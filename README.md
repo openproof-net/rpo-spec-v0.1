@@ -95,3 +95,22 @@ Governance: [truthx-openproof.org](https://truthx-openproof.org)
 Technical site: [openproof.net](https://www.openproof.net)
 
 ---
+
+---
+
+## 🧭 Roadmap — RPO Specification
+
+| Phase | Description | Status |
+|-------|--------------|---------|
+| **v0.1 — Draft** | Initial specification released for public review (JSON + PDF format). | ✅ Published |
+| **v0.5 — Public Comment** | Integration of feedback from CNRS / GREYC researchers, legal experts, and institutional partners. | ⏳ In progress |
+| **v1.0 — Stable Release** | Finalized RPO (Rapport Probatoire Ouvert) standard with governance signatures and OpenProof registry integration. | 🔒 Planned Q2 2026 |
+
+🗓 **Next milestone:** integration of the OpenProof Registry and RPO signature verification module.
+
+---
+
+📍 **Maintained by the OpenProof Consortium**  
+Research collaboration: CNRS – GREYC – Université de Caen Normandie  
+Contact: [openproof@truthx.co](mailto:openproof@truthx.co)
+
