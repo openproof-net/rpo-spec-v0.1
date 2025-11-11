@@ -5,10 +5,11 @@
 </p>
 
 <p align="center">
-  <a href="https://www.openproof.net"><img src="https://img.shields.io/badge/specification-v0.1-gold"></a>
-  <a href="https://truthx.co"><img src="https://img.shields.io/badge/forensic-engine-TruthX-blue"></a>
-  <a href="https://truthx-openproof.org"><img src="https://img.shields.io/badge/governance-Consortium-green"></a>
+  <a href="https://www.openproof.net"><img src="https://img.shields.io/badge/specification-v0.1-gold" alt="spec badge"></a>
+  <a href="https://truthx.co"><img src="https://img.shields.io/badge/forensic-engine-TruthX-blue" alt="forensic engine badge"></a>
+  <a href="https://truthx-openproof.org"><img src="https://img.shields.io/badge/governance-Consortium-green" alt="governance badge"></a>
 </p>
+
 
 ---
 
