@@ -65,3 +65,29 @@ This specification aims to make **truth measurable**, **power traceable**, and *
     }
   ]
 }
+---
+
+## 🧩 Contributing
+
+OpenProof welcomes scientific and institutional contributors interested in advancing the **RPO (Rapport Probatoire Ouvert)** standard.  
+Researchers, legal experts, engineers and data scientists can:
+- review or comment on the specification files,  
+- submit anonymized case schemas or validation tests,  
+- open discussions in the *Governance* repository.
+
+📬 To request participation: [join the OpenProof Beta](https://www.openproof.net/join)
+
+---
+
+## ⚖️ Licenses
+
+This repository and its materials are released under a dual-license model:
+
+- **CC BY-NC 4.0** for content, documentation, and datasets — allowing reuse with attribution, excluding commercial purposes.  
+- **Apache 2.0** for code, JSON schemas, and software components — enabling open, verifiable, and auditable use.
+
+© 2025 **OpenProof Consortium**  
+Governance: [truthx-openproof.org](https://truthx-openproof.org)  
+Technical site: [openproof.net](https://www.openproof.net)
+
+---
