@@ -1,15 +1,22 @@
 
 <p align="center">
-  <img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png" alt="OpenProof Logo" width="120"/><br>
-  <b>OpenProof — RPO Specification v0.1</b><br>
-  <i>Integrity • Readability • Verifiability</i>
+  <img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png" alt="OpenProof Logo" width="120"><br>
+  <b>OpenProof — Spécification RPO v0.1</b><br>
+  <i>Intégrité • Lisibilité • Vérifiabilité</i>
 </p>
 
 <p align="center">
-  <a href="https://www.openproof.net"><img src="https://img.shields.io/badge/specification-v0.1-gold" alt="spec badge"></a>
-  <a href="https://truthx.co"><img src="https://img.shields.io/badge/forensic-engine-TruthX-blue" alt="forensic engine badge"></a>
-  <a href="https://truthx-openproof.org"><img src="https://img.shields.io/badge/governance-Consortium-green" alt="governance badge"></a>
+  <a href="https://rpo.openproof.net/">
+    <img src="https://img.shields.io/badge/specification-v0.1-yellow" alt="RPO Spec v0.1">
+  </a>
+  <a href="https://truthx.co/">
+    <img src="https://img.shields.io/badge/forensic--engine-TruthX-blue" alt="TruthX">
+  </a>
+  <a href="https://truthx-openproof.org/">
+    <img src="https://img.shields.io/badge/governance-Consortium-green" alt="Governance">
+  </a>
 </p>
+
 
 
 
