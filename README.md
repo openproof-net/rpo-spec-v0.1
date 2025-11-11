@@ -65,6 +65,10 @@ This specification aims to make **truth measurable**, **power traceable**, and *
     }
   ]
 }
+}
+]
+}
+
 ---
 
 ## 🧩 Contributing
