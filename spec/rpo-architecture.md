@@ -106,3 +106,12 @@ Example:
   "id": "openproof:case:001",
   "role": "case"
 }
+"evidence": [
+  {
+    "id": "ev-001",
+    "type": "timeline",
+    "description": "Consolidated timeline of events",
+    "hash": "sha256:...",
+    "uri": "openproof://case-001/timeline.csv"
+  }
+]
