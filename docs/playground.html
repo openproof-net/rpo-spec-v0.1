@@ -213,7 +213,7 @@
     }
 
     .hero-title {
-      font-size: clamp(2.0rem, 2.8vw, 2.5rem);
+      font-size: clamp(2rem, 2.8vw, 2.5rem);
       line-height: 1.2;
       margin: 0 0 0.75rem;
     }
@@ -251,29 +251,46 @@
     }
 
     .hero-card {
-      background: radial-gradient(circle at top left, #1a1f32, #070913);
+      max-width: 460px;
+      margin-left: auto;
+      background: radial-gradient(circle at top left, #1b2236, #050711);
       border-radius: var(--radius-lg);
-      padding: 1.6rem;
+      padding: 1.6rem 1.7rem;
       border: 1px solid var(--border-soft);
       box-shadow: var(--shadow-soft);
     }
 
     .hero-card-title {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 0.4rem;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold-soft);
+      margin: 0 0 0.4rem;
     }
 
     .hero-card-subtitle {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-bottom: 0.9rem;
+      font-size: 0.85rem;
+      color: var(--text-main);
+      margin-bottom: 0.8rem;
     }
 
     .hero-card-note {
       font-size: 0.78rem;
       color: var(--text-muted);
       line-height: 1.5;
+      margin-top: 0.7rem;
+    }
+
+    .hero-list {
+      list-style: disc;
+      padding-left: 1.1rem;
+      margin: 0 0 0.6rem;
+      font-size: 0.86rem;
+      color: var(--text-main);
+    }
+
+    .hero-list li + li {
+      margin-top: 0.25rem;
     }
 
     /* Layout panels */
@@ -295,6 +312,10 @@
       }
       .grid {
         grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-card {
+        margin: 1.4rem 0 0;
+        max-width: 100%;
       }
     }
 
@@ -469,51 +490,6 @@
       margin: 0;
     }
 
-    /* CNRS CTA inside panel */
-    .cnrs-cta {
-      margin-top: 1.4rem;
-      padding: 1rem 1.2rem;
-      border-radius: 14px;
-      background: linear-gradient(145deg, #fbf8f1, #f7f3e8);
-      border: 1px solid rgba(212, 175, 55, 0.55);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
-      color: #5c4721;
-      font-size: 0.86rem;
-    }
-
-    .cnrs-cta-title {
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin: 0 0 0.4rem;
-    }
-
-    .cnrs-cta p {
-      margin: 0 0 0.6rem;
-      line-height: 1.4;
-    }
-
-    .cnrs-cta a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 0.2rem;
-      padding: 0.36rem 0.9rem;
-      border-radius: 999px;
-      border: 1px solid rgba(212, 175, 55, 0.9);
-      background: #f7f3e8;
-      font-size: 0.84rem;
-      font-weight: 500;
-      color: #5c4721;
-      text-decoration: none;
-    }
-
-    .cnrs-cta a:hover {
-      background: #f1e6a3;
-      text-decoration: none;
-    }
-
-    /* Bottom CTA panel */
     .cta-panel {
       max-width: 1120px;
       margin: 2.4rem auto 0;
@@ -662,9 +638,8 @@
           <li>Derives a <code>public_hash</code> from the full content.</li>
         </ul>
         <p class="hero-card-note">
-          Think of it as an <strong>RPO sandbox</strong>:
-          the “code civil” exists, this page shows how a simple engine could apply it to
-          real narratives.
+          Think of it as an <strong>RPO sandbox</strong>: the “code civil” exists,
+          this page shows how a simple engine could apply it to real narratives.
         </p>
       </aside>
     </div>
@@ -740,13 +715,13 @@
 
         <pre id="rpo-json" aria-label="Draft RPO JSON bundle"></pre>
 
-        <!-- CNRS CTA INSIDE PANEL -->
-        <div class="cnrs-cta">
-          <div class="cnrs-cta-title">Test the Scientific Pilot (CNRS × TruthX)</div>
+        <!-- CNRS pilot card inside the right panel -->
+        <div class="cnrs-cta" style="margin-top:1.2rem; display:block;">
+          <div class="cnrs-cta-title">Test the scientific pilot (CNRS × TruthX)</div>
           <p>
-            For an advanced psycho-medical-forensic analysis (interpretive coherence,
-            narrative structure, markers of coercive control), you can request access
-            to the <strong>CNRS × TruthX</strong> research pilot.
+            For an advanced psycho-medical-forensic analysis (interpretive coherence, narrative structure,
+            markers of coercive control), you can request access to the
+            <strong>CNRS × TruthX</strong> research pilot.
           </p>
           <a
             href="https://www.truthx.co/truthx-pilote-form"
@@ -759,7 +734,7 @@
       </section>
     </div>
 
-    <!-- CTA PANEL BOTTOM -->
+    <!-- CTA PANEL -->
     <section class="cta-panel">
       <div>
         <strong>Here you see the “open” RPO Playground.</strong><br />
@@ -817,7 +792,6 @@
     const hashValueEl = document.getElementById("hash-value");
     const jsonEl = document.getElementById("rpo-json");
 
-    // Basic helpers
     function countSentences(text) {
       const cleaned = text.replace(/\s+/g, " ").trim();
       if (!cleaned) return 0;
@@ -826,19 +800,15 @@
     }
 
     function countEvidenceMarkers(text) {
-      // Very simple heuristic:
-      // - numbers (dates, amounts)
-      // - words like "on", "at", "since", "because", "when", "where"
       let digits = (text.match(/\d{2,}/g) || []).length;
       const markers = (text.match(/\b(on|at|since|because|when|where)\b/gi) || []).length;
       return digits + markers;
     }
 
     function computeCoherenceScore(sentences, markers) {
-      // Heuristic score just to show the idea of a "coherence of proof" metric.
-      const base = Math.min(40, sentences * 6);   // structure
-      const detail = Math.min(40, markers * 4);   // concrete markers
-      const floor = 20;                           // baseline
+      const base = Math.min(40, sentences * 6);
+      const detail = Math.min(40, markers * 4);
+      const floor = 20;
       return Math.max(0, Math.min(100, floor + base + detail));
     }
 
@@ -931,7 +901,6 @@
         }
       };
 
-      // Update UI
       sentencesEl.textContent = sentences.toString();
       markersEl.textContent = markers.toString();
       scoreEl.textContent = score.toString() + "%";
@@ -966,4 +935,5 @@
   </script>
 </body>
 </html>
+
 
