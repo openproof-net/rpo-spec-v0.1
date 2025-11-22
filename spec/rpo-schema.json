@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RPO Schema v0.1",
+  "type": "object",
+  "description": "Placeholder for the official RPO JSON schema."
+}
