@@ -268,6 +268,13 @@ This separation ensures:
 
 neutrality (the format does not depend on TruthX)
 
+## 5. Architecture Diagram (Conceptual)
+
+The RPO architecture can be viewed as a linear but verifiable pipeline that links
+raw evidence, structured data, narrative interpretation, hashing, signatures,
+registry anchoring, and independent verification.
+
+
 auditability (anyone can re-hash and verify)
 
 longevity (registries outlive tools)
