@@ -1,3 +1,27 @@
-# Placeholder for human-readable PDF
-The real PDF will be added in version 0.1.  
-This file exists only to reserve the slot in the example.
+RPO Minimal Example – Human-readable Narrative
+=============================================
+
+Case: Case–001 — Coercive control
+Bundle ID: rpo-example-minimal-0001
+Date: 2025-01-01T00:00:00Z
+
+Summary
+-------
+This minimal example illustrates how the human-readable PDF component of an RPO
+(Rapport Probatoire Ouvert) may look. It provides a short narrative aligned with
+the structured JSON evidence bundle.
+
+Narrative
+---------
+Over a period of three years, the subject experienced a progressively escalating
+pattern of coercive control. Key events include isolation, manipulation,
+institutional disqualification, and narrative inversion.
+
+Evidence Reference
+------------------
+Timeline ID: ev-001
+Hash (placeholder): sha256:placeholder-timeline
+
+PDF Hash
+--------
+sha256:placeholder-pdf
