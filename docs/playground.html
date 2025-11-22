@@ -1,23 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>OpenProof — RPO Playground | From narrative to RPO bundle</title>
+  <title>OpenProof – RPO Playground | Du récit au lot RPO</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- SEO -->
-  <meta name="description"
-        content="RPO Playground: try the open version of the RPO (Rapport Probatoire Ouvert). Paste a narrative, get a draft RPO JSON bundle plus heuristic scores and a public hash." />
+  <meta
+    name="description"
+    content="RPO Playground : essayez la version ouverte du RPO (Rapport Probatoire Ouvert). Collez un récit, générez un lot JSON RPO préliminaire, des scores heuristiques et un hachage public."
+  />
   <link rel="canonical" href="https://rpo.openproof.net/playground.html" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="OpenProof — RPO Playground" />
-  <meta property="og:description"
-        content="Experimental playground for the RPO standard: turn a narrative into a draft JSON bundle, with heuristic scores and a public hash." />
+  <meta property="og:title" content="OpenProof – RPO Playground" />
+  <meta
+    property="og:description"
+    content="Terrain d’essai expérimental pour la norme RPO : du récit libre au lot JSON signé, avec scores heuristiques et hachage public."
+  />
   <meta property="og:url" content="https://rpo.openproof.net/playground.html" />
-  <meta property="og:image"
-        content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
+  <meta
+    property="og:image"
+    content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+  />
 
   <!-- Favicon OpenProof -->
   <link
@@ -34,7 +40,7 @@
     rel="stylesheet"
   />
 
-  <!-- Minimal dark/ivory/gold theme -->
+  <!-- Dark / ivory / gold theme -->
   <style>
     :root {
       --bg: #04040e;
@@ -57,8 +63,8 @@
 
     body {
       margin: 0;
-      font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "SF Pro Text",
-        "Segoe UI", sans-serif;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui,
+        "SF Pro Text", "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #111625 0, var(--bg) 45%);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
@@ -73,7 +79,7 @@
       text-decoration: underline;
     }
 
-    /* Nav */
+    /* NAVBAR */
     .nav {
       position: sticky;
       top: 0;
@@ -176,10 +182,6 @@
       background: rgba(10, 14, 24, 0.9);
     }
 
-    .btn-ghost span {
-      font-size: 0.9rem;
-    }
-
     .btn-ghost:hover {
       border-color: var(--gold-soft);
       text-decoration: none;
@@ -199,7 +201,7 @@
       }
     }
 
-    /* Hero */
+    /* HERO */
     .hero {
       padding: 3.2rem 1.5rem 2.4rem;
     }
@@ -310,14 +312,6 @@
       text-align: justify;
     }
 
-    .hero-card-note {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      line-height: 1.5;
-      margin-top: 0.7rem;
-      text-align: justify;
-    }
-
     .hero-list {
       list-style: disc;
       padding-left: 1.1rem;
@@ -330,7 +324,15 @@
       margin-top: 0.25rem;
     }
 
-    /* Layout panels */
+    .hero-card-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-top: 0.7rem;
+      text-align: justify;
+    }
+
+    /* LAYOUT PANELS */
     .main {
       padding: 0 1.5rem 3.5rem;
     }
@@ -351,7 +353,7 @@
         grid-template-columns: minmax(0, 1fr);
       }
       .hero-card {
-        margin: 1.4rem 0 0;
+        margin-top: 1.4rem;
       }
     }
 
@@ -391,7 +393,7 @@
       color: var(--text-muted);
     }
 
-    /* Form & results */
+    /* FORM & RESULTS */
     .form-group {
       margin-bottom: 0.9rem;
     }
@@ -421,7 +423,7 @@
     .input:focus,
     .textarea:focus {
       border-color: var(--gold);
-      box-shadow: 0 0 0 1px rgba(212,175,55,0.35);
+      box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.35);
     }
 
     .textarea {
@@ -448,15 +450,15 @@
     .btn-example {
       border-radius: 999px;
       padding: 0.25rem 0.7rem;
-      border: 1px dashed rgba(122,100,50,0.6);
+      border: 1px dashed rgba(122, 100, 50, 0.6);
       font-size: 0.78rem;
       cursor: pointer;
-      background: rgba(253,251,247,0.9);
+      background: rgba(253, 251, 247, 0.9);
       color: #3a2c12;
     }
 
     .btn-example:hover {
-      background: rgba(241,230,163,0.4);
+      background: rgba(241, 230, 163, 0.4);
     }
 
     .btn-row {
@@ -475,7 +477,7 @@
       cursor: pointer;
       background: linear-gradient(135deg, #d4af37, #f1e6a3);
       color: #2a210e;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.25);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
     }
 
     .btn-primary:hover {
@@ -493,7 +495,7 @@
     }
 
     .btn-secondary:hover {
-      background: rgba(212,175,55,0.08);
+      background: rgba(212, 175, 55, 0.08);
     }
 
     .result-tagline {
@@ -512,10 +514,10 @@
     }
 
     .metric {
-      background: rgba(255,255,255,0.7);
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 10px;
       padding: 0.4rem 0.55rem;
-      border: 1px solid rgba(212,175,55,0.35);
+      border: 1px solid rgba(212, 175, 55, 0.35);
     }
 
     .metric-label {
@@ -539,13 +541,64 @@
       text-align: justify;
     }
 
+    .anchors-block {
+      margin-bottom: 0.8rem;
+      background: rgba(255, 255, 255, 0.75);
+      border-radius: 10px;
+      padding: 0.55rem 0.6rem 0.65rem;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      font-size: 0.8rem;
+    }
+
+    .anchors-title {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      color: #8a6c33;
+      margin-bottom: 0.25rem;
+    }
+
+    .anchors-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.6rem;
+    }
+
+    @media (max-width: 600px) {
+      .anchors-columns {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .anchors-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+      color: #4a3716;
+    }
+
+    .anchors-list {
+      margin: 0;
+      padding-left: 1.1rem;
+      font-size: 0.78rem;
+    }
+
+    .anchors-list li + li {
+      margin-top: 0.1rem;
+    }
+
+    .anchors-empty {
+      font-size: 0.78rem;
+      color: #7a6432;
+    }
+
     .hash-block {
       font-size: 0.78rem;
       word-break: break-all;
-      background: rgba(255,255,255,0.7);
+      background: rgba(255, 255, 255, 0.7);
       border-radius: 10px;
       padding: 0.5rem 0.6rem;
-      border: 1px dashed rgba(122,100,50,0.5);
+      border: 1px dashed rgba(122, 100, 50, 0.5);
       margin-bottom: 0.8rem;
     }
 
@@ -559,15 +612,15 @@
     .btn-json {
       border-radius: 999px;
       padding: 0.35rem 0.9rem;
-      border: 1px solid rgba(122,100,50,0.5);
+      border: 1px solid rgba(122, 100, 50, 0.5);
       font-size: 0.8rem;
       cursor: pointer;
-      background: rgba(253,251,247,0.9);
+      background: rgba(253, 251, 247, 0.9);
       color: #3a2c12;
     }
 
     .btn-json:hover {
-      background: rgba(241,230,163,0.5);
+      background: rgba(241, 230, 163, 0.5);
     }
 
     pre {
@@ -577,75 +630,11 @@
       border-radius: 10px;
       font-size: 0.78rem;
       overflow-x: auto;
-      border: 1px solid rgba(15,23,42,0.8);
+      border: 1px solid rgba(15, 23, 42, 0.8);
       margin: 0;
     }
 
-    .cta-panel {
-      max-width: 1120px;
-      margin: 2.4rem auto 0;
-      padding: 1.3rem 1.5rem;
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(212,175,55,0.4);
-      background: radial-gradient(circle at top left, #1b2236, #050711);
-      box-shadow: var(--shadow-soft);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8rem;
-      font-size: 0.9rem;
-    }
-
-    .cta-panel strong {
-      color: var(--gold-soft);
-    }
-
-    .cta-btn {
-      border-radius: 999px;
-      padding: 0.45rem 1.2rem;
-      border: none;
-      font-size: 0.88rem;
-      font-weight: 500;
-      background: linear-gradient(135deg, #d4af37, #f1e6a3);
-      color: #2a210e;
-      text-decoration: none;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.25);
-      white-space: nowrap;
-    }
-
-    .cta-btn:hover {
-      filter: brightness(1.03);
-      text-decoration: none;
-    }
-
-    /* CNRS pilot mini-block */
-    .cnrs-cta {
-      margin-top: 1.2rem;
-      padding-top: 0.9rem;
-      border-top: 1px dashed rgba(212,175,55,0.35);
-      font-size: 0.8rem;
-    }
-
-    .cnrs-cta-title {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--gold-soft);
-      margin-bottom: 0.3rem;
-    }
-
-    .cnrs-cta p {
-      margin: 0 0 0.45rem;
-      color: var(--text-muted);
-      text-align: justify;
-    }
-
-    .cnrs-cta a {
-      font-size: 0.8rem;
-    }
-
-    /* Info panel: How this page works */
+    /* INFO PANEL */
     .info-section {
       max-width: 1120px;
       margin: 2.4rem auto 0;
@@ -663,7 +652,7 @@
     .info-panel h2 {
       margin-top: 0;
       font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 1.0rem;
+      font-size: 1rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #5c4721;
@@ -705,7 +694,72 @@
       text-align: justify;
     }
 
-    /* Footer */
+    /* CTA PANEL */
+    .cta-panel {
+      max-width: 1120px;
+      margin: 2.4rem auto 0;
+      padding: 1.3rem 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: radial-gradient(circle at top left, #1b2236, #050711);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .cta-panel strong {
+      color: var(--gold-soft);
+    }
+
+    .cta-btn {
+      border-radius: 999px;
+      padding: 0.45rem 1.2rem;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, #d4af37, #f1e6a3);
+      color: #2a210e;
+      text-decoration: none;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+      white-space: nowrap;
+    }
+
+    .cta-btn:hover {
+      filter: brightness(1.03);
+      text-decoration: none;
+    }
+
+    /* CNRS PILOT MINI-BLOCK */
+    .cnrs-cta {
+      margin-top: 1.2rem;
+      padding-top: 0.9rem;
+      border-top: 1px dashed rgba(212, 175, 55, 0.35);
+      font-size: 0.8rem;
+    }
+
+    .cnrs-cta-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold-soft);
+      margin-bottom: 0.3rem;
+    }
+
+    .cnrs-cta p {
+      margin: 0 0 0.45rem;
+      color: var(--text-muted);
+      text-align: justify;
+    }
+
+    .cnrs-cta a {
+      font-size: 0.8rem;
+    }
+
+    /* FOOTER */
     .footer {
       border-top: 1px solid var(--border-soft);
       background: radial-gradient(circle at top, #101525, #020308);
@@ -744,98 +798,102 @@
 <body>
   <!-- NAVBAR -->
   <header class="nav">
-  <div class="nav-inner">
-    <div class="nav-left">
-      <a href="overview.html" class="nav-logo-link">
-        <div class="nav-logo">
-          <img
-            src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-            alt="Emblème OpenProof"
-          />
-        </div>
-        <div>
-          <div class="nav-title">OPENPROOF – RPO V0.1</div>
-          <div class="nav-subtitle">JSON signé • PDF lisible par l’homme • Hachage public</div>
-        </div>
-      </a>
-    </div>
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="overview.html" class="nav-logo-link">
+          <div class="nav-logo">
+            <img
+              src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+              alt="Emblème OpenProof"
+            />
+          </div>
+          <div>
+            <div class="nav-title">OPENPROOF – RPO V0.1</div>
+            <div class="nav-subtitle">
+              JSON signé • PDF lisible par l’homme • Hachage public
+            </div>
+          </div>
+        </a>
+      </div>
 
-    <div class="nav-links">
-      <a href="overview.html" class="nav-link">Aperçu</a>
-      <a href="index.html" class="nav-link">Spécification</a>
-      <a href="examples.html" class="nav-link">Exemples</a>
-      <a href="tests.html" class="nav-link">Tests</a>
-      <a href="playground.html" class="nav-link active">Aire de jeux</a>
-      <a
-        class="btn-ghost"
-        href="https://github.com/openproof-net/rpo-spec-v0.1"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span>Voir sur GitHub</span>
-      </a>
+      <div class="nav-links">
+        <a href="overview.html" class="nav-link">Aperçu</a>
+        <a href="index.html" class="nav-link">Spécification</a>
+        <a href="examples.html" class="nav-link">Exemples</a>
+        <a href="tests.html" class="nav-link">Tests</a>
+        <a href="playground.html" class="nav-link active">Aire de jeux</a>
+        <a
+          class="btn-ghost"
+          href="https://github.com/openproof-net/rpo-spec-v0.1"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>Voir sur GitHub</span>
+        </a>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
   <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <div class="hero-kicker">RPO Playground • Open version</div>
+        <div class="hero-kicker">RPO Playground • Version ouverte</div>
         <h1 class="hero-title">
-          Try the <span>RPO Playground</span> — from narrative to draft proof bundle
+          Essayez le <span>RPO Playground</span> — du récit à l’épreuve du brouillon
         </h1>
         <p class="hero-subtitle">
-          Paste a short narrative, add a few identifiers, and generate a
-          <strong>draft RPO JSON bundle</strong> with heuristic scores and a public hash.
-          This page demonstrates how the RPO standard can structure a story into
-          something verifiable.
+          Collez un court récit, ajoutez quelques identifiants et générez un
+          <strong>lot JSON RPO préliminaire</strong> avec des scores heuristiques et un
+          hachage public. Cette page montre comment la norme RPO peut structurer
+          un récit pour le rendre vérifiable.
         </p>
         <div class="hero-badges">
-          <div class="badge">Experimental</div>
-          <div class="badge">Deterministic</div>
-          <div class="badge">Open source friendly</div>
+          <div class="badge">Expérimental</div>
+          <div class="badge">Déterministe</div>
+          <div class="badge">Compatible logiciels libres</div>
         </div>
         <div class="hero-meta">
-          This is an <strong>open playground</strong> — no AI model, no registry, no legal
-          value. It is here to show how an RPO bundle could look and behave, before
-          plugging advanced engines or CNRS modules.
+          Il s’agit d’un <strong>terrain de jeu ouvert</strong> : sans modèle d’IA, sans
+          registre, sans valeur juridique. Son but est de montrer à quoi pourrait
+          ressembler un lot RPO simple et comment il se comporte, avant d’y
+          brancher des moteurs avancés ou des modules CNRS.
         </div>
       </div>
 
       <aside class="hero-card">
         <div class="hero-card-title-row">
-          <div class="hero-card-title">What this page does</div>
-          <div class="hero-card-pill">Local only</div>
+          <div class="hero-card-title">Que fait cette page&nbsp;?</div>
+          <div class="hero-card-pill">Local uniquement</div>
         </div>
         <div class="hero-card-subtitle">
-          It takes your narrative and turns it into a draft RPO bundle:
+          Elle prend votre récit et le transforme en un brouillon de lot RPO :
         </div>
         <ul class="hero-list">
-          <li>Computes basic metrics (length, structure, evidence density).</li>
-          <li>Builds a minimal <code>rpo.json</code> object.</li>
-          <li>Derives a <code>public_hash</code> from the full content.</li>
+          <li>Calcule les métriques de base (longueur, structure, densité de preuves).</li>
+          <li>Construit un objet <code>rpo.json</code> minimal conforme au standard.</li>
+          <li>Derive un <code>public_hash</code> du contenu complet.</li>
         </ul>
         <p class="hero-card-note">
-          Think of it as an <strong>RPO sandbox</strong>: the “code civil” exists,
-          this page shows how a simple engine could apply it to real narratives.
+          Considérez cela comme un <strong>bac à sable RPO</strong> : le “code civil”
+          existe, cette page montre comment un moteur simple pourrait l’appliquer
+          à des récits réels.
         </p>
-
-        <!-- CNRS pilot card inside the right panel -->
         <div class="cnrs-cta">
-          <div class="cnrs-cta-title">Test the scientific pilot (CNRS × TruthX)</div>
+          <div class="cnrs-cta-title">
+            Test du projet pilote scientifique (CNRS × TruthX)
+          </div>
           <p>
-            For an advanced psycho-medical-forensic analysis (interpretive coherence, narrative structure,
-            markers of coercive control), you can request access to the
-            <strong>CNRS × TruthX</strong> research pilot.
+            Pour une analyse psycho-médico-légale avancée (cohérence interprétative,
+            structure narrative, marqueurs de contrôle coercitif), vous pouvez
+            demander l’accès au projet pilote de recherche <strong>CNRS × TruthX</strong>.
           </p>
           <a
             href="https://www.truthx.co/truthx-pilote-form"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Request access to the CNRS pilot
+            Demander l’accès au projet pilote du CNRS
           </a>
         </div>
       </aside>
@@ -844,126 +902,180 @@
 
   <!-- MAIN -->
   <main class="main">
-    <div class="section-title">Play with a narrative</div>
+    <div class="section-title">Jouez avec un récit</div>
     <div class="grid">
       <!-- INPUT PANEL -->
       <section class="panel">
-        <h2>1. Input</h2>
+        <h2>1. Entrée</h2>
         <p>
-          Start with a short narrative (1–3 paragraphs). You can anonymise names and
-          dates. The goal is to see how the structure behaves, not to judge the case.
+          Commencez par un court récit (1 à 3 paragraphes). Vous pouvez anonymiser
+          les noms et les dates. L’objectif est d’observer la structure, non de porter
+          un jugement sur le fond.
         </p>
         <div class="form-group">
-          <label class="form-label" for="case-title">Case title</label>
-          <input id="case-title" class="input" placeholder="Example: Incident in Paris office – March 2024" />
+          <label class="form-label" for="case-title">Titre de l’affaire</label>
+          <input
+            id="case-title"
+            class="input"
+            placeholder="Exemple : Incident dans les bureaux de Paris – mars 2024"
+          />
         </div>
         <div class="form-group">
-          <label class="form-label" for="issuer">Issuer (who files the report)</label>
-          <input id="issuer" class="input" placeholder="Example: Internal audit team, Company X" />
+          <label class="form-label" for="issuer">Émetteur (qui dépose le rapport)</label>
+          <input
+            id="issuer"
+            class="input"
+            placeholder="Exemple : Équipe d’audit interne, Société X"
+          />
         </div>
         <div class="form-group">
-          <label class="form-label" for="subject">Subject (who / what is concerned)</label>
-          <input id="subject" class="input" placeholder="Example: Employee, department, contract, etc." />
+          <label class="form-label" for="subject">Sujet (qui / quoi est concerné)</label>
+          <input
+            id="subject"
+            class="input"
+            placeholder="Exemple : Salarié, service, contrat, etc."
+          />
         </div>
         <div class="form-group">
-          <label class="form-label" for="narrative">Narrative (free text)</label>
+          <label class="form-label" for="narrative">Récit (texte libre)</label>
           <textarea
             id="narrative"
             class="textarea"
-            placeholder="Describe the situation in your own words. What happened, when, where, who was involved?"
+            placeholder="Décrivez la situation avec vos mots. Que s’est-il passé, quand, où, qui était impliqué ?"
           ></textarea>
           <div class="helper">
-            Tip: include at least one date or time marker, a location, and 2–3 concrete actions.
+            Astuce : incluez au moins un repère temporel, un lieu, et 2–3 actions concrètes.
           </div>
           <div class="example-row">
-            <span>Or load an example:</span>
-            <button type="button" class="btn-example" id="example-workplace">Workplace incident</button>
-            <button type="button" class="btn-example" id="example-contract">Contract dispute</button>
+            <span>Ou charger un exemple&nbsp;:</span>
+            <button type="button" class="btn-example" id="example-incident">
+              Incident en entreprise
+            </button>
+            <button type="button" class="btn-example" id="example-contrat">
+              Litige contractuel
+            </button>
           </div>
         </div>
 
         <div class="btn-row">
-          <button class="btn-primary" id="generate-btn">Generate draft RPO bundle</button>
-          <button class="btn-secondary" id="reset-btn" type="button">Reset</button>
+          <button class="btn-primary" id="generate-btn">
+            Générer le lot RPO
+          </button>
+          <button class="btn-secondary" id="reset-btn" type="button">
+            Réinitialiser
+          </button>
         </div>
       </section>
 
       <!-- OUTPUT PANEL -->
       <section class="panel">
-        <h2>2. Draft RPO bundle</h2>
+        <h2>2. Projet de lot RPO</h2>
         <p class="result-tagline" id="result-tagline">
-          Fill the form on the left and click “Generate” to see the bundle.
+          Remplissez le formulaire à gauche et cliquez sur « Générer » pour voir le
+          lot.
         </p>
 
-        <div class="result-metrics" id="metrics" style="display:none">
+        <div class="result-metrics" id="metrics" style="display: none">
           <div class="metric">
-            <div class="metric-label">Sentences</div>
+            <div class="metric-label">Phrases</div>
             <div class="metric-value" id="metric-sentences">0</div>
           </div>
           <div class="metric">
-            <div class="metric-label">Evidence markers</div>
+            <div class="metric-label">Marqueurs de preuve</div>
             <div class="metric-value" id="metric-markers">0</div>
           </div>
           <div class="metric">
-            <div class="metric-label">Coherence score</div>
+            <div class="metric-label">Score de cohérence</div>
             <div class="metric-value" id="metric-score">0%</div>
           </div>
         </div>
 
-        <div class="score-interpretation" id="score-interpretation" style="display:none">
-          <!-- Filled by JS -->
+        <div
+          class="score-interpretation"
+          id="score-interpretation"
+          style="display: none"
+        ></div>
+
+        <div
+          class="anchors-block"
+          id="anchors-block"
+          style="display: none"
+        >
+          <div class="anchors-title">
+            Ancres heuristiques (version ouverte)
+          </div>
+          <div class="anchors-columns">
+            <div>
+              <div class="anchors-label">Dates et années</div>
+              <ul class="anchors-list" id="anchors-dates"></ul>
+            </div>
+            <div>
+              <div class="anchors-label">Lieux (expérimental)</div>
+              <ul class="anchors-list" id="anchors-places"></ul>
+            </div>
+          </div>
         </div>
 
-        <div class="hash-block" id="hash-block" style="display:none">
+        <div
+          class="hash-block"
+          id="hash-block"
+          style="display: none"
+        >
           <strong>public_hash</strong><br />
           <span id="hash-value"></span>
         </div>
 
-        <div class="json-actions" id="json-actions" style="display:none">
-          <button class="btn-json" id="copy-json-btn" type="button">Copy JSON</button>
-          <button class="btn-json" id="download-json-btn" type="button">Download rpo.json</button>
+        <div class="json-actions" id="json-actions" style="display: none">
+          <button class="btn-json" id="copy-json-btn" type="button">
+            Copier le JSON
+          </button>
+          <button class="btn-json" id="download-json-btn" type="button">
+            Télécharger rpo.json
+          </button>
         </div>
 
-        <pre id="rpo-json" aria-label="Draft RPO JSON bundle"></pre>
+        <pre id="rpo-json" aria-label="Lot RPO JSON préliminaire"></pre>
       </section>
     </div>
 
-    <!-- INFO PANEL: HOW THIS PAGE WORKS -->
+    <!-- INFO PANEL -->
     <section class="info-section">
       <div class="info-panel">
-        <h2>How this page works</h2>
+        <h2>Comment fonctionne cette page</h2>
         <div class="info-grid">
           <div>
             <p>
-              This open playground shows how a simple narrative can become a
-              <strong>minimal RPO bundle</strong>. Everything runs locally in your browser:
-              no backend, no registry, no AI model. It is a didactic PMVP, not a legal tool.
+              Cette aire de jeux ouverte montre comment un récit libre peut devenir
+              un <strong>lot RPO minimal</strong>. Tout se fait localement dans votre
+              navigateur : pas de backend, pas de registre, pas de modèle d’IA.
             </p>
             <ul class="info-list">
-              <li>You write a narrative and a few labels (issuer, subject, title).</li>
-              <li>The page computes three heuristic signals: sentences, evidence markers, coherence score.</li>
-              <li>A minimal <code>rpo.json</code> object is generated, plus a <code>public_hash</code> in SHA-256.</li>
+              <li>Vous écrivez un récit et quelques libellés (émetteur, sujet, titre).</li>
+              <li>La page calcule trois signaux heuristiques : nombre de phrases, marqueurs de preuve, score de cohérence.</li>
+              <li>Un objet <code>rpo.json</code> est généré, avec un <code>public_hash</code> en SHA-256.</li>
             </ul>
             <p class="info-note">
-              The goal is to make the structure of proof visible: what today is “just a story”
-              becomes a bundle that can, tomorrow, be anchored, versioned, and interpreted
-              by more advanced engines.
+              L’objectif est de rendre la <strong>structure de la preuve visible</strong> :
+              ce qui n’était “qu’une histoire” devient un lot qui peut, demain, être
+              ancré, versionné et interprété par des moteurs plus avancés.
             </p>
           </div>
           <div>
             <p>
-              In the <strong>scientific CNRS × TruthX pilot</strong>, this skeleton will be
-              enriched with psycho-forensic heuristics: interpretive coherence, patterns of
-              coercive control, inverted narratives, and probatory coherence scores.
+              Dans le <strong>projet pilote scientifique CNRS × TruthX</strong>, ce
+              squelette sera enrichi par des heuristiques psycho-forensiques :
+              cohérence interprétative, patterns de contrôle coercitif, récits inversés,
+              scores de cohérence probatoire.
             </p>
             <p>
-              This open version deliberately stays simple and transparent so that anyone can
-              inspect the JSON, recompute the hash, and reuse the bundle in their own tests
-              or tools.
+              Cette version ouverte reste volontairement simple et transparente, pour
+              que chacun puisse inspecter le JSON, recalculer le hachage et réutiliser
+              le lot dans ses propres tests ou outils.
             </p>
             <p class="info-note">
-              Open playground = no AI, no central registry, no legal value. Scientific pilot =
-              advanced psycho-legal engines, controlled environment, and strict governance.
+              Version ouverte = pas d’IA, pas de registre central, pas de valeur
+              juridique. Version scientifique = moteurs psycho-légaux avancés,
+              environnement contrôlé et gouvernance stricte.
             </p>
           </div>
         </div>
@@ -973,10 +1085,11 @@
     <!-- CTA PANEL -->
     <section class="cta-panel">
       <div>
-        <strong>Here you see the “open” RPO Playground.</strong><br />
-        If you want to test the <strong>scientific / CNRS pilot version</strong> with
-        advanced psycho-forensic modules and real cases, you can apply to the pilot
-        programme.
+        <strong>Ce que vous voyez ici : la version ouverte du RPO Playground.</strong
+        ><br />
+        Si vous souhaitez tester la <strong>version scientifique CNRS</strong> avec des
+        modules psycho-forensiques avancés et des cas réels, vous pouvez candidater
+        au programme pilote.
       </div>
       <a
         class="cta-btn"
@@ -984,7 +1097,7 @@
         target="_blank"
         rel="noopener noreferrer"
       >
-        Apply for the CNRS pilot
+        Candidater au pilote CNRS
       </a>
     </section>
   </main>
@@ -993,22 +1106,32 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
-        <div class="footer-title">OpenProof — RPO Specification v0.1</div>
+        <div class="footer-title">OpenProof – RPO Spécification v0.1</div>
         <div class="footer-text">
-          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie.
+          © 2026 OpenProof Consortium. Collaboration de recherche : CNRS – GREYC – Université de Caen Normandie.
         </div>
       </div>
       <div class="footer-right footer-links">
-        <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">Technical site</a>
+        <a
+          href="https://www.openproof.net"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Site technique</a
+        >
         <span>•</span>
-        <a href="https://www.truthx-openproof.org" target="_blank" rel="noopener noreferrer">Governance</a>
+        <a
+          href="https://www.truthx-openproof.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Gouvernance</a
+        >
         <span>•</span>
         <a href="mailto:openproof@truthx.co">Contact</a>
       </div>
     </div>
   </footer>
 
-  <!-- SIMPLE JS ENGINE -->
+  <!-- SIMPLE JS ENGINE – heuristics + anchors -->
   <script>
     const generateBtn = document.getElementById("generate-btn");
     const resetBtn = document.getElementById("reset-btn");
@@ -1018,8 +1141,8 @@
     const subjectInput = document.getElementById("subject");
     const narrativeInput = document.getElementById("narrative");
 
-    const exampleWorkplaceBtn = document.getElementById("example-workplace");
-    const exampleContractBtn = document.getElementById("example-contract");
+    const exampleIncidentBtn = document.getElementById("example-incident");
+    const exampleContratBtn = document.getElementById("example-contrat");
 
     const taglineEl = document.getElementById("result-tagline");
     const metricsEl = document.getElementById("metrics");
@@ -1033,46 +1156,51 @@
     const hashValueEl = document.getElementById("hash-value");
     const jsonEl = document.getElementById("rpo-json");
 
+    const anchorsBlockEl = document.getElementById("anchors-block");
+    const anchorsDatesEl = document.getElementById("anchors-dates");
+    const anchorsPlacesEl = document.getElementById("anchors-places");
+
     const jsonActionsEl = document.getElementById("json-actions");
     const copyJsonBtn = document.getElementById("copy-json-btn");
     const downloadJsonBtn = document.getElementById("download-json-btn");
 
     const examples = {
-      workplace: {
-        title: "Incident in Paris office – March 2024",
-        issuer: "Internal audit team, Company X",
-        subject: "Employee – Sales department",
-        narrative:
-`On 12 March 2024, during the afternoon shift in the Paris head office, several colleagues reported unusual behaviour from a sales employee assigned to the North region.
+      incident: {
+        title: "Incident dans les bureaux de Paris – mars 2024",
+        issuer: "Équipe d’audit interne, Société X",
+        subject: "Salarié – Département commercial",
+        narrative: `Le 12 mars 2024, dans l’après-midi, plusieurs collègues ont signalé un comportement inhabituel d’un salarié du service commercial au siège de Paris.
 
-According to three witnesses, the employee raised his voice at a junior colleague in the open space, after a disagreement about the allocation of a key client account. The exchange was audible across the floor and lasted approximately five minutes.
+Selon trois témoins, le salarié a élevé la voix sur un collègue junior dans l’open space, à propos de l’attribution d’un compte client stratégique. L’échange, d’une durée d’environ cinq minutes, était audible sur une grande partie du plateau.
 
-Later the same day, the same employee allegedly accessed a restricted CRM folder outside of his usual perimeter. The access occurred at 19:42, after normal working hours. The IT logs confirmed a login from his corporate laptop, using his personal credentials.`
+Le même jour, ce salarié aurait accédé à un dossier CRM restreint, en dehors de son périmètre habituel. L’accès a eu lieu à 19h42, après les horaires normaux de travail. Les journaux informatiques confirment une connexion depuis son ordinateur professionnel, avec ses identifiants personnels.`
       },
-      contract: {
-        title: "Dispute on service contract renewal – Client Z",
-        issuer: "Legal department, Company Y",
-        subject: "Framework service agreement – Client Z (France)",
-        narrative:
-`Since September 2023, Company Y has been providing IT maintenance services to Client Z under a one-year framework agreement signed on 15 September 2023 in Lyon.
+      contrat: {
+        title: "Litige sur le renouvellement d’un contrat de services – Client Z",
+        issuer: "Direction juridique, Société Y",
+        subject: "Contrat-cadre de maintenance IT – Client Z (France)",
+        narrative: `Depuis septembre 2023, la Société Y fournit des services de maintenance informatique au Client Z, dans le cadre d’un contrat-cadre d’un an signé le 15 septembre 2023 à Lyon.
 
-On 20 August 2024, Client Z informed our account manager by email that they considered the contract automatically renewed for another year, at the same price conditions, based on a clause they interpret as tacit renewal. Our legal team does not share this interpretation.
+Le 20 août 2024, le Client Z a informé notre chargé de compte, par courriel, qu’il considérait le contrat comme renouvelé automatiquement pour une année supplémentaire, aux mêmes conditions tarifaires, en se fondant sur une clause de reconduction tacite. Notre équipe juridique ne partage pas cette interprétation.
 
-Between 25 August and 5 September 2024, several calls and written exchanges took place between both parties. Client Z continued to request interventions on their infrastructure, while refusing any price update. Our teams consider that, without a signed addendum, interventions performed after 15 September 2024 may be disputed or unpaid.`
+Entre le 25 août et le 5 septembre 2024, plusieurs échanges téléphoniques et écrits ont eu lieu entre les parties. Le Client Z a continué à demander des interventions sur son infrastructure, tout en refusant toute mise à jour de prix. Nos équipes considèrent que, sans avenant signé, les interventions réalisées après le 15 septembre 2024 pourraient être contestées ou impayées.`
       }
     };
 
     function countSentences(text) {
       const cleaned = text.replace(/\s+/g, " ").trim();
       if (!cleaned) return 0;
-      const parts = cleaned.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
+      const parts = cleaned.split(/[.!?]+/).map((s) => s.trim()).filter(Boolean);
       return parts.length;
     }
 
     function countEvidenceMarkers(text) {
-      let digits = (text.match(/\d{2,}/g) || []).length;
-      const markers = (text.match(/\b(on|at|since|because|when|where)\b/gi) || []).length;
-      return digits + markers;
+      const digits = (text.match(/\d{2,}/g) || []).length;
+      const markers =
+        text.match(
+          /\b(on|at|since|because|when|where|le|en|depuis|lorsque|où|au|aux|vers)\b/gi
+        ) || [];
+      return digits + markers.length;
     }
 
     function computeCoherenceScore(sentences, markers) {
@@ -1086,12 +1214,80 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
       if (score <= 0) {
         return "";
       } else if (score < 40) {
-        return "Low structural coherence: short or weakly structured narrative, with few explicit markers. As a probatory bundle, this would remain fragile.";
+        return "Cohérence structurelle faible : récit court ou peu structuré, avec peu d’ancres explicites. Comme lot probatoire, cela resterait fragile.";
       } else if (score < 70) {
-        return "Intermediate coherence: the narrative contains some structure and markers, but key anchors (dates, places, actors) may still be missing or thin.";
+        return "Cohérence intermédiaire : le récit contient une structure et quelques marqueurs, mais des ancres clés (dates, lieux, acteurs) peuvent encore manquer ou rester floues.";
       } else {
-        return "High narrative structure: multiple sentences and markers help organise the story into a potentially probatory skeleton. It still needs legal and factual review.";
+        return "Structure narrative forte : plusieurs phrases et ancres permettent d’organiser le récit en squelette potentiellement probatoire. Il doit néanmoins être relu sur le plan factuel et juridique.";
       }
+    }
+
+    function extractAnchors(text) {
+      const datesSet = new Set();
+      const yearsSet = new Set();
+      const placesSet = new Set();
+
+      // années 19xx / 20xx
+      const yearMatches = text.match(/\b(19|20)\d{2}\b/g) || [];
+      yearMatches.forEach((y) => yearsSet.add(y));
+
+      // dates 12/03/2024 ou 12-03-2024
+      const datePattern = /\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/g;
+      let m;
+      while ((m = datePattern.exec(text)) !== null) {
+        datesSet.add(m[1]);
+      }
+
+      // dates avec mois (FR + EN)
+      const monthNames = [
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december",
+        "janvier",
+        "février",
+        "fevrier",
+        "mars",
+        "avril",
+        "mai",
+        "juin",
+        "juillet",
+        "août",
+        "aout",
+        "septembre",
+        "octobre",
+        "novembre",
+        "décembre",
+        "decembre"
+      ];
+      const monthRegex = new RegExp(
+        "\\b(\\d{1,2})\\s+(" + monthNames.join("|") + ")\\b",
+        "gi"
+      );
+      while ((m = monthRegex.exec(text)) !== null) {
+        datesSet.add(m[0]);
+      }
+
+      // lieux simples après in/at/en/à + Mot capitalisé
+      const placePattern =
+        /\b(?:in|at|en|à|au|aux)\s+([A-Z][A-Za-zÀ-ÖØ-öø-ÿ\-]*(?:\s+[A-Z][A-Za-zÀ-ÖØ-öø-ÿ\-]*)?)/g;
+      while ((m = placePattern.exec(text)) !== null) {
+        placesSet.add(m[1].trim());
+      }
+
+      return {
+        dates: Array.from(datesSet),
+        years: Array.from(yearsSet),
+        places: Array.from(placesSet)
+      };
     }
 
     async function sha256(text) {
@@ -1099,7 +1295,7 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
       const data = encoder.encode(text);
       const hashBuffer = await crypto.subtle.digest("SHA-256", data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+      return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
     }
 
     function randomBundleId() {
@@ -1119,19 +1315,71 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
       }
     }
 
+    function renderAnchors(anchors) {
+      anchorsDatesEl.innerHTML = "";
+      anchorsPlacesEl.innerHTML = "";
+
+      const combinedDates = [...anchors.dates, ...anchors.years];
+
+      if (!combinedDates.length && !anchors.places.length) {
+        anchorsBlockEl.style.display = "none";
+        return;
+      }
+
+      anchorsBlockEl.style.display = "block";
+
+      if (combinedDates.length) {
+        combinedDates.forEach((v) => {
+          const li = document.createElement("li");
+          li.textContent = v;
+          anchorsDatesEl.appendChild(li);
+        });
+      } else {
+        const li = document.createElement("li");
+        li.className = "anchors-empty";
+        li.textContent = "Aucune date ou année explicite détectée.";
+        anchorsDatesEl.appendChild(li);
+      }
+
+      if (anchors.places.length) {
+        anchors.places.forEach((v) => {
+          const li = document.createElement("li");
+          li.textContent = v;
+          anchorsPlacesEl.appendChild(li);
+        });
+      } else {
+        const li = document.createElement("li");
+        li.className = "anchors-empty";
+        li.textContent = "Aucun marqueur de lieu net détecté.";
+        anchorsPlacesEl.appendChild(li);
+      }
+    }
+
     function enableJsonActions(enable) {
       jsonActionsEl.style.display = enable ? "flex" : "none";
     }
 
     function resetOutputs() {
+      taglineEl.textContent =
+        "Remplissez le formulaire à gauche et cliquez sur « Générer » pour voir le lot.";
       metricsEl.style.display = "none";
+      sentencesEl.textContent = "0";
+      markersEl.textContent = "0";
+      scoreEl.textContent = "0%";
+
       hashBlockEl.style.display = "none";
       hashValueEl.textContent = "";
+
       jsonEl.textContent = "";
-      setScoreInterpretation(0);
+
+      scoreInterpretationEl.style.display = "none";
+      scoreInterpretationEl.textContent = "";
+
+      anchorsBlockEl.style.display = "none";
+      anchorsDatesEl.innerHTML = "";
+      anchorsPlacesEl.innerHTML = "";
+
       enableJsonActions(false);
-      taglineEl.textContent =
-        "Fill the form on the left and click “Generate” to see the bundle.";
     }
 
     function loadExample(example) {
@@ -1145,19 +1393,20 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
     generateBtn.addEventListener("click", async (event) => {
       event.preventDefault();
 
-      const title = titleInput.value.trim() || "Untitled case";
-      const issuer = issuerInput.value.trim() || "Unknown issuer";
-      const subject = subjectInput.value.trim() || "Unspecified subject";
+      const title = titleInput.value.trim() || "Affaire sans titre";
+      const issuer = issuerInput.value.trim() || "Émetteur non renseigné";
+      const subject = subjectInput.value.trim() || "Sujet non précisé";
       const narrative = narrativeInput.value.trim();
 
       if (!narrative) {
-        alert("Please paste a narrative before generating the bundle.");
+        alert("Veuillez saisir un récit avant de générer le lot RPO.");
         return;
       }
 
       const sentences = countSentences(narrative);
       const markers = countEvidenceMarkers(narrative);
       const score = computeCoherenceScore(sentences, markers);
+      const anchors = extractAnchors(narrative);
 
       const bundleId = randomBundleId();
       const createdAt = new Date().toISOString();
@@ -1199,13 +1448,15 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
             id: "E1",
             type: "narrative_block",
             source: "user_input",
-            description: "Raw narrative provided in the playground",
+            description:
+              "Récit brut saisi dans le playground RPO ouvert",
             text_ref: "narrative.text"
           }
         ],
         registry: {
           public_hash: publicHash,
-          registry_hint: "Open playground — no official registry anchor yet."
+          registry_hint:
+            "Aire de jeux ouverte — aucun ancrage officiel dans un registre."
         },
         meta: {
           playground: true,
@@ -1213,6 +1464,12 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
             coherence_score: score,
             evidence_markers: markers,
             sentence_count: sentences
+          },
+          heuristic_anchors: anchors,
+          psycho_forensic: {
+            available: false,
+            note:
+              "Dans le pilote CNRS × TruthX, ce bloc sera rempli par des modèles psycho-forensiques (cohérence interprétative, contrôle coercitif, récits inversés)."
           }
         }
       };
@@ -1223,6 +1480,7 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
       metricsEl.style.display = "grid";
 
       setScoreInterpretation(score);
+      renderAnchors(anchors);
 
       if (publicHash) {
         hashBlockEl.style.display = "block";
@@ -1233,7 +1491,7 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
       }
 
       taglineEl.textContent =
-        "This is a draft RPO bundle generated locally in your browser. It is deterministic, non-binding, and meant for experimentation only.";
+        "Ce lot RPO est généré localement dans votre navigateur. Il est déterministe, non opposable et destiné à l’expérimentation.";
       jsonEl.textContent = JSON.stringify(rpo, null, 2);
 
       enableJsonActions(true);
@@ -1247,17 +1505,27 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
       resetOutputs();
     });
 
+    exampleIncidentBtn.addEventListener("click", () => {
+      loadExample(examples.incident);
+    });
+
+    exampleContratBtn.addEventListener("click", () => {
+      loadExample(examples.contrat);
+    });
+
     copyJsonBtn.addEventListener("click", () => {
       const text = jsonEl.textContent.trim();
       if (!text) return;
       try {
         navigator.clipboard.writeText(text);
-        copyJsonBtn.textContent = "Copied";
+        copyJsonBtn.textContent = "Copié";
         setTimeout(() => {
-          copyJsonBtn.textContent = "Copy JSON";
+          copyJsonBtn.textContent = "Copier le JSON";
         }, 1500);
       } catch (e) {
-        alert("Unable to copy JSON automatically. You can still select and copy it manually.");
+        alert(
+          "Impossible de copier automatiquement. Vous pouvez toujours sélectionner le texte et le copier manuellement."
+        );
       }
     });
 
@@ -1275,17 +1543,10 @@ Between 25 August and 5 September 2024, several calls and written exchanges took
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
     });
-
-    exampleWorkplaceBtn.addEventListener("click", () => {
-      loadExample(examples.workplace);
-    });
-
-    exampleContractBtn.addEventListener("click", () => {
-      loadExample(examples.contract);
-    });
   </script>
 </body>
 </html>
+
 
 
 
