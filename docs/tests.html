@@ -1,1 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>OpenProof — RPO Test Suite</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Theme -->
+    <style>
+        :root {
+            --bg: #04040e;
+            --bg-elevated: #0b0f14;
+            --panel: #1a1e27;
+            --ivory: #f7f3e8;
+            --gold: #d4af37;
+            --gold-soft: #f1e6a3;
+            --border-soft: rgba(241,230,163,0.2);
+            --radius: 16px;
+            --text-main: #e7e7e7;
+            --text-muted: #8b92a1;
+        }
+        body {
+            margin: 0;
+            font-family: "Inter", sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+        }
+
+        /* NAV */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(11,15,20,0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-soft);
+            padding: 0.9rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 20;
+        }
+        .nav-title {
+            color: var(--gold);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 1.5rem;
+            font-size: 0.9rem;
+        }
+        nav a:hover {
+            color: var(--gold);
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1100px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-soft);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+        }
+        .card h2 {
+            margin-top: 0;
+            color: var(--gold-soft);
+            font-size: 1.2rem;
+        }
+        .card p, .card ul {
+            color: var(--ivory);
+            font-size: 0.95rem;
+        }
+        ul {
+            padding-left: 1.2rem;
+        }
+        a.link {
+            color: var(--gold);
+            text-decoration: none;
+        }
+        a.link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            text-align: center;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-soft);
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="nav-title">OPENPROOF — RPO V0.1</div>
+    <div>
+        <a href="/docs/index.html">Overview</a>
+        <a href="/docs/overview.md">Specification</a>
+        <a href="/docs/tests.html" style="color: var(--gold);">Tests</a>
+        <a href="https://github.com/openproof-net/rpo-spec-v0.1" target="_blank">GitHub</a>
+    </div>
+</nav>
+
+<!-- CONTENT -->
+<div class="container">
+    <h1>RPO Test Suite</h1>
+    <p class="subtitle">
+        Minimal validation suite for RPO implementers: JSON schema validation, hashing integrity, and PDF narrative linkage.
+    </p>
+
+    <!-- Schema Test -->
+    <div class="card">
+        <h2>1. Schema Validation Test</h2>
+        <p>Validates candidate bundles against <code>rpo-schema.json</code>.</p>
+        <ul>
+            <li>Ensures required fields exist</li>
+            <li>Checks types & constraints</li>
+            <li>Verifies structural coherence of the JSON bundle</li>
+        </ul>
+        <p><a class="link" href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/tests/schema-validation.test.js" target="_blank">View schema-validation.test.js →</a></p>
+    </div>
+
+    <!-- Hash Integrity -->
+    <div class="card">
+        <h2>2. Hash Integrity Test</h2>
+        <p>Ensures that the canonical JSON produces a stable, verifiable hash.</p>
+        <ul>
+            <li>Canonicalization process</li>
+            <li>SHA3-512 digest generation</li>
+            <li>Comparison with expected hash anchor</li>
+        </ul>
+        <p><a class="link" href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/tests/hash-integrity.test.js" target="_blank">View hash-integrity.test.js →</a></p>
+    </div>
+
+    <!-- PDF Output -->
+    <div class="card">
+        <h2>3. PDF Output Test</h2>
+        <p>Ensures that narrative PDF content corresponds to <code>narrative_pdf_hash</code> in the bundle.</p>
+        <ul>
+            <li>PDF → text extraction</li>
+            <li>Canonical hashing</li>
+            <li>Matching with JSON field</li>
+        </ul>
+        <p><a class="link" href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/tests/pdf-output.test.js" target="_blank">View pdf-output.test.js →</a></p>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+    OpenProof — RPO Specification v0.1  
+    <br>© 2025 OpenProof Consortium — CNRS × GREYC × Université de Caen Normandie.
+</footer>
+
+</body>
+</html>
 
