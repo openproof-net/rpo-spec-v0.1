@@ -1,98 +1,80 @@
-# OpenProof — RPO v0.1  
-**Rapport Probatoire Ouvert (Open Proof Report)**  
-A minimal, open, verifiable evidence standard.
+📘 OpenProof — RPO Specification v0.1
 
-The RPO (Rapport Probatoire Ouvert) defines a structured, machine-readable and
-human-readable format for representing narrative-based evidence in a verifiable,
-auditable, and tamper-evident way.
+Integrity • Readability • Verifiability
 
-It addresses a gap in existing probatory standards:  
-traditional norms (DNA, metadata chains, ISO information integrity) do not
-handle **narratives**, **coercive dynamics**, **manipulation**, or **interpretive coherence**.
-RPO provides a minimal foundation for making narrative evidence measurable,
-traceable, and independently verifiable.
+Overview
 
----
+OpenProof defines an open, verifiable standard for digital evidence.
+The RPO (Rapport Probatoire Ouvert) is a dual-format bundle combining:
 
-## What this repository contains
+Signed JSON — structured, machine-readable data
 
-### **1. Specification (`/spec`)**
-- `rpo-format.md` — the human-readable definition of the RPO bundle  
-- `rpo-schema.json` — machine validation schema (JSON Schema 2020-12)  
-- `rpo-architecture.md` — architectural and verification model
+Human-readable PDF — coherent narrative output
 
-These files define the core of **RPO v0.1**.
+Public hash — anchor for audit, integrity, and long-term verification
 
-### **2. Documentation (`/docs`)**
-- `overview.md` — simple introduction for readers and implementers
+The goal: make truth measurable, power traceable, and coherence verifiable across legal, institutional, and research systems.
 
-### **3. Examples (`/examples`)**
-- `example-minimal/` — a minimal, valid RPO bundle:
-  - `rpo.json` — structured evidence bundle  
-  - `rpo.pdf.txt` — human-readable narrative placeholder  
-  - `README.md` — explanation of the example
+Core Principles
 
-### **4. Tests (`/tests`)**
-Illustrative tests for:
-- schema validation  
-- hash integrity  
-- PDF output structure  
-These prepare the ground for full automated verification in future versions.
+Integrity — any modification becomes detectable
 
----
+Readability — humans and institutions interpret the same narrative
 
-## Core Principles
+Verifiability — a public, testable JSON structure enforces accountability
 
-RPO is built on three principles:
+Technical Schema (RPO Object)
+{
+  "version": "0.1",
+  "issuer": "OpenProof Consortium",
+  "timestamp": "2025-11-11T00:00:00Z",
+  "format": {
+    "json": "signed-object.json",
+    "pdf": "human-readable-report.pdf"
+  },
+  "hash": {
+    "algorithm": "SHA3-512",
+    "value": "bf73a4c8e9f2...e73d1c2"
+  },
+  "signatures": [
+    {
+      "type": "ed25519",
+      "issuer": "OpenProof Authority",
+      "signature": "Zs0k20D...9fae"
+    }
+  ]
+}
+Contributing
 
-1. **Integrity**  
-   Every RPO bundle includes stable hashing and signature fields.
+OpenProof welcomes scientific, legal, and institutional contributors interested in strengthening the RPO standard.
 
-2. **Readability**  
-   Every JSON bundle must have a linked human-readable narrative (PDF).
+Participants may:
 
-3. **Verifiability**  
-   Any third party must be able to validate the RPO without trusting the issuer:
-   schema → hash → PDF → registry entry.
+Review or comment on specification files
 
-These principles guide all future versions of the standard.
+Submit anonymized case schemas or validation tests
 
----
+Engage in discussions via the OpenProof Governance repository
 
-## Roadmap
+📩 To request participation: https://www.openproof.net/join
 
-### **v0.1 (this version) — Minimal Standard**  
-- Core JSON bundle format  
-- Minimal schema  
-- Architecture overview  
-- Example bundle  
-- Baseline tests (non-strict)  
+Licenses
 
-### **v0.2 — Canonicalisation & Strict Validation**  
-- Canonical JSON  
-- Strict hash matching  
-- Full PDF generation tests  
-- Registry API draft  
-- `example-full/` with multi-evidence timelines
+This repository is released under a dual-license model:
 
-### **v1.0 — Production Standard**  
-- Multi-algorithm hashing  
-- Multi-signer format  
-- Full registry protocol  
-- Deployment guidance for institutions
+CC BY-NC 4.0 — documentation, content, schema descriptions
 
----
+Apache-2.0 — code, JSON schemas, software components
 
-## License
+© 2025 OpenProof Consortium
+Technical site: https://www.openproof.net
 
-Open standard, free to implement and extend.  
-License will be finalised before v1.0.
+Governance: https://truthx-openproof.org
 
----
+Roadmap — RPO Specification
+Phase	Description	Status
+v0.1 — Draft	Initial specification (JSON + PDF bundle).	✔️ Published
+v0.5 — Public Comment	Integration of feedback from CNRS / GREYC / legal experts.	⏳ In progress
+v1.0 — Stable Release	Finalized RPO + registry integration + governance signatures.	🔒 Planned Q2 2026
 
-## Contact & Governance
-
-The RPO standard is developed within the **OpenProof** initiative, in
-collaboration with research partners.
-
-Contributions, comments, and reviews are welcome.
+🧭 Next milestone: Integration of the OpenProof Registry & RPO signature verification module.
