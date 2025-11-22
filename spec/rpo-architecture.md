@@ -198,3 +198,76 @@ Registry → long-term integrity
 Signatures → authenticity of creation
 
 No single component is sufficient on its own; security emerges from the combination.
+
+4. Relation to OpenProof & TruthX
+
+The RPO (Rapport Probatoire Ouvert) is the open standard.
+It is intentionally dissociated from implementation choices, tools, or platforms.
+
+Two components interact with the RPO:
+
+4.1 OpenProof — Public Registry & Governance Layer
+
+OpenProof provides the neutral, verifiable, long-term anchor for RPO bundles.
+
+Its responsibilities include:
+
+storing the public hash of each RPO bundle
+
+issuing a registry_id and entry_id
+
+exposing a public verification API
+
+ensuring long-term availability of integrity proofs
+
+offering a governance and versioning model for RPO evolution
+
+The registry never stores the full evidence.
+It only stores the integrity anchor required for independent verification.
+
+OpenProof =
+Integrity • Retention • Trust-minimized verification
+
+4.2 TruthX — Evidence Engine & Narrative Generator
+
+TruthX (or any other compliant engine) is an implementation, not the standard.
+
+Its responsibilities include:
+
+collecting and structuring evidence
+
+detecting patterns (coherence, dynamics, narrative structures)
+
+generating the RPO JSON bundle
+
+producing the human-readable PDF narrative
+
+applying signatures
+
+anchoring the public hash to an RPO-compliant registry
+
+TruthX outputs RPO.
+OpenProof verifies RPO.
+The RPO Specification defines how the two must interoperate.
+
+4.3 Interoperability Guarantee
+
+Any evidence engine — institutional, academic, or private — is considered RPO-compatible if it meets the following requirements:
+
+produces a JSON bundle compliant with rpo-format.md
+
+validates against rpo-schema.json
+
+anchors its hash in a registry supporting the RPO standard
+
+binds its PDF narrative to the JSON structure through narrative.pdf_hash
+
+produces at least one cryptographic signature
+
+This separation ensures:
+
+neutrality (the format does not depend on TruthX)
+
+auditability (anyone can re-hash and verify)
+
+longevity (registries outlive tools)
