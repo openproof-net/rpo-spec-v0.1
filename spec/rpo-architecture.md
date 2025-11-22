@@ -121,3 +121,8 @@ Example:
   "pdf_uri": "openproof://case-001/report.pdf",
   "timeline_ref": "ev-001"
 }
+"registry": {
+  "registry_id": "openproof-registry",
+  "entry_id": "rpo-2025-0001",
+  "public_hash": "sha256:placeholder"
+}
