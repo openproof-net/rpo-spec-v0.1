@@ -1,50 +1,736 @@
-OpenProof — RPO Specification v0.1
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenProof — RPO Specification v0.1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-Integrity • Readability • Verifiability
+  <!-- Favicon OpenProof -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png"
+  />
 
-Overview
+  <!-- Minimal dark/ivory/gold theme -->
+  <style>
+    :root {
+      --bg: #04040e;
+      --bg-elevated: #0b0f14;
+      --panel: #f7f3e8;
+      --panel-soft: #fbf8f1;
+      --text-main: #f5f5f7;
+      --text-muted: #b2b7c5;
+      --ink: #7a6432;
+      --gold: #d4af37;
+      --gold-soft: #f1e6a3;
+      --border-soft: rgba(241, 230, 163, 0.2);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 18px;
+    }
 
-The RPO (Rapport Probatoire Ouvert) is an open, verifiable standard for digital evidence.
-It defines a dual-format probatory bundle:
+    * {
+      box-sizing: border-box;
+    }
 
-Signed JSON — structured, machine-readable evidence
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111625 0, var(--bg) 45%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
 
-Human-readable PDF — coherent narrative mirror
+    a {
+      color: var(--gold-soft);
+      text-decoration: none;
+    }
 
-Public hash — immutable audit anchor
+    a:hover {
+      text-decoration: underline;
+    }
 
-The standard aims to make truth measurable, power traceable, and coherence verifiable across legal, institutional and research contexts.
+    /* Nav */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(
+        90deg,
+        rgba(4, 4, 14, 0.96),
+        rgba(4, 4, 14, 0.92)
+      );
+      border-bottom: 1px solid var(--border-soft);
+    }
 
-Specification
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
 
-RPO Format (JSON + PDF):
-/spec/rpo-format.md
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
 
-RPO Architecture:
-/spec/rpo-architecture.md
+    .nav-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f3e8b2, #b88c2a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4),
+        0 10px 25px rgba(0, 0, 0, 0.6);
+    }
 
-RPO JSON Schema:
-/spec/rpo-schema.json
+    .nav-logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: block;
+    }
 
-Examples
+    .nav-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+    }
 
-Minimal RPO example:
-/examples/example-minimal/
+    .nav-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
 
-Roadmap
-Phase	Description	Status
-v0.1	Initial JSON + PDF specification	✅ Published
-v0.5	Public Comment (CNRS / GREYC / Legal)	⏳ In progress
-v1.0	Stable RPO + Registry Integration	🔒 Q2 2026
-Consortium & Governance
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      font-size: 0.9rem;
+    }
 
-OpenProof Consortium
-Research Collaboration: CNRS — GREYC — Université de Caen Normandie
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
 
-Technical site: https://www.openproof.net
+    .nav-link:hover {
+      color: var(--gold-soft);
+    }
 
-Governance: https://truthx-openproof.org
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--border-soft);
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      color: var(--gold-soft);
+      background: rgba(10, 14, 24, 0.9);
+    }
 
-📩 Contact
+    .btn-ghost span {
+      font-size: 0.9rem;
+    }
 
-openproof@truthx.co
+    .btn-ghost:hover {
+      border-color: var(--gold-soft);
+      text-decoration: none;
+      background: rgba(13, 18, 30, 0.95);
+    }
+
+    @media (max-width: 780px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    /* Hero */
+    .hero {
+      padding: 3.2rem 1.5rem 2.4rem;
+    }
+
+    .hero-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.6fr);
+      gap: 2.4rem;
+      align-items: center;
+    }
+
+    .hero-kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      line-height: 1.2;
+      margin: 0 0 0.75rem;
+    }
+
+    .hero-title span {
+      color: var(--gold-soft);
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 32rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(241, 230, 163, 0.3);
+      color: var(--gold-soft);
+      background: rgba(11, 15, 20, 0.9);
+    }
+
+    .hero-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .hero-card {
+      background: radial-gradient(circle at top left, #1a1f32, #070913);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-logo-frame {
+      width: 70px;
+      height: 70px;
+      border-radius: 18px;
+      background: radial-gradient(circle at 25% 15%, #f3e8b2, #b88c2a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.7);
+    }
+
+    .hero-logo-frame img {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: #f7f3e8;
+      object-fit: contain;
+    }
+
+    .hero-card-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .hero-card-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .hero-list li {
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-list strong {
+      color: var(--gold-soft);
+      font-weight: 500;
+    }
+
+    /* Layout panels */
+    .main {
+      padding: 0 1.5rem 3.5rem;
+    }
+
+    .grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 2rem;
+    }
+
+    .panel {
+      background: linear-gradient(145deg, var(--panel), var(--panel-soft));
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.7rem 1.7rem;
+      box-shadow: var(--shadow-soft);
+      color: var(--ink);
+      border-top: 3px solid var(--gold);
+    }
+
+    .panel h2 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #5c4721;
+    }
+
+    .panel p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .panel ul {
+      margin: 0.4rem 0 0;
+      padding-left: 1.1rem;
+      font-size: 0.9rem;
+    }
+
+    .panel li + li {
+      margin-top: 0.25rem;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+    }
+
+    .chip {
+      font-size: 0.78rem;
+      padding: 0.16rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.12);
+      color: #5c4721;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+    }
+
+    .links-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.3rem 0 0;
+      font-size: 0.9rem;
+    }
+
+    .links-list li + li {
+      margin-top: 0.3rem;
+    }
+
+    .links-list a {
+      color: #654b1e;
+      font-weight: 500;
+    }
+
+    .links-list a:hover {
+      color: #3e2e12;
+      text-decoration: underline;
+    }
+
+    .section-title {
+      max-width: 1120px;
+      margin: 2.4rem auto 0.9rem;
+      padding: 0 0.1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-card {
+        order: -1;
+      }
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top, #101525, #020308);
+      padding: 1.6rem 1.5rem 2.1rem;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .footer-left strong {
+      color: var(--gold-soft);
+      font-weight: 500;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold-soft);
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <div class="nav-logo">
+          <img
+            src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png"
+            alt="OpenProof emblem"
+          />
+        </div>
+        <div>
+          <div class="nav-title">OpenProof — RPO v0.1</div>
+          <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a class="nav-link" href="#overview">Overview</a>
+        <a class="nav-link" href="#spec">Specification</a>
+        <a class="nav-link" href="#examples">Examples</a>
+        <a class="nav-link" href="#tests">Tests</a>
+        <a
+          class="btn-ghost"
+          href="https://github.com/openproof-net/rpo-spec-v0.1"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>View on GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="overview">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-kicker">RPO Standard • v0.1 Draft</div>
+        <h1 class="hero-title">
+          OpenProof <span>RPO Specification</span> — JSON + PDF proof bundle
+        </h1>
+        <p class="hero-subtitle">
+          The RPO (Rapport Probatoire Ouvert) defines a dual-format standard for digital
+          evidence: a signed JSON bundle for machines, and a coherent narrative PDF for
+          humans, both anchored by a public hash.
+        </p>
+        <div class="hero-badges">
+          <div class="badge">Integrity</div>
+          <div class="badge">Readability</div>
+          <div class="badge">Verifiability</div>
+        </div>
+        <div class="hero-meta">
+          Draft maintained by the <strong>OpenProof Consortium</strong> in collaboration
+          with <strong>CNRS – GREYC – Université de Caen Normandie</strong>.
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="hero-card-header">
+          <div class="hero-logo-frame">
+            <img
+              src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png"
+              alt="OpenProof logo"
+            />
+          </div>
+          <div>
+            <div class="hero-card-title">RPO v0.1 — Minimal Guarantee</div>
+            <div class="hero-card-subtitle">
+              Any bundle claiming RPO compliance must implement these three pillars.
+            </div>
+          </div>
+        </div>
+        <ul class="hero-list">
+          <li>
+            <strong>Signed JSON</strong> — complete, structured evidence bundle with
+            canonical hashing and signatures.
+          </li>
+          <li>
+            <strong>Human-readable PDF</strong> — narrative report linked via
+            <code>narrative.pdf_hash</code>.
+          </li>
+          <li>
+            <strong>Public hash</strong> — registry anchor enabling independent
+            verification of integrity over time.
+          </li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <main class="main">
+    <!-- CORE PANELS -->
+    <div class="section-title">Core components</div>
+    <div class="grid" id="spec">
+      <section class="panel">
+        <h2>RPO Object — JSON Schema</h2>
+        <p>
+          The <strong>RPO JSON object</strong> is the canonical representation of the
+          proof bundle. It defines the fields that every implementation must expose and
+          validate.
+        </p>
+        <ul>
+          <li>
+            Top-level fields such as <code>rpo_version</code>,
+            <code>bundle_id</code>, <code>created_at</code>, <code>issuer</code>,
+            <code>subject</code>, <code>evidence[]</code>, <code>narrative</code>,
+            <code>registry</code>, and <code>signatures[]</code>.
+          </li>
+          <li>
+            Types and constraints for each field, including required vs optional
+            sections.
+          </li>
+          <li>
+            Validation rules that allow third parties to check structural coherence of a
+            given RPO bundle.
+          </li>
+        </ul>
+        <div class="chips">
+          <span class="chip">Machine-readable</span>
+          <span class="chip">Schema validation</span>
+          <span class="chip">Interoperability</span>
+        </div>
+        <ul class="links-list">
+          <li>
+            📄 JSON schema:
+            <a href="/spec/rpo-schema.json">/spec/rpo-schema.json</a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>RPO JSON + PDF Format</h2>
+        <p>
+          The <strong>format specification</strong> describes how JSON and PDF work
+          together as a dual-format bundle, and how they relate to hashing and registry
+          anchoring.
+        </p>
+        <ul>
+          <li>Field-by-field description of the JSON structure.</li>
+          <li>
+            Relationship between narrative sections and the underlying evidence entries.
+          </li>
+          <li>
+            Minimal rules for registry anchoring using <code>public_hash</code> and
+            <code>bundle_id</code>.
+          </li>
+        </ul>
+        <div class="chips">
+          <span class="chip">JSON ↔ PDF mapping</span>
+          <span class="chip">Hash anchoring</span>
+          <span class="chip">Verification flow</span>
+        </div>
+        <ul class="links-list">
+          <li>
+            📘 Format spec:
+            <a href="/spec/rpo-format.md">/spec/rpo-format.md</a>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- ARCHITECTURE & FLOW -->
+    <div class="section-title">Architecture & flow</div>
+    <div class="grid">
+      <section class="panel">
+        <h2>RPO Architecture Overview</h2>
+        <p>
+          The architecture document explains how <strong>evidence producers</strong>,
+          <strong>registries</strong>, and <strong>verifiers</strong> interact around the
+          RPO standard.
+        </p>
+        <ul>
+          <li>Roles and responsibilities of each actor.</li>
+          <li>
+            High-level data flow from evidence collection to registry anchoring and
+            verification.
+          </li>
+          <li>
+            How the RPO standard can be adopted by different engines, including
+            TruthX-based systems.
+          </li>
+        </ul>
+        <ul class="links-list">
+          <li>
+            🧩 Architecture:
+            <a href="/spec/rpo-architecture.md">/spec/rpo-architecture.md</a>
+          </li>
+        </ul>
+      </section>
+
+      <section class="panel" id="examples">
+        <h2>Minimal RPO Example</h2>
+        <p>
+          A <strong>minimal working example</strong> is provided to help implementers and
+          reviewers understand the expected structure.
+        </p>
+        <ul>
+          <li><code>rpo.json</code> — minimal RPO bundle (JSON only).</li>
+          <li><code>rpo.pdf.txt</code> — placeholder for the human-readable PDF.</li>
+          <li>
+            <code>README.md</code> — explanation of the example and its intended use.
+          </li>
+        </ul>
+        <ul class="links-list">
+          <li>
+            📂 Minimal example:
+            <a href="/examples/example-minimal/">/examples/example-minimal/</a>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <!-- TESTS -->
+    <div class="section-title" id="tests">Validation & tests</div>
+    <div class="grid">
+      <section class="panel">
+        <h2>Schema & Hash Tests</h2>
+        <p>
+          A small test suite is shipped with the spec to illustrate how validation and
+          integrity checks can be implemented.
+        </p>
+        <ul>
+          <li>
+            Schema validation against <code>rpo-schema.json</code> for any candidate
+            bundle.
+          </li>
+          <li>
+            Hash integrity tests to ensure that the canonical JSON representation is
+            stable.
+          </li>
+          <li>
+            PDF output tests to verify that narrative reports are consistently linked to
+            the JSON bundle.
+          </li>
+        </ul>
+        <ul class="links-list">
+          <li>
+            🧪 Tests:
+            <a href="/spec/tests/">/spec/tests/</a> (JavaScript test files)
+          </li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Participate in OpenProof</h2>
+        <p>
+          OpenProof is designed as an <strong>open evidence infrastructure</strong>. The
+          RPO specification is meant to evolve with contributions from researchers,
+          institutions, and practitioners.
+        </p>
+        <ul>
+          <li>Review or comment on the specification files.</li>
+          <li>Submit anonymized validation tests or case schemas.</li>
+          <li>
+            Engage in discussions via the OpenProof Governance and
+            <code>truthx-openproof.org</code>.
+          </li>
+        </ul>
+        <ul class="links-list">
+          <li>
+            ✉️ Join the consortium:
+            <a
+              href="https://www.openproof.net/join"
+              target="_blank"
+              rel="noopener noreferrer"
+              >https://www.openproof.net/join</a
+            >
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <div>
+          <strong>OpenProof — RPO Specification v0.1</strong>
+        </div>
+        <div>
+          © 2025 OpenProof Consortium. Research collaboration:
+          CNRS – GREYC – Université de Caen Normandie.
+        </div>
+      </div>
+      <div class="footer-links">
+        <a
+          href="https://www.openproof.net"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Technical site</a
+        >
+        <a
+          href="https://truthx-openproof.org"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Governance</a
+        >
+        <a href="mailto:openproof@truthx.co">Contact: openproof@truthx.co</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
+
