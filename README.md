@@ -150,3 +150,13 @@ OSINT & forensic analysts (field use cases)
 📬 Contact
 Technical questions, implementations, or interoperability:
 openproof@truthx.co
+
+
+---
+
+### Maintainer
+
+This specification is maintained by **Gersende Ryard de Parcey**.
+
+- Email: openproof@truthx.co  
+- LinkedIn: https://www.linkedin.com/in/gryard/
