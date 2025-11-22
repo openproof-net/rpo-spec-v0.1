@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>OpenProof — RPO Overview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Favicon OpenProof -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://custom-images.strikinglycdn.com/res/hrscyvw4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/uploads/985447/451167_485103.png"
+  />
+
+  <!-- Minimal dark/ivory/gold theme (same as index.html) -->
+  <style>
+    :root {
+      --bg: #04040e;
+      --bg-elevated: #0b0f14;
+      --panel: #f7f3e8;
+      --panel-soft: #fbf8f1;
+      --text-main: #f5f5f7;
+      --text-muted: #b2b7c5;
+      --ink: #7a6432;
+      --gold: #d4af37;
+      --gold-soft: #f1e6a3;
+      --border-soft: rgba(241, 230, 163, 0.2);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111625 0, #04040e 55%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--gold-soft);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* NAVBAR (same style as index) */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        90deg,
+        rgba(4, 4, 14, 0.96),
+        rgba(4, 4, 14, 0.92)
+      );
+      border-bottom: 1px solid rgba(241, 230, 163, 0.12);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.65rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .nav-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f3e8b2, #b88a32);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 10px 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .nav-logo img {
+      width: 26px;
+      height: 26px;
+      display: block;
+    }
+
+    .nav-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.085em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+    }
+
+    .nav-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      color: var(--gold-soft);
+      border-color: rgba(250, 224, 150, 0.4);
+      background: rgba(250, 224, 150, 0.03);
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      color: #04040e;
+      background: linear-gradient(135deg, #f1e6a3, #d4af37);
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    .nav-link-cta {
+      border-color: rgba(241, 230, 163, 0.55);
+    }
+
+    /* LAYOUT */
+    .page {
+      max-width: 1120px;
+      margin: 2.3rem auto 3.25rem;
+      padding: 0 1.25rem 3rem;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    h1 {
+      font-size: 2.1rem;
+      letter-spacing: 0.03em;
+      margin: 0 0 0.6rem;
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 600px;
+    }
+
+    .chip-row {
+      margin-top: 0.9rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .chip {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      padding: 0.25rem 0.8rem;
+      border: 1px solid rgba(241, 230, 163, 0.32);
+      color: var(--gold-soft);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    /* PANELS GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.6fr);
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.3rem;
+      margin-top: 1.6rem;
+    }
+
+    @media (max-width: 880px) {
+      .grid,
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .page {
+        margin-top: 1.6rem;
+      }
+    }
+
+    .panel {
+      background: linear-gradient(145deg, #111623, #090b12);
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(241, 230, 163, 0.18);
+      box-shadow: var(--shadow-soft);
+      padding: 1.4rem 1.35rem 1.35rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        circle at top left,
+        rgba(255, 248, 189, 0.12),
+        transparent 60%
+      );
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .panel-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 0.35rem;
+    }
+
+    .panel-heading {
+      font-size: 1.1rem;
+      margin: 0.1rem 0 0.5rem;
+    }
+
+    .panel-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    ul {
+      margin: 0.4rem 0 0.1rem;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    li + li {
+      margin-top: 0.25rem;
+    }
+
+    .inline-code {
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
+      font-size: 0.8rem;
+      background: rgba(12, 16, 28, 0.9);
+      padding: 0.05rem 0.35rem;
+      border-radius: 5px;
+      border: 1px solid rgba(241, 230, 163, 0.12);
+    }
+
+    .link-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 0.45rem 0 0;
+      font-size: 0.88rem;
+    }
+
+    .link-list li + li {
+      margin-top: 0.25rem;
+    }
+
+    .link-label {
+      color: var(--text-muted);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.8rem;
+      padding: 0.18rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(241, 230, 163, 0.35);
+      background: rgba(8, 10, 18, 0.9);
+      color: var(--gold-soft);
+    }
+
+    .pill span {
+      color: var(--text-muted);
+    }
+
+    /* FOOTER */
+    .footer {
+      margin-top: 2.3rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(241, 230, 163, 0.18);
+      padding-top: 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.5rem;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <div class="nav-logo">
+          <img
+            src="https://custom-images.strikinglycdn.com/res/hrscyvw4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/uploads/985447/451167_485103.png"
+            alt="OpenProof emblem"
+          />
+        </div>
+        <div>
+          <div class="nav-title">OPENPROOF — RPO v0.1</div>
+          <div class="nav-subtitle">Overview • Integrity • Readability • Verifiability</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="overview.html" class="nav-link active">Overview</a>
+        <a href="index.html" class="nav-link">Specification</a>
+        <a href="examples.html" class="nav-link">Examples</a>
+        <a href="tests.html" class="nav-link">Tests</a>
+        <a
+          href="https://github.com/openproof-net/rpo-spec-v0.1"
+          class="nav-link nav-link-cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on GitHub
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- HEADER -->
+    <header class="page-header">
+      <div class="eyebrow">RPO — Rapport Probatoire Ouvert</div>
+      <h1>What the RPO Standard Does in Practice</h1>
+      <p class="subtitle">
+        This page gives a conceptual overview of the RPO (Rapport Probatoire Ouvert) standard:
+        what problem it solves, how it is structured, and how implementers and reviewers are meant
+        to use it.
+      </p>
+      <div class="chip-row">
+        <div class="chip">Signed JSON</div>
+        <div class="chip">Human-readable PDF</div>
+        <div class="chip">Public hash</div>
+      </div>
+    </header>
+
+    <!-- FIRST ROW: WHAT & WHO -->
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">1. What is the RPO?</div>
+          <h2 class="panel-heading">A dual-format standard for digital evidence</h2>
+          <p class="panel-text">
+            The RPO defines how a piece of digital evidence must be packaged so that:
+          </p>
+          <ul>
+            <li>machines can verify integrity and structure via a signed JSON bundle,</li>
+            <li>humans can read a coherent narrative via a PDF report,</li>
+            <li>both are anchored by a <strong>public hash</strong> that can be checked by any registry.</li>
+          </ul>
+          <p class="panel-text">
+            The goal is simple: make <strong>truth measurable</strong>, <strong>power traceable</strong>,
+            and <strong>coherence verifiable</strong> across institutions, courts, and research projects.
+          </p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">2. Who is it for?</div>
+          <h2 class="panel-heading">Intended audiences</h2>
+          <p class="panel-text">The RPO standard is designed for:</p>
+          <ul>
+            <li>Engineers building forensic or reporting engines,</li>
+            <li>Legal teams and auditors who must trust the narrative,</li>
+            <li>Registries and platforms providing long-term anchoring,</li>
+            <li>Researchers studying evidence structures or narrative bias.</li>
+          </ul>
+          <p class="panel-text">
+            Any system that wants to issue <em>verifiable, sealed reports</em> can implement RPO.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <!-- SECOND ROW: GUARANTEES & FLOW -->
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">3. Core guarantees</div>
+          <h2 class="panel-heading">Integrity • Readability • Verifiability</h2>
+          <p class="panel-text">Every RPO-compliant bundle must satisfy three conditions:</p>
+          <ul>
+            <li>
+              <strong>Integrity</strong> — any modification to the evidence bundle or the narrative
+              becomes detectable through hashing and signatures.
+            </li>
+            <li>
+              <strong>Readability</strong> — humans and institutions can interpret the same narrative,
+              with timestamps and context preserved in the PDF.
+            </li>
+            <li>
+              <strong>Verifiability</strong> — a public, testable JSON structure allows third parties
+              to check coherence and re-compute hashes.
+            </li>
+          </ul>
+          <p class="panel-text">
+            These guarantees are enforced by the RPO schema, the format spec, and recommended
+            signature practices.
+          </p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">4. High-level flow</div>
+          <h2 class="panel-heading">From raw data to sealed report</h2>
+          <p class="panel-text">At a high level, an RPO implementation follows four steps:</p>
+          <ol class="panel-text" style="padding-left: 1.2rem;">
+            <li><strong>Collect</strong> structured evidence and metadata.</li>
+            <li><strong>Build</strong> the RPO JSON object (<span class="inline-code">rpo.json</span>).</li>
+            <li>
+              <strong>Generate</strong> the narrative PDF and link it via
+              <span class="inline-code">narrative.pdf_hash</span>.
+            </li>
+            <li>
+              <strong>Anchor</strong> the bundle using a public hash
+              (<span class="inline-code">public_hash</span>) and optional signatures.
+            </li>
+          </ol>
+          <p class="panel-text">
+            The detailed flow and actor roles are described in
+            <a href="/spec/rpo-architecture.md">/spec/rpo-architecture.md</a>.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <!-- THIRD ROW: FILES & VERSIONS -->
+    <section class="grid">
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">5. Files in this specification</div>
+          <h2 class="panel-heading">How the spec is organised</h2>
+          <p class="panel-text">
+            The GitHub repository <span class="inline-code">openproof-net/rpo-spec-v0.1</span>
+            ships three main documents:
+          </p>
+          <ul class="link-list">
+            <li>
+              <span class="link-label">Architecture:</span>
+              <a href="/spec/rpo-architecture.md">/spec/rpo-architecture.md</a>
+              — actors (producer, registry, verifier) and data flow.
+            </li>
+            <li>
+              <span class="link-label">Format:</span>
+              <a href="/spec/rpo-format.md">/spec/rpo-format.md</a>
+              — field-by-field JSON and PDF mapping, including registry anchoring rules.
+            </li>
+            <li>
+              <span class="link-label">Schema:</span>
+              <a href="/spec/rpo-schema.json">/spec/rpo-schema.json</a>
+              — machine-readable JSON schema for validation.
+            </li>
+          </ul>
+          <p class="panel-text">
+            In addition, the <a href="/examples/example-minimal/">/examples/example-minimal/</a>
+            directory provides a minimal working bundle.
+          </p>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">6. Versioning & roadmap</div>
+          <h2 class="panel-heading">RPO standard evolution</h2>
+          <p class="panel-text">
+            The RPO specification is released incrementally. Current milestones:
+          </p>
+          <ul>
+            <li>
+              <strong>v0.1 — Draft</strong><br />
+              Initial JSON + PDF bundle specification, shipped with minimal example and tests.
+            </li>
+            <li>
+              <strong>v0.5 — Public Comment</strong><br />
+              Feedback from CNRS / GREYC researchers, legal experts, and institutional partners.
+            </li>
+            <li>
+              <strong>v1.0 — Stable Release</strong><br />
+              Finalized standard with registry integration and governance signatures.
+            </li>
+          </ul>
+          <p class="panel-text">
+            <span class="pill">
+              Next milestone
+              <span>OpenProof Registry + RPO signature verification module</span>
+            </span>
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <!-- SMALL 3-COLUMN GRID FOR QUICK LINKS -->
+    <section class="grid-3">
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">Implementers</div>
+          <h2 class="panel-heading">Build an RPO-compatible engine</h2>
+          <p class="panel-text">
+            Start from the JSON schema and format spec, then model your internal data so that your
+            reports can always be exported as a compliant RPO bundle.
+          </p>
+          <ul class="link-list">
+            <li><a href="/spec/rpo-schema.json">JSON schema</a></li>
+            <li><a href="/spec/rpo-format.md">Format specification</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">Reviewers & auditors</div>
+          <h2 class="panel-heading">Understand what you can test</h2>
+          <p class="panel-text">
+            Use the schema, hash tests, and minimal example to verify that a given bundle is
+            structurally sound and cryptographically anchored.
+          </p>
+          <ul class="link-list">
+            <li><a href="/docs/tests.html">Validation & tests overview</a></li>
+            <li><a href="/examples/example-minimal/">Minimal RPO example</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="panel-inner">
+          <div class="panel-title">Contributors</div>
+          <h2 class="panel-heading">Participate in OpenProof</h2>
+          <p class="panel-text">
+            OpenProof is designed as an open evidence infrastructure. Contributions are welcome on
+            both the specification and the test suite.
+          </p>
+          <ul class="link-list">
+            <li>
+              <a
+                href="https://github.com/openproof-net/rpo-spec-v0.1"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GitHub repository</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.openproof.net/join"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Join the OpenProof consortium</a
+              >
+            </li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div>
+        OpenProof — RPO Specification v0.1<br />
+        Research collaboration: CNRS — GREYC — Université de Caen Normandie
+      </div>
+      <div>
+        Technical site: <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">openproof.net</a><br />
+        Governance: <a href="https://truthx-openproof.org" target="_blank" rel="noopener noreferrer">truthx-openproof.org</a>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>
+
