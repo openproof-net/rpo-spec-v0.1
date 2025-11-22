@@ -1,10 +1,42 @@
 {
   "rpo_version": "0.1",
   "type": "evidence_bundle",
-  "description": "Placeholder for minimal RPO example",
-  "evidence": [],
-  "metadata": {
-    "created_at": "2025-01-01T00:00:00Z",
-    "hash": "placeholder"
-  }
+  "bundle_id": "rpo-example-minimal-0001",
+  "created_at": "2025-01-01T00:00:00Z",
+
+  "issuer": {
+    "name": "CNRS – GREYC / TruthX",
+    "id": "did:example:issuer-1234",
+    "role": "research_consortium"
+  },
+
+  "subject": {
+    "name": "Case–001 — Coercive control",
+    "id": "openproof:case:001",
+    "role": "case"
+  },
+
+  "evidence": [
+    {
+      "id": "ev-001",
+      "type": "timeline",
+      "description": "Consolidated timeline of events (minimal example)",
+      "hash": "sha256:placeholder-timeline",
+      "uri": "openproof://case-001/timeline.csv"
+    }
+  ],
+
+  "narrative": {
+    "summary": "Minimal RPO example describing a coercive control pattern.",
+    "pdf_hash": "sha256:placeholder-pdf",
+    "timeline_ref": "ev-001"
+  },
+
+  "registry": {
+    "registry_id": "openproof-registry",
+    "entry_id": "rpo-2025-0001",
+    "public_hash": "sha256:placeholder-registry"
+  },
+
+  "signatures": []
 }
