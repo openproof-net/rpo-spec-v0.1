@@ -278,3 +278,51 @@ registry anchoring, and independent verification.
 auditability (anyone can re-hash and verify)
 
 longevity (registries outlive tools)
+
+          Raw Evidence
+                │
+                ▼
+      Structured Evidence (JSON)
+                │
+                ▼
+     ┌──────── JSON Bundle ────────┐
+     │                              │
+     │     Hashing & Signatures     │
+     │                              │
+     └──────────────┬──────────────┘
+                    │
+                    ▼
+             Registry Anchor
+       (public_hash + entry_id + timestamp)
+                    │
+                    ▼
+           Human-Readable Narrative
+                 (PDF File)
+                    │
+                    ▼
+          Independent Verification
+    (schema validation + re-hashing + registry check)
+
+5.2 Interpretation
+
+Evidence feeds the JSON bundle (machine interpretation).
+
+The narrative (PDF) is generated from the JSON and cryptographically linked.
+
+Hashes ensure nothing can be modified without detection.
+
+Signatures prove authorship and authenticity.
+
+The registry provides a public integrity anchor.
+
+Any third party can perform independent verification without trusting the issuer.
+
+This diagram highlights the separation of responsibilities:
+
+JSON → structure and machine logic
+
+PDF → human readability
+
+Registry → long-term verifiability
+
+Hash & signatures → integrity and authenticity
