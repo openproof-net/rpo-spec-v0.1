@@ -1,123 +1,98 @@
+# OpenProof — RPO v0.1  
+**Rapport Probatoire Ouvert (Open Proof Report)**  
+A minimal, open, verifiable evidence standard.
 
-<p align="center">
-  <img src="https://custom-images.strikinglycdn.com/res/hrscywv4p/image/upload/c_limit,fl_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png" alt="OpenProof Logo" width="120"><br>
-  <b>OpenProof — Spécification RPO v0.1</b><br>
-  <i>Intégrité • Lisibilité • Vérifiabilité</i>
-</p>
+The RPO (Rapport Probatoire Ouvert) defines a structured, machine-readable and
+human-readable format for representing narrative-based evidence in a verifiable,
+auditable, and tamper-evident way.
 
-<p align="center">
-  <a href="https://rpo.openproof.net/">
-    <img src="https://img.shields.io/badge/specification-v0.1-yellow" alt="RPO Spec v0.1">
-  </a>
-  <a href="https://truthx.co/">
-    <img src="https://img.shields.io/badge/forensic--engine-TruthX-blue" alt="TruthX">
-  </a>
-  <a href="https://truthx-openproof.org/">
-    <img src="https://img.shields.io/badge/governance-Consortium-green" alt="Governance">
-  </a>
-</p>
-
-
-
+It addresses a gap in existing probatory standards:  
+traditional norms (DNA, metadata chains, ISO information integrity) do not
+handle **narratives**, **coercive dynamics**, **manipulation**, or **interpretive coherence**.
+RPO provides a minimal foundation for making narrative evidence measurable,
+traceable, and independently verifiable.
 
 ---
 
-# OpenProof — RPO Specification v0.1
+## What this repository contains
 
-**Integrity • Readability • Verifiability**
+### **1. Specification (`/spec`)**
+- `rpo-format.md` — the human-readable definition of the RPO bundle  
+- `rpo-schema.json` — machine validation schema (JSON Schema 2020-12)  
+- `rpo-architecture.md` — architectural and verification model
 
----
+These files define the core of **RPO v0.1**.
 
-## Overview
+### **2. Documentation (`/docs`)**
+- `overview.md` — simple introduction for readers and implementers
 
-**OpenProof** defines an open, verifiable standard for digital evidence:  
-**RPO (Rapport Probatoire Ouvert)** — a dual-format proof combining:
+### **3. Examples (`/examples`)**
+- `example-minimal/` — a minimal, valid RPO bundle:
+  - `rpo.json` — structured evidence bundle  
+  - `rpo.pdf.txt` — human-readable narrative placeholder  
+  - `README.md` — explanation of the example
 
-- **Signed JSON**: structured and machine-readable data  
-- **Human-readable PDF**: traceable, timestamped narrative output  
-- **Public hash**: unique integrity key for audit and verification  
-
-This specification aims to make **truth measurable**, **power traceable**, and **coherence verifiable** across legal, institutional, and research contexts.
+### **4. Tests (`/tests`)**
+Illustrative tests for:
+- schema validation  
+- hash integrity  
+- PDF output structure  
+These prepare the ground for full automated verification in future versions.
 
 ---
 
 ## Core Principles
 
-1. **Integrity** — Every proof object must be cryptographically sealed.  
-2. **Readability** — Every human must be able to interpret the same data.  
-3. **Verifiability** — Every institution must be able to check it publicly.
+RPO is built on three principles:
+
+1. **Integrity**  
+   Every RPO bundle includes stable hashing and signature fields.
+
+2. **Readability**  
+   Every JSON bundle must have a linked human-readable narrative (PDF).
+
+3. **Verifiability**  
+   Any third party must be able to validate the RPO without trusting the issuer:
+   schema → hash → PDF → registry entry.
+
+These principles guide all future versions of the standard.
 
 ---
 
-## Technical Schema (RPO Object)
+## Roadmap
 
-```json
-{
-  "version": "0.1",
-  "issuer": "OpenProof Consortium",
-  "timestamp": "2025-11-11T00:00:00Z",
-  "format": {
-    "json": "signed-object.json",
-    "pdf": "human-readable-report.pdf"
-  },
-  "hash": {
-    "algorithm": "SHA3-512",
-    "value": "b7f3a4c8e9f2...e73d1c2"
-  },
-  "signatures": [
-    {
-      "type": "ed25519",
-      "issuer": "OpenProof Authority",
-      "signature": "Zs0k2JQb...9faQ=="
-    }
-  ]
-}
-}
-]
-}
+### **v0.1 (this version) — Minimal Standard**  
+- Core JSON bundle format  
+- Minimal schema  
+- Architecture overview  
+- Example bundle  
+- Baseline tests (non-strict)  
+
+### **v0.2 — Canonicalisation & Strict Validation**  
+- Canonical JSON  
+- Strict hash matching  
+- Full PDF generation tests  
+- Registry API draft  
+- `example-full/` with multi-evidence timelines
+
+### **v1.0 — Production Standard**  
+- Multi-algorithm hashing  
+- Multi-signer format  
+- Full registry protocol  
+- Deployment guidance for institutions
 
 ---
 
-## 🧩 Contributing
+## License
 
-OpenProof welcomes scientific and institutional contributors interested in advancing the **RPO (Rapport Probatoire Ouvert)** standard.  
-Researchers, legal experts, engineers and data scientists can:
-- review or comment on the specification files,  
-- submit anonymized case schemas or validation tests,  
-- open discussions in the *Governance* repository.
-
-📬 To request participation: [join the OpenProof Beta](https://www.openproof.net/join)
+Open standard, free to implement and extend.  
+License will be finalised before v1.0.
 
 ---
 
-## ⚖️ Licenses
+## Contact & Governance
 
-This repository and its materials are released under a dual-license model:
+The RPO standard is developed within the **OpenProof** initiative, in
+collaboration with research partners.
 
-- **CC BY-NC 4.0** for content, documentation, and datasets — allowing reuse with attribution, excluding commercial purposes.  
-- **Apache 2.0** for code, JSON schemas, and software components — enabling open, verifiable, and auditable use.
-
-© 2025 **OpenProof Consortium**  
-Governance: [truthx-openproof.org](https://truthx-openproof.org)  
-Technical site: [openproof.net](https://www.openproof.net)
-
----
-
----
-
-## 🧭 Roadmap — RPO Specification
-
-| Phase | Description | Status |
-|-------|--------------|---------|
-| **v0.1 — Draft** | Initial specification released for public review (JSON + PDF format). | ✅ Published |
-| **v0.5 — Public Comment** | Integration of feedback from CNRS / GREYC researchers, legal experts, and institutional partners. | ⏳ In progress |
-| **v1.0 — Stable Release** | Finalized RPO (Rapport Probatoire Ouvert) standard with governance signatures and OpenProof registry integration. | 🔒 Planned Q2 2026 |
-
-🗓 **Next milestone:** integration of the OpenProof Registry and RPO signature verification module.
-
----
-
-📍 **Maintained by the OpenProof Consortium**  
-Research collaboration: CNRS – GREYC – Université de Caen Normandie  
-Contact: [openproof@truthx.co](mailto:openproof@truthx.co)
-
+Contributions, comments, and reviews are welcome.
