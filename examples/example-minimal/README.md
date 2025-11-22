@@ -1,19 +1,30 @@
 # RPO Minimal Example
 
-This directory contains a minimal, valid RPO (Rapport Probatoire Ouvert) example for implementers and auditors.
+This directory contains a minimal, valid example of an RPO (Rapport Probatoire Ouvert)
+evidence bundle.  
+It is designed to illustrate the basic structure required for implementers,
+auditors, and verifiers.
 
 ## Files
 
-- **rpo.json** — Machine-readable signed evidence bundle (placeholder for now)
-- **rpo.pdf** — Human-readable narrative PDF (placeholder for now)
-- **README.md** — Description of this example
+- **rpo.json** — minimal machine-readable RPO bundle  
+- **rpo.pdf.txt** — placeholder human-readable narrative (used before PDF generation)  
+- **README.md** — description of this example
 
 ## Purpose
 
 This minimal example demonstrates:
 
-- how a basic RPO is structured,
-- how JSON and PDF relate to each other,
-- how evidence, metadata, and signature anchors are organized.
+- how the RPO JSON bundle is structured,
+- how the narrative (PDF) is linked to the JSON,
+- how metadata is represented,
+- how timestamps and hashes are integrated,
+- how a verifier can read both the structured bundle and the human-readable narrative.
 
-More complete examples will be added in future versions.
+## Notes
+
+- The content is intentionally simple.  
+- Hashes are placeholders.  
+- The purpose is to help developers and auditors understand the RPO format before
+working with real cases or full bundles.
+
