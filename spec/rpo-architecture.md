@@ -126,3 +126,11 @@ Example:
   "entry_id": "rpo-2025-0001",
   "public_hash": "sha256:placeholder"
 }
+"signatures": [
+  {
+    "algorithm": "ed25519",
+    "value": "base64-encoded-signature",
+    "signer_id": "did:example:issuer-1234",
+    "created_at": "2025-01-01T12:00:00Z"
+  }
+]
