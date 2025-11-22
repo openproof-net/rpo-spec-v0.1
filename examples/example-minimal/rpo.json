@@ -1,0 +1,10 @@
+{
+  "rpo_version": "0.1",
+  "type": "evidence_bundle",
+  "description": "Placeholder for minimal RPO example",
+  "evidence": [],
+  "metadata": {
+    "created_at": "2025-01-01T00:00:00Z",
+    "hash": "placeholder"
+  }
+}
