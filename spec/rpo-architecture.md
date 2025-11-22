@@ -88,3 +88,21 @@ Producer sends the following fields to the registry:
   "subject": "...",
   "created_at": "..."
 }
+### 2.2 Subject
+
+Information about the entity or case the RPO describes.
+
+Required fields:
+
+- **name** — human-readable name of the case, person, or entity.
+- **id** — unique identifier (string).
+- **role** — describes the type of subject (e.g., "case", "person", "organization").
+
+Example:
+
+```json
+"subject": {
+  "name": "Case–001 — Coercive control",
+  "id": "openproof:case:001",
+  "role": "case"
+}
