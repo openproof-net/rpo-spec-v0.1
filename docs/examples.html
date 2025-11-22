@@ -12,7 +12,7 @@
     href="https://custom-images.strikinglycdn.com/res/hrscyvw4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png"
   />
 
-  <!-- Theme (dark / ivory / gold) -->
+  <!-- Theme (dark / ivory / gold, aligned with index) -->
   <style>
     :root {
       --bg: #04040e;
@@ -36,50 +36,153 @@
     }
 
     body {
-      background: var(--bg);
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI",
-        sans-serif;
+      background: radial-gradient(circle at top, #111625 0, var(--bg) 50%);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
-      padding: 2rem 1.5rem 4rem;
-      max-width: 1100px;
-      margin: 0 auto;
     }
 
-    /* NAV */
-    nav {
+    a {
+      color: var(--gold-soft);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* NAVBAR (same base as index) */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(
+        90deg,
+        rgba(4, 4, 14, 0.96),
+        rgba(4, 4, 14, 0.92)
+      );
+      border-bottom: 1px solid rgba(241, 230, 163, 0.12);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0.65rem 1.5rem;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      margin-bottom: 2.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      justify-content: space-between;
+      gap: 1.25rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
     }
 
     .nav-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f3e8b2, #b88a32);
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      justify-content: center;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25),
+        0 10px 25px rgba(0, 0, 0, 0.6);
     }
 
     .nav-logo img {
-      width: 32px;
-      height: 32px;
+      width: 26px;
+      height: 26px;
+      display: block;
+      border-radius: 50%;
     }
 
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      margin-left: 1.5rem;
-      font-size: 0.9rem;
-      transition: 0.2s;
-    }
-
-    .nav-links a:hover {
+    .nav-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.085em;
+      text-transform: uppercase;
       color: var(--gold-soft);
     }
 
-    /* TITLES */
+    .nav-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      color: var(--gold-soft);
+      border-color: rgba(250, 224, 150, 0.4);
+      background: rgba(250, 224, 150, 0.03);
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      color: #04040e;
+      background: linear-gradient(135deg, #f1e6a3, #d4af37);
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--border-soft);
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      color: var(--gold-soft);
+      background: rgba(10, 14, 24, 0.9);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold-soft);
+      background: rgba(13, 18, 30, 0.95);
+      text-decoration: none;
+    }
+
+    @media (max-width: 880px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
+    }
+
+    /* TITLES & LAYOUT */
+    .page {
+      max-width: 1100px;
+      margin: 2.5rem auto 4rem;
+      padding: 0 1.5rem;
+    }
+
     h1 {
       font-size: 2rem;
       margin-bottom: 0.5rem;
@@ -89,27 +192,31 @@
       font-size: 1rem;
       color: var(--text-muted);
       margin-bottom: 2rem;
+      max-width: 640px;
     }
 
     /* CARDS */
     .card {
-      background: var(--panel);
+      background: linear-gradient(145deg, var(--panel), var(--panel-soft));
       color: var(--ink);
       border-radius: var(--radius-lg);
       padding: 1.8rem;
       margin-bottom: 2rem;
       box-shadow: var(--shadow-soft);
-      border: 1px solid var(--border-soft);
+      border-top: 3px solid var(--gold);
+      border-left: 1px solid var(--border-soft);
+      border-right: 1px solid var(--border-soft);
+      border-bottom: 1px solid rgba(0,0,0,0.04);
     }
 
     .card h2 {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin-bottom: 1rem;
     }
 
     .card p,
     .card li {
-      font-size: 1rem;
+      font-size: 0.95rem;
       line-height: 1.55;
       margin-bottom: 0.7rem;
     }
@@ -124,10 +231,11 @@
       padding-left: 1.2rem;
     }
 
+    /* Footer */
     footer {
       margin-top: 4rem;
       padding-top: 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-top: 1px solid rgba(241, 230, 163, 0.2);
       text-align: center;
       font-size: 0.9rem;
       color: var(--text-muted);
@@ -137,139 +245,143 @@
       color: var(--gold-soft);
       text-decoration: none;
     }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
 <body>
   <!-- NAV -->
-  <nav>
-    <div class="nav-logo">
-      <img
-        src="https://custom-images.strikinglycdn.com/res/hrscyvw4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png"
-        alt="OpenProof logo"
-      />
-      <strong>OPENPROOF — RPO v0.1</strong>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <div class="nav-logo">
+          <img
+            src="https://custom-images.strikinglycdn.com/res/hrscyvw4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png"
+            alt="OpenProof logo"
+          />
+        </div>
+        <div>
+          <div class="nav-title">OpenProof — RPO v0.1</div>
+          <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a href="overview.html" class="nav-link">Overview</a>
+        <a href="index.html#spec" class="nav-link">Specification</a>
+        <a href="examples.html" class="nav-link active">Examples</a>
+        <a href="tests.html" class="nav-link">Tests</a>
+        <a
+          href="https://github.com/openproof-net/rpo-spec-v0.1"
+          class="btn-ghost"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>View on GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTENT -->
+  <main class="page">
+    <!-- TITLE -->
+    <h1>Minimal RPO Examples</h1>
+    <p class="subtitle">
+      Reference examples to help implementers understand how an RPO bundle is structured.
+    </p>
+
+    <!-- CARD: Structure -->
+    <div class="card">
+      <h2>1. Minimal JSON bundle</h2>
+      <p>The <strong>simplest valid RPO bundle</strong> contains only the required top-level fields:</p>
+
+      <ul>
+        <li><code>rpo_version</code></li>
+        <li><code>bundle_id</code></li>
+        <li><code>created_at</code></li>
+        <li><code>issuer</code></li>
+        <li><code>subject</code></li>
+        <li><code>evidence[]</code></li>
+        <li><code>narrative</code></li>
+        <li><code>registry</code></li>
+        <li><code>signatures[]</code></li>
+      </ul>
+
+      <p>
+        👉 Download the minimal JSON example:
+        <a
+          href="https://raw.githubusercontent.com/openproof-net/rpo-spec-v0.1/main/examples/example-minimal/rpo.json"
+          target="_blank" rel="noopener noreferrer"
+        >
+          rpo.json
+        </a>
+      </p>
     </div>
 
-    <div class="nav-links">
-      <a href="overview.html">Overview</a>
-      <a href="index.html#spec">Specification</a>
-      <a href="examples.html"><strong>Examples</strong></a>
-      <a href="tests.html">Tests</a>
-      <a
-        href="https://github.com/openproof-net/rpo-spec-v0.1"
-        target="_blank"
-        rel="noopener noreferrer"
-        >GitHub</a
-      >
+    <!-- CARD: PDF placeholder -->
+    <div class="card">
+      <h2>2. Human-readable PDF placeholder</h2>
+      <p>
+        The example includes a <strong>PDF placeholder</strong> (<code>rpo.pdf.txt</code>) showing how the
+        narrative report is linked to the JSON via <code>narrative_pdf_hash</code>.
+      </p>
+
+      <p>
+        👉 Download:
+        <a
+          href="https://raw.githubusercontent.com/openproof-net/rpo-spec-v0.1/main/examples/example-minimal/rpo.pdf.txt"
+          target="_blank" rel="noopener noreferrer"
+        >
+          rpo.pdf.txt
+        </a>
+      </p>
     </div>
-  </nav>
 
-  <!-- TITLE -->
-  <h1>Minimal RPO Examples</h1>
-  <p class="subtitle">
-    Reference examples to help implementers understand how an RPO bundle is structured.
-  </p>
+    <!-- CARD: GitHub path -->
+    <div class="card">
+      <h2>3. Full example folder on GitHub</h2>
+      <p>
+        All minimal examples are available in the repository under:
+      </p>
 
-  <!-- CARD: Structure -->
-  <div class="card">
-    <h2>1. Minimal JSON bundle</h2>
-    <p>
-      The <strong>simplest valid RPO bundle</strong> contains only the required top-level
-      fields:
-    </p>
+      <p>
+        <a
+          href="https://github.com/openproof-net/rpo-spec-v0.1/tree/main/examples/example-minimal"
+          target="_blank" rel="noopener noreferrer"
+        >
+          /examples/example-minimal/
+        </a>
+      </p>
+    </div>
 
-    <ul>
-      <li><code>rpo_version</code></li>
-      <li><code>bundle_id</code></li>
-      <li><code>created_at</code></li>
-      <li><code>issuer</code></li>
-      <li><code>subject</code></li>
-      <li><code>evidence[]</code></li>
-      <li><code>narrative</code></li>
-      <li><code>registry</code></li>
-      <li><code>signatures[]</code></li>
-    </ul>
+    <!-- CARD: Next steps -->
+    <div class="card">
+      <h2>4. Next steps for implementers</h2>
+      <ul>
+        <li>Validate the JSON against the RPO schema</li>
+        <li>Run hash integrity tests</li>
+        <li>Integrate PDF → JSON narrative hashing</li>
+        <li>Use these examples as templates for real-world cases</li>
+      </ul>
 
-    <p>
-      👉 Download the minimal JSON example:  
-      <a
-        href="https://raw.githubusercontent.com/openproof-net/rpo-spec-v0.1/main/examples/example-minimal/rpo.json"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        rpo.json
-      </a>
-    </p>
-  </div>
+      <p>
+        Access the test suite:
+        <a href="tests.html">RPO Test Suite</a>
+      </p>
+    </div>
 
-  <!-- CARD: PDF placeholder -->
-  <div class="card">
-    <h2>2. Human-readable PDF placeholder</h2>
-    <p>
-      The example includes a <strong>PDF placeholder</strong>
-      (<code>rpo.pdf.txt</code>) showing how the narrative report is linked to the JSON
-      via <code>narrative_pdf_hash</code>.
-    </p>
-
-    <p>
-      👉 Download:  
-      <a
-        href="https://raw.githubusercontent.com/openproof-net/rpo-spec-v0.1/main/examples/example-minimal/rpo.pdf.txt"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        rpo.pdf.txt
-      </a>
-    </p>
-  </div>
-
-  <!-- CARD: GitHub path -->
-  <div class="card">
-    <h2>3. Full example folder on GitHub</h2>
-    <p>All minimal examples are available in the repository under:</p>
-
-    <p>
-      <a
-        href="https://github.com/openproof-net/rpo-spec-v0.1/tree/main/examples/example-minimal"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        /examples/example-minimal/
-      </a>
-    </p>
-  </div>
-
-  <!-- CARD: Next steps -->
-  <div class="card">
-    <h2>4. Next steps for implementers</h2>
-    <ul>
-      <li>Validate the JSON against the RPO schema</li>
-      <li>Run hash integrity tests</li>
-      <li>Integrate PDF → JSON narrative hashing</li>
-      <li>Use these examples as templates for real-world cases</li>
-    </ul>
-
-    <p>
-      Access the test suite:  
-      <a href="tests.html">RPO Test Suite</a>
-    </p>
-  </div>
-
-  <footer>
-    OpenProof — RPO Specification v0.1  
-    • Technical site:
-    <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer"
-      >openproof.net</a
-    >
-    • Governance:
-    <a
-      href="https://www.truthx-openproof.org"
-      target="_blank"
-      rel="noopener noreferrer"
-      >truthx-openproof.org</a
-    ><br />
-    © 2025 OpenProof Consortium
-  </footer>
+    <footer>
+      OpenProof — RPO Specification v0.1<br />
+      Technical site:
+      <a href="https://openproof.net" target="_blank" rel="noopener noreferrer">openproof.net</a>
+      • Governance:
+      <a href="https://truthx-openproof.org" target="_blank" rel="noopener noreferrer">truthx-openproof.org</a><br />
+      © 2026 OpenProof Consortium
+    </footer>
+  </main>
 </body>
 </html>
