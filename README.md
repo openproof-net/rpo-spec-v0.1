@@ -1,14 +1,50 @@
-RPO v0.1 — Developer Guide
+# OPENPROOF — RPO v0.1  
+Integrity • Readability • Verifiability  
+Dual-format standard for structured, verifiable digital evidence.
 
-Minimal JSON profile • Hashing • Validation • Integration
+---
 
-The RPO (Rapport Probatoire Ouvert) standard defines a minimal, verifiable structure for digital evidence.
-This guide focuses on the developer essentials needed to parse, validate, hash, and integrate RPO bundles.
+═══════════════════════════════════════════════════════  
+🟡 **1. OVERVIEW — WHAT OPENPROOF OFFERS**  
+═══════════════════════════════════════════════════════
 
-1. Minimal RPO JSON structure (v0.1)
+OpenProof defines the **RPO** (Rapport Probatoire Ouvert),  
+a dual-format probatory standard combining:
 
-A valid RPO v0.1 bundle contains the following top-level fields:
+- **Signed JSON** — machine-readable, structured evidence  
+- **Human-readable PDF** — coherent narrative mirror  
+- **Public hash** — verifiable integrity anchor
 
+Its objective is simple:  
+**make truth measurable, power traceable, and coherence verifiable**  
+across legal, institutional and research contexts.
+
+---
+
+═══════════════════════════════════════════════════════  
+🟡 **2. WHAT THE RPO SOLVES**  
+═══════════════════════════════════════════════════════
+
+Digital evidence is fragmented, unverifiable, and often unreadable.  
+The RPO introduces a shared structure allowing:
+
+- Deterministic integrity (hashing)  
+- Narrative readability  
+- Registry anchoring  
+- Cross-system interoperability  
+- Audit-friendly JSON structure  
+
+The RPO is **open, testable and public**.
+
+---
+
+═══════════════════════════════════════════════════════  
+🟡 **3. MINIMAL RPO STRUCTURE (v0.1)**  
+═══════════════════════════════════════════════════════
+
+A minimal RPO v0.1 bundle contains:
+
+```json
 {
   "rpo_version": "0.1",
   "bundle_id": "string",
@@ -20,230 +56,103 @@ A valid RPO v0.1 bundle contains the following top-level fields:
     "text": "string",
     "pdf_hash": "string"
   },
-  "evidence": [
-    {
-      "id": "string",
-      "type": "string",
-      "source": "string",
-      "description": "string",
-      "text_ref": "string"
-    }
-  ],
+  "evidence": [],
   "registry": {
     "public_hash": "sha256 hex",
     "registry_hint": "string"
   },
-  "meta": {
-    "playground": true,
-    "heuristic_scores": {
-      "coherence_score": "int",
-      "evidence_markers": "int",
-      "sentence_count": "int"
-    },
-    "heuristic_anchors": {
-      "dates": [],
-      "years": [],
-      "places": []
-    },
-    "psycho_forensic": {
-      "available": false,
-      "note": "string"
-    }
-  }
+  "meta": { "playground": true }
 }
+```
 
+This structure ensures **immutability**, **interpretability**, and **verifiability**.
 
-This is the canonical minimal profile for the open version of RPO.
+---
 
-2. Hashing (public_hash)
-Algorithm
+═══════════════════════════════════════════════════════  
+🟡 **4. THE RPO PLAYGROUND (OPEN VERSION)**  
+═══════════════════════════════════════════════════════
 
-RPO v0.1 uses SHA-256.
-The public_hash is computed over a deterministic string concatenation of the minimal fields:
+The **RPO Playground** is an open, deterministic, non-AI version  
+that demonstrates how a narrative becomes a preliminary RPO bundle.
 
-rpo_version=<v>|
-bundle_id=<id>|
-created_at=<iso>|
-issuer=<string>|
-subject=<string>|
-title=<string>|
-narrative=<text>
+It provides:
 
-Example (pseudo-code)
-import hashlib
+- **Sentence count**  
+- **Evidence markers**  
+- **Coherence score**  
+- **Minimal RPO JSON generation**  
+- **Local SHA-256 hashing** (public_hash)
 
-def compute_public_hash(bundle):
-    payload = (
-        f"rpo_version={bundle['rpo_version']}|"
-        f"bundle_id={bundle['bundle_id']}|"
-        f"created_at={bundle['created_at']}|"
-        f"issuer={bundle['issuer']['label']}|"
-        f"subject={bundle['subject']['label']}|"
-        f"title={bundle['narrative']['title']}|"
-        f"narrative={bundle['narrative']['text']}"
-    )
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+Everything runs **locally in the browser**, with no backend.  
+It is an educational sandbox illustrating how the RPO standard works.
 
-Validation
-def validate_public_hash(bundle):
-    expected = compute_public_hash(bundle)
-    return expected == bundle["registry"]["public_hash"]
+---
 
-3. How to integrate an RPO bundle into your system
-a) Parse JSON
+═══════════════════════════════════════════════════════  
+🟡 **5. HASHING & INTEGRITY**  
+═══════════════════════════════════════════════════════
 
-There is no special format, just standard JSON:
+RPO v0.1 uses **SHA-256**.  
+The `public_hash` is derived from a deterministic concatenation of core fields  
+(narrative + metadata), ensuring any change becomes detectable.
 
-import json
+Integrity check = `compute → compare`.
 
-with open("rpo.json") as f:
-    rpo = json.load(f)
+---
 
-b) Validate required fields
+═══════════════════════════════════════════════════════  
+🟡 **6. USING THE STANDARD**  
+═══════════════════════════════════════════════════════
 
-Implementers should validate:
+Engineers, auditors and researchers can:
 
-presence of the top-level fields
+- Parse and validate RPO JSON  
+- Verify integrity via the public hash  
+- Generate new RPO bundles  
+- Produce narrative-PDF mirrors  
+- Integrate the standard into their systems  
 
-presence of narrative title & text
+For full developer instructions, see:  
+👉 **README-dev.md**
 
-bundle_id uniqueness (your responsibility)
+---
 
-correct SHA-256 format (64 hex characters)
+═══════════════════════════════════════════════════════  
+🟡 **7. STATUS OF v0.1**  
+═══════════════════════════════════════════════════════
 
-ISO timestamp correctness
+- Minimal deterministic profile  
+- Fully open and verifiable  
+- PDF hashing supported  
+- No remote registry anchoring yet  
+- AI psycho-forensic interpretation reserved for the CNRS pilot
 
-Minimal check (Python):
+---
 
-def validate_structure(rpo):
-    required = [
-        "rpo_version", "bundle_id", "created_at",
-        "issuer", "subject", "narrative",
-        "evidence", "registry", "meta"
-    ]
-    for k in required:
-        if k not in rpo:
-            raise ValueError(f"Missing field: {k}")
+═══════════════════════════════════════════════════════  
+🟡 **8. CONTRIBUTION**  
+═══════════════════════════════════════════════════════
 
-4. Generating your own RPO bundle programmatically
+The project welcomes contributions from:
 
-Basic example:
+- Research  
+- Law  
+- Engineering  
+- Institutional governance  
 
-import uuid
-from datetime import datetime
+OpenProof aims to build a **consistent, sovereign** standard  
+for verifiable digital evidence.
 
-def new_rpo(title, text, issuer, subject):
-    return {
-        "rpo_version": "0.1",
-        "bundle_id": f"rpo-{uuid.uuid4()}",
-        "created_at": datetime.utcnow().isoformat() + "Z",
-        "issuer": { "label": issuer },
-        "subject": { "label": subject },
-        "narrative": {
-            "title": title,
-            "text": text,
-            "pdf_hash": "placeholder"
-        },
-        "evidence": [],
-        "registry": {
-            "public_hash": "",
-            "registry_hint": "No registry anchor in minimal profile"
-        },
-        "meta": {
-            "playground": False
-        }
-    }
+---
 
+═══════════════════════════════════════════════════════  
+🟡 **9. CONTACT**  
+═══════════════════════════════════════════════════════
 
-Add hash:
+For implementation or technical questions:  
+📧 **openproof@truthx.co**
 
-bundle = new_rpo(...)
-bundle["registry"]["public_hash"] = compute_public_hash(bundle)
-
-5. Validating an RPO bundle in CI/CD
-
-You can add a step in GitHub Actions:
-
-- name: Validate RPO JSON
-  run: |
-    python3 validate_rpo.py docs/examples/example-minimal/rpo.json
-
-6. Common developer questions
-Q1. Can I add custom fields?
-
-Yes, as long as:
-
-you do not modify the minimal required fields,
-
-custom fields are placed under a namespace such as:
-
-"extensions": {
-  "my_org": { ... }
-}
-
-Q2. Does the public_hash sign the PDF?
-
-No. It signs the narrative text + metadata.
-PDF integrity is checked via pdf_hash.
-
-Q3. Is the registry required?
-
-Not in v0.1.
-A later version will define remote anchoring.
-
-7. What developers should NOT assume
-
-RPO does not determine truth or falsity.
-
-RPO does not replace legal analysis.
-
-RPO does not embed AI models in the open version.
-
-RPO does not guarantee authenticity of the narrative — only immutability.
-
-8. Minimal implementation checklist (copy/paste)
-
-To accept RPO bundles in your system, you must:
-
- Parse JSON
-
- Validate minimal fields
-
- Enforce ISO timestamp
-
- Recompute public_hash and compare
-
- Reject bundle if fields missing or hash mismatch
-
- (Optional) Validate pdf_hash
-
- (Optional) Validate bundle_id uniqueness
-
- (Optional) Validate schemas if using JSON Schema
-
-9. Example: command-line validation tool
-#!/usr/bin/env python3
-
-import sys, json
-from rpo_lib import compute_public_hash
-
-def main(path):
-    data = json.load(open(path))
-    expected = compute_public_hash(data)
-    if expected == data["registry"]["public_hash"]:
-        print("✔ RPO bundle is valid")
-    else:
-        print("✘ INVALID RPO BUNDLE")
-        print("expected:", expected)
-        print("found:   ", data["registry"]["public_hash"])
-
-if __name__ == "__main__":
-    main(sys.argv[1])
-
-10. Contact
-
-For technical questions, implementations or interoperability:
-
-openproof@truthx.co
+---
 
 
