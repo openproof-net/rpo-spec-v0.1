@@ -1,48 +1,58 @@
-# OPENPROOF — RPO v0.1  
-Integrity • Readability • Verifiability  
-Dual-format standard for structured, verifiable digital evidence.
+# OPENPROOF — RPO Specification v0.1  
+**Integrity • Readability • Verifiability**
 
 ---
 
-═══════════════════════════════════════════════════════  
-🟡 **1. OVERVIEW — WHAT OPENPROOF OFFERS**  
-═══════════════════════════════════════════════════════
+## 🧭 What OpenProof is
+OpenProof defines an open, verifiable structure for digital evidence.  
+The **RPO (Rapport Probatoire Ouvert)** is a dual-format probatory bundle designed to make:
 
-OpenProof defines the **RPO** (Rapport Probatoire Ouvert),  
-a dual-format probatory standard combining:
+- **truth measurable**,  
+- **power traceable**,  
+- **coherence verifiable**  
 
-- **Signed JSON** — machine-readable, structured evidence  
-- **Human-readable PDF** — coherent narrative mirror  
-- **Public hash** — verifiable integrity anchor
-
-Its objective is simple:  
-**make truth measurable, power traceable, and coherence verifiable**  
 across legal, institutional and research contexts.
 
----
-
-═══════════════════════════════════════════════════════  
-🟡 **2. WHAT THE RPO SOLVES**  
-═══════════════════════════════════════════════════════
-
-Digital evidence is fragmented, unverifiable, and often unreadable.  
-The RPO introduces a shared structure allowing:
-
-- Deterministic integrity (hashing)  
-- Narrative readability  
-- Registry anchoring  
-- Cross-system interoperability  
-- Audit-friendly JSON structure  
-
-The RPO is **open, testable and public**.
+The objective is simple:  
+**If machines can verify integrity, and humans can read coherence, society can trust evidence again.**
 
 ---
 
-═══════════════════════════════════════════════════════  
-🟡 **3. MINIMAL RPO STRUCTURE (v0.1)**  
-═══════════════════════════════════════════════════════
+# 🟡 PANEL — The RPO “Civil Code”
+> The RPO v0.1 acts as a **minimal civil code for digital evidence**.
 
-A minimal RPO v0.1 bundle contains:
+It defines a set of rules that every RPO bundle must respect:
+
+- a **signed JSON** that machines can validate;  
+- a **human-readable PDF** that mirrors the narrative;  
+- a **public hash** that anchors immutability;  
+- a deterministic structure that any implementation can test.
+
+This guarantees that **any story transformed into an RPO follows the same laws** —  
+the same fields, the same structure, the same verifiable logic.
+
+OpenProof does **not** decide truth or falsity.  
+It guarantees that **nothing can be modified without detection**.
+
+---
+
+# 🚀 TRY THE ENGINE — Launch the RPO Playground  
+*(open, deterministic, no AI, no registry)*
+
+The **RPO Playground** transforms any short narrative into:
+
+- a minimal `rpo.json` object  
+- heuristic scores (sentences, indicators, coherence)  
+- a deterministic **public_hash** (SHA-256)
+
+👉 **Try it instantly:**  
+https://rpo.openproof.net/playground.html
+
+This open engine demonstrates how the RPO “civil code” behaves when applied to real narratives.
+
+---
+
+# 🟡 PANEL — Minimal JSON Profile (v0.1)
 
 ```json
 {
@@ -56,103 +66,87 @@ A minimal RPO v0.1 bundle contains:
     "text": "string",
     "pdf_hash": "string"
   },
-  "evidence": [],
+  "evidence": [
+    {
+      "id": "E1",
+      "type": "narrative_block",
+      "source": "user_input",
+      "description": "Raw narrative",
+      "text_ref": "narrative.text"
+    }
+  ],
   "registry": {
     "public_hash": "sha256 hex",
     "registry_hint": "string"
   },
-  "meta": { "playground": true }
+  "meta": {
+    "playground": true,
+    "heuristic_scores": {
+      "coherence_score": "int",
+      "evidence_markers": "int",
+      "sentence_count": "int"
+    }
+  }
 }
-```
+This is the canonical minimal profile for the open version of RPO.
 
-This structure ensures **immutability**, **interpretability**, and **verifiability**.
+🔐 Hashing Algorithm (SHA-256)
+The public hash is computed over the deterministic string concatenation:
 
----
+ini
+Copier le code
+rpo_version=|bundle_id=|created_at=|issuer=|subject=|title=|narrative=
+A later version (v1.0) will define remote anchoring, registries, and multi-signature authority.
 
-═══════════════════════════════════════════════════════  
-🟡 **4. THE RPO PLAYGROUND (OPEN VERSION)**  
-═══════════════════════════════════════════════════════
+🧪 Test & Validate RPO Bundles
+To accept any RPO in your system, you must:
 
-The **RPO Playground** is an open, deterministic, non-AI version  
-that demonstrates how a narrative becomes a preliminary RPO bundle.
+Parse JSON
 
-It provides:
+Validate minimal fields
 
-- **Sentence count**  
-- **Evidence markers**  
-- **Coherence score**  
-- **Minimal RPO JSON generation**  
-- **Local SHA-256 hashing** (public_hash)
+Enforce ISO timestamps
 
-Everything runs **locally in the browser**, with no backend.  
-It is an educational sandbox illustrating how the RPO standard works.
+Recompute public_hash and compare
 
----
+Reject bundle if any mismatch
 
-═══════════════════════════════════════════════════════  
-🟡 **5. HASHING & INTEGRITY**  
-═══════════════════════════════════════════════════════
+(Optional) Validate pdf_hash
 
-RPO v0.1 uses **SHA-256**.  
-The `public_hash` is derived from a deterministic concatenation of core fields  
-(narrative + metadata), ensuring any change becomes detectable.
+(Optional) Validate schema (JSON Schema)
 
-Integrity check = `compute → compare`.
+A command-line validator example is included in /tests.
 
----
+🧠 What OpenProof does NOT assume
+RPO does not determine truth or falsity
 
-═══════════════════════════════════════════════════════  
-🟡 **6. USING THE STANDARD**  
-═══════════════════════════════════════════════════════
+RPO does not replace legal analysis
 
-Engineers, auditors and researchers can:
+RPO does not embed AI in the open version
 
-- Parse and validate RPO JSON  
-- Verify integrity via the public hash  
-- Generate new RPO bundles  
-- Produce narrative-PDF mirrors  
-- Integrate the standard into their systems  
+RPO guarantees immutability, not authenticity of the narrative
 
-For full developer instructions, see:  
-👉 **README-dev.md**
+🧬 Scientific Pilot (CNRS × TruthX)
+For advanced modules — interpretive coherence, psycho-forensic markers, narrative inversion, coercive control — request access to the scientific pilot:
 
----
+👉 https://www.truthx.co/truthx-pilote-form
 
-═══════════════════════════════════════════════════════  
-🟡 **7. STATUS OF v0.1**  
-═══════════════════════════════════════════════════════
+This layer is operated with CNRS research partners and goes beyond the open standard.
 
-- Minimal deterministic profile  
-- Fully open and verifiable  
-- PDF hashing supported  
-- No remote registry anchoring yet  
-- AI psycho-forensic interpretation reserved for the CNRS pilot
+📘 Examples
+Minimal RPO bundles and test cases live in the /examples folder.
 
----
+🛠 Contribute
+OpenProof welcomes contributions from:
 
-═══════════════════════════════════════════════════════  
-🟡 **8. CONTRIBUTION**  
-═══════════════════════════════════════════════════════
+engineers (validation, schema, hashing)
 
-The project welcomes contributions from:
+researchers (structures of narratives & bias)
 
-- Research  
-- Law  
-- Engineering  
-- Institutional governance  
+legal teams (probatory constraints)
 
-OpenProof aims to build a **consistent, sovereign** standard  
-for verifiable digital evidence.
+OSINT & forensic analysts (field use cases)
 
----
-
-═══════════════════════════════════════════════════════  
-🟡 **9. CONTACT**  
-═══════════════════════════════════════════════════════
-
-For implementation or technical questions:  
-📧 **openproof@truthx.co**
-
----
-
-
+📬 Contact
+Technical questions, implementations, or interoperability:
+openproof@truthx.co
