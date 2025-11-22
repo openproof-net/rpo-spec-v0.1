@@ -7,21 +7,27 @@ Overview
 OpenProof defines an open, verifiable standard for digital evidence.
 The RPO (Rapport Probatoire Ouvert) is a dual-format bundle combining:
 
-Signed JSON — structured, machine-readable data
+Signed JSON — structured, machine-readable integrity
 
-Human-readable PDF — coherent narrative output
+Human-readable PDF — coherent, timestamped narrative
 
-Public hash — anchor for audit, integrity, and long-term verification
+Public hash — audit anchor for long-term verification
 
-The goal: make truth measurable, power traceable, and coherence verifiable across legal, institutional, and research systems.
+The goal is simple :
+Make truth measurable, power traceable, and coherence verifiable across legal, institutional, and research environments.
 
 Core Principles
+1. Integrity
 
-Integrity — any modification becomes detectable
+Every modification of the proof object must be detectable.
 
-Readability — humans and institutions interpret the same narrative
+2. Readability
 
-Verifiability — a public, testable JSON structure enforces accountability
+Humans and institutions must interpret the same narrative.
+
+3. Verifiability
+
+A public, testable JSON structure enforces accountability.
 
 Technical Schema (RPO Object)
 {
@@ -44,9 +50,10 @@ Technical Schema (RPO Object)
     }
   ]
 }
+
 Contributing
 
-OpenProof welcomes scientific, legal, and institutional contributors interested in strengthening the RPO standard.
+OpenProof welcomes scientific, legal, and institutional collaborators interested in strengthening the RPO standard.
 
 Participants may:
 
@@ -54,27 +61,32 @@ Review or comment on specification files
 
 Submit anonymized case schemas or validation tests
 
-Engage in discussions via the OpenProof Governance repository
+Engage in technical discussions via the Governance repository
 
-📩 To request participation: https://www.openproof.net/join
+📩 Request participation: https://www.openproof.net/join
 
 Licenses
 
-This repository is released under a dual-license model:
+This repository is released under a dual-license model :
 
 CC BY-NC 4.0 — documentation, content, schema descriptions
 
 Apache-2.0 — code, JSON schemas, software components
 
 © 2025 OpenProof Consortium
-Technical site: https://www.openproof.net
+Technical site : https://www.openproof.net
 
-Governance: https://truthx-openproof.org
+Governance : https://truthx-openproof.org
 
-Roadmap — RPO Specification
+RPO Specification Roadmap
 Phase	Description	Status
-v0.1 — Draft	Initial specification (JSON + PDF bundle).	✔️ Published
-v0.5 — Public Comment	Integration of feedback from CNRS / GREYC / legal experts.	⏳ In progress
-v1.0 — Stable Release	Finalized RPO + registry integration + governance signatures.	🔒 Planned Q2 2026
+v0.1 — Draft	Initial specification (JSON + PDF bundle)	✔️ Published
+v0.5 — Public Comment	Integration of feedback from CNRS / GREYC / legal experts	⏳ In progress
+v1.0 — Stable Release	Finalized RPO standard with registry integration + governance signatures	🔒 Planned Q2 2026
 
-🧭 Next milestone: Integration of the OpenProof Registry & RPO signature verification module.
+🧭 Next milestone: Integration of the OpenProof Registry and the RPO signature verification module.
+
+Maintained by the OpenProof Consortium
+
+Research collaboration: CNRS — GREYC — Université de Caen Normandie
+Contact : openproof@truthx.co
