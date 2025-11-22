@@ -1,234 +1,249 @@
-# OpenProof — RPO Specification v0.1
+RPO v0.1 — Developer Guide
 
-**RPO** (Rapport Probatoire Ouvert) is an open standard for structuring digital evidence into a dual bundle:
+Minimal JSON profile • Hashing • Validation • Integration
 
-- a **signed JSON** file (`rpo.json`), machine-readable and verifiable,
-- a **human-readable PDF**, aligned with the JSON content,
-- plus a **public hash** used as an integrity anchor.
+The RPO (Rapport Probatoire Ouvert) standard defines a minimal, verifiable structure for digital evidence.
+This guide focuses on the developer essentials needed to parse, validate, hash, and integrate RPO bundles.
 
-This repository hosts the **v0.1 specification** of the RPO standard, examples, tests and an **open playground** implemented entirely in the browser (no backend, no AI model).
+1. Minimal RPO JSON structure (v0.1)
 
-> 🇫🇷 RPO = Rapport Probatoire Ouvert : un format unifié pour transformer un récit, des pièces et des métadonnées en un lot de preuve structuré, traçable et vérifiable.
+A valid RPO v0.1 bundle contains the following top-level fields:
 
----
-
-## Repository structure
-
-- `docs/`
-  - `overview.html` – high-level introduction to RPO
-  - `index.html` – **formal v0.1 specification**
-  - `examples.html` – example bundles and use cases
-  - `tests.html` – conformance and validation tests
-  - `playground.html` – **RPO Playground**, from narrative to draft `rpo.json`
-- `schema/` (optional, if present)
-  - JSON Schemas or auxiliary definitions for tooling
-- `examples/` (optional, if present)
-  - Sample `rpo.json` bundles and associated artefacts
-
-The `docs/` folder is designed to be published as a static site (e.g. GitHub Pages).
-
----
-
-## What is an RPO bundle?
-
-An **RPO bundle** minimally contains:
-
-- `rpo_version` — specification version (e.g. `"0.1"`)
-- `bundle_id` — unique identifier for this bundle
-- `created_at` — ISO 8601 timestamp
-- `issuer` — who issues the report (person / organisation)
-- `subject` — who / what the report is about
-- `narrative` — human-readable account of the situation
-- `evidence[]` — references to exhibits, documents, logs, etc.
-- `registry.public_hash` — public hash used as integrity anchor
-- `meta` — additional metadata and heuristics
-
-The goal is to make **truth measurable, power traceable and coherence verifiable** without locking users into a proprietary format or a single vendor.
-
----
-
-## RPO Playground (docs/playground.html)
-
-The **RPO Playground** is an open, minimal implementation of the standard:
-
-- runs **entirely in the browser** (pure HTML/CSS/JS),
-- requires **no backend**, **no database**, **no AI model**,
-- generates a **draft `rpo.json`** bundle from a free-text narrative,
-- computes simple **heuristics** to illustrate narrative structure.
-
-### Heuristics
-
-From the narrative you enter, the playground computes:
-
-- `sentence_count` – number of sentences detected,
-- `evidence_markers` – count of numbers and basic markers (dates, time/causality words),
-- `coherence_score` – a simple 0–100 score derived from length and markers,
-- `heuristic_anchors`:
-  - `dates` – explicit dates,
-  - `years` – years like `2023`, `2024`, …
-  - `places` – simple location patterns (experimental).
-
-These are stored under:
-
-```json
-"meta": {
-  "playground": true,
-  "heuristic_scores": {
-    "coherence_score": 72,
-    "evidence_markers": 9,
-    "sentence_count": 7
+{
+  "rpo_version": "0.1",
+  "bundle_id": "string",
+  "created_at": "ISO-8601 timestamp",
+  "issuer": { "label": "string" },
+  "subject": { "label": "string" },
+  "narrative": {
+    "title": "string",
+    "text": "string",
+    "pdf_hash": "string"
   },
-  "heuristic_anchors": {
-    "dates": ["12 March 2024"],
-    "years": ["2024"],
-    "places": ["Paris"]
+  "evidence": [
+    {
+      "id": "string",
+      "type": "string",
+      "source": "string",
+      "description": "string",
+      "text_ref": "string"
+    }
+  ],
+  "registry": {
+    "public_hash": "sha256 hex",
+    "registry_hint": "string"
   },
-  "psycho_forensic": {
-    "available": false,
-    "note": "In the CNRS × TruthX pilot, this block will be populated by psycho-forensic models."
+  "meta": {
+    "playground": true,
+    "heuristic_scores": {
+      "coherence_score": "int",
+      "evidence_markers": "int",
+      "sentence_count": "int"
+    },
+    "heuristic_anchors": {
+      "dates": [],
+      "years": [],
+      "places": []
+    },
+    "psycho_forensic": {
+      "available": false,
+      "note": "string"
+    }
   }
 }
-The psycho_forensic block is intentionally disabled (available: false) in the open version.
-It documents where advanced CNRS × TruthX models would later attach their analysis.
 
-Public hash
-The playground computes a public_hash using SHA-256 over a deterministic concatenation of:
 
-rpo_version
+This is the canonical minimal profile for the open version of RPO.
 
-bundle_id
+2. Hashing (public_hash)
+Algorithm
 
-created_at
+RPO v0.1 uses SHA-256.
+The public_hash is computed over a deterministic string concatenation of the minimal fields:
 
-issuer
+rpo_version=<v>|
+bundle_id=<id>|
+created_at=<iso>|
+issuer=<string>|
+subject=<string>|
+title=<string>|
+narrative=<text>
 
-subject
+Example (pseudo-code)
+import hashlib
 
-title
+def compute_public_hash(bundle):
+    payload = (
+        f"rpo_version={bundle['rpo_version']}|"
+        f"bundle_id={bundle['bundle_id']}|"
+        f"created_at={bundle['created_at']}|"
+        f"issuer={bundle['issuer']['label']}|"
+        f"subject={bundle['subject']['label']}|"
+        f"title={bundle['narrative']['title']}|"
+        f"narrative={bundle['narrative']['text']}"
+    )
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
-narrative
+Validation
+def validate_public_hash(bundle):
+    expected = compute_public_hash(bundle)
+    return expected == bundle["registry"]["public_hash"]
 
-This hash is exposed as:
+3. How to integrate an RPO bundle into your system
+a) Parse JSON
 
-json
-Copier le code
-"registry": {
-  "public_hash": "…sha256…",
-  "registry_hint": "Open playground — no official registry anchor yet."
+There is no special format, just standard JSON:
+
+import json
+
+with open("rpo.json") as f:
+    rpo = json.load(f)
+
+b) Validate required fields
+
+Implementers should validate:
+
+presence of the top-level fields
+
+presence of narrative title & text
+
+bundle_id uniqueness (your responsibility)
+
+correct SHA-256 format (64 hex characters)
+
+ISO timestamp correctness
+
+Minimal check (Python):
+
+def validate_structure(rpo):
+    required = [
+        "rpo_version", "bundle_id", "created_at",
+        "issuer", "subject", "narrative",
+        "evidence", "registry", "meta"
+    ]
+    for k in required:
+        if k not in rpo:
+            raise ValueError(f"Missing field: {k}")
+
+4. Generating your own RPO bundle programmatically
+
+Basic example:
+
+import uuid
+from datetime import datetime
+
+def new_rpo(title, text, issuer, subject):
+    return {
+        "rpo_version": "0.1",
+        "bundle_id": f"rpo-{uuid.uuid4()}",
+        "created_at": datetime.utcnow().isoformat() + "Z",
+        "issuer": { "label": issuer },
+        "subject": { "label": subject },
+        "narrative": {
+            "title": title,
+            "text": text,
+            "pdf_hash": "placeholder"
+        },
+        "evidence": [],
+        "registry": {
+            "public_hash": "",
+            "registry_hint": "No registry anchor in minimal profile"
+        },
+        "meta": {
+            "playground": False
+        }
+    }
+
+
+Add hash:
+
+bundle = new_rpo(...)
+bundle["registry"]["public_hash"] = compute_public_hash(bundle)
+
+5. Validating an RPO bundle in CI/CD
+
+You can add a step in GitHub Actions:
+
+- name: Validate RPO JSON
+  run: |
+    python3 validate_rpo.py docs/examples/example-minimal/rpo.json
+
+6. Common developer questions
+Q1. Can I add custom fields?
+
+Yes, as long as:
+
+you do not modify the minimal required fields,
+
+custom fields are placed under a namespace such as:
+
+"extensions": {
+  "my_org": { ... }
 }
-In v0.1, the playground does not register the bundle anywhere. It only shows how a hash could be produced, inspected, and later anchored in a registry.
 
-Running the docs & playground
-Because everything is static, you can:
+Q2. Does the public_hash sign the PDF?
 
-Option 1 — Open locally
-Clone the repository
+No. It signs the narrative text + metadata.
+PDF integrity is checked via pdf_hash.
 
-Open docs/overview.html or docs/playground.html directly in your browser
+Q3. Is the registry required?
 
-Note: some browsers restrict crypto.subtle on file:// URLs.
-If the public hash is not computed, run a tiny local server instead.
+Not in v0.1.
+A later version will define remote anchoring.
 
-Option 2 — Run a tiny local server
-From the repository root:
+7. What developers should NOT assume
 
-bash
-Copier le code
-# Python 3
-python -m http.server 8000
+RPO does not determine truth or falsity.
 
-# or
-npx serve docs
-Then open:
+RPO does not replace legal analysis.
 
-http://localhost:8000/docs/overview.html
+RPO does not embed AI models in the open version.
 
-http://localhost:8000/docs/playground.html
+RPO does not guarantee authenticity of the narrative — only immutability.
 
-The playground will generate:
+8. Minimal implementation checklist (copy/paste)
 
-a draft rpo.json (displayed in the interface),
+To accept RPO bundles in your system, you must:
 
-a SHA-256 public_hash,
+ Parse JSON
 
-heuristic scores and anchors.
+ Validate minimal fields
 
-You can copy the JSON or download it as rpo.json directly from the page.
+ Enforce ISO timestamp
 
-Relationship with CNRS × TruthX pilot
-This repository and its playground are deliberately simple:
+ Recompute public_hash and compare
 
-open, inspectable, reproducible,
+ Reject bundle if fields missing or hash mismatch
 
-no hidden backend,
+ (Optional) Validate pdf_hash
 
-no claim of legal or probatory value on their own.
+ (Optional) Validate bundle_id uniqueness
 
-The CNRS × TruthX pilot builds on top of the standard RPO bundle and adds:
+ (Optional) Validate schemas if using JSON Schema
 
-narrative interpretation and interpretive coherence,
+9. Example: command-line validation tool
+#!/usr/bin/env python3
 
-psycho-forensic heuristics (e.g. coercive control, inverted narratives),
+import sys, json
+from rpo_lib import compute_public_hash
 
-richer probatory coherence scores,
+def main(path):
+    data = json.load(open(path))
+    expected = compute_public_hash(data)
+    if expected == data["registry"]["public_hash"]:
+        print("✔ RPO bundle is valid")
+    else:
+        print("✘ INVALID RPO BUNDLE")
+        print("expected:", expected)
+        print("found:   ", data["registry"]["public_hash"])
 
-controlled infrastructure and governance.
+if __name__ == "__main__":
+    main(sys.argv[1])
 
-If you are a researcher, lawyer, magistrate, compliance officer or institution interested in testing the scientific pilot, you can request access here:
+10. Contact
 
-👉 https://www.truthx.co/truthx-pilote-form
-
-Status and scope of v0.1
-RPO v0.1 is:
-
-An open technical baseline, not a binding legal framework.
-
-A minimal profile, suitable for experimentation, prototyping and tooling.
-
-Designed to evolve toward richer versions (v0.2, v1.0…) with:
-
-profiles per domain (justice, governance, audit, protection),
-
-stronger registry requirements,
-
-compatibility with external standards and infrastructures.
-
-Contributions, comments and critiques about the structure, fields or heuristics are welcome.
-
-Contributing
-For now, contributions can focus on:
-
-improving the clarity and robustness of the specification text,
-
-proposing additional examples (anonymised),
-
-refining heuristics used in the Playground (without turning it into a full AI system),
-
-suggesting interoperability hooks (e.g. with existing legal / evidence standards).
-
-Typical workflow:
-
-bash
-Copier le code
-git clone https://github.com/openproof-net/rpo-spec-v0.1.git
-cd rpo-spec-v0.1
-# create a branch, edit docs/schema/examples, then:
-git add .
-git commit -m "Improve RPO v0.1 docs/playground heuristics"
-git push origin <your-branch>
-Then open a Pull Request describing:
-
-what changed,
-
-why it improves the clarity, safety or interoperability of the RPO standard.
-
-License
-Unless otherwise stated in individual files, the RPO v0.1 specification and the documentation in this repository are released under an open documentation license (to be confirmed by the OpenProof governance body).
-
-Please check the LICENSE file when it is added, or contact:
+For technical questions, implementations or interoperability:
 
 openproof@truthx.co
-
-for clarification about reuse in commercial, academic or institutional projects.
 
 
