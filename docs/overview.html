@@ -12,7 +12,7 @@
     href="https://custom-images.strikinglycdn.com/res/hrscyvw4p/image/upload/c_limit,f_lossy,h_130,w_130,f_auto,q_auto/985447/451167_485103.png"
   />
 
-  <!-- Minimal dark/ivory/gold theme (same as index.html) -->
+  <!-- Minimal dark/ivory/gold theme (aligned with index.html) -->
   <style>
     :root {
       --bg: #04040e;
@@ -35,7 +35,7 @@
 
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, "SF Pro Text",
         "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #111625 0, #04040e 55%);
       color: var(--text-main);
@@ -50,7 +50,7 @@
       text-decoration: underline;
     }
 
-    /* NAVBAR (same style as index) */
+    /* NAVBAR (same base as index) */
     .nav {
       position: sticky;
       top: 0;
@@ -68,7 +68,7 @@
     .nav-inner {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0.65rem 1.25rem;
+      padding: 0.65rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -89,13 +89,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 10px 25px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25),
+        0 10px 25px rgba(0, 0, 0, 0.6);
     }
 
     .nav-logo img {
       width: 26px;
       height: 26px;
       display: block;
+      border-radius: 50%;
     }
 
     .nav-title {
@@ -144,15 +146,40 @@
       font-weight: 600;
     }
 
-    .nav-link-cta {
-      border-color: rgba(241, 230, 163, 0.55);
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--border-soft);
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      color: var(--gold-soft);
+      background: rgba(10, 14, 24, 0.9);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold-soft);
+      background: rgba(13, 18, 30, 0.95);
+      text-decoration: none;
+    }
+
+    @media (max-width: 880px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
     }
 
     /* LAYOUT */
     .page {
       max-width: 1120px;
       margin: 2.3rem auto 3.25rem;
-      padding: 0 1.25rem 3rem;
+      padding: 0 1.5rem 3rem;
     }
 
     .page-header {
@@ -281,8 +308,8 @@
     }
 
     .inline-code {
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
-        "Liberation Mono", "Courier New", monospace;
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
+        "Courier New", monospace;
       font-size: 0.8rem;
       background: rgba(12, 16, 28, 0.9);
       padding: 0.05rem 0.35rem;
@@ -348,26 +375,24 @@
           />
         </div>
         <div>
-          <div class="nav-title">OPENPROOF — RPO v0.1</div>
-          <div class="nav-subtitle">
-            Overview • Integrity • Readability • Verifiability
-          </div>
+          <div class="nav-title">OpenProof — RPO v0.1</div>
+          <div class="nav-subtitle">Overview • Integrity • Readability • Verifiability</div>
         </div>
       </div>
-      <nav class="nav-links">
+      <div class="nav-links">
         <a href="overview.html" class="nav-link active">Overview</a>
-        <a href="index.html" class="nav-link">Specification</a>
+        <a href="index.html#spec" class="nav-link">Specification</a>
         <a href="examples.html" class="nav-link">Examples</a>
         <a href="tests.html" class="nav-link">Tests</a>
         <a
           href="https://github.com/openproof-net/rpo-spec-v0.1"
-          class="nav-link nav-link-cta"
+          class="btn-ghost"
           target="_blank"
           rel="noopener noreferrer"
         >
-          View on GitHub
+          <span>View on GitHub</span>
         </a>
-      </nav>
+      </div>
     </div>
   </header>
 
@@ -377,9 +402,9 @@
       <div class="eyebrow">RPO — Rapport Probatoire Ouvert</div>
       <h1>What the RPO Standard Does in Practice</h1>
       <p class="subtitle">
-        This page gives a conceptual overview of the RPO (Rapport Probatoire Ouvert)
-        standard: what problem it solves, how it is structured, and how implementers and
-        reviewers are meant to use it.
+        This page gives a conceptual overview of the RPO (Rapport Probatoire Ouvert) standard:
+        what problem it solves, how it is structured, and how implementers and reviewers are meant
+        to use it.
       </p>
       <div class="chip-row">
         <div class="chip">Signed JSON</div>
@@ -398,20 +423,13 @@
             The RPO defines how a piece of digital evidence must be packaged so that:
           </p>
           <ul>
-            <li>
-              machines can verify integrity and structure via a signed JSON bundle,
-            </li>
+            <li>machines can verify integrity and structure via a signed JSON bundle,</li>
             <li>humans can read a coherent narrative via a PDF report,</li>
-            <li>
-              both are anchored by a <strong>public hash</strong> that can be checked by
-              any registry.
-            </li>
+            <li>both are anchored by a <strong>public hash</strong> that can be checked by any registry.</li>
           </ul>
           <p class="panel-text">
-            The goal is simple: make <strong>truth measurable</strong>,
-            <strong>power traceable</strong>, and
-            <strong>coherence verifiable</strong> across institutions, courts, and
-            research projects.
+            The goal is simple: make <strong>truth measurable</strong>, <strong>power traceable</strong>,
+            and <strong>coherence verifiable</strong> across institutions, courts, and research projects.
           </p>
         </div>
       </article>
@@ -428,8 +446,7 @@
             <li>Researchers studying evidence structures or narrative bias.</li>
           </ul>
           <p class="panel-text">
-            Any system that wants to issue <em>verifiable, sealed reports</em> can
-            implement RPO.
+            Any system that wants to issue <em>verifiable, sealed reports</em> can implement RPO.
           </p>
         </div>
       </article>
@@ -441,26 +458,24 @@
         <div class="panel-inner">
           <div class="panel-title">3. Core guarantees</div>
           <h2 class="panel-heading">Integrity • Readability • Verifiability</h2>
-          <p class="panel-text">
-            Every RPO-compliant bundle must satisfy three conditions:
-          </p>
+          <p class="panel-text">Every RPO-compliant bundle must satisfy three conditions:</p>
           <ul>
             <li>
-              <strong>Integrity</strong> — any modification to the evidence bundle or the
-              narrative becomes detectable through hashing and signatures.
+              <strong>Integrity</strong> — any modification to the evidence bundle or the narrative
+              becomes detectable through hashing and signatures.
             </li>
             <li>
-              <strong>Readability</strong> — humans and institutions can interpret the
-              same narrative, with timestamps and context preserved in the PDF.
+              <strong>Readability</strong> — humans and institutions can interpret the same narrative,
+              with timestamps and context preserved in the PDF.
             </li>
             <li>
-              <strong>Verifiability</strong> — a public, testable JSON structure allows
-              third parties to check coherence and re-compute hashes.
+              <strong>Verifiability</strong> — a public, testable JSON structure allows third parties
+              to check coherence and re-compute hashes.
             </li>
           </ul>
           <p class="panel-text">
-            These guarantees are enforced by the RPO schema, the format spec, and
-            recommended signature practices.
+            These guarantees are enforced by the RPO schema, the format spec, and recommended
+            signature practices.
           </p>
         </div>
       </article>
@@ -469,15 +484,10 @@
         <div class="panel-inner">
           <div class="panel-title">4. High-level flow</div>
           <h2 class="panel-heading">From raw data to sealed report</h2>
-          <p class="panel-text">
-            At a high level, an RPO implementation follows four steps:
-          </p>
+          <p class="panel-text">At a high level, an RPO implementation follows four steps:</p>
           <ol class="panel-text" style="padding-left: 1.2rem;">
             <li><strong>Collect</strong> structured evidence and metadata.</li>
-            <li>
-              <strong>Build</strong> the RPO JSON object
-              (<span class="inline-code">rpo.json</span>).
-            </li>
+            <li><strong>Build</strong> the RPO JSON object (<span class="inline-code">rpo.json</span>).</li>
             <li>
               <strong>Generate</strong> the narrative PDF and link it via
               <span class="inline-code">narrative.pdf_hash</span>.
@@ -489,12 +499,7 @@
           </ol>
           <p class="panel-text">
             The detailed flow and actor roles are described in
-            <a
-              href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/spec/rpo-architecture.md"
-              target="_blank"
-              rel="noopener noreferrer"
-              >/spec/rpo-architecture.md</a
-            >.
+            <a href="spec/rpo-architecture.md">/spec/rpo-architecture.md</a>.
           </p>
         </div>
       </article>
@@ -507,50 +512,28 @@
           <div class="panel-title">5. Files in this specification</div>
           <h2 class="panel-heading">How the spec is organised</h2>
           <p class="panel-text">
-            The GitHub repository
-            <span class="inline-code">openproof-net/rpo-spec-v0.1</span>
+            The GitHub repository <span class="inline-code">openproof-net/rpo-spec-v0.1</span>
             ships three main documents:
           </p>
           <ul class="link-list">
             <li>
               <span class="link-label">Architecture:</span>
-              <a
-                href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/spec/rpo-architecture.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                >/spec/rpo-architecture.md</a
-              >
+              <a href="spec/rpo-architecture.md">/spec/rpo-architecture.md</a>
               — actors (producer, registry, verifier) and data flow.
             </li>
             <li>
               <span class="link-label">Format:</span>
-              <a
-                href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/spec/rpo-format.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                >/spec/rpo-format.md</a
-              >
+              <a href="spec/rpo-format.md">/spec/rpo-format.md</a>
               — field-by-field JSON and PDF mapping, including registry anchoring rules.
             </li>
             <li>
               <span class="link-label">Schema:</span>
-              <a
-                href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/spec/rpo-schema.json"
-                target="_blank"
-                rel="noopener noreferrer"
-                >/spec/rpo-schema.json</a
-              >
+              <a href="spec/rpo-schema.json">/spec/rpo-schema.json</a>
               — machine-readable JSON schema for validation.
             </li>
           </ul>
           <p class="panel-text">
-            In addition, the
-            <a
-              href="https://github.com/openproof-net/rpo-spec-v0.1/tree/main/examples/example-minimal"
-              target="_blank"
-              rel="noopener noreferrer"
-              >/examples/example-minimal/</a
-            >
+            In addition, the <a href="examples/example-minimal/">/examples/example-minimal/</a>
             directory provides a minimal working bundle.
           </p>
         </div>
@@ -566,13 +549,11 @@
           <ul>
             <li>
               <strong>v0.1 — Draft</strong><br />
-              Initial JSON + PDF bundle specification, shipped with minimal example and
-              tests.
+              Initial JSON + PDF bundle specification, shipped with minimal example and tests.
             </li>
             <li>
               <strong>v0.5 — Public Comment</strong><br />
-              Feedback from CNRS / GREYC researchers, legal experts, and institutional
-              partners.
+              Feedback from CNRS / GREYC researchers, legal experts, and institutional partners.
             </li>
             <li>
               <strong>v1.0 — Stable Release</strong><br />
@@ -596,26 +577,12 @@
           <div class="panel-title">Implementers</div>
           <h2 class="panel-heading">Build an RPO-compatible engine</h2>
           <p class="panel-text">
-            Start from the JSON schema and format spec, then model your internal data so
-            that your reports can always be exported as a compliant RPO bundle.
+            Start from the JSON schema and format spec, then model your internal data so that your
+            reports can always be exported as a compliant RPO bundle.
           </p>
           <ul class="link-list">
-            <li>
-              <a
-                href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/spec/rpo-schema.json"
-                target="_blank"
-                rel="noopener noreferrer"
-                >JSON schema</a
-              >
-            </li>
-            <li>
-              <a
-                href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/spec/rpo-format.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Format specification</a
-              >
-            </li>
+            <li><a href="spec/rpo-schema.json">JSON schema</a></li>
+            <li><a href="spec/rpo-format.md">Format specification</a></li>
           </ul>
         </div>
       </article>
@@ -625,19 +592,12 @@
           <div class="panel-title">Reviewers & auditors</div>
           <h2 class="panel-heading">Understand what you can test</h2>
           <p class="panel-text">
-            Use the schema, hash tests, and minimal example to verify that a given bundle
-            is structurally sound and cryptographically anchored.
+            Use the schema, hash tests, and minimal example to verify that a given bundle is
+            structurally sound and cryptographically anchored.
           </p>
           <ul class="link-list">
             <li><a href="tests.html">Validation & tests overview</a></li>
-            <li>
-              <a
-                href="https://github.com/openproof-net/rpo-spec-v0.1/tree/main/examples/example-minimal"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Minimal RPO example</a
-              >
-            </li>
+            <li><a href="examples/example-minimal/">Minimal RPO example</a></li>
           </ul>
         </div>
       </article>
@@ -647,8 +607,8 @@
           <div class="panel-title">Contributors</div>
           <h2 class="panel-heading">Participate in OpenProof</h2>
           <p class="panel-text">
-            OpenProof is designed as an open evidence infrastructure. Contributions are
-            welcome on both the specification and the test suite.
+            OpenProof is designed as an open evidence infrastructure. Contributions are welcome on
+            both the specification and the test suite.
           </p>
           <ul class="link-list">
             <li>
@@ -680,22 +640,11 @@
       </div>
       <div>
         Technical site:
-        <a
-          href="https://www.openproof.net"
-          target="_blank"
-          rel="noopener noreferrer"
-          >openproof.net</a
-        ><br />
+        <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">openproof.net</a><br />
         Governance:
-        <a
-          href="https://www.truthx-openproof.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          >truthx-openproof.org</a
-        >
+        <a href="https://truthx-openproof.org" target="_blank" rel="noopener noreferrer">truthx-openproof.org</a>
       </div>
     </footer>
   </main>
 </body>
 </html>
-
