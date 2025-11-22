@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>OpenProof — RPO Playground | Open RPO Demo</title>
+  <title>OpenProof — RPO Playground | From narrative to RPO bundle</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- SEO -->
   <meta name="description"
-        content="OpenProof RPO Playground — open demo of the RPO (Rapport Probatoire Ouvert) standard: type a narrative, add simple evidence, and generate an open RPO bundle skeleton." />
+        content="RPO Playground: try the open version of the RPO (Rapport Probatoire Ouvert). Paste a narrative, get a draft RPO JSON bundle plus heuristic scores and a public hash." />
   <link rel="canonical" href="https://rpo.openproof.net/playground.html" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="OpenProof — RPO Playground" />
   <meta property="og:description"
-        content="Interactive playground for the RPO standard: narrative + evidence → open RPO JSON skeleton." />
+        content="Experimental playground for the RPO standard: turn a narrative into a draft JSON bundle, with heuristic scores and a public hash." />
   <meta property="og:url" content="https://rpo.openproof.net/playground.html" />
   <meta property="og:image"
         content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
@@ -26,7 +26,7 @@
     href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
   />
 
-  <!-- Dark / ivory / gold theme -->
+  <!-- Minimal dark/ivory/gold theme (copié depuis index.html pour cohérence) -->
   <style>
     :root {
       --bg: #04040e;
@@ -65,7 +65,7 @@
       text-decoration: underline;
     }
 
-    /* Nav (identique à index, avec Playground en plus) */
+    /* Nav */
     .nav {
       position: sticky;
       top: 0;
@@ -138,7 +138,6 @@
       align-items: center;
       gap: 1.25rem;
       font-size: 0.9rem;
-      flex-wrap: wrap;
     }
 
     .nav-link {
@@ -185,21 +184,22 @@
       }
       .nav-links {
         width: 100%;
-        justify-content: flex-start;
+        justify-content: space-between;
+        flex-wrap: wrap;
         row-gap: 0.4rem;
       }
     }
 
     /* Hero */
     .hero {
-      padding: 3.2rem 1.5rem 2rem;
+      padding: 3.2rem 1.5rem 2.4rem;
     }
 
     .hero-inner {
       max-width: 1120px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.6fr);
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.9fr);
       gap: 2.4rem;
       align-items: center;
     }
@@ -213,7 +213,7 @@
     }
 
     .hero-title {
-      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      font-size: clamp(2.0rem, 2.8vw, 2.5rem);
       line-height: 1.2;
       margin: 0 0 0.75rem;
     }
@@ -233,7 +233,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.4rem;
     }
 
     .badge {
@@ -246,76 +246,59 @@
     }
 
     .hero-meta {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
     }
 
     .hero-card {
       background: radial-gradient(circle at top left, #1a1f32, #070913);
       border-radius: var(--radius-lg);
-      padding: 1.4rem 1.5rem;
+      padding: 1.6rem;
       border: 1px solid var(--border-soft);
       box-shadow: var(--shadow-soft);
-      font-size: 0.88rem;
-      color: var(--text-muted);
     }
 
-    .hero-card h2 {
-      margin: 0 0 0.6rem;
+    .hero-card-title {
       font-size: 0.95rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--gold-soft);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
     }
 
-    .hero-card ol {
-      margin: 0.4rem 0 0;
-      padding-left: 1.2rem;
+    .hero-card-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.9rem;
     }
 
-    .hero-card li + li {
-      margin-top: 0.25rem;
+    .hero-card-note {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.5;
     }
 
-    .hero-cta {
-      margin-top: 1rem;
-      font-size: 0.85rem;
+    /* Layout panels */
+    .main {
+      padding: 0 1.5rem 3.5rem;
     }
 
-    .hero-cta a {
-      text-decoration: underline;
+    .grid {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+      gap: 2rem;
     }
 
     @media (max-width: 900px) {
       .hero-inner {
         grid-template-columns: minmax(0, 1fr);
       }
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
     }
 
-    /* Playground layout */
-    .main {
-      padding: 0 1.5rem 3.5rem;
-    }
-
-    .playground-grid {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.5fr);
-      gap: 2rem;
-    }
-
-    .section-title {
-      max-width: 1120px;
-      margin: 0 auto 0.9rem;
-      padding: 0 0.1rem;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-    }
-
-    .card {
+    .panel {
       background: linear-gradient(145deg, var(--panel), var(--panel-soft));
       border-radius: var(--radius-lg);
       padding: 1.6rem 1.7rem 1.7rem;
@@ -324,121 +307,204 @@
       border-top: 3px solid var(--gold);
     }
 
-    .card h2 {
+    .panel h2 {
       margin-top: 0;
-      font-size: 1rem;
+      font-size: 1.05rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: #5c4721;
+      margin-bottom: 0.8rem;
     }
 
-    .card p {
+    .panel p {
       font-size: 0.9rem;
       line-height: 1.5;
-      margin-top: 0.4rem;
+      margin-top: 0;
+    }
+
+    .section-title {
+      max-width: 1120px;
+      margin: 2.2rem auto 0.9rem;
+      padding: 0 0.1rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    /* Form & results */
+    .form-group {
       margin-bottom: 0.9rem;
     }
 
-    .field-group {
-      margin-bottom: 1rem;
-    }
-
-    .field-label {
+    .form-label {
       display: block;
-      font-size: 0.82rem;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
       margin-bottom: 0.25rem;
       color: #5c4721;
     }
 
-    textarea,
-    input[type="text"] {
+    .input,
+    .textarea {
       width: 100%;
       border-radius: 10px;
-      border: 1px solid rgba(122, 100, 50, 0.35);
-      padding: 0.55rem 0.65rem;
-      font-size: 0.88rem;
+      border: 1px solid rgba(122, 100, 50, 0.25);
+      padding: 0.5rem 0.6rem;
+      font-size: 0.9rem;
       font-family: inherit;
-      resize: vertical;
-      min-height: 2.2rem;
-      background: #fdfaf3;
-      color: #3e2f16;
+      color: #3a2c12;
+      background: #fdfbf7;
       outline: none;
     }
 
-    textarea {
-      min-height: 140px;
-    }
-
-    textarea:focus,
-    input[type="text"]:focus {
+    .input:focus,
+    .textarea:focus {
       border-color: var(--gold);
-      box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.2);
+      box-shadow: 0 0 0 1px rgba(212,175,55,0.35);
     }
 
-    .helper-text {
+    .textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .helper {
       font-size: 0.78rem;
-      color: #7f6a3a;
-      margin-top: 0.25rem;
+      color: #7a6432;
+      margin-top: 0.1rem;
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1rem;
     }
 
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
       border-radius: 999px;
+      padding: 0.45rem 1.1rem;
       border: none;
-      padding: 0.5rem 1.3rem;
       font-size: 0.9rem;
+      font-weight: 500;
       cursor: pointer;
       background: linear-gradient(135deg, #d4af37, #f1e6a3);
-      color: #3b2c10;
-      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.28);
+      color: #2a210e;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.25);
     }
 
     .btn-primary:hover {
-      filter: brightness(0.97);
+      filter: brightness(1.03);
     }
 
-    .btn-primary:active {
-      transform: translateY(1px);
-      box-shadow: 0 7px 16px rgba(0, 0, 0, 0.32);
-    }
-
-    .output-meta {
-      font-size: 0.8rem;
-      color: #7f6a3a;
-      margin-top: 0.1rem;
-      margin-bottom: 0.7rem;
-    }
-
-    pre {
-      background: #111521;
-      color: #f7f3e8;
-      border-radius: 14px;
-      padding: 0.9rem 1rem;
-      font-size: 0.82rem;
-      max-height: 280px;
-      overflow: auto;
-      border: 1px solid rgba(241, 230, 163, 0.2);
-      margin: 0;
-    }
-
-    .cta-cnrs {
-      margin-top: 1rem;
-      font-size: 0.82rem;
+    .btn-secondary {
+      border-radius: 999px;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid rgba(122, 100, 50, 0.4);
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: transparent;
       color: #5c4721;
     }
 
-    .cta-cnrs a {
-      color: #4b3614;
-      text-decoration: underline;
+    .btn-secondary:hover {
+      background: rgba(212,175,55,0.08);
     }
 
-    @media (max-width: 900px) {
-      .playground-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
+    .result-tagline {
+      font-size: 0.82rem;
+      color: #5c4721;
+      margin-bottom: 0.6rem;
+    }
+
+    .result-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 0.8rem;
+      font-size: 0.8rem;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.7);
+      border-radius: 10px;
+      padding: 0.4rem 0.55rem;
+      border: 1px solid rgba(212,175,55,0.35);
+    }
+
+    .metric-label {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      color: #8a6c33;
+      margin-bottom: 0.15rem;
+    }
+
+    .metric-value {
+      font-weight: 600;
+      color: #3a2c12;
+      font-size: 0.9rem;
+    }
+
+    .hash-block {
+      font-size: 0.78rem;
+      word-break: break-all;
+      background: rgba(255,255,255,0.7);
+      border-radius: 10px;
+      padding: 0.5rem 0.6rem;
+      border: 1px dashed rgba(122,100,50,0.5);
+      margin-bottom: 0.8rem;
+    }
+
+    pre {
+      background: #111827;
+      color: #e5e7eb;
+      padding: 0.8rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      overflow-x: auto;
+      border: 1px solid rgba(15,23,42,0.8);
+      margin: 0;
+    }
+
+    .cta-panel {
+      max-width: 1120px;
+      margin: 2.4rem auto 0;
+      padding: 1.3rem 1.5rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(212,175,55,0.4);
+      background: radial-gradient(circle at top left, #1b2236, #050711);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .cta-panel strong {
+      color: var(--gold-soft);
+    }
+
+    .cta-btn {
+      border-radius: 999px;
+      padding: 0.45rem 1.2rem;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, #d4af37, #f1e6a3);
+      color: #2a210e;
+      text-decoration: none;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.25);
+      white-space: nowrap;
+    }
+
+    .cta-btn:hover {
+      filter: brightness(1.03);
+      text-decoration: none;
     }
 
     /* Footer */
@@ -448,7 +514,6 @@
       padding: 1.6rem 1.5rem 2.1rem;
       color: var(--text-muted);
       font-size: 0.82rem;
-      margin-top: 3rem;
     }
 
     .footer-inner {
@@ -498,8 +563,8 @@
       </div>
 
       <div class="nav-links">
-        <a href="index.html" class="nav-link">Specification</a>
         <a href="overview.html" class="nav-link">Overview</a>
+        <a href="index.html" class="nav-link">Specification</a>
         <a href="examples.html" class="nav-link">Examples</a>
         <a href="tests.html" class="nav-link">Tests</a>
         <a href="playground.html" class="nav-link active">Playground</a>
@@ -519,147 +584,148 @@
   <section class="hero">
     <div class="hero-inner">
       <div>
-        <div class="hero-kicker">RPO Standard • Open Playground</div>
+        <div class="hero-kicker">RPO Playground • Open version</div>
         <h1 class="hero-title">
-          OpenProof RPO <span>Playground</span> — narrative to open proof bundle
+          Try the <span>RPO Playground</span> — from narrative to draft proof bundle
         </h1>
         <p class="hero-subtitle">
-          This page lets you test the open version of the RPO (Rapport Probatoire Ouvert):
-          type a short narrative, add a few pieces of evidence, and generate an
-          <em>open</em> RPO JSON skeleton.
+          Paste a short narrative, add a few identifiers, and generate a
+          <strong>draft RPO JSON bundle</strong> with heuristic scores and a public hash.
+          This page demonstrates how the RPO standard can structure a story into
+          something verifiable.
         </p>
         <div class="hero-badges">
-          <div class="badge">Open demo</div>
-          <div class="badge">Narrative → JSON</div>
-          <div class="badge">CNRS-ready concept</div>
+          <div class="badge">Experimental</div>
+          <div class="badge">Deterministic</div>
+          <div class="badge">Open source friendly</div>
         </div>
         <div class="hero-meta">
-          This playground does not replace legal advice. It shows how an open proof
-          standard can structure a case before any advanced AI analysis.
+          This is an <strong>open playground</strong> — no AI model, no registry, no legal
+          value. It is here to show how an RPO bundle could look and behave, before
+          plugging advanced engines or CNRS modules.
         </div>
       </div>
 
       <aside class="hero-card">
-        <h2>How this playground works</h2>
-        <ol>
-          <li>You write a short narrative about a situation.</li>
-          <li>You add 1–3 concrete evidence elements (dates, messages, events).</li>
-          <li>The tool builds an open RPO JSON skeleton from your input.</li>
-          <li>You can review / copy the JSON as a starting point for further tools.</li>
-        </ol>
-        <div class="hero-cta">
-          If you want to test the <em>scientific / CNRS</em> pilot version with advanced
-          psycho-forensic modules, you can apply here:
-          <a
-            href="https://www.truthx.co/truthx-pilote-form"
-            target="_blank"
-            rel="noopener noreferrer"
-          >TruthX Pilot Form</a>.
+        <div class="hero-card-title">What this page does</div>
+        <div class="hero-card-subtitle">
+          It takes your narrative and turns it into a draft RPO bundle:
         </div>
+        <ul class="hero-list">
+          <li>Computes basic metrics (length, structure, evidence density).</li>
+          <li>Builds a minimal <code>rpo.json</code> object.</li>
+          <li>Derives a <code>public_hash</code> from the full content.</li>
+        </ul>
+        <p class="hero-card-note">
+          Think of it as an <strong>RPO sandbox</strong>:
+          the “code civil” exists, this page shows how a simple engine could apply it to
+          real narratives.
+        </p>
       </aside>
     </div>
   </section>
 
+  <!-- MAIN -->
   <main class="main">
-    <div class="section-title">Playground · From narrative to open RPO</div>
-    <div class="playground-grid">
-      <!-- LEFT: INPUT -->
-      <section class="card">
-        <h2>Your mini-case</h2>
+    <div class="section-title">Play with a narrative</div>
+    <div class="grid">
+      <!-- INPUT PANEL -->
+      <section class="panel">
+        <h2>1. Input</h2>
         <p>
-          Start with a short, factual description. Then add a few concrete elements that
-          could count as evidence (date, message, screenshot, witness, decision, etc.).
+          Start with a short narrative (1–3 paragraphs). You can anonymise names and
+          dates. The goal is to see how the structure behaves, not to judge the case.
         </p>
-
-        <div class="field-group">
-          <label for="storyInput" class="field-label">Narrative (required)</label>
+        <div class="form-group">
+          <label class="form-label" for="case-title">Case title</label>
+          <input id="case-title" class="input" placeholder="Example: Incident in Paris office – March 2024" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="issuer">Issuer (who files the report)</label>
+          <input id="issuer" class="input" placeholder="Example: Internal audit team, Company X" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="subject">Subject (who / what is concerned)</label>
+          <input id="subject" class="input" placeholder="Example: Employee, department, contract, etc." />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="narrative">Narrative (free text)</label>
           <textarea
-            id="storyInput"
-            placeholder="Example: On 12 March, I reported X to my manager. Since then, ..."
+            id="narrative"
+            class="textarea"
+            placeholder="Describe the situation in your own words. What happened, when, where, who was involved?"
           ></textarea>
-          <div class="helper-text">
-            One paragraph is enough. Focus on events: who did what, when, and how it impacted you.
+          <div class="helper">
+            Tip: include at least one date or time marker, a location, and 2–3 concrete actions.
           </div>
         </div>
 
-        <div class="field-group">
-          <label for="evidence1" class="field-label">Evidence 1</label>
-          <input
-            type="text"
-            id="evidence1"
-            placeholder="Example: Email sent on 12 March at 09:14 CET."
-          />
-        </div>
-
-        <div class="field-group">
-          <label for="evidence2" class="field-label">Evidence 2</label>
-          <input
-            type="text"
-            id="evidence2"
-            placeholder="Example: HR meeting summary dated 25 March."
-          />
-        </div>
-
-        <div class="field-group">
-          <label for="evidence3" class="field-label">Evidence 3</label>
-          <input
-            type="text"
-            id="evidence3"
-            placeholder="Example: Medical report mentioning psychological impact."
-          />
-        </div>
-
-        <button type="button" class="btn-primary" id="generateRpoBtn">
-          Generate open RPO JSON
-        </button>
-        <div class="helper-text">
-          For now, this will generate a simple JSON skeleton. Later, it can be extended with AI assistance
-          and PDF generation.
+        <div class="btn-row">
+          <button class="btn-primary" id="generate-btn">Generate draft RPO bundle</button>
+          <button class="btn-secondary" id="reset-btn" type="button">Reset</button>
         </div>
       </section>
 
-      <!-- RIGHT: OUTPUT -->
-      <section class="card">
-        <h2>Open RPO output</h2>
-        <p>
-          This is a <em>draft</em>, open-source representation of your case in the RPO
-          format. It is not stored or submitted anywhere from this page.
+      <!-- OUTPUT PANEL -->
+      <section class="panel">
+        <h2>2. Draft RPO bundle</h2>
+        <p class="result-tagline" id="result-tagline">
+          Fill the form on the left and click “Generate” to see the bundle.
         </p>
-        <div class="output-meta">
-          You can copy this JSON into your own tools, or use it as a starting point for a
-          more advanced RPO engine.
-        </div>
-        <pre id="jsonOutput">
-{
-  "message": "Fill the form on the left and click 'Generate open RPO JSON'."
-}
-        </pre>
 
-        <div class="cta-cnrs">
-          For a research-grade version with advanced psycho-forensic analysis (CNRS × TruthX),
-          you can request access to the pilot here:<br />
-          <a
-            href="https://www.truthx.co/truthx-pilote-form"
-            target="_blank"
-            rel="noopener noreferrer"
-          >https://www.truthx.co/truthx-pilote-form</a>.
+        <div class="result-metrics" id="metrics" style="display:none">
+          <div class="metric">
+            <div class="metric-label">Sentences</div>
+            <div class="metric-value" id="metric-sentences">0</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Evidence markers</div>
+            <div class="metric-value" id="metric-markers">0</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Coherence score</div>
+            <div class="metric-value" id="metric-score">0%</div>
+          </div>
         </div>
+
+        <div class="hash-block" id="hash-block" style="display:none">
+          <strong>public_hash</strong><br />
+          <span id="hash-value"></span>
+        </div>
+
+        <pre id="rpo-json" aria-label="Draft RPO JSON bundle"></pre>
       </section>
     </div>
+
+    <!-- CTA PANEL -->
+    <section class="cta-panel">
+      <div>
+        <strong>Here you see the “open” RPO Playground.</strong><br />
+        If you want to test the <strong>scientific / CNRS pilot version</strong> with
+        advanced psycho-forensic modules and real cases, you can apply to the pilot
+        programme.
+      </div>
+      <a
+        class="cta-btn"
+        href="https://www.truthx.co/truthx-pilote-form"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Apply for the CNRS pilot
+      </a>
+    </section>
   </main>
 
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
-        <div class="footer-title">OpenProof — RPO Playground</div>
+        <div class="footer-title">OpenProof — RPO Specification v0.1</div>
         <div class="footer-text">
           © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie.
         </div>
       </div>
-      <div class="footer-links">
-        <a href="index.html">Specification</a>
-        <span>•</span>
+      <div class="footer-right footer-links">
         <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">Technical site</a>
         <span>•</span>
         <a href="https://www.truthx-openproof.org" target="_blank" rel="noopener noreferrer">Governance</a>
@@ -669,7 +735,172 @@
     </div>
   </footer>
 
-  <!-- JS placeholder for later -->
-  <script src="js/playground.js"></script>
+  <!-- SIMPLE JS ENGINE -->
+  <script>
+    const generateBtn = document.getElementById("generate-btn");
+    const resetBtn = document.getElementById("reset-btn");
+
+    const titleInput = document.getElementById("case-title");
+    const issuerInput = document.getElementById("issuer");
+    const subjectInput = document.getElementById("subject");
+    const narrativeInput = document.getElementById("narrative");
+
+    const taglineEl = document.getElementById("result-tagline");
+    const metricsEl = document.getElementById("metrics");
+    const sentencesEl = document.getElementById("metric-sentences");
+    const markersEl = document.getElementById("metric-markers");
+    const scoreEl = document.getElementById("metric-score");
+
+    const hashBlockEl = document.getElementById("hash-block");
+    const hashValueEl = document.getElementById("hash-value");
+    const jsonEl = document.getElementById("rpo-json");
+
+    // Basic helpers
+    function countSentences(text) {
+      const cleaned = text.replace(/\s+/g, " ").trim();
+      if (!cleaned) return 0;
+      const parts = cleaned.split(/[.!?]+/).map(s => s.trim()).filter(Boolean);
+      return parts.length;
+    }
+
+    function countEvidenceMarkers(text) {
+      // Very simple heuristic:
+      // - numbers (dates, amounts)
+      // - words like "on", "at", "since", "because" (causal / temporal)
+      let digits = (text.match(/\d{2,}/g) || []).length;
+      const markers = (text.match(/\b(on|at|since|because|when|where)\b/gi) || []).length;
+      return digits + markers;
+    }
+
+    function computeCoherenceScore(sentences, markers) {
+      // Heuristic score just to show the idea of a "coherence of proof" metric.
+      const base = Math.min(40, sentences * 6);   // structure
+      const detail = Math.min(40, markers * 4);   // concrete markers
+      const floor = 20;                           // baseline
+      return Math.max(0, Math.min(100, floor + base + detail));
+    }
+
+    async function sha256(text) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    function randomBundleId() {
+      const ts = Date.now().toString(36);
+      const rand = Math.floor(Math.random() * 1e8).toString(36);
+      return "rpo-" + ts + "-" + rand;
+    }
+
+    generateBtn.addEventListener("click", async (event) => {
+      event.preventDefault();
+
+      const title = titleInput.value.trim() || "Untitled case";
+      const issuer = issuerInput.value.trim() || "Unknown issuer";
+      const subject = subjectInput.value.trim() || "Unspecified subject";
+      const narrative = narrativeInput.value.trim();
+
+      if (!narrative) {
+        alert("Please paste a narrative before generating the bundle.");
+        return;
+      }
+
+      const sentences = countSentences(narrative);
+      const markers = countEvidenceMarkers(narrative);
+      const score = computeCoherenceScore(sentences, markers);
+
+      const bundleId = randomBundleId();
+      const createdAt = new Date().toISOString();
+
+      const fullForHash = [
+        "rpo_version=0.1",
+        "bundle_id=" + bundleId,
+        "created_at=" + createdAt,
+        "issuer=" + issuer,
+        "subject=" + subject,
+        "title=" + title,
+        "narrative=" + narrative
+      ].join("|");
+
+      let publicHash = "";
+      try {
+        publicHash = await sha256(fullForHash);
+      } catch (e) {
+        publicHash = "sha256-not-available-in-this-browser";
+      }
+
+      const rpo = {
+        rpo_version: "0.1",
+        bundle_id: bundleId,
+        created_at: createdAt,
+        issuer: {
+          label: issuer
+        },
+        subject: {
+          label: subject
+        },
+        narrative: {
+          title: title,
+          text: narrative,
+          pdf_hash: "pdf-placeholder-hash"
+        },
+        evidence: [
+          {
+            id: "E1",
+            type: "narrative_block",
+            source: "user_input",
+            description: "Raw narrative provided in the playground",
+            text_ref: "narrative.text"
+          }
+        ],
+        registry: {
+          public_hash: publicHash,
+          registry_hint: "Open playground — no official registry anchor yet."
+        },
+        meta: {
+          playground: true,
+          heuristic_scores: {
+            coherence_score: score,
+            evidence_markers: markers,
+            sentence_count: sentences
+          }
+        }
+      };
+
+      // Update UI
+      sentencesEl.textContent = sentences.toString();
+      markersEl.textContent = markers.toString();
+      scoreEl.textContent = score.toString() + "%";
+      metricsEl.style.display = "grid";
+
+      if (publicHash) {
+        hashBlockEl.style.display = "block";
+        hashValueEl.textContent = publicHash;
+      } else {
+        hashBlockEl.style.display = "none";
+        hashValueEl.textContent = "";
+      }
+
+      taglineEl.textContent =
+        "This is a draft RPO bundle generated locally in your browser. It is deterministic, non-binding, and meant for experimentation only.";
+      jsonEl.textContent = JSON.stringify(rpo, null, 2);
+    });
+
+    resetBtn.addEventListener("click", () => {
+      titleInput.value = "";
+      issuerInput.value = "";
+      subjectInput.value = "";
+      narrativeInput.value = "";
+
+      taglineEl.textContent =
+        "Fill the form on the left and click “Generate” to see the bundle.";
+      metricsEl.style.display = "none";
+      hashBlockEl.style.display = "none";
+      hashValueEl.textContent = "";
+      jsonEl.textContent = "";
+    });
+  </script>
 </body>
 </html>
