@@ -26,7 +26,7 @@
     href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
   />
 
-  <!-- Minimal dark/ivory/gold theme (copié depuis index.html pour cohérence) -->
+  <!-- Minimal dark/ivory/gold theme -->
   <style>
     :root {
       --bg: #04040e;
@@ -469,6 +469,51 @@
       margin: 0;
     }
 
+    /* CNRS CTA inside panel */
+    .cnrs-cta {
+      margin-top: 1.4rem;
+      padding: 1rem 1.2rem;
+      border-radius: 14px;
+      background: linear-gradient(145deg, #fbf8f1, #f7f3e8);
+      border: 1px solid rgba(212, 175, 55, 0.55);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+      color: #5c4721;
+      font-size: 0.86rem;
+    }
+
+    .cnrs-cta-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin: 0 0 0.4rem;
+    }
+
+    .cnrs-cta p {
+      margin: 0 0 0.6rem;
+      line-height: 1.4;
+    }
+
+    .cnrs-cta a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.2rem;
+      padding: 0.36rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.9);
+      background: #f7f3e8;
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: #5c4721;
+      text-decoration: none;
+    }
+
+    .cnrs-cta a:hover {
+      background: #f1e6a3;
+      text-decoration: none;
+    }
+
+    /* Bottom CTA panel */
     .cta-panel {
       max-width: 1120px;
       margin: 2.4rem auto 0;
@@ -694,10 +739,27 @@
         </div>
 
         <pre id="rpo-json" aria-label="Draft RPO JSON bundle"></pre>
+
+        <!-- CNRS CTA INSIDE PANEL -->
+        <div class="cnrs-cta">
+          <div class="cnrs-cta-title">Test the Scientific Pilot (CNRS × TruthX)</div>
+          <p>
+            For an advanced psycho-medical-forensic analysis (interpretive coherence,
+            narrative structure, markers of coercive control), you can request access
+            to the <strong>CNRS × TruthX</strong> research pilot.
+          </p>
+          <a
+            href="https://www.truthx.co/truthx-pilote-form"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Request access to the CNRS pilot
+          </a>
+        </div>
       </section>
     </div>
 
-    <!-- CTA PANEL -->
+    <!-- CTA PANEL BOTTOM -->
     <section class="cta-panel">
       <div>
         <strong>Here you see the “open” RPO Playground.</strong><br />
@@ -766,7 +828,7 @@
     function countEvidenceMarkers(text) {
       // Very simple heuristic:
       // - numbers (dates, amounts)
-      // - words like "on", "at", "since", "because" (causal / temporal)
+      // - words like "on", "at", "since", "because", "when", "where"
       let digits = (text.match(/\d{2,}/g) || []).length;
       const markers = (text.match(/\b(on|at|since|because|when|where)\b/gi) || []).length;
       return digits + markers;
@@ -904,3 +966,4 @@
   </script>
 </body>
 </html>
+
