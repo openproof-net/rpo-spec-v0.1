@@ -134,3 +134,67 @@ Example:
     "created_at": "2025-01-01T12:00:00Z"
   }
 ]
+3. Security Considerations
+
+The RPO architecture is designed to preserve probatory integrity under hostile or uncertain conditions.
+Security guarantees rely on the separation of components and the use of deterministic, verifiable structures.
+
+3.1 Integrity
+
+Integrity ensures that the RPO bundle cannot be altered without detection.
+
+Mechanisms:
+
+SHA-256 hashing of the full JSON bundle.
+
+Optional PDF hashing to bind narrative and structure.
+
+Canonical JSON serialization to ensure stable hashing across systems.
+
+Cryptographic signatures (e.g., Ed25519) applied to the bundle.
+
+Any modification of JSON fields must produce a hash mismatch.
+
+3.2 Readability
+
+Humans must be able to interpret the narrative without ambiguity.
+
+Principles:
+
+PDF is the human-readable mirror of the JSON.
+
+narrative.summary must reflect the structure of evidence[].
+
+The narrative must not introduce information absent from the JSON.
+
+Hashes bind the PDF to the JSON to prevent tampering.
+
+3.3 Verifiability
+
+A third party must be able to confirm the validity of the proof independently.
+
+Mechanisms:
+
+JSON Schema validation (rpo-schema.json).
+
+Registry anchoring with a public hash.
+
+Re-hashing of the bundle to confirm integrity.
+
+Cross-checking PDF content vs JSON fields.
+
+No trust is required in the issuer; verification is possible offline.
+
+3.4 Separation of concerns
+
+Each layer plays a different role:
+
+JSON → machine verifiable
+
+PDF → human readable
+
+Registry → long-term integrity
+
+Signatures → authenticity of creation
+
+No single component is sufficient on its own; security emerges from the combination.
