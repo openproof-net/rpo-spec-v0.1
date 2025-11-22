@@ -1,111 +1,10 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://rpo.openproof.net/spec/v0.1/rpo-schema.json",
-  "title": "OpenProof RPO v0.1",
-  "description": "Minimal JSON Schema for RPO (Rapport Probatoire Ouvert) bundles.",
+  "$id": "https://rpo.openproof.net/schema/rpo-v0.1.json",
+  "title": "RPO v0.1 — Rapport Probatoire Ouvert",
+  "description": "JSON Schema for the OpenProof RPO v0.1 bundle.",
   "type": "object",
-  "properties": {
-    "rpo_version": {
-      "type": "string",
-      "const": "0.1"
-    },
-    "type": {
-      "type": "string",
-      "enum": ["evidence_bundle"]
-    },
-    "bundle_id": {
-      "type": "string",
-      "description": "Unique identifier of the RPO bundle.",
-      "minLength": 1
-    },
-    "created_at": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "issuer": {
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" },
-        "id": { "type": "string" },
-        "role": { "type": "string" }
-      },
-      "required": ["name"],
-      "additionalProperties": true
-    },
-    "subject": {
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" },
-        "id": { "type": "string" },
-        "role": { "type": "string" }
-      },
-      "required": ["name"],
-      "additionalProperties": true
-    },
-    "jurisdiction": {
-      "type": "string"
-    },
-    "language": {
-      "type": "string",
-      "description": "BCP-47 language code (e.g. fr-FR, en-GB)."
-    },
-    "evidence": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "id": { "type": "string" },
-          "type": { "type": "string" },
-          "description": { "type": "string" },
-          "source": { "type": "string" },
-          "hash": { "type": "string" },
-          "uri": { "type": "string" }
-        },
-        "required": ["id", "type"],
-        "additionalProperties": true
-      }
-    },
-    "narrative": {
-      "type": "object",
-      "properties": {
-        "summary": { "type": "string" },
-        "pdf_hash": { "type": "string" },
-        "pdf_uri": { "type": "string" },
-        "timeline_ref": { "type": "string" },
-        "notes": {
-          "type": "array",
-          "items": { "type": "string" }
-        }
-      },
-      "required": ["summary", "pdf_hash"],
-      "additionalProperties": true
-    },
-    "registry": {
-      "type": "object",
-      "properties": {
-        "registry_id": { "type": "string" },
-        "entry_id": { "type": "string" },
-        "public_hash": { "type": "string" },
-        "timestamp": { "type": "string", "format": "date-time" }
-      },
-      "required": ["registry_id", "entry_id", "public_hash"],
-      "additionalProperties": true
-    },
-    "signatures": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "algorithm": { "type": "string" },
-          "value": { "type": "string" },
-          "signer_id": { "type": "string" },
-          "created_at": { "type": "string", "format": "date-time" }
-        },
-        "required": ["algorithm", "value"],
-        "additionalProperties": true
-      }
-    }
-  },
+  "additionalProperties": false,
   "required": [
     "rpo_version",
     "type",
@@ -114,9 +13,104 @@
     "issuer",
     "subject",
     "evidence",
-    "narrative",
-    "signatures"
+    "narrative"
   ],
-  "additionalProperties": true
+  "properties": {
+    "rpo_version": {
+      "type": "string",
+      "const": "0.1"
+    },
+    "type": {
+      "type": "string",
+      "const": "evidence_bundle"
+    },
+    "bundle_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "jurisdiction": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string",
+      "description": "BCP-47 language tag, e.g. 'fr-FR' or 'en-GB'"
+    },
+    "issuer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "id", "role"],
+      "properties": {
+        "name": { "type": "string" },
+        "id":   { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "id", "role"],
+      "properties": {
+        "name": { "type": "string" },
+        "id":   { "type": "string" },
+        "role": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type"],
+        "properties": {
+          "id":          { "type": "string" },
+          "type":        { "type": "string" },
+          "description": { "type": "string" },
+          "hash":        { "type": "string" },
+          "uri":         { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "narrative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "pdf_hash"],
+      "properties": {
+        "summary":     { "type": "string" },
+        "pdf_hash":    { "type": "string" },
+        "pdf_uri":     { "type": "string", "format": "uri" },
+        "timeline_ref":{ "type": "string" }
+      }
+    },
+    "registry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["registry_id", "entry_id", "public_hash"],
+      "properties": {
+        "registry_id": { "type": "string" },
+        "entry_id":    { "type": "string" },
+        "public_hash": { "type": "string" }
+      }
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["algorithm", "value", "created_at"],
+        "properties": {
+          "algorithm": { "type": "string" },
+          "value":     { "type": "string" },
+          "signer_id": { "type": "string" },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
 }
-
