@@ -115,3 +115,9 @@ Example:
     "uri": "openproof://case-001/timeline.csv"
   }
 ]
+"narrative": {
+  "summary": "Pattern of coercive control over 3 years, with escalating isolation and institutional disqualification.",
+  "pdf_hash": "sha256:...",
+  "pdf_uri": "openproof://case-001/report.pdf",
+  "timeline_ref": "ev-001"
+}
