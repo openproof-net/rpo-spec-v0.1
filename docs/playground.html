@@ -26,6 +26,14 @@
     href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
   />
 
+  <!-- Fonts: Orbitron + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;600&display=swap"
+    rel="stylesheet"
+  />
+
   <!-- Minimal dark/ivory/gold theme -->
   <style>
     :root {
@@ -49,7 +57,7 @@
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, system-ui, "SF Pro Text",
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, "SF Pro Text",
         "Segoe UI", sans-serif;
       background: radial-gradient(circle at top, #111625 0, var(--bg) 45%);
       color: var(--text-main);
@@ -122,6 +130,7 @@
     }
 
     .nav-title {
+      font-family: "Orbitron", system-ui, sans-serif;
       font-size: 0.95rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -213,6 +222,7 @@
     }
 
     .hero-title {
+      font-family: "Orbitron", system-ui, sans-serif;
       font-size: clamp(2rem, 2.8vw, 2.5rem);
       line-height: 1.2;
       margin: 0 0 0.75rem;
@@ -273,6 +283,7 @@
     }
 
     .hero-card-title {
+      font-family: "Orbitron", system-ui, sans-serif;
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
@@ -355,6 +366,7 @@
 
     .panel h2 {
       margin-top: 0;
+      font-family: "Orbitron", system-ui, sans-serif;
       font-size: 1.05rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -471,7 +483,7 @@
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 0.5rem;
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.4rem;
       font-size: 0.8rem;
     }
 
@@ -496,6 +508,13 @@
       font-size: 0.9rem;
     }
 
+    .score-interpretation {
+      font-size: 0.78rem;
+      color: #7a6432;
+      margin-bottom: 0.8rem;
+      text-align: justify;
+    }
+
     .hash-block {
       font-size: 0.78rem;
       word-break: break-all;
@@ -504,6 +523,27 @@
       padding: 0.5rem 0.6rem;
       border: 1px dashed rgba(122,100,50,0.5);
       margin-bottom: 0.8rem;
+    }
+
+    .json-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .btn-json {
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(122,100,50,0.5);
+      font-size: 0.8rem;
+      cursor: pointer;
+      background: rgba(253,251,247,0.9);
+      color: #3a2c12;
+    }
+
+    .btn-json:hover {
+      background: rgba(241,230,163,0.5);
     }
 
     pre {
@@ -579,6 +619,66 @@
 
     .cnrs-cta a {
       font-size: 0.8rem;
+    }
+
+    /* Info panel: How this page works */
+    .info-section {
+      max-width: 1120px;
+      margin: 2.4rem auto 0;
+    }
+
+    .info-panel {
+      background: linear-gradient(145deg, var(--panel), var(--panel-soft));
+      border-radius: var(--radius-lg);
+      padding: 1.6rem 1.7rem 1.8rem;
+      box-shadow: var(--shadow-soft);
+      color: var(--ink);
+      border-top: 3px solid var(--gold);
+    }
+
+    .info-panel h2 {
+      margin-top: 0;
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 1.0rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5c4721;
+      margin-bottom: 0.9rem;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+      gap: 1.6rem;
+    }
+
+    @media (max-width: 900px) {
+      .info-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .info-panel p {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 0 0 0.8rem;
+      text-align: justify;
+    }
+
+    .info-list {
+      margin: 0.1rem 0 0.9rem;
+      padding-left: 1.1rem;
+      font-size: 0.9rem;
+    }
+
+    .info-list li + li {
+      margin-top: 0.25rem;
+    }
+
+    .info-note {
+      font-size: 0.82rem;
+      color: #7a6432;
+      text-align: justify;
     }
 
     /* Footer */
@@ -781,14 +881,65 @@
           </div>
         </div>
 
+        <div class="score-interpretation" id="score-interpretation" style="display:none">
+          <!-- Filled by JS -->
+        </div>
+
         <div class="hash-block" id="hash-block" style="display:none">
           <strong>public_hash</strong><br />
           <span id="hash-value"></span>
         </div>
 
+        <div class="json-actions" id="json-actions" style="display:none">
+          <button class="btn-json" id="copy-json-btn" type="button">Copy JSON</button>
+          <button class="btn-json" id="download-json-btn" type="button">Download rpo.json</button>
+        </div>
+
         <pre id="rpo-json" aria-label="Draft RPO JSON bundle"></pre>
       </section>
     </div>
+
+    <!-- INFO PANEL: HOW THIS PAGE WORKS -->
+    <section class="info-section">
+      <div class="info-panel">
+        <h2>How this page works</h2>
+        <div class="info-grid">
+          <div>
+            <p>
+              This open playground shows how a simple narrative can become a
+              <strong>minimal RPO bundle</strong>. Everything runs locally in your browser:
+              no backend, no registry, no AI model. It is a didactic PMVP, not a legal tool.
+            </p>
+            <ul class="info-list">
+              <li>You write a narrative and a few labels (issuer, subject, title).</li>
+              <li>The page computes three heuristic signals: sentences, evidence markers, coherence score.</li>
+              <li>A minimal <code>rpo.json</code> object is generated, plus a <code>public_hash</code> in SHA-256.</li>
+            </ul>
+            <p class="info-note">
+              The goal is to make the structure of proof visible: what today is “just a story”
+              becomes a bundle that can, tomorrow, be anchored, versioned, and interpreted
+              by more advanced engines.
+            </p>
+          </div>
+          <div>
+            <p>
+              In the <strong>scientific CNRS × TruthX pilot</strong>, this skeleton will be
+              enriched with psycho-forensic heuristics: interpretive coherence, patterns of
+              coercive control, inverted narratives, and probatory coherence scores.
+            </p>
+            <p>
+              This open version deliberately stays simple and transparent so that anyone can
+              inspect the JSON, recompute the hash, and reuse the bundle in their own tests
+              or tools.
+            </p>
+            <p class="info-note">
+              Open playground = no AI, no central registry, no legal value. Scientific pilot =
+              advanced psycho-legal engines, controlled environment, and strict governance.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- CTA PANEL -->
     <section class="cta-panel">
@@ -844,9 +995,15 @@
     const markersEl = document.getElementById("metric-markers");
     const scoreEl = document.getElementById("metric-score");
 
+    const scoreInterpretationEl = document.getElementById("score-interpretation");
+
     const hashBlockEl = document.getElementById("hash-block");
     const hashValueEl = document.getElementById("hash-value");
     const jsonEl = document.getElementById("rpo-json");
+
+    const jsonActionsEl = document.getElementById("json-actions");
+    const copyJsonBtn = document.getElementById("copy-json-btn");
+    const downloadJsonBtn = document.getElementById("download-json-btn");
 
     function countSentences(text) {
       const cleaned = text.replace(/\s+/g, " ").trim();
@@ -868,6 +1025,18 @@
       return Math.max(0, Math.min(100, floor + base + detail));
     }
 
+    function interpretScore(score) {
+      if (score <= 0) {
+        return "";
+      } else if (score < 40) {
+        return "Low structural coherence: short or weakly structured narrative, with few explicit markers. As a probatory bundle, this would remain fragile.";
+      } else if (score < 70) {
+        return "Intermediate coherence: the narrative contains some structure and markers, but key anchors (dates, places, actors) may still be missing or thin.";
+      } else {
+        return "High narrative structure: multiple sentences and markers help organise the story into a potentially probatory skeleton. It still needs legal and factual review.";
+      }
+    }
+
     async function sha256(text) {
       const encoder = new TextEncoder();
       const data = encoder.encode(text);
@@ -880,6 +1049,21 @@
       const ts = Date.now().toString(36);
       const rand = Math.floor(Math.random() * 1e8).toString(36);
       return "rpo-" + ts + "-" + rand;
+    }
+
+    function setScoreInterpretation(score) {
+      const text = interpretScore(score);
+      if (text) {
+        scoreInterpretationEl.style.display = "block";
+        scoreInterpretationEl.textContent = text;
+      } else {
+        scoreInterpretationEl.style.display = "none";
+        scoreInterpretationEl.textContent = "";
+      }
+    }
+
+    function enableJsonActions(enable) {
+      jsonActionsEl.style.display = enable ? "flex" : "none";
     }
 
     generateBtn.addEventListener("click", async (event) => {
@@ -962,6 +1146,8 @@
       scoreEl.textContent = score.toString() + "%";
       metricsEl.style.display = "grid";
 
+      setScoreInterpretation(score);
+
       if (publicHash) {
         hashBlockEl.style.display = "block";
         hashValueEl.textContent = publicHash;
@@ -973,6 +1159,8 @@
       taglineEl.textContent =
         "This is a draft RPO bundle generated locally in your browser. It is deterministic, non-binding, and meant for experimentation only.";
       jsonEl.textContent = JSON.stringify(rpo, null, 2);
+
+      enableJsonActions(true);
     });
 
     resetBtn.addEventListener("click", () => {
@@ -987,9 +1175,41 @@
       hashBlockEl.style.display = "none";
       hashValueEl.textContent = "";
       jsonEl.textContent = "";
+      setScoreInterpretation(0);
+      enableJsonActions(false);
+    });
+
+    copyJsonBtn.addEventListener("click", () => {
+      const text = jsonEl.textContent.trim();
+      if (!text) return;
+      try {
+        navigator.clipboard.writeText(text);
+        copyJsonBtn.textContent = "Copied";
+        setTimeout(() => {
+          copyJsonBtn.textContent = "Copy JSON";
+        }, 1500);
+      } catch (e) {
+        alert("Unable to copy JSON automatically. You can still select and copy it manually.");
+      }
+    });
+
+    downloadJsonBtn.addEventListener("click", () => {
+      const text = jsonEl.textContent.trim();
+      if (!text) return;
+
+      const blob = new Blob([text], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "rpo.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     });
   </script>
 </body>
 </html>
+
 
 
