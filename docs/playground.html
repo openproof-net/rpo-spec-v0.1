@@ -7,7 +7,7 @@
 
   <!-- SEO -->
   <meta name="description"
-        content="RPO Playground: try the open version of the RPO (Rapport Probatoire Ouvert). Paste a narrative, get a draft RPO JSON bundle with heuristic scores and a public hash." />
+        content="RPO Playground: open, deterministic sandbox for the RPO (Rapport Probatoire Ouvert). Paste a narrative, get a draft RPO JSON bundle with heuristic scores and a public hash." />
   <link rel="canonical" href="https://rpo.openproof.net/playground.html" />
 
   <!-- Open Graph -->
@@ -30,7 +30,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@500;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@500;600&display=swap"
     rel="stylesheet"
   />
 
@@ -46,7 +46,7 @@
       --ink: #7a6432;
       --gold: #d4af37;
       --gold-soft: #f1e6a3;
-      --border-soft: rgba(241, 230, 163, 0.2);
+      --border-soft: rgba(241, 230, 163, 0.25);
       --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
       --radius-lg: 18px;
     }
@@ -57,9 +57,9 @@
 
     body {
       margin: 0;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #111625 0, var(--bg) 45%);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui,
+        "SF Pro Text", "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111625 0, var(--bg) 46%);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
@@ -74,18 +74,16 @@
     }
 
     code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
         "Liberation Mono", "Courier New", monospace;
-      font-size: 0.9em;
     }
 
-    /* NAVBAR */
-
+    /* NAV */
     .nav {
       position: sticky;
       top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
+      z-index: 30;
+      backdrop-filter: blur(18px);
       background: linear-gradient(
         90deg,
         rgba(4, 4, 14, 0.96),
@@ -97,7 +95,7 @@
     .nav-inner {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0.65rem 1.5rem;
+      padding: 0.7rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -107,7 +105,7 @@
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.75rem;
     }
 
     .nav-logo {
@@ -123,13 +121,13 @@
     }
 
     .nav-logo img {
-      width: 26px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
       border-radius: 999px;
       display: block;
     }
 
-    .nav-title-block {
+    .nav-brand {
       display: flex;
       flex-direction: column;
       gap: 0.1rem;
@@ -137,8 +135,8 @@
 
     .nav-title {
       font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 0.9rem;
-      letter-spacing: 0.18em;
+      font-size: 0.92rem;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--gold-soft);
     }
@@ -151,7 +149,7 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.35rem;
+      gap: 1.4rem;
       font-size: 0.9rem;
     }
 
@@ -182,22 +180,17 @@
       background: rgba(10, 14, 24, 0.9);
     }
 
-    .btn-ghost span {
-      font-size: 0.9rem;
-    }
-
     .btn-ghost:hover {
       border-color: var(--gold-soft);
       text-decoration: none;
-      background: rgba(13, 18, 30, 0.95);
+      background: rgba(13, 18, 30, 0.96);
     }
 
-    @media (max-width: 780px) {
+    @media (max-width: 840px) {
       .nav-inner {
         flex-direction: column;
         align-items: flex-start;
       }
-
       .nav-links {
         width: 100%;
         justify-content: space-between;
@@ -207,34 +200,32 @@
     }
 
     /* HERO */
-
     .hero {
-      padding: 3.1rem 1.5rem 2.5rem;
+      padding: 3.2rem 1.5rem 2.6rem;
     }
 
     .hero-inner {
       max-width: 1120px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.9fr);
-      gap: 2.6rem;
-      align-items: center;
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
+      gap: 2.4rem;
+      align-items: stretch;
     }
 
     .hero-kicker {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 0.76rem;
-      letter-spacing: 0.22em;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold-soft);
-      margin-bottom: 0.8rem;
+      margin-bottom: 0.75rem;
     }
 
     .hero-title {
       font-family: "Orbitron", system-ui, sans-serif;
       font-size: clamp(2.1rem, 3vw, 2.7rem);
-      line-height: 1.2;
-      margin: 0 0 1rem;
+      line-height: 1.18;
+      margin: 0 0 0.9rem;
     }
 
     .hero-title span {
@@ -244,7 +235,7 @@
     .hero-subtitle {
       font-size: 0.98rem;
       color: var(--text-muted);
-      max-width: 33rem;
+      max-width: 34rem;
       margin-bottom: 1.4rem;
     }
 
@@ -252,112 +243,88 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.55rem;
-      margin-bottom: 1.35rem;
+      margin-bottom: 1.4rem;
     }
 
     .badge {
-      font-size: 0.78rem;
-      padding: 0.16rem 0.6rem;
+      font-size: 0.8rem;
+      padding: 0.18rem 0.7rem;
       border-radius: 999px;
-      border: 1px solid rgba(241, 230, 163, 0.3);
+      border: 1px solid rgba(241, 230, 163, 0.32);
       color: var(--gold-soft);
-      background: rgba(11, 15, 20, 0.9);
+      background: rgba(11, 15, 20, 0.92);
     }
 
     .hero-meta {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      max-width: 34rem;
+      max-width: 32rem;
     }
 
     .hero-card {
-      max-width: 460px;
-      margin-left: auto;
       background: radial-gradient(circle at top left, #1b2236, #050711);
       border-radius: var(--radius-lg);
-      padding: 1.6rem 1.7rem 1.5rem;
+      padding: 1.7rem 1.8rem 1.6rem;
       border: 1px solid var(--border-soft);
       box-shadow: var(--shadow-soft);
-      font-size: 0.86rem;
-    }
-
-    .hero-card-header {
       display: flex;
-      align-items: center;
+      flex-direction: column;
       justify-content: space-between;
-      gap: 0.75rem;
-      margin-bottom: 0.4rem;
+      min-height: 100%;
     }
 
-    .hero-card-title {
+    .hero-card-heading {
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin: 0 0 0.75rem;
+    }
+
+    .hero-card-body {
       font-size: 0.88rem;
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      color: var(--gold-soft);
-    }
-
-    .hero-card-chip {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      padding: 0.14rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(241, 230, 163, 0.5);
-      color: var(--gold-soft);
-      background: rgba(5, 7, 17, 0.7);
-      white-space: nowrap;
-    }
-
-    .hero-card-subtitle {
-      font-size: 0.84rem;
-      color: var(--text-main);
-      margin: 0 0 0.7rem;
-    }
-
-    .hero-list {
-      list-style: disc;
-      padding-left: 1.15rem;
-      margin: 0 0 0.7rem;
-      font-size: 0.84rem;
       color: var(--text-main);
     }
 
-    .hero-list li + li {
+    .hero-card-body ul {
+      margin: 0 0 0.8rem;
+      padding-left: 1.1rem;
+    }
+
+    .hero-card-body li + li {
       margin-top: 0.2rem;
-    }
-
-    .hero-card-divider {
-      margin: 0.8rem 0 0.7rem;
-      border: none;
-      border-top: 1px solid rgba(148, 163, 184, 0.35);
-    }
-
-    .hero-card-pilot-title {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-      margin-bottom: 0.3rem;
     }
 
     .hero-card-note {
       font-size: 0.8rem;
       color: var(--text-muted);
-      line-height: 1.5;
-      margin: 0;
+      margin: 0.25rem 0 0;
+    }
+
+    .hero-card-divider {
+      margin: 1rem 0 0.9rem;
+      border: 0;
+      border-top: 1px dashed rgba(214, 189, 114, 0.55);
+    }
+
+    .hero-card-subtitle {
+      font-size: 0.82rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-card-pilot {
+      font-size: 0.8rem;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
     }
 
     .hero-card-link {
-      display: inline-block;
-      margin-top: 0.5rem;
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--gold-soft);
-      text-decoration: none;
-    }
-
-    .hero-card-link:hover {
+      font-size: 0.82rem;
+      font-weight: 500;
       text-decoration: underline;
     }
 
@@ -365,41 +332,36 @@
       .hero-inner {
         grid-template-columns: minmax(0, 1fr);
       }
-
       .hero-card {
-        margin: 1.5rem 0 0;
-        max-width: 100%;
+        margin-top: 1.4rem;
       }
     }
 
     /* MAIN LAYOUT */
-
     .main {
-      padding: 0 1.5rem 3.6rem;
+      padding: 0 1.5rem 3.2rem;
     }
 
-    .section-title {
+    .section-kicker {
       max-width: 1120px;
-      margin: 0 auto 0.9rem;
-      padding-top: 0.4rem;
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 0.78rem;
+      margin: 0 auto 1rem;
+      font-size: 0.82rem;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       color: var(--text-muted);
     }
 
-    .grid {
+    .grid-main {
       max-width: 1120px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(0, 1.55fr);
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
       gap: 2rem;
       align-items: stretch;
     }
 
-    @media (max-width: 900px) {
-      .grid {
+    @media (max-width: 960px) {
+      .grid-main {
         grid-template-columns: minmax(0, 1fr);
       }
     }
@@ -407,22 +369,22 @@
     .panel {
       background: linear-gradient(145deg, var(--panel), var(--panel-soft));
       border-radius: var(--radius-lg);
-      padding: 1.6rem 1.7rem 1.7rem;
+      padding: 1.7rem 1.7rem 1.8rem;
       box-shadow: var(--shadow-soft);
       color: var(--ink);
       border-top: 3px solid var(--gold);
       display: flex;
       flex-direction: column;
+      min-height: 100%;
     }
 
     .panel h2 {
-      margin-top: 0;
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 0.98rem;
+      margin: 0 0 0.9rem;
+      font-size: 1.05rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: #5c4721;
-      margin-bottom: 0.8rem;
+      font-family: "Orbitron", system-ui, sans-serif;
     }
 
     .panel p {
@@ -432,14 +394,13 @@
     }
 
     /* FORM */
-
     .form-group {
       margin-bottom: 0.9rem;
     }
 
     .form-label {
       display: block;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.14em;
       margin-bottom: 0.25rem;
@@ -466,7 +427,7 @@
     }
 
     .textarea {
-      min-height: 180px;
+      min-height: 170px;
       resize: vertical;
     }
 
@@ -479,13 +440,13 @@
     .btn-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 1rem;
+      gap: 0.7rem;
+      margin-top: 1.2rem;
     }
 
     .btn-primary {
       border-radius: 999px;
-      padding: 0.48rem 1.25rem;
+      padding: 0.5rem 1.3rem;
       border: none;
       font-size: 0.9rem;
       font-weight: 500;
@@ -501,8 +462,8 @@
 
     .btn-secondary {
       border-radius: 999px;
-      padding: 0.42rem 1rem;
-      border: 1px solid rgba(122, 100, 50, 0.4);
+      padding: 0.45rem 1.1rem;
+      border: 1px solid rgba(122, 100, 50, 0.45);
       font-size: 0.85rem;
       cursor: pointer;
       background: transparent;
@@ -513,35 +474,39 @@
       background: rgba(212, 175, 55, 0.08);
     }
 
-    /* OUTPUT METRICS */
-
-    .result-tagline {
-      font-size: 0.82rem;
-      color: #5c4721;
-      margin-bottom: 0.6rem;
+    /* OUTPUT PANEL */
+    .panel-output-header {
+      font-size: 0.9rem;
+      margin-bottom: 1.1rem;
     }
 
-    .result-metrics {
+    .metrics-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.5rem;
+      gap: 0.55rem;
       margin-bottom: 0.9rem;
       font-size: 0.8rem;
     }
 
+    @media (max-width: 640px) {
+      .metrics-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
     .metric {
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: 11px;
       padding: 0.45rem 0.55rem;
-      border: 1px solid rgba(212, 175, 55, 0.35);
+      border: 1px solid rgba(212, 175, 55, 0.4);
     }
 
     .metric-label {
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       color: #8a6c33;
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.12rem;
     }
 
     .metric-value {
@@ -553,92 +518,109 @@
     .hash-block {
       font-size: 0.78rem;
       word-break: break-all;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
-      padding: 0.55rem 0.6rem;
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: 11px;
+      padding: 0.55rem 0.65rem;
       border: 1px dashed rgba(122, 100, 50, 0.55);
       margin-bottom: 0.8rem;
     }
 
+    .hash-block strong {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.72rem;
+      color: #8a6c33;
+    }
+
     .anchors-block {
+      background: rgba(255, 255, 255, 0.86);
+      border-radius: 11px;
+      padding: 0.55rem 0.65rem 0.6rem;
+      border: 1px solid rgba(212, 175, 55, 0.45);
       font-size: 0.8rem;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
-      padding: 0.55rem 0.6rem;
-      border: 1px solid rgba(212, 175, 55, 0.4);
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.8rem;
     }
 
     .anchors-title {
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       font-size: 0.7rem;
       color: #8a6c33;
       margin-bottom: 0.25rem;
     }
 
-    .anchors-line {
-      margin: 0.1rem 0;
+    .anchors-block ul {
+      margin: 0;
+      padding-left: 1.1rem;
     }
 
-    .output-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 0.7rem;
-    }
-
-    .btn-small {
-      border-radius: 999px;
-      padding: 0.36rem 0.9rem;
-      border: 1px solid rgba(122, 100, 50, 0.4);
-      font-size: 0.8rem;
-      cursor: pointer;
-      background: #fdfbf7;
-      color: #5c4721;
-    }
-
-    .btn-small:hover {
-      background: rgba(212, 175, 55, 0.08);
+    .anchors-block li + li {
+      margin-top: 0.1rem;
     }
 
     pre {
       background: #111827;
       color: #e5e7eb;
-      padding: 0.8rem 0.9rem;
-      border-radius: 10px;
+      padding: 0.9rem 1rem;
+      border-radius: 11px;
       font-size: 0.78rem;
+      overflow-x: auto;
       border: 1px solid rgba(15, 23, 42, 0.8);
-      margin: 0;
-      max-height: 280px;
-      overflow: auto;
+      margin: 0 0 0.9rem;
     }
 
-    .panel .spacer {
-      flex: 1 1 auto;
+    .output-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 0.6rem;
     }
 
-    .cnrs-note {
-      font-size: 0.82rem;
+    .btn-small {
+      border-radius: 999px;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid rgba(122, 100, 50, 0.45);
+      font-size: 0.8rem;
+      background: rgba(250, 247, 239, 0.9);
       color: #5c4721;
-      margin-top: 0.7rem;
+      cursor: pointer;
     }
 
-    .cnrs-note a {
+    .btn-small:hover {
+      background: rgba(212, 175, 55, 0.1);
+    }
+
+    .panel-output-footer {
+      margin-top: auto;
+      padding-top: 0.8rem;
+      font-size: 0.82rem;
+      border-top: 1px dashed rgba(122, 100, 50, 0.4);
+    }
+
+    .panel-output-footer-title {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      color: #8a6c33;
+      margin-bottom: 0.3rem;
+    }
+
+    .panel-output-footer a {
       font-weight: 500;
+      text-decoration: underline;
     }
 
-    /* LOWER PANELS */
-
+    /* INFO PANELS */
     .info-grid {
       max-width: 1120px;
       margin: 2.4rem auto 0;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.6rem;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: stretch;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
       .info-grid {
         grid-template-columns: minmax(0, 1fr);
       }
@@ -647,39 +629,82 @@
     .info-panel {
       background: linear-gradient(145deg, var(--panel), var(--panel-soft));
       border-radius: var(--radius-lg);
-      padding: 1.4rem 1.5rem 1.5rem;
+      padding: 1.6rem 1.7rem 1.7rem;
       box-shadow: var(--shadow-soft);
       color: var(--ink);
       border-top: 3px solid var(--gold);
-      font-size: 0.88rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
     }
 
     .info-title {
       font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 0.86rem;
-      text-transform: uppercase;
+      font-size: 0.95rem;
       letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: #5c4721;
-      margin-bottom: 0.6rem;
+      margin: 0 0 0.8rem;
+    }
+
+    .info-panel p,
+    .info-panel ul {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin: 0 0 0.5rem;
     }
 
     .info-panel ul {
       padding-left: 1.1rem;
-      margin: 0.3rem 0 0;
     }
 
-    .info-panel li + li {
-      margin-top: 0.18rem;
+    /* CTA PANEL */
+    .cta-panel {
+      max-width: 1120px;
+      margin: 2.5rem auto 0;
+      padding: 1.3rem 1.6rem;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      background: radial-gradient(circle at top left, #1b2236, #050711);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.9rem;
+      font-size: 0.9rem;
+    }
+
+    .cta-panel strong {
+      color: var(--gold-soft);
+    }
+
+    .cta-btn {
+      border-radius: 999px;
+      padding: 0.5rem 1.4rem;
+      border: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      background: linear-gradient(135deg, #d4af37, #f1e6a3);
+      color: #2a210e;
+      text-decoration: none;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.25);
+      white-space: nowrap;
+    }
+
+    .cta-btn:hover {
+      filter: brightness(1.03);
+      text-decoration: none;
     }
 
     /* FOOTER */
-
     .footer {
       border-top: 1px solid var(--border-soft);
       background: radial-gradient(circle at top, #101525, #020308);
       padding: 1.6rem 1.5rem 2.1rem;
       color: var(--text-muted);
       font-size: 0.82rem;
+      margin-top: 3rem;
     }
 
     .footer-inner {
@@ -720,7 +745,7 @@
             alt="OpenProof emblem"
           />
         </div>
-        <div class="nav-title-block">
+        <div class="nav-brand">
           <div class="nav-title">OPENPROOF — RPO v0.1</div>
           <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
         </div>
@@ -738,7 +763,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span>View on GitHub</span>
+          View on GitHub
         </a>
       </nav>
     </div>
@@ -754,9 +779,9 @@
         </h1>
         <p class="hero-subtitle">
           Paste a short narrative, add a few identifiers, and generate a
-          <strong>draft RPO JSON bundle</strong> with heuristic scores and a public hash.
-          This page demonstrates how the RPO standard can structure a story into
-          something verifiable.
+          <strong>draft RPO JSON bundle</strong> with heuristic scores and a public
+          hash. This page demonstrates how the RPO standard can structure a story
+          into something verifiable.
         </p>
         <div class="hero-badges">
           <div class="badge">Experimental</div>
@@ -764,56 +789,67 @@
           <div class="badge">Open-source friendly</div>
         </div>
         <div class="hero-meta">
-          This is an <strong>open playground</strong> — no AI model, no registry, no legal
-          value. It is here to show how an RPO bundle can look and behave,
+          This is an <strong>open playground</strong> — no AI model, no registry, no
+          legal value. It is here to show how an RPO bundle can look and behave,
           before plugging advanced engines or CNRS modules.
         </div>
       </div>
 
+      <!-- Right hero card: rich version with CNRS pilot -->
       <aside class="hero-card">
-        <div class="hero-card-header">
-          <span class="hero-card-title">What this page does</span>
-          <span class="hero-card-chip">local only</span>
+        <div>
+          <h2 class="hero-card-heading">What this page does</h2>
+          <div class="hero-card-body">
+            <p>It takes your narrative and turns it into a draft RPO bundle:</p>
+            <ul>
+              <li>Computes basic metrics (length, structure, evidence density).</li>
+              <li>Detects simple anchors (dates, places, temporal hints).</li>
+              <li>Builds a minimal <code>rpo.json</code> object with heuristic fields.</li>
+              <li>Derives a <code>public_hash</code> from the full content.</li>
+            </ul>
+            <p class="hero-card-note">
+              Think of it as an <strong>RPO sandbox</strong>: the “civil code”
+              exists, this page shows how a lightweight engine could apply it to
+              real narratives.
+            </p>
+          </div>
+
+          <hr class="hero-card-divider" />
+
+          <div>
+            <div class="hero-card-subtitle">Scientific pilot (CNRS × TruthX)</div>
+            <p class="hero-card-pilot">
+              For advanced psycho-medical-forensic analysis (interpretive
+              coherence, narrative structure, markers of coercive control and
+              narrative inversion), you can request access to the
+              <strong>CNRS × TruthX</strong> research pilot.
+            </p>
+            <a
+              class="hero-card-link"
+              href="https://www.truthx.co/truthx-pilote-form"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Request access to the CNRS pilot
+            </a>
+          </div>
         </div>
-        <p class="hero-card-subtitle">
-          It takes your narrative and turns it into a draft RPO bundle:
-        </p>
-        <ul class="hero-list">
-          <li>Computes basic metrics (length, structure, evidence density).</li>
-          <li>Detects simple anchors (dates, places, temporal hints).</li>
-          <li>Builds a minimal <code>rpo.json</code> object with heuristic fields.</li>
-          <li>Derives a deterministic <code>public_hash</code> from the full content.</li>
-        </ul>
-        <hr class="hero-card-divider" />
-        <div class="hero-card-pilot-title">Scientific pilot (CNRS × TruthX)</div>
-        <p class="hero-card-note">
-          For an advanced psycho-medical-forensic analysis (interpretive coherence,
-          narrative structure, markers of coercive control and narrative inversion),
-          you can request access to the <strong>CNRS × TruthX</strong> research pilot.
-        </p>
-        <a
-          class="hero-card-link"
-          href="https://www.truthx.co/truthx-pilote-form"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Request access to the CNRS pilot
-        </a>
       </aside>
     </div>
   </section>
 
   <!-- MAIN -->
   <main class="main">
-    <div class="section-title">Play with a narrative</div>
+    <div class="section-kicker">Play with a narrative</div>
 
-    <div class="grid">
+    <div class="grid-main">
       <!-- INPUT PANEL -->
-      <section class="panel" aria-labelledby="panel-input-title">
-        <h2 id="panel-input-title">1. Input</h2>
+      <section class="panel" aria-label="RPO input">
+        <h2>1. Input</h2>
         <p>
-          Start with a short narrative (1–3 paragraphs). You can anonymise names and
-          dates. The goal is to see how the structure behaves, not to judge the case.
+          Start with a short narrative (1–3 paragraphs). You can anonymise names
+          and dates. The goal is to see how the structure behaves, not to judge
+          the case.
         </p>
 
         <div class="form-group">
@@ -851,8 +887,8 @@
             placeholder="Describe the situation in your own words. What happened, when, where, who was involved?"
           ></textarea>
           <div class="helper">
-            Tip: include at least one date or time marker, a location, and 2–3 concrete
-            actions.
+            Tip: include at least one date or time marker, a location, and 2–3
+            concrete actions.
           </div>
         </div>
 
@@ -860,19 +896,20 @@
           <button class="btn-primary" id="generate-btn" type="button">
             Generate draft RPO bundle
           </button>
-          <button class="btn-secondary" id="reset-btn" type="button">Reset</button>
+          <button class="btn-secondary" id="reset-btn" type="button">
+            Reset
+          </button>
         </div>
       </section>
 
       <!-- OUTPUT PANEL -->
-      <section class="panel" aria-labelledby="panel-output-title">
-        <h2 id="panel-output-title">2. Draft RPO bundle</h2>
-
-        <p class="result-tagline" id="result-tagline">
+      <section class="panel" aria-label="Draft RPO bundle">
+        <h2>2. Draft RPO bundle</h2>
+        <p class="panel-output-header" id="result-tagline">
           Fill the form on the left and click “Generate” to see the bundle.
         </p>
 
-        <div class="result-metrics" id="metrics" style="display:none">
+        <div class="metrics-grid" id="metrics" style="display:none">
           <div class="metric">
             <div class="metric-label">Sentences</div>
             <div class="metric-value" id="metric-sentences">0</div>
@@ -909,14 +946,20 @@
         </div>
 
         <div class="anchors-block" id="anchors-block" style="display:none">
-          <div class="anchors-title">Heuristic anchors (open version, non-AI)</div>
-          <p class="anchors-line" id="anchors-dates"></p>
-          <p class="anchors-line" id="anchors-places"></p>
-          <p class="anchors-line" id="anchors-temporal"></p>
+          <div class="anchors-title">
+            Heuristic anchors (open version, non-AI)
+          </div>
+          <ul>
+            <li id="anchors-dates">Dates: –</li>
+            <li id="anchors-places">Places: –</li>
+            <li id="anchors-temporal">Temporal markers: 0</li>
+          </ul>
         </div>
 
-        <div class="output-actions">
-          <button class="btn-small" id="copy-json-btn" type="button">Copy JSON</button>
+        <div class="output-actions" id="output-actions" style="display:none">
+          <button class="btn-small" id="copy-json-btn" type="button">
+            Copy JSON
+          </button>
           <button class="btn-small" id="download-json-btn" type="button">
             Download rpo.json
           </button>
@@ -924,69 +967,108 @@
 
         <pre id="rpo-json" aria-label="Draft RPO JSON bundle"></pre>
 
-        <div class="spacer"></div>
-
-        <p class="cnrs-note">
-          For an advanced psycho-medical-forensic engine (interpretive coherence,
-          coercive control markers, narrative inversion), access is restricted to the
-          CNRS × TruthX pilot.
-          <br />
-          <a
-            href="https://www.truthx.co/truthx-pilote-form"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Request access to the CNRS pilot
-          </a>
-        </p>
+        <div class="panel-output-footer">
+          <div class="panel-output-footer-title">
+            Scientific pilot (CNRS × TruthX)
+          </div>
+          <p>
+            For an advanced psycho-medical-forensic analysis (interpretive
+            coherence, narrative structure, markers of coercive control and
+            narrative inversion), you can request access to the
+            <strong>CNRS × TruthX</strong> research pilot.
+            <br />
+            <a
+              href="https://www.truthx.co/truthx-pilote-form"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Apply for the CNRS pilot
+            </a>
+          </p>
+        </div>
       </section>
     </div>
 
     <!-- INFO PANELS -->
-    <div class="info-grid" aria-label="Explanatory panels">
-      <section class="info-panel">
-        <div class="info-title">How this page works</div>
+    <section class="info-grid" aria-label="How this page works">
+      <article class="info-panel">
+        <h3 class="info-title">How this page works</h3>
         <p>
-          This playground applies the minimal RPO “civil code” to your narrative. It
-          does not use any AI model: everything runs locally in your browser.
+          This playground applies the minimal RPO “civil code” to your narrative.
+          It does not use any AI model: everything runs locally in your browser.
         </p>
         <ul>
-          <li>You provide a short narrative and basic identifiers (issuer, subject, title).</li>
-          <li>The engine computes deterministic heuristics: sentences, evidence markers, anchors.</li>
-          <li>A minimal <code>rpo.json</code> bundle is generated with a <code>public_hash</code>.</li>
           <li>
-            The JSON is ready to be validated, hashed again, or integrated into your own
-            tools.
+            You provide a short narrative and basic identifiers (issuer, subject,
+            title).
+          </li>
+          <li>
+            The engine computes deterministic heuristics: sentences, evidence
+            markers, anchors.
+          </li>
+          <li>
+            A minimal <code>rpo.json</code> bundle is generated with a
+            <code>public_hash</code>.
+          </li>
+          <li>
+            The JSON is ready to be validated, hashed again, or integrated into
+            your own tools.
           </li>
         </ul>
         <p>
-          The structure mirrors the official RPO v0.1 specification, with additional
-          fields marked as <code>heuristic_scores</code> and
+          The structure mirrors the official RPO v0.1 specification, with
+          additional fields marked as <code>heuristic_scores</code> and
           <code>heuristic_anchors</code> for research use.
         </p>
-      </section>
+      </article>
 
-      <section class="info-panel">
-        <div class="info-title">What this engine does not do</div>
+      <article class="info-panel">
+        <h3 class="info-title">What this engine does not do</h3>
         <p>
-          This open engine is deliberately limited. It is a demonstrator, not a forensic
-          authority.
+          This open engine is deliberately limited. It is a demonstrator, not a
+          forensic authority.
         </p>
         <ul>
           <li>It does <strong>not</strong> determine truth or falsity.</li>
-          <li>It does <strong>not</strong> replace legal analysis or expert assessment.</li>
-          <li>It does <strong>not</strong> connect to any remote registry or blockchain.</li>
           <li>
-            It does <strong>not</strong> embed psycho-forensic AI models in the open
-            version.
+            It does <strong>not</strong> replace legal analysis or expert
+            assessment.
+          </li>
+          <li>
+            It does <strong>not</strong> connect to any remote registry or
+            blockchain.
+          </li>
+          <li>
+            It does <strong>not</strong> embed psycho-forensic AI models in the
+            open version.
           </li>
         </ul>
         <p>
-          The goal is to make the structure of evidence transparent and testable, before
-          connecting more advanced scientific engines in restricted pilots.
+          The goal is to make the structure of evidence transparent and testable,
+          before connecting more advanced scientific engines in restricted pilots.
         </p>
-      </section>
-    </div>
+      </article>
+    </section>
+
+    <!-- CTA PANEL -->
+    <section class="cta-panel">
+      <div>
+        Here you see the <strong>open</strong> RPO Playground.
+        <br />
+        If you want to test the
+        <strong>scientific / CNRS pilot version</strong> with advanced
+        psycho-forensic modules and real cases, you can apply to the pilot
+        programme.
+      </div>
+      <a
+        class="cta-btn"
+        href="https://www.truthx.co/truthx-pilote-form"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Apply for the CNRS pilot
+      </a>
+    </section>
   </main>
 
   <!-- FOOTER -->
@@ -995,8 +1077,8 @@
       <div>
         <div>OpenProof — RPO Specification v0.1</div>
         <div>
-          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université
-          de Caen Normandie.
+          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC –
+          Université de Caen Normandie.
         </div>
       </div>
       <div class="footer-links">
@@ -1046,78 +1128,77 @@
     const anchorsTemporalEl = document.getElementById("anchors-temporal");
 
     const jsonEl = document.getElementById("rpo-json");
+    const outputActions = document.getElementById("output-actions");
     const copyBtn = document.getElementById("copy-json-btn");
     const downloadBtn = document.getElementById("download-json-btn");
 
-    function normalise(text) {
+    function normaliseText(text) {
       return text.replace(/\s+/g, " ").trim();
     }
 
     function countSentences(text) {
-      const cleaned = normalise(text);
+      const cleaned = normaliseText(text);
       if (!cleaned) return 0;
-      const parts = cleaned.split(/[.!?]+/).map((s) => s.trim()).filter(Boolean);
+      const parts = cleaned
+        .split(/[.!?]+/g)
+        .map((s) => s.trim())
+        .filter(Boolean);
       return parts.length;
     }
 
     function countEvidenceMarkers(text) {
-      const digits = (text.match(/\d{2,}/g) || []).length;
+      let digits = (text.match(/\b\d{2,}\b/g) || []).length;
       const markers =
-        (text.match(/\b(on|at|since|because|when|where|from|until|between)\b/gi) ||
-          []).length;
-      return digits + markers;
+        text.match(
+          /\b(on|at|since|because|when|where|witness|email|report|contract|invoice)\b/gi
+        ) || [];
+      return digits + markers.length;
     }
 
-    function detectMonths(text) {
+    function detectDates(text) {
       const months =
-        "january,february,march,april,may,june,july,august,september,october,november,december".split(
-          ","
+        "january february march april may june july august september october november december".split(
+          " "
         );
       const lower = text.toLowerCase();
-      const found = [];
+      const found = new Set();
+
       months.forEach((m) => {
         if (lower.includes(m)) {
-          found.push(m.charAt(0).toUpperCase() + m.slice(1));
+          const label = m.charAt(0).toUpperCase() + m.slice(1);
+          found.add(label);
         }
       });
-      return found;
-    }
 
-    function detectYears(text) {
-      const matches = text.match(/\b(19[0-9]{2}|20[0-9]{2})\b/g) || [];
-      return Array.from(new Set(matches));
+      const years = text.match(/\b(19|20)\d{2}\b/g) || [];
+      years.forEach((y) => found.add(y));
+
+      return Array.from(found);
     }
 
     function detectPlaces(text) {
-      const candidates =
-        "paris,london,new york,berlin,brussels,rome,madrid,office,factory,plant,school,hospital,court".split(
-          ","
+      const placeWords =
+        "office headquarters store shop factory plant school university court hospital paris lyon marseille london berlin brussels new york sydney".split(
+          " "
         );
       const lower = text.toLowerCase();
-      const found = [];
-      candidates.forEach((p) => {
+      const found = new Set();
+
+      placeWords.forEach((p) => {
         if (lower.includes(p)) {
-          const label = p
-            .split(" ")
-            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-            .join(" ");
-          found.push(label);
+          found.add(p);
         }
       });
-      return Array.from(new Set(found));
+
+      return Array.from(found);
     }
 
-    function detectTemporalMarkers(text) {
+    function countTemporalMarkers(text) {
       const markers =
-        "yesterday,today,tomorrow,before,after,later,earlier,recently,previously,now,soon,immediately".split(
-          ","
-        );
-      const lower = text.toLowerCase();
-      let count = 0;
-      markers.forEach((m) => {
-        if (lower.includes(m)) count += 1;
-      });
-      return count;
+        text.match(
+          /\b(yesterday|today|tomorrow|morning|evening|night|week|month|year|before|after|during)\b/gi
+        ) || [];
+      return markers.length;
     }
 
     function computeCoherenceScore(sentences, markers) {
@@ -1127,14 +1208,12 @@
       return Math.max(0, Math.min(100, floor + base + detail));
     }
 
-    function computeChronologyConfidence(dateCount, temporalMarkers) {
-      const score = dateCount * 20 + temporalMarkers * 10;
-      return Math.max(0, Math.min(100, score));
-    }
-
-    function computeDensityRatio(markers, sentences) {
-      if (!sentences) return 0;
-      return markers / sentences;
+    function computeChronologyConfidence(datesCount, temporalMarkers) {
+      const base = 10;
+      const dateWeight = datesCount * 20;
+      const temporalWeight = temporalMarkers * 8;
+      const raw = base + dateWeight + temporalWeight;
+      return Math.max(0, Math.min(100, raw));
     }
 
     async function sha256(text) {
@@ -1151,8 +1230,6 @@
       return "rpo-" + ts + "-" + rand;
     }
 
-    let lastRpoObject = null;
-
     generateBtn.addEventListener("click", async () => {
       const title = titleInput.value.trim() || "Untitled case";
       const issuer = issuerInput.value.trim() || "Unknown issuer";
@@ -1166,19 +1243,16 @@
 
       const sentences = countSentences(narrative);
       const markers = countEvidenceMarkers(narrative);
-
-      const months = detectMonths(narrative);
-      const years = detectYears(narrative);
+      const dates = detectDates(narrative);
       const places = detectPlaces(narrative);
-      const temporalMarkers = detectTemporalMarkers(narrative);
+      const temporalMarkers = countTemporalMarkers(narrative);
 
-      const dateCount = months.length + years.length;
-      const densityRatio = computeDensityRatio(markers, sentences);
+      const coherenceScore = computeCoherenceScore(sentences, markers);
+      const densityRatio = sentences ? markers / sentences : 0;
       const chronoConfidence = computeChronologyConfidence(
-        dateCount,
+        dates.length,
         temporalMarkers
       );
-      const score = computeCoherenceScore(sentences, markers);
 
       const bundleId = randomBundleId();
       const createdAt = new Date().toISOString();
@@ -1231,24 +1305,22 @@
         meta: {
           playground: true,
           heuristic_scores: {
-            coherence_score: score,
+            coherence_score: coherenceScore,
             evidence_markers: markers,
             sentence_count: sentences,
-            dates_detected: dateCount,
+            dates_detected: dates.length,
             places_detected: places.length,
-            density_ratio: densityRatio,
-            chronology_confidence: chronoConfidence,
+            density_ratio: Number(densityRatio.toFixed(2)),
+            chrono_logy_confidence: chronoConfidence,
           },
           heuristic_anchors: {
-            dates: months,
-            years: years,
+            dates: dates,
             places: places,
             temporal_markers: temporalMarkers,
           },
           psycho_forensic: {
             available: false,
-            note:
-              "Open version — no psycho-forensic engine. Reserved for CNRS × TruthX research pilot.",
+            note: "Open version — no psycho-forensic engine. Reserved for CNRS × TruthX pilots.",
           },
         },
       };
@@ -1256,14 +1328,14 @@
       // Update metrics UI
       sentencesEl.textContent = sentences.toString();
       markersEl.textContent = markers.toString();
-      scoreEl.textContent = score.toString() + "%";
-      datesEl.textContent = dateCount.toString();
+      scoreEl.textContent = coherenceScore.toString() + "%";
+      datesEl.textContent = dates.length.toString();
       placesEl.textContent = places.length.toString();
       densityEl.textContent = densityRatio.toFixed(2);
       chronoEl.textContent = chronoConfidence.toString() + "%";
       metricsEl.style.display = "grid";
 
-      // Hash block
+      // Hash & anchors
       if (publicHash) {
         hashBlockEl.style.display = "block";
         hashValueEl.textContent = publicHash;
@@ -1272,25 +1344,20 @@
         hashValueEl.textContent = "";
       }
 
-      // Anchors block
+      anchorsBlockEl.style.display = "block";
       anchorsDatesEl.textContent =
-        "Dates: " +
-        (months.length || years.length
-          ? [months.join(", "), years.join(", ")]
-              .filter(Boolean)
-              .join(" · ")
-          : "none detected");
+        "Dates: " + (dates.length ? dates.join(", ") : "–");
       anchorsPlacesEl.textContent =
-        "Places: " + (places.length ? places.join(", ") : "none detected");
+        "Places: " + (places.length ? places.join(", ") : "–");
       anchorsTemporalEl.textContent =
         "Temporal markers: " + temporalMarkers.toString();
-      anchorsBlockEl.style.display = "block";
 
+      // JSON
       taglineEl.textContent =
         "This is a draft RPO bundle generated locally in your browser. It is deterministic, non-binding, and meant for experimentation only.";
-
       jsonEl.textContent = JSON.stringify(rpo, null, 2);
-      lastRpoObject = rpo;
+
+      outputActions.style.display = "flex";
     });
 
     resetBtn.addEventListener("click", () => {
@@ -1305,32 +1372,29 @@
       hashBlockEl.style.display = "none";
       anchorsBlockEl.style.display = "none";
       hashValueEl.textContent = "";
-      anchorsDatesEl.textContent = "";
-      anchorsPlacesEl.textContent = "";
-      anchorsTemporalEl.textContent = "";
+      anchorsDatesEl.textContent = "Dates: –";
+      anchorsPlacesEl.textContent = "Places: –";
+      anchorsTemporalEl.textContent = "Temporal markers: 0";
       jsonEl.textContent = "";
-      lastRpoObject = null;
+      outputActions.style.display = "none";
     });
 
     copyBtn.addEventListener("click", async () => {
-      if (!jsonEl.textContent) {
-        alert("Nothing to copy yet. Generate a bundle first.");
-        return;
-      }
+      if (!jsonEl.textContent) return;
       try {
         await navigator.clipboard.writeText(jsonEl.textContent);
-        alert("RPO JSON copied to clipboard.");
+        copyBtn.textContent = "Copied!";
+        setTimeout(() => {
+          copyBtn.textContent = "Copy JSON";
+        }, 1200);
       } catch (e) {
-        alert("Unable to access clipboard. You can copy the JSON manually.");
+        alert("Clipboard is not available in this browser.");
       }
     });
 
     downloadBtn.addEventListener("click", () => {
-      if (!lastRpoObject) {
-        alert("Nothing to download yet. Generate a bundle first.");
-        return;
-      }
-      const blob = new Blob([JSON.stringify(lastRpoObject, null, 2)], {
+      if (!jsonEl.textContent) return;
+      const blob = new Blob([jsonEl.textContent], {
         type: "application/json",
       });
       const url = URL.createObjectURL(blob);
@@ -1345,6 +1409,7 @@
   </script>
 </body>
 </html>
+
 
 
 
