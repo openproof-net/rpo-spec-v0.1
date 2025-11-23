@@ -1,119 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" data-page="demo-psycho-forensic">
 <head>
   <meta charset="UTF-8" />
-  <title>OpenProof — Psycho-forensic Demo | Narrative pattern decoder</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OpenProof — Démo psycho-médico-légale | Mécanismes narratifs</title>
 
-  <!-- SEO -->
+  <!-- SEO minimal -->
   <meta name="description"
-        content="OpenProof psycho-forensic demo: paste a short narrative and see how structural patterns of coercive control and narrative mechanisms are highlighted, on top of a minimal RPO logic." />
+        content="Démonstration psycho-médico-légale : du récit brut aux schémas de contrôle. Détection déterministe des mécanismes de contrôle coercitif et score d’emprise, sans IA." />
   <link rel="canonical" href="https://rpo.openproof.net/demo-psycho.html" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="OpenProof — Psycho-forensic Demo" />
-  <meta property="og:description"
-        content="Narrative pattern decoder: from raw story to structural signals of coercive control, risk, and narrative phenotype." />
-  <meta property="og:url" content="https://rpo.openproof.net/demo-psycho.html" />
-
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 
   <style>
     :root {
-      --bg: #04040e;
+      --bg-deep: #04040e;
       --bg-elevated: #0b0f14;
-      --panel: #f8f2e6;
-      --panel-soft: #fbf6ee;
+      --panel-bg: #fbf6ea;
       --panel-border: #d4af37;
+      --panel-shadow: 0 18px 45px rgba(0,0,0,0.65);
+
       --text-main: #f7f3e8;
-      --text-muted: #d1c8b3;
-      --ink: #7a6432;
-      --accent-gold: #f1e6a3;
-      --accent-gold-strong: #d4af37;
-      --pill-bg: rgba(244, 221, 158, 0.08);
-      --danger: #ff5c7a;
-      --warn: #ffb347;
-      --safe: #60d394;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
-      --radius-xl: 22px;
-      --radius-pill: 999px;
+      --text-soft: #c9c3b2;
+      --text-ink: #3c2f18;
+
+      --accent-gold: #d4af37;
+      --accent-gold-soft: #f3e2aa;
+      --accent-pill-bg: rgba(212,175,55,0.12);
+
+      --danger: #ff6b6b;
+      --warning: #ffb347;
+      --safe: #55c37e;
+
+      --font-title: "Orbitron", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+      --radius-panel: 22px;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
-      min-height: 100vh;
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: radial-gradient(circle at top left, #182032 0, #04040e 50%, #020309 100%);
+      padding: 0;
+      background: radial-gradient(circle at top left, #111827 0, var(--bg-deep) 55%);
       color: var(--text-main);
+      font-family: var(--font-body);
+    }
+
+    body {
+      min-height: 100vh;
     }
 
     a {
-      color: var(--accent-gold);
+      color: var(--accent-gold-soft);
       text-decoration: none;
     }
-
     a:hover {
       text-decoration: underline;
     }
 
-    /* Top nav */
-    .top-nav {
+    /* Layout */
+    .nav-shell {
       position: sticky;
       top: 0;
       z-index: 40;
-      backdrop-filter: blur(22px);
-      background: linear-gradient(to right, rgba(4,4,14,0.96), rgba(4,4,14,0.88));
+      background: linear-gradient(to bottom,
+      rgba(4,4,14,0.95),
+      rgba(4,4,14,0.90),
+      rgba(4,4,14,0.80));
+      backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(212,175,55,0.18);
     }
 
-    .top-nav-inner {
-      max-width: 1120px;
+    .nav-inner {
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 14px 22px;
+      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 16px;
     }
 
-    .brand {
+    .brand-lockup {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .brand-logo {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #f6f0da, #cda94b 45%, #60441a 100%);
+    .brand-medallion {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #fdf7df, #e3c771 45%, #8d6b17 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 8px 18px rgba(0,0,0,0.65);
-      font-size: 18px;
-      color: #3b2a0d;
-      font-family: 'Orbitron', system-ui;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.55), 0 18px 40px rgba(0,0,0,0.7);
+    }
+
+    .brand-medallion span {
+      font-family: var(--font-title);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #3f2c09;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
     }
 
     .brand-text-main {
-      font-family: 'Orbitron', system-ui;
-      letter-spacing: 0.12em;
-      font-size: 11px;
+      font-family: var(--font-title);
+      letter-spacing: 0.16em;
+      font-size: 13px;
       text-transform: uppercase;
     }
 
     .brand-text-sub {
       font-size: 11px;
-      color: var(--text-muted);
+      color: var(--text-soft);
     }
 
     .nav-links {
@@ -123,943 +138,1125 @@
       font-size: 13px;
     }
 
-    .nav-links a {
-      color: var(--text-muted);
+    .nav-link {
+      color: var(--text-soft);
       text-decoration: none;
       position: relative;
-      padding-bottom: 2px;
+      padding-bottom: 3px;
     }
 
-    .nav-links a:hover {
-      color: var(--accent-gold);
+    .nav-link.active {
+      color: var(--accent-gold-soft);
     }
-
-    .nav-links a.nav-active {
-      color: var(--accent-gold);
-    }
-
-    .nav-links a.nav-active::after {
-      content: '';
+    .nav-link.active::after {
+      content: "";
       position: absolute;
       left: 0;
-      bottom: -4px;
-      width: 100%;
+      bottom: 0;
       height: 2px;
+      width: 26px;
       border-radius: 999px;
-      background: linear-gradient(90deg, #d4af37, #f1e6a3);
+      background: linear-gradient(to right, var(--accent-gold), var(--accent-gold-soft));
     }
 
     .nav-cta {
-      padding: 7px 14px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(241, 230, 163, 0.6);
-      background: radial-gradient(circle at 0 0, rgba(241,230,163,0.2), rgba(4,4,14,0.9));
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.7);
+      background: radial-gradient(circle at top, rgba(255,255,255,0.12), rgba(11,15,20,0.95));
       font-size: 12px;
-      color: var(--accent-gold);
       text-decoration: none;
+      color: var(--accent-gold-soft);
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
-    .nav-cta span {
-      font-family: 'Orbitron', system-ui;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-size: 10px;
+    .nav-cta span.icon {
+      font-size: 13px;
     }
 
-    /* Layout */
-    .page {
-      max-width: 1120px;
-      margin: 32px auto 64px;
-      padding: 0 22px 40px;
+    .page-shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 26px 18px 60px;
     }
 
-    .hero {
+    /* Hero */
+    .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 30px;
-      margin-bottom: 38px;
-      align-items: center;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.6fr);
+      gap: 26px;
+      align-items: stretch;
+      margin-bottom: 40px;
     }
 
-    .hero-title-kicker {
-      font-family: 'Orbitron', system-ui;
+    .hero-main-title {
+      font-family: var(--font-title);
+      font-size: clamp(28px, 3.1vw, 34px);
+      letter-spacing: 0.10em;
       text-transform: uppercase;
-      letter-spacing: 0.24em;
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-bottom: 10px;
+      margin-bottom: 14px;
     }
 
-    .hero-title {
-      font-family: 'Orbitron', system-ui;
-      font-size: 30px;
-      line-height: 1.18;
-      margin: 0 0 14px;
-      color: #f6f1d9;
+    .hero-main-title span.highlight {
+      color: var(--accent-gold-soft);
     }
 
-    .hero-title span {
-      color: var(--accent-gold);
-    }
-
-    .hero-sub {
-      font-size: 14px;
-      color: var(--text-muted);
+    .hero-subline {
+      font-size: 15px;
       max-width: 520px;
+      color: var(--text-soft);
+      line-height: 1.6;
     }
 
-    .hero-chips {
+    .chip-row {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 14px;
+      margin: 18px 0 12px;
     }
 
     .chip {
       font-size: 11px;
-      padding: 5px 10px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(241,230,163,0.35);
-      background: var(--pill-bg);
-      color: var(--accent-gold);
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,0.4);
+      background: var(--accent-pill-bg);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .hero-footnote {
+      font-size: 12px;
+      color: var(--text-soft);
+      max-width: 540px;
+      line-height: 1.6;
     }
 
     .hero-panel {
-      background: radial-gradient(circle at 0 0, rgba(241,230,163,0.15), rgba(11,15,20,0.98));
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(212,175,55,0.5);
-      box-shadow: var(--shadow-soft);
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.08), rgba(11,15,20,0.98));
+      border-radius: var(--radius-panel);
+      border: 1px solid rgba(212,175,55,0.4);
+      box-shadow: var(--panel-shadow);
       padding: 18px 20px 20px;
-      font-size: 13px;
       color: var(--text-main);
     }
 
-    .hero-panel h3 {
-      margin: 0 0 10px;
-      font-family: 'Orbitron', system-ui;
+    .hero-panel-title {
+      font-family: var(--font-title);
+      font-size: 13px;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      font-size: 11px;
-      color: var(--accent-gold);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-panel-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(212,175,55,0.35);
+      letter-spacing: 0.1em;
+      color: var(--accent-gold-soft);
+    }
+
+    .hero-panel p {
+      font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.6;
+      margin: 0 0 10px;
     }
 
     .hero-panel ul {
-      margin: 8px 0 10px 18px;
-      padding: 0;
+      padding-left: 18px;
+      margin: 8px 0 0;
+      color: var(--text-soft);
+      font-size: 13px;
     }
 
-    .hero-panel li {
-      margin-bottom: 4px;
-    }
-
-    .hero-panel small {
-      display: block;
-      margin-top: 8px;
-      color: var(--text-muted);
-      font-size: 11px;
-    }
-
-    /* Main panels */
     .section-title {
-      font-family: 'Orbitron', system-ui;
+      font-family: var(--font-title);
+      font-size: 11px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 12px;
-      color: var(--text-muted);
+      color: var(--text-soft);
       margin-bottom: 14px;
     }
 
-    .grid-main {
+    /* Panels main */
+    .play-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
-      gap: 26px;
-      align-items: flex-start;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
+      gap: 22px;
+      margin-bottom: 26px;
     }
 
     .panel {
-      background: radial-gradient(circle at top left, #fbf6ee, #f2e6d2);
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(212,175,55,0.7);
-      box-shadow: var(--shadow-soft);
-      padding: 20px 22px 22px;
-      color: #3e3115;
+      background: var(--panel-bg);
+      border-radius: var(--radius-panel);
+      border: 1px solid rgba(212,175,55,0.9);
+      box-shadow: var(--panel-shadow);
+      padding: 18px 20px 20px;
+      color: var(--text-ink);
+      position: relative;
     }
 
     .panel h2 {
-      margin: 0 0 8px;
-      font-family: 'Orbitron', system-ui;
-      letter-spacing: 0.16em;
-      font-size: 13px;
+      margin: 0 0 10px;
+      font-family: var(--font-title);
+      font-size: 15px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #7a6432;
+      color: #816026;
     }
 
-    .panel p {
-      margin: 6px 0 10px;
+    .panel-sub {
       font-size: 13px;
-      color: #6f5a32;
+      color: #7c6b4b;
+      margin-bottom: 14px;
+      line-height: 1.6;
     }
 
-    .field-label {
-      font-size: 11px;
-      letter-spacing: 0.16em;
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      color: #5e4a23;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: #a2864c;
-      margin-bottom: 4px;
     }
 
-    input[type="text"], textarea, select {
+    select, textarea, input[type="text"] {
       width: 100%;
-      border-radius: 10px;
-      border: 1px solid rgba(188,160,92,0.6);
-      padding: 9px 10px;
-      font-family: inherit;
+      border-radius: 12px;
+      border: 1px solid rgba(0,0,0,0.12);
+      padding: 9px 11px;
       font-size: 13px;
-      background: rgba(255,255,255,0.76);
-      color: #3b2d10;
+      font-family: var(--font-body);
+      background: rgba(255,255,255,0.9);
+      color: #222;
       outline: none;
-      transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+    select:focus, textarea:focus, input[type="text"]:focus {
+      border-color: rgba(212,175,55,0.8);
+      box-shadow: 0 0 0 1px rgba(212,175,55,0.4);
     }
 
     textarea {
       min-height: 150px;
       resize: vertical;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
-    input:focus, textarea:focus, select:focus {
-      border-color: #d4af37;
-      box-shadow: 0 0 0 1px rgba(212,175,55,0.55);
-      background: #ffffff;
-    }
-
-    .field-tip {
+    .input-tip {
       font-size: 11px;
-      color: #9a8350;
-      margin-top: 4px;
+      color: #948361;
+      margin-top: 6px;
     }
 
-    .form-row {
-      margin-bottom: 12px;
-    }
-
-    .btn-row {
+    .button-row {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-top: 10px;
+      margin-top: 14px;
     }
 
-    .btn-main {
-      border-radius: var(--radius-pill);
-      padding: 9px 18px;
+    .btn {
+      border-radius: 999px;
       border: none;
       cursor: pointer;
       font-size: 13px;
       font-weight: 500;
-      background: radial-gradient(circle at 0 0, #f8eab8, #d4af37);
-      color: #3b2d10;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.35);
+      font-family: var(--font-body);
+      padding: 8px 18px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
+      transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.15s ease;
+      white-space: nowrap;
     }
 
-    .btn-main span {
-      font-family: 'Orbitron', system-ui;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 10px;
+    .btn-primary {
+      background: radial-gradient(circle at top, #f9e6a6, #d4af37);
+      color: #3b2903;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.32);
+    }
+
+    .btn-secondary {
+      background: #f5eddb;
+      color: #604b22;
+      border: 1px solid rgba(0,0,0,0.12);
+    }
+    .btn-secondary:hover {
+      background: #f0e3cc;
     }
 
     .btn-ghost {
-      border-radius: var(--radius-pill);
-      padding: 8px 16px;
-      border: 1px solid rgba(139,112,63,0.7);
       background: transparent;
-      cursor: pointer;
-      font-size: 12px;
-      color: #7a6432;
+      color: #7a6330;
+      border: 1px dashed rgba(122,99,48,0.65);
+    }
+    .btn-ghost:hover {
+      background: rgba(251,245,229,0.8);
     }
 
-    .btn-main:disabled {
-      opacity: 0.6;
-      cursor: default;
-      box-shadow: none;
+    .btn .icon {
+      font-size: 14px;
     }
 
-    /* Result side */
-    .badge-row {
+    /* Results */
+    .score-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin: 6px 0 12px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
-    .badge-score {
-      border-radius: var(--radius-pill);
-      padding: 4px 10px;
-      font-size: 11px;
-      border: 1px solid rgba(0,0,0,0.09);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+    .score-pill {
+      flex: 1 1 140px;
+      background: #f7efdd;
+      border-radius: 14px;
+      padding: 8px 10px 9px;
+      border: 1px solid rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
     }
 
-    .badge-score strong {
-      font-family: 'Orbitron', system-ui;
-      font-size: 12px;
-    }
-
-    .badge-score[data-risk="low"] {
-      background: rgba(96, 211, 148, 0.2);
-      border-color: rgba(96, 211, 148, 0.55);
-      color: #225638;
-    }
-
-    .badge-score[data-risk="medium"] {
-      background: rgba(255, 179, 71, 0.2);
-      border-color: rgba(255, 179, 71, 0.65);
-      color: #7a4a16;
-    }
-
-    .badge-score[data-risk="high"] {
-      background: rgba(255, 92, 122, 0.18);
-      border-color: rgba(255, 92, 122, 0.7);
-      color: #812335;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
-      gap: 14px;
-      margin-top: 10px;
-    }
-
-    .subpanel {
-      background: var(--panel-soft);
-      border-radius: 16px;
-      border: 1px dashed rgba(122,100,50,0.4);
-      padding: 10px 12px 12px;
-      font-size: 12px;
-      color: #5f4720;
-    }
-
-    .subpanel h3 {
-      margin: 0 0 4px;
+    .score-label {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
-      font-family: 'Orbitron', system-ui;
-      color: #90723a;
+      letter-spacing: 0.06em;
+      color: #7b6432;
     }
 
-    .subpanel ul {
+    .score-value {
+      font-size: 18px;
+      font-weight: 600;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .score-value span.unit {
+      font-size: 12px;
+      color: #8b7a55;
+    }
+
+    .score-tag {
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .score-tag.safe { color: var(--safe); }
+    .score-tag.warn { color: var(--warning); }
+    .score-tag.danger { color: var(--danger); }
+
+    .mechanisms-list {
+      font-size: 13px;
+      margin: 8px 0 12px;
+      padding-left: 18px;
+    }
+
+    .mechanisms-list li {
+      margin-bottom: 3px;
+    }
+
+    .matrix-grid {
+      margin-top: 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #faf1dd;
+      overflow: hidden;
+    }
+
+    .matrix-row {
+      display: grid;
+      grid-template-columns: 1.8fr 1fr;
+      font-size: 12px;
+      padding: 7px 10px;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      align-items: center;
+    }
+    .matrix-row:first-child {
+      border-top: none;
+    }
+
+    .matrix-axis {
+      color: #5c4620;
+    }
+
+    .matrix-level {
+      justify-self: end;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.08);
+      background: #fdf7ea;
+    }
+    .matrix-level.none {
+      color: #7d7d7d;
+    }
+    .matrix-level.low {
+      color: #a97620;
+    }
+    .matrix-level.high {
+      color: #b52121;
+    }
+
+    .signals-list, .phenotype-block {
+      font-size: 13px;
+      color: #6a5531;
+      margin-top: 10px;
+      line-height: 1.55;
+    }
+
+    .signals-list ul {
       margin: 4px 0 0 16px;
       padding: 0;
     }
 
-    .subpanel li {
-      margin-bottom: 3px;
-    }
-
-    .matrix-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 4px;
-      font-size: 12px;
-    }
-
-    .matrix-table th,
-    .matrix-table td {
-      padding: 4px 6px;
-      border-bottom: 1px solid rgba(122,100,50,0.15);
-      text-align: left;
-    }
-
-    .matrix-table th {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9a8044;
-    }
-
-    .level {
-      font-weight: 600;
-    }
-
-    .level-low {
-      color: #3c6f4a;
-    }
-
-    .level-medium {
-      color: #a46a1c;
-    }
-
-    .level-high {
-      color: #a8263f;
-    }
-
-    .mono-block {
-      margin-top: 10px;
-      padding: 8px 10px;
-      background: #111827;
-      color: #e5e7eb;
+    .highlighted-text {
+      margin-top: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 10px 12px;
       border-radius: 12px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: 11px;
+      background: #f9f0de;
       max-height: 180px;
-      overflow: auto;
-      border: 1px solid rgba(15,23,42,0.9);
+      overflow-y: auto;
+      border: 1px dashed rgba(0,0,0,0.12);
     }
 
-    .mono-block strong {
-      color: #facc15;
+    .highlighted-text mark {
+      background: #ffe9a5;
+      border-radius: 4px;
+      padding: 0 1px;
+      box-shadow: 0 0 0 1px rgba(212,175,55,0.3);
     }
 
-    .footer-banner {
+    /* Bottom CTA */
+    .bottom-cta {
       margin-top: 26px;
-      background: radial-gradient(circle at 0 0, rgba(241,230,163,0.14), rgba(11,15,20,0.98));
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(212,175,55,0.55);
-      padding: 16px 18px;
-      font-size: 13px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      background: radial-gradient(circle at top left,
+        rgba(253,246,227,0.06),
+        rgba(12,12,18,0.96));
+      border-radius: 20px;
+      border: 1px solid rgba(212,175,55,0.45);
+      padding: 18px 20px 16px;
       color: var(--text-main);
+      display: grid;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.4fr);
+      gap: 14px;
+      align-items: center;
     }
 
-    .footer-banner p {
-      margin: 0;
-      max-width: 620px;
+    .bottom-cta-title {
+      font-family: var(--font-title);
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .bottom-cta-text {
       font-size: 13px;
+      color: var(--text-soft);
+      line-height: 1.6;
     }
 
-    .footer-banner small {
-      color: var(--text-muted);
-      font-size: 11px;
-      display: block;
-      margin-top: 4px;
-    }
-
-    .footer-cta {
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(241,230,163,0.8);
-      padding: 9px 16px;
-      font-size: 12px;
-      background: radial-gradient(circle at 0 0, #f9efc9, #d4af37);
-      color: #3b2d10;
+    .bottom-cta button,
+    .bottom-cta a.btn-primary-link {
       text-decoration: none;
-      font-weight: 500;
+    }
+
+    .btn-primary-link {
+      border-radius: 999px;
+      border: none;
+      background: radial-gradient(circle at top, #f9e6a6, #d4af37);
+      color: #3b2903;
+      padding: 9px 18px;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      white-space: nowrap;
+      font-size: 13px;
+      font-weight: 500;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.45);
     }
 
-    .footer-cta span {
-      font-family: 'Orbitron', system-ui;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 9px;
+    .btn-primary-link:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.5);
     }
 
-    .disclaimer {
-      margin-top: 10px;
+    .cta-disclaimer {
       font-size: 11px;
-      color: #a3a3a3;
+      color: var(--text-soft);
+      margin-top: 6px;
+    }
+
+    .demo-disclaimer {
+      margin-top: 12px;
+      font-size: 11px;
+      color: #8f7f65;
       text-align: right;
     }
 
     @media (max-width: 900px) {
-      .hero {
+      .hero-grid,
+      .play-grid,
+      .bottom-cta {
         grid-template-columns: minmax(0, 1fr);
       }
-      .grid-main {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .two-col {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .top-nav-inner {
-        flex-wrap: wrap;
+
+      .bottom-cta {
+        text-align: left;
       }
     }
   </style>
 </head>
 <body>
-<header class="top-nav">
-  <div class="top-nav-inner">
-    <div class="brand">
-      <div class="brand-logo">Ø</div>
-      <div>
+
+<header class="nav-shell">
+  <div class="nav-inner">
+    <div class="brand-lockup">
+      <div class="brand-medallion">
+        <span>RPO</span>
+      </div>
+      <div class="brand-text">
         <div class="brand-text-main">OPENPROOF — RPO v0.1</div>
-        <div class="brand-text-sub">Signed JSON • Human-readable PDF • Public hash</div>
+        <div class="brand-text-sub">JSON signé · PDF lisible par l’humain · Hachage public</div>
       </div>
     </div>
     <nav class="nav-links">
-      <a href="overview.html">Overview</a>
-      <a href="index.html">Specification</a>
-      <a href="examples.html">Examples</a>
-      <a href="tests.html">Tests</a>
-      <a href="playground.html">Playground</a>
-      <a href="demo-psycho.html" class="nav-active">Psycho-forensic demo</a>
-      <a href="https://github.com/openproof-net/rpo-spec-v0.1" class="nav-cta" target="_blank" rel="noopener noreferrer">
-        <span>View on GitHub</span>
+      <a href="index.html" class="nav-link">Aperçu</a>
+      <a href="specification.html" class="nav-link">Spécification</a>
+      <a href="examples.html" class="nav-link">Exemples</a>
+      <a href="tests.html" class="nav-link">Tests</a>
+      <a href="playground.html" class="nav-link">Aire de jeux</a>
+      <a href="demo-psycho.html" class="nav-link active">Démonstration psycho-légale</a>
+      <a href="https://github.com/openproof-net/rpo-spec-v0.1"
+         class="nav-cta" target="_blank" rel="noopener noreferrer">
+        <span class="icon">↗</span><span>Voir sur GitHub</span>
       </a>
     </nav>
   </div>
 </header>
 
-<main class="page">
-  <section class="hero">
+<main class="page-shell">
+  <!-- HERO -->
+  <section class="hero-grid">
     <div>
-      <div class="hero-title-kicker">RPO demo layer · narrative mechanics</div>
-      <h1 class="hero-title">
-        Try the <span>psycho-forensic demo</span> — from raw story to narrative patterns
+      <div class="section-title">Couche de démonstration RPO · Mécanismes narratifs</div>
+      <h1 class="hero-main-title">
+        Essayez la démo <span class="highlight">psycho-médico-légale</span> — du récit brut aux schémas narratifs
       </h1>
-      <p class="hero-sub">
-        Paste a short narrative involving potential coercion (domestic, workplace, online). This demo detects structural
-        mechanisms of control, estimates a rough coercive control score, and exposes the narrative phenotype. Everything
-        runs locally in your browser, without any AI model.
+      <p class="hero-subline">
+        Saisissez un court récit évoquant une situation de contrôle potentiel
+        (domestique, professionnel ou en ligne). Cette démonstration détecte les
+        mécanismes structurels de contrôle, estime un score approximatif d’emprise
+        et révèle le <strong>phénotype narratif</strong>. Tout s’exécute localement
+        dans votre navigateur, sans aucun modèle d’IA.
       </p>
-      <div class="hero-chips">
-        <div class="chip">Pattern-based</div>
-        <div class="chip">Non-AI demo</div>
-        <div class="chip">Coercive control focus</div>
-        <div class="chip">RPO-compatible narrative layer</div>
+      <div class="chip-row">
+        <div class="chip">Basé sur des modèles</div>
+        <div class="chip">Détermination sans IA</div>
+        <div class="chip">Contrôle coercitif</div>
+        <div class="chip">Couche narrative compatible RPO</div>
       </div>
+      <p class="hero-footnote">
+        Dans le pilote scientifique CNRS × TruthX, cette couche sera alimentée par des
+        modules psycho-forensiques avancés capables d’intégrer directement des jeux de
+        messages, des rapports et des transcriptions. Ici, vous voyez une
+        <strong>démo simplifiée et transparente</strong> qui met déjà en évidence des
+        schémas structurés de contrôle.
+      </p>
     </div>
 
     <aside class="hero-panel">
-      <h3>What this demo illustrates</h3>
+      <div class="hero-panel-title">
+        Ce que cette démo illustre
+        <span class="hero-panel-tag">Version de démonstration</span>
+      </div>
       <p>
-        This page simulates the <em>psycho-forensic layer</em> that can sit on top of the RPO standard:
+        Cette page simule la couche psycho-médico-légale qui peut se
+        superposer à la norme RPO&nbsp;:
       </p>
       <ul>
-        <li>Detecting <strong>mechanisms of control</strong> (lock-in, threats, surveillance).</li>
-        <li>Mapping them into a <strong>coercive control matrix</strong>.</li>
-        <li>Estimating an <strong>emprise score</strong> and risk level.</li>
-        <li>Highlighting <strong>signals to monitor</strong> and the narrative phenotype.</li>
+        <li>Détection de mécanismes de contrôle (verrouillage, menaces, surveillance, normalisation).</li>
+        <li>Inscription dans une mini-matrice de contrôle coercitif.</li>
+        <li>Estimation d’un score d’emprise et d’un niveau de risque.</li>
+        <li>Mise en évidence de <strong>signaux faibles</strong> et d’un phénotype narratif.</li>
       </ul>
-      <small>
-        It does <strong>not</strong> replace legal, clinical, or police assessment. It is a structural decoder,
-        not a diagnostic tool.
-      </small>
+      <p style="margin-top:10px;">
+        Ce n’est pas une évaluation juridique, clinique ou policière. Il s’agit d’un
+        <strong>décodage narratif structuré</strong>, construit pour la recherche et la
+        pédagogie autour du contrôle coercitif.
+      </p>
     </aside>
   </section>
 
+  <!-- PLAYGROUND -->
   <section>
-    <div class="section-title">Play with a narrative</div>
-    <div class="grid-main">
+    <div class="section-title">Jouez avec un récit</div>
+    <div class="play-grid">
       <!-- INPUT PANEL -->
       <div class="panel">
-        <h2>1. Input narrative</h2>
-        <p>
-          Paste a short narrative (1–3 paragraphs). Names can be anonymised. The goal is to observe the
-          <strong>structure of control</strong>, not to judge the case.
+        <h2>1. Récit d’entrée</h2>
+        <p class="panel-sub">
+          Rédigez un court récit (1 à 3 paragraphes). Les noms peuvent être anonymisés.
+          L’objectif est d’observer la structure de contrôle, et non de porter un jugement
+          sur l’affaire.
         </p>
 
-        <div class="form-row">
-          <div class="field-label">Context</div>
+        <div style="margin-bottom:10px;">
+          <label for="contextSelect">Contexte</label>
           <select id="contextSelect">
-            <option value="unspecified">Unspecified / generic</option>
-            <option value="domestic">Intimate / domestic relationship</option>
-            <option value="workplace">Workplace / managerial</option>
-            <option value="institutional">Institutional / administrative</option>
-            <option value="online">Online / digital</option>
+            <option value="generic">Non spécifié / générique</option>
+            <option value="intimate">Relation intime / domestique</option>
+            <option value="work">Lieu de travail / gestion</option>
+            <option value="institutional" selected>Institutionnel / administratif</option>
+            <option value="online">En ligne / numérique</option>
           </select>
         </div>
 
-        <div class="form-row">
-          <div class="field-label">Narrative (free text)</div>
-          <textarea id="narrativeInput" placeholder="Describe what happened, in your own words.
-Who did what, when, where, and how did it make you or others feel?"></textarea>
-          <div class="field-tip">
-            Tip: include at least one concrete action, a time marker, and any threats, justifications or
-            constraints you remember.
-          </div>
+        <div>
+          <label for="narrativeInput">Récit (texte libre)</label>
+          <textarea id="narrativeInput" placeholder="Décrivez ce qui s’est passé, avec vos propres mots. Qui a fait quoi, quand, où et comment cela vous a-t-il affecté, vous ou les autres ?"></textarea>
+          <p class="input-tip">
+            Conseil&nbsp;: incluez au moins une action concrète, un repère temporel et toutes les menaces,
+            justifications ou contraintes dont vous vous souvenez.
+          </p>
         </div>
 
-        <div class="btn-row">
-          <button class="btn-main" id="analyzeBtn">
-            <span>Analyze narrative</span> →
+        <div class="button-row">
+          <button class="btn btn-primary" id="analyzeBtn">
+            <span class="icon">➜</span>Analyser le récit
           </button>
-          <button class="btn-ghost" id="resetBtn">Reset</button>
+          <button class="btn btn-secondary" id="resetBtn">
+            Réinitialiser
+          </button>
+          <button class="btn btn-ghost" id="exampleBtn">
+            <span class="icon">★</span>Charger un exemple
+          </button>
         </div>
       </div>
 
       <!-- RESULT PANEL -->
       <div class="panel">
-        <h2>2. Psycho-forensic overlay</h2>
-        <p id="statusText">
-          Paste a narrative on the left and click <strong>Analyze</strong> to reveal the structural patterns of control.
+        <h2>2. Superposition psycho-médico-légale</h2>
+        <p class="panel-sub">
+          Collez un texte narratif à gauche et cliquez sur «&nbsp;Analyser&nbsp;» pour
+          révéler les schémas structurés de contrôle.
         </p>
 
-        <div class="badge-row" id="badgesRow" style="display:none;">
-          <div class="badge-score" id="scoreBadge" data-risk="medium">
-            <strong id="scoreValue">0%</strong>
-            <span>coercive control score</span>
+        <!-- Scores -->
+        <div class="score-row">
+          <div class="score-pill">
+            <div class="score-label">Score d’emprise (approx.)</div>
+            <div class="score-value" id="holdScoreValue">
+              0<span class="unit">/100</span>
+            </div>
+            <div class="score-tag safe" id="holdScoreTag">Aucun signal structuré détecté</div>
           </div>
-          <div class="badge-score" id="riskBadge" data-risk="medium">
-            <strong id="riskLabel">–</strong>
-            <span>risk level</span>
-          </div>
-        </div>
-
-        <div class="two-col">
-          <div class="subpanel">
-            <h3>Mechanisms detected</h3>
-            <ul id="mechanismsList">
-              <li>No narrative analysed yet.</li>
-            </ul>
-          </div>
-
-          <div class="subpanel">
-            <h3>Coercive control matrix</h3>
-            <table class="matrix-table" id="matrixTable">
-              <thead>
-              <tr>
-                <th>Axis</th>
-                <th>Level</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td>Isolation / confinement</td>
-                <td class="level level-low">None yet</td>
-              </tr>
-              <tr>
-                <td>Surveillance &amp; suspicion</td>
-                <td class="level level-low">None yet</td>
-              </tr>
-              <tr>
-                <td>Control of communications</td>
-                <td class="level level-low">None yet</td>
-              </tr>
-              <tr>
-                <td>Threats &amp; sanctions</td>
-                <td class="level level-low">None yet</td>
-              </tr>
-              <tr>
-                <td>Economic / resource control</td>
-                <td class="level level-low">None yet</td>
-              </tr>
-              <tr>
-                <td>Normalisation &amp; gaslighting</td>
-                <td class="level level-low">None yet</td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="score-pill">
+            <div class="score-label">Risque immédiat (narratif)</div>
+            <div class="score-value" id="riskScoreValue">
+              0<span class="unit">/100</span>
+            </div>
+            <div class="score-tag safe" id="riskScoreTag">Pas de menace explicite dans le récit</div>
           </div>
         </div>
 
-        <div class="two-col" style="margin-top:14px;">
-          <div class="subpanel">
-            <h3>Signals to monitor</h3>
-            <ul id="signalsList">
-              <li>Signals will appear once a narrative has been analysed.</li>
-            </ul>
-          </div>
+        <!-- Mechanisms -->
+        <div>
+          <label>Mécanismes détectés</label>
+          <ul class="mechanisms-list" id="mechanismsList">
+            <li>Aucun mécanisme détecté pour l’instant.</li>
+          </ul>
+        </div>
 
-          <div class="subpanel">
-            <h3>Narrative phenotype</h3>
-            <ul id="phenotypeList">
-              <li>Sentence count, density of anchors, and tone will be summarised here.</li>
-            </ul>
+        <!-- Matrix -->
+        <div>
+          <label>Matrice de contrôle coercitif</label>
+          <div class="matrix-grid" id="matrixGrid">
+            <!-- rows generated by JS -->
           </div>
         </div>
 
-        <div class="mono-block" id="debugBlock" style="display:none;">
-          <strong>Debug view</strong> — internal demo scores:
-          <div id="debugContent"></div>
+        <!-- Signals -->
+        <div class="signals-list" id="signalsBlock">
+          <strong>Signaux à surveiller</strong><br/>
+          Aucuns signaux faibles tant qu’aucun récit n’a été analysé.
+        </div>
+
+        <!-- Phenotype -->
+        <div class="phenotype-block" id="phenotypeBlock">
+          <strong>Phénotype narratif</strong><br/>
+          Le profil narratif sera résumé ici après l’analyse (ex.&nbsp;: contrôle coercitif
+          domestique, management intimidant, harcèlement institutionnel, etc.).
+        </div>
+
+        <!-- Highlighted narrative -->
+        <div class="highlighted-text" id="highlightedNarrative" aria-label="Texte analysé avec surlignage">
+          Le récit surligné apparaîtra ici, avec les passages sensibles mis en évidence.
         </div>
       </div>
     </div>
 
-    <div class="footer-banner">
-      <div>
-        <p>
-          Here you see the <strong>open psycho-forensic demo</strong>: a deterministic narrative decoder built on top
-          of the RPO logic. For a scientific CNRS × TruthX pilot with advanced psycho-forensic modules and real cases,
-          you can apply to the restricted programme.
-        </p>
-        <small>
-          The demo does not decide truth or falsity and does not replace legal or clinical assessment. It only exposes
-          structural patterns that may need attention.
-        </small>
-      </div>
-      <a class="footer-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
-        <span>Apply for the CNRS pilot</span> ↗
+    <p class="demo-disclaimer">
+      Cette logique de démonstration est heuristique et volontairement conservative.
+      Elle met simplement en lumière des schémas de contrôle possibles à partir du texte fourni.
+    </p>
+  </section>
+
+  <!-- CTA BOTTOM -->
+  <section class="bottom-cta">
+    <div>
+      <div class="bottom-cta-title">Vous êtes face à un cas réel&nbsp;?</div>
+      <p class="bottom-cta-text">
+        Cette page montre un <strong>décodage narratif démonstratif</strong>. Dans la version
+        scientifique / CNRS, la couche psycho-forensique est couplée à la norme RPO, à des
+        graphes temporels et à une lecture juridique structurée. Si vous souhaitez tester ces
+        modules avancés sur des cas réels, vous pouvez demander l’accès au
+        <strong>projet pilote CNRS × TruthX</strong>.
+      </p>
+    </div>
+    <div>
+      <a class="btn-primary-link"
+         href="https://www.truthx.co/truthx-pilote-form"
+         target="_blank"
+         rel="noopener noreferrer">
+        <span class="icon">⚖︎</span>
+        <span>Postuler pour le projet pilote CNRS</span>
       </a>
-    </div>
-
-    <div class="disclaimer">
-      Demo logic is heuristic and intentionally conservative. It is meant for experimentation, not diagnosis.
+      <div class="cta-disclaimer">
+        Cette démonstration n’est pas un avis juridique ni un diagnostic clinique.
+        Elle ne remplace pas un accompagnement spécialisé.
+      </div>
     </div>
   </section>
 </main>
 
 <script>
-  function analyzeNarrative(text, context) {
-    const lower = text.toLowerCase();
+  // --- Axes et motifs déterministes ----------------------------------------
 
-    // Simple keyword-based pattern matching
-    const patterns = {
-      isolation: /(locked|shut in|kept me in|blocked the door|confined|couldn['’]t leave|trapped)/,
-      surveillance: /(checking my|went through my|read my messages|monitoring|spy|tracking|accusing me of hiding|snooping)/,
-      comms: /(took my phone|no one needed to hear|blocked me|removed me from|forbade me to call|no need to talk)/,
-      threats: /(threaten(ed)?|or else|if you don['’]t|take the keys|kick(ed)? out|lose your job|take the car|you will regret)/,
-      economic: /(card|bank|money|account|allowance|paycheck|blocked access|withheld|took my salary)/,
-      norm: /(normal for couples|everyone does this|you are overreacting|it[’']s nothing|you are crazy|gaslighting)/,
-      sleep: /(woke me up at|middle of the night|kept me awake)/,
-    };
-
-    const mechanisms = [];
-    const matrix = {
-      isolation: 0,
-      surveillance: 0,
-      comms: 0,
-      threats: 0,
-      economic: 0,
-      norm: 0
-    };
-
-    if (patterns.isolation.test(lower)) {
-      mechanisms.push("Confinement / isolation (locked in, blocked from leaving).");
-      matrix.isolation = 2;
+  const AXES = [
+    {
+      id: "isolation",
+      label: "Isolement / confinement",
+      patterns: [
+        "locked me in", "locked me into", "m'a enfermé", "m’a enfermé",
+        "barred the door", "blocked the door", "m'empêchait de sortir", "m’empechait de sortir",
+        "confined me", "kept me in the room", "no one needed to hear from me tonight"
+      ]
+    },
+    {
+      id: "surveillance",
+      label: "Surveillance et suspicion",
+      patterns: [
+        "checking my phone", "checked my phone", "surveillait mon téléphone",
+        "watching my messages", "accusing me of hiding conversations",
+        "demanded passwords", "wanted my passwords", "demandait mes codes",
+        "monitoring", "track my location", "me suivait partout"
+      ]
+    },
+    {
+      id: "communications",
+      label: "Contrôle des communications",
+      patterns: [
+        "took my phone", "took my phone away", "a pris mon téléphone",
+        "deleted messages", "deleted my messages", "forbade me to call",
+        "m'interdisait d'appeler", "m interdisait d appeler",
+        "no one needed to hear from me", "blocked my contacts"
+      ]
+    },
+    {
+      id: "threats",
+      label: "Menaces et sanctions",
+      patterns: [
+        "threatened to", "threatened me", "a menacé de",
+        "would take the car keys", "take the car keys",
+        "raise his voice", "shouted at me", "criait sur moi",
+        "punish me", "me punirait", "you will pay for this",
+        "hit me", "pushed me", "slapped me", "m'a frappé", "m’a frappe"
+      ]
+    },
+    {
+      id: "economic",
+      label: "Contrôle économique / des ressources",
+      patterns: [
+        "all my bank notifications", "my bank notifications",
+        "access to my account", "blocked my account",
+        "contrôle de l'argent", "contrôle de mes finances",
+        "took my salary", "kept my card", "kept my bank card"
+      ]
+    },
+    {
+      id: "normalisation",
+      label: "Normalisation et pression mentale",
+      patterns: [
+        "normal for couples", "normal for a couple",
+        "everyone does that", "tous les couples font ça", "c'est normal",
+        "i was overreacting", "you are too sensitive", "trop sensible",
+        "i was crazy", "i was imagining things", "gaslighting"
+      ]
     }
-    if (patterns.surveillance.test(lower)) {
-      mechanisms.push("Surveillance & suspicion (monitoring phone, messages, conversations).");
-      matrix.surveillance = 2;
-    }
-    if (patterns.comms.test(lower)) {
-      mechanisms.push("Control of communications (phone confiscation, blocking access to others).");
-      matrix.comms = 2;
-    }
-    if (patterns.threats.test(lower)) {
-      mechanisms.push("Threats & sanctions (conditions, ultimatums, withdrawal of resources).");
-      matrix.threats = 2;
-    }
-    if (patterns.economic.test(lower)) {
-      mechanisms.push("Economic / resource control (money, cards, access to essentials).");
-      matrix.economic = 2;
-    }
-    if (patterns.norm.test(lower)) {
-      mechanisms.push("Normalisation & gaslighting (“it’s normal”, minimising, making you doubt your perception).");
-      matrix.norm = 2;
-    }
+  ];
 
-    // Simple narrative stats
-    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
-    const wordCount = text.split(/\s+/).filter(w => w.trim().length > 0).length;
-    const hasTimeMarkers = /(monday|tuesday|wednesday|thursday|friday|saturday|sunday|am|pm|morning|evening|night|week|day|month|year|\d{1,2}\s?(am|pm))/i.test(text);
-    const hasDateMarkers = /\b\d{1,2}\s?(january|february|march|april|may|june|july|august|september|october|november|december)\b/i.test(text);
-    const hasPlaceMarkers = /(kitchen|bedroom|office|living room|car|home|flat|house|school|work|police|station)/i.test(text);
-    const firstPerson = /\bi\b/.test(lower);
+  const ACUTE_KEYWORDS = [
+    "locked", "enfermé", "threatened", "menacé", "hit", "frappé",
+    "no one needed to hear from me", "take the car keys", "keys if i",
+    "you will pay for this"
+  ];
 
-    // Emprise score: very simple aggregation
-    const axesTriggered = Object.values(matrix).filter(v => v > 0).length;
-    let score = 10 * axesTriggered;
+  // Initialisation de la matrice visuelle
+  const matrixGrid = document.getElementById("matrixGrid");
 
-    if (hasTimeMarkers) score += 8;
-    if (hasDateMarkers) score += 7;
-    if (hasPlaceMarkers) score += 5;
-    if (sentences >= 3) score += 8;
+  function initMatrix() {
+    matrixGrid.innerHTML = "";
+    AXES.forEach(axis => {
+      const row = document.createElement("div");
+      row.className = "matrix-row";
+      row.dataset.axisId = axis.id;
 
-    if (context === "domestic") score += 5;
-    if (context === "workplace") score += 3;
+      const axisDiv = document.createElement("div");
+      axisDiv.className = "matrix-axis";
+      axisDiv.textContent = axis.label;
 
-    score = Math.max(0, Math.min(96, score));
-    let riskLabel = "Moderate";
-    let riskLevel = "medium";
+      const levelDiv = document.createElement("div");
+      levelDiv.className = "matrix-level none";
+      levelDiv.textContent = "Aucun pour l’instant";
 
-    if (score >= 70) {
-      riskLabel = "High";
-      riskLevel = "high";
-    } else if (score <= 40) {
-      riskLabel = "Low";
-      riskLevel = "low";
-    }
-
-    // Signals to monitor
-    const signals = [];
-    if (matrix.isolation) signals.push("Pattern of isolation or confinement. Monitor how often physical freedom is restricted.");
-    if (matrix.surveillance) signals.push("Intrusive surveillance of communications or movements. Check if this becomes routine.");
-    if (matrix.comms) signals.push("Control over who you can talk to or when. Loss of contact with friends / family is a red flag.");
-    if (matrix.threats) signals.push("Use of threats or conditions to obtain obedience. Note escalation in the nature of threats.");
-    if (matrix.economic) signals.push("Control of money, accounts or essential resources. Track who decides what can be spent and how.");
-    if (matrix.norm) signals.push("Repeated use of “it’s normal / you’re crazy” to justify control. Watch self-doubt growing over time.");
-
-    if (signals.length === 0) {
-      signals.push("No strong coercive pattern detected by this demo. If something still feels unsafe, professional advice is recommended.");
-    }
-
-    // Phenotype description
-    const phenotype = [];
-    phenotype.push(`Approx. ${sentences} sentence(s), ~${wordCount} word(s).`);
-    if (hasDateMarkers || hasTimeMarkers) phenotype.push("Concrete temporal anchors present (dates / time of day).");
-    else phenotype.push("Few explicit time markers — events may feel blurred in memory.");
-    if (hasPlaceMarkers) phenotype.push("Spatial anchors present (places, rooms, or locations).");
-    if (firstPerson) phenotype.push("First-person narrative — the speaker is directly involved in the events.");
-    phenotype.push("This description is heuristic, not clinical: it helps structure the story, not judge it.");
-
-    return {
-      mechanisms,
-      matrix,
-      score,
-      riskLabel,
-      riskLevel,
-      signals,
-      phenotype,
-      debug: {
-        sentences,
-        wordCount,
-        hasTimeMarkers,
-        hasDateMarkers,
-        hasPlaceMarkers,
-        context
-      }
-    };
+      row.appendChild(axisDiv);
+      row.appendChild(levelDiv);
+      matrixGrid.appendChild(row);
+    });
   }
 
-  const narrativeInput = document.getElementById('narrativeInput');
-  const contextSelect = document.getElementById('contextSelect');
-  const analyzeBtn = document.getElementById('analyzeBtn');
-  const resetBtn = document.getElementById('resetBtn');
+  initMatrix();
 
-  const statusText = document.getElementById('statusText');
-  const badgesRow = document.getElementById('badgesRow');
-  const scoreBadge = document.getElementById('scoreBadge');
-  const scoreValue = document.getElementById('scoreValue');
-  const riskBadge = document.getElementById('riskBadge');
-  const riskLabel = document.getElementById('riskLabel');
+  // --- Analyse -------------------------------------------------------------
 
-  const mechanismsList = document.getElementById('mechanismsList');
-  const matrixTable = document.getElementById('matrixTable').querySelector('tbody');
-  const signalsList = document.getElementById('signalsList');
-  const phenotypeList = document.getElementById('phenotypeList');
-  const debugBlock = document.getElementById('debugBlock');
-  const debugContent = document.getElementById('debugContent');
+  const narrativeInput = document.getElementById("narrativeInput");
+  const contextSelect = document.getElementById("contextSelect");
+  const mechanismsList = document.getElementById("mechanismsList");
+  const holdScoreValue = document.getElementById("holdScoreValue");
+  const holdScoreTag = document.getElementById("holdScoreTag");
+  const riskScoreValue = document.getElementById("riskScoreValue");
+  const riskScoreTag = document.getElementById("riskScoreTag");
+  const signalsBlock = document.getElementById("signalsBlock");
+  const phenotypeBlock = document.getElementById("phenotypeBlock");
+  const highlightedNarrative = document.getElementById("highlightedNarrative");
 
-  function clearResults() {
-    badgesRow.style.display = 'none';
-    mechanismsList.innerHTML = '<li>No narrative analysed yet.</li>';
-    signalsList.innerHTML = '<li>Signals will appear once a narrative has been analysed.</li>';
-    phenotypeList.innerHTML = '<li>Sentence count, density of anchors, and tone will be summarised here.</li>';
-    matrixTable.innerHTML = `
-      <tr><td>Isolation / confinement</td><td class="level level-low">None yet</td></tr>
-      <tr><td>Surveillance &amp; suspicion</td><td class="level level-low">None yet</td></tr>
-      <tr><td>Control of communications</td><td class="level level-low">None yet</td></tr>
-      <tr><td>Threats &amp; sanctions</td><td class="level level-low">None yet</td></tr>
-      <tr><td>Economic / resource control</td><td class="level level-low">None yet</td></tr>
-      <tr><td>Normalisation &amp; gaslighting</td><td class="level level-low">None yet</td></tr>
-    `;
-    debugBlock.style.display = 'none';
-    debugContent.textContent = '';
-    statusText.textContent = 'Paste a narrative on the left and click “Analyze” to reveal the structural patterns of control.';
-  }
-
-  function levelLabel(value) {
-    if (value >= 2) return { text: 'High', cls: 'level-high' };
-    if (value === 1) return { text: 'Medium', cls: 'level-medium' };
-    return { text: 'Low / none', cls: 'level-low' };
-  }
-
-  analyzeBtn.addEventListener('click', () => {
-    const text = narrativeInput.value.trim();
+  document.getElementById("analyzeBtn").addEventListener("click", () => {
+    const text = (narrativeInput.value || "").trim();
     if (!text) {
-      alert('Please paste a narrative first.');
+      alert("Veuillez saisir un court récit avant de lancer l’analyse.");
       return;
     }
-    analyzeBtn.disabled = true;
-    analyzeBtn.querySelector('span').textContent = 'Analyzing…';
+    runAnalysis(text, contextSelect.value);
+  });
 
-    const result = analyzeNarrative(text, contextSelect.value);
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    narrativeInput.value = "";
+    contextSelect.value = "generic";
+    initMatrix();
+    mechanismsList.innerHTML = "<li>Aucun mécanisme détecté pour l’instant.</li>";
+    holdScoreValue.innerHTML = "0<span class='unit'>/100</span>";
+    holdScoreTag.textContent = "Aucun signal structuré détecté";
+    holdScoreTag.className = "score-tag safe";
 
-    // Score & risk
-    scoreValue.textContent = `${result.score}%`;
-    riskLabel.textContent = result.riskLabel;
+    riskScoreValue.innerHTML = "0<span class='unit'>/100</span>";
+    riskScoreTag.textContent = "Pas de menace explicite dans le récit";
+    riskScoreTag.className = "score-tag safe";
 
-    scoreBadge.dataset.risk = result.riskLevel;
-    riskBadge.dataset.risk = result.riskLevel;
+    signalsBlock.innerHTML =
+      "<strong>Signaux à surveiller</strong><br/>" +
+      "Aucuns signaux faibles tant qu’aucun récit n’a été analysé.";
+    phenotypeBlock.innerHTML =
+      "<strong>Phénotype narratif</strong><br/>" +
+      "Le profil narratif sera résumé ici après l’analyse.";
+    highlightedNarrative.textContent =
+      "Le récit surligné apparaîtra ici, avec les passages sensibles mis en évidence.";
+  });
 
-    badgesRow.style.display = 'flex';
+  document.getElementById("exampleBtn").addEventListener("click", () => {
+    // Exemple conjugal – structure type contrôle coercitif
+    const example = "On Saturday 12 February, around 9 pm, he locked me in the living room for almost two hours after I refused to cancel a dinner with my sister. He stood in front of the door, took my phone and said that no one needed to hear from me tonight. Two days later, on Monday, he woke me up at 5:30 am accusing me of hiding conversations from him because I didn’t leave my phone charging in the kitchen as he demanded. Last week, he also threatened to take the car keys if I didn’t give him all my bank notifications, saying it was normal for couples to share everything.";
+    narrativeInput.value = example;
+    contextSelect.value = "intimate";
+    runAnalysis(example, "intimate");
+  });
 
-    // Mechanisms
-    mechanismsList.innerHTML = '';
-    if (result.mechanisms.length === 0) {
-      mechanismsList.innerHTML = '<li>No major coercive mechanism detected by this demo. This does not mean there is no issue.</li>';
+  function runAnalysis(text, context) {
+    const lower = text.toLowerCase();
+
+    const hitsByAxis = {};
+    const matchedSegments = [];
+
+    AXES.forEach(axis => {
+      hitsByAxis[axis.id] = 0;
+      axis.patterns.forEach(pattern => {
+        const p = pattern.toLowerCase();
+        let index = lower.indexOf(p);
+        while (index !== -1) {
+          hitsByAxis[axis.id]++;
+          matchedSegments.push({ start: index, end: index + p.length });
+          index = lower.indexOf(p, index + p.length);
+        }
+      });
+    });
+
+    // Fusion crude des segments pour le surlignage
+    const merged = mergeSegments(matchedSegments);
+    const highlighted = buildHighlightedText(text, merged);
+    highlightedNarrative.innerHTML = highlighted;
+
+    // Liste des mécanismes détectés
+    const activeAxes = Object.entries(hitsByAxis).filter(([_, count]) => count > 0);
+    if (activeAxes.length === 0) {
+      mechanismsList.innerHTML =
+        "<li>Aucun motif de contrôle explicite détecté. " +
+        "Cela ne signifie pas qu’il n’y a pas d’emprise, seulement que ce court extrait ne la rend pas visible.</li>";
     } else {
-      result.mechanisms.forEach(m => {
-        const li = document.createElement('li');
-        li.textContent = m;
+      mechanismsList.innerHTML = "";
+      activeAxes.forEach(([axisId, count]) => {
+        const axis = AXES.find(a => a.id === axisId);
+        const li = document.createElement("li");
+        li.textContent = `${axis.label} · ${count} indice(s) lexical(aux)`;
         mechanismsList.appendChild(li);
       });
     }
 
-    // Matrix
-    matrixTable.innerHTML = '';
-    const rows = [
-      ['Isolation / confinement', result.matrix.isolation],
-      ['Surveillance & suspicion', result.matrix.surveillance],
-      ['Control of communications', result.matrix.comms],
-      ['Threats & sanctions', result.matrix.threats],
-      ['Economic / resource control', result.matrix.economic],
-      ['Normalisation & gaslighting', result.matrix.norm],
-    ];
-    rows.forEach(([label, value]) => {
-      const tr = document.createElement('tr');
-      const tdLabel = document.createElement('td');
-      const tdValue = document.createElement('td');
-      tdLabel.textContent = label;
-      const lvl = levelLabel(value);
-      tdValue.textContent = lvl.text;
-      tdValue.className = `level ${lvl.cls}`;
-      tr.appendChild(tdLabel);
-      tr.appendChild(tdValue);
-      matrixTable.appendChild(tr);
+    // Mise à jour de la matrice (aucun / présent / fort)
+    updateMatrix(hitsByAxis);
+
+    // Scores d’emprise et de risque
+    const totalAxes = AXES.length;
+    const nbAxesActive = activeAxes.length;
+    const totalHits = Object.values(hitsByAxis).reduce((a, b) => a + b, 0);
+
+    // Score d’emprise: base sur nombre d’axes + volume d’indices
+    let holdScore = Math.round((nbAxesActive / totalAxes) * 60 + Math.min(totalHits * 6, 40));
+    holdScore = clamp(holdScore, 0, 100);
+
+    // Ajustement léger selon le contexte
+    if (context === "intimate" || context === "work") {
+      holdScore = Math.min(100, Math.round(holdScore * 1.1));
+    }
+
+    // Score de risque immédiat: basé sur menaces / enfermement / violence
+    let acuteHits = 0;
+    const lowerNoAccents = lower; // simplification
+
+    ACUTE_KEYWORDS.forEach(keyword => {
+      const k = keyword.toLowerCase();
+      let idx = lowerNoAccents.indexOf(k);
+      while (idx !== -1) {
+        acuteHits++;
+        idx = lowerNoAccents.indexOf(k, idx + k.length);
+      }
     });
 
-    // Signals
-    signalsList.innerHTML = '';
-    result.signals.forEach(s => {
-      const li = document.createElement('li');
-      li.textContent = s;
-      signalsList.appendChild(li);
+    let riskScore = Math.round(acuteHits * 18);
+    if (hitsByAxis["threats"] >= 2 || hitsByAxis["isolation"] >= 2) {
+      riskScore += 20;
+    }
+    riskScore = clamp(riskScore, 0, 100);
+
+    // Mise à jour UI scores
+    holdScoreValue.innerHTML = `${holdScore}<span class="unit">/100</span>`;
+    riskScoreValue.innerHTML = `${riskScore}<span class="unit">/100</span>`;
+
+    if (holdScore < 30) {
+      holdScoreTag.textContent = "Structure d’emprise peu marquée dans cet extrait isolé.";
+      holdScoreTag.className = "score-tag safe";
+    } else if (holdScore < 65) {
+      holdScoreTag.textContent = "Plusieurs axes de contrôle apparaissent ; à surveiller dans la durée.";
+      holdScoreTag.className = "score-tag warn";
+    } else {
+      holdScoreTag.textContent = "Structure d’emprise forte : plusieurs axes convergent dans ce récit.";
+      holdScoreTag.className = "score-tag danger";
+    }
+
+    if (riskScore < 20) {
+      riskScoreTag.textContent = "Pas de menace explicite dans ce court extrait.";
+      riskScoreTag.className = "score-tag safe";
+    } else if (riskScore < 60) {
+      riskScoreTag.textContent = "Présence de menaces ou de contraintes ; risque à contextualiser.";
+      riskScoreTag.className = "score-tag warn";
+    } else {
+      riskScoreTag.textContent = "Signaux de risque aigu (menaces, enfermement, sanctions). Nécessite une vigilance immédiate.";
+      riskScoreTag.className = "score-tag danger";
+    }
+
+    // Signaux faibles
+    const weakSignals = Object.entries(hitsByAxis)
+      .filter(([_, count]) => count === 1)
+      .map(([axisId]) => AXES.find(a => a.id === axisId).label);
+
+    if (weakSignals.length === 0 && activeAxes.length === 0) {
+      signalsBlock.innerHTML =
+        "<strong>Signaux à surveiller</strong><br/>" +
+        "Aucun signal lexical particulier n’a été relevé dans ce court extrait.";
+    } else {
+      let html = "<strong>Signaux à surveiller</strong><br/>";
+      if (weakSignals.length > 0) {
+        html += "Axes apparaissant une seule fois (à suivre dans le temps)&nbsp;:";
+        html += "<ul>";
+        weakSignals.forEach(label => {
+          html += `<li>${label}</li>`;
+        });
+        html += "</ul>";
+      } else {
+        html += "Les axes détectés se répètent déjà : le contrôle semble structuré plutôt que ponctuel.";
+      }
+      signalsBlock.innerHTML = html;
+    }
+
+    // Phénotype narratif
+    phenotypeBlock.innerHTML = `<strong>Phénotype narratif</strong><br/>${buildPhenotype(hitsByAxis, context)}`;
+  }
+
+  function updateMatrix(hitsByAxis) {
+    Array.from(matrixGrid.children).forEach(row => {
+      const axisId = row.dataset.axisId;
+      const levelDiv = row.querySelector(".matrix-level");
+      const hits = hitsByAxis[axisId] || 0;
+
+      if (hits === 0) {
+        levelDiv.textContent = "Aucun pour l’instant";
+        levelDiv.className = "matrix-level none";
+      } else if (hits === 1) {
+        levelDiv.textContent = "Présent, 1 indice";
+        levelDiv.className = "matrix-level low";
+      } else {
+        levelDiv.textContent = `Fort, ${hits} indices`;
+        levelDiv.className = "matrix-level high";
+      }
+    });
+  }
+
+  function buildPhenotype(hitsByAxis, context) {
+    const intlAxes = {
+      isolation: hitsByAxis["isolation"] || 0,
+      surveillance: hitsByAxis["surveillance"] || 0,
+      communications: hitsByAxis["communications"] || 0,
+      threats: hitsByAxis["threats"] || 0,
+      economic: hitsByAxis["economic"] || 0,
+      normalisation: hitsByAxis["normalisation"] || 0
+    };
+
+    const active = Object.values(intlAxes).some(v => v > 0);
+    if (!active) {
+      return "Aucun profil net ne se dégage sur la base de cet extrait isolé. Un récit plus long ou des pièces complémentaires seraient nécessaires.";
+    }
+
+    const strongAxes = Object.entries(intlAxes)
+      .filter(([_, v]) => v >= 2)
+      .map(([id]) => id);
+
+    const hasCoreCoercive =
+      intlAxes.isolation > 0 &&
+      (intlAxes.surveillance > 0 || intlAxes.communications > 0) &&
+      intlAxes.threats > 0;
+
+    if (hasCoreCoercive && context === "intimate") {
+      return "Le récit correspond à un schéma typique de contrôle coercitif en contexte intime : " +
+        "épisodes d’isolement, surveillance des communications, menaces ou sanctions répétées. " +
+        "Dans une évaluation complète, ce type de profil justifierait une attention prioritaire.";
+    }
+
+    if (context === "work" && (intlAxes.threats > 0 || intlAxes.normalisation > 0)) {
+      return "Le profil évoque un management coercitif : usage de menaces, pression normative " +
+        "et possible disqualification progressive. Dans un cadre RH, ce type de dynamique peut " +
+        "alimenter des situations de harcèlement moral ou institutionnel.";
+    }
+
+    if (context === "institutional" && intlAxes.normalisation > 0) {
+      return "Le récit laisse apparaître une forme de contrôle institutionnel : " +
+        "normalisation de pratiques contestables, renversement de la responsabilité " +
+        "et dilution des menaces dans des procédures apparemment neutres.";
+    }
+
+    if (intlAxes.economic > 0 && context === "intimate") {
+      return "Le contrôle économique est au cœur de ce récit, combiné à d’autres signaux " +
+        "d’emprise. Ce type de profil est fréquent dans les situations d’emprise domestique " +
+        "où la dépendance financière renforce le verrouillage psychologique.";
+    }
+
+    if (strongAxes.length >= 3) {
+      return "Plusieurs axes de contrôle apparaissent simultanément, ce qui suggère " +
+        "une structure d’emprise multi-dimensionnelle plutôt qu’un conflit isolé.";
+    }
+
+    return "Des éléments de contrôle apparaissent mais le profil reste partiel. " +
+      "La dynamique pourrait être précisée par des récits supplémentaires " +
+      "ou d’autres types de pièces (messages, emails, décisions formelles).";
+  }
+
+  function mergeSegments(segments) {
+    if (!segments.length) return [];
+    const sorted = segments.sort((a, b) => a.start - b.start);
+    const merged = [sorted[0]];
+
+    for (let i = 1; i < sorted.length; i++) {
+      const last = merged[merged.length - 1];
+      const current = sorted[i];
+      if (current.start <= last.end) {
+        last.end = Math.max(last.end, current.end);
+      } else {
+        merged.push({ start: current.start, end: current.end });
+      }
+    }
+    return merged;
+  }
+
+  function buildHighlightedText(text, segments) {
+    if (!segments.length) return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    let result = "";
+    let cursor = 0;
+
+    segments.forEach(seg => {
+      const safeStart = Math.max(0, Math.min(seg.start, text.length));
+      const safeEnd = Math.max(0, Math.min(seg.end, text.length));
+      if (safeStart > cursor) {
+        result += escapeHtml(text.slice(cursor, safeStart));
+      }
+      result += "<mark>" + escapeHtml(text.slice(safeStart, safeEnd)) + "</mark>";
+      cursor = safeEnd;
     });
 
-    // Phenotype
-    phenotypeList.innerHTML = '';
-    result.phenotype.forEach(p => {
-      const li = document.createElement('li');
-      li.textContent = p;
-      phenotypeList.appendChild(li);
-    });
+    if (cursor < text.length) {
+      result += escapeHtml(text.slice(cursor));
+    }
+    return result;
+  }
 
-    // Debug
-    debugBlock.style.display = 'block';
-    debugContent.textContent = JSON.stringify(result.debug, null, 2);
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  }
 
-    statusText.textContent = 'This narrative has been structurally decoded. Scores are heuristic and meant for demonstration only.';
-
-    analyzeBtn.disabled = false;
-    analyzeBtn.querySelector('span').textContent = 'Analyze narrative';
-  });
-
-  resetBtn.addEventListener('click', () => {
-    narrativeInput.value = '';
-    contextSelect.value = 'unspecified';
-    clearResults();
-  });
-
-  clearResults();
+  function clamp(value, min, max) {
+    return Math.max(min, Math.min(max, value));
+  }
 </script>
+
 </body>
 </html>
+
