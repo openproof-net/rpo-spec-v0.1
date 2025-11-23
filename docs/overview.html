@@ -122,6 +122,7 @@
       height: 28px;
       border-radius: 999px;
       display: block;
+      object-fit: contain;
     }
 
     .nav-title {
@@ -303,6 +304,66 @@
       color: var(--text-muted);
     }
 
+    /* HERO RIGHT CARD (logo issue fixed here) */
+    .hero-card {
+      background: var(--bg-elevated);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.4rem 1.3rem;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-logo-frame {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #f3e8b2, #b88c2a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4),
+                  0 8px 20px rgba(0, 0, 0, 0.6);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .hero-logo-frame img {
+      width: 26px;
+      height: 26px;
+      display: block;
+      object-fit: contain;
+      border-radius: 999px;
+    }
+
+    .hero-card-title {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--gold-soft);
+    }
+
+    .hero-card-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-list {
+      margin: 0.5rem 0 0;
+      padding-left: 1.1rem;
+      font-size: 0.86rem;
+      color: var(--text-main);
+    }
+
+    .hero-list li + li {
+      margin-top: 0.25rem;
+    }
+
     /* MAIN LAYOUT */
     .main {
       padding: 0 1.5rem 3.5rem;
@@ -364,6 +425,9 @@
       }
       .grid {
         grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-card {
+        margin-top: -0.4rem;
       }
     }
 
@@ -464,10 +528,10 @@
       <nav class="nav-links" aria-label="Primary navigation">
         <!-- Public layer -->
         <a href="overview.html" class="nav-link nav-link--overview">Overview</a>
-        <a href="demo-psycho.html" class="nav-link nav-link--psycho">Psycho-medico-legal demo</a>
+        <a href="demo-psycho.html" class="nav-link nav-link--psycho">Psycho-legal demo</a>
         <a href="demo-legal.html" class="nav-link nav-link--legal">Legal demo</a>
         <a href="demo-legal-mapping.html" class="nav-link nav-link--legal-mapping">Legal mapping</a>
-        <a href="playground.html" class="nav-link nav-link--playground">Sandbox</a>
+        <a href="sandbox.html" class="nav-link nav-link--playground">Sandbox</a>
 
         <!-- Technical docs dropdown -->
         <div class="nav-dropdown">
@@ -643,4 +707,5 @@
   </footer>
 </body>
 </html>
+
 
