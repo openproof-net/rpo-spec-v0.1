@@ -10,13 +10,6 @@
         content="Legal Mapping Layer demo: from narrative patterns to potential legal domains. Non-normative, jurisdiction-agnostic, and compatible with the RPO (Rapport Probatoire Ouvert) standard." />
   <link rel="canonical" href="https://rpo.openproof.net/demo-legal-mapping.html" />
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="OpenProof — Legal Mapping Layer Demo" />
-  <meta property="og:description"
-        content="From psycho-forensic patterns to potential legal domains: an orientation layer on top of the RPO standard. Non-binding and jurisdiction-agnostic." />
-  <meta property="og:url" content="https://rpo.openproof.net/demo-legal-mapping.html" />
-
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -679,6 +672,17 @@
       color: #f3e7c0;
     }
 
+    /* JUSTIFICATION ------------------------------------------------ */
+    .hero-lead,
+    .hero-extra,
+    .card small,
+    .card p,
+    .helper-text,
+    .mapping-note,
+    .band-real-case p {
+      text-align: justify;
+    }
+
     /* RESPONSIVE --------------------------------------------------- */
     @media (max-width: 960px) {
       .nav-inner {
@@ -722,19 +726,19 @@
           <div class="logo-pill-icon">◎</div>
           <div class="logo-pill-text">
             <div class="logo-title">OPENPROOF — RPO v0.1</div>
-            <div class="logo-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
+            <div class="logo-subtitle">JSON signé • PDF lisible par l’homme • Hachage public</div>
           </div>
         </div>
       </div>
       <nav class="nav-links">
-        <a href="overview.html" class="nav-link">Overview</a>
-        <a href="index.html" class="nav-link">Specification</a>
-        <a href="examples.html" class="nav-link">Examples</a>
+        <a href="overview.html" class="nav-link">Aperçu</a>
+        <a href="index.html" class="nav-link">Spécification</a>
+        <a href="examples.html" class="nav-link">Exemples</a>
         <a href="tests.html" class="nav-link">Tests</a>
-        <a href="playground.html" class="nav-link">Playground</a>
-        <a href="demo-psycho.html" class="nav-link">Psycho-forensic demo</a>
-        <a href="demo-legal.html" class="nav-link">Legal demo</a>
-        <a href="demo-legal-mapping.html" class="nav-link active">Legal mapping</a>
+        <a href="playground.html" class="nav-link">Aire de jeux</a>
+        <a href="demo-psycho.html" class="nav-link">Démonstration psycho-médico-légale</a>
+        <a href="demo-legal.html" class="nav-link">Démonstration juridique</a>
+        <a href="demo-legal-mapping.html" class="nav-link active">Cartographie légale</a>
       </nav>
       <div class="nav-right">
         <a
@@ -743,7 +747,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          View on GitHub
+          Voir sur GitHub
         </a>
       </div>
     </div>
@@ -755,59 +759,60 @@
       <!-- HERO -->
       <section class="hero">
         <div>
-          <div class="hero-kicker">Legal mapping layer • orientation only</div>
+          <div class="hero-kicker">Couche de cartographie légale · orientation uniquement</div>
           <h1 class="hero-title">
-            From narrative <span class="hero-highlight">patterns</span><br />
-            to potential legal domains
+            Des schémas narratifs<br />
+            aux <span class="hero-highlight">domaines juridiques</span> potentiels
           </h1>
           <p class="hero-lead">
-            This demo shows how a structured narrative analysis can be projected onto
-            <strong>legal domains</strong> (liberty, coercion, economic pressure, privacy)
-            without turning into automated legal qualification.
+            Cette démonstration montre comment une analyse narrative structurée peut être
+            projetée sur des <strong>domaines juridiques</strong> (liberté, coercition, pression
+            économique, vie privée) sans se transformer en qualification juridique automatisée.
           </p>
           <p class="hero-extra">
-            The mapping layer comes <strong>after</strong> the psycho-forensic reading.
-            It assumes that a narrative already shows patterns of control, pressure or abuse,
-            and it projects these patterns onto legal domains to suggest
-            <em>where</em> a jurist could look, not <em>what</em> to conclude.
+            L’étape de cartographie intervient <strong>après</strong> l’analyse psycho-médicale.
+            Elle part du principe qu’un récit révèle déjà des schémas de contrôle, de pression ou d’abus,
+            et elle projette ces schémas dans le domaine juridique afin d’orienter le travail du juriste,
+            et non de lui indiquer la conclusion à tirer.
           </p>
           <div class="chip-row">
-            <div class="chip">Orientation only</div>
-            <div class="chip chip-secondary">Jurisdiction-agnostic</div>
-            <div class="chip">Non-normative</div>
-            <div class="chip chip-secondary">Compatible with RPO v0.1</div>
+            <div class="chip">Orientation uniquement</div>
+            <div class="chip chip-secondary">Indépendant de la juridiction</div>
+            <div class="chip">Non normatif</div>
+            <div class="chip chip-secondary">Compatible avec RPO v0.1</div>
           </div>
         </div>
 
         <aside class="hero-card">
           <div class="hero-card-inner">
             <div class="hero-card-header">
-              <div class="hero-card-title">What this page illustrates</div>
-              <div class="hero-card-badge">Demo mode</div>
+              <div class="hero-card-title">Ce que cette page illustre</div>
+              <div class="hero-card-badge">Mode démo</div>
             </div>
             <ul class="hero-card-list">
               <li>
-                It takes a short narrative and reads it through
-                <strong>six legal domains</strong> (liberty, threats, economic pressure,
-                communications, harassment, privacy).
+                Elle prend un court récit et l’analyse à travers
+                <strong>six domaines juridiques</strong> (liberté, menaces, pression économique,
+                communications, harcèlement, vie privée).
               </li>
               <li>
-                For each domain, it counts <strong>cues</strong> and rates them as
-                “Not detected”, “Present” or “Strong”.
+                Pour chaque domaine, elle compte les <strong>indices</strong> et les évalue comme
+                « Non détectés », « Présents » ou « Forts ».
               </li>
               <li>
-                It stays <strong>jurisdiction-agnostic</strong>: no articles, no automatic
-                offences or legal qualification.
+                Elle reste <strong>indépendante de toute juridiction</strong> : pas d’articles,
+                pas d’infractions automatiques ni de qualification juridique.
               </li>
               <li>
-                It acts as a <strong>legal compass</strong>: it suggests directions that may
-                deserve legal attention if the case is escalated.
+                Elle fait office de <strong>boussole juridique</strong> : elle suggère des pistes
+                qui pourraient mériter une attention juridique si l’affaire s’envenime.
               </li>
             </ul>
             <p class="hero-card-foot">
-              In the <em>CNRS × TruthX</em> pilot, this layer is coupled with advanced
-              psycho-forensic models and jurisdiction-specific analysis. Here you see
-              a simplified, transparent orientation layer on top of the RPO “civil code”.
+              Dans le <em>pilote CNRS × TruthX</em>, cette couche est associée à des modèles
+              psycho-forensiques avancés et à une analyse spécifique à chaque juridiction.
+              Vous en voyez ici une couche d’orientation simplifiée et transparente
+              superposée au « code civil » du RPO.
             </p>
           </div>
         </aside>
@@ -815,65 +820,65 @@
 
       <!-- DEMO -->
       <section>
-        <div class="section-title">Try the legal mapping demo</div>
+        <div class="section-title">Essayez la démo de cartographie légale</div>
         <div class="playground-grid">
           <!-- LEFT: INPUT -->
           <article class="card">
-            <h2>2. Narrative input</h2>
+            <h2>2. Apport narratif</h2>
             <small>
-              Start from a short narrative (5–10 sentences). You can anonymise names,
-              places and dates. The goal is to test how a story with control or pressure
-              signals can be mapped to legal domains without turning into automated
-              legal advice.
+              Commencez par un court récit (5 à 10 phrases). Vous pouvez anonymiser les noms,
+              les lieux et les dates. L’objectif est de tester comment un récit comportant des
+              signaux de contrôle ou de pression peut être transposé dans le domaine juridique
+              sans se transformer en avis juridique automatisé.
             </small>
 
-            <label class="field-label" for="narrativeInput">Story (free text)</label>
+            <label class="field-label" for="narrativeInput">Récit (texte libre)</label>
             <textarea
               id="narrativeInput"
               class="textarea"
-              placeholder="Describe the situation in your own words. What happens, how often, who controls what, which threats or pressures are mentioned?"
+              placeholder="Décrivez la situation avec vos mots. Que se passe-t-il, qui contrôle quoi, quelles menaces ou pressions sont évoquées ?"
             ></textarea>
             <p class="helper-text">
-              Tip: include at least one concrete constraint (freedom, money, communication, threats)
-              so that the mapping has something to work with.
+              Conseil : incluez au moins une contrainte concrète (liberté, argent, communication,
+              menaces) afin que la cartographie ait quelque chose sur quoi travailler.
             </p>
 
             <div class="button-row">
               <button id="analyzeBtn" class="btn btn-primary">
-                <span class="btn-icon">▶</span> Analyse &amp; map legal domains
+                <span class="btn-icon">▶</span> Analyser et cartographier les domaines juridiques
               </button>
-              <button id="exampleBtn" class="btn btn-secondary" type="button">Load example</button>
-              <button id="resetBtn" class="btn btn-secondary" type="button">Reset</button>
+              <button id="exampleBtn" class="btn btn-secondary" type="button">Exemple de chargement</button>
+              <button id="resetBtn" class="btn btn-secondary" type="button">Réinitialiser</button>
             </div>
 
             <p class="helper-text" style="margin-top:10px;">
-              <strong>Disclaimer.</strong> This demo is for illustration only. It does not
-              provide legal advice, does not qualify any offence and is not a decision
-              system. Only a qualified professional can assess the legal implications
-              of a real case.
+              <strong>Avertissement :</strong> Cette démonstration est fournie à titre indicatif uniquement.
+              Elle ne constitue pas un avis juridique, ne qualifie aucune infraction et ne représente pas
+              un système de décision. Seul un professionnel qualifié est habilité à évaluer les implications
+              juridiques d’un cas réel.
             </p>
           </article>
 
           <!-- RIGHT: LEGAL MAPPING -->
           <article class="card">
-            <h2>3. Legal orientation (non-binding)</h2>
+            <h2>3. Orientation juridique (non contraignante)</h2>
 
             <div class="result-header">
-              <div class="result-title">Mapping result for this narrative</div>
+              <div class="result-title">Résultat de la cartographie pour ce récit</div>
               <div class="result-metrics" id="result-metrics" style="display:none;">
-                <div class="metric-chip" id="pill-domains">Domains detected: 0</div>
-                <div class="metric-chip" id="pill-max-strength">Max strength: –</div>
-                <div class="metric-chip" id="pill-cues">Total cues: 0</div>
+                <div class="metric-chip" id="pill-domains">Domaines détectés : 0</div>
+                <div class="metric-chip" id="pill-max-strength">Force maximale : –</div>
+                <div class="metric-chip" id="pill-cues">Nombre total d’indices : 0</div>
               </div>
             </div>
 
             <div class="mapping-table-wrapper" id="mapping-wrapper" style="display:none;">
-              <table class="mapping-table" aria-label="Legal mapping table">
+              <table class="mapping-table" aria-label="Tableau de cartographie juridique">
                 <thead>
                   <tr>
-                    <th>Legal domain</th>
-                    <th>Strength</th>
-                    <th>What the cues suggest</th>
+                    <th>Domaine juridique</th>
+                    <th>Force</th>
+                    <th>Ce que suggèrent les indices</th>
                   </tr>
                 </thead>
                 <tbody id="mapping-body">
@@ -883,9 +888,10 @@
             </div>
 
             <p class="mapping-note" id="mapping-note" style="display:none;">
-              This table is a <strong>jurisdiction-agnostic</strong> orientation. It highlights domains where
-              the narrative structure seems most engaged (for example, liberty, coercion, economic pressure).
-              It is meant to support, not replace, human legal reasoning.
+              Ce tableau adopte une perspective <strong>indépendante de toute juridiction</strong>.
+              Il met en lumière les domaines où la structure narrative semble la plus présente
+              (par exemple, la liberté, la coercition, la pression économique). Il vise à appuyer,
+              et non à remplacer, le raisonnement juridique humain.
             </p>
           </article>
         </div>
@@ -893,10 +899,10 @@
         <!-- Real case band -->
         <div class="band-real-case">
           <p>
-            This page shows a <em>demonstration mapping layer</em> built on simple rules.
-            In the scientific / CNRS pilot, legal mapping is combined with the full RPO standard,
-            temporal graphs and structured psycho-forensic models. If you want to test these
-            modules on real-world cases, you can apply to the CNRS × TruthX pilot programme.
+            Cette page présente une <em>couche de cartographie de démonstration</em> basée sur des règles simples.
+            Dans le cadre du projet pilote scientifique/CNRS, la cartographie juridique est combinée à la norme
+            RPO complète, aux graphes temporels et aux modèles psycho-forensiques structurés. Si vous souhaitez
+            tester ces modules sur des cas concrets, vous pouvez candidater au programme pilote CNRS × TruthX.
           </p>
           <a
             class="band-cta"
@@ -904,7 +910,7 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            Apply for the CNRS pilot
+            Postulez pour le projet pilote du CNRS
           </a>
         </div>
       </section>
@@ -1091,9 +1097,9 @@ When I disagree or say that this feels unfair, he calls me ungrateful, threatens
     if (maxStrengthRank === 1) maxStrengthLabel = "Present";
     if (maxStrengthRank === 2) maxStrengthLabel = "Strong";
 
-    pillDomains.textContent = `Domains detected: ${detectedDomains}`;
-    pillMaxStrength.textContent = `Max strength: ${maxStrengthLabel}`;
-    pillCues.textContent = `Total cues: ${totalCues}`;
+    pillDomains.textContent = `Domaines détectés : ${detectedDomains}`;
+    pillMaxStrength.textContent = `Force maximale : ${maxStrengthLabel}`;
+    pillCues.textContent = `Nombre total d’indices : ${totalCues}`;
 
     metricsEl.style.display = "flex";
     mappingWrapper.style.display = "block";
