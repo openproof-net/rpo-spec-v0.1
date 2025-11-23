@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="overview">
 <head>
   <meta charset="UTF-8" />
   <title>OpenProof — RPO Specification v0.1 | Signed JSON • Human-readable PDF • Public hash</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="author" content="Gersende Ryard de Parcey">
   <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor">
-
 
   <!-- SEO -->
   <meta name="description"
@@ -68,7 +67,7 @@
       text-decoration: underline;
     }
 
-    /* Nav */
+    /* NAVBAR */
     .nav {
       position: sticky;
       top: 0;
@@ -95,6 +94,7 @@
     .nav-left {
       display: flex;
       align-items: center;
+      gap: 0.9rem;
     }
 
     .nav-logo-link {
@@ -139,17 +139,26 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.25rem;
+      gap: 1rem;
       font-size: 0.9rem;
     }
 
     .nav-link {
       color: var(--text-muted);
       text-decoration: none;
+      border: none;
+      background: none;
+      font: inherit;
+      padding: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
     }
 
     .nav-link:hover {
       color: var(--gold-soft);
+      text-decoration: none;
     }
 
     .nav-link.active {
@@ -168,6 +177,7 @@
       text-decoration: none;
       color: var(--gold-soft);
       background: rgba(10, 14, 24, 0.9);
+      white-space: nowrap;
     }
 
     .btn-ghost span {
@@ -180,20 +190,60 @@
       background: rgba(13, 18, 30, 0.95);
     }
 
-    @media (max-width: 780px) {
+    /* Dropdown “Technical docs” */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-caret {
+      font-size: 0.7rem;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 130%;
+      right: 0;
+      min-width: 180px;
+      padding: 0.4rem 0;
+      border-radius: 12px;
+      background: #070913;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      display: none;
+      z-index: 30;
+    }
+
+    .nav-dropdown-menu .nav-link {
+      width: 100%;
+      padding: 0.35rem 0.9rem;
+      justify-content: flex-start;
+      color: var(--text-muted);
+    }
+
+    .nav-dropdown-menu .nav-link:hover {
+      background: rgba(241, 230, 163, 0.08);
+      color: var(--gold-soft);
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
       .nav-inner {
         flex-direction: column;
         align-items: flex-start;
       }
       .nav-links {
-        width: 100%;
-        justify-content: space-between;
         flex-wrap: wrap;
-        row-gap: 0.4rem;
+      }
+      .btn-ghost {
+        align-self: flex-start;
       }
     }
 
-    /* Hero */
+    /* HERO */
     .hero {
       padding: 3.2rem 1.5rem 2.4rem;
     }
@@ -457,69 +507,93 @@
       color: var(--gold-soft);
       text-decoration: underline;
     }
+
     /* Active nav state driven by data-page on <html> */
-html[data-page="overview"] .nav-link--overview,
-html[data-page="index"] .nav-link--overview {
-  color: #f1e6a3;
-}
+    html[data-page="overview"] .nav-link--overview,
+    html[data-page="index"] .nav-link--overview {
+      color: #f1e6a3;
+    }
 
-html[data-page="spec"] .nav-link--spec {
-  color: #f1e6a3;
-}
+    html[data-page="spec"] .nav-link--spec {
+      color: #f1e6a3;
+    }
 
-html[data-page="examples"] .nav-link--examples {
-  color: #f1e6a3;
-}
+    html[data-page="examples"] .nav-link--examples {
+      color: #f1e6a3;
+    }
 
-html[data-page="tests"] .nav-link--tests {
-  color: #f1e6a3;
-}
+    html[data-page="tests"] .nav-link--tests {
+      color: #f1e6a3;
+    }
 
-html[data-page="playground"] .nav-link--playground {
-  color: #f1e6a3;
-}
+    html[data-page="playground"] .nav-link--playground {
+      color: #f1e6a3;
+    }
 
-html[data-page="demo-psycho"] .nav-link--psycho {
-  color: #f1e6a3;
-}
+    html[data-page="demo-psycho"] .nav-link--psycho {
+      color: #f1e6a3;
+    }
 
-html[data-page="demo-legal"] .nav-link--legal {
-  color: #f1e6a3;
-}
+    html[data-page="demo-legal"] .nav-link--legal {
+      color: #f1e6a3;
+    }
 
-html[data-page="demo-legal-mapping"] .nav-link--legal-mapping {
-  color: #f1e6a3;
-}
-
+    html[data-page="demo-legal-mapping"] .nav-link--legal-mapping {
+      color: #f1e6a3;
+    }
   </style>
 </head>
 <body>
-  <!-- NAVBAR -->
-  <header class="site-header">
-  <div class="site-header-inner">
-    <a href="index.html" class="brand-pill">
-      <span class="brand-title">OPENPROOF — RPO v0.1</span>
-      <span class="brand-subtitle">Signed JSON · Human-readable PDF · Public hash</span>
-    </a>
 
-    <nav class="main-nav" aria-label="Main navigation">
-      <a href="overview.html" class="nav-link nav-link--overview">Overview</a>
-      <a href="spec/index.html" class="nav-link nav-link--spec">Specification</a>
-      <a href="examples.html" class="nav-link nav-link--examples">Examples</a>
-      <a href="tests.html" class="nav-link nav-link--tests">Tests</a>
-      <a href="playground.html" class="nav-link nav-link--playground">Playground</a>
-      <a href="demo-psycho.html" class="nav-link nav-link--psycho">Psycho-forensic demo</a>
-      <a href="demo-legal.html" class="nav-link nav-link--legal">Legal demo</a>
-      <a href="demo-legal-mapping.html" class="nav-link nav-link--legal-mapping">Legal mapping</a>
-    </nav>
+  <!-- UNIVERSAL NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-left">
+        <a href="index.html" class="nav-logo-link">
+          <div class="nav-logo">
+            <img
+              src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+              alt="OpenProof logo"
+            />
+          </div>
+          <div>
+            <div class="nav-title">OPENPROOF — RPO v0.1</div>
+            <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
+          </div>
+        </a>
+      </div>
 
-    <a href="https://github.com/…/rpo-spec-v0.1" class="nav-cta" target="_blank" rel="noopener noreferrer">
-      View on GitHub
-    </a>
-  </div>
-</header>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <!-- Public layer -->
+        <a href="overview.html" class="nav-link nav-link--overview">Overview</a>
+        <a href="demo-psycho.html" class="nav-link nav-link--psycho">Psycho-medico-legal demo</a>
+        <a href="demo-legal.html" class="nav-link nav-link--legal">Legal demo</a>
+        <a href="demo-legal-mapping.html" class="nav-link nav-link--legal-mapping">Legal mapping layer</a>
+        <a href="playground.html" class="nav-link nav-link--playground">Playground</a>
 
+        <!-- Technical docs dropdown -->
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-toggle" type="button">
+            Technical docs <span class="nav-dropdown-caret">▾</span>
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="spec/index.html" class="nav-link nav-link--spec" role="menuitem">Specification</a>
+            <a href="examples.html" class="nav-link nav-link--examples" role="menuitem">Examples</a>
+            <a href="tests.html" class="nav-link nav-link--tests" role="menuitem">Tests</a>
+          </div>
+        </div>
+      </nav>
 
+      <a
+        href="https://github.com/openproof-net/rpo-spec-v0.1"
+        class="btn-ghost"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span>View on GitHub</span>
+      </a>
+    </div>
+  </header>
 
   <!-- HERO -->
   <section class="hero" id="overview">
@@ -548,11 +622,11 @@ html[data-page="demo-legal-mapping"] .nav-link--legal-mapping {
       <aside class="hero-card">
         <div class="hero-card-header">
           <div class="hero-logo-frame">
-  <img
-    src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-    alt="OpenProof logo"
-  />
-</div>
+            <img
+              src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+              alt="OpenProof logo"
+            />
+          </div>
 
           <div>
             <div class="hero-card-title">RPO v0.1 — Minimal Guarantee</div>
@@ -756,7 +830,7 @@ html[data-page="demo-legal-mapping"] .nav-link--legal-mapping {
     </div>
   </main>
 
-  <!-- FOOTER -->
+  <!-- UNIVERSAL FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-left">
@@ -776,3 +850,4 @@ html[data-page="demo-legal-mapping"] .nav-link--legal-mapping {
   </footer>
 </body>
 </html>
+
