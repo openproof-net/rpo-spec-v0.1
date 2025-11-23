@@ -1,134 +1,147 @@
 <!DOCTYPE html>
-<html lang="fr" data-page="demo-psycho-forensic">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>OpenProof — Psycho-Forensic Demo | Narrative control patterns</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OpenProof — Démo psycho-médico-légale | Mécanismes narratifs</title>
 
-  <!-- SEO minimal -->
+  <!-- SEO -->
   <meta name="description"
-        content="Démonstration psycho-médico-légale : du récit brut aux schémas de contrôle. Détection déterministe des mécanismes de contrôle coercitif et score d’emprise, sans IA." />
+        content="Psycho-forensic demo on top of the RPO standard. Paste a short narrative and see how structural markers of coercive control and narrative pressure are highlighted." />
   <link rel="canonical" href="https://rpo.openproof.net/demo-psycho.html" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="OpenProof — Psycho-Forensic Demo" />
+  <meta property="og:description"
+        content="From raw narrative to structural control patterns: experimental psycho-forensic layer compatible with the RPO standard." />
+  <meta property="og:url" content="https://rpo.openproof.net/demo-psycho.html" />
 
   <style>
     :root {
-      --bg-deep: #04040e;
+      --bg-main: #04040e;
       --bg-elevated: #0b0f14;
-      --panel-bg: #fbf6ea;
-      --panel-border: #d4af37;
-      --panel-shadow: 0 18px 45px rgba(0,0,0,0.65);
-
-      --text-main: #f7f3e8;
-      --text-soft: #c9c3b2;
-      --text-ink: #3c2f18;
-
+      --card-bg: #fbf8f1;
+      --card-soft: #f7f3e8;
       --accent-gold: #d4af37;
-      --accent-gold-soft: #f3e2aa;
-      --accent-pill-bg: rgba(212,175,55,0.12);
-
+      --accent-gold-soft: #f3e8b2;
+      --accent-gold-deep: #b08a22;
+      --text-main: #f7f3e8;
+      --text-ink: #1f1b12;
+      --text-muted: #7a7361;
+      --pill-bg: rgba(243, 232, 178, 0.1);
+      --pill-border: rgba(243, 232, 178, 0.7);
       --danger: #ff6b6b;
-      --warning: #ffb347;
-      --safe: #55c37e;
-
-      --font-title: "Orbitron", system-ui, sans-serif;
-      --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-
-      --radius-panel: 22px;
+      --safe: #3ecf8e;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.55);
+      --radius-card: 22px;
+      --radius-pill: 999px;
+      --highlight: rgba(244, 208, 111, 0.35);
+      --border-gold-soft: 1px solid rgba(212, 175, 55, 0.7);
+      --border-gold-strong: 1px solid rgba(255, 215, 128, 0.9);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top left, #111827 0, var(--bg-deep) 55%);
-      color: var(--text-main);
-      font-family: var(--font-body);
-    }
-
     body {
-      min-height: 100vh;
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      background: radial-gradient(circle at top, #151a26 0, var(--bg-main) 55%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
     }
 
     a {
-      color: var(--accent-gold-soft);
+      color: inherit;
       text-decoration: none;
     }
-    a:hover {
-      text-decoration: underline;
-    }
 
-    /* Layout */
-    .nav-shell {
+    /* Top nav */
+
+    .nav {
       position: sticky;
       top: 0;
       z-index: 40;
-      background: linear-gradient(to bottom,
-      rgba(4,4,14,0.95),
-      rgba(4,4,14,0.90),
-      rgba(4,4,14,0.80));
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(212,175,55,0.18);
-    }
-
-    .nav-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      padding: 14px 36px;
+      background: linear-gradient(to bottom,
+        rgba(4, 4, 14, 0.98),
+        rgba(4, 4, 14, 0.92),
+        rgba(4, 4, 14, 0.86),
+        rgba(4, 4, 14, 0.0)
+      );
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
     }
 
-    .brand-lockup {
+    .nav-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
     }
 
-    .brand-medallion {
+    .nav-emblem {
       width: 40px;
       height: 40px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #fdf7df, #e3c771 45%, #8d6b17 100%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #fff8dc, #d4af37 40%, #7a6432 75%, #2a2114 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.55), 0 18px 40px rgba(0,0,0,0.7);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5), 0 10px 30px rgba(0, 0, 0, 0.7);
+      flex-shrink: 0;
     }
 
-    .brand-medallion span {
-      font-family: var(--font-title);
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #3f2c09;
+    .nav-emblem-inner {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid rgba(4, 4, 14, 0.9);
+      position: relative;
     }
 
-    .brand-text {
+    .nav-emblem-inner::before,
+    .nav-emblem-inner::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(4, 4, 14, 0.9);
+    }
+
+    .nav-emblem-inner::before {
+      top: 3px;
+      width: 2px;
+      height: 10px;
+    }
+
+    .nav-emblem-inner::after {
+      bottom: 3px;
+      width: 8px;
+      height: 2px;
+      border-radius: 999px;
+    }
+
+    .nav-title-block {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
 
-    .brand-text-main {
-      font-family: var(--font-title);
-      letter-spacing: 0.16em;
-      font-size: 13px;
+    .nav-title {
+      font-size: 14px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
+      font-weight: 600;
     }
 
-    .brand-text-sub {
+    .nav-subtitle {
       font-size: 11px;
-      color: var(--text-soft);
+      color: rgba(247, 243, 232, 0.68);
     }
 
     .nav-links {
@@ -139,225 +152,289 @@
     }
 
     .nav-link {
-      color: var(--text-soft);
-      text-decoration: none;
-      position: relative;
-      padding-bottom: 3px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: rgba(247, 243, 232, 0.78);
     }
 
-    .nav-link.active {
-      color: var(--accent-gold-soft);
+    .nav-link:hover {
+      border-color: rgba(243, 232, 178, 0.5);
+      background: rgba(243, 232, 178, 0.05);
     }
-    .nav-link.active::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      height: 2px;
-      width: 26px;
-      border-radius: 999px;
-      background: linear-gradient(to right, var(--accent-gold), var(--accent-gold-soft));
+
+    .nav-link-active {
+      border-color: rgba(243, 232, 178, 0.9);
+      background: radial-gradient(circle at top, rgba(243, 232, 178, 0.15), rgba(243, 232, 178, 0.02));
+      color: #fff9e8;
     }
 
     .nav-cta {
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.7);
-      background: radial-gradient(circle at top, rgba(255,255,255,0.12), rgba(11,15,20,0.95));
-      font-size: 12px;
-      text-decoration: none;
-      color: var(--accent-gold-soft);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .nav-cta span.icon {
+      border: 1px solid rgba(255, 228, 150, 0.95);
+      background: radial-gradient(circle at 20% 0, #fff7da, #f3e0a5 40%, #c79f2e 100%);
+      color: #20160b;
       font-size: 13px;
+      font-weight: 600;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
     }
 
-    .page-shell {
+    .nav-cta:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    main {
       max-width: 1180px;
       margin: 0 auto;
-      padding: 26px 18px 60px;
+      padding: 40px 24px 80px;
     }
 
     /* Hero */
-    .hero-grid {
+
+    .hero {
       display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.6fr);
-      gap: 26px;
+      grid-template-columns: minmax(0, 3.2fr) minmax(0, 2.2fr);
+      gap: 32px;
       align-items: stretch;
       margin-bottom: 40px;
     }
 
-    .hero-main-title {
-      font-family: var(--font-title);
-      font-size: clamp(28px, 3.1vw, 34px);
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .hero-main-title span.highlight {
-      color: var(--accent-gold-soft);
-    }
-
-    .hero-subline {
-      font-size: 15px;
-      max-width: 520px;
-      color: var(--text-soft);
-      line-height: 1.6;
-    }
-
-    .chip-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 18px 0 12px;
-    }
-
-    .chip {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,0.4);
-      background: var(--accent-pill-bg);
+    .hero-left-title {
+      font-family: "Orbitron", system-ui, -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
+      font-size: 32px;
+      line-height: 1.15;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      white-space: nowrap;
+      margin-bottom: 18px;
     }
 
-    .hero-footnote {
-      font-size: 12px;
-      color: var(--text-soft);
-      max-width: 540px;
-      line-height: 1.6;
+    .hero-left-sub {
+      max-width: 520px;
+      font-size: 14px;
+      color: rgba(247, 243, 232, 0.78);
+      margin-bottom: 16px;
     }
 
-    .hero-panel {
-      background: radial-gradient(circle at top left, rgba(255,255,255,0.08), rgba(11,15,20,0.98));
-      border-radius: var(--radius-panel);
-      border: 1px solid rgba(212,175,55,0.4);
-      box-shadow: var(--panel-shadow);
-      padding: 18px 20px 20px;
-      color: var(--text-main);
-    }
-
-    .hero-panel-title {
-      font-family: var(--font-title);
-      font-size: 13px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
+    .hero-pills {
       display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .hero-panel-tag {
-      font-size: 10px;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(0,0,0,0.55);
-      border: 1px solid rgba(212,175,55,0.35);
-      letter-spacing: 0.1em;
-      color: var(--accent-gold-soft);
-    }
-
-    .hero-panel p {
-      font-size: 13px;
-      color: var(--text-soft);
-      line-height: 1.6;
-      margin: 0 0 10px;
-    }
-
-    .hero-panel ul {
-      padding-left: 18px;
-      margin: 8px 0 0;
-      color: var(--text-soft);
-      font-size: 13px;
-    }
-
-    .section-title {
-      font-family: var(--font-title);
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-soft);
+      flex-wrap: wrap;
+      gap: 10px;
       margin-bottom: 14px;
     }
 
-    /* Panels main */
-    .play-grid {
+    .pill {
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--pill-border);
+      background: var(--pill-bg);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(243, 232, 178, 0.95);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 10%, #fff7da, #f3e0a5 40%, #d4af37 100%);
+    }
+
+    .hero-left-note {
+      font-size: 12px;
+      color: rgba(247, 243, 232, 0.65);
+      max-width: 540px;
+    }
+
+    .hero-right {
+      background: radial-gradient(circle at top left, #fdf7e9, #f7f3e8 40%, #efe3c6 100%);
+      border-radius: var(--radius-card);
+      border: var(--border-gold-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 22px;
+      color: var(--text-ink);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-right::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(243, 232, 178, 0.55), transparent 55%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    .hero-right-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .hero-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #7a6432;
+    }
+
+    .hero-card-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(122, 100, 50, 0.55);
+      background: rgba(251, 248, 241, 0.9);
+      color: #7a6432;
+    }
+
+    .hero-card-lead {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .hero-card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 8px;
+      font-size: 12px;
+      color: #554b33;
+    }
+
+    .hero-card-list li {
+      margin-bottom: 4px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .hero-card-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 5px;
+      background: linear-gradient(to bottom right, #f6e2a9, #d4af37);
+      flex-shrink: 0;
+    }
+
+    .hero-card-foot {
+      font-size: 11px;
+      color: #8a7b57;
+    }
+
+    .hero-card-foot span {
+      font-weight: 600;
+      color: #5a4c2e;
+    }
+
+    /* Demo section */
+
+    .section-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 12px;
+      color: rgba(247, 243, 232, 0.7);
+    }
+
+    .demo-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.4fr);
-      gap: 22px;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 24px;
+      align-items: flex-start;
       margin-bottom: 26px;
     }
 
-    .panel {
-      background: var(--panel-bg);
-      border-radius: var(--radius-panel);
-      border: 1px solid rgba(212,175,55,0.9);
-      box-shadow: var(--panel-shadow);
-      padding: 18px 20px 20px;
+    .card {
+      background: radial-gradient(circle at top left, #fdf7ec, var(--card-soft) 40%, var(--card-bg) 100%);
+      border-radius: var(--radius-card);
+      border: var(--border-gold-soft);
+      box-shadow: var(--shadow-soft);
+      padding: 20px 22px 20px;
       color: var(--text-ink);
       position: relative;
     }
 
-    .panel h2 {
-      margin: 0 0 10px;
-      font-family: var(--font-title);
-      font-size: 15px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #816026;
+    .card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 3px;
+      border-radius: 22px 22px 0 0;
+      background: linear-gradient(to right,
+        rgba(212, 175, 55, 0.2),
+        rgba(243, 232, 178, 0.9),
+        rgba(212, 175, 55, 0.2)
+      );
+      opacity: 0.9;
     }
 
-    .panel-sub {
+    .card-title {
       font-size: 13px;
-      color: #7c6b4b;
-      margin-bottom: 14px;
-      line-height: 1.6;
-    }
-
-    label {
-      display: block;
-      font-size: 12px;
-      font-weight: 500;
-      margin-bottom: 5px;
-      color: #5e4a23;
-      letter-spacing: 0.04em;
       text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 10px;
+      color: #7a6432;
     }
 
-    select, textarea, input[type="text"] {
+    .field-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #8c7a4b;
+      margin-bottom: 6px;
+    }
+
+    .select {
       width: 100%;
-      border-radius: 12px;
-      border: 1px solid rgba(0,0,0,0.12);
-      padding: 9px 11px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(189, 168, 118, 0.9);
       font-size: 13px;
-      font-family: var(--font-body);
-      background: rgba(255,255,255,0.9);
-      color: #222;
-      outline: none;
-    }
-    select:focus, textarea:focus, input[type="text"]:focus {
-      border-color: rgba(212,175,55,0.8);
-      box-shadow: 0 0 0 1px rgba(212,175,55,0.4);
+      background: rgba(251, 248, 241, 0.98);
+      color: #1f1b12;
+      margin-bottom: 12px;
     }
 
     textarea {
-      min-height: 150px;
+      width: 100%;
+      min-height: 170px;
+      border-radius: 14px;
+      border: 1px solid rgba(189, 168, 118, 0.9);
+      padding: 10px 11px;
+      font-size: 13px;
       resize: vertical;
-      line-height: 1.5;
+      background: rgba(251, 248, 241, 0.98);
+      color: #1f1b12;
+      line-height: 1.35;
     }
 
-    .input-tip {
+    textarea::placeholder {
+      color: rgba(102, 92, 72, 0.7);
+    }
+
+    .helper {
       font-size: 11px;
-      color: #948361;
+      color: var(--text-muted);
       margin-top: 6px;
     }
 
@@ -370,893 +447,774 @@
 
     .btn {
       border-radius: 999px;
-      border: none;
-      cursor: pointer;
+      border: 1px solid transparent;
       font-size: 13px;
-      font-weight: 500;
-      font-family: var(--font-body);
-      padding: 8px 18px;
+      padding: 8px 16px;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: transform 0.07s ease, box-shadow 0.07s ease, background 0.15s ease;
-      white-space: nowrap;
+      background: none;
     }
 
     .btn-primary {
-      background: radial-gradient(circle at top, #f9e6a6, #d4af37);
-      color: #3b2903;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      background: radial-gradient(circle at 20% 0, #fff7da, #f3e0a5 40%, #c79f2e 100%);
+      border-color: rgba(255, 228, 150, 0.95);
+      color: #20160b;
+      font-weight: 600;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
     }
+
     .btn-primary:hover {
+      filter: brightness(1.05);
       transform: translateY(-1px);
-      box-shadow: 0 14px 32px rgba(0,0,0,0.32);
+    }
+
+    .btn-light {
+      background: rgba(251, 248, 241, 0.9);
+      border-color: rgba(189, 168, 118, 0.6);
+      color: #4f4530;
+    }
+
+    .btn-light:hover {
+      background: #fffaf0;
+    }
+
+    .btn-icon {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid #a17c1a;
+      box-shadow: 0 0 0 2px rgba(255, 238, 200, 0.8);
     }
 
     .btn-secondary {
-      background: #f5eddb;
-      color: #604b22;
-      border: 1px solid rgba(0,0,0,0.12);
+      background: rgba(4, 4, 14, 0.03);
+      border-color: rgba(189, 168, 118, 0.6);
+      color: #4f4530;
     }
+
     .btn-secondary:hover {
-      background: #f0e3cc;
+      background: rgba(243, 232, 178, 0.12);
     }
 
-    .btn-ghost {
-      background: transparent;
-      color: #7a6330;
-      border: 1px dashed rgba(122,99,48,0.65);
-    }
-    .btn-ghost:hover {
-      background: rgba(251,245,229,0.8);
-    }
+    /* Right card content */
 
-    .btn .icon {
-      font-size: 14px;
-    }
-
-    /* Results */
-    .score-row {
-      display: flex;
-      flex-wrap: wrap;
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 10px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
-    .score-pill {
-      flex: 1 1 140px;
-      background: #f7efdd;
+    .metric-box {
       border-radius: 14px;
-      padding: 8px 10px 9px;
-      border: 1px solid rgba(0,0,0,0.08);
+      padding: 8px 10px 7px;
+      background: rgba(251, 248, 241, 0.98);
+      border: 1px solid rgba(189, 168, 118, 0.8);
+      font-size: 11px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
 
-    .score-label {
-      font-size: 11px;
+    .metric-label {
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #7b6432;
+      letter-spacing: 0.12em;
+      color: #8c7a4b;
     }
 
-    .score-value {
-      font-size: 18px;
+    .metric-value {
+      font-size: 16px;
       font-weight: 600;
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
+      color: #2b2316;
     }
 
-    .score-value span.unit {
-      font-size: 12px;
-      color: #8b7a55;
-    }
-
-    .score-tag {
+    .metric-detail {
       font-size: 11px;
-      font-weight: 500;
+      color: #7a7361;
     }
 
-    .score-tag.safe { color: var(--safe); }
-    .score-tag.warn { color: var(--warning); }
-    .score-tag.danger { color: var(--danger); }
-
-    .mechanisms-list {
-      font-size: 13px;
-      margin: 8px 0 12px;
-      padding-left: 18px;
-    }
-
-    .mechanisms-list li {
-      margin-bottom: 3px;
-    }
-
-    .matrix-grid {
+    .matrix {
+      width: 100%;
+      border-spacing: 0;
+      border-collapse: separate;
       margin-top: 10px;
-      border-radius: 14px;
-      border: 1px solid rgba(0,0,0,0.08);
-      background: #faf1dd;
-      overflow: hidden;
+      font-size: 11px;
     }
 
-    .matrix-row {
-      display: grid;
-      grid-template-columns: 1.8fr 1fr;
-      font-size: 12px;
-      padding: 7px 10px;
-      border-top: 1px solid rgba(0,0,0,0.05);
-      align-items: center;
+    .matrix th,
+    .matrix td {
+      padding: 6px 8px;
+      border-bottom: 1px solid rgba(210, 191, 145, 0.4);
     }
-    .matrix-row:first-child {
-      border-top: none;
+
+    .matrix th {
+      text-align: left;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 500;
+      color: #8c7a4b;
+      font-size: 10px;
+    }
+
+    .matrix tr:last-child td {
+      border-bottom: none;
     }
 
     .matrix-axis {
-      color: #5c4620;
+      color: #4a3f26;
+      width: 55%;
     }
 
     .matrix-level {
-      justify-self: end;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(0,0,0,0.08);
-      background: #fdf7ea;
-    }
-    .matrix-level.none {
-      color: #7d7d7d;
-    }
-    .matrix-level.low {
-      color: #a97620;
-    }
-    .matrix-level.high {
-      color: #b52121;
-    }
-
-    .signals-list, .phenotype-block {
-      font-size: 13px;
-      color: #6a5531;
-      margin-top: 10px;
-      line-height: 1.55;
-    }
-
-    .signals-list ul {
-      margin: 4px 0 0 16px;
-      padding: 0;
-    }
-
-    .highlighted-text {
-      margin-top: 12px;
-      font-size: 13px;
-      line-height: 1.6;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: #f9f0de;
-      max-height: 180px;
-      overflow-y: auto;
-      border: 1px dashed rgba(0,0,0,0.12);
-    }
-
-    .highlighted-text mark {
-      background: #ffe9a5;
-      border-radius: 4px;
-      padding: 0 1px;
-      box-shadow: 0 0 0 1px rgba(212,175,55,0.3);
-    }
-
-    /* Bottom CTA */
-    .bottom-cta {
-      margin-top: 26px;
-      background: radial-gradient(circle at top left,
-        rgba(253,246,227,0.06),
-        rgba(12,12,18,0.96));
-      border-radius: 20px;
-      border: 1px solid rgba(212,175,55,0.45);
-      padding: 18px 20px 16px;
-      color: var(--text-main);
-      display: grid;
-      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1.4fr);
-      gap: 14px;
-      align-items: center;
-    }
-
-    .bottom-cta-title {
-      font-family: var(--font-title);
-      font-size: 14px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .bottom-cta-text {
-      font-size: 13px;
-      color: var(--text-soft);
-      line-height: 1.6;
-    }
-
-    .bottom-cta button,
-    .bottom-cta a.btn-primary-link {
-      text-decoration: none;
-    }
-
-    .btn-primary-link {
-      border-radius: 999px;
-      border: none;
-      background: radial-gradient(circle at top, #f9e6a6, #d4af37);
-      color: #3b2903;
-      padding: 9px 18px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 13px;
+      text-align: right;
       font-weight: 500;
-      box-shadow: 0 12px 32px rgba(0,0,0,0.45);
     }
 
-    .btn-primary-link:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 36px rgba(0,0,0,0.5);
+    .matrix-level-none {
+      color: #8f8a7a;
     }
 
-    .cta-disclaimer {
+    .matrix-level-low {
+      color: #b8860b;
+    }
+
+    .matrix-level-high {
+      color: #b22222;
+    }
+
+    .detected-list,
+    .signals-text,
+    .phenotype-text {
       font-size: 11px;
-      color: var(--text-soft);
+      color: #6b5f40;
       margin-top: 6px;
     }
 
-    .demo-disclaimer {
-      margin-top: 12px;
-      font-size: 11px;
-      color: #8f7f65;
-      text-align: right;
+    .detected-list strong {
+      font-weight: 600;
+      color: #4a3f26;
     }
 
-    @media (max-width: 900px) {
-      .hero-grid,
-      .play-grid,
-      .bottom-cta {
+    .highlight-box {
+      margin-top: 12px;
+      border-radius: 14px;
+      border: 1px dashed rgba(189, 168, 118, 0.8);
+      background: rgba(251, 248, 241, 0.9);
+      padding: 10px 11px;
+      font-size: 11px;
+      color: #3a3224;
+      max-height: 170px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+
+    .highlight-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #8c7a4b;
+      margin-bottom: 4px;
+    }
+
+    .highlight-span {
+      background: var(--highlight);
+      border-radius: 4px;
+      padding: 0 1px;
+    }
+
+    /* Bottom CTA */
+
+    .cta-strip {
+      margin-top: 28px;
+      background: radial-gradient(circle at top left, rgba(243, 232, 178, 0.12), rgba(10, 10, 22, 0.96));
+      border-radius: var(--radius-card);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: #f7f3e8;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .cta-text-main {
+      font-size: 13px;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .cta-text-sub {
+      font-size: 12px;
+      color: rgba(247, 243, 232, 0.7);
+    }
+
+    .cta-button {
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 228, 150, 0.95);
+      background: radial-gradient(circle at 20% 0, #fff7da, #f3e0a5 40%, #c79f2e 100%);
+      color: #20160b;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+      white-space: nowrap;
+    }
+
+    .cta-button:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+    }
+
+    /* Footer */
+
+    footer {
+      border-top: 1px solid rgba(212, 175, 55, 0.4);
+      background: radial-gradient(circle at top, #111623, #04040e 55%);
+      padding: 14px 24px 18px;
+      color: rgba(247, 243, 232, 0.72);
+      font-size: 11px;
+    }
+
+    .footer-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-link {
+      text-decoration: none;
+      color: rgba(247, 243, 232, 0.75);
+    }
+
+    .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 960px) {
+      .hero {
         grid-template-columns: minmax(0, 1fr);
       }
 
-      .bottom-cta {
-        text-align: left;
+      .demo-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      main {
+        padding-top: 26px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav {
+        padding: 10px 16px;
+      }
+
+      main {
+        padding: 26px 16px 70px;
+      }
+
+      .cta-strip {
+        align-items: flex-start;
       }
     }
   </style>
 </head>
 <body>
-
-<header class="nav-shell">
-  <div class="nav-inner">
-    <div class="brand-lockup">
-      <div class="brand-medallion">
-        <span>RPO</span>
-      </div>
-      <div class="brand-text">
-        <div class="brand-text-main">OPENPROOF — RPO v0.1</div>
-        <div class="brand-text-sub">JSON signé · PDF lisible par l’humain · Hachage public</div>
-      </div>
+<header class="nav">
+  <div class="nav-left">
+    <div class="nav-emblem">
+      <div class="nav-emblem-inner"></div>
     </div>
-    <nav class="nav-links">
-      <a href="index.html" class="nav-link">Aperçu</a>
-      <a href="specification.html" class="nav-link">Spécification</a>
-      <a href="examples.html" class="nav-link">Exemples</a>
-      <a href="tests.html" class="nav-link">Tests</a>
-      <a href="playground.html" class="nav-link">Aire de jeux</a>
-      <a href="demo-psycho.html" class="nav-link active">Démonstration psycho-légale</a>
-      <a href="https://github.com/openproof-net/rpo-spec-v0.1"
-         class="nav-cta" target="_blank" rel="noopener noreferrer">
-        <span class="icon">↗</span><span>Voir sur GitHub</span>
-      </a>
-    </nav>
+    <div class="nav-title-block">
+      <div class="nav-title">OPENPROOF — RPO v0.1</div>
+      <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
+    </div>
   </div>
+  <nav class="nav-links">
+    <a class="nav-link" href="index.html" target="_blank" rel="noopener noreferrer">Overview</a>
+    <a class="nav-link" href="specification.html" target="_blank" rel="noopener noreferrer">Specification</a>
+    <a class="nav-link" href="examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+    <a class="nav-link" href="tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+    <a class="nav-link" href="playground.html" target="_blank" rel="noopener noreferrer">Playground</a>
+    <a class="nav-link nav-link-active" href="demo-psycho.html">Psycho-forensic demo</a>
+    <a class="nav-cta" href="https://github.com/openproof-net/rpo-spec-v0.1"
+       target="_blank" rel="noopener noreferrer">View on GitHub</a>
+  </nav>
 </header>
 
-<main class="page-shell">
+<main>
   <!-- HERO -->
-  <section class="hero-grid">
+  <section class="hero">
     <div>
-      <div class="section-title">Couche de démonstration RPO · Mécanismes narratifs</div>
-      <h1 class="hero-main-title">
-        Essayez la démo <span class="highlight">psycho-médico-légale</span> — du récit brut aux schémas narratifs
+      <div class="section-title">RPO demo layer · Narrative mechanisms</div>
+      <h1 class="hero-left-title">
+        Try the psycho-forensic demo<br />
+        from raw story to control patterns
       </h1>
-      <p class="hero-subline">
-        Saisissez un court récit évoquant une situation de contrôle potentiel
-        (domestique, professionnel ou en ligne). Cette démonstration détecte les
-        mécanismes structurels de contrôle, estime un score approximatif d’emprise
-        et révèle le <strong>phénotype narratif</strong>. Tout s’exécute localement
-        dans votre navigateur, sans aucun modèle d’IA.
+      <p class="hero-left-sub">
+        Paste a short narrative describing a potential coercive situation
+        (domestic, workplace or institutional). This demo highlights
+        structural control mechanisms and gives an approximate narrative
+        imprint — without using any AI model.
       </p>
-      <div class="chip-row">
-        <div class="chip">Basé sur des modèles</div>
-        <div class="chip">Détermination sans IA</div>
-        <div class="chip">Contrôle coercitif</div>
-        <div class="chip">Couche narrative compatible RPO</div>
+
+      <div class="hero-pills">
+        <div class="pill"><span class="pill-dot"></span> Model-free determination</div>
+        <div class="pill"><span class="pill-dot"></span> Coercive control matrix</div>
+        <div class="pill"><span class="pill-dot"></span> RPO-compatible narrative layer</div>
       </div>
-      <p class="hero-footnote">
-        Dans le pilote scientifique CNRS × TruthX, cette couche sera alimentée par des
-        modules psycho-forensiques avancés capables d’intégrer directement des jeux de
-        messages, des rapports et des transcriptions. Ici, vous voyez une
-        <strong>démo simplifiée et transparente</strong> qui met déjà en évidence des
-        schémas structurés de contrôle.
+
+      <p class="hero-left-note">
+        In the CNRS × TruthX scientific pilot, this layer is powered by advanced
+        psycho-forensic modules able to ingest message logs, reports and
+        transcripts. Here you see a simplified and transparent demonstrator
+        that already exposes structural control patterns.
       </p>
     </div>
 
-    <aside class="hero-panel">
-      <div class="hero-panel-title">
-        Ce que cette démo illustre
-        <span class="hero-panel-tag">Version de démonstration</span>
+    <aside class="hero-right">
+      <div class="hero-right-inner">
+        <div class="hero-card-label-row">
+          <div class="hero-card-title">What this demo illustrates</div>
+          <div class="hero-card-tag">Demo version</div>
+        </div>
+        <p class="hero-card-lead">
+          Think of it as a narrative decoder that can sit on top of the RPO
+          evidence bundle.
+        </p>
+        <ul class="hero-card-list">
+          <li>
+            <span class="hero-card-bullet"></span>
+            <span>Detects typical axes of coercive control
+              (isolation, surveillance, economic pressure).</span>
+          </li>
+          <li>
+            <span class="hero-card-bullet"></span>
+            <span>Builds a small control matrix and an approximate
+              <strong>coercion score</strong>.</span>
+          </li>
+          <li>
+            <span class="hero-card-bullet"></span>
+            <span>Highlights sensitive segments of the story that carry
+              structural pressure.</span>
+          </li>
+          <li>
+            <span class="hero-card-bullet"></span>
+            <span>Stays heuristic and conservative: no diagnosis, no legal
+              qualification.</span>
+          </li>
+        </ul>
+        <p class="hero-card-foot">
+          <span>Goal:</span> make invisible control structures readable, before
+          connecting deeper scientific engines in restricted pilots.
+        </p>
       </div>
-      <p>
-        Cette page simule la couche psycho-médico-légale qui peut se
-        superposer à la norme RPO&nbsp;:
-      </p>
-      <ul>
-        <li>Détection de mécanismes de contrôle (verrouillage, menaces, surveillance, normalisation).</li>
-        <li>Inscription dans une mini-matrice de contrôle coercitif.</li>
-        <li>Estimation d’un score d’emprise et d’un niveau de risque.</li>
-        <li>Mise en évidence de <strong>signaux faibles</strong> et d’un phénotype narratif.</li>
-      </ul>
-      <p style="margin-top:10px;">
-        Ce n’est pas une évaluation juridique, clinique ou policière. Il s’agit d’un
-        <strong>décodage narratif structuré</strong>, construit pour la recherche et la
-        pédagogie autour du contrôle coercitif.
-      </p>
     </aside>
   </section>
 
-  <!-- PLAYGROUND -->
-  <section>
-    <div class="section-title">Jouez avec un récit</div>
-    <div class="play-grid">
-      <!-- INPUT PANEL -->
-      <div class="panel">
-        <h2>1. Récit d’entrée</h2>
-        <p class="panel-sub">
-          Rédigez un court récit (1 à 3 paragraphes). Les noms peuvent être anonymisés.
-          L’objectif est d’observer la structure de contrôle, et non de porter un jugement
-          sur l’affaire.
+  <!-- DEMO -->
+  <section aria-label="Psycho-forensic narrative demo">
+    <div class="section-title">Play with a narrative</div>
+
+    <div class="demo-grid">
+      <!-- LEFT: INPUT -->
+      <div class="card">
+        <h2 class="card-title">1. Narrative input</h2>
+        <div class="field-label">Context</div>
+        <select id="contextSelect" class="select">
+          <option value="generic">Unspecified / generic</option>
+          <option value="intimate">Intimate / domestic</option>
+          <option value="work">Workplace / management</option>
+          <option value="institutional">Institutional / administrative</option>
+          <option value="online">Online / digital</option>
+        </select>
+
+        <div class="field-label">Story (free text)</div>
+        <textarea id="storyInput" placeholder="Describe what happened, with your own words. Who did what, when, where, and how did it affect you or others?"></textarea>
+        <p class="helper">
+          Tip: include at least one concrete action, a time marker and all
+          threats, justifications or constraints you remember.
         </p>
-
-        <div style="margin-bottom:10px;">
-          <label for="contextSelect">Contexte</label>
-          <select id="contextSelect">
-            <option value="generic">Non spécifié / générique</option>
-            <option value="intimate">Relation intime / domestique</option>
-            <option value="work">Lieu de travail / gestion</option>
-            <option value="institutional" selected>Institutionnel / administratif</option>
-            <option value="online">En ligne / numérique</option>
-          </select>
-        </div>
-
-        <div>
-          <label for="narrativeInput">Récit (texte libre)</label>
-          <textarea id="narrativeInput" placeholder="Décrivez ce qui s’est passé, avec vos propres mots. Qui a fait quoi, quand, où et comment cela vous a-t-il affecté, vous ou les autres ?"></textarea>
-          <p class="input-tip">
-            Conseil&nbsp;: incluez au moins une action concrète, un repère temporel et toutes les menaces,
-            justifications ou contraintes dont vous vous souvenez.
-          </p>
-        </div>
 
         <div class="button-row">
           <button class="btn btn-primary" id="analyzeBtn">
-            <span class="icon">➜</span>Analyser le récit
+            <span class="btn-icon"></span>
+            <span>Analyse the narrative</span>
           </button>
-          <button class="btn btn-secondary" id="resetBtn">
-            Réinitialiser
-          </button>
-          <button class="btn btn-ghost" id="exampleBtn">
-            <span class="icon">★</span>Charger un exemple
-          </button>
+          <button class="btn btn-light" id="resetBtn">Reset</button>
+          <button class="btn btn-secondary" id="loadExampleBtn">Load an example</button>
         </div>
       </div>
 
-      <!-- RESULT PANEL -->
-      <div class="panel">
-        <h2>2. Superposition psycho-médico-légale</h2>
-        <p class="panel-sub">
-          Collez un texte narratif à gauche et cliquez sur «&nbsp;Analyser&nbsp;» pour
-          révéler les schémas structurés de contrôle.
-        </p>
+      <!-- RIGHT: RESULTS -->
+      <div class="card">
+        <h2 class="card-title">2. Psycho-forensic overlay</h2>
 
-        <!-- Scores -->
-        <div class="score-row">
-          <div class="score-pill">
-            <div class="score-label">Score d’emprise (approx.)</div>
-            <div class="score-value" id="holdScoreValue">
-              0<span class="unit">/100</span>
-            </div>
-            <div class="score-tag safe" id="holdScoreTag">Aucun signal structuré détecté</div>
+        <div class="metrics-grid">
+          <div class="metric-box">
+            <div class="metric-label">Coercion score (approx.)</div>
+            <div class="metric-value" id="coercionScore">0 / 100</div>
+            <div class="metric-detail" id="coercionScoreDetail">No structural control detected yet.</div>
           </div>
-          <div class="score-pill">
-            <div class="score-label">Risque immédiat (narratif)</div>
-            <div class="score-value" id="riskScoreValue">
-              0<span class="unit">/100</span>
-            </div>
-            <div class="score-tag safe" id="riskScoreTag">Pas de menace explicite dans le récit</div>
+          <div class="metric-box">
+            <div class="metric-label">Immediate risk (narrative)</div>
+            <div class="metric-value" id="riskScore">0 / 100</div>
+            <div class="metric-detail" id="riskScoreDetail">No explicit threat in the story.</div>
           </div>
         </div>
 
-        <!-- Mechanisms -->
-        <div>
-          <label>Mécanismes détectés</label>
-          <ul class="mechanisms-list" id="mechanismsList">
-            <li>Aucun mécanisme détecté pour l’instant.</li>
-          </ul>
+        <div class="detected-list" id="mechanismsDetected">
+          <strong>Mechanisms detected:</strong> none yet — paste a story on the left and click “Analyse”.
         </div>
 
-        <!-- Matrix -->
-        <div>
-          <label>Matrice de contrôle coercitif</label>
-          <div class="matrix-grid" id="matrixGrid">
-            <!-- rows generated by JS -->
-          </div>
+        <table class="matrix" aria-label="Coercive control matrix">
+          <thead>
+          <tr>
+            <th>Coercive control axis</th>
+            <th style="text-align:right;">Level (demo)</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td class="matrix-axis">Isolation / confinement</td>
+            <td class="matrix-level matrix-level-none" id="axisIsolation">None so far</td>
+          </tr>
+          <tr>
+            <td class="matrix-axis">Surveillance &amp; suspicion</td>
+            <td class="matrix-level matrix-level-none" id="axisSurveillance">None so far</td>
+          </tr>
+          <tr>
+            <td class="matrix-axis">Control of communications</td>
+            <td class="matrix-level matrix-level-none" id="axisComms">None so far</td>
+          </tr>
+          <tr>
+            <td class="matrix-axis">Threats &amp; sanctions</td>
+            <td class="matrix-level matrix-level-none" id="axisThreats">None so far</td>
+          </tr>
+          <tr>
+            <td class="matrix-axis">Economic / resource control</td>
+            <td class="matrix-level matrix-level-none" id="axisEconomic">None so far</td>
+          </tr>
+          <tr>
+            <td class="matrix-axis">Normalisation &amp; mental pressure</td>
+            <td class="matrix-level matrix-level-none" id="axisNormalisation">None so far</td>
+          </tr>
+          </tbody>
+        </table>
+
+        <div class="signals-text" id="signalsToWatch">
+          <strong>Signals to monitor:</strong> will appear here once a story has been analysed.
         </div>
 
-        <!-- Signals -->
-        <div class="signals-list" id="signalsBlock">
-          <strong>Signaux à surveiller</strong><br/>
-          Aucuns signaux faibles tant qu’aucun récit n’a été analysé.
+        <div class="phenotype-text" id="phenotypeSummary">
+          <strong>Narrative phenotype:</strong> not assessed yet.
         </div>
 
-        <!-- Phenotype -->
-        <div class="phenotype-block" id="phenotypeBlock">
-          <strong>Phénotype narratif</strong><br/>
-          Le profil narratif sera résumé ici après l’analyse (ex.&nbsp;: contrôle coercitif
-          domestique, management intimidant, harcèlement institutionnel, etc.).
-        </div>
-
-        <!-- Highlighted narrative -->
-        <div class="highlighted-text" id="highlightedNarrative" aria-label="Texte analysé avec surlignage">
-          Le récit surligné apparaîtra ici, avec les passages sensibles mis en évidence.
+        <div class="highlight-box" id="highlightBox">
+          <div class="highlight-label">Story with sensitive passages</div>
+          <div id="highlightContent">The analysed narrative will be displayed here, with passages carrying structural pressure highlighted in gold.</div>
         </div>
       </div>
     </div>
 
-    <p class="demo-disclaimer">
-      Cette logique de démonstration est heuristique et volontairement conservative.
-      Elle met simplement en lumière des schémas de contrôle possibles à partir du texte fourni.
-    </p>
-  </section>
-
-  <!-- CTA BOTTOM -->
-  <section class="bottom-cta">
-    <div>
-      <div class="bottom-cta-title">Vous êtes face à un cas réel&nbsp;?</div>
-      <p class="bottom-cta-text">
-        Cette page montre un <strong>décodage narratif démonstratif</strong>. Dans la version
-        scientifique / CNRS, la couche psycho-forensique est couplée à la norme RPO, à des
-        graphes temporels et à une lecture juridique structurée. Si vous souhaitez tester ces
-        modules avancés sur des cas réels, vous pouvez demander l’accès au
-        <strong>projet pilote CNRS × TruthX</strong>.
-      </p>
-    </div>
-    <div>
-      <a class="btn-primary-link"
-         href="https://www.truthx.co/truthx-pilote-form"
-         target="_blank"
-         rel="noopener noreferrer">
-        <span class="icon">⚖︎</span>
-        <span>Postuler pour le projet pilote CNRS</span>
+    <div class="cta-strip">
+      <div>
+        <div class="cta-text-main">Facing a real case rather than a demo?</div>
+        <div class="cta-text-sub">
+          This page shows a demonstrative decoding only. In the scientific CNRS × TruthX
+          pilot, the psycho-forensic layer is stricter, coupled to the RPO standard and
+          includes structured legal views.
+        </div>
+      </div>
+      <a class="cta-button"
+         href="https://www.truthx.co/pilote-individuel"
+         target="_blank" rel="noopener noreferrer">
+        Apply for the CNRS pilot
       </a>
-      <div class="cta-disclaimer">
-        Cette démonstration n’est pas un avis juridique ni un diagnostic clinique.
-        Elle ne remplace pas un accompagnement spécialisé.
-      </div>
     </div>
   </section>
 </main>
 
+<footer>
+  <div class="footer-inner">
+    <div>
+      OpenProof — RPO Specification v0.1<br />
+      © 2026 OpenProof Consortium. Research collaboration: CNRS — GREYC — Université de Caen Normandie —
+      Specification editor: Gersende Ryard de Parcey.
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="https://openproof.net" target="_blank" rel="noopener noreferrer">Technical site</a>
+      <a class="footer-link" href="https://truthx-openproof.org" target="_blank" rel="noopener noreferrer">Governance</a>
+      <a class="footer-link" href="mailto:openproof@truthx.co">Contact</a>
+    </div>
+  </div>
+</footer>
+
 <script>
-  // --- Axes et motifs déterministes ----------------------------------------
+  // --- Simple keyword maps for demo heuristics ---
+  const axisKeywords = {
+    isolation: [
+      "locked me", "locked her", "locked him", "locked in",
+      "confined", "no one could leave", "took my keys", "seized my keys"
+    ],
+    surveillance: [
+      "checked my phone", "checked my messages", "monitoring",
+      "tracked my location", "installed a camera", "spied", "spying",
+      "had to share my location", "tracking app"
+    ],
+    comms: [
+      "took my phone", "took her phone", "took his phone",
+      "blocked my number", "blocked me", "deleted my messages",
+      "forbade me to call", "forbade me to speak", "no one needed to hear from me"
+    ],
+    threats: [
+      "threatened", "if you don't", "otherwise I will",
+      "you will regret", "shouted that he would", "broke my things",
+      "punish", "punished", "hit me", "slapped", "pushed me", "violent"
+    ],
+    economic: [
+      "took my card", "took my money", "controlled all the accounts",
+      "no access to money", "gave me cash", "stopped paying", "kept my salary"
+    ],
+    normalisation: [
+      "normal for couples", "everyone does that", "you are crazy",
+      "you are too sensitive", "it was just a joke", "no one will believe you",
+      "overreacting", "imagining things"
+    ]
+  };
 
-  const AXES = [
-    {
-      id: "isolation",
-      label: "Isolement / confinement",
-      patterns: [
-        "locked me in", "locked me into", "m'a enfermé", "m’a enfermé",
-        "barred the door", "blocked the door", "m'empêchait de sortir", "m’empechait de sortir",
-        "confined me", "kept me in the room", "no one needed to hear from me tonight"
-      ]
-    },
-    {
-      id: "surveillance",
-      label: "Surveillance et suspicion",
-      patterns: [
-        "checking my phone", "checked my phone", "surveillait mon téléphone",
-        "watching my messages", "accusing me of hiding conversations",
-        "demanded passwords", "wanted my passwords", "demandait mes codes",
-        "monitoring", "track my location", "me suivait partout"
-      ]
-    },
-    {
-      id: "communications",
-      label: "Contrôle des communications",
-      patterns: [
-        "took my phone", "took my phone away", "a pris mon téléphone",
-        "deleted messages", "deleted my messages", "forbade me to call",
-        "m'interdisait d'appeler", "m interdisait d appeler",
-        "no one needed to hear from me", "blocked my contacts"
-      ]
-    },
-    {
-      id: "threats",
-      label: "Menaces et sanctions",
-      patterns: [
-        "threatened to", "threatened me", "a menacé de",
-        "would take the car keys", "take the car keys",
-        "raise his voice", "shouted at me", "criait sur moi",
-        "punish me", "me punirait", "you will pay for this",
-        "hit me", "pushed me", "slapped me", "m'a frappé", "m’a frappe"
-      ]
-    },
-    {
-      id: "economic",
-      label: "Contrôle économique / des ressources",
-      patterns: [
-        "all my bank notifications", "my bank notifications",
-        "access to my account", "blocked my account",
-        "contrôle de l'argent", "contrôle de mes finances",
-        "took my salary", "kept my card", "kept my bank card"
-      ]
-    },
-    {
-      id: "normalisation",
-      label: "Normalisation et pression mentale",
-      patterns: [
-        "normal for couples", "normal for a couple",
-        "everyone does that", "tous les couples font ça", "c'est normal",
-        "i was overreacting", "you are too sensitive", "trop sensible",
-        "i was crazy", "i was imagining things", "gaslighting"
-      ]
-    }
+  const riskKeywords = [
+    "hit me", "hit her", "hit him", "strangled", "choked", "threatened to kill",
+    "threatened to hurt", "threatened the children", "knife", "gun"
   ];
 
-  const ACUTE_KEYWORDS = [
-    "locked", "enfermé", "threatened", "menacé", "hit", "frappé",
-    "no one needed to hear from me", "take the car keys", "keys if i",
-    "you will pay for this"
+  const evidenceMarkers = [
+    "email", "emails", "message", "messages", "sms", "texted",
+    "recording", "screenshot", "witness", "witnesses", "police", "report"
   ];
 
-  // Initialisation de la matrice visuelle
-  const matrixGrid = document.getElementById("matrixGrid");
+  const sentenceSplitter = /(?<=[.!?])\s+/;
 
-  function initMatrix() {
-    matrixGrid.innerHTML = "";
-    AXES.forEach(axis => {
-      const row = document.createElement("div");
-      row.className = "matrix-row";
-      row.dataset.axisId = axis.id;
+  function analyseStory() {
+    const context = document.getElementById("contextSelect").value;
+    const story = document.getElementById("storyInput").value.trim();
 
-      const axisDiv = document.createElement("div");
-      axisDiv.className = "matrix-axis";
-      axisDiv.textContent = axis.label;
-
-      const levelDiv = document.createElement("div");
-      levelDiv.className = "matrix-level none";
-      levelDiv.textContent = "Aucun pour l’instant";
-
-      row.appendChild(axisDiv);
-      row.appendChild(levelDiv);
-      matrixGrid.appendChild(row);
-    });
-  }
-
-  initMatrix();
-
-  // --- Analyse -------------------------------------------------------------
-
-  const narrativeInput = document.getElementById("narrativeInput");
-  const contextSelect = document.getElementById("contextSelect");
-  const mechanismsList = document.getElementById("mechanismsList");
-  const holdScoreValue = document.getElementById("holdScoreValue");
-  const holdScoreTag = document.getElementById("holdScoreTag");
-  const riskScoreValue = document.getElementById("riskScoreValue");
-  const riskScoreTag = document.getElementById("riskScoreTag");
-  const signalsBlock = document.getElementById("signalsBlock");
-  const phenotypeBlock = document.getElementById("phenotypeBlock");
-  const highlightedNarrative = document.getElementById("highlightedNarrative");
-
-  document.getElementById("analyzeBtn").addEventListener("click", () => {
-    const text = (narrativeInput.value || "").trim();
-    if (!text) {
-      alert("Veuillez saisir un court récit avant de lancer l’analyse.");
+    if (!story) {
+      alert("Please paste or type a short narrative first.");
       return;
     }
-    runAnalysis(text, contextSelect.value);
-  });
 
-  document.getElementById("resetBtn").addEventListener("click", () => {
-    narrativeInput.value = "";
-    contextSelect.value = "generic";
-    initMatrix();
-    mechanismsList.innerHTML = "<li>Aucun mécanisme détecté pour l’instant.</li>";
-    holdScoreValue.innerHTML = "0<span class='unit'>/100</span>";
-    holdScoreTag.textContent = "Aucun signal structuré détecté";
-    holdScoreTag.className = "score-tag safe";
+    const storyLower = story.toLowerCase();
 
-    riskScoreValue.innerHTML = "0<span class='unit'>/100</span>";
-    riskScoreTag.textContent = "Pas de menace explicite dans le récit";
-    riskScoreTag.className = "score-tag safe";
+    // Sentences
+    const sentences = story.split(sentenceSplitter).filter(s => s.trim().length > 0);
+    const sentenceCount = sentences.length;
 
-    signalsBlock.innerHTML =
-      "<strong>Signaux à surveiller</strong><br/>" +
-      "Aucuns signaux faibles tant qu’aucun récit n’a été analysé.";
-    phenotypeBlock.innerHTML =
-      "<strong>Phénotype narratif</strong><br/>" +
-      "Le profil narratif sera résumé ici après l’analyse.";
-    highlightedNarrative.textContent =
-      "Le récit surligné apparaîtra ici, avec les passages sensibles mis en évidence.";
-  });
-
-  document.getElementById("exampleBtn").addEventListener("click", () => {
-    // Exemple conjugal – structure type contrôle coercitif
-    const example = "On Saturday 12 February, around 9 pm, he locked me in the living room for almost two hours after I refused to cancel a dinner with my sister. He stood in front of the door, took my phone and said that no one needed to hear from me tonight. Two days later, on Monday, he woke me up at 5:30 am accusing me of hiding conversations from him because I didn’t leave my phone charging in the kitchen as he demanded. Last week, he also threatened to take the car keys if I didn’t give him all my bank notifications, saying it was normal for couples to share everything.";
-    narrativeInput.value = example;
-    contextSelect.value = "intimate";
-    runAnalysis(example, "intimate");
-  });
-
-  function runAnalysis(text, context) {
-    const lower = text.toLowerCase();
-
-    const hitsByAxis = {};
-    const matchedSegments = [];
-
-    AXES.forEach(axis => {
-      hitsByAxis[axis.id] = 0;
-      axis.patterns.forEach(pattern => {
-        const p = pattern.toLowerCase();
-        let index = lower.indexOf(p);
-        while (index !== -1) {
-          hitsByAxis[axis.id]++;
-          matchedSegments.push({ start: index, end: index + p.length });
-          index = lower.indexOf(p, index + p.length);
-        }
-      });
+    // Evidence markers
+    let evidenceCount = 0;
+    evidenceMarkers.forEach(k => {
+      if (storyLower.includes(k)) evidenceCount++;
     });
 
-    // Fusion crude des segments pour le surlignage
-    const merged = mergeSegments(matchedSegments);
-    const highlighted = buildHighlightedText(text, merged);
-    highlightedNarrative.innerHTML = highlighted;
-
-    // Liste des mécanismes détectés
-    const activeAxes = Object.entries(hitsByAxis).filter(([_, count]) => count > 0);
-    if (activeAxes.length === 0) {
-      mechanismsList.innerHTML =
-        "<li>Aucun motif de contrôle explicite détecté. " +
-        "Cela ne signifie pas qu’il n’y a pas d’emprise, seulement que ce court extrait ne la rend pas visible.</li>";
-    } else {
-      mechanismsList.innerHTML = "";
-      activeAxes.forEach(([axisId, count]) => {
-        const axis = AXES.find(a => a.id === axisId);
-        const li = document.createElement("li");
-        li.textContent = `${axis.label} · ${count} indice(s) lexical(aux)`;
-        mechanismsList.appendChild(li);
-      });
-    }
-
-    // Mise à jour de la matrice (aucun / présent / fort)
-    updateMatrix(hitsByAxis);
-
-    // Scores d’emprise et de risque
-    const totalAxes = AXES.length;
-    const nbAxesActive = activeAxes.length;
-    const totalHits = Object.values(hitsByAxis).reduce((a, b) => a + b, 0);
-
-    // Score d’emprise: base sur nombre d’axes + volume d’indices
-    let holdScore = Math.round((nbAxesActive / totalAxes) * 60 + Math.min(totalHits * 6, 40));
-    holdScore = clamp(holdScore, 0, 100);
-
-    // Ajustement léger selon le contexte
-    if (context === "intimate" || context === "work") {
-      holdScore = Math.min(100, Math.round(holdScore * 1.1));
-    }
-
-    // Score de risque immédiat: basé sur menaces / enfermement / violence
-    let acuteHits = 0;
-    const lowerNoAccents = lower; // simplification
-
-    ACUTE_KEYWORDS.forEach(keyword => {
-      const k = keyword.toLowerCase();
-      let idx = lowerNoAccents.indexOf(k);
-      while (idx !== -1) {
-        acuteHits++;
-        idx = lowerNoAccents.indexOf(k, idx + k.length);
-      }
-    });
-
-    let riskScore = Math.round(acuteHits * 18);
-    if (hitsByAxis["threats"] >= 2 || hitsByAxis["isolation"] >= 2) {
-      riskScore += 20;
-    }
-    riskScore = clamp(riskScore, 0, 100);
-
-    // Mise à jour UI scores
-    holdScoreValue.innerHTML = `${holdScore}<span class="unit">/100</span>`;
-    riskScoreValue.innerHTML = `${riskScore}<span class="unit">/100</span>`;
-
-    if (holdScore < 30) {
-      holdScoreTag.textContent = "Structure d’emprise peu marquée dans cet extrait isolé.";
-      holdScoreTag.className = "score-tag safe";
-    } else if (holdScore < 65) {
-      holdScoreTag.textContent = "Plusieurs axes de contrôle apparaissent ; à surveiller dans la durée.";
-      holdScoreTag.className = "score-tag warn";
-    } else {
-      holdScoreTag.textContent = "Structure d’emprise forte : plusieurs axes convergent dans ce récit.";
-      holdScoreTag.className = "score-tag danger";
-    }
-
-    if (riskScore < 20) {
-      riskScoreTag.textContent = "Pas de menace explicite dans ce court extrait.";
-      riskScoreTag.className = "score-tag safe";
-    } else if (riskScore < 60) {
-      riskScoreTag.textContent = "Présence de menaces ou de contraintes ; risque à contextualiser.";
-      riskScoreTag.className = "score-tag warn";
-    } else {
-      riskScoreTag.textContent = "Signaux de risque aigu (menaces, enfermement, sanctions). Nécessite une vigilance immédiate.";
-      riskScoreTag.className = "score-tag danger";
-    }
-
-    // Signaux faibles
-    const weakSignals = Object.entries(hitsByAxis)
-      .filter(([_, count]) => count === 1)
-      .map(([axisId]) => AXES.find(a => a.id === axisId).label);
-
-    if (weakSignals.length === 0 && activeAxes.length === 0) {
-      signalsBlock.innerHTML =
-        "<strong>Signaux à surveiller</strong><br/>" +
-        "Aucun signal lexical particulier n’a été relevé dans ce court extrait.";
-    } else {
-      let html = "<strong>Signaux à surveiller</strong><br/>";
-      if (weakSignals.length > 0) {
-        html += "Axes apparaissant une seule fois (à suivre dans le temps)&nbsp;:";
-        html += "<ul>";
-        weakSignals.forEach(label => {
-          html += `<li>${label}</li>`;
-        });
-        html += "</ul>";
-      } else {
-        html += "Les axes détectés se répètent déjà : le contrôle semble structuré plutôt que ponctuel.";
-      }
-      signalsBlock.innerHTML = html;
-    }
-
-    // Phénotype narratif
-    phenotypeBlock.innerHTML = `<strong>Phénotype narratif</strong><br/>${buildPhenotype(hitsByAxis, context)}`;
-  }
-
-  function updateMatrix(hitsByAxis) {
-    Array.from(matrixGrid.children).forEach(row => {
-      const axisId = row.dataset.axisId;
-      const levelDiv = row.querySelector(".matrix-level");
-      const hits = hitsByAxis[axisId] || 0;
-
-      if (hits === 0) {
-        levelDiv.textContent = "Aucun pour l’instant";
-        levelDiv.className = "matrix-level none";
-      } else if (hits === 1) {
-        levelDiv.textContent = "Présent, 1 indice";
-        levelDiv.className = "matrix-level low";
-      } else {
-        levelDiv.textContent = `Fort, ${hits} indices`;
-        levelDiv.className = "matrix-level high";
-      }
-    });
-  }
-
-  function buildPhenotype(hitsByAxis, context) {
-    const intlAxes = {
-      isolation: hitsByAxis["isolation"] || 0,
-      surveillance: hitsByAxis["surveillance"] || 0,
-      communications: hitsByAxis["communications"] || 0,
-      threats: hitsByAxis["threats"] || 0,
-      economic: hitsByAxis["economic"] || 0,
-      normalisation: hitsByAxis["normalisation"] || 0
+    // Axes detection
+    const axesState = {
+      isolation: false,
+      surveillance: false,
+      comms: false,
+      threats: false,
+      economic: false,
+      normalisation: false
     };
 
-    const active = Object.values(intlAxes).some(v => v > 0);
-    if (!active) {
-      return "Aucun profil net ne se dégage sur la base de cet extrait isolé. Un récit plus long ou des pièces complémentaires seraient nécessaires.";
-    }
-
-    const strongAxes = Object.entries(intlAxes)
-      .filter(([_, v]) => v >= 2)
-      .map(([id]) => id);
-
-    const hasCoreCoercive =
-      intlAxes.isolation > 0 &&
-      (intlAxes.surveillance > 0 || intlAxes.communications > 0) &&
-      intlAxes.threats > 0;
-
-    if (hasCoreCoercive && context === "intimate") {
-      return "Le récit correspond à un schéma typique de contrôle coercitif en contexte intime : " +
-        "épisodes d’isolement, surveillance des communications, menaces ou sanctions répétées. " +
-        "Dans une évaluation complète, ce type de profil justifierait une attention prioritaire.";
-    }
-
-    if (context === "work" && (intlAxes.threats > 0 || intlAxes.normalisation > 0)) {
-      return "Le profil évoque un management coercitif : usage de menaces, pression normative " +
-        "et possible disqualification progressive. Dans un cadre RH, ce type de dynamique peut " +
-        "alimenter des situations de harcèlement moral ou institutionnel.";
-    }
-
-    if (context === "institutional" && intlAxes.normalisation > 0) {
-      return "Le récit laisse apparaître une forme de contrôle institutionnel : " +
-        "normalisation de pratiques contestables, renversement de la responsabilité " +
-        "et dilution des menaces dans des procédures apparemment neutres.";
-    }
-
-    if (intlAxes.economic > 0 && context === "intimate") {
-      return "Le contrôle économique est au cœur de ce récit, combiné à d’autres signaux " +
-        "d’emprise. Ce type de profil est fréquent dans les situations d’emprise domestique " +
-        "où la dépendance financière renforce le verrouillage psychologique.";
-    }
-
-    if (strongAxes.length >= 3) {
-      return "Plusieurs axes de contrôle apparaissent simultanément, ce qui suggère " +
-        "une structure d’emprise multi-dimensionnelle plutôt qu’un conflit isolé.";
-    }
-
-    return "Des éléments de contrôle apparaissent mais le profil reste partiel. " +
-      "La dynamique pourrait être précisée par des récits supplémentaires " +
-      "ou d’autres types de pièces (messages, emails, décisions formelles).";
-  }
-
-  function mergeSegments(segments) {
-    if (!segments.length) return [];
-    const sorted = segments.sort((a, b) => a.start - b.start);
-    const merged = [sorted[0]];
-
-    for (let i = 1; i < sorted.length; i++) {
-      const last = merged[merged.length - 1];
-      const current = sorted[i];
-      if (current.start <= last.end) {
-        last.end = Math.max(last.end, current.end);
-      } else {
-        merged.push({ start: current.start, end: current.end });
-      }
-    }
-    return merged;
-  }
-
-  function buildHighlightedText(text, segments) {
-    if (!segments.length) return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    let result = "";
-    let cursor = 0;
-
-    segments.forEach(seg => {
-      const safeStart = Math.max(0, Math.min(seg.start, text.length));
-      const safeEnd = Math.max(0, Math.min(seg.end, text.length));
-      if (safeStart > cursor) {
-        result += escapeHtml(text.slice(cursor, safeStart));
-      }
-      result += "<mark>" + escapeHtml(text.slice(safeStart, safeEnd)) + "</mark>";
-      cursor = safeEnd;
+    Object.entries(axisKeywords).forEach(([axis, keywords]) => {
+      axesState[axis] = keywords.some(k => storyLower.includes(k));
     });
 
-    if (cursor < text.length) {
-      result += escapeHtml(text.slice(cursor));
+    const axesDetected = Object.values(axesState).filter(Boolean).length;
+
+    // Coercion score: simple proportional score + context bonus
+    let coercionScore = Math.round((axesDetected / 6) * 80);
+    if (context === "intimate" || context === "work") {
+      coercionScore += 5;
     }
-    return result;
+    if (coercionScore > 100) coercionScore = 100;
+
+    // Risk score
+    let riskScore = riskKeywords.some(k => storyLower.includes(k)) ? 70 : 0;
+    if (axesState.threats) riskScore = Math.max(riskScore, 40);
+    if (context === "intimate" && riskScore > 0) riskScore += 10;
+    if (riskScore > 100) riskScore = 100;
+
+    // Update cards
+    const coercionScoreEl = document.getElementById("coercionScore");
+    const coercionDetailEl = document.getElementById("coercionScoreDetail");
+    const riskScoreEl = document.getElementById("riskScore");
+    const riskDetailEl = document.getElementById("riskScoreDetail");
+
+    coercionScoreEl.textContent = coercionScore + " / 100";
+    riskScoreEl.textContent = riskScore + " / 100";
+
+    if (axesDetected === 0) {
+      coercionDetailEl.textContent = "No structural control axis clearly detected in this short narrative.";
+    } else if (axesDetected === 1) {
+      coercionDetailEl.textContent = "One control axis appears in the narrative. Useful to monitor over time.";
+    } else if (axesDetected <= 3) {
+      coercionDetailEl.textContent = "Several control axes co-exist. This pattern suggests a possible coercive dynamic.";
+    } else {
+      coercionDetailEl.textContent = "Multiple axes are active at once. This looks like a dense coercive structure.";
+    }
+
+    if (riskScore === 0) {
+      riskDetailEl.textContent = "No explicit threat or physical risk appears in the text.";
+    } else if (riskScore < 60) {
+      riskDetailEl.textContent = "Threats or pressure are narrated. Risk should be assessed in context.";
+    } else {
+      riskDetailEl.textContent = "Narrative contains explicit danger markers. In real life, urgent support would be required.";
+    }
+
+    // Mechanisms summary
+    const mechEl = document.getElementById("mechanismsDetected");
+    const labels = [];
+    if (axesState.isolation) labels.push("isolation / confinement");
+    if (axesState.surveillance) labels.push("surveillance & suspicion");
+    if (axesState.comms) labels.push("control of communications");
+    if (axesState.threats) labels.push("threats & sanctions");
+    if (axesState.economic) labels.push("economic / resource control");
+    if (axesState.normalisation) labels.push("normalisation & mental pressure");
+
+    if (labels.length === 0) {
+      mechEl.innerHTML = "<strong>Mechanisms detected:</strong> none clearly detected in this short text.";
+    } else {
+      mechEl.innerHTML =
+        "<strong>Mechanisms detected:</strong> " + labels.join(", ") + ".";
+    }
+
+    // Update matrix cells
+    function setAxisCell(id, active) {
+      const el = document.getElementById(id);
+      el.classList.remove("matrix-level-none", "matrix-level-low", "matrix-level-high");
+      if (!active) {
+        el.classList.add("matrix-level-none");
+        el.textContent = "None so far";
+      } else {
+        el.classList.add("matrix-level-low");
+        el.textContent = "Present in this story";
+      }
+    }
+
+    setAxisCell("axisIsolation", axesState.isolation);
+    setAxisCell("axisSurveillance", axesState.surveillance);
+    setAxisCell("axisComms", axesState.comms);
+    setAxisCell("axisThreats", axesState.threats);
+    setAxisCell("axisEconomic", axesState.economic);
+    setAxisCell("axisNormalisation", axesState.normalisation);
+
+    // Signals to monitor
+    const signalsEl = document.getElementById("signalsToWatch");
+    if (labels.length === 0) {
+      signalsEl.innerHTML = "<strong>Signals to monitor:</strong> none highlighted at demo level. The narrative can still be important for a human expert.";
+    } else {
+      signalsEl.innerHTML =
+        "<strong>Signals to monitor:</strong> repetition over time of " +
+        labels.join(", ") +
+        ", escalation of threats, and attempts to cut the person from external support.";
+    }
+
+    // Phenotype summary
+    const phenotypeEl = document.getElementById("phenotypeSummary");
+    let phenotype = "";
+
+    if (sentenceCount <= 2 && axesDetected === 0) {
+      phenotype = "Very short and factual narrative, with limited structure. Needs more details for proper analysis.";
+    } else if (axesDetected === 0) {
+      phenotype = "Structured narrative without obvious coercive pattern. Can still hide contextual issues.";
+    } else if (axesDetected <= 2) {
+      phenotype = "Episodic coercive pattern: some control axes appear, but the structure is still relatively loose.";
+    } else {
+      phenotype = "Dense coercive pattern: several axes interact. The story reads like a systemic control environment.";
+    }
+
+    phenotypeEl.innerHTML = "<strong>Narrative phenotype:</strong> " + phenotype;
+
+    // Highlight sensitive spans inside the story
+    const highlightBox = document.getElementById("highlightBox");
+    const highlightContent = document.getElementById("highlightContent");
+
+    const highlightKeywords = [
+      ...axisKeywords.isolation,
+      ...axisKeywords.surveillance,
+      ...axisKeywords.comms,
+      ...axisKeywords.threats,
+      ...axisKeywords.economic,
+      ...axisKeywords.normalisation
+    ];
+
+    let highlightedStory = story;
+    highlightKeywords.forEach(keyword => {
+      if (!keyword) return;
+      const escaped = keyword.replace(/[-/\\^$*+?.()|[\]{}]/g, "\\$&");
+      const regex = new RegExp(escaped, "gi");
+      highlightedStory = highlightedStory.replace(regex, match =>
+        `<span class="highlight-span">${match}</span>`
+      );
+    });
+
+    highlightContent.innerHTML = highlightedStory;
+    highlightBox.scrollTop = 0;
   }
 
-  function escapeHtml(str) {
-    return str
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
-  }
+  document.getElementById("analyzeBtn").addEventListener("click", analyseStory);
 
-  function clamp(value, min, max) {
-    return Math.max(min, Math.min(max, value));
-  }
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    document.getElementById("storyInput").value = "";
+    document.getElementById("contextSelect").value = "generic";
+    // Reset visible outputs
+    document.getElementById("coercionScore").textContent = "0 / 100";
+    document.getElementById("coercionScoreDetail").textContent =
+      "No structural control axis clearly detected in this short narrative.";
+    document.getElementById("riskScore").textContent = "0 / 100";
+    document.getElementById("riskScoreDetail").textContent =
+      "No explicit threat in the story.";
+    document.getElementById("mechanismsDetected").innerHTML =
+      "<strong>Mechanisms detected:</strong> none yet — paste a story on the left and click “Analyse”.";
+    ["axisIsolation", "axisSurveillance", "axisComms", "axisThreats", "axisEconomic", "axisNormalisation"]
+      .forEach(id => {
+        const el = document.getElementById(id);
+        el.classList.remove("matrix-level-low", "matrix-level-high");
+        el.classList.add("matrix-level-none");
+        el.textContent = "None so far";
+      });
+    document.getElementById("signalsToWatch").innerHTML =
+      "<strong>Signals to monitor:</strong> will appear here once a story has been analysed.";
+    document.getElementById("phenotypeSummary").innerHTML =
+      "<strong>Narrative phenotype:</strong> not assessed yet.";
+    document.getElementById("highlightContent").textContent =
+      "The analysed narrative will be displayed here, with passages carrying structural pressure highlighted in gold.";
+  });
+
+  document.getElementById("loadExampleBtn").addEventListener("click", () => {
+    const example = "On Saturday 12 February, around 9 pm, he locked me in the living room for almost two hours after I refused to cancel a dinner with my sister. He stood in front of the door, took my phone and said that \"no one needed to hear from me tonight\". Two days later he demanded full access to my bank account and said that if I refused, he would stop paying the rent. When I tried to complain, he repeated that it was \"normal for couples to share everything\" and that I was overreacting.";
+    document.getElementById("contextSelect").value = "intimate";
+    document.getElementById("storyInput").value = example;
+    analyseStory();
+  });
 </script>
-
 </body>
 </html>
+
 
