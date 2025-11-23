@@ -14,7 +14,7 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="OpenProof — Psycho-forensic narrative demo" />
   <meta property="og:description"
-        content="From raw story to control patterns: a rule-based psycho-forensic layer on top of the RPO standard. Coercion score, risk hints and narrative phenotype." />
+        content="From raw story to control patterns: a rule-based psycho-forensic layer on top of the RPO standard. Coercion score, risk hints and narrative profile (phenotype)." />
   <meta property="og:url" content="https://rpo.openproof.net/demo-psycho.html" />
 
   <!-- Fonts -->
@@ -689,6 +689,15 @@
       cursor: pointer;
       white-space: nowrap;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .band-cta:hover {
+      filter: brightness(1.03);
+      transform: translateY(-0.5px);
     }
 
     /* FOOTER ------------------------------------------------------- */
@@ -777,15 +786,22 @@
         </div>
       </div>
       <nav class="nav-links">
-        <a href="index.html" class="nav-link">Overview</a>
-        <a href="specification.html" class="nav-link">Specification</a>
+        <a href="overview.html" class="nav-link">Overview</a>
+        <a href="index.html" class="nav-link">Specification</a>
         <a href="examples.html" class="nav-link">Examples</a>
         <a href="tests.html" class="nav-link">Tests</a>
         <a href="playground.html" class="nav-link">Playground</a>
         <a href="demo-psycho.html" class="nav-link active">Psycho-forensic demo</a>
       </nav>
       <div class="nav-right">
-        <a href="https://github.com/" class="nav-cta">View on GitHub</a>
+        <a
+          href="https://github.com/openproof-net/rpo-spec-v0.1"
+          class="nav-cta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on GitHub
+        </a>
       </div>
     </div>
   </header>
@@ -804,7 +820,7 @@
           <p class="hero-lead">
             Paste a short narrative about a potential coercive situation (domestic, workplace,
             institutional or online). This demo surfaces structural control patterns, estimates
-            a rough coercion score, and highlights the narrative phenotype. Everything runs
+            a rough coercion score, and highlights the narrative profile. Everything runs
             locally in your browser — no AI model.
           </p>
           <p class="hero-extra">
@@ -832,7 +848,7 @@
                   surveillance, normalisation).</li>
               <li>Aggregation into a mini-matrix of coercive control axes.</li>
               <li>Approximate coercion score and narrative risk level for the story.</li>
-              <li>Highlighting of sensitive passages and the resulting narrative phenotype.</li>
+              <li>Highlighting of sensitive passages and the resulting narrative profile (phenotype).</li>
             </ul>
             <p class="hero-card-foot">
               In a full evaluation, this overlay would be one part of a broader
@@ -896,7 +912,7 @@
                   <span id="coercionScoreValue">0</span><span>/ 100</span>
                 </div>
                 <div class="score-note" id="coercionScoreNote">
-                  No clear structural control pattern yet.
+                  No clear structural coercive pattern yet. Add concrete actions, constraints or threats if they exist.
                 </div>
               </div>
               <div class="score-box">
@@ -971,10 +987,10 @@
             </ul>
 
             <!-- Phenotype -->
-            <div class="subsection-title">Narrative phenotype</div>
+            <div class="subsection-title">Narrative profile (phenotype)</div>
             <p class="phenotype-text" id="phenotypeText">
-              Once analysed, the story’s structure will be summarised here as a narrative phenotype
-              (for example: isolated incidents, escalating pattern, dense coercive environment).
+              Once analysed, this field summarises the overall narrative profile (phenotype): how the different
+              control axes combine in this story (isolated incident, emerging pattern, or dense coercive environment).
             </p>
 
             <!-- Story with highlights -->
@@ -999,9 +1015,14 @@
             RPO standard, temporal graphs and a structured legal reading. If you want to test
             these modules on real-world cases, you can apply to the CNRS × TruthX pilot programme.
           </p>
-          <button class="band-cta" type="button">
+          <a
+            class="band-cta"
+            href="https://www.truthx.co/truthx-pilote-form"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Apply for the CNRS pilot
-          </button>
+          </a>
         </div>
       </section>
     </div>
@@ -1016,7 +1037,7 @@
         Editorial lead for the specification: <strong>Gersende Ryard de Parcey</strong>.
       </div>
       <div class="footer-links">
-        <a href="index.html">Technical site</a>
+        <a href="overview.html">Technical site</a>
         <span class="footer-dot"></span>
         <a href="governance.html">Governance</a>
         <span class="footer-dot"></span>
@@ -1060,6 +1081,7 @@
           "would not let me leave",
           "took my keys",
           "took her keys",
+          "took his keys",
           "could not leave",
           "confined",
           "prevented me from leaving"
@@ -1233,7 +1255,7 @@
 
       if (coercionScore === 0) {
         coercionScoreNote.textContent =
-          "No clear structural coercive pattern yet. Add concrete actions, constraints or threats if they exist.";
+          "No clear structural coercive pattern yet. It may describe conflict or tension, or the narrative may still be too fragmentary.";
       } else if (coercionScore < 45) {
         coercionScoreNote.textContent =
           "Some control cues appear in the story. The pattern is weak but may need monitoring over time.";
@@ -1308,19 +1330,19 @@
         });
       }
 
-      // Phenotype text
+      // Phenotype text (narrative profile)
       if (totalCues === 0) {
         phenotypeText.textContent =
-          "The story does not yet show a structured control pattern. It may describe conflict or tension without systemic coercion, or the narrative may still be too fragmentary.";
+          "The narrative profile does not yet show a structured pattern of control. It may describe conflict or tension without systemic coercion, or the story may simply be too fragmentary.";
       } else if (strongAxes.length === 0 && presentAxes.length === 1) {
         phenotypeText.textContent =
-          "The narrative suggests isolated control behaviour on one axis. It may represent an early signal that should be monitored over time or cross-checked with other evidence.";
+          "The narrative profile shows isolated control behaviour on a single axis. It looks more like an early warning signal that should be monitored over time and cross-checked with other sources.";
       } else if (strongAxes.length <= 2) {
         phenotypeText.textContent =
-          "The story points to a developing coercive pattern where several axes start to interact. Episodes of pressure, surveillance or threats appear and may escalate if repeated.";
+          "The narrative profile points to a developing coercive control pattern: several axes start to interact, with episodes of pressure, surveillance or sanctions that may escalate if repeated.";
       } else {
         phenotypeText.textContent =
-          "The narrative corresponds to a typical coercive control scheme: several axes interact (isolation, communications, sanctions, economic control, normalisation). In a full evaluation, this kind of profile would justify priority attention and cross-checking with other sources of proof.";
+          "The narrative profile corresponds to a dense coercive control scheme: several axes interact (isolation, communications, sanctions, economic and mental pressure). In a full evaluation, this kind of phenotype would justify priority attention, safety planning and cross-checking with independent proof.";
       }
 
       // Highlighted story: wrap all cue spans
@@ -1375,7 +1397,7 @@
       li.textContent = "No weak axis detected yet. Signals will appear here once a story is analysed.";
       signalsList.appendChild(li);
       phenotypeText.textContent =
-        "Once analysed, the story’s structure will be summarised here as a narrative phenotype (for example: isolated incidents, escalating pattern, dense coercive environment).";
+        "Once analysed, this field will describe the narrative profile (phenotype): the global shape of the story in terms of control patterns (isolated incident, emerging pattern, or dense coercive environment).";
       highlightedStory.textContent =
         "The analysed story will appear here with sensitive passages highlighted once you run the demo.";
     }
@@ -1401,4 +1423,5 @@
 </script>
 </body>
 </html>
+
 
