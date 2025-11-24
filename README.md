@@ -85,15 +85,15 @@ ___
 
 The RPO guarantees three invariants:
 
-### ✔ Integrity
+#### ✔ Integrity
 
 A signed JSON whose fields can be recomputed and validated.
 
-### ✔ Readability
+#### ✔ Readability
 
 A human-readable PDF mirroring the narrative.
 
-### ✔ Verifiability
+#### ✔ Verifiability
 
 A deterministic SHA-256 public hash anchoring immutability.
 
