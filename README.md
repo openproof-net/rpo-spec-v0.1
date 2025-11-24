@@ -1,4 +1,4 @@
-🔵 OpenProof — RPO Specification v0.1
+# 🔵 OpenProof — RPO Specification v0.1
 
 Integrity · Readability · Verifiability
 ___
@@ -19,7 +19,7 @@ It ensures that nothing can be altered without detection.
 
 ___
 
-1. 💙 Why OpenProof Exists — The Crisis We Are Fixing
+## 1. 💙 Why OpenProof Exists — The Crisis We Are Fixing
 
 Digital evidence is collapsing.
 
@@ -44,7 +44,7 @@ If machines can verify integrity, and humans can read coherence, society can tru
 
 ___
 
-2. 🏛 What OpenProof Is — A Minimal, Enforceable Standard
+## 2. 🏛 What OpenProof Is — A Minimal, Enforceable Standard
 
 The RPO guarantees three invariants:
 
@@ -65,7 +65,7 @@ It ensures that any modification becomes detectable.
 
 ___
 
-3. 📦 Minimal RPO JSON Structure (v0.1)
+## 3. 📦 Minimal RPO JSON Structure (v0.1)
 
 This is the canonical baseline of a compliant RPO bundle:
 
@@ -92,7 +92,7 @@ This is the canonical baseline of a compliant RPO bundle:
 
 ___
 
-4. 🔐 Hashing Algorithm (public_hash)
+## 4. 🔐 Hashing Algorithm (public_hash)
 
 RPO v0.1 uses SHA-256 over a deterministic concatenation of core fields.
 
@@ -126,7 +126,7 @@ This guarantees deterministic validation across implementations.
 
 ___
 
-5. ✅ Validating an RPO Bundle
+## 5. ✅ Validating an RPO Bundle
 Minimal validation helper (Python)
 def validate_public_hash(bundle):
     expected = compute_public_hash(bundle)
@@ -156,7 +156,7 @@ run full JSON Schema validation.
 
 ___
 
-6. 🧩 Generating a New RPO Bundle
+## 6. 🧩 Generating a New RPO Bundle
 
 Minimal example (Python):
 
@@ -190,7 +190,7 @@ def new_rpo(title, text, issuer, subject):
 
 ___
 
-7. 🎯 Try the Engine — RPO Sandbox
+## 7. 🎯 Try the Engine — RPO Sandbox
 
 Open, deterministic, no AI, no registry.
 
@@ -206,7 +206,7 @@ a deterministic SHA-256 hash.
 
 ___
 
-8. 🔬 Scientific Pilot (CNRS × TruthX)
+## 8. 🔬 Scientific Pilot (CNRS × TruthX)
 
 The open standard does not include interpretive or psycho-forensic analysis.
 
@@ -224,7 +224,7 @@ structure-level markers.
 
 ___
 
-9. 🤝 Contributing
+## 9. 🤝 Contributing
 
 OpenProof welcomes contributions from:
 
@@ -240,7 +240,7 @@ Issues and pull requests are encouraged in this repository.
 
 ___
 
-10. 📫 Contact
+## 10. 📫 Contact
 
 Email: openproof@truthx.co
 
@@ -248,6 +248,6 @@ LinkedIn: https://www.linkedin.com/in/gryard/
 
 ___
 
-11. 🛡 Maintainer
+## 11. 🛡 Maintainer
 
 This specification is maintained by Gersende Ryard de Parcey.
