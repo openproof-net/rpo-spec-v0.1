@@ -239,7 +239,6 @@ issuer=<label>     |
 subject=<label>    |
 title=<string>     |
 narrative=<text>
-```
 
 ```
 ---
@@ -265,12 +264,11 @@ narrative=<text>
   },
   "meta": { "playground": false }
 }
-```json
 ```
 ---
 
 ### 8.4 🔹 Validation Contract
-```
+
 - presence of mandatory fields  
 - valid ISO-8601 timestamp  
 - 64-char SHA-256 hex  
@@ -285,6 +283,5 @@ narrative=<text>
 
 ### 8.5 🔹 Lifecycle Summary
 
-```
 Input → Normalize → Build JSON → Compute Hash → Attach Registry → Validate → Publish
 ```
