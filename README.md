@@ -131,7 +131,7 @@ This is the canonical baseline of a compliant RPO bundle:
 
 ### 2.1 Optional — JSON Schema
 
-"$schema": "https://json-schema.org/draft/2020-12/schema",
+"schema": "https://json-schema.org/draft/2020-12/schema",
 "type": "object",
 "properties": { … }
 
