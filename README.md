@@ -1,6 +1,7 @@
 🔵 OpenProof — RPO Specification v0.1
 
 Integrity · Readability · Verifiability
+___
 
 A civil code for digital evidence in an age ruled by narratives.
 
@@ -16,7 +17,7 @@ institutions to trust the structure of evidence.
 OpenProof does not adjudicate truth.
 It ensures that nothing can be altered without detection.
 
----
+___
 
 1. 💙 Why OpenProof Exists — The Crisis We Are Fixing
 
@@ -41,7 +42,7 @@ It provides a minimal, deterministic and testable foundation that any machine, i
 
 If machines can verify integrity, and humans can read coherence, society can trust evidence again.
 
----
+___
 
 2. 🏛 What OpenProof Is — A Minimal, Enforceable Standard
 
@@ -62,7 +63,7 @@ A deterministic SHA-256 public hash anchoring immutability.
 OpenProof does not determine what is “true”.
 It ensures that any modification becomes detectable.
 
----
+___
 
 3. 📦 Minimal RPO JSON Structure (v0.1)
 
@@ -72,7 +73,7 @@ This is the canonical baseline of a compliant RPO bundle:
   "rpo_version": "0.1",
   "bundle_id": "string",
   "created_at": "ISO-8601 timestamp",
-  "issuer":  { "label": "string" },
+  "issuer": { "label": "string" },
   "subject": { "label": "string" },
   "narrative": {
     "title": "string",
@@ -89,13 +90,13 @@ This is the canonical baseline of a compliant RPO bundle:
   }
 }
 
----
+___
 
 4. 🔐 Hashing Algorithm (public_hash)
 
 RPO v0.1 uses SHA-256 over a deterministic concatenation of core fields.
 
-Concatenation template :
+Concatenation model :
 
 rpo_version=<v>|
 bundle_id=<id>|
@@ -123,41 +124,42 @@ def compute_public_hash(bundle):
 
 This guarantees deterministic validation across implementations.
 
----
+___
 
 5. ✅ Validating an RPO Bundle
-
 Minimal validation helper (Python)
-
 def validate_public_hash(bundle):
     expected = compute_public_hash(bundle)
     return expected == bundle["registry"]["public_hash"]
 
 Required validations
 
-An implementation SHOULD verify:
+Any implementation SHOULD verify:
 
-mandatory fields are present
+presence of mandatory fields,
 
-created_at is ISO-8601
+valid ISO-8601 created_at,
 
-public_hash is a 64-character hex string
+public_hash is a 64-character hex string,
 
-narrative structure matches schema
+narrative structure matches schema,
 
-recompute hash and reject on mismatch
+recompute hash and reject on mismatch.
 
 Optional (recommended)
 
-validate pdf_hash
+validate pdf_hash,
 
-enforce uniqueness of bundle_id
+ensure bundle_id uniqueness,
 
-full JSON Schema validation
+run full JSON Schema validation.
 
----
+___
 
 6. 🧩 Generating a New RPO Bundle
+
+Minimal example (Python):
+
 import uuid
 from datetime import datetime
 
@@ -186,7 +188,7 @@ def new_rpo(title, text, issuer, subject):
     bundle["registry"]["public_hash"] = compute_public_hash(bundle)
     return bundle
 
----
+___
 
 7. 🎯 Try the Engine — RPO Sandbox
 
@@ -194,17 +196,15 @@ Open, deterministic, no AI, no registry.
 
 The Sandbox lets you transform any narrative into:
 
-a minimal RPO JSON
+a minimal RPO JSON,
 
-heuristic markers
+heuristic markers,
 
-a deterministic SHA-256 hash
+a deterministic SHA-256 hash.
 
 🔗 https://rpo.openproof.net/sandbox.html
 
-Use it to prototype, integrate and sanity-check your own RPO implementation.
-
----
+___
 
 8. 🔬 Scientific Pilot (CNRS × TruthX)
 
@@ -212,43 +212,41 @@ The open standard does not include interpretive or psycho-forensic analysis.
 
 These modules live in the scientific pilot:
 
-narrative inversion
+narrative inversion,
 
-coercive control signals
+coercive control signals,
 
-interpretive coherence
+interpretive coherence,
 
-structure-level markers
-
-This pilot extends the open standard for legal, research and institutional partners.
+structure-level markers.
 
 🔗 https://www.truthx.co/truthx-pilote-form
 
----
+___
 
 9. 🤝 Contributing
 
 OpenProof welcomes contributions from:
 
-engineers (validation, hashing, schema)
+engineers (validation, hashing, schema),
 
-legal teams (probatory constraints)
+legal teams (probatory constraints),
 
-researchers (structures, bias, narrative logic)
+researchers (structures, bias, narrative logic),
 
-OSINT & forensic analysts (field use cases)
+OSINT & forensic analysts (field use cases).
 
-Issues, pull requests and spec discussions are encouraged.
+Issues and pull requests are encouraged in this repository.
 
----
+___
 
 10. 📫 Contact
 
-Email — openproof@truthx.co
+Email: openproof@truthx.co
 
-LinkedIn — https://www.linkedin.com/in/gryard/
+LinkedIn: https://www.linkedin.com/in/gryard/
 
----
+___
 
 11. 🛡 Maintainer
 
