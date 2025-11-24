@@ -12,11 +12,9 @@ ___
 OpenProof defines a public, deterministic and testable format for structuring digital evidence.
 Its core artifact, the RPO (Rapport Probatoire Ouvert), is a dual-format bundle allowing:
 
-machines to verify integrity,
-
-humans to read coherence,
-
-institutions to trust the structure of evidence.
+- machines to verify integrity,
+- humans to read coherence,
+- institutions to trust the structure of evidence.
 
 OpenProof does not adjudicate truth.
 It ensures that nothing can be altered without detection.
@@ -50,17 +48,12 @@ Digital evidence is collapsing.
 
 Today, “evidence” often means:
 
-screenshots no system can authenticate,
-
-PDFs whose origin no one can verify,
-
-AI-generated narratives with no traceability,
-
-fragmented logs scattered across institutions,
-
-internal formats that die with each organisation.
-
-Everyone talks about truth. Very few artifacts are verifiable.
+- screenshots no system can authenticate,
+- PDFs whose origin no one can verify,
+- AI-generated narratives with no traceability,
+- fragmented logs scattered across institutions,
+- internal formats that die with each organisation.
+- Everyone talks about truth. Very few artifacts are verifiable.
 
 OpenProof is born from this failure.
 It provides a minimal, deterministic and testable foundation that any machine, institution or jurisdiction can check — independently, predictably, transparently.
@@ -92,15 +85,15 @@ ___
 
 The RPO guarantees three invariants:
 
-✔ Integrity
+### ✔ Integrity
 
 A signed JSON whose fields can be recomputed and validated.
 
-✔ Readability
+### ✔ Readability
 
 A human-readable PDF mirroring the narrative.
 
-✔ Verifiability
+### ✔ Verifiability
 
 A deterministic SHA-256 public hash anchoring immutability.
 
@@ -189,6 +182,7 @@ This guarantees deterministic validation across implementations.
 ___
 
 ## 4. ✅ Validating an RPO Bundle
+
 Minimal validation helper (Python)
 
 
@@ -200,23 +194,17 @@ Required validations
 
 Any implementation SHOULD verify:
 
-presence of mandatory fields,
-
-valid ISO-8601 created_at,
-
-public_hash is a 64-character hex string,
-
-narrative structure matches schema,
-
-recompute hash and reject on mismatch.
+- presence of mandatory fields,
+- valid ISO-8601 created_at,
+- public_hash is a 64-character hex string,
+- narrative structure matches schema,
+- recompute hash and reject on mismatch.
 
 Optional (recommended)
 
-validate pdf_hash,
-
-ensure bundle_id uniqueness,
-
-run full JSON Schema validation.
+- validate pdf_hash,
+- ensure bundle_id uniqueness,
+- run full JSON Schema validation.
 
 ___
 
@@ -272,11 +260,9 @@ Open, deterministic, no AI, no registry.
 
 The Sandbox lets you transform any narrative into:
 
-a minimal RPO JSON,
-
-heuristic markers,
-
-a deterministic SHA-256 hash.
+- a minimal RPO JSON,
+- heuristic markers,
+- a deterministic SHA-256 hash.
 
 🔗 https://rpo.openproof.net/sandbox.html
 
@@ -288,13 +274,10 @@ The open standard does not include interpretive or psycho-forensic analysis.
 
 These modules live in the scientific pilot:
 
-narrative inversion,
-
-coercive control signals,
-
-interpretive coherence,
-
-structure-level markers.
+- narrative inversion,
+- coercive control signals,
+- interpretive coherence,
+- structure-level markers.
 
 🔗 https://www.truthx.co/truthx-pilote-form
 
@@ -304,13 +287,10 @@ ___
 
 OpenProof welcomes contributions from:
 
-engineers (validation, hashing, schema),
-
-legal teams (probatory constraints),
-
-researchers (structures, bias, narrative logic),
-
-OSINT & forensic analysts (field use cases).
+- engineers (validation, hashing, schema),
+- legal teams (probatory constraints),
+- researchers (structures, bias, narrative logic),
+- OSINT & forensic analysts (field use cases).
 
 Issues and pull requests are encouraged in this repository.
 
