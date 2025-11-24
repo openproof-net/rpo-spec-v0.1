@@ -7,7 +7,6 @@ Integrity · Readability · Verifiability
 ___
 
 ## Table des matières
-
 1. [💙 Pourquoi OpenProof existe — La crise que nous résolvons](#1--pourquoi-openproof-existe--la-crise-que-nous-resolvons)
 2. [🏛 Qu'est-ce qu'OpenProof ? — Une norme minimale et applicable](#2--quest-ce-quopenproof--une-norme-minimale-et-applicable)
 3. [📦 Structure JSON RPO minimale (v0.1)](#3--structure-json-rpo-minimale-v01)
@@ -19,6 +18,7 @@ ___
 9. [🤝 Contribuer](#9--contribuer)
 10. [📫 Contactez-nous](#10--contactez-nous)
 11. [🛡 Responsable de la maintenance](#11--responsable-de-la-maintenance)
+
 
 
 
