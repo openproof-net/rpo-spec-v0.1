@@ -69,7 +69,6 @@ ___
 
 This is the canonical baseline of a compliant RPO bundle:
 
-```json
 {
   "rpo_version": "0.1",
   "bundle_id": "string",
@@ -99,7 +98,6 @@ RPO v0.1 uses SHA-256 over a deterministic concatenation of core fields.
 
 Concatenation model :
 
-```ini
 rpo_version=<v>|
 bundle_id=<id>|
 created_at=<iso>|
@@ -110,7 +108,7 @@ narrative=<text>
 
 Example (Python)
 
-```python
+
 import hashlib
 
 def compute_public_hash(bundle):
@@ -133,7 +131,7 @@ ___
 ## 5. ✅ Validating an RPO Bundle
 Minimal validation helper (Python)
 
-```python
+
 def validate_public_hash(bundle):
     expected = compute_public_hash(bundle)
     return expected == bundle["registry"]["public_hash"]
@@ -166,7 +164,6 @@ ___
 
 Minimal example (Python):
 
-```python
 import uuid
 from datetime import datetime
 
