@@ -422,3 +422,58 @@ Safe Pattern
 # ✔ Safe: preserve original structure & whitespace
 json.dumps(bundle, separators=(",", ":"))
 ```
+
+---
+
+## 10. 🧪 Test Fixtures & CI Hooks
+
+---
+
+### 10.1 🔸 Local Test Commands
+
+Use a minimal, reproducible set of tests to ensure your implementation stays compatible with RPO v0.1:
+
+```bash
+# 1. Run unit tests (hashing, validation, JSON schema)
+$ pytest tests/
+
+# 2. Validate all sample bundles in /examples
+$ python tools/validate_all.py examples/*.json
+```
+
+---
+
+### 10.2 🔸 Golden Bundles & Hashes
+
+RPO v0.1 relies on golden fixtures to guarantee deterministic behaviour across implementations.
+
+/examples/ should contain a small set of reference bundles.
+
+Each bundle has a known, documented public_hash.
+
+Any change in code that alters these hashes must be considered breaking.
+
+Example (documentation snippet):
+
+```Texte
+examples/rpo-example-001.json  ->  public_hash = <sha256 hex>
+examples/rpo-example-002.json  ->  public_hash = <sha256 hex>
+```
+
+---
+
+### 10.3 🔸 CI Integration
+
+Recommended checks in your CI pipeline:
+
+parse and validate all RPO JSON files in /examples
+
+recompute public_hash and compare with stored value
+
+fail the pipeline on any mismatch or malformed bundle
+
+Example (pseudo GitHub Actions step):
+
+- name: Validate RPO examples
+  run: |
+    python tools/validate_all.py examples/*.json
