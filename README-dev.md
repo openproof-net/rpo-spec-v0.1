@@ -282,5 +282,141 @@ narrative=<text>
 
 ### 8.5 🔹 Lifecycle Summary
 
+```text
 Input → Normalize → Build JSON → Compute Hash → Attach Registry → Validate → Publish
 ```
+---
+
+## 9. 🛠 Developer Responsibilities & Integrations
+```
+---
+```
+### 9.1 🔸 API Boundaries
+
+The RPO v0.1 spec defines strict boundaries for any implementation:
+
+- The hash computation must follow the deterministic concatenation model.  
+- No additional fields may be injected into the hashing payload.  
+- Validation tools must treat missing fields as fatal errors.  
+- RPO JSON must remain portable across environments (UTF-8, no BOM).  
+- Implementations must not depend on external, mutable APIs for core operations.
+```
+#### Minimal API Contract
+
+```text
+compute_public_hash(bundle) -> sha256_hex
+validate_public_hash(bundle) -> bool
+new_rpo(title, text, issuer, subject) -> dict
+
+---
+```
+### 9.2 🔸 Required Developer Guarantees
+
+To preserve determinism and cross-implementation compatibility, developers integrating RPO v0.1 must guarantee:
+
+Stable hashing (no whitespace drift, no locale drift, no reordering).
+
+Fixed timestamp format (UTC, ISO-8601, trailing “Z”).
+
+Strict UTF-8 text normalization.
+
+Immutability of RPO bundles once hashed.
+
+No auto-formatting of JSON fields by the runtime or editor.
+
+No additional serialization layers (pretty-print differences must not alter stored JSON).
+
+Consistent UUID generation (UUID4).
+
+Rejection of bundles with missing or malformed fields.
+
+Example (Python defensive pattern)
+def safe_load(path):
+    with open(path, "r", encoding="utf-8") as f:
+        raw = f.read()
+    # Ensure no BOM, no trailing nulls
+    assert raw.encode("utf-8", "strict")
+    return json.loads(raw)
+    
+---
+
+### 9.3 🔸 Integration Patterns (CLI, API, Serverless, Local)
+
+RPO v0.1 is intentionally lightweight and can be integrated into multiple architectures.
+
+CLI Integration
+
+Bundle generation and validation via Python or Node scripts.
+
+Ideal for CI pipelines and researcher tooling.
+
+$ rpo new "Title" "Narrative..."
+$ rpo validate my_bundle.json
+
+API Integration
+
+Stateless HTTP endpoint wrapping compute_public_hash() and validators.
+
+Must not store bundles unless explicit.
+
+Ensure identical hashing behaviour across deployments.
+
+POST /compute-hash
+POST /validate
+POST /new-rpo
+
+Serverless Integration
+
+Lambda / Cloud Functions can host hashing logic.
+
+Must pin runtime versions to avoid drift.
+
+Must pass full JSON body without modification.
+
+def handler(event, context):
+    bundle = json.loads(event["body"])
+    return compute_public_hash(bundle)
+
+Local Library Integration
+
+Ideal for offline or privacy-preserving workflows.
+
+No external dependencies beyond standard crypto libraries.
+
+Recommended for sensitive narratives.
+
+---
+
+### 9.4 🔸 Danger Zone (What Can Break Determinism)
+
+These pitfalls will instantly corrupt the determinism of the RPO bundle and produce mismatched hashes.
+
+🚨 High-Risk Sources of Drift
+
+Auto-formatters (Prettier, Black) rewriting JSON.
+
+Automatic newline conversion (LF ↔ CRLF).
+
+Using localized date formats instead of ISO-8601.
+
+Adding or reordering JSON fields.
+
+Using Python dictionaries pre-3.7 (non-ordered).
+
+Invisible characters (NBSP, zero-width space).
+
+Changing runtime versions without pinning.
+
+Encoding drift (UTF-16, ANSI, BOM).
+
+Mutating text after hashing.
+
+Example of a Drift-Inducing Mistake
+# ❌ Dangerous: pretty-printing alters whitespace → hash mismatch
+json.dumps(bundle, indent=4)
+
+Safe Pattern
+# ✔ Safe: preserve original structure & whitespace
+json.dumps(bundle, separators=(",", ":"))
+
+
