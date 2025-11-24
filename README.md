@@ -4,25 +4,10 @@
 # 🔵 OpenProof — RPO Specification v0.1
 
 Integrity · Readability · Verifiability
+
 ___
 
-## Table of Contents
-
-1. [💙 Why OpenProof Exists — The Crisis We Are Fixing](#1--why-openproof-exists--the-crisis-we-are-fixing)
-2. [🏛 What OpenProof Is — A Minimal, Enforceable Standard](#2--what-openproof-is--a-minimal-enforceable-standard)
-3. [📦 Minimal RPO JSON Structure (v0.1)](#3--minimal-rpo-json-structure-v01)
-4. [🔐 Hashing Algorithm (public_hash)](#4--hashing-algorithm-public_hash)
-5. [✅ Validating an RPO Bundle](#5--validating-an-rpo-bundle)
-6. [🧩 Generating a New RPO Bundle](#6--generating-a-new-rpo-bundle)
-7. [🎯 Try the Engine — RPO Sandbox](#7--try-the-engine--rpo-sandbox)
-8. [🔬 Scientific Pilot (CNRS × TruthX)](#8--scientific-pilot-cnrs--truthx)
-9. [🤝 Contributing](#9--contributing)
-10. [📫 Contact](#10--contact)
-11. [🛡 Maintainer](#11--maintainer)
-
-
-
-
+*A civil code for digital evidence in an age ruled by narratives.*
 
 
 A civil code for digital evidence in an age ruled by narratives.
@@ -39,9 +24,30 @@ institutions to trust the structure of evidence.
 OpenProof does not adjudicate truth.
 It ensures that nothing can be altered without detection.
 
+
+Narrative → JSON → SHA-256 → Registry → Validation
+
 ___
 
-## 1. 💙 Why OpenProof Exists — The Crisis We Are Fixing
+## ▶️ Try it in 10 seconds
+
+```bash
+git clone https://github.com/openproof-net/rpo-spec-v0.1
+cd rpo-spec-v0.1
+python tools/validate_rpo.py examples/rpo-example-001.json
+```
+___
+
+## 👤 Who is this for?
+
+- Developers → see “Minimal JSON Structure” + “Hashing Algorithm”
+- Researchers → see “Scientific Pilot (CNRS × TruthX)”
+- Legal teams → see “Validity & Immutability Guarantees”
+- Everyone → try the Sandbox in 10 seconds
+
+___
+
+## 💙 Why OpenProof Exists — The Crisis We Are Fixing
 
 Digital evidence is collapsing.
 
@@ -66,7 +72,26 @@ If machines can verify integrity, and humans can read coherence, society can tru
 
 ___
 
-## 2. 🏛 What OpenProof Is — A Minimal, Enforceable Standard
+
+
+## Table of Contents
+
+1. [🏛 What OpenProof Is — A Minimal, Enforceable Standard](#2--what-openproof-is--a-minimal-enforceable-standard)
+2. [📦 Minimal RPO JSON Structure (v0.1)](#3--minimal-rpo-json-structure-v01)
+3. [🔐 Hashing Algorithm (public_hash)](#4--hashing-algorithm-public_hash)
+4. [✅ Validating an RPO Bundle](#5--validating-an-rpo-bundle)
+5. [🧩 Generating a New RPO Bundle](#6--generating-a-new-rpo-bundle)
+6. [🎯 Try the Engine — RPO Sandbox](#7--try-the-engine--rpo-sandbox)
+7. [🔬 Scientific Pilot (CNRS × TruthX)](#8--scientific-pilot-cnrs--truthx)
+8. [🤝 Contributing](#9--contributing)
+9. [📫 Contact](#10--contact)
+10. [🛡 Maintainer](#11--maintainer)
+
+
+
+___
+
+## 1. 🏛 What OpenProof Is — A Minimal, Enforceable Standard
 
 The RPO guarantees three invariants:
 
@@ -87,7 +112,7 @@ It ensures that any modification becomes detectable.
 
 ___
 
-## 3. 📦 Minimal RPO JSON Structure (v0.1)
+## 2. 📦 Minimal RPO JSON Structure (v0.1)
 
 This is the canonical baseline of a compliant RPO bundle:
 
@@ -114,7 +139,7 @@ This is the canonical baseline of a compliant RPO bundle:
 }
 ```
 
-### 3.1 Optional — JSON Schema
+### 2.1 Optional — JSON Schema
 
 "$schema": "https://json-schema.org/draft/2020-12/schema",
 "type": "object",
@@ -122,7 +147,7 @@ This is the canonical baseline of a compliant RPO bundle:
 
 ___
 
-## 4. 🔐 Hashing Algorithm (public_hash)
+## 3. 🔐 Hashing Algorithm (public_hash)
 
 RPO v0.1 uses SHA-256 over a deterministic concatenation of core fields.
 
@@ -166,7 +191,7 @@ This guarantees deterministic validation across implementations.
 
 ___
 
-## 5. ✅ Validating an RPO Bundle
+## 4. ✅ Validating an RPO Bundle
 Minimal validation helper (Python)
 
 
@@ -198,7 +223,7 @@ run full JSON Schema validation.
 
 ___
 
-## 6. 🧩 Generating a New RPO Bundle
+## 5. 🧩 Generating a New RPO Bundle
 
 Minimal example (Python):
 
@@ -244,7 +269,7 @@ def new_rpo(title, text, issuer, subject):
 
 ___
 
-## 7. 🎯 Try the Engine — RPO Sandbox
+## 6. 🎯 Try the Engine — RPO Sandbox
 
 Open, deterministic, no AI, no registry.
 
@@ -260,7 +285,7 @@ a deterministic SHA-256 hash.
 
 ___
 
-## 8. 🔬 Scientific Pilot (CNRS × TruthX)
+## 7. 🔬 Scientific Pilot (CNRS × TruthX)
 
 The open standard does not include interpretive or psycho-forensic analysis.
 
@@ -278,7 +303,7 @@ structure-level markers.
 
 ___
 
-## 9. 🤝 Contributing
+## 8. 🤝 Contributing
 
 OpenProof welcomes contributions from:
 
@@ -294,7 +319,7 @@ Issues and pull requests are encouraged in this repository.
 
 ___
 
-## 10. 📫 Contact
+## 9. 📫 Contact
 
 Email: openproof@truthx.co
 
@@ -302,6 +327,6 @@ LinkedIn: https://www.linkedin.com/in/gryard/
 
 ___
 
-## 11. 🛡 Maintainer
+## 10. 🛡 Maintainer
 
 This specification is maintained by Gersende Ryard de Parcey.
