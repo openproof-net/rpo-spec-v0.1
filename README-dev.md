@@ -346,24 +346,21 @@ def safe_load(path):
 
 RPO v0.1 is intentionally lightweight and can be integrated into multiple architectures.
 
-CLI Integration
+# CLI Integration
 
-Bundle generation and validation via Python or Node scripts.
-
-Ideal for CI pipelines and researcher tooling.
+- Bundle generation and validation via Python or Node scripts.
+- Ideal for CI pipelines and researcher tooling.
 
 ```bash
 $ rpo new "Title" "Narrative..."
 $ rpo validate my_bundle.json
 ```
 
-API Integration
+# API Integration
 
-Stateless HTTP endpoint wrapping compute_public_hash() and validators.
-
-Must not store bundles unless explicit.
-
-Ensure identical hashing behaviour across deployments.
+- Stateless HTTP endpoint wrapping compute_public_hash() and validators.
+- Must not store bundles unless explicit.
+- Ensure identical hashing behaviour across deployments.
 
 ```Text
 POST /compute-hash
@@ -371,13 +368,11 @@ POST /validate
 POST /new-rpo
 ```
 
-Serverless Integration
+# Serverless Integration
 
-Lambda / Cloud Functions can host hashing logic.
-
-Must pin runtime versions to avoid drift.
-
-Must pass full JSON body without modification.
+- Lambda / Cloud Functions can host hashing logic.
+- Must pin runtime versions to avoid drift.
+- Must pass full JSON body without modification.
 
 def handler(event, context):
 ```python
@@ -385,13 +380,11 @@ def handler(event, context):
     return compute_public_hash(bundle)
 ```
 
-Local Library Integration
+# Local Library Integration
 
-Ideal for offline or privacy-preserving workflows.
-
-No external dependencies beyond standard crypto libraries.
-
-Recommended for sensitive narratives.
+- Ideal for offline or privacy-preserving workflows.
+- No external dependencies beyond standard crypto libraries.
+- Recommended for sensitive narratives.
 
 ---
 
@@ -445,7 +438,7 @@ $ python tools/validate_all.py examples/*.json
 
 ### 10.2 🔸 Golden Bundles & Hashes
 
-RPO v0.1 relies on golden fixtures to guarantee deterministic behaviour across implementations.
+# RPO v0.1 relies on golden fixtures to guarantee deterministic behaviour across implementations.
 
 - /examples/ should contain a small set of reference bundles.
 - Each bundle has a known, documented public_hash.
@@ -462,7 +455,7 @@ examples/rpo-example-002.json  ->  public_hash = <sha256 hex>
 
 ### 10.3 🔸 CI Integration
 
-Recommended checks in your CI pipeline:
+# Recommended checks in your CI pipeline:
 
 - parse and validate all RPO JSON files in /examples
 - recompute public_hash and compare with stored value
