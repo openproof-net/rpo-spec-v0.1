@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-page="index">
+<html lang="en" data-page="overview">
 <head>
   <meta charset="UTF-8" />
   <title>OpenProof — RPO Specification v0.1 | Signed JSON • Human-readable PDF • Public hash</title>
@@ -28,7 +28,7 @@
     href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
   />
 
-  <!-- Minimal dark/ivory/gold theme -->
+  <!-- Dark/ivory/gold theme (aligné Psycho/Legal) -->
   <style>
     :root {
       --bg: #04040e;
@@ -67,7 +67,7 @@
       text-decoration: underline;
     }
 
-    /* NAVBAR */
+    /* ===== NAVBAR (universelle, modèle Psycho) ===== */
     .nav {
       position: sticky;
       top: 0;
@@ -113,7 +113,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4),
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.4),
         0 10px 25px rgba(0, 0, 0, 0.6);
     }
 
@@ -139,9 +140,8 @@
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 1rem;
       font-size: 0.9rem;
-      flex-wrap: nowrap;
     }
 
     .nav-link {
@@ -161,11 +161,6 @@
     .nav-link:hover {
       color: var(--gold-soft);
       text-decoration: none;
-    }
-
-    .nav-link.active {
-      color: var(--gold-soft);
-      font-weight: 600;
     }
 
     .btn-ghost {
@@ -192,7 +187,7 @@
       background: rgba(13, 18, 30, 0.95);
     }
 
-    /* Dropdown “Docs” */
+    /* Dropdown “Technical docs” */
     .nav-dropdown {
       position: relative;
     }
@@ -245,7 +240,7 @@
       }
     }
 
-    /* HERO */
+    /* ===== HERO ===== */
     .hero {
       padding: 3.2rem 1.5rem 2.4rem;
     }
@@ -366,7 +361,7 @@
       font-weight: 500;
     }
 
-    /* Layout panels */
+    /* ===== LAYOUT PANELS ===== */
     .main {
       padding: 0 1.5rem 3.5rem;
     }
@@ -470,7 +465,7 @@
       }
     }
 
-    /* Footer */
+    /* ===== FOOTER ===== */
     .footer {
       border-top: 1px solid var(--border-soft);
       background: radial-gradient(circle at top, #101525, #020308);
@@ -510,29 +505,36 @@
       text-decoration: underline;
     }
 
-    /* Active nav state driven by data-page on <html> */
+    /* ===== ACTIVE NAV STATES ===== */
     html[data-page="overview"] .nav-link--overview,
     html[data-page="index"] .nav-link--overview {
       color: #f1e6a3;
     }
+
     html[data-page="spec"] .nav-link--spec {
       color: #f1e6a3;
     }
+
     html[data-page="examples"] .nav-link--examples {
       color: #f1e6a3;
     }
+
     html[data-page="tests"] .nav-link--tests {
       color: #f1e6a3;
     }
-    html[data-page="playground"] .nav-link--sandbox {
+
+    html[data-page="sandbox"] .nav-link--sandbox {
       color: #f1e6a3;
     }
+
     html[data-page="demo-psycho"] .nav-link--psycho {
       color: #f1e6a3;
     }
+
     html[data-page="demo-legal"] .nav-link--legal {
       color: #f1e6a3;
     }
+
     html[data-page="demo-legal-mapping"] .nav-link--legal-mapping {
       color: #f1e6a3;
     }
@@ -564,15 +566,15 @@
         <a href="demo-psycho.html" class="nav-link nav-link--psycho">Psycho-legal demo</a>
         <a href="demo-legal.html" class="nav-link nav-link--legal">Legal demo</a>
         <a href="demo-legal-mapping.html" class="nav-link nav-link--legal-mapping">Legal mapping</a>
-        <a href="playground.html" class="nav-link nav-link--sandbox">Sandbox</a>
+        <a href="sandbox.html" class="nav-link nav-link--sandbox">Sandbox</a>
 
-        <!-- Docs dropdown -->
+        <!-- Technical docs dropdown -->
         <div class="nav-dropdown">
-          <button class="nav-link" type="button">
-            Docs <span class="nav-dropdown-caret">▾</span>
+          <button class="nav-link nav-dropdown-toggle" type="button">
+            Technical docs <span class="nav-dropdown-caret">▾</span>
           </button>
           <div class="nav-dropdown-menu" role="menu">
-            <a href="index.html" class="nav-link nav-link--spec" role="menuitem">Specification</a>
+            <a href="spec/index.html" class="nav-link nav-link--spec" role="menuitem">Specification</a>
             <a href="examples.html" class="nav-link nav-link--examples" role="menuitem">Examples</a>
             <a href="tests.html" class="nav-link nav-link--tests" role="menuitem">Tests</a>
           </div>
@@ -831,7 +833,7 @@
       <div class="footer-left">
         <div class="footer-title">OpenProof — RPO Specification v0.1</div>
         <div class="footer-text">
-          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie. Specification editor: Gersende Ryard de Parcey.
+          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie. Specification editor: <strong>Gersende Ryard de Parcey</strong>.
         </div>
       </div>
       <div class="footer-right footer-links">
