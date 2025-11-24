@@ -69,6 +69,7 @@ ___
 
 This is the canonical baseline of a compliant RPO bundle:
 
+```json
 {
   "rpo_version": "0.1",
   "bundle_id": "string",
@@ -89,6 +90,8 @@ This is the canonical baseline of a compliant RPO bundle:
     "playground": false
   }
 }
+```
+
 
 ___
 
