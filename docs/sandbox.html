@@ -311,7 +311,7 @@
     }
 
     .hero-title {
-      font-family: "Orbitron", system-ui, sans-serif;
+      /* Same spirit as Overview / Legal / Mapping */
       font-size: clamp(2.1rem, 3vw, 2.7rem);
       line-height: 1.18;
       margin: 0 0 0.9rem;
@@ -825,6 +825,15 @@
     .footer-links a:hover {
       color: var(--gold-soft);
       text-decoration: underline;
+    }
+
+    /* Text justification to match other pages */
+    .hero-subtitle,
+    .hero-meta,
+    .panel p,
+    .info-panel p,
+    .info-panel ul {
+      text-align: justify;
     }
   </style>
 </head>
