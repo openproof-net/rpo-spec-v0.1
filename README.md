@@ -19,13 +19,14 @@ Its core artifact, the RPO (Rapport Probatoire Ouvert), is a dual-format bundle 
 OpenProof does not adjudicate truth.
 It ensures that nothing can be altered without detection.
 
-
+```text
 Narrative → JSON → SHA-256 → Registry → Validation
-
+```
 ___
 
-## ▶️ Try it in 10 seconds
+## ▶️ Quick start — validate your first RPO bundle (10 seconds) 
 
+Try it in 10 seconds
 ```bash
 git clone https://rpo.openproof.net/ or https://github.com/openproof-net/rpo-spec-v0.1
 cd rpo-spec-v0.1
@@ -38,6 +39,7 @@ ___
 - Developers → see “Minimal JSON Structure” + “Hashing Algorithm”
 - Researchers → see “Scientific Pilot (CNRS × TruthX)”
 - Legal teams → see “Validity & Immutability Guarantees”
+- Institutions → see “Verifiability & immutability guarantees”
 - Everyone → try the Sandbox in 10 seconds
 
 ___
@@ -61,7 +63,6 @@ It provides a minimal, deterministic and testable foundation that any machine, i
 If machines can verify integrity, and humans can read coherence, society can trust evidence again.
 
 ___
-
 
 
 ## Table of Contents
