@@ -226,7 +226,7 @@ For technical questions, integrations or bug reports:
 |   publication              |
 +----------------------------+
 ────────────────────────────────────────────────────────────────┘
-
+```
 
 ---
 
@@ -239,7 +239,7 @@ issuer=<label>     |
 subject=<label>    |
 title=<string>     |
 narrative=<text>
-
+```
 
 
 ---
