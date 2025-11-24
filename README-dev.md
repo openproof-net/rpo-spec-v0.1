@@ -1,9 +1,9 @@
 # RPO v0.1 — Developer Guide  
-Minimal JSON profile • Hashing • Validation • Integration
+Minimal JSON profile · Hashing · Validation · Integration
 
 ---
 
-## 1. Minimal RPO JSON structure
+## 1. 📦 Minimal RPO JSON Structure
 
 ```json
 {
@@ -28,7 +28,7 @@ Minimal JSON profile • Hashing • Validation • Integration
 
 ---
 
-## 2. Hashing algorithm (public_hash)
+## 2. 🔐 Hashing Algorithm (public_hash)
 
 RPO v0.1 uses **SHA-256** over a deterministic concatenation of core fields:
 
@@ -62,7 +62,7 @@ def compute_public_hash(bundle):
 
 ---
 
-## 3. Validating a bundle
+## 3. ✅ Validating an RPO Bundle
 
 ```python
 def validate_public_hash(bundle):
@@ -70,7 +70,7 @@ def validate_public_hash(bundle):
     return expected == bundle["registry"]["public_hash"]
 ```
 
-Required validations:
+### Required validations
 
 - presence of mandatory fields  
 - ISO-8601 timestamp  
@@ -80,7 +80,7 @@ Required validations:
 
 ---
 
-## 4. Generating a new RPO bundle
+## 4. 🧩 Generating a New RPO Bundle
 
 ```python
 import uuid
@@ -109,7 +109,7 @@ def new_rpo(title, text, issuer, subject):
 
 ---
 
-## 5. CLI validator tool
+## 5. 🖥 CLI Validator Tool
 
 ```python
 #!/usr/bin/env python3
@@ -118,33 +118,41 @@ import sys, json
 from rpo_lib import compute_public_hash
 
 def main(path):
-    data = json.load(open(path))
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
     expected = compute_public_hash(data)
     if expected == data["registry"]["public_hash"]:
         print("✔ RPO bundle is valid")
     else:
         print("✘ INVALID RPO BUNDLE")
         print("expected:", expected)
-        print("found:   ", data["registry"]["public_hash"])
+        print("found:   ", data.get("registry", {}).get("public_hash"))
 
 if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: validate_rpo.py <path_to_rpo.json>")
+        sys.exit(1)
     main(sys.argv[1])
 ```
 
 ---
 
-## 6. Developer checklist
+## 6. ✅ Developer Checklist
 
 - [ ] Parse JSON  
 - [ ] Validate minimal fields  
-- [ ] Validate ISO timestamp  
-- [ ] Recompute and compare public hash  
-- [ ] Reject on mismatch  
-- [ ] Optional: validate PDF hash  
-- [ ] Optional: validate bundle_id uniqueness  
-- [ ] Optional: JSON Schema validation  
+- [ ] Validate ISO-8601 timestamp  
+- [ ] Recompute and compare `public_hash`  
+- [ ] Reject bundle on mismatch  
+- [ ] (Optional) Validate `pdf_hash`  
+- [ ] (Optional) Enforce `bundle_id` uniqueness  
+- [ ] (Optional) Run JSON Schema validation  
 
 ---
 
-## 7. Contact  
-openproof@truthx.co
+## 7. 📫 Contact
+
+For technical questions, integrations or bug reports:
+
+- Email: `openproof@truthx.co`
