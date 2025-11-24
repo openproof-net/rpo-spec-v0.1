@@ -1,8 +1,7 @@
-══════════════════════════════════
+
 🧭 OpenProof — RPO Specification v0.1
 
 Integrity • Readability • Verifiability
-══════════════════════════════════
 
 A civil code for digital evidence in an age ruled by narratives.
 
