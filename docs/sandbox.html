@@ -913,7 +913,7 @@
         </div>
       </div>
 
-      <!-- Right hero card: rich version with CNRS pilot -->
+      <!-- Right hero card -->
       <aside class="hero-card">
         <div>
           <h2 class="hero-card-heading">What this page does</h2>
@@ -1018,7 +1018,7 @@
             Reset
           </button>
           <button class="btn-secondary" id="load-example-btn" type="button">
-            Load example case
+            Load example
           </button>
         </div>
       </section>
@@ -1474,7 +1474,9 @@
       outputActions.style.display = "flex";
     }
 
-    generateBtn.addEventListener("click", generateBundle);
+    generateBtn.addEventListener("click", () => {
+      generateBundle();
+    });
 
     resetBtn.addEventListener("click", () => {
       titleInput.value = "";
@@ -1495,18 +1497,18 @@
       outputActions.style.display = "none";
     });
 
+    // LOAD EXAMPLE
     loadExampleBtn.addEventListener("click", async () => {
       titleInput.value = "Incident in Paris office – March 2024";
       issuerInput.value = "Internal audit team, Company X";
-      subjectInput.value = "Employee in the legal department";
-      narrativeInput.value =
-        "In March 2024, during a weekly internal meeting at the Paris office, a disagreement arose about how a sensitive client file had been handled. " +
-        "The employee in the legal department stated that the escalation procedure had not been followed, while the manager argued that the delay was justified by workload. " +
-        "On 12 March 2024, an internal email summarised the discussion and noted that several documents had been shared late with the client. " +
-        "No threats, sanctions or personal pressure were mentioned, but the audit team was asked to review the chronology of events and the related emails.";
+      subjectInput.value = "Employee – Sales department";
 
-      // Directly generate the bundle so users see the result immediately,
-      // comme dans les autres démos.
+      narrativeInput.value =
+        "On 14 March 2024, around 10:30 am, an argument broke out in the Paris office between a line manager and a sales employee. " +
+        "Several colleagues report that the manager raised his voice, threatened to remove key accounts from the employee and asked him to leave the open space immediately. " +
+        "Later that day, around 3 pm, the same manager sent an email copying HR, questioning the employee's 'loyalty' and suggesting he should be excluded from client meetings. " +
+        "No formal warning or prior evaluation had been communicated before this incident.";
+
       await generateBundle();
     });
 
