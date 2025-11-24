@@ -1,80 +1,69 @@
-
-🧭 OpenProof — RPO Specification v0.1
-
-Integrity • Readability • Verifiability
+# OpenProof — RPO Specification v0.1  
+Integrity · Readability · Verifiability
 
 A civil code for digital evidence in an age ruled by narratives.
 
-OpenProof defines a public, deterministic and testable structure for digital evidence.
-Its core artifact, the RPO (Rapport Probatoire Ouvert), is a dual-format bundle built so that:
+OpenProof defines a public, deterministic, testable format for structuring digital evidence.  
+Its core object, the RPO (Rapport Probatoire Ouvert), is a dual-format bundle designed so that:
 
-machines verify integrity,
+- machines can verify integrity,  
+- humans can read coherence,  
+- institutions can trust the structure of evidence.
 
-humans read coherence,
+OpenProof does **not** adjudicate truth.  
+It guarantees that **nothing can be altered without detection**.
 
-institutions trust the structure of evidence.
+---
 
-OpenProof does not decide truth or falsity.
-It guarantees that nothing can be altered without detection.
-
-══════════════════════════════════
-
-1. Why OpenProof Exists — The Crisis We Are Fixing
+## 1. Why OpenProof Exists — The Crisis We Are Fixing
 
 Digital evidence is collapsing.
 
 Today, “evidence” often means:
 
-screenshots no system can authenticate,
+- screenshots no system can authenticate,  
+- PDFs whose origin no one can verify,  
+- AI-generated narratives with no traceability,  
+- fragmented logs scattered across institutions,  
+- internal formats that die with each organisation.
 
-PDFs whose origin no one can verify,
-
-AI-generated narratives with no traceability,
-
-fragmented logs scattered across institutions,
-
-internal formats that die inside each organisation.
-
-Everyone talks about truth.
+Everyone talks about truth.  
 Very few artifacts are verifiable.
 
-OpenProof is born from this failure.
-It establishes a minimal, deterministic and testable foundation that any machine, institution or jurisdiction can check independently and predictably.
+**OpenProof is born from this failure.**  
+It provides a minimal, deterministic, testable foundation that any machine, institution or jurisdiction can check predictably and independently.
 
-If machines can verify integrity, and humans can read coherence, society can trust evidence again.
+> If machines can verify integrity, and humans can read coherence, society can trust evidence again.
 
-══════════════════════════════════
+---
 
-2. What OpenProof Is — A Minimal, Enforceable Standard
+## 2. What OpenProof Is — A Minimal, Enforceable Standard
 
 The RPO guarantees three invariants:
 
-✔ Integrity
-
+### ✔ Integrity  
 A signed JSON whose fields can be recomputed and validated.
 
-✔ Readability
-
+### ✔ Readability  
 A human-readable PDF mirroring the narrative.
 
-✔ Verifiability
-
+### ✔ Verifiability  
 A deterministic SHA-256 public hash anchoring immutability.
 
-OpenProof does not adjudicate truth.
-It ensures that any modification becomes detectable.
+OpenProof does not decide truth.  
+It ensures that **any change becomes detectable**.
 
-══════════════════════════════════
+---
 
-3. Minimal RPO Profile (v0.1) — The “Civil Code”
+## 3. The RPO “Civil Code” — Minimal Profile (v0.1)
 
 This is the canonical baseline of a compliant RPO bundle:
 
+```json
 {
   "rpo_version": "0.1",
   "bundle_id": "string",
   "created_at": "ISO-8601 timestamp",
-
   "issuer": { "label": "string" },
   "subject": { "label": "string" },
 
@@ -108,26 +97,23 @@ This is the canonical baseline of a compliant RPO bundle:
     }
   }
 }
-
-
-══════════════════════════════════
-
 4. Hashing Algorithm (SHA-256)
+The public hash is computed through a strict deterministic concatenation of core fields:
 
-The public hash is computed through a strict deterministic concatenation:
-
-rpo_version=|
-bundle_id=|
-created_at=|
-issuer=|
-subject=|
-title=|
-narrative=
-
-
-This guarantees consistent validation across implementations.
+ini
+Copier le code
+rpo_version=⟨v⟩|
+bundle_id=⟨id⟩|
+created_at=⟨iso⟩|
+issuer=⟨label⟩|
+subject=⟨label⟩|
+title=⟨title⟩|
+narrative=⟨text⟩
+This guarantees deterministic validation across implementations.
 
 Example (Python)
+python
+Copier le code
 import hashlib
 
 def compute_public_hash(bundle):
@@ -140,30 +126,25 @@ def compute_public_hash(bundle):
         f"title={bundle['narrative']['title']}|"
         f"narrative={bundle['narrative']['text']}"
     )
-    return hashlib.sha256(payload.encode('utf-8')).hexdigest()
-
-
-══════════════════════════════════
-
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 5. Validating an RPO Bundle
-
-A system must reject any RPO if:
+Any system should reject an RPO if:
 
 mandatory fields are missing,
 
 timestamp is not ISO-8601,
 
-hash is not a 64-char hex string,
+hash is not a 64-character hex,
 
 narrative structure is invalid,
 
-the recomputed hash does not match.
+recomputed hash does not match.
 
 This ensures a provably immutable artifact.
 
-══════════════════════════════════
-
-6. Developer Example — Generating a New RPO
+6. Generating an RPO (Developer Example)
+python
+Copier le code
 import uuid
 from datetime import datetime
 
@@ -172,87 +153,64 @@ def new_rpo(title, text, issuer, subject):
         "rpo_version": "0.1",
         "bundle_id": f"rpo-{uuid.uuid4()}",
         "created_at": datetime.utcnow().isoformat() + "Z",
-
         "issuer": { "label": issuer },
         "subject": { "label": subject },
-
         "narrative": {
             "title": title,
             "text": text,
             "pdf_hash": "placeholder"
         },
-
         "evidence": [],
-
         "registry": {
             "public_hash": "",
             "registry_hint": "No registry anchor in v0.1"
         },
-
-        "meta": { "playground": False }
+        "meta": { "playground": true }
     }
+7. Try the Engine — RPO Playground
+Open, deterministic, no AI, no registry.
+Transform any narrative into:
 
-
-══════════════════════════════════
-
-7. RPO Playground — Open, Deterministic, No AI
-
-Transforms any short narrative into:
-
-a minimal rpo.json,
+a minimal RPO JSON,
 
 heuristic markers,
 
 a deterministic SHA-256 hash.
 
-🔗 https://rpo.openproof.net/playground.html
-
-══════════════════════════════════
+➡ https://rpo.openproof.net/playground.html
 
 8. Scientific Pilot (CNRS × TruthX)
-
-Interpretive and psycho-forensic modules live in the advanced research layer:
+The open standard does not include interpretive or psycho-forensic analysis.
+These modules live in the scientific pilot:
 
 narrative inversion,
 
-coercive-control signals,
+coercive control signals,
 
 interpretive coherence,
 
 structure-level markers.
 
-Access reserved for legal, research and institutional partners:
-
-🔗 https://www.truthx.co/truthx-pilote-form
-
-══════════════════════════════════
+➡ https://www.truthx.co/truthx-pilote-form
 
 9. Contribute
-
 OpenProof welcomes contributions from:
 
-engineers (validation, schema, hashing),
+engineers (validation, hashing, schema),
 
 legal teams (probatory constraints),
 
 researchers (structures, bias, narrative logic),
 
-OSINT & forensic analysts (field cases).
-
-══════════════════════════════════
+OSINT & forensic analysts (field use cases).
 
 10. Contact
-
 Technical questions or interoperability:
-
 openproof@truthx.co
-
-LinkedIn : https://www.linkedin.com/in/gryard/
-
-══════════════════════════════════
+LinkedIn: https://www.linkedin.com/in/gryard/
 
 11. Maintainer
-
 This specification is maintained by Gersende Ryard de Parcey.
 
-══════════════════════════════════
+markdown
+Copier le code
