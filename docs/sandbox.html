@@ -563,6 +563,21 @@
       background: rgba(212, 175, 55, 0.08);
     }
 
+    /* Third button: load example, style proche de la démo psycho */
+    .btn-ghost-local {
+      border-radius: 999px;
+      padding: 0.45rem 1.1rem;
+      border: 1px dashed rgba(122, 100, 50, 0.7);
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: transparent;
+      color: #7a6432;
+    }
+
+    .btn-ghost-local:hover {
+      background: rgba(212, 175, 55, 0.06);
+    }
+
     /* OUTPUT PANEL */
     .panel-output-header {
       font-size: 0.9rem;
@@ -1018,6 +1033,9 @@
           <button class="btn-secondary" id="reset-btn" type="button">
             Reset
           </button>
+          <button class="btn-ghost-local" id="load-example-btn" type="button">
+            Load example
+          </button>
         </div>
       </section>
 
@@ -1107,6 +1125,7 @@
         </div>
       </section>
     </div>
+
 
     <!-- INFO PANELS -->
     <section class="info-grid" aria-label="How this page works">
