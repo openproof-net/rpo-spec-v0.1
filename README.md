@@ -178,6 +178,17 @@ Minimal example (Python):
 import uuid
 from datetime import datetime
 
+```python
+def validate_public_hash(bundle):
+    expected = compute_public_hash(bundle)
+    return expected == bundle["registry"]["public_hash"]
+```
+
+    
+```python
+import uuid
+from datetime import datetime
+
 def new_rpo(title, text, issuer, subject):
     bundle = {
         "rpo_version": "0.1",
@@ -202,6 +213,7 @@ def new_rpo(title, text, issuer, subject):
 
     bundle["registry"]["public_hash"] = compute_public_hash(bundle)
     return bundle
+```
 
 ___
 
