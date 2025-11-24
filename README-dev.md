@@ -156,3 +156,131 @@ if __name__ == "__main__":
 For technical questions, integrations or bug reports:
 
 - Email: `openproof@truthx.co`
+
+---
+
+  ## 8. 🏗 Architecture Overview — RPO Pipeline v0.1
+
+---
+
+### 8.1 🔹 High-Level Pipeline
+
+┌──────────────────────────┐
+│ 1. Input Narrative │
+│ (text, metadata) │
+└─────────────┬────────────┘
+│
+▼
+┌──────────────────────────┐
+│ 2. Normalization Layer │
+│ - trim + sanitize text │
+│ - unify encoding (UTF-8) │
+│ - ensure JSON-safe │
+└─────────────┬────────────┘
+│
+▼
+┌──────────────────────────┐
+│ 3. RPO JSON Builder │
+│ - rpo_version │
+│ - bundle_id (UUID4) │
+│ - created_at (ISO-8601) │
+│ - issuer / subject │
+│ - narrative title/text │
+└─────────────┬────────────┘
+│
+▼
+┌──────────────────────────┐
+│ 4. Hash Engine (SHA-256) │
+│ - deterministic concat │
+│ - compute public_hash │
+└─────────────┬────────────┘
+│
+▼
+┌──────────────────────────┐
+│ 5. Registry Layer │
+│ - attach public_hash │
+│ - attach registry_hint │
+└─────────────┬────────────┘
+│
+▼
+┌──────────────────────────┐
+│ 6. Validation Suite │
+│ - schema checks │
+│ - ISO-date check │
+│ - hash recomputation │
+│ - structural coherence │
+└─────────────┬────────────┘
+│
+▼
+┌──────────────────────────┐
+│ 7. Final RPO Bundle │
+│ - JSON + public_hash │
+│ - PDF hash optional │
+│ - ready for storage │
+└──────────────────────────┘
+
+
+---
+
+### 8.2 🔹 Deterministic Concatenation Model
+
+rpo_version=<v>|
+bundle_id=<id>|
+created_at=<iso>|
+issuer=<label>|
+subject=<label>|
+title=<title>|
+narrative=<text>
+
+
+---
+
+### 8.3 🔹 Minimal JSON Responsibilities
+
+```json
+{
+  "rpo_version": "0.1",
+  "bundle_id": "string",
+  "created_at": "ISO-8601 timestamp",
+  "issuer": { "label": "string" },
+  "subject": { "label": "string" },
+  "narrative": {
+    "title": "string",
+    "text": "string",
+    "pdf_hash": "string or placeholder"
+  },
+  "evidence": [],
+  "registry": {
+    "public_hash": "sha256 hex",
+    "registry_hint": "string"
+  },
+  "meta": { "playground": false }
+}
+
+---
+
+### 8.4 🔹 Validation Contract 
+presence of mandatory fields
+
+valid ISO-8601 timestamp
+
+64-char SHA-256 hex
+
+correct narrative structure
+
+deterministic hash match
+
+JSON parseable + UTF-8 clean
+
+(optional) pdf_hash validation
+
+(optional) schema validation
+
+---
+
+### 8.5 🔹 Lifecycle Summary
+mathematica
+Copier le code
+Input → Normalize → Build JSON → Compute Hash → Attach Registry → Validate → Publish
+
+
