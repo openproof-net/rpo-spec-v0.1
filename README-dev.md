@@ -330,8 +330,8 @@ Consistent UUID generation (UUID4).
 
 Rejection of bundles with missing or malformed fields.
 
-```python
 Example (Python defensive pattern)
+```python
 def safe_load(path):
     with open(path, "r", encoding="utf-8") as f:
         raw = f.read()
@@ -379,8 +379,8 @@ Must pin runtime versions to avoid drift.
 
 Must pass full JSON body without modification.
 
-```python
 def handler(event, context):
+```python
     bundle = json.loads(event["body"])
     return compute_public_hash(bundle)
 ```
@@ -411,8 +411,8 @@ These pitfalls will instantly corrupt the determinism of the RPO bundle and prod
 - Encoding drift (UTF-16, ANSI, BOM).
 - Mutating text after hashing.
 
-```python
 Example of a Drift-Inducing Mistake
+```python
 # ❌ Dangerous: pretty-printing alters whitespace → hash mismatch
 json.dumps(bundle, indent=4)
 ```
