@@ -3,8 +3,6 @@
 
 # 🔵 OpenProof — RPO Specification v0.1
 
-# 🔵 OpenProof — RPO Specification v0.1
-
 Integrity · Readability · Verifiability
 ___
 
