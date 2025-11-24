@@ -25,7 +25,6 @@ Minimal JSON profile · Hashing · Validation · Integration
   "meta": { "playground": true }
 }
 ```
-
 ---
 
 ## 2. 🔐 Hashing Algorithm (public_hash)
