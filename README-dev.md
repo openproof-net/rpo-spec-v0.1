@@ -300,7 +300,7 @@ The RPO v0.1 spec defines strict boundaries for any implementation:
 - Validation tools must treat missing fields as fatal errors.  
 - RPO JSON must remain portable across environments (UTF-8, no BOM).  
 - Implementations must not depend on external, mutable APIs for core operations.
-```
+  
 #### Minimal API Contract
 
 ```text
@@ -312,7 +312,7 @@ new_rpo(title, text, issuer, subject) -> dict
 ```
 ### 9.2 🔸 Required Developer Guarantees
 
-To preserve determinism and cross-implementation compatibility, developers integrating RPO v0.1 must guarantee:
+#### To preserve determinism and cross-implementation compatibility, developers integrating RPO v0.1 must guarantee:
 
 - Stable hashing (no whitespace drift, no locale drift, no reordering).
 - Fixed timestamp format (UTC, ISO-8601, trailing “Z”).
