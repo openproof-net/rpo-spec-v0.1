@@ -9,9 +9,6 @@ ___
 
 *A civil code for digital evidence in an age ruled by narratives.*
 
-
-A civil code for digital evidence in an age ruled by narratives.
-
 OpenProof defines a public, deterministic and testable format for structuring digital evidence.
 Its core artifact, the RPO (Rapport Probatoire Ouvert), is a dual-format bundle allowing:
 
@@ -76,16 +73,16 @@ ___
 
 ## Table of Contents
 
-1. [🏛 What OpenProof Is — A Minimal, Enforceable Standard](#2--what-openproof-is--a-minimal-enforceable-standard)
-2. [📦 Minimal RPO JSON Structure (v0.1)](#3--minimal-rpo-json-structure-v01)
-3. [🔐 Hashing Algorithm (public_hash)](#4--hashing-algorithm-public_hash)
-4. [✅ Validating an RPO Bundle](#5--validating-an-rpo-bundle)
-5. [🧩 Generating a New RPO Bundle](#6--generating-a-new-rpo-bundle)
-6. [🎯 Try the Engine — RPO Sandbox](#7--try-the-engine--rpo-sandbox)
-7. [🔬 Scientific Pilot (CNRS × TruthX)](#8--scientific-pilot-cnrs--truthx)
-8. [🤝 Contributing](#9--contributing)
-9. [📫 Contact](#10--contact)
-10. [🛡 Maintainer](#11--maintainer)
+1. [🏛 What OpenProof Is — A Minimal, Enforceable Standard](#1--what-openproof-is--a-minimal-enforceable-standard)
+2. [📦 Minimal RPO JSON Structure (v0.1)](#2--minimal-rpo-json-structure-v01)
+3. [🔐 Hashing Algorithm (public_hash)](#3--hashing-algorithm-public_hash)
+4. [✅ Validating an RPO Bundle](#4--validating-an-rpo-bundle)
+5. [🧩 Generating a New RPO Bundle](#5--generating-a-new-rpo-bundle)
+6. [🎯 Try the Engine — RPO Sandbox](#6--try-the-engine--rpo-sandbox)
+7. [🔬 Scientific Pilot (CNRS × TruthX)](#7--scientific-pilot-cnrs--truthx)
+8. [🤝 Contributing](#8--contributing)
+9. [📫 Contact](#9--contact)
+10. [🛡 Maintainer](#10--maintainer)
 
 
 
