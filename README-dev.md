@@ -314,21 +314,14 @@ new_rpo(title, text, issuer, subject) -> dict
 
 To preserve determinism and cross-implementation compatibility, developers integrating RPO v0.1 must guarantee:
 
-Stable hashing (no whitespace drift, no locale drift, no reordering).
-
-Fixed timestamp format (UTC, ISO-8601, trailing “Z”).
-
-Strict UTF-8 text normalization.
-
-Immutability of RPO bundles once hashed.
-
-No auto-formatting of JSON fields by the runtime or editor.
-
-No additional serialization layers (pretty-print differences must not alter stored JSON).
-
-Consistent UUID generation (UUID4).
-
-Rejection of bundles with missing or malformed fields.
+- Stable hashing (no whitespace drift, no locale drift, no reordering).
+- Fixed timestamp format (UTC, ISO-8601, trailing “Z”).
+- Strict UTF-8 text normalization.
+- Immutability of RPO bundles once hashed.
+- No auto-formatting of JSON fields by the runtime or editor.
+- No additional serialization layers (pretty-print differences must not alter stored JSON).
+- Consistent UUID generation (UUID4).
+- Rejection of bundles with missing or malformed fields.
 
 Example (Python defensive pattern)
 ```python
@@ -346,7 +339,7 @@ def safe_load(path):
 
 RPO v0.1 is intentionally lightweight and can be integrated into multiple architectures.
 
-# CLI Integration
+#### CLI Integration
 
 - Bundle generation and validation via Python or Node scripts.
 - Ideal for CI pipelines and researcher tooling.
@@ -356,7 +349,7 @@ $ rpo new "Title" "Narrative..."
 $ rpo validate my_bundle.json
 ```
 
-# API Integration
+#### API Integration
 
 - Stateless HTTP endpoint wrapping compute_public_hash() and validators.
 - Must not store bundles unless explicit.
@@ -368,7 +361,7 @@ POST /validate
 POST /new-rpo
 ```
 
-# Serverless Integration
+#### Serverless Integration
 
 - Lambda / Cloud Functions can host hashing logic.
 - Must pin runtime versions to avoid drift.
@@ -380,7 +373,7 @@ def handler(event, context):
     return compute_public_hash(bundle)
 ```
 
-# Local Library Integration
+#### Local Library Integration
 
 - Ideal for offline or privacy-preserving workflows.
 - No external dependencies beyond standard crypto libraries.
@@ -422,7 +415,7 @@ json.dumps(bundle, separators=(",", ":"))
 
 ---
 
-### 10.1 🔸 Local Test Commands
+#### 10.1 🔸 Local Test Commands
 
 Use a minimal, reproducible set of tests to ensure your implementation stays compatible with RPO v0.1:
 
@@ -438,7 +431,7 @@ $ python tools/validate_all.py examples/*.json
 
 ### 10.2 🔸 Golden Bundles & Hashes
 
-# RPO v0.1 relies on golden fixtures to guarantee deterministic behaviour across implementations.
+#### RPO v0.1 relies on golden fixtures to guarantee deterministic behaviour across implementations.
 
 - /examples/ should contain a small set of reference bundles.
 - Each bundle has a known, documented public_hash.
@@ -455,7 +448,7 @@ examples/rpo-example-002.json  ->  public_hash = <sha256 hex>
 
 ### 10.3 🔸 CI Integration
 
-# Recommended checks in your CI pipeline:
+#### Recommended checks in your CI pipeline:
 
 - parse and validate all RPO JSON files in /examples
 - recompute public_hash and compare with stored value
