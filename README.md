@@ -101,13 +101,16 @@ RPO v0.1 uses SHA-256 over a deterministic concatenation of core fields.
 
 Concatenation model :
 
+```
 rpo_version=<v>|
 bundle_id=<id>|
 created_at=<iso>|
 issuer=<label>|
 subject=<label>|
 title=<title>|
-narrative=<text>
+narrative=<text>|
+```
+
 
 Example (Python)
 
