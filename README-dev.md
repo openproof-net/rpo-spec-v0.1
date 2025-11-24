@@ -447,11 +447,9 @@ $ python tools/validate_all.py examples/*.json
 
 RPO v0.1 relies on golden fixtures to guarantee deterministic behaviour across implementations.
 
-/examples/ should contain a small set of reference bundles.
-
-Each bundle has a known, documented public_hash.
-
-Any change in code that alters these hashes must be considered breaking.
+- /examples/ should contain a small set of reference bundles.
+- Each bundle has a known, documented public_hash.
+- Any change in code that alters these hashes must be considered breaking.
 
 Example (documentation snippet):
 
@@ -466,14 +464,14 @@ examples/rpo-example-002.json  ->  public_hash = <sha256 hex>
 
 Recommended checks in your CI pipeline:
 
-parse and validate all RPO JSON files in /examples
-
-recompute public_hash and compare with stored value
-
-fail the pipeline on any mismatch or malformed bundle
+- parse and validate all RPO JSON files in /examples
+- recompute public_hash and compare with stored value
+- fail the pipeline on any mismatch or malformed bundle
 
 Example (pseudo GitHub Actions step):
 
+```yaml
 - name: Validate RPO examples
   run: |
     python tools/validate_all.py examples/*.json
+```
