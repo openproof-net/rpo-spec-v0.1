@@ -304,7 +304,7 @@
       color: var(--text-muted);
     }
 
-    /* HERO RIGHT CARD (logo issue fixed here) */
+    /* HERO RIGHT CARD */
     .hero-card {
       background: var(--bg-elevated);
       border-radius: var(--radius-lg);
@@ -419,6 +419,12 @@
       color: var(--text-muted);
     }
 
+    /* Single-column section for site-structure explanation */
+    .section-single {
+      max-width: 1120px;
+      margin: 0 auto 0;
+    }
+
     @media (max-width: 900px) {
       .hero-inner {
         grid-template-columns: minmax(0, 1fr);
@@ -469,6 +475,14 @@
     .footer-links a:hover {
       color: var(--gold-soft);
       text-decoration: underline;
+    }
+
+    /* Text justification to keep everything “carré” */
+    .hero-subtitle,
+    .hero-meta,
+    .panel p,
+    .panel ul {
+      text-align: justify;
     }
 
     /* Active nav state driven by data-page on <html> */
@@ -602,6 +616,38 @@
   </section>
 
   <main class="main">
+    <!-- HOW THIS SITE IS STRUCTURED -->
+    <div class="section-title">How to read this site</div>
+    <section class="section-single">
+      <article class="panel">
+        <h2>0. Two complementary layers</h2>
+        <p>
+          The public RPO site is organised in two complementary families of pages.
+          They use the same standard, but they serve different needs.
+        </p>
+        <ul>
+          <li>
+            <strong>Narrative demo layer</strong> —
+            <em>Psycho-legal demo</em>, <em>Legal demo</em> and <em>Legal mapping</em>.
+            These pages start from a short story and show how RPO-compatible narratives
+            can reveal psycho-legal mechanisms, legal signals and potential domains of law.
+          </li>
+          <li>
+            <strong>Core RPO layer</strong> —
+            the <em>Sandbox</em> and the <em>Technical docs</em>.
+            These pages focus on the standard itself: how a narrative becomes an
+            <code>rpo.json</code> bundle with a public hash, and how implementers can
+            validate their engines.
+          </li>
+        </ul>
+        <p>
+          A simple reading path is:
+          start here with the overview, explore the narrative demos,
+          then test the open RPO Sandbox and dive into the specification, examples and tests.
+        </p>
+      </article>
+    </section>
+
     <!-- First row -->
     <div class="section-title">What & who</div>
     <section class="grid">
@@ -693,7 +739,7 @@
         <div class="footer-title">OpenProof — RPO Specification v0.1</div>
         <div class="footer-text">
           © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie.
-          Specification editor: Gersende Ryard de Parcey.
+          Specification editor: <strong>Gersende Ryard de Parcey</strong>.
         </div>
       </div>
       <div class="footer-right footer-links">
@@ -707,5 +753,3 @@
   </footer>
 </body>
 </html>
-
-
