@@ -311,7 +311,6 @@
     }
 
     .hero-title {
-      /* Same spirit as Overview / Legal / Mapping */
       font-size: clamp(2.1rem, 3vw, 2.7rem);
       line-height: 1.18;
       margin: 0 0 0.9rem;
@@ -561,21 +560,6 @@
 
     .btn-secondary:hover {
       background: rgba(212, 175, 55, 0.08);
-    }
-
-    /* Third button: load example, style proche de la démo psycho */
-    .btn-ghost-local {
-      border-radius: 999px;
-      padding: 0.45rem 1.1rem;
-      border: 1px dashed rgba(122, 100, 50, 0.7);
-      font-size: 0.85rem;
-      cursor: pointer;
-      background: transparent;
-      color: #7a6432;
-    }
-
-    .btn-ghost-local:hover {
-      background: rgba(212, 175, 55, 0.06);
     }
 
     /* OUTPUT PANEL */
@@ -1033,8 +1017,8 @@
           <button class="btn-secondary" id="reset-btn" type="button">
             Reset
           </button>
-          <button class="btn-ghost-local" id="load-example-btn" type="button">
-            Load example
+          <button class="btn-secondary" id="load-example-btn" type="button">
+            Load example case
           </button>
         </div>
       </section>
@@ -1125,7 +1109,6 @@
         </div>
       </section>
     </div>
-
 
     <!-- INFO PANELS -->
     <section class="info-grid" aria-label="How this page works">
@@ -1233,6 +1216,7 @@
   <script>
     const generateBtn = document.getElementById("generate-btn");
     const resetBtn = document.getElementById("reset-btn");
+    const loadExampleBtn = document.getElementById("load-example-btn");
 
     const titleInput = document.getElementById("case-title");
     const issuerInput = document.getElementById("issuer");
@@ -1360,7 +1344,7 @@
       return "rpo-" + ts + "-" + rand;
     }
 
-    generateBtn.addEventListener("click", async () => {
+    async function generateBundle() {
       const title = titleInput.value.trim() || "Untitled case";
       const issuer = issuerInput.value.trim() || "Unknown issuer";
       const subject = subjectInput.value.trim() || "Unspecified subject";
@@ -1488,7 +1472,9 @@
       jsonEl.textContent = JSON.stringify(rpo, null, 2);
 
       outputActions.style.display = "flex";
-    });
+    }
+
+    generateBtn.addEventListener("click", generateBundle);
 
     resetBtn.addEventListener("click", () => {
       titleInput.value = "";
@@ -1507,6 +1493,21 @@
       anchorsTemporalEl.textContent = "Temporal markers: 0";
       jsonEl.textContent = "";
       outputActions.style.display = "none";
+    });
+
+    loadExampleBtn.addEventListener("click", async () => {
+      titleInput.value = "Incident in Paris office – March 2024";
+      issuerInput.value = "Internal audit team, Company X";
+      subjectInput.value = "Employee in the legal department";
+      narrativeInput.value =
+        "In March 2024, during a weekly internal meeting at the Paris office, a disagreement arose about how a sensitive client file had been handled. " +
+        "The employee in the legal department stated that the escalation procedure had not been followed, while the manager argued that the delay was justified by workload. " +
+        "On 12 March 2024, an internal email summarised the discussion and noted that several documents had been shared late with the client. " +
+        "No threats, sanctions or personal pressure were mentioned, but the audit team was asked to review the chronology of events and the related emails.";
+
+      // Directly generate the bundle so users see the result immediately,
+      // comme dans les autres démos.
+      await generateBundle();
     });
 
     copyBtn.addEventListener("click", async () => {
