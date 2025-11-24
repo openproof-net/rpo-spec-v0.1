@@ -1,41 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" data-page="legal-mapping">
+<html lang="en" data-page="demo-legal-mapping">
 <head>
   <meta charset="UTF-8" />
-  <title>OpenProof — Legal Mapping Layer Demo | From narrative patterns to legal domains</title>
+  <title>OpenProof — Legal mapping demo | From narrative patterns to legal domains</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="author" content="Gersende Ryard de Parcey">
+  <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor">
 
   <!-- SEO -->
   <meta name="description"
         content="Legal Mapping Layer demo: from narrative patterns to potential legal domains. Non-normative, jurisdiction-agnostic, and compatible with the RPO (Rapport Probatoire Ouvert) standard." />
   <link rel="canonical" href="https://rpo.openproof.net/demo-legal-mapping.html" />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="OpenProof — Legal Mapping Layer demo" />
+  <meta property="og:description"
+        content="From narrative control patterns to potential legal domains, as an orientation layer on top of the RPO standard. Non-normative, jurisdiction-agnostic, and rule-based." />
+  <meta property="og:url" content="https://rpo.openproof.net/demo-legal-mapping.html" />
+  <meta property="og:image"
+        content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
 
+  <!-- Favicon OpenProof -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+  />
+
+  <!-- Global dark/ivory/gold theme (same base as overview/examples/tests/psycho) -->
   <style>
     :root {
-      --bg-main: #04040e;
+      --bg: #04040e;
       --bg-elevated: #0b0f14;
-      --card-bg: #fbf4e6;
-      --card-bg-soft: #f7efdd;
-      --accent-gold: #d4af37;
-      --accent-gold-soft: #f5e1a5;
-      --accent-gold-strong: #ffcf6b;
-      --accent-red-soft: #fbe3e3;
-      --accent-red: #e25b5b;
-      --accent-green-soft: #e0f3df;
-      --accent-green: #2f9b5d;
-      --border-gold: rgba(212, 175, 55, 0.65);
-      --text-main: #f5f5ff;
-      --text-muted: #a5acb8;
-      --text-ink: #3a2c1a;
-      --chip-bg: rgba(12, 18, 30, 0.9);
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
-      --radius-card: 22px;
-      --radius-pill: 999px;
+      --panel: #f7f3e8;
+      --panel-soft: #fbf8f1;
+      --text-main: #f5f5f7;
+      --text-muted: #b2b7c5;
+      --ink: #7a6432;
+      --gold: #d4af37;
+      --gold-soft: #f1e6a3;
+      --border-soft: rgba(241, 230, 163, 0.2);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+      --radius-lg: 18px;
     }
 
     * {
@@ -44,234 +51,357 @@
 
     body {
       margin: 0;
-      min-height: 100vh;
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #151d2b 0, #04040e 42%, #000 100%);
+      font-family: -apple-system, BlinkMacSystemFont, system-ui, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111625 0, var(--bg) 45%);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
 
     a {
-      color: inherit;
+      color: var(--gold-soft);
       text-decoration: none;
     }
 
-    .page-shell {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    a:hover {
+      text-decoration: underline;
     }
 
-    /* NAVBAR ------------------------------------------------------- */
+    /* NAVBAR (universal) */
     .nav {
       position: sticky;
       top: 0;
-      z-index: 40;
-      backdrop-filter: blur(18px);
-      background: linear-gradient(to bottom, rgba(4, 4, 14, 0.94), rgba(4, 4, 14, 0.86));
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(
+        90deg,
+        rgba(4, 4, 14, 0.96),
+        rgba(4, 4, 14, 0.92)
+      );
+      border-bottom: 1px solid var(--border-soft);
     }
 
     .nav-inner {
-      max-width: 1180px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 14px 20px 10px;
+      padding: 0.65rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 1rem;
     }
 
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 0.9rem;
     }
 
-    .logo-pill {
-      display: inline-flex;
+    .nav-logo-link {
+      display: flex;
       align-items: center;
-      gap: 10px;
-      padding: 6px 14px 6px 8px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 0 0, #ffffff, #f2e3b2 40%, #9a7a2b 100%);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 12px 30px rgba(0, 0, 0, 0.6);
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
     }
 
-    .logo-pill-icon {
-      width: 26px;
-      height: 26px;
+    .nav-logo {
+      width: 40px;
+      height: 40px;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffffff 0, #f5e6bc 42%, #c59c3d 75%, #8a6a22 100%);
+      background: radial-gradient(circle at 30% 20%, #f3e8b2, #b88c2a);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
-      color: #4a3915;
-      font-weight: 600;
+      box-shadow:
+        0 0 0 1px rgba(0, 0, 0, 0.4),
+        0 10px 25px rgba(0, 0, 0, 0.6);
     }
 
-    .logo-pill-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.15;
+    .nav-logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: block;
     }
 
-    .logo-title {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.16em;
+    .nav-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #20160a;
+      color: var(--gold-soft);
     }
 
-    .logo-subtitle {
-      font-size: 10px;
-      color: #644b22;
+    .nav-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 18px;
-      font-size: 13px;
-      color: var(--text-muted);
+      gap: 1rem;
+      font-size: 0.9rem;
     }
 
     .nav-link {
-      position: relative;
-      padding-bottom: 2px;
-    }
-
-    .nav-link.active {
-      color: #f5eedf;
-      font-weight: 500;
-    }
-
-    .nav-link.active::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(to right, #f7e29b, #d4af37);
-      border-radius: 999px;
-    }
-
-    .nav-right {
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-cta {
-      padding: 7px 14px;
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(250, 237, 190, 0.9);
-      background: radial-gradient(circle at top left, #f7e8c4, #cfa93a);
-      color: #241b08;
-      font-size: 12px;
-      font-weight: 500;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
-      cursor: pointer;
+      color: var(--text-muted);
       text-decoration: none;
+      border: none;
+      background: none;
+      font: inherit;
+      padding: 0;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .nav-link:hover {
+      color: var(--gold-soft);
+      text-decoration: none;
+    }
+
+    .btn-ghost {
+      border-radius: 999px;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--border-soft);
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-decoration: none;
+      color: var(--gold-soft);
+      background: rgba(10, 14, 24, 0.9);
       white-space: nowrap;
     }
 
-    .nav-cta:hover {
-      filter: brightness(1.03);
-      transform: translateY(-0.5px);
+    .btn-ghost span {
+      font-size: 0.9rem;
     }
 
-    /* LAYOUT ------------------------------------------------------- */
-    .content {
-      flex: 1;
-      padding: 26px 16px 40px;
+    .btn-ghost:hover {
+      border-color: var(--gold-soft);
+      text-decoration: none;
+      background: rgba(13, 18, 30, 0.95);
     }
 
-    .content-inner {
-      max-width: 1180px;
+    /* Dropdown “Technical docs” */
+    .nav-dropdown {
+      position: relative;
+    }
+
+    .nav-dropdown-caret {
+      font-size: 0.7rem;
+    }
+
+    .nav-dropdown-menu {
+      position: absolute;
+      top: 130%;
+      right: 0;
+      min-width: 180px;
+      padding: 0.4rem 0;
+      border-radius: 12px;
+      background: #070913;
+      border: 1px solid var(--border-soft);
+      box-shadow: var(--shadow-soft);
+      display: none;
+      z-index: 30;
+    }
+
+    .nav-dropdown-menu .nav-link {
+      width: 100%;
+      padding: 0.35rem 0.9rem;
+      justify-content: flex-start;
+      color: var(--text-muted);
+    }
+
+    .nav-dropdown-menu .nav-link:hover {
+      background: rgba(241, 230, 163, 0.08);
+      color: var(--gold-soft);
+    }
+
+    .nav-dropdown:hover .nav-dropdown-menu,
+    .nav-dropdown:focus-within .nav-dropdown-menu {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .nav-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-links {
+        flex-wrap: wrap;
+      }
+      .btn-ghost {
+        align-self: flex-start;
+      }
+    }
+
+    /* HERO (base) */
+    .hero {
+      padding: 3.2rem 1.5rem 2.4rem;
+    }
+
+    .hero-inner {
+      max-width: 1120px;
       margin: 0 auto;
     }
 
-    /* HERO --------------------------------------------------------- */
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 3.2fr) minmax(0, 2.3fr);
-      gap: 32px;
-      margin-bottom: 34px;
-      align-items: flex-start;
+    .hero-kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+      margin-bottom: 0.75rem;
     }
 
     .hero-title {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 32px;
-      line-height: 1.25;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #f7f1df;
-      margin: 4px 0 14px;
+      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      line-height: 1.2;
+      margin: 0 0 0.75rem;
     }
 
-    .hero-highlight {
-      color: var(--accent-gold-strong);
+    .hero-title span {
+      color: var(--gold-soft);
     }
 
-    .hero-kicker {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent-gold-soft);
-      margin-bottom: 6px;
-    }
-
-    .hero-lead {
-      font-size: 14px;
-      line-height: 1.6;
-      color: #d7dde8;
-      max-width: 640px;
-      margin-bottom: 12px;
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 46rem;
+      margin-bottom: 1.4rem;
     }
 
     .hero-extra {
-      font-size: 13px;
-      line-height: 1.55;
-      color: #a8b0c0;
-      max-width: 650px;
-      margin-bottom: 14px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 46rem;
+      margin-bottom: 1.2rem;
     }
 
-    .chip-row {
+    .hero-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 4px;
+      gap: 0.5rem;
+      margin-bottom: 1.6rem;
     }
 
-    .chip {
-      font-size: 11px;
-      padding: 5px 10px;
+    .badge {
+      font-size: 0.8rem;
+      padding: 0.18rem 0.6rem;
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      background: linear-gradient(to bottom right, rgba(250, 230, 170, 0.16), rgba(8, 10, 18, 0.95));
-      color: #f5edd9;
-      letter-spacing: 0.06em;
+      border: 1px solid rgba(241, 230, 163, 0.3);
+      color: var(--gold-soft);
+      background: rgba(11, 15, 20, 0.9);
+    }
+
+    /* MAIN LAYOUT */
+    .main {
+      padding: 0 1.5rem 3.5rem;
+    }
+
+    .section-title {
+      max-width: 1120px;
+      margin: 0 auto 0.9rem;
+      padding: 0 0.1rem;
+      font-size: 0.85rem;
       text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    /* Footer (universal) */
+    .footer {
+      border-top: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top, #101525, #020308);
+      padding: 1.6rem 1.5rem 2.1rem;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .footer-left strong {
+      color: var(--gold-soft);
       font-weight: 500;
     }
 
-    .chip-secondary {
-      background: var(--chip-bg);
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+    }
+
+    .footer-links a {
       color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold-soft);
+      text-decoration: underline;
+    }
+
+    /* Active nav state driven by data-page on <html> */
+    html[data-page="overview"] .nav-link--overview {
+      color: #f1e6a3;
+    }
+
+    html[data-page="spec"] .nav-link--spec {
+      color: #f1e6a3;
+    }
+
+    html[data-page="examples"] .nav-link--examples {
+      color: #f1e6a3;
+    }
+
+    html[data-page="tests"] .nav-link--tests {
+      color: #f1e6a3;
+    }
+
+    html[data-page="playground"] .nav-link--playground {
+      color: #f1e6a3;
+    }
+
+    html[data-page="demo-psycho"] .nav-link--psycho {
+      color: #f1e6a3;
+    }
+
+    html[data-page="demo-legal"] .nav-link--legal {
+      color: #f1e6a3;
+    }
+
+    html[data-page="demo-legal-mapping"] .nav-link--legal-mapping {
+      color: #f1e6a3;
+    }
+
+    /* ====== SHARED PLAYGROUND STYLES (cards, grid, band) ====== */
+
+    .hero-inner-legal {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 2.4rem;
+      align-items: flex-start;
     }
 
     .hero-card {
       background: radial-gradient(circle at top left, #151b28, #050813 55%);
-      border-radius: var(--radius-card);
+      border-radius: var(--radius-lg);
       border: 1px solid rgba(255, 255, 255, 0.06);
       box-shadow: var(--shadow-soft);
-      padding: 18px 20px 18px;
+      padding: 1.1rem 1.3rem 1.3rem;
       color: #e2e6f0;
       position: relative;
       overflow: hidden;
@@ -281,7 +411,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at top right, rgba(255, 223, 133, 0.16), transparent 55%);
+      background: radial-gradient(circle at top right, rgba(255, 223, 133, 0.18), transparent 55%);
       opacity: 0.9;
       pointer-events: none;
     }
@@ -295,22 +425,21 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 0.4rem;
     }
 
     .hero-card-title {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 13px;
+      font-size: 0.78rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #f7f0d0;
     }
 
     .hero-card-badge {
-      font-size: 10px;
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
-      padding: 3px 10px;
+      padding: 0.15rem 0.6rem;
       border-radius: 999px;
       border: 1px solid rgba(245, 226, 154, 0.7);
       background: rgba(10, 10, 15, 0.9);
@@ -318,20 +447,20 @@
     }
 
     .hero-card-list {
-      margin: 0;
-      padding-left: 18px;
-      font-size: 13px;
+      margin: 0.4rem 0 0.2rem;
+      padding-left: 1.1rem;
+      font-size: 0.86rem;
       line-height: 1.55;
       color: #d1d8e5;
     }
 
     .hero-card-list li {
-      margin-bottom: 4px;
+      margin-bottom: 0.25rem;
     }
 
     .hero-card-foot {
-      margin-top: 10px;
-      font-size: 11px;
+      margin-top: 0.5rem;
+      font-size: 0.78rem;
       color: #9ca5b8;
     }
 
@@ -340,119 +469,101 @@
       color: #f3d99b;
     }
 
-    /* MAIN SECTION ------------------------------------------------- */
-    .section-title {
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin: 8px 0 10px;
+    .psy-inner {
+      max-width: 1120px;
+      margin: 0 auto;
     }
 
     .playground-grid {
       display: grid;
       grid-template-columns: minmax(0, 1.05fr) minmax(0, 1.25fr);
-      gap: 26px;
-      margin-bottom: 18px;
-      align-items: flex-start;
+      gap: 1.8rem;
+      margin-bottom: 1.4rem;
     }
 
     .card {
-      background: linear-gradient(to bottom right, var(--card-bg), #f5ebd6);
-      color: var(--text-ink);
-      border-radius: var(--radius-card);
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      padding: 18px 20px 20px;
+      background: linear-gradient(145deg, var(--panel), var(--panel-soft));
+      color: var(--ink);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-soft);
+      border-top: 3px solid var(--gold);
+      border-left: 1px solid rgba(0, 0, 0, 0.05);
+      border-right: 1px solid rgba(0, 0, 0, 0.03);
+      padding: 1.5rem 1.6rem 1.6rem;
       position: relative;
     }
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      border-top: 2px solid rgba(212, 175, 55, 0.55);
-      pointer-events: none;
-    }
-
     .card h2 {
-      margin: 0 0 10px;
-      font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 15px;
-      letter-spacing: 0.15em;
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #3b2d14;
+      color: #5c4721;
     }
 
     .card small {
-      font-size: 12px;
-      color: #7a6d55;
+      font-size: 0.8rem;
+      color: #8b7c60;
     }
 
     .field-label {
-      font-size: 11px;
+      font-size: 0.74rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: #8b7c63;
-      margin-bottom: 4px;
-      margin-top: 10px;
+      margin-bottom: 0.25rem;
+      margin-top: 0.85rem;
     }
 
-    .textarea,
-    textarea {
+    .textarea {
       width: 100%;
       font-family: inherit;
-      font-size: 13px;
+      font-size: 0.85rem;
       border-radius: 10px;
       border: 1px solid rgba(120, 96, 56, 0.35);
-      padding: 8px 10px;
+      padding: 0.45rem 0.6rem;
       background: rgba(255, 255, 255, 0.9);
       color: #2f2515;
       outline: none;
-      margin-top: 4px;
       resize: vertical;
       min-height: 150px;
     }
 
-    .textarea:focus,
-    textarea:focus {
-      border-color: var(--accent-gold);
+    .textarea:focus {
+      border-color: var(--gold);
       box-shadow: 0 0 0 1px rgba(212, 175, 55, 0.5);
     }
 
     .helper-text {
-      font-size: 11px;
+      font-size: 0.78rem;
       color: #8c7b60;
-      margin-top: 6px;
+      margin-top: 0.3rem;
     }
 
     .button-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 14px;
+      gap: 0.5rem;
+      margin-top: 0.9rem;
     }
 
     .btn {
       border-radius: 999px;
-      font-size: 13px;
+      font-size: 0.82rem;
       font-weight: 500;
-      padding: 8px 16px;
+      padding: 0.5rem 0.95rem;
       border: none;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.35rem;
       white-space: nowrap;
-      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
     }
 
     .btn-primary {
       background: radial-gradient(circle at top left, #f7e6ba, #d4af37);
       color: #261c09;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
     }
 
     .btn-secondary {
@@ -467,21 +578,73 @@
     }
 
     .btn-icon {
-      font-size: 14px;
+      font-size: 0.9rem;
     }
 
-    /* LEGAL MAPPING OUTPUT ----------------------------------------- */
+    .band-real-case {
+      margin-top: 1.4rem;
+      background: radial-gradient(
+        circle at top left,
+        rgba(255, 230, 170, 0.16),
+        rgba(6, 8, 18, 0.96)
+      );
+      border-radius: 18px;
+      border: 1px solid rgba(255, 236, 179, 0.28);
+      padding: 0.9rem 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      color: #f3eddc;
+      font-size: 0.86rem;
+    }
+
+    .band-real-case p {
+      margin: 0;
+      max-width: 720px;
+    }
+
+    .band-real-case em {
+      font-style: normal;
+      color: #f7dfa0;
+    }
+
+    .band-cta {
+      border-radius: 999px;
+      border: 1px solid rgba(248, 228, 170, 0.9);
+      background: radial-gradient(circle at top left, #f7e6b7, #d4af37);
+      color: #261a06;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .band-cta:hover {
+      filter: brightness(1.03);
+      transform: translateY(-0.5px);
+    }
+
+    /* ====== LEGAL MAPPING SPECIFIC STYLES ====== */
+
     .result-header {
       display: flex;
       flex-wrap: wrap;
       align-items: baseline;
       justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 8px;
+      gap: 0.35rem;
+      margin-bottom: 0.5rem;
     }
 
     .result-title {
-      font-size: 13px;
+      font-size: 0.85rem;
       font-weight: 600;
       color: #5c4721;
     }
@@ -489,12 +652,12 @@
     .result-metrics {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
-      font-size: 11px;
+      gap: 0.4rem;
+      font-size: 0.75rem;
     }
 
     .metric-chip {
-      padding: 3px 9px;
+      padding: 0.25rem 0.6rem;
       border-radius: 999px;
       border: 1px solid rgba(122, 100, 50, 0.35);
       background: #fdf7ea;
@@ -508,8 +671,8 @@
       border-radius: 14px;
       border: 1px solid rgba(212, 175, 55, 0.4);
       background: rgba(255, 255, 255, 0.96);
-      padding: 8px 10px 10px;
-      font-size: 12px;
+      padding: 0.5rem 0.6rem 0.6rem;
+      font-size: 0.78rem;
       overflow-x: auto;
     }
 
@@ -521,13 +684,13 @@
 
     table.mapping-table th,
     table.mapping-table td {
-      padding: 6px 8px;
+      padding: 0.35rem 0.5rem;
       text-align: left;
       vertical-align: top;
     }
 
     table.mapping-table th {
-      font-size: 11px;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: #8a6c33;
@@ -538,7 +701,7 @@
     table.mapping-table td {
       border-bottom: 1px solid rgba(122, 100, 50, 0.12);
       color: #3a2c12;
-      font-size: 12px;
+      font-size: 0.8rem;
       line-height: 1.45;
     }
 
@@ -550,9 +713,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 3px 9px;
+      padding: 0.2rem 0.6rem;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 0.72rem;
       font-weight: 500;
       border: 1px solid rgba(122, 100, 50, 0.5);
       background: #fdf7e7;
@@ -576,104 +739,17 @@
     }
 
     .mapping-note {
-      font-size: 11px;
+      font-size: 0.78rem;
       color: #7a6432;
-      margin-top: 8px;
+      margin-top: 0.6rem;
     }
 
     .mapping-note strong {
       font-weight: 600;
     }
 
-    /* BAND --------------------------------------------------------- */
-    .band-real-case {
-      margin-top: 22px;
-      background: radial-gradient(circle at top left, rgba(255, 230, 170, 0.16), rgba(6, 8, 18, 0.96));
-      border-radius: 20px;
-      border: 1px solid rgba(255, 236, 179, 0.28);
-      padding: 14px 18px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      color: #f3eddc;
-      font-size: 13px;
-    }
-
-    .band-real-case p {
-      margin: 0;
-      max-width: 720px;
-    }
-
-    .band-real-case em {
-      font-style: normal;
-      color: #f7dfa0;
-    }
-
-    .band-cta {
-      border-radius: var(--radius-pill);
-      border: 1px solid rgba(248, 228, 170, 0.9);
-      background: radial-gradient(circle at top left, #f7e6b7, #d4af37);
-      color: #261a06;
-      padding: 8px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      white-space: nowrap;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .band-cta:hover {
-      filter: brightness(1.03);
-      transform: translateY(-0.5px);
-    }
-
-    /* FOOTER ------------------------------------------------------- */
-    .footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 14px 16px 18px;
-      background: radial-gradient(circle at top, #0c111b 0, #04040e 55%, #000 100%);
-      color: var(--text-muted);
-      font-size: 12px;
-    }
-
-    .footer-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-    }
-
-    .footer-main {
-      margin-bottom: 6px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      font-size: 12px;
-    }
-
-    .footer-dot::before {
-      content: "•";
-      margin: 0 6px;
-      opacity: 0.65;
-    }
-
-    .footer a {
-      color: var(--text-muted);
-    }
-
-    .footer a:hover {
-      color: #f3e7c0;
-    }
-
-    /* JUSTIFICATION ------------------------------------------------ */
-    .hero-lead,
+    /* Justify text blocks, as in original */
+    .hero-subtitle,
     .hero-extra,
     .card small,
     .card p,
@@ -683,17 +759,10 @@
       text-align: justify;
     }
 
-    /* RESPONSIVE --------------------------------------------------- */
+    /* Responsive */
     @media (max-width: 960px) {
-      .nav-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .hero {
+      .hero-inner-legal {
         grid-template-columns: minmax(0, 1fr);
-      }
-      .hero-card {
-        margin-top: 4px;
       }
       .playground-grid {
         grid-template-columns: minmax(0, 1fr);
@@ -701,258 +770,269 @@
     }
 
     @media (max-width: 720px) {
-      .nav-inner {
-        padding-inline: 12px;
+      .hero {
+        padding-inline: 1rem;
       }
-      .hero-title {
-        font-size: 24px;
-      }
-      .content {
-        padding-inline: 12px;
+      .main {
+        padding-inline: 1rem;
       }
       .card {
-        padding-inline: 16px;
+        padding-inline: 1.2rem;
       }
     }
   </style>
 </head>
 <body>
-<div class="page-shell">
-  <!-- NAVBAR -->
+  <!-- UNIVERSAL NAVBAR -->
   <header class="nav">
     <div class="nav-inner">
       <div class="nav-left">
-        <div class="logo-pill">
-          <div class="logo-pill-icon">◎</div>
-          <div class="logo-pill-text">
-            <div class="logo-title">OPENPROOF — RPO v0.1</div>
-            <div class="logo-subtitle">JSON signé • PDF lisible par l’homme • Hachage public</div>
+        <a href="overview.html" class="nav-logo-link">
+          <div class="nav-logo">
+            <img
+              src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+              alt="OpenProof logo"
+            />
           </div>
-        </div>
-      </div>
-      <nav class="nav-links">
-        <a href="overview.html" class="nav-link">Aperçu</a>
-        <a href="index.html" class="nav-link">Spécification</a>
-        <a href="examples.html" class="nav-link">Exemples</a>
-        <a href="tests.html" class="nav-link">Tests</a>
-        <a href="playground.html" class="nav-link">Aire de jeux</a>
-        <a href="demo-psycho.html" class="nav-link">Démonstration psycho-médico-légale</a>
-        <a href="demo-legal.html" class="nav-link">Démonstration juridique</a>
-        <a href="demo-legal-mapping.html" class="nav-link active">Cartographie légale</a>
-      </nav>
-      <div class="nav-right">
-        <a
-          href="https://github.com/openproof-net/rpo-spec-v0.1"
-          class="nav-cta"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Voir sur GitHub
+          <div>
+            <div class="nav-title">OPENPROOF — RPO v0.1</div>
+            <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
+          </div>
         </a>
       </div>
+
+      <nav class="nav-links" aria-label="Primary navigation">
+        <!-- Public layer -->
+        <a href="overview.html" class="nav-link nav-link--overview">Overview</a>
+        <a href="demo-psycho.html" class="nav-link nav-link--psycho">Psycho-legal demo</a>
+        <a href="demo-legal.html" class="nav-link nav-link--legal">Legal demo</a>
+        <a href="demo-legal-mapping.html" class="nav-link nav-link--legal-mapping">Legal mapping</a>
+        <a href="playground.html" class="nav-link nav-link--playground">Sandbox</a>
+
+        <!-- Technical docs dropdown -->
+        <div class="nav-dropdown">
+          <button class="nav-link nav-dropdown-toggle" type="button">
+            Technical docs <span class="nav-dropdown-caret">▾</span>
+          </button>
+          <div class="nav-dropdown-menu" role="menu">
+            <a href="spec/index.html" class="nav-link nav-link--spec" role="menuitem">Specification</a>
+            <a href="examples.html" class="nav-link nav-link--examples" role="menuitem">Examples</a>
+            <a href="tests.html" class="nav-link nav-link--tests" role="menuitem">Tests</a>
+          </div>
+        </div>
+      </nav>
+
+      <a
+        href="https://github.com/openproof-net/rpo-spec-v0.1"
+        class="btn-ghost"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <span>View on GitHub</span>
+      </a>
     </div>
   </header>
 
-  <!-- CONTENT -->
-  <main class="content">
-    <div class="content-inner">
-      <!-- HERO -->
-      <section class="hero">
-        <div>
-          <div class="hero-kicker">Couche de cartographie légale · orientation uniquement</div>
-          <h1 class="hero-title">
-            Des schémas narratifs<br />
-            aux <span class="hero-highlight">domaines juridiques</span> potentiels
-          </h1>
-          <p class="hero-lead">
-            Cette démonstration montre comment une analyse narrative structurée peut être
-            projetée sur des <strong>domaines juridiques</strong> (liberté, coercition, pression
-            économique, vie privée) sans se transformer en qualification juridique automatisée.
-          </p>
-          <p class="hero-extra">
-            L’étape de cartographie intervient <strong>après</strong> l’analyse psycho-médicale.
-            Elle part du principe qu’un récit révèle déjà des schémas de contrôle, de pression ou d’abus,
-            et elle projette ces schémas dans le domaine juridique afin d’orienter le travail du juriste,
-            et non de lui indiquer la conclusion à tirer.
-          </p>
-          <div class="chip-row">
-            <div class="chip">Orientation uniquement</div>
-            <div class="chip chip-secondary">Indépendant de la juridiction</div>
-            <div class="chip">Non normatif</div>
-            <div class="chip chip-secondary">Compatible avec RPO v0.1</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner hero-inner-legal">
+      <div>
+        <div class="hero-kicker">Couche de cartographie légale · orientation uniquement</div>
+        <h1 class="hero-title">
+          Des schémas narratifs<br />
+          aux <span>domaines juridiques</span> potentiels
+        </h1>
+        <p class="hero-subtitle">
+          Cette démonstration montre comment une analyse narrative structurée peut être
+          projetée sur des <strong>domaines juridiques</strong> (liberté, coercition, pression
+          économique, vie privée) sans se transformer en qualification juridique automatisée.
+        </p>
+        <p class="hero-extra">
+          L’étape de cartographie intervient <strong>après</strong> l’analyse psycho-médicale.
+          Elle part du principe qu’un récit révèle déjà des schémas de contrôle, de pression ou d’abus,
+          et elle projette ces schémas dans le domaine juridique afin d’orienter le travail du juriste,
+          et non de lui indiquer la conclusion à tirer.
+        </p>
+        <div class="hero-badges">
+          <div class="badge">Orientation uniquement</div>
+          <div class="badge">Jurisdiction-agnostic</div>
+          <div class="badge">Non normatif</div>
+          <div class="badge">RPO-compatible</div>
+        </div>
+      </div>
+
+      <aside class="hero-card">
+        <div class="hero-card-inner">
+          <div class="hero-card-header">
+            <div class="hero-card-title">Ce que cette page illustre</div>
+            <div class="hero-card-badge">Mode démo</div>
           </div>
-        </div>
-
-        <aside class="hero-card">
-          <div class="hero-card-inner">
-            <div class="hero-card-header">
-              <div class="hero-card-title">Ce que cette page illustre</div>
-              <div class="hero-card-badge">Mode démo</div>
-            </div>
-            <ul class="hero-card-list">
-              <li>
-                Elle prend un court récit et l’analyse à travers
-                <strong>six domaines juridiques</strong> (liberté, menaces, pression économique,
-                communications, harcèlement, vie privée).
-              </li>
-              <li>
-                Pour chaque domaine, elle compte les <strong>indices</strong> et les évalue comme
-                « Non détectés », « Présents » ou « Forts ».
-              </li>
-              <li>
-                Elle reste <strong>indépendante de toute juridiction</strong> : pas d’articles,
-                pas d’infractions automatiques ni de qualification juridique.
-              </li>
-              <li>
-                Elle fait office de <strong>boussole juridique</strong> : elle suggère des pistes
-                qui pourraient mériter une attention juridique si l’affaire s’envenime.
-              </li>
-            </ul>
-            <p class="hero-card-foot">
-              Dans le <em>pilote CNRS × TruthX</em>, cette couche est associée à des modèles
-              psycho-forensiques avancés et à une analyse spécifique à chaque juridiction.
-              Vous en voyez ici une couche d’orientation simplifiée et transparente
-              superposée au « code civil » du RPO.
-            </p>
-          </div>
-        </aside>
-      </section>
-
-      <!-- DEMO -->
-      <section>
-        <div class="section-title">Essayez la démo de cartographie légale</div>
-        <div class="playground-grid">
-          <!-- LEFT: INPUT -->
-          <article class="card">
-            <h2>2. Apport narratif</h2>
-            <small>
-              Commencez par un court récit (5 à 10 phrases). Vous pouvez anonymiser les noms,
-              les lieux et les dates. L’objectif est de tester comment un récit comportant des
-              signaux de contrôle ou de pression peut être transposé dans le domaine juridique
-              sans se transformer en avis juridique automatisé.
-            </small>
-
-            <label class="field-label" for="narrativeInput">Récit (texte libre)</label>
-            <textarea
-              id="narrativeInput"
-              class="textarea"
-              placeholder="Décrivez la situation avec vos mots. Que se passe-t-il, qui contrôle quoi, quelles menaces ou pressions sont évoquées ?"
-            ></textarea>
-            <p class="helper-text">
-              Conseil : incluez au moins une contrainte concrète (liberté, argent, communication,
-              menaces) afin que la cartographie ait quelque chose sur quoi travailler.
-            </p>
-
-            <div class="button-row">
-              <button id="analyzeBtn" class="btn btn-primary">
-                <span class="btn-icon">▶</span> Analyser et cartographier les domaines juridiques
-              </button>
-              <button id="exampleBtn" class="btn btn-secondary" type="button">Exemple de chargement</button>
-              <button id="resetBtn" class="btn btn-secondary" type="button">Réinitialiser</button>
-            </div>
-
-            <p class="helper-text" style="margin-top:10px;">
-              <strong>Avertissement :</strong> Cette démonstration est fournie à titre indicatif uniquement.
-              Elle ne constitue pas un avis juridique, ne qualifie aucune infraction et ne représente pas
-              un système de décision. Seul un professionnel qualifié est habilité à évaluer les implications
-              juridiques d’un cas réel.
-            </p>
-          </article>
-
-          <!-- RIGHT: LEGAL MAPPING -->
-          <article class="card">
-            <h2>3. Orientation juridique (non contraignante)</h2>
-
-            <div class="result-header">
-              <div class="result-title">Résultat de la cartographie pour ce récit</div>
-              <div class="result-metrics" id="result-metrics" style="display:none;">
-                <div class="metric-chip" id="pill-domains">Domaines détectés : 0</div>
-                <div class="metric-chip" id="pill-max-strength">Force maximale : –</div>
-                <div class="metric-chip" id="pill-cues">Nombre total d’indices : 0</div>
-              </div>
-            </div>
-
-            <div class="mapping-table-wrapper" id="mapping-wrapper" style="display:none;">
-              <table class="mapping-table" aria-label="Tableau de cartographie juridique">
-                <thead>
-                  <tr>
-                    <th>Domaine juridique</th>
-                    <th>Force</th>
-                    <th>Ce que suggèrent les indices</th>
-                  </tr>
-                </thead>
-                <tbody id="mapping-body">
-                  <!-- Filled by JS -->
-                </tbody>
-              </table>
-            </div>
-
-            <p class="mapping-note" id="mapping-note" style="display:none;">
-              Ce tableau adopte une perspective <strong>indépendante de toute juridiction</strong>.
-              Il met en lumière les domaines où la structure narrative semble la plus présente
-              (par exemple, la liberté, la coercition, la pression économique). Il vise à appuyer,
-              et non à remplacer, le raisonnement juridique humain.
-            </p>
-          </article>
-        </div>
-
-        <!-- Real case band -->
-        <div class="band-real-case">
-          <p>
-            Cette page présente une <em>couche de cartographie de démonstration</em> basée sur des règles simples.
-            Dans le cadre du projet pilote scientifique/CNRS, la cartographie juridique est combinée à la norme
-            RPO complète, aux graphes temporels et aux modèles psycho-forensiques structurés. Si vous souhaitez
-            tester ces modules sur des cas concrets, vous pouvez candidater au programme pilote CNRS × TruthX.
+          <ul class="hero-card-list">
+            <li>
+              Elle prend un court récit et l’analyse à travers
+              <strong>six domaines juridiques</strong> (liberté, menaces, pression économique,
+              communications, harcèlement, vie privée).
+            </li>
+            <li>
+              Pour chaque domaine, elle compte les <strong>indices</strong> et les évalue comme
+              « Non détectés », « Présents » ou « Forts ».
+            </li>
+            <li>
+              Elle reste <strong>indépendante de toute juridiction</strong> : pas d’articles,
+              pas d’infractions automatiques ni de qualification juridique.
+            </li>
+            <li>
+              Elle fait office de <strong>boussole juridique</strong> : elle suggère des pistes
+              qui pourraient mériter une attention juridique si l’affaire s’envenime.
+            </li>
+          </ul>
+          <p class="hero-card-foot">
+            Dans le <em>pilote CNRS × TruthX</em>, cette couche est associée à des modèles
+            psycho-forensiques avancés et à une analyse spécifique à chaque juridiction.
+            Vous en voyez ici une couche d’orientation simplifiée et transparente
+            superposée au « code civil » du RPO.
           </p>
-          <a
-            class="band-cta"
-            href="https://www.truthx.co/truthx-pilote-form"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Postulez pour le projet pilote du CNRS
-          </a>
         </div>
-      </section>
+      </aside>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="psy-inner">
+      <div class="section-title">Essayez la démo de cartographie légale</div>
+      <div class="playground-grid">
+        <!-- LEFT: INPUT -->
+        <article class="card">
+          <h2>2. Apport narratif</h2>
+          <small>
+            Commencez par un court récit (5 à 10 phrases). Vous pouvez anonymiser les noms,
+            les lieux et les dates. L’objectif est de tester comment un récit comportant des
+            signaux de contrôle ou de pression peut être transposé dans le domaine juridique
+            sans se transformer en avis juridique automatisé.
+          </small>
+
+          <label class="field-label" for="narrativeInput">Récit (texte libre)</label>
+          <textarea
+            id="narrativeInput"
+            class="textarea"
+            placeholder="Décrivez la situation avec vos mots. Que se passe-t-il, qui contrôle quoi, quelles menaces ou pressions sont évoquées ?"
+          ></textarea>
+          <p class="helper-text">
+            Conseil : incluez au moins une contrainte concrète (liberté, argent, communication,
+            menaces) afin que la cartographie ait quelque chose sur quoi travailler.
+          </p>
+
+          <div class="button-row">
+            <button id="analyzeBtn" class="btn btn-primary">
+              <span class="btn-icon">▶</span> Analyser et cartographier les domaines juridiques
+            </button>
+            <button id="exampleBtn" class="btn btn-secondary" type="button">Exemple de chargement</button>
+            <button id="resetBtn" class="btn btn-secondary" type="button">Réinitialiser</button>
+          </div>
+
+          <p class="helper-text" style="margin-top:0.7rem;">
+            <strong>Avertissement :</strong> Cette démonstration est fournie à titre indicatif uniquement.
+            Elle ne constitue pas un avis juridique, ne qualifie aucune infraction et ne représente pas
+            un système de décision. Seul un professionnel qualifié est habilité à évaluer les implications
+            juridiques d’un cas réel.
+          </p>
+        </article>
+
+        <!-- RIGHT: LEGAL MAPPING -->
+        <article class="card">
+          <h2>3. Orientation juridique (non contraignante)</h2>
+
+          <div class="result-header">
+            <div class="result-title">Résultat de la cartographie pour ce récit</div>
+            <div class="result-metrics" id="result-metrics" style="display:none;">
+              <div class="metric-chip" id="pill-domains">Domaines détectés : 0</div>
+              <div class="metric-chip" id="pill-max-strength">Force maximale : –</div>
+              <div class="metric-chip" id="pill-cues">Nombre total d’indices : 0</div>
+            </div>
+          </div>
+
+          <div class="mapping-table-wrapper" id="mapping-wrapper" style="display:none;">
+            <table class="mapping-table" aria-label="Tableau de cartographie juridique">
+              <thead>
+                <tr>
+                  <th>Domaine juridique</th>
+                  <th>Force</th>
+                  <th>Ce que suggèrent les indices</th>
+                </tr>
+              </thead>
+              <tbody id="mapping-body">
+                <!-- Filled by JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <p class="mapping-note" id="mapping-note" style="display:none;">
+            Ce tableau adopte une perspective <strong>indépendante de toute juridiction</strong>.
+            Il met en lumière les domaines où la structure narrative semble la plus présente
+            (par exemple, la liberté, la coercition, la pression économique). Il vise à appuyer,
+            et non à remplacer, le raisonnement juridique humain.
+          </p>
+        </article>
+      </div>
+
+      <!-- Real case band -->
+      <div class="band-real-case">
+        <p>
+          Cette page présente une <em>couche de cartographie de démonstration</em> basée sur des règles simples.
+          Dans le cadre du projet pilote scientifique/CNRS, la cartographie juridique est combinée à la norme
+          RPO complète, aux graphes temporels et aux modèles psycho-forensiques structurés. Si vous souhaitez
+          tester ces modules sur des cas concrets, vous pouvez candidater au programme pilote CNRS × TruthX.
+        </p>
+        <a
+          class="band-cta"
+          href="https://www.truthx.co/truthx-pilote-form"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Postulez pour le projet pilote du CNRS
+        </a>
+      </div>
     </div>
   </main>
 
-  <!-- FOOTER -->
+  <!-- UNIVERSAL FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-main">
-        OpenProof — RPO Specification v0.1<br />
-        © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie —
-        Editorial lead for the specification: <strong>Gersende Ryard de Parcey</strong>.
+      <div class="footer-left">
+        <div class="footer-title">OpenProof — RPO Specification v0.1</div>
+        <div class="footer-text">
+          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie.
+          Specification editor: <strong>Gersende Ryard de Parcey</strong>.
+        </div>
       </div>
-      <div class="footer-links">
-        <a href="overview.html">Technical site</a>
-        <span class="footer-dot"></span>
-        <a href="governance.html">Governance</a>
-        <span class="footer-dot"></span>
-        <a href="contact.html">Contact</a>
+      <div class="footer-right footer-links">
+        <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">Technical site</a>
+        <span>•</span>
+        <a href="https://www.truthx-openproof.org" target="_blank" rel="noopener noreferrer">Governance</a>
+        <span>•</span>
+        <a href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">Contact</a>
       </div>
     </div>
   </footer>
-</div>
 
-<!-- SIMPLE JS ENGINE (legal mapping) ------------------------------- -->
-<script>
-  const inputEl = document.getElementById("narrativeInput");
-  const btnAnalyse = document.getElementById("analyzeBtn");
-  const btnExample = document.getElementById("exampleBtn");
-  const btnReset = document.getElementById("resetBtn");
+  <!-- SIMPLE JS ENGINE (legal mapping, unchanged logic) -->
+  <script>
+    const inputEl = document.getElementById("narrativeInput");
+    const btnAnalyse = document.getElementById("analyzeBtn");
+    const btnExample = document.getElementById("exampleBtn");
+    const btnReset = document.getElementById("resetBtn");
 
-  const mappingWrapper = document.getElementById("mapping-wrapper");
-  const mappingBody = document.getElementById("mapping-body");
-  const mappingNote = document.getElementById("mapping-note");
+    const mappingWrapper = document.getElementById("mapping-wrapper");
+    const mappingBody = document.getElementById("mapping-body");
+    const mappingNote = document.getElementById("mapping-note");
 
-  const metricsEl = document.getElementById("result-metrics");
-  const pillDomains = document.getElementById("pill-domains");
-  const pillMaxStrength = document.getElementById("pill-max-strength");
-  const pillCues = document.getElementById("pill-cues");
+    const metricsEl = document.getElementById("result-metrics");
+    const pillDomains = document.getElementById("pill-domains");
+    const pillMaxStrength = document.getElementById("pill-max-strength");
+    const pillCues = document.getElementById("pill-cues");
 
-  const exampleNarrative = (
+    const exampleNarrative = (
 `Last year, after I moved in with my partner, he started to control more and more aspects of my daily life.
 He keeps the car keys and tells me I do not need to go anywhere without him.
 When I try to visit my sister, he says that if I leave, he might "make sure the rent is not paid on time".
@@ -960,171 +1040,171 @@ He constantly checks my phone, asks for screenshots of my messages and insists t
 including my family, saying it is for my own good.
 I do not have direct access to our bank account anymore, he gives me cash and asks for receipts for every small expense.
 When I disagree or say that this feels unfair, he calls me ungrateful, threatens to "tell everyone I am unstable" and says no one will believe me if I speak.`
-  ).trim();
+    ).trim();
 
-  const legalDomains = [
-    {
-      id: "liberty",
-      label: "Restriction of liberty / movement",
-      description: "Control over freedom of movement, confinement, constraint on where the person can go.",
-      keywords: ["go anywhere", "leave", "locked", "car keys", "cannot go", "not allowed to go", "stay home", "move out"]
-    },
-    {
-      id: "coercion",
-      label: "Threats and coercion",
-      description: "Explicit or implicit threats, conditions, or pressure linked to harm or sanctions.",
-      keywords: ["threat", "threaten", "or else", "sanction", "punish", "if you leave", "make sure", "no one will believe", "unstable"]
-    },
-    {
-      id: "economic",
-      label: "Economic and resource control",
-      description: "Control of money, bank access, basic needs or resources.",
-      keywords: ["bank account", "cash", "money", "rent", "pay", "salary", "finance", "gives me", "receipts"]
-    },
-    {
-      id: "communications",
-      label: "Control of communications",
-      description: "Monitoring or blocking of calls, messages, online accounts or social links.",
-      keywords: ["phone", "messages", "screenshots", "block", "contacts", "social media", "no one needs to hear", "checking", "reads my"]
-    },
-    {
-      id: "harassment",
-      label: "Harassment and psychological pressure",
-      description: "Insults, repeated denigration, gaslighting, humiliation, or degrading remarks.",
-      keywords: ["ungrateful", "unstable", "no one will believe", "crazy", "overreacting", "insult", "humiliate", "worthless"]
-    },
-    {
-      id: "privacy",
-      label: "Privacy and surveillance",
-      description: "Intrusion into private life, tracking, surveillance tools, or constant monitoring.",
-      keywords: ["checks my phone", "tracking", "location", "follow", "monitor", "spy", "cameras", "watching", "surveillance"]
-    }
-  ];
-
-  function countCues(text, keywords) {
-    const lowered = text.toLowerCase();
-    let count = 0;
-    for (const kw of keywords) {
-      const pattern = kw.toLowerCase();
-      if (lowered.includes(pattern)) {
-        count += 1;
+    const legalDomains = [
+      {
+        id: "liberty",
+        label: "Restriction of liberty / movement",
+        description: "Control over freedom of movement, confinement, constraint on where the person can go.",
+        keywords: ["go anywhere", "leave", "locked", "car keys", "cannot go", "not allowed to go", "stay home", "move out"]
+      },
+      {
+        id: "coercion",
+        label: "Threats and coercion",
+        description: "Explicit or implicit threats, conditions, or pressure linked to harm or sanctions.",
+        keywords: ["threat", "threaten", "or else", "sanction", "punish", "if you leave", "make sure", "no one will believe", "unstable"]
+      },
+      {
+        id: "economic",
+        label: "Economic and resource control",
+        description: "Control of money, bank access, basic needs or resources.",
+        keywords: ["bank account", "cash", "money", "rent", "pay", "salary", "finance", "gives me", "receipts"]
+      },
+      {
+        id: "communications",
+        label: "Control of communications",
+        description: "Monitoring or blocking of calls, messages, online accounts or social links.",
+        keywords: ["phone", "messages", "screenshots", "block", "contacts", "social media", "no one needs to hear", "checking", "reads my"]
+      },
+      {
+        id: "harassment",
+        label: "Harassment and psychological pressure",
+        description: "Insults, repeated denigration, gaslighting, humiliation, or degrading remarks.",
+        keywords: ["ungrateful", "unstable", "no one will believe", "crazy", "overreacting", "insult", "humiliate", "worthless"]
+      },
+      {
+        id: "privacy",
+        label: "Privacy and surveillance",
+        description: "Intrusion into private life, tracking, surveillance tools, or constant monitoring.",
+        keywords: ["checks my phone", "tracking", "location", "follow", "monitor", "spy", "cameras", "watching", "surveillance"]
       }
-    }
-    return count;
-  }
+    ];
 
-  function classifyStrength(cues) {
-    if (cues >= 3) return "strong";
-    if (cues >= 1) return "present";
-    return "none";
-  }
-
-  function strengthLabel(strength, cues) {
-    if (strength === "strong") return `Strong — ${cues} cues`;
-    if (strength === "present") return `Present — ${cues} cue${cues > 1 ? "s" : ""}`;
-    return "Not detected";
-  }
-
-  function analyseNarrative() {
-    const text = (inputEl.value || "").trim();
-    if (!text) {
-      alert("Please paste or write a narrative before running the mapping.");
-      return;
-    }
-
-    const rows = [];
-    let detectedDomains = 0;
-    let totalCues = 0;
-    let maxStrengthRank = 0;
-    const strengthOrder = { none: 0, present: 1, strong: 2 };
-
-    for (const domain of legalDomains) {
-      const cues = countCues(text, domain.keywords);
-      const strength = classifyStrength(cues);
-      const label = strengthLabel(strength, cues);
-
-      if (strength !== "none") {
-        detectedDomains += 1;
-        totalCues += cues;
-        if (strengthOrder[strength] > maxStrengthRank) {
-          maxStrengthRank = strengthOrder[strength];
+    function countCues(text, keywords) {
+      const lowered = text.toLowerCase();
+      let count = 0;
+      for (const kw of keywords) {
+        const pattern = kw.toLowerCase();
+        if (lowered.includes(pattern)) {
+          count += 1;
         }
       }
-
-      let explanation;
-      if (strength === "none") {
-        explanation = "No clear cue detected for this domain in the current narrative.";
-      } else if (strength === "present") {
-        explanation = "Some elements in the narrative touch this domain and could justify closer legal attention.";
-      } else {
-        explanation = "Multiple cues converge on this domain, suggesting that it may be central in any legal assessment.";
-      }
-
-      rows.push({
-        id: domain.id,
-        label: domain.label,
-        strength,
-        labelStrength: label,
-        explanation
-      });
+      return count;
     }
 
-    // Render table
-    mappingBody.innerHTML = "";
-    rows.forEach(row => {
-      const tr = document.createElement("tr");
+    function classifyStrength(cues) {
+      if (cues >= 3) return "strong";
+      if (cues >= 1) return "present";
+      return "none";
+    }
 
-      const tdDomain = document.createElement("td");
-      tdDomain.textContent = row.label;
-      tr.appendChild(tdDomain);
+    function strengthLabel(strength, cues) {
+      if (strength === "strong") return `Strong — ${cues} cues`;
+      if (strength === "present") return `Present — ${cues} cue${cues > 1 ? "s" : ""}`;
+      return "Not detected";
+    }
 
-      const tdStrength = document.createElement("td");
-      const badge = document.createElement("span");
-      badge.className = "badge-strength " + row.strength;
-      badge.textContent = row.labelStrength;
-      tdStrength.appendChild(badge);
-      tr.appendChild(tdStrength);
+    function analyseNarrative() {
+      const text = (inputEl.value || "").trim();
+      if (!text) {
+        alert("Please paste or write a narrative before running the mapping.");
+        return;
+      }
 
-      const tdExplanation = document.createElement("td");
-      tdExplanation.textContent = row.explanation;
-      tr.appendChild(tdExplanation);
+      const rows = [];
+      let detectedDomains = 0;
+      let totalCues = 0;
+      let maxStrengthRank = 0;
+      const strengthOrder = { none: 0, present: 1, strong: 2 };
 
-      mappingBody.appendChild(tr);
+      for (const domain of legalDomains) {
+        const cues = countCues(text, domain.keywords);
+        const strength = classifyStrength(cues);
+        const label = strengthLabel(strength, cues);
+
+        if (strength !== "none") {
+          detectedDomains += 1;
+          totalCues += cues;
+          if (strengthOrder[strength] > maxStrengthRank) {
+            maxStrengthRank = strengthOrder[strength];
+          }
+        }
+
+        let explanation;
+        if (strength === "none") {
+          explanation = "No clear cue detected for this domain in the current narrative.";
+        } else if (strength === "present") {
+          explanation = "Some elements in the narrative touch this domain and could justify closer legal attention.";
+        } else {
+          explanation = "Multiple cues converge on this domain, suggesting that it may be central in any legal assessment.";
+        }
+
+        rows.push({
+          id: domain.id,
+          label: domain.label,
+          strength,
+          labelStrength: label,
+          explanation
+        });
+      }
+
+      // Render table
+      mappingBody.innerHTML = "";
+      rows.forEach(row => {
+        const tr = document.createElement("tr");
+
+        const tdDomain = document.createElement("td");
+        tdDomain.textContent = row.label;
+        tr.appendChild(tdDomain);
+
+        const tdStrength = document.createElement("td");
+        const badge = document.createElement("span");
+        badge.className = "badge-strength " + row.strength;
+        badge.textContent = row.labelStrength;
+        tdStrength.appendChild(badge);
+        tr.appendChild(tdStrength);
+
+        const tdExplanation = document.createElement("td");
+        tdExplanation.textContent = row.explanation;
+        tr.appendChild(tdExplanation);
+
+        mappingBody.appendChild(tr);
+      });
+
+      // Metrics
+      let maxStrengthLabel = "None";
+      if (maxStrengthRank === 1) maxStrengthLabel = "Present";
+      if (maxStrengthRank === 2) maxStrengthLabel = "Strong";
+
+      pillDomains.textContent = `Domaines détectés : ${detectedDomains}`;
+      pillMaxStrength.textContent = `Force maximale : ${maxStrengthLabel}`;
+      pillCues.textContent = `Nombre total d’indices : ${totalCues}`;
+
+      metricsEl.style.display = "flex";
+      mappingWrapper.style.display = "block";
+      mappingNote.style.display = "block";
+    }
+
+    btnAnalyse.addEventListener("click", function (event) {
+      event.preventDefault();
+      analyseNarrative();
     });
 
-    // Metrics
-    let maxStrengthLabel = "None";
-    if (maxStrengthRank === 1) maxStrengthLabel = "Present";
-    if (maxStrengthRank === 2) maxStrengthLabel = "Strong";
+    btnExample.addEventListener("click", function (event) {
+      event.preventDefault();
+      inputEl.value = exampleNarrative;
+      analyseNarrative();
+    });
 
-    pillDomains.textContent = `Domaines détectés : ${detectedDomains}`;
-    pillMaxStrength.textContent = `Force maximale : ${maxStrengthLabel}`;
-    pillCues.textContent = `Nombre total d’indices : ${totalCues}`;
-
-    metricsEl.style.display = "flex";
-    mappingWrapper.style.display = "block";
-    mappingNote.style.display = "block";
-  }
-
-  btnAnalyse.addEventListener("click", function (event) {
-    event.preventDefault();
-    analyseNarrative();
-  });
-
-  btnExample.addEventListener("click", function (event) {
-    event.preventDefault();
-    inputEl.value = exampleNarrative;
-    analyseNarrative();
-  });
-
-  btnReset.addEventListener("click", function (event) {
-    event.preventDefault();
-    inputEl.value = "";
-    mappingBody.innerHTML = "";
-    mappingWrapper.style.display = "none";
-    mappingNote.style.display = "none";
-    metricsEl.style.display = "none";
-  });
-</script>
+    btnReset.addEventListener("click", function (event) {
+      event.preventDefault();
+      inputEl.value = "";
+      mappingBody.innerHTML = "";
+      mappingWrapper.style.display = "none";
+      mappingNote.style.display = "none";
+      metricsEl.style.display = "none";
+    });
+  </script>
 </body>
 </html>
