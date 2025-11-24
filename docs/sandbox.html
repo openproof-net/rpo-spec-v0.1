@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-page="sandbox">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>OpenProof — RPO Sandbox | From narrative to draft proof bundle</title>
@@ -36,36 +36,20 @@
     rel="stylesheet"
   />
 
+  <!-- Minimal dark/ivory/gold theme -->
   <style>
     :root {
-      /* Global theme (aligned with new OpenProof charter) */
-      --bg-main: #04040e;
+      --bg: #04040e;
       --bg-elevated: #0b0f14;
-      --card-bg: #fbf4e6;
-      --card-bg-soft: #f7efdd;
-      --accent-gold: #d4af37;
-      --accent-gold-soft: #f5e1a5;
-      --accent-gold-strong: #ffcf6b;
-      --accent-red-soft: #fbe3e3;
-      --accent-red: #e25b5b;
-      --accent-green-soft: #e0f3df;
-      --accent-green: #2f9b5d;
-      --border-gold: rgba(212, 175, 55, 0.65);
-      --text-main: #f5f5ff;
-      --text-muted: #a5acb8;
-      --text-ink: #3a2c1a;
-      --chip-bg: rgba(12, 18, 30, 0.9);
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.55);
-      --radius-card: 22px;
-      --radius-pill: 999px;
-
-      /* Sandbox panels (compat) */
       --panel: #f7f3e8;
       --panel-soft: #fbf8f1;
+      --text-main: #f5f5f7;
+      --text-muted: #b2b7c5;
       --ink: #7a6432;
-      --gold: var(--accent-gold);
+      --gold: #d4af37;
       --gold-soft: #f1e6a3;
       --border-soft: rgba(241, 230, 163, 0.25);
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
       --radius-lg: 18px;
     }
 
@@ -77,13 +61,13 @@
       margin: 0;
       font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui,
         "SF Pro Text", "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #151d2b 0, #04040e 42%, #000 100%);
+      background: radial-gradient(circle at top, #111625 0, var(--bg) 46%);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
 
     a {
-      color: var(--accent-gold-soft);
+      color: var(--gold-soft);
       text-decoration: none;
     }
 
@@ -96,141 +80,128 @@
         "Liberation Mono", "Courier New", monospace;
     }
 
-    /* NAVBAR (new universal version) ---------------------------------- */
+    /* NAV */
     .nav {
       position: sticky;
       top: 0;
-      z-index: 40;
+      z-index: 30;
       backdrop-filter: blur(18px);
-      background: linear-gradient(to bottom, rgba(4, 4, 14, 0.94), rgba(4, 4, 14, 0.86));
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      background: linear-gradient(
+        90deg,
+        rgba(4, 4, 14, 0.96),
+        rgba(4, 4, 14, 0.92)
+      );
+      border-bottom: 1px solid var(--border-soft);
     }
 
     .nav-inner {
-      max-width: 1180px;
+      max-width: 1120px;
       margin: 0 auto;
-      padding: 14px 20px 10px;
+      padding: 0.7rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 1rem;
     }
 
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 0.75rem;
     }
 
-    .logo-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      padding: 6px 14px 6px 8px;
+    .nav-logo {
+      width: 40px;
+      height: 40px;
       border-radius: 999px;
-      background: radial-gradient(circle at 0 0, #ffffff, #f2e3b2 40%, #9a7a2b 100%);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 12px 30px rgba(0, 0, 0, 0.6);
-    }
-
-    .logo-pill-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffffff 0, #f5e6bc 42%, #c59c3d 75%, #8a6a22 100%);
+      background: radial-gradient(circle at 30% 20%, #f3e8b2, #b88c2a);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
-      color: #4a3915;
-      font-weight: 600;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4),
+        0 10px 25px rgba(0, 0, 0, 0.6);
     }
 
-    .logo-pill-text {
+    .nav-logo img {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: block;
+    }
+
+    .nav-brand {
       display: flex;
       flex-direction: column;
-      line-height: 1.15;
+      gap: 0.1rem;
     }
 
-    .logo-title {
+    .nav-title {
       font-family: "Orbitron", system-ui, sans-serif;
-      font-size: 11px;
+      font-size: 0.92rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #20160a;
+      color: var(--gold-soft);
     }
 
-    .logo-subtitle {
-      font-size: 10px;
-      color: #644b22;
+    .nav-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 18px;
-      font-size: 13px;
-      color: var(--text-muted);
-      flex-wrap: wrap;
+      gap: 1.4rem;
+      font-size: 0.9rem;
     }
 
     .nav-link {
-      position: relative;
-      padding-bottom: 2px;
       color: var(--text-muted);
+      text-decoration: none;
     }
 
     .nav-link:hover {
-      color: #f5eedf;
+      color: var(--gold-soft);
     }
 
     .nav-link.active {
-      color: #f5eedf;
-      font-weight: 500;
+      color: var(--gold-soft);
+      font-weight: 600;
     }
 
-    .nav-link.active::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(to right, #f7e29b, #d4af37);
+    .btn-ghost {
       border-radius: 999px;
-    }
-
-    .nav-right {
-      display: flex;
+      padding: 0.4rem 0.95rem;
+      border: 1px solid var(--border-soft);
+      font-size: 0.85rem;
+      display: inline-flex;
       align-items: center;
-    }
-
-    .nav-cta {
-      padding: 7px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(250, 237, 190, 0.9);
-      background: radial-gradient(circle at top left, #f7e8c4, #cfa93a);
-      color: #241b08;
-      font-size: 12px;
-      font-weight: 500;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
-      cursor: pointer;
+      gap: 0.4rem;
       text-decoration: none;
-      white-space: nowrap;
+      color: var(--gold-soft);
+      background: rgba(10, 14, 24, 0.9);
     }
 
-    .nav-cta:hover {
-      filter: brightness(1.03);
-      transform: translateY(-0.5px);
+    .btn-ghost:hover {
+      border-color: var(--gold-soft);
+      text-decoration: none;
+      background: rgba(13, 18, 30, 0.96);
     }
 
-    @media (max-width: 960px) {
+    @media (max-width: 840px) {
       .nav-inner {
         flex-direction: column;
         align-items: flex-start;
       }
+      .nav-links {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        row-gap: 0.4rem;
+      }
     }
 
-    /* HERO ------------------------------------------------------------ */
+    /* HERO */
     .hero {
       padding: 3.2rem 1.5rem 2.6rem;
     }
@@ -248,9 +219,8 @@
       font-size: 0.8rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--accent-gold-soft);
+      color: var(--gold-soft);
       margin-bottom: 0.75rem;
-      font-family: "Orbitron", system-ui, sans-serif;
     }
 
     .hero-title {
@@ -258,11 +228,10 @@
       font-size: clamp(2.1rem, 3vw, 2.7rem);
       line-height: 1.18;
       margin: 0 0 0.9rem;
-      text-transform: none;
     }
 
     .hero-title span {
-      color: var(--accent-gold-soft);
+      color: var(--gold-soft);
     }
 
     .hero-subtitle {
@@ -270,7 +239,6 @@
       color: var(--text-muted);
       max-width: 34rem;
       margin-bottom: 1.4rem;
-      text-align: justify;
     }
 
     .hero-badges {
@@ -285,33 +253,26 @@
       padding: 0.18rem 0.7rem;
       border-radius: 999px;
       border: 1px solid rgba(241, 230, 163, 0.32);
-      color: var(--accent-gold-soft);
+      color: var(--gold-soft);
       background: rgba(11, 15, 20, 0.92);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
     }
 
     .hero-meta {
       font-size: 0.8rem;
       color: var(--text-muted);
       max-width: 32rem;
-      text-align: justify;
     }
 
-    /* Hero card (right) */
     .hero-card {
       background: radial-gradient(circle at top left, #1b2236, #050711);
       border-radius: var(--radius-lg);
       padding: 1.7rem 1.8rem 1.6rem;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-soft);
       box-shadow: var(--shadow-soft);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-height: 100%;
-      color: #e2e6f0;
-      position: relative;
-      overflow: hidden;
     }
 
     .hero-card-heading {
@@ -319,7 +280,7 @@
       font-size: 0.95rem;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--accent-gold-soft);
+      color: var(--gold-soft);
       margin: 0 0 0.75rem;
     }
 
@@ -341,7 +302,6 @@
       font-size: 0.8rem;
       color: var(--text-muted);
       margin: 0.25rem 0 0;
-      text-align: justify;
     }
 
     .hero-card-divider {
@@ -354,7 +314,7 @@
       font-size: 0.82rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: var(--accent-gold-soft);
+      color: var(--gold-soft);
       margin-bottom: 0.4rem;
     }
 
@@ -362,7 +322,6 @@
       font-size: 0.8rem;
       color: var(--text-main);
       margin-bottom: 0.5rem;
-      text-align: justify;
     }
 
     .hero-card-link {
@@ -380,7 +339,7 @@
       }
     }
 
-    /* MAIN LAYOUT ----------------------------------------------------- */
+    /* MAIN LAYOUT */
     .main {
       padding: 0 1.5rem 3.2rem;
     }
@@ -392,7 +351,6 @@
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--text-muted);
-      font-family: "Orbitron", system-ui, sans-serif;
     }
 
     .grid-main {
@@ -435,10 +393,9 @@
       font-size: 0.9rem;
       line-height: 1.5;
       margin-top: 0;
-      text-align: justify;
     }
 
-    /* FORM ------------------------------------------------------------ */
+    /* FORM */
     .form-group {
       margin-bottom: 0.9rem;
     }
@@ -480,7 +437,6 @@
       font-size: 0.78rem;
       color: #7a6432;
       margin-top: 0.1rem;
-      text-align: justify;
     }
 
     .btn-row {
@@ -520,11 +476,10 @@
       background: rgba(212, 175, 55, 0.08);
     }
 
-    /* OUTPUT PANEL ---------------------------------------------------- */
+    /* OUTPUT PANEL */
     .panel-output-header {
       font-size: 0.9rem;
       margin-bottom: 1.1rem;
-      text-align: justify;
     }
 
     .metrics-grid {
@@ -642,7 +597,6 @@
       padding-top: 0.8rem;
       font-size: 0.82rem;
       border-top: 1px dashed rgba(122, 100, 50, 0.4);
-      text-align: justify;
     }
 
     .panel-output-footer-title {
@@ -651,7 +605,6 @@
       font-size: 0.78rem;
       color: #8a6c33;
       margin-bottom: 0.3rem;
-      font-family: "Orbitron", system-ui, sans-serif;
     }
 
     .panel-output-footer a {
@@ -659,7 +612,7 @@
       text-decoration: underline;
     }
 
-    /* INFO PANELS ----------------------------------------------------- */
+    /* INFO PANELS */
     .info-grid {
       max-width: 1120px;
       margin: 2.4rem auto 0;
@@ -701,14 +654,13 @@
       font-size: 0.9rem;
       line-height: 1.55;
       margin: 0 0 0.5rem;
-      text-align: justify;
     }
 
     .info-panel ul {
       padding-left: 1.1rem;
     }
 
-    /* CTA PANEL ------------------------------------------------------- */
+    /* CTA PANEL */
     .cta-panel {
       max-width: 1120px;
       margin: 2.5rem auto 0;
@@ -726,7 +678,7 @@
     }
 
     .cta-panel strong {
-      color: var(--accent-gold-soft);
+      color: var(--gold-soft);
     }
 
     .cta-btn {
@@ -747,10 +699,10 @@
       text-decoration: none;
     }
 
-    /* FOOTER (aligned with new pages) -------------------------------- */
+    /* FOOTER */
     .footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      background: radial-gradient(circle at top, #0c111b 0, #04040e 55%, #000 100%);
+      border-top: 1px solid var(--border-soft);
+      background: radial-gradient(circle at top, #101525, #020308);
       padding: 1.6rem 1.5rem 2.1rem;
       color: var(--text-muted);
       font-size: 0.82rem;
@@ -758,33 +710,29 @@
     }
 
     .footer-inner {
-      max-width: 1180px;
+      max-width: 1120px;
       margin: 0 auto;
-    }
-
-    .footer-main {
-      margin-bottom: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
     }
 
     .footer-links {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      font-size: 12px;
+      gap: 0.9rem;
     }
 
-    .footer-dot::before {
-      content: "•";
-      margin: 0 6px;
-      opacity: 0.65;
-    }
-
-    .footer a {
+    .footer-links a {
       color: var(--text-muted);
+      text-decoration: none;
     }
 
-    .footer a:hover {
-      color: #f3e7c0;
+    .footer-links a:hover {
+      color: var(--gold-soft);
+      text-decoration: underline;
     }
   </style>
 </head>
@@ -793,12 +741,15 @@
   <header class="nav">
     <div class="nav-inner">
       <div class="nav-left">
-        <div class="logo-pill">
-          <div class="logo-pill-icon">◎</div>
-          <div class="logo-pill-text">
-            <div class="logo-title">OPENPROOF — RPO v0.1</div>
-            <div class="logo-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
-          </div>
+        <div class="nav-logo">
+          <img
+            src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+            alt="OpenProof emblem"
+          />
+        </div>
+        <div class="nav-brand">
+          <div class="nav-title">OPENPROOF — RPO v0.1</div>
+          <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
         </div>
       </div>
 
@@ -807,22 +758,16 @@
         <a href="index.html" class="nav-link">Specification</a>
         <a href="examples.html" class="nav-link">Examples</a>
         <a href="tests.html" class="nav-link">Tests</a>
-        <a href="demo-psycho.html" class="nav-link">Psycho-legal demo</a>
-        <a href="demo-legal.html" class="nav-link">Legal demo</a>
-        <a href="demo-legal-mapping.html" class="nav-link">Legal mapping</a>
         <a href="sandbox.html" class="nav-link active">Sandbox</a>
-      </nav>
-
-      <div class="nav-right">
         <a
+          class="btn-ghost"
           href="https://github.com/openproof-net/rpo-spec-v0.1"
-          class="nav-cta"
           target="_blank"
           rel="noopener noreferrer"
         >
           View on GitHub
         </a>
-      </div>
+      </nav>
     </div>
   </header>
 
@@ -1131,22 +1076,38 @@
   <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
-      <div class="footer-main">
-        OpenProof — RPO Specification v0.1<br />
-        © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie —
-        Editorial lead for the specification: <strong>Gersende Ryard de Parcey</strong>.
+      <div>
+        <div>OpenProof — RPO Specification v0.1</div>
+        <div>
+          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC –
+          Université de Caen Normandie — Specification editor: Gersende Ryard de Parcey.
+        </div>
       </div>
       <div class="footer-links">
-        <a href="overview.html">Technical site</a>
-        <span class="footer-dot"></span>
-        <a href="governance.html">Governance</a>
-        <span class="footer-dot"></span>
-        <a href="contact.html">Contact</a>
+        <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">
+          Technical site
+        </a>
+        <span>•</span>
+        <a
+          href="https://www.truthx-openproof.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Governance
+        </a>
+        <span>•</span>
+        <a
+          href="https://www.linkedin.com/in/gryard/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Contact
+        </a>
       </div>
     </div>
   </footer>
 
-  <!-- JS ENGINE (unchanged logic, updated text only where needed) -->
+  <!-- JS ENGINE -->
   <script>
     const generateBtn = document.getElementById("generate-btn");
     const resetBtn = document.getElementById("reset-btn");
@@ -1350,7 +1311,8 @@
           registry_hint: "Open sandbox — no official registry anchor yet.",
         },
         meta: {
-          playground: true,
+          playground: false,
+          sandbox: true,
           heuristic_scores: {
             coherence_score: coherenceScore,
             evidence_markers: markers,
@@ -1358,7 +1320,7 @@
             dates_detected: dates.length,
             places_detected: places.length,
             density_ratio: Number(densityRatio.toFixed(2)),
-            chrono_logy_confidence: chronoConfidence,
+            chronology_confidence: chronoConfidence,
           },
           heuristic_anchors: {
             dates: dates,
