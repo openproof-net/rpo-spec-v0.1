@@ -6,18 +6,20 @@
 Integrity · Readability · Verifiability
 ___
 
-## Table des matières
-1. [💙 Pourquoi OpenProof existe — La crise que nous résolvons](#1--pourquoi-openproof-existe--la-crise-que-nous-resolvons)
-2. [🏛 Qu'est-ce qu'OpenProof ? — Une norme minimale et applicable](#2--quest-ce-quopenproof--une-norme-minimale-et-applicable)
-3. [📦 Structure JSON RPO minimale (v0.1)](#3--structure-json-rpo-minimale-v01)
-4. [🔐 Algorithme de hachage (public_hash)](#4--algorithme-de-hachage-public_hash)
-5. [✅ Validation d'un ensemble RPO](#5--validation-dun-ensemble-rpo)
-6. [🧩 Générer un nouveau pack RPO](#6--generer-un-nouveau-pack-rpo)
-7. [🎯 Essayez le moteur — Bac à sable RPO](#7--essayez-le-moteur--bac-a-sable-rpo)
-8. [🔬 Projet pilote scientifique (CNRS × TruthX)](#8--projet-pilote-scientifique-cnrs--truthx)
-9. [🤝 Contribuer](#9--contribuer)
-10. [📫 Contactez-nous](#10--contactez-nous)
-11. [🛡 Responsable de la maintenance](#11--responsable-de-la-maintenance)
+## Table of Contents
+
+1. [💙 Why OpenProof Exists – The Crisis We Are Fixing](#1--why-openproof-exists--the-crisis-we-are-fixing)
+2. [🏛 What Is OpenProof? – A Minimal and Applicable Standard](#2--what-is-openproof--a-minimal-and-applicable-standard)
+3. [📦 Minimal RPO JSON Structure (v0.1)](#3--minimal-rpo-json-structure-v01)
+4. [🔐 Hashing Algorithm (public_hash)](#4--hashing-algorithm-public_hash)
+5. [✅ Validation of an RPO Bundle](#5--validation-of-an-rpo-bundle)
+6. [🧩 Generate a New RPO Pack](#6--generate-a-new-rpo-pack)
+7. [🎯 Try the Engine – RPO Sandbox](#7--try-the-engine--rpo-sandbox)
+8. [🔬 Scientific Pilot Project (CNRS × TruthX)](#8--scientific-pilot-project-cnrs--truthx)
+9. [🤝 Contribute](#9--contribute)
+10. [📫 Contact Us](#10--contact-us)
+11. [🛡 Maintainer](#11--maintainer)
+
 
 
 
