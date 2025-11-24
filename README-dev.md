@@ -259,28 +259,22 @@ narrative=<text>
 
 ---
 
-### 8.4 🔹 Validation Contract 
-presence of mandatory fields
+### 8.4 🔹 Validation Contract
 
-valid ISO-8601 timestamp
-
-64-char SHA-256 hex
-
-correct narrative structure
-
-deterministic hash match
-
-JSON parseable + UTF-8 clean
-
-(optional) pdf_hash validation
-
-(optional) schema validation
+- presence of mandatory fields  
+- valid ISO-8601 timestamp  
+- 64-char SHA-256 hex  
+- correct narrative structure  
+- deterministic hash match  
+- JSON parseable + UTF-8 clean  
+- (optional) pdf_hash validation  
+- (optional) schema validation  
 
 ---
 
 ### 8.5 🔹 Lifecycle Summary
-mathematica
-Copier le code
+
+
 Input → Normalize → Build JSON → Compute Hash → Attach Registry → Validate → Publish
 
 
