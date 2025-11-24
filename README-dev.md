@@ -241,7 +241,7 @@ title=<string>     |
 narrative=<text>
 ```
 
-
+```
 ---
 
 ### 8.3 🔹 Minimal JSON Responsibilities
@@ -265,8 +265,8 @@ narrative=<text>
   },
   "meta": { "playground": false }
 }
+```json
 ```
-
 ---
 
 ### 8.4 🔹 Validation Contract
@@ -278,13 +278,13 @@ narrative=<text>
 - deterministic hash match  
 - JSON parseable + UTF-8 clean  
 - (optional) pdf_hash validation  
-- (optional) schema validation  
-
+- (optional) schema validation
+```
+```
 ---
 
 ### 8.5 🔹 Lifecycle Summary
 
 
 Input → Normalize → Build JSON → Compute Hash → Attach Registry → Validate → Publish
-
-
+```
