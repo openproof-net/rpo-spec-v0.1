@@ -231,7 +231,7 @@ For technical questions, integrations or bug reports:
 ---
 
 ### 8.2 🔹 Deterministic Concatenation Model
-
+```
 rpo_version=<v>    |
 bundle_id=<uuid>   |
 created_at=<iso8601> |
@@ -270,7 +270,7 @@ narrative=<text>
 ---
 
 ### 8.4 🔹 Validation Contract
-
+```
 - presence of mandatory fields  
 - valid ISO-8601 timestamp  
 - 64-char SHA-256 hex  
@@ -285,6 +285,6 @@ narrative=<text>
 
 ### 8.5 🔹 Lifecycle Summary
 
-
+```
 Input → Normalize → Build JSON → Compute Hash → Attach Registry → Validate → Publish
 ```
