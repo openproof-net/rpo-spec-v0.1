@@ -80,9 +80,6 @@ This is the canonical baseline of a compliant RPO bundle:
     "playground": false
   }
 }
-
----
-
 4. 🔐 Hashing Algorithm (public_hash)
 RPO v0.1 uses SHA-256 over a deterministic concatenation of core fields:
 
@@ -113,8 +110,6 @@ def compute_public_hash(bundle):
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 This guarantees deterministic validation across implementations.
 
----
-
 5. ✅ Validating an RPO Bundle
 Minimal validation helper (Python)
 python
@@ -141,8 +136,6 @@ validate pdf_hash,
 enforce bundle_id uniqueness in the target registry,
 
 run a full JSON Schema validation of the RPO structure.
-
----
 
 6. 🧩 Generating a New RPO Bundle
 This is a minimal example for creating a new bundle in Python:
@@ -177,9 +170,6 @@ def new_rpo(title, text, issuer, subject):
     # Compute and attach public hash
     bundle["registry"]["public_hash"] = compute_public_hash(bundle)
     return bundle
-
----
-
 7. 🎯 Try the Engine — RPO Sandbox
 Open, deterministic, no AI, no registry.
 
@@ -194,8 +184,6 @@ a deterministic SHA-256 hash.
 🔗 https://rpo.openproof.net/sandbox.html
 
 Use it to prototype, test integrations and sanity-check your own RPO implementation.
-
----
 
 8. 🔬 Scientific Pilot (CNRS × TruthX)
 The open standard does not include interpretive or psycho-forensic analysis.
@@ -213,8 +201,6 @@ This pilot extends the open standard for legal, research and institutional partn
 
 🔗 https://www.truthx.co/truthx-pilote-form
 
----
-
 9. 🤝 Contributing
 OpenProof welcomes contributions from:
 
@@ -228,14 +214,10 @@ OSINT & forensic analysts (field use cases).
 
 Issues, pull requests and spec discussions are encouraged in this repository.
 
----
-
 10. 📫 Contact
 Email: openproof@truthx.co
 
 LinkedIn: https://www.linkedin.com/in/gryard/
-
----
 
 11. 🛡 Maintainer
 This specification is maintained by Gersende Ryard de Parcey.
