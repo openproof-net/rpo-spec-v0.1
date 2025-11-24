@@ -97,6 +97,7 @@ This is the canonical baseline of a compliant RPO bundle:
     }
   }
 }
+
 4. Hashing Algorithm (SHA-256)
 The public hash is computed through a strict deterministic concatenation of core fields:
 
@@ -127,6 +128,7 @@ def compute_public_hash(bundle):
         f"narrative={bundle['narrative']['text']}"
     )
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
 5. Validating an RPO Bundle
 Any system should reject an RPO if:
 
@@ -141,6 +143,7 @@ narrative structure is invalid,
 recomputed hash does not match.
 
 This ensures a provably immutable artifact.
+
 
 6. Generating an RPO (Developer Example)
 python
@@ -167,6 +170,7 @@ def new_rpo(title, text, issuer, subject):
         },
         "meta": { "playground": true }
     }
+
 7. Try the Engine — RPO Playground
 Open, deterministic, no AI, no registry.
 Transform any narrative into:
@@ -178,6 +182,7 @@ heuristic markers,
 a deterministic SHA-256 hash.
 
 ➡ https://rpo.openproof.net/playground.html
+
 
 8. Scientific Pilot (CNRS × TruthX)
 The open standard does not include interpretive or psycho-forensic analysis.
@@ -193,6 +198,7 @@ structure-level markers.
 
 ➡ https://www.truthx.co/truthx-pilote-form
 
+
 9. Contribute
 OpenProof welcomes contributions from:
 
@@ -204,13 +210,12 @@ researchers (structures, bias, narrative logic),
 
 OSINT & forensic analysts (field use cases).
 
+
 10. Contact
 Technical questions or interoperability:
 openproof@truthx.co
 LinkedIn: https://www.linkedin.com/in/gryard/
 
+
 11. Maintainer
 This specification is maintained by Gersende Ryard de Parcey.
-
-markdown
-Copier le code
