@@ -32,7 +32,7 @@ ___
 ## ▶️ Try it in 10 seconds
 
 ```bash
-git clone https://github.com/openproof-net/rpo-spec-v0.1
+git clone https://rpo.openproof.net/ or https://github.com/openproof-net/rpo-spec-v0.1
 cd rpo-spec-v0.1
 python tools/validate_rpo.py examples/rpo-example-001.json
 ```
