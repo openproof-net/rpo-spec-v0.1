@@ -117,6 +117,9 @@ Example (Python)
 
 import hashlib
 
+```python
+import hashlib
+
 def compute_public_hash(bundle):
     payload = (
         f"rpo_version={bundle['rpo_version']}|"
@@ -128,6 +131,8 @@ def compute_public_hash(bundle):
         f"narrative={bundle['narrative']['text']}"
     )
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+```
+
 
 
 This guarantees deterministic validation across implementations.
