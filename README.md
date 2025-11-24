@@ -8,17 +8,18 @@ ___
 
 ## Table of Contents
 
-1. [💙 Why OpenProof Exists – The Crisis We Are Fixing](#1--why-openproof-exists--the-crisis-we-are-fixing)
-2. [🏛 What Is OpenProof? – A Minimal and Applicable Standard](#2--what-is-openproof--a-minimal-and-applicable-standard)
+1. [💙 Why OpenProof Exists — The Crisis We Are Fixing](#1--why-openproof-exists--the-crisis-we-are-fixing)
+2. [🏛 What OpenProof Is — A Minimal, Enforceable Standard](#2--what-openproof-is--a-minimal-enforceable-standard)
 3. [📦 Minimal RPO JSON Structure (v0.1)](#3--minimal-rpo-json-structure-v01)
 4. [🔐 Hashing Algorithm (public_hash)](#4--hashing-algorithm-public_hash)
-5. [✅ Validation of an RPO Bundle](#5--validation-of-an-rpo-bundle)
-6. [🧩 Generate a New RPO Pack](#6--generate-a-new-rpo-pack)
-7. [🎯 Try the Engine – RPO Sandbox](#7--try-the-engine--rpo-sandbox)
-8. [🔬 Scientific Pilot Project (CNRS × TruthX)](#8--scientific-pilot-project-cnrs--truthx)
-9. [🤝 Contribute](#9--contribute)
-10. [📫 Contact Us](#10--contact-us)
+5. [✅ Validating an RPO Bundle](#5--validating-an-rpo-bundle)
+6. [🧩 Generating a New RPO Bundle](#6--generating-a-new-rpo-bundle)
+7. [🎯 Try the Engine — RPO Sandbox](#7--try-the-engine--rpo-sandbox)
+8. [🔬 Scientific Pilot (CNRS × TruthX)](#8--scientific-pilot-cnrs--truthx)
+9. [🤝 Contributing](#9--contributing)
+10. [📫 Contact](#10--contact)
 11. [🛡 Maintainer](#11--maintainer)
+
 
 
 
