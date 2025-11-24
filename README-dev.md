@@ -330,6 +330,7 @@ Consistent UUID generation (UUID4).
 
 Rejection of bundles with missing or malformed fields.
 
+```python
 Example (Python defensive pattern)
 def safe_load(path):
     with open(path, "r", encoding="utf-8") as f:
@@ -337,6 +338,7 @@ def safe_load(path):
     # Ensure no BOM, no trailing nulls
     assert raw.encode("utf-8", "strict")
     return json.loads(raw)
+```
     
 ---
 
@@ -350,8 +352,10 @@ Bundle generation and validation via Python or Node scripts.
 
 Ideal for CI pipelines and researcher tooling.
 
+```bash
 $ rpo new "Title" "Narrative..."
 $ rpo validate my_bundle.json
+```
 
 API Integration
 
@@ -361,9 +365,11 @@ Must not store bundles unless explicit.
 
 Ensure identical hashing behaviour across deployments.
 
+```Text
 POST /compute-hash
 POST /validate
 POST /new-rpo
+```
 
 Serverless Integration
 
@@ -373,9 +379,11 @@ Must pin runtime versions to avoid drift.
 
 Must pass full JSON body without modification.
 
+```python
 def handler(event, context):
     bundle = json.loads(event["body"])
     return compute_public_hash(bundle)
+```
 
 Local Library Integration
 
@@ -393,30 +401,24 @@ These pitfalls will instantly corrupt the determinism of the RPO bundle and prod
 
 🚨 High-Risk Sources of Drift
 
-Auto-formatters (Prettier, Black) rewriting JSON.
+- Auto-formatters (Prettier, Black) rewriting JSON.
+- Automatic newline conversion (LF ↔ CRLF).
+- Using localized date formats instead of ISO-8601.
+- Adding or reordering JSON fields.
+- Using Python dictionaries pre-3.7 (non-ordered).
+- Invisible characters (NBSP, zero-width space).
+- Changing runtime versions without pinning.
+- Encoding drift (UTF-16, ANSI, BOM).
+- Mutating text after hashing.
 
-Automatic newline conversion (LF ↔ CRLF).
-
-Using localized date formats instead of ISO-8601.
-
-Adding or reordering JSON fields.
-
-Using Python dictionaries pre-3.7 (non-ordered).
-
-Invisible characters (NBSP, zero-width space).
-
-Changing runtime versions without pinning.
-
-Encoding drift (UTF-16, ANSI, BOM).
-
-Mutating text after hashing.
-
+```python
 Example of a Drift-Inducing Mistake
 # ❌ Dangerous: pretty-printing alters whitespace → hash mismatch
 json.dumps(bundle, indent=4)
+```
 
 Safe Pattern
+```python
 # ✔ Safe: preserve original structure & whitespace
 json.dumps(bundle, separators=(",", ":"))
-
-
+```
