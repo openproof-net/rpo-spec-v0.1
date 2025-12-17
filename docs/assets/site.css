@@ -22,6 +22,14 @@
 
   --shadow-soft: 0 18px 55px rgba(0, 0, 0, 0.35);
 }
+:root {
+  --confidence-very-low: #9aa0a6;   /* neutral grey */
+  --confidence-low: #c9973a;        /* amber */
+  --confidence-medium: #d4af37;     /* soft gold */
+  --confidence-high: #4fa3a5;       /* mineral teal */
+  --confidence-very-high: #3b6ea8;  /* deep blue */
+}
+
 
 /* ---------- Reset & Base ---------- */
 * {
