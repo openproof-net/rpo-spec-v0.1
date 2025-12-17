@@ -7,6 +7,15 @@
 (function () {
   "use strict";
 
+   const CONFIDENCE_LEVELS = {
+  "very-low": { label: "Very low" },
+  "low": { label: "Low" },
+  "medium": { label: "Medium" },
+  "high": { label: "High" },
+  "very-high": { label: "Very high" }
+};
+
+
   /* ---------- Utils ---------- */
 
   function $(selector, scope) {
