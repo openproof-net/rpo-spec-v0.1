@@ -74,8 +74,8 @@
     a:hover { text-decoration: underline; }
 
     code {
-      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono",
-        "Courier New", monospace;
+      font-family: "SF Mono", ui-monospace, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
     }
 
     /* NAVBAR (universal) */
@@ -98,11 +98,7 @@
       gap: 1rem;
     }
 
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
+    .nav-left { display: flex; align-items: center; gap: 0.75rem; }
 
     .nav-logo-link {
       display: flex;
@@ -215,7 +211,9 @@
     }
 
     .nav-dropdown:hover .nav-dropdown-menu,
-    .nav-dropdown:focus-within .nav-dropdown-menu { display: block; }
+    .nav-dropdown:focus-within .nav-dropdown-menu {
+      display: block;
+    }
 
     @media (max-width: 840px) {
       .nav-inner { flex-direction: column; align-items: flex-start; }
@@ -289,11 +287,7 @@
       background: rgba(11, 15, 20, 0.92);
     }
 
-    .hero-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      max-width: 32rem;
-    }
+    .hero-meta { font-size: 0.8rem; color: var(--text-muted); max-width: 32rem; }
 
     .hero-card {
       background: radial-gradient(circle at top left, #1b2236, #050711);
@@ -316,19 +310,12 @@
       margin: 0 0 0.75rem;
     }
 
-    .hero-card-body {
-      font-size: 0.88rem;
-      color: var(--text-main);
-    }
+    .hero-card-body { font-size: 0.88rem; color: var(--text-main); }
 
     .hero-card-body ul { margin: 0 0 0.8rem; padding-left: 1.1rem; }
     .hero-card-body li + li { margin-top: 0.2rem; }
 
-    .hero-card-note {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin: 0.25rem 0 0;
-    }
+    .hero-card-note { font-size: 0.8rem; color: var(--text-muted); margin: 0.25rem 0 0; }
 
     .hero-card-divider {
       margin: 1rem 0 0.9rem;
@@ -685,6 +672,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.9rem;
+      align-items: center;
     }
 
     .footer-links a { color: var(--text-muted); text-decoration: none; }
@@ -757,51 +745,37 @@
     <div class="hero-inner">
       <div>
         <div class="hero-kicker">RPO Sandbox · Open version</div>
-        <h1 class="hero-title">
-          Try the <span>RPO Sandbox</span> — from narrative to draft proof bundle
-        </h1>
-
+        <h1 class="hero-title">Try the <span>RPO Sandbox</span> — from narrative to draft proof bundle</h1>
         <p class="hero-subtitle">
           Paste a short narrative, add a few identifiers, and generate a
-          <strong>draft RPO JSON bundle</strong> with deterministic heuristics and a public
-          hash. This sandbox does not “judge” a case; it demonstrates, in a testable way,
-          how the RPO structure turns a story into a bundle that can be reviewed,
-          verified, and versioned.
+          <strong>draft RPO JSON bundle</strong> with heuristic scores and a public hash.
+          This page demonstrates how the RPO standard can structure a story into something verifiable.
         </p>
-
         <div class="hero-badges">
           <div class="badge">Experimental</div>
           <div class="badge">Deterministic</div>
           <div class="badge">Open-source friendly</div>
         </div>
-
         <div class="hero-meta">
-          This is an <strong>open sandbox</strong>: no AI model, no registry anchoring, no
-          legal effect. The output is a structured draft intended to make the mechanics
-          visible (fields, hashes, anchors), before any advanced research modules are
-          plugged in through restricted scientific pilots.
+          This is an <strong>open sandbox</strong> — no AI model, no registry, no legal value.
+          It is here to show how an RPO bundle can look and behave, before plugging advanced engines or CNRS modules.
         </div>
       </div>
 
-      <!-- Right hero card -->
       <aside class="hero-card">
         <div>
           <h2 class="hero-card-heading">What this page does</h2>
           <div class="hero-card-body">
-            <p>
-              It takes your narrative and produces a draft RPO bundle, so the structure can be
-              inspected and reproduced:
-            </p>
+            <p>It takes your narrative and turns it into a draft RPO bundle:</p>
             <ul>
               <li>Computes basic metrics (length, structure, evidence density).</li>
               <li>Detects simple anchors (dates, places, temporal hints).</li>
               <li>Builds a minimal <code>rpo.json</code> object with heuristic fields.</li>
-              <li>Derives a <code>public_hash</code> from the full content.</li>
+              <li>Derives a <code>public_hash</code> from the content (deterministic).</li>
             </ul>
             <p class="hero-card-note">
-              Think of it as a <strong>standards sandbox</strong>: the “civil code” (the RPO
-              specification) exists, and this page shows a minimal, deterministic way to apply
-              it. The value here is reproducibility and transparency, not authority.
+              Think of it as an <strong>RPO sandbox</strong>: the “civil code” exists,
+              this page shows how a lightweight engine could apply it to real narratives.
             </p>
           </div>
 
@@ -810,10 +784,9 @@
           <div>
             <div class="hero-card-subtitle">Scientific pilot (CNRS × TruthX)</div>
             <p class="hero-card-pilot">
-              For advanced psycho-forensic analysis (interpretive coherence, narrative
-              structure, markers of coercive control, narrative inversion), access is handled
-              through a restricted <strong>CNRS × TruthX</strong> research pilot. The open
-              sandbox stays intentionally lightweight and non-inferential.
+              For advanced psycho-medical-forensic analysis (interpretive coherence, narrative structure,
+              markers of coercive control and narrative inversion), you can request access to the
+              <strong>CNRS × TruthX</strong> research pilot.
             </p>
             <a
               class="hero-card-link"
@@ -838,36 +811,23 @@
       <section class="panel" aria-label="RPO input">
         <h2>1. Input</h2>
         <p>
-          Start with a short narrative (1–3 paragraphs). You may anonymise names and
-          dates. The purpose is to observe how structure, anchors, and hashing behave on
-          realistic text, not to produce a legal qualification or a truth claim.
+          Start with a short narrative (1–3 paragraphs). You can anonymise names and dates.
+          The goal is to see how the structure behaves, not to judge the case.
         </p>
 
         <div class="form-group">
           <label class="form-label" for="case-title">Case title</label>
-          <input
-            id="case-title"
-            class="input"
-            placeholder="Example: Incident in Paris office – March 2024"
-          />
+          <input id="case-title" class="input" placeholder="Example: Incident in Paris office – March 2024" />
         </div>
 
         <div class="form-group">
           <label class="form-label" for="issuer">Issuer (who files the report)</label>
-          <input
-            id="issuer"
-            class="input"
-            placeholder="Example: Internal audit team, Company X"
-          />
+          <input id="issuer" class="input" placeholder="Example: Internal audit team, Company X" />
         </div>
 
         <div class="form-group">
           <label class="form-label" for="subject">Subject (who / what is concerned)</label>
-          <input
-            id="subject"
-            class="input"
-            placeholder="Example: Employee, department, contract, etc."
-          />
+          <input id="subject" class="input" placeholder="Example: Employee, department, contract, etc." />
         </div>
 
         <div class="form-group">
@@ -878,19 +838,14 @@
             placeholder="Describe the situation in your own words. What happened, when, where, who was involved?"
           ></textarea>
           <div class="helper">
-            Tip: include at least one date or time marker, one location, and 2–3 concrete
-            actions. The more explicit the anchors, the more reproducible the bundle.
+            Tip: include at least one date or time marker, a location, and 2–3 concrete actions.
           </div>
         </div>
 
         <div class="btn-row">
-          <button class="btn-primary" id="generate-btn" type="button">
-            Generate draft RPO bundle
-          </button>
+          <button class="btn-primary" id="generate-btn" type="button">Generate draft RPO bundle</button>
           <button class="btn-secondary" id="reset-btn" type="button">Reset</button>
-          <button class="btn-secondary" id="load-example-btn" type="button">
-            Load example
-          </button>
+          <button class="btn-secondary" id="load-example-btn" type="button">Load example</button>
         </div>
       </section>
 
@@ -902,34 +857,13 @@
         </p>
 
         <div class="metrics-grid" id="metrics" style="display:none">
-          <div class="metric">
-            <div class="metric-label">Sentences</div>
-            <div class="metric-value" id="metric-sentences">0</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Evidence markers</div>
-            <div class="metric-value" id="metric-markers">0</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Coherence score</div>
-            <div class="metric-value" id="metric-score">0%</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Dates detected</div>
-            <div class="metric-value" id="metric-dates">0</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Places detected</div>
-            <div class="metric-value" id="metric-places">0</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Density ratio</div>
-            <div class="metric-value" id="metric-density">0.00</div>
-          </div>
-          <div class="metric">
-            <div class="metric-label">Chronology confidence</div>
-            <div class="metric-value" id="metric-chrono">0%</div>
-          </div>
+          <div class="metric"><div class="metric-label">Sentences</div><div class="metric-value" id="metric-sentences">0</div></div>
+          <div class="metric"><div class="metric-label">Evidence markers</div><div class="metric-value" id="metric-markers">0</div></div>
+          <div class="metric"><div class="metric-label">Coherence score</div><div class="metric-value" id="metric-score">0%</div></div>
+          <div class="metric"><div class="metric-label">Dates detected</div><div class="metric-value" id="metric-dates">0</div></div>
+          <div class="metric"><div class="metric-label">Places detected</div><div class="metric-value" id="metric-places">0</div></div>
+          <div class="metric"><div class="metric-label">Density ratio</div><div class="metric-value" id="metric-density">0.00</div></div>
+          <div class="metric"><div class="metric-label">Chronology confidence</div><div class="metric-value" id="metric-chrono">0%</div></div>
         </div>
 
         <div class="hash-block" id="hash-block" style="display:none">
@@ -948,29 +882,19 @@
 
         <div class="output-actions" id="output-actions" style="display:none">
           <button class="btn-small" id="copy-json-btn" type="button">Copy JSON</button>
-          <button class="btn-small" id="download-json-btn" type="button">
-            Download rpo.json
-          </button>
+          <button class="btn-small" id="download-json-btn" type="button">Download rpo.json</button>
         </div>
 
         <pre id="rpo-json" aria-label="Draft RPO JSON bundle"></pre>
 
-        <p style="margin:0.2rem 0 0; font-size:0.78rem; color:#7a6432;">
-          Note: the hash demonstrates integrity for this draft bundle; it does not certify the underlying facts.
-        </p>
-
         <div class="panel-output-footer">
           <div class="panel-output-footer-title">Scientific pilot (CNRS × TruthX)</div>
           <p>
-            For an advanced psycho-medical-forensic analysis (interpretive coherence,
-            narrative structure, markers of coercive control and narrative inversion), you
-            can request access to the <strong>CNRS × TruthX</strong> research pilot.
+            For an advanced psycho-medical-forensic analysis (interpretive coherence, narrative structure,
+            markers of coercive control and narrative inversion), you can request access to the
+            <strong>CNRS × TruthX</strong> research pilot.
             <br />
-            <a
-              href="https://www.truthx.co/truthx-pilote-form"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
               Apply for the CNRS pilot
             </a>
           </p>
@@ -983,29 +907,24 @@
       <article class="info-panel">
         <h3 class="info-title">How this page works</h3>
         <p>
-          This sandbox applies a minimal, testable interpretation of the RPO “civil code”
-          to your narrative. It does not call any AI model: everything runs locally in
-          your browser, so the result can be reproduced and audited.
+          This sandbox applies the minimal RPO “civil code” to your narrative.
+          It does not use any AI model: everything runs locally in your browser.
         </p>
         <ul>
           <li>You provide a short narrative and basic identifiers (issuer, subject, title).</li>
           <li>The engine computes deterministic heuristics: sentences, evidence markers, anchors.</li>
-          <li>A minimal <code>rpo.json</code> bundle is generated with a <code>public_hash</code>.</li>
+          <li>A minimal <code>rpo.json</code> bundle is generated with a deterministic <code>public_hash</code>.</li>
           <li>The JSON is ready to be validated, hashed again, or integrated into your own tools.</li>
         </ul>
         <p>
-          The structure mirrors the official RPO v0.1 specification. Additional fields are
-          explicitly labelled as <code>heuristic_scores</code> and
-          <code>heuristic_anchors</code>, because they are demonstrators, not normative
-          requirements.
+          The structure mirrors the official RPO v0.1 specification, with additional fields marked as
+          <code>heuristic_scores</code> and <code>heuristic_anchors</code> for research use.
         </p>
       </article>
 
       <article class="info-panel">
         <h3 class="info-title">What this engine does not do</h3>
-        <p>
-          This open engine is deliberately limited. It is a demonstrator, not a forensic authority.
-        </p>
+        <p>This open engine is deliberately limited. It is a demonstrator, not a forensic authority.</p>
         <ul>
           <li>It does <strong>not</strong> determine truth or falsity.</li>
           <li>It does <strong>not</strong> replace legal analysis or expert assessment.</li>
@@ -1013,9 +932,8 @@
           <li>It does <strong>not</strong> embed psycho-forensic AI models in the open version.</li>
         </ul>
         <p>
-          The goal is to make evidence structure transparent and testable first, then connect
-          advanced scientific engines later under controlled conditions. This sequencing is
-          deliberate: structure before interpretation.
+          The goal is to make the structure of evidence transparent and testable,
+          before connecting more advanced scientific engines in restricted pilots.
         </p>
       </article>
     </section>
@@ -1023,11 +941,9 @@
     <!-- CTA PANEL -->
     <section class="cta-panel">
       <div>
-        You are viewing the <strong>open</strong> RPO Sandbox.
-        <br />
-        If you need advanced psycho-forensic modules and controlled evaluation on real cases,
-        access is handled through a <strong>scientific / CNRS pilot</strong>. The open version
-        remains public, lightweight, and standards-focused by design.
+        Here you see the <strong>open</strong> RPO Sandbox.<br />
+        If you want to test the <strong>scientific / CNRS pilot version</strong> with advanced psycho-forensic modules
+        and real cases, you can apply to the pilot programme.
       </div>
       <a
         class="cta-btn"
@@ -1095,23 +1011,21 @@
     const downloadBtn = document.getElementById("download-json-btn");
 
     function normaliseText(text) {
-      return text.replace(/\s+/g, " ").trim();
+      return (text || "").replace(/\s+/g, " ").trim();
     }
 
     function countSentences(text) {
       const cleaned = normaliseText(text);
       if (!cleaned) return 0;
-      const parts = cleaned
+      return cleaned
         .split(/[.!?]+/g)
-        .map((s) => s.trim())
-        .filter(Boolean);
-      return parts.length;
+        .map(s => s.trim())
+        .filter(Boolean).length;
     }
 
     function countEvidenceMarkers(text) {
-      let digits = (text.match(/\b\d{2,}\b/g) || []).length;
-      const markers =
-        text.match(/\b(on|at|since|because|when|where|witness|email|report|contract|invoice)\b/gi) || [];
+      const digits = (text.match(/\b\d{2,}\b/g) || []).length;
+      const markers = text.match(/\b(on|at|since|because|when|where|witness|email|report|contract|invoice)\b/gi) || [];
       return digits + markers.length;
     }
 
@@ -1120,35 +1034,24 @@
       const lower = text.toLowerCase();
       const found = new Set();
 
-      months.forEach((m) => {
-        if (lower.includes(m)) {
-          const label = m.charAt(0).toUpperCase() + m.slice(1);
-          found.add(label);
-        }
+      months.forEach(m => {
+        if (lower.includes(m)) found.add(m.charAt(0).toUpperCase() + m.slice(1));
       });
 
-      const years = text.match(/\b(19|20)\d{2}\b/g) || [];
-      years.forEach((y) => found.add(y));
-
+      (text.match(/\b(19|20)\d{2}\b/g) || []).forEach(y => found.add(y));
       return Array.from(found);
     }
 
     function detectPlaces(text) {
-      const placeWords =
-        "office headquarters store shop factory plant school university court hospital paris lyon marseille london berlin brussels new york sydney".split(" ");
+      const placeWords = "office headquarters store shop factory plant school university court hospital paris lyon marseille london berlin brussels new york sydney".split(" ");
       const lower = text.toLowerCase();
       const found = new Set();
-
-      placeWords.forEach((p) => {
-        if (lower.includes(p)) found.add(p);
-      });
-
+      placeWords.forEach(p => { if (lower.includes(p)) found.add(p); });
       return Array.from(found);
     }
 
     function countTemporalMarkers(text) {
-      const markers =
-        text.match(/\b(yesterday|today|tomorrow|morning|evening|night|week|month|year|before|after|during)\b/gi) || [];
+      const markers = text.match(/\b(yesterday|today|tomorrow|morning|evening|night|week|month|year|before|after|during)\b/gi) || [];
       return markers.length;
     }
 
@@ -1163,8 +1066,7 @@
       const base = 10;
       const dateWeight = datesCount * 20;
       const temporalWeight = temporalMarkers * 8;
-      const raw = base + dateWeight + temporalWeight;
-      return Math.max(0, Math.min(100, raw));
+      return Math.max(0, Math.min(100, base + dateWeight + temporalWeight));
     }
 
     async function sha256(text) {
@@ -1172,22 +1074,20 @@
       const data = encoder.encode(text);
       const hashBuffer = await crypto.subtle.digest("SHA-256", data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
-      return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+      return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
     }
 
-    function randomBundleId() {
-      const ts = Date.now().toString(36);
-      const rand = Math.floor(Math.random() * 1e8).toString(36);
-      return "rpo-" + ts + "-" + rand;
+    function safeToFixed(n, digits) {
+      return Number.isFinite(n) ? n.toFixed(digits) : (0).toFixed(digits);
     }
 
     async function generateBundle() {
-      const title = titleInput.value.trim() || "Untitled case";
-      const issuer = issuerInput.value.trim() || "Unknown issuer";
-      const subject = subjectInput.value.trim() || "Unspecified subject";
-      const narrative = narrativeInput.value.trim();
+      const title = normaliseText(titleInput.value) || "Untitled case";
+      const issuer = normaliseText(issuerInput.value) || "Unknown issuer";
+      const subject = normaliseText(subjectInput.value) || "Unspecified subject";
+      const narrative = (narrativeInput.value || "").trim();
 
-      if (!narrative) {
+      if (!normaliseText(narrative)) {
         alert("Please paste a narrative before generating the bundle.");
         return;
       }
@@ -1200,27 +1100,31 @@
 
       const coherenceScore = computeCoherenceScore(sentences, markers);
       const densityRatio = sentences ? markers / sentences : 0;
-      const chronoConfidence = computeChronologyConfidence(dates.length, temporalMarkers);
+      const chronologyConfidence = computeChronologyConfidence(dates.length, temporalMarkers);
 
-      const bundleId = randomBundleId();
-      const createdAt = new Date().toISOString();
-
-      const fullForHash = [
+      // Deterministic public hash: only depends on canonical content (not time)
+      const canonicalForHash = [
         "rpo_version=0.1",
-        "bundle_id=" + bundleId,
-        "created_at=" + createdAt,
         "issuer=" + issuer,
         "subject=" + subject,
         "title=" + title,
-        "narrative=" + narrative,
+        "narrative=" + normaliseText(narrative),
       ].join("|");
 
       let publicHash = "";
       try {
-        publicHash = await sha256(fullForHash);
+        publicHash = await sha256(canonicalForHash);
       } catch (e) {
         publicHash = "sha256-not-available-in-this-browser";
       }
+
+      // Deterministic bundle_id derived from the public hash
+      const bundleId = (publicHash && publicHash !== "sha256-not-available-in-this-browser")
+        ? "rpo-" + publicHash.slice(0, 12)
+        : "rpo-local-unknown";
+
+      // created_at is informational; does not affect public_hash
+      const createdAt = new Date().toISOString();
 
       const rpo = {
         rpo_version: "0.1",
@@ -1231,7 +1135,7 @@
         narrative: {
           title: title,
           text: narrative,
-          pdf_hash: "pdf-placeholder-hash",
+          pdf_hash: "pdf-placeholder-hash"
         },
         evidence: [
           {
@@ -1239,12 +1143,12 @@
             type: "narrative_block",
             source: "user_input",
             description: "Raw narrative provided in the sandbox",
-            text_ref: "narrative.text",
-          },
+            text_ref: "narrative.text"
+          }
         ],
         registry: {
           public_hash: publicHash,
-          registry_hint: "Open sandbox — no official registry anchor yet.",
+          registry_hint: "Open sandbox — no official registry anchor yet."
         },
         meta: {
           playground: true,
@@ -1254,29 +1158,29 @@
             sentence_count: sentences,
             dates_detected: dates.length,
             places_detected: places.length,
-            density_ratio: Number(densityRatio.toFixed(2)),
-            chronology_confidence: chronoConfidence
+            density_ratio: Number(safeToFixed(densityRatio, 2)),
+            chronology_confidence: chronologyConfidence
           },
           heuristic_anchors: {
             dates: dates,
             places: places,
-            temporal_markers: temporalMarkers,
+            temporal_markers: temporalMarkers
           },
           psycho_forensic: {
             available: false,
-            note: "Open version — no psycho-forensic engine. Reserved for CNRS × TruthX pilots.",
-          },
-        },
+            note: "Open version — no psycho-forensic engine. Reserved for CNRS × TruthX pilots."
+          }
+        }
       };
 
       // Update metrics UI
-      sentencesEl.textContent = sentences.toString();
-      markersEl.textContent = markers.toString();
-      scoreEl.textContent = coherenceScore.toString() + "%";
-      datesEl.textContent = dates.length.toString();
-      placesEl.textContent = places.length.toString();
-      densityEl.textContent = densityRatio.toFixed(2);
-      chronoEl.textContent = chronoConfidence.toString() + "%";
+      sentencesEl.textContent = String(sentences);
+      markersEl.textContent = String(markers);
+      scoreEl.textContent = String(coherenceScore) + "%";
+      datesEl.textContent = String(dates.length);
+      placesEl.textContent = String(places.length);
+      densityEl.textContent = safeToFixed(densityRatio, 2);
+      chronoEl.textContent = String(chronologyConfidence) + "%";
       metricsEl.style.display = "grid";
 
       // Hash & anchors
@@ -1291,19 +1195,17 @@
       anchorsBlockEl.style.display = "block";
       anchorsDatesEl.textContent = "Dates: " + (dates.length ? dates.join(", ") : "–");
       anchorsPlacesEl.textContent = "Places: " + (places.length ? places.join(", ") : "–");
-      anchorsTemporalEl.textContent = "Temporal markers: " + temporalMarkers.toString();
+      anchorsTemporalEl.textContent = "Temporal markers: " + String(temporalMarkers);
 
-      // JSON + tagline
+      // JSON
       taglineEl.textContent =
-        "This draft RPO bundle was generated locally in your browser. It is deterministic and non-binding: its purpose is to make the structure auditable (fields, anchors, hash), so the same input yields the same bundle.";
+        "This is a draft RPO bundle generated locally in your browser. It is deterministic, non-binding, and meant for experimentation only.";
       jsonEl.textContent = JSON.stringify(rpo, null, 2);
 
       outputActions.style.display = "flex";
     }
 
-    generateBtn.addEventListener("click", () => {
-      generateBundle();
-    });
+    generateBtn.addEventListener("click", () => { generateBundle(); });
 
     resetBtn.addEventListener("click", () => {
       titleInput.value = "";
@@ -1343,9 +1245,7 @@
       try {
         await navigator.clipboard.writeText(jsonEl.textContent);
         copyBtn.textContent = "Copied!";
-        setTimeout(() => {
-          copyBtn.textContent = "Copy JSON";
-        }, 1200);
+        setTimeout(() => { copyBtn.textContent = "Copy JSON"; }, 1200);
       } catch (e) {
         alert("Clipboard is not available in this browser.");
       }
