@@ -4,31 +4,45 @@
   <meta charset="UTF-8" />
   <title>OpenProof — RPO Overview | JSON + PDF proof bundle</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="Gersende Ryard de Parcey">
-  <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor">
+  <meta name="author" content="Gersende Ryard de Parcey" />
+  <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor" />
 
   <!-- SEO -->
-  <meta name="description"
-        content="Conceptual overview of the OpenProof RPO standard: what problem it solves, how JSON and PDF work together, and how implementers and reviewers can use it." />
+  <meta
+    name="description"
+    content="Conceptual overview of the OpenProof RPO standard: how signed JSON, human-readable PDF and public hashes work together to structure and preserve evidence."
+  />
   <link rel="canonical" href="https://rpo.openproof.net/overview.html" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="OpenProof — RPO Overview" />
-  <meta property="og:description"
-        content="High-level overview of the RPO (Rapport Probatoire Ouvert) standard for digital evidence: signed JSON, human-readable PDF, and a public hash for verifiability." />
+  <meta
+    property="og:description"
+    content="High-level overview of the RPO (Rapport Probatoire Ouvert) standard for digital evidence: signed JSON, human-readable PDF, and a public hash."
+  />
   <meta property="og:url" content="https://rpo.openproof.net/overview.html" />
-  <meta property="og:image"
-        content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
+  <meta
+    property="og:image"
+    content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+  />
 
-  <!-- Favicon OpenProof -->
+  <!-- Favicon -->
   <link
     rel="icon"
     type="image/png"
     href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
   />
 
-  <!-- Minimal dark/ivory/gold theme -->
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Minimal dark / ivory / gold theme -->
   <style>
     :root {
       --bg: #04040e;
@@ -40,51 +54,38 @@
       --ink: #7a6432;
       --gold: #d4af37;
       --gold-soft: #f1e6a3;
-      --border-soft: rgba(241, 230, 163, 0.2);
+      --border-soft: rgba(241, 230, 163, 0.25);
       --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
       --radius-lg: 18px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, system-ui, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #111625 0, var(--bg) 45%);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111625 0, var(--bg) 46%);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
 
-    a {
-      color: var(--gold-soft);
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
+    a { color: var(--gold-soft); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
     /* NAVBAR */
     .nav {
       position: sticky;
       top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
-      background: linear-gradient(
-        90deg,
-        rgba(4, 4, 14, 0.96),
-        rgba(4, 4, 14, 0.92)
-      );
+      z-index: 30;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(90deg, rgba(4,4,14,0.96), rgba(4,4,14,0.92));
       border-bottom: 1px solid var(--border-soft);
     }
 
     .nav-inner {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 0.65rem 1.5rem;
+      padding: 0.7rem 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -94,14 +95,13 @@
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
+      gap: 0.75rem;
     }
 
     .nav-logo-link {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      text-decoration: none;
       color: var(--text-main);
     }
 
@@ -113,19 +113,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4),
-        0 10px 25px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.4), 0 10px 25px rgba(0,0,0,0.6);
     }
 
     .nav-logo img {
       width: 28px;
       height: 28px;
       border-radius: 999px;
-      display: block;
-      object-fit: contain;
     }
 
     .nav-title {
+      font-family: "Orbitron", system-ui, sans-serif;
       font-size: 0.95rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -139,32 +137,16 @@
 
     .nav-links {
       display: flex;
-      align-items: center;
       gap: 1rem;
       font-size: 0.9rem;
     }
 
     .nav-link {
       color: var(--text-muted);
-      text-decoration: none;
-      border: none;
-      background: none;
-      font: inherit;
-      padding: 0;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
     }
 
-    .nav-link:hover {
+    html[data-page="overview"] .nav-link--overview {
       color: var(--gold-soft);
-      text-decoration: none;
-    }
-
-    .nav-link.active {
-      color: var(--gold-soft);
-      font-weight: 600;
     }
 
     .btn-ghost {
@@ -172,90 +154,18 @@
       padding: 0.4rem 0.95rem;
       border: 1px solid var(--border-soft);
       font-size: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      text-decoration: none;
       color: var(--gold-soft);
-      background: rgba(10, 14, 24, 0.9);
-      white-space: nowrap;
-    }
-
-    .btn-ghost span {
-      font-size: 0.9rem;
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--gold-soft);
-      text-decoration: none;
-      background: rgba(13, 18, 30, 0.95);
-    }
-
-    /* Dropdown “Technical docs” */
-    .nav-dropdown {
-      position: relative;
-    }
-
-    .nav-dropdown-caret {
-      font-size: 0.7rem;
-    }
-
-    .nav-dropdown-menu {
-      position: absolute;
-      top: 130%;
-      right: 0;
-      min-width: 180px;
-      padding: 0.4rem 0;
-      border-radius: 12px;
-      background: #070913;
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-soft);
-      display: none;
-      z-index: 30;
-    }
-
-    .nav-dropdown-menu .nav-link {
-      width: 100%;
-      padding: 0.35rem 0.9rem;
-      justify-content: flex-start;
-      color: var(--text-muted);
-    }
-
-    .nav-dropdown-menu .nav-link:hover {
-      background: rgba(241, 230, 163, 0.08);
-      color: var(--gold-soft);
-    }
-
-    .nav-dropdown:hover .nav-dropdown-menu,
-    .nav-dropdown:focus-within .nav-dropdown-menu {
-      display: block;
-    }
-
-    @media (max-width: 900px) {
-      .nav-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .nav-links {
-        flex-wrap: wrap;
-      }
-      .btn-ghost {
-        align-self: flex-start;
-      }
+      background: rgba(10,14,24,0.9);
     }
 
     /* HERO */
     .hero {
-      padding: 3.2rem 1.5rem 2.4rem;
+      padding: 3.2rem 1.5rem 2.6rem;
     }
 
     .hero-inner {
       max-width: 1120px;
       margin: 0 auto;
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.6fr);
-      gap: 2.4rem;
-      align-items: center;
     }
 
     .hero-kicker {
@@ -267,177 +177,49 @@
     }
 
     .hero-title {
-      font-size: clamp(2.1rem, 3vw, 2.6rem);
-      line-height: 1.2;
-      margin: 0 0 0.75rem;
-    }
-
-    .hero-title span {
-      color: var(--gold-soft);
+      font-size: clamp(2.1rem, 3vw, 2.7rem);
+      line-height: 1.18;
+      margin-bottom: 1rem;
     }
 
     .hero-subtitle {
-      font-size: 0.98rem;
+      font-size: 1rem;
       color: var(--text-muted);
-      max-width: 46rem;
-      margin-bottom: 1.4rem;
+      max-width: 38rem;
+      text-align: justify;
     }
 
-    .hero-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.6rem;
-    }
-
-    .badge {
-      font-size: 0.8rem;
-      padding: 0.18rem 0.6rem;
-      border-radius: 999px;
-      border: 1px solid rgba(241, 230, 163, 0.3);
-      color: var(--gold-soft);
-      background: rgba(11, 15, 20, 0.9);
-    }
-
-    .hero-meta {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-    }
-
-    /* HERO RIGHT CARD */
-    .hero-card {
-      background: var(--bg-elevated);
-      border-radius: var(--radius-lg);
-      padding: 1.2rem 1.4rem 1.3rem;
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .hero-card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-      margin-bottom: 0.75rem;
-    }
-
-    .hero-logo-frame {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #f3e8b2, #b88c2a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4),
-                  0 8px 20px rgba(0, 0, 0, 0.6);
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .hero-logo-frame img {
-      width: 26px;
-      height: 26px;
-      display: block;
-      object-fit: contain;
-      border-radius: 999px;
-    }
-
-    .hero-card-title {
-      font-size: 0.92rem;
-      font-weight: 500;
-      color: var(--gold-soft);
-    }
-
-    .hero-card-subtitle {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .hero-list {
-      margin: 0.5rem 0 0;
-      padding-left: 1.1rem;
-      font-size: 0.86rem;
-      color: var(--text-main);
-    }
-
-    .hero-list li + li {
-      margin-top: 0.25rem;
-    }
-
-    /* MAIN LAYOUT */
+    /* PANELS */
     .main {
-      padding: 0 1.5rem 3.5rem;
-    }
-
-    .grid {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1.4fr);
-      gap: 2rem;
+      padding: 0 1.5rem 3rem;
     }
 
     .panel {
+      max-width: 1120px;
+      margin: 0 auto 1.6rem;
       background: linear-gradient(145deg, var(--panel), var(--panel-soft));
       border-radius: var(--radius-lg);
-      padding: 1.6rem 1.7rem 1.7rem;
+      padding: 1.7rem 1.8rem;
       box-shadow: var(--shadow-soft);
       color: var(--ink);
       border-top: 3px solid var(--gold);
     }
 
     .panel h2 {
-      margin-top: 0;
-      font-size: 1.1rem;
-      letter-spacing: 0.08em;
+      font-family: "Orbitron", system-ui, sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
+      margin-bottom: 0.8rem;
       color: #5c4721;
     }
 
     .panel p {
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      text-align: justify;
     }
 
-    .panel ul {
-      margin: 0.4rem 0 0;
-      padding-left: 1.1rem;
-      font-size: 0.9rem;
-    }
-
-    .panel li + li {
-      margin-top: 0.25rem;
-    }
-
-    .section-title {
-      max-width: 1120px;
-      margin: 2.4rem auto 0.9rem;
-      padding: 0 0.1rem;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-    }
-
-    /* Single-column section for site-structure explanation */
-    .section-single {
-      max-width: 1120px;
-      margin: 0 auto 0;
-    }
-
-    @media (max-width: 900px) {
-      .hero-inner {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .hero-card {
-        margin-top: -0.4rem;
-      }
-    }
-
-    /* Footer */
     .footer {
       border-top: 1px solid var(--border-soft);
       background: radial-gradient(circle at top, #101525, #020308);
@@ -450,315 +232,103 @@
       max-width: 1120px;
       margin: 0 auto;
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 0.8rem;
     }
-
-    .footer-left strong {
-      color: var(--gold-soft);
-      font-weight: 500;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-    }
-
-    .footer-links a:hover {
-      color: var(--gold-soft);
-      text-decoration: underline;
-    }
-
-    /* Text justification to keep everything “carré” */
-    .hero-subtitle,
-    .hero-meta,
-    .panel p,
-    .panel ul {
-      text-align: justify;
-    }
-
-    /* Active nav state driven by data-page on <html> */
-    html[data-page="overview"] .nav-link--overview {
-      color: #f1e6a3;
-    }
-
-    html[data-page="spec"] .nav-link--spec {
-      color: #f1e6a3;
-    }
-
-    html[data-page="examples"] .nav-link--examples {
-      color: #f1e6a3;
-    }
-
-    html[data-page="tests"] .nav-link--tests {
-      color: #f1e6a3;
-    }
-
-    html[data-page="playground"] .nav-link--playground {
-      color: #f1e6a3;
-    }
-
-    html[data-page="demo-psycho"] .nav-link--psycho {
-      color: #f1e6a3;
-    }
-
-    html[data-page="demo-legal"] .nav-link--legal {
-      color: #f1e6a3;
-    }
-
-    html[data-page="demo-legal-mapping"] .nav-link--legal-mapping {
-      color: #f1e6a3;
-    }
-       /* ===== Justification panels ===== */
-.panel p,
-.panel ul,
-.panel li {
-  text-align: justify;
-}
-
-
-
   </style>
 </head>
+
 <body>
 
-  <!-- UNIVERSAL NAVBAR -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="nav-left">
-        <a href="overview.html" class="nav-logo-link">
-          <div class="nav-logo">
-            <img
-              src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-              alt="OpenProof logo"
-            />
-          </div>
-          <div>
-            <div class="nav-title">OPENPROOF — RPO v0.1</div>
-            <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
-          </div>
-        </a>
-      </div>
-
-      <nav class="nav-links" aria-label="Primary navigation">
-        <!-- Public layer -->
-        <a href="overview.html" class="nav-link nav-link--overview">Overview</a>
-        <a href="demo-psycho.html" class="nav-link nav-link--psycho">Psycho-legal demo</a>
-        <a href="demo-legal.html" class="nav-link nav-link--legal">Legal demo</a>
-        <a href="demo-legal-mapping.html" class="nav-link nav-link--legal-mapping">Legal mapping</a>
-        <a href="sandbox.html" class="nav-link nav-link--playground">Sandbox</a>
-
-        <!-- Technical docs dropdown -->
-        <div class="nav-dropdown">
-          <button class="nav-link nav-dropdown-toggle" type="button">
-            Technical docs <span class="nav-dropdown-caret">▾</span>
-          </button>
-          <div class="nav-dropdown-menu" role="menu">
-            <a href="index.html" class="nav-link nav-link--spec" role="menuitem">Specification</a>
-            <a href="examples.html" class="nav-link nav-link--examples" role="menuitem">Examples</a>
-            <a href="tests.html" class="nav-link nav-link--tests" role="menuitem">Tests</a>
-          </div>
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <a href="overview.html" class="nav-logo-link">
+        <div class="nav-logo">
+          <img
+            src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+            alt="OpenProof emblem"
+          />
         </div>
-      </nav>
-
-      <a
-        href="https://github.com/openproof-net/rpo-spec-v0.1"
-        class="btn-ghost"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span>View on GitHub</span>
+        <div>
+          <div class="nav-title">OPENPROOF — RPO v0.1</div>
+          <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
+        </div>
       </a>
     </div>
-  </header>
 
-  <!-- HERO -->
-  <section class="hero" id="overview">
-    <div class="hero-inner">
-      <div>
-        <div class="hero-kicker">RPO Standard • v0.1 Draft</div>
-        <h1 class="hero-title">
-          What the <span>RPO Standard</span> Does in Practice
-        </h1>
-        <p class="hero-subtitle">
-          This page gives a conceptual overview of the RPO (Rapport Probatoire Ouvert)
-          standard: what problem it solves, how it is structured, and how implementers and
-          reviewers are meant to use it.
-        </p>
-        <div class="hero-badges">
-          <div class="badge">Signed JSON</div>
-          <div class="badge">Human-readable PDF</div>
-          <div class="badge">Public hash</div>
-        </div>
-      </div>
+    <nav class="nav-links">
+      <a href="overview.html" class="nav-link nav-link--overview">Overview</a>
+      <a href="sandbox.html" class="nav-link">Sandbox</a>
+    </nav>
 
-      <aside class="hero-card">
-        <div class="hero-card-header">
-          <div class="hero-logo-frame">
-            <img
-              src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-              alt="OpenProof logo"
-            />
-          </div>
-          <div>
-            <div class="hero-card-title">RPO v0.1 — Conceptual overview</div>
-            <div class="hero-card-subtitle">
-              A standard for packaging digital evidence in a way that both humans and machines can trust.
-            </div>
-          </div>
-        </div>
-        <ul class="hero-list">
-          <li><strong>Machines</strong> verify structure and integrity via JSON.</li>
-          <li><strong>Humans</strong> read a clear, timestamped narrative via PDF.</li>
-          <li><strong>Registries</strong> anchor everything with a public hash.</li>
-        </ul>
-      </aside>
-    </div>
+    <a
+      class="btn-ghost"
+      href="https://github.com/openproof-net/rpo-spec-v0.1"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      View on GitHub
+    </a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">RPO — Rapport Probatoire Ouvert</div>
+    <h1 class="hero-title">A standard to structure, seal and preserve evidence</h1>
+    <p class="hero-subtitle">
+      OpenProof defines the RPO (Rapport Probatoire Ouvert): a transparent standard
+      combining a signed JSON structure, a human-readable PDF and a public hash.
+      The goal is not to decide truth, but to make evidence coherent, traceable
+      and re-evaluable over time.
+    </p>
+  </div>
+</section>
+
+<main class="main">
+
+  <section class="panel">
+    <h2>What problem RPO solves</h2>
+    <p>
+      In many legal, institutional or organisational contexts, narratives evolve,
+      documents are fragmented, and interpretations shift over time. RPO introduces
+      a stable evidentiary object: once structured and sealed, a narrative can be
+      analysed again later without being rewritten or retroactively altered.
+    </p>
   </section>
 
-  <main class="main">
-    <!-- HOW THIS SITE IS STRUCTURED -->
-    <div class="section-title">How to read this site</div>
-    <section class="section-single">
-      <article class="panel">
-        <h2>0. Two complementary layers</h2>
-        <p>
-          The public RPO site is organised in two complementary families of pages.
-          They use the same standard, but they serve different needs.
-        </p>
-        <ul>
-          <li>
-            <strong>Narrative demo layer</strong> —
-            <em>Psycho-legal demo</em>, <em>Legal demo</em> and <em>Legal mapping</em>.
-            These pages start from a short story and show how RPO-compatible narratives
-            can reveal psycho-legal mechanisms, legal signals and potential domains of law.
-          </li>
-          <li>
-            <strong>Core RPO layer</strong> —
-            the <em>Sandbox</em> and the <em>Technical docs</em>.
-            These pages focus on the standard itself: how a narrative becomes an
-            <code>rpo.json</code> bundle with a public hash, and how implementers can
-            validate their engines.
-          </li>
-        </ul>
-        <p>
-          A simple reading path is:
-          start here with the overview, explore the narrative demos,
-          then test the open RPO Sandbox and dive into the specification, examples and tests.
-        </p>
-      </article>
-    </section>
+  <section class="panel">
+    <h2>RPO Sandbox</h2>
+    <p>
+      The sandbox is an open, deterministic demonstrator: paste a narrative,
+      generate a draft RPO JSON bundle, and compute a public hash.
+      This draft bundle illustrates how a narrative can be structured, sealed
+      and later re-evaluated without rewriting history.
+    </p>
+    <p>
+      <a class="btn-ghost" href="sandbox.html">Open the RPO Sandbox</a>
+    </p>
+  </section>
 
-    <!-- First row -->
-    <div class="section-title">What & who</div>
-    <section class="grid">
-      <article class="panel">
-        <h2>1. What is the RPO?</h2>
-        <p><strong>A dual-format standard for digital evidence.</strong></p>
-        <p>
-          The RPO defines how a piece of digital evidence must be packaged so that:
-        </p>
-        <ul>
-          <li>machines can verify integrity and structure via a signed JSON bundle,</li>
-          <li>humans can read a coherent narrative via a PDF report,</li>
-          <li>both are anchored by a public hash that can be checked by any registry.</li>
-        </ul>
-        <p>
-          The goal is simple: make <strong>truth measurable</strong>,
-          <strong>power traceable</strong>, and <strong>coherence verifiable</strong> across
-          institutions, courts, and research projects.
-        </p>
-      </article>
+</main>
 
-      <article class="panel">
-        <h2>2. Who is it for?</h2>
-        <p><strong>Intended audiences.</strong></p>
-        <p>The RPO standard is designed for:</p>
-        <ul>
-          <li>Engineers building forensic or reporting engines,</li>
-          <li>Legal teams and auditors who must trust the narrative,</li>
-          <li>Registries and platforms providing long-term anchoring,</li>
-          <li>Researchers studying evidence structures or narrative bias.</li>
-        </ul>
-        <p>
-          Any system that wants to issue <em>verifiable, sealed reports</em> can implement RPO.
-        </p>
-      </article>
-    </section>
-
-    <!-- Second row -->
-    <div class="section-title">Guarantees & flow</div>
-    <section class="grid">
-      <article class="panel">
-        <h2>3. Core guarantees</h2>
-        <p><strong>Integrity • Readability • Verifiability.</strong></p>
-        <p>Every RPO-compliant bundle must satisfy three conditions:</p>
-        <ul>
-          <li>
-            <strong>Integrity</strong> — any modification to the evidence bundle or the narrative
-            becomes detectable through hashing and signatures.
-          </li>
-          <li>
-            <strong>Readability</strong> — humans and institutions can interpret the same narrative,
-            with timestamps and context preserved in the PDF.
-          </li>
-          <li>
-            <strong>Verifiability</strong> — a public, testable JSON structure allows third parties
-            to check coherence and re-compute hashes.
-          </li>
-        </ul>
-        <p>
-          These guarantees are enforced by the RPO schema, the format spec, and recommended
-          signature practices.
-        </p>
-      </article>
-
-      <article class="panel">
-        <h2>4. High-level flow</h2>
-        <p><strong>From raw data to sealed report.</strong></p>
-        <p>At a high level, an RPO implementation follows four steps:</p>
-        <ul>
-          <li><strong>Collect</strong> structured evidence and metadata.</li>
-          <li><strong>Build</strong> the RPO JSON object (<code>rpo.json</code>).</li>
-          <li>
-            <strong>Generate</strong> the narrative PDF and link it via
-            <code>narrative.pdf_hash</code>.
-          </li>
-          <li>
-            <strong>Anchor</strong> the bundle using a public hash (<code>public_hash</code>)
-            and optional signatures.
-          </li>
-        </ul>
-      </article>
-    </section>
-  </main>
-
-  <!-- UNIVERSAL FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <div class="footer-title">OpenProof — RPO Specification v0.1</div>
-        <div class="footer-text">
-          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie.
-          Specification editor: <strong>Gersende Ryard de Parcey</strong>.
-        </div>
-      </div>
-      <div class="footer-right footer-links">
-        <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">Technical site</a>
-        <span>•</span>
-        <a href="https://www.truthx-openproof.org" target="_blank" rel="noopener noreferrer">Governance</a>
-        <span>•</span>
-        <a href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">Contact</a>
-      </div>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <strong>OpenProof — RPO Specification v0.1</strong><br />
+      © 2026 OpenProof Consortium. Research collaboration:
+      CNRS – GREYC – Université de Caen Normandie.<br />
+      Specification editor: <strong>Gersende Ryard de Parcey</strong>.
     </div>
-  </footer>
+    <div>
+      <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">Technical site</a> •
+      <a href="https://www.truthx-openproof.org" target="_blank" rel="noopener noreferrer">Governance</a> •
+      <a href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">Contact</a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
