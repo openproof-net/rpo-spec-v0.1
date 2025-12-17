@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="spec">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -225,5 +226,30 @@
       }
     }, 12000);
   </script>
+  <section class="panel">
+  <h2>Seal and public hash</h2>
+
+  <p>
+    An RPO bundle may include a <code>seal</code> section containing a deterministic
+    <code>public_hash</code>. This hash is computed from canonical narrative fields
+    and allows later verification that the content has not been altered.
+  </p>
+
+  <p>
+    This mechanism enables a narrative to be structured, sealed and later re-evaluated
+    without rewriting history. The presence of a public hash does not imply legal
+    registration, certification or evidentiary value by itself.
+  </p>
+
+  <pre><code>{
+  "seal": {
+    "public_hash": "sha256:…",
+    "method": "sha256",
+    "scope": "rpo_version|bundle_id|issuer|subject|narrative",
+    "note": "Deterministic seal for integrity verification"
+  }
+}</code></pre>
+</section>
+
 </body>
 </html>
