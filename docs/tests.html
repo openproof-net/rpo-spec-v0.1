@@ -1,558 +1,720 @@
 <!DOCTYPE html>
-<html lang="en" data-page="tests">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>OpenProof — RPO Test Suite | Schema, hash, PDF linkage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="author" content="Gersende Ryard de Parcey">
-  <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor">
+  <title>OpenProof.net — Tests (RPO v0.1)</title>
+  <meta name="description" content="Deterministic tests for the RPO sandbox: same input → same output, stable extraction, and reproducible sha256 integrity anchors." />
 
-  <!-- SEO -->
-  <meta name="description"
-        content="Minimal validation suite for RPO implementers: JSON schema validation, hashing integrity checks, and PDF narrative linkage tests." />
-  <link rel="canonical" href="https://rpo.openproof.net/tests.html" />
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet">
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="OpenProof — RPO Test Suite" />
-  <meta property="og:description"
-        content="Test suite for the OpenProof RPO standard: JSON schema validation, hash integrity, and PDF narrative linkage." />
-  <meta property="og:url" content="https://rpo.openproof.net/tests.html" />
-  <meta property="og:image"
-        content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
-
-  <!-- Favicon OpenProof -->
-  <link
-    rel="icon"
-    type="image/png"
-    href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-  />
-
-  <!-- Dark / ivory / gold theme (same as overview/examples) -->
   <style>
-    :root {
-      --bg: #04040e;
-      --bg-elevated: #0b0f14;
-      --panel: #f7f3e8;
-      --panel-soft: #fbf8f1;
-      --text-main: #f5f5f7;
-      --text-muted: #b2b7c5;
-      --ink: #7a6432;
-      --gold: #d4af37;
-      --gold-soft: #f1e6a3;
-      --border-soft: rgba(241, 230, 163, 0.2);
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
-      --radius-lg: 18px;
+    :root{
+      --bg-deep:#04040e;
+      --bg-mid:#0b0f14;
+      --gold-soft:#f1e6a3;
+      --gold:#d4af37;
+      --gold-deep:#8f7633;
+      --ivory:#f7f3e8;
+      --ink-soft:#b3a48b;
+      --ink-dim: rgba(243,237,215,0.72);
+      --line: rgba(212,175,55,0.22);
+      --panel: linear-gradient(145deg, rgba(10,12,27,0.96), rgba(5,7,18,0.98));
+      --panel2: radial-gradient(circle at 0 0, rgba(241,230,163,0.10), transparent 60%), var(--panel);
+      --radius:24px;
+      --shadow: 0 26px 70px rgba(0,0,0,0.5);
+      --shadow-strong: 0 28px 80px rgba(0,0,0,0.65);
+      --ok: #46ff99;
+      --warn: #ffdfb0;
+      --bad: #ff6b6b;
     }
 
-    * {
-      box-sizing: border-box;
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      color:var(--ivory);
+      background:
+        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
+        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
+        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
+      overflow-x:hidden;
     }
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, system-ui, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #111625 0, var(--bg) 45%);
-      color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
+    #bg-field{
+      position:fixed; inset:0; width:100%; height:100%;
+      z-index:-1;
+      background:
+        radial-gradient(circle at top, rgba(241,230,163,0.12), transparent 60%),
+        radial-gradient(circle at bottom, rgba(241,230,163,0.06), transparent 65%),
+        radial-gradient(circle at center, #04040e, #020208 70%);
     }
 
-    a {
-      color: var(--gold-soft);
-      text-decoration: none;
+    header.top-bar{
+      position:fixed; top:0; left:0; right:0;
+      height:68px;
+      padding:0 40px;
+      display:flex; align-items:center; justify-content:space-between;
+      z-index:20;
+      background: linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
+      backdrop-filter: blur(18px);
+      border-bottom:1px solid var(--line);
+    }
+    .top-left{display:flex; align-items:center; gap:14px;}
+    .emblem-wrap{
+      width:38px;height:38px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background: radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
+      box-shadow: 0 0 22px rgba(241,230,163,0.8);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .emblem-wrap img{width:30px;height:30px;object-fit:contain;display:block}
+    .brand-title{
+      font-family:Orbitron,sans-serif;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      font-size:0.74rem;
+      color:var(--ink-soft);
+      white-space:nowrap;
+    }
+    .brand-title span{color:var(--gold-soft)}
+
+    .top-nav{
+      display:flex; gap:14px; align-items:center;
+      font-size:0.86rem;
+      color:var(--ink-soft);
+    }
+    .chip{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.25);
+      background: rgba(7,8,20,0.45);
+      backdrop-filter: blur(10px);
+      color:inherit;
+      text-decoration:none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      font-family: Orbitron, sans-serif;
+      font-size:0.74rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+    .chip:hover{transform: translateY(-1px); border-color: rgba(241,230,163,0.5); background: rgba(7,8,20,0.62);}
+    .chip.current{border-color: rgba(241,230,163,0.65); color: var(--gold-soft);}
+
+    .top-cta{
+      display:inline-flex;
+      align-items:center; justify-content:center;
+      padding:8px 18px;
+      border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      font-size:0.8rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      background: radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      text-decoration:none;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.65);
+      font-family: Orbitron, sans-serif;
+      white-space:nowrap;
     }
 
-    a:hover {
-      text-decoration: underline;
+    .container{width:min(1240px, 92vw); margin:0 auto;}
+    main{padding-top:88px; padding-bottom:70px;}
+
+    .hero{padding: 26px 0 10px;}
+    .hero-grid{
+      display:grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 34px;
+      align-items: start;
     }
 
-    /* NAVBAR (universal) */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(16px);
-      background: linear-gradient(
-        90deg,
-        rgba(4, 4, 14, 0.96),
-        rgba(4, 4, 14, 0.92)
-      );
-      border-bottom: 1px solid var(--border-soft);
+    .eyebrow{
+      font-family:Orbitron,sans-serif;
+      font-size:0.78rem;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+      margin-bottom:12px;
     }
-
-    .nav-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0.65rem 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
+    .eyebrow span{color:var(--gold-soft)}
+    h1{
+      font-family:Orbitron,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.07em;
+      line-height:1.08;
+      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+      margin-bottom:14px;
+      max-width: 760px;
     }
+    h1 .line2{display:block; color:var(--gold-soft)}
+    h1 .line3{display:block; color:var(--gold)}
 
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-    }
-
-    .nav-logo-link {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      text-decoration: none;
-      color: var(--text-main);
-    }
-
-    .nav-logo {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #f3e8b2, #b88c2a);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow:
-        0 0 0 1px rgba(0, 0, 0, 0.4),
-        0 10px 25px rgba(0, 0, 0, 0.6);
-    }
-
-    .nav-logo img {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      display: block;
-      object-fit: contain;
-    }
-
-    .nav-title {
-      font-size: 0.95rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--gold-soft);
-    }
-
-    .nav-subtitle {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .nav-link {
-      color: var(--text-muted);
-      text-decoration: none;
-      border: none;
-      background: none;
-      font: inherit;
-      padding: 0;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-
-    .nav-link:hover {
-      color: var(--gold-soft);
-      text-decoration: none;
-    }
-
-    .btn-ghost {
-      border-radius: 999px;
-      padding: 0.4rem 0.95rem;
-      border: 1px solid var(--border-soft);
-      font-size: 0.85rem;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      text-decoration: none;
-      color: var(--gold-soft);
-      background: rgba(10, 14, 24, 0.9);
-      white-space: nowrap;
-    }
-
-    .btn-ghost span {
-      font-size: 0.9rem;
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--gold-soft);
-      text-decoration: none;
-      background: rgba(13, 18, 30, 0.95);
-    }
-
-    /* Dropdown “Technical docs” */
-    .nav-dropdown {
-      position: relative;
-    }
-
-    .nav-dropdown-caret {
-      font-size: 0.7rem;
-    }
-
-    .nav-dropdown-menu {
-      position: absolute;
-      top: 130%;
-      right: 0;
-      min-width: 180px;
-      padding: 0.4rem 0;
-      border-radius: 12px;
-      background: #070913;
-      border: 1px solid var(--border-soft);
-      box-shadow: var(--shadow-soft);
-      display: none;
-      z-index: 30;
-    }
-
-    .nav-dropdown-menu .nav-link {
-      width: 100%;
-      padding: 0.35rem 0.9rem;
-      justify-content: flex-start;
-      color: var(--text-muted);
-    }
-
-    .nav-dropdown-menu .nav-link:hover {
-      background: rgba(241, 230, 163, 0.08);
-      color: var(--gold-soft);
-    }
-
-    .nav-dropdown:hover .nav-dropdown-menu,
-    .nav-dropdown:focus-within .nav-dropdown-menu {
-      display: block;
-    }
-
-    @media (max-width: 900px) {
-      .nav-inner {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .nav-links {
-        flex-wrap: wrap;
-      }
-      .btn-ghost {
-        align-self: flex-start;
-      }
-    }
-
-    /* HERO */
-    .hero {
-      padding: 3.2rem 1.5rem 2.4rem;
-    }
-
-    .hero-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .hero-kicker {
-      font-size: 0.8rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold-soft);
-      margin-bottom: 0.75rem;
-    }
-
-    .hero-title {
-      font-size: clamp(2.1rem, 3vw, 2.4rem);
-      margin: 0 0 0.6rem;
-    }
-
-    .hero-title span {
-      color: var(--gold-soft);
-    }
-
-    .hero-subtitle {
+    .lead{
+      max-width: 760px;
       font-size: 0.98rem;
-      color: var(--text-muted);
-      max-width: 40rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      text-align: justify;
+      text-align-last: left;
+    }
+    .lead b{color:var(--gold-soft); font-weight:600}
+    .note{
+      margin-top:10px;
+      font-size:0.86rem;
+      color: var(--ink-dim);
     }
 
-    /* MAIN CONTENT */
-    .main {
-      padding: 0 1.5rem 3.5rem;
+    .panel{
+      background: var(--panel2);
+      border-radius: 26px;
+      border: 1px solid rgba(212,175,55,0.5);
+      box-shadow: var(--shadow);
+      padding: 18px 18px 16px;
+      position: relative;
+      overflow:hidden;
+    }
+    .panel::before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:inherit;
+      border:1px solid rgba(241,230,163,0.16);
+      pointer-events:none;
+    }
+    .panel-title{
+      font-family:Orbitron,sans-serif;
+      font-size:0.86rem;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+      margin-bottom:10px;
+    }
+    .panel-text{color:var(--ink-soft); line-height:1.6; font-size:0.95rem;}
+
+    .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:14px;}
+    .btn-primary{
+      padding: 12px 24px;
+      border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      font-size:0.8rem;
+      background: radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      text-decoration:none;
+      box-shadow:0 18px 34px rgba(0,0,0,0.75);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-family:Orbitron,sans-serif;
+      cursor:pointer;
+    }
+    .btn-secondary{
+      padding: 11px 20px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.6);
+      font-size:0.8rem;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:var(--gold-soft);
+      text-decoration:none;
+      background: rgba(7,8,20,0.7);
+      backdrop-filter: blur(10px);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-family:Orbitron,sans-serif;
+      cursor:pointer;
     }
 
-    .panel {
-      max-width: 1120px;
-      margin: 0 auto 1.8rem;
-      background: linear-gradient(145deg, var(--panel), var(--panel-soft));
-      border-radius: var(--radius-lg);
-      padding: 1.8rem 1.9rem 1.8rem;
-      box-shadow: var(--shadow-soft);
-      color: var(--ink);
-      border-top: 3px solid var(--gold);
+    .section{margin-top:26px;}
+    .section-head{
+      display:flex; align-items:baseline; justify-content:space-between;
+      gap:18px;
+      margin: 12px 0 12px;
+    }
+    .h2{
+      font-family:Orbitron,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      font-size:0.95rem;
+      color:var(--ink-soft);
+    }
+    .rule{
+      height:1px; flex:1 1 auto;
+      background: linear-gradient(90deg, rgba(212,175,55,0.0), rgba(212,175,55,0.45), rgba(212,175,55,0.0));
+      opacity:0.9;
     }
 
-    .panel h2 {
-      margin-top: 0;
-      font-size: 1.1rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #5c4721;
+    .table{
+      border-radius: 26px;
+      overflow:hidden;
+      border:1px solid rgba(241,230,163,0.18);
+      box-shadow: var(--shadow-strong);
+      background: rgba(7,8,20,0.55);
+      backdrop-filter: blur(10px);
+    }
+    .trow{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr 0.9fr 1.2fr;
+      gap: 12px;
+      padding: 14px 16px;
+      border-top: 1px dashed rgba(136,116,72,0.28);
+      align-items: start;
+    }
+    .trow.head{
+      border-top:none;
+      background: linear-gradient(180deg, rgba(241,230,163,0.08), rgba(7,8,20,0.0));
+      font-family:Orbitron,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      font-size:0.76rem;
+      color: var(--ink-soft);
+    }
+    .cell{color: var(--ink-soft); font-size:0.93rem; line-height:1.55;}
+    .cell code{color: var(--gold-soft);}
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border:1px solid rgba(241,230,163,0.22);
+      background: rgba(3,4,14,0.58);
+      font-family: Orbitron, sans-serif;
+      font-size:0.72rem;
+      letter-spacing:0.10em;
+      text-transform:uppercase;
+      white-space:nowrap;
+      width: fit-content;
+    }
+    .dot{width:8px;height:8px;border-radius:999px; box-shadow: 0 0 12px rgba(0,0,0,0.35)}
+    .ok .dot{background: var(--ok); box-shadow: 0 0 14px rgba(70,255,153,0.8)}
+    .warn .dot{background: var(--warn); box-shadow: 0 0 14px rgba(255,223,176,0.7)}
+    .bad .dot{background: var(--bad); box-shadow: 0 0 14px rgba(255,107,107,0.7)}
+
+    .results{
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border:1px solid rgba(241,230,163,0.22);
+      background: rgba(3,4,14,0.55);
+      color: rgba(247,243,232,0.88);
+      font-size: 0.92rem;
+      line-height:1.6;
+      box-shadow: 0 18px 46px rgba(0,0,0,0.55);
+      min-height: 84px;
+      white-space: pre-wrap;
     }
 
-    .panel p,
-    .panel li {
-      font-size: 0.95rem;
-      line-height: 1.55;
+    .band{
+      margin-top: 20px;
+      border-radius: 26px;
+      background: rgba(7,8,20,0.60);
+      border:1px solid rgba(241,230,163,0.22);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      backdrop-filter: blur(10px);
+    }
+    .band p{color: var(--ink-soft); line-height:1.6; max-width: 860px;}
+
+    footer{
+      margin-top: 14px;
+      color: rgba(198,186,150,0.70);
+      font-size:0.86rem;
+      line-height:1.6;
+      padding-bottom: 6px;
     }
 
-    .panel ul {
-      margin: 0.4rem 0 0;
-      padding-left: 1.2rem;
-    }
-
-    .section-title {
-      max-width: 1120px;
-      margin: 2.2rem auto 0.9rem;
-      padding: 0 0.1rem;
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--text-muted);
-    }
-
-    /* FOOTER (universal) */
-    .footer {
-      border-top: 1px solid var(--border-soft);
-      background: radial-gradient(circle at top, #101525, #020308);
-      padding: 1.6rem 1.5rem 2.1rem;
-      color: var(--text-muted);
-      font-size: 0.82rem;
-    }
-
-    .footer-inner {
-      max-width: 1120px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.8rem;
-    }
-
-    .footer-left strong {
-      color: var(--gold-soft);
-      font-weight: 500;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.9rem;
-    }
-
-    .footer-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-    }
-
-    .footer-links a:hover {
-      color: var(--gold-soft);
-      text-decoration: underline;
-    }
-
-    /* Active nav state via data-page */
-    html[data-page="overview"] .nav-link--overview,
-    html[data-page="psycho-demo"] .nav-link--psycho-demo,
-    html[data-page="legal-demo"] .nav-link--legal-demo,
-    html[data-page="legal-mapping"] .nav-link--legal-mapping,
-    html[data-page="sandbox"] .nav-link--sandbox,
-    html[data-page="spec"] .nav-link--spec,
-    html[data-page="examples"] .nav-link--examples,
-    html[data-page="tests"] .nav-link--tests {
-      color: #f1e6a3;
+    @media (max-width: 980px){
+      header.top-bar{padding:0 16px}
+      .top-nav{display:none}
+      .hero-grid{grid-template-columns: 1fr; gap: 18px;}
+      .trow{grid-template-columns: 1fr;}
+      .band{flex-direction:column; align-items:flex-start}
     }
   </style>
 </head>
-<body>
 
-  <!-- UNIVERSAL NAVBAR -->
-  <header class="nav">
-    <div class="nav-inner">
-      <div class="nav-left">
-        <a href="overview.html" class="nav-logo-link">
-          <div class="nav-logo">
-            <img
-              src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-              alt="OpenProof logo"
-            />
+<body>
+  <canvas id="bg-field"></canvas>
+
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="emblem-wrap">
+        <img
+          src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+          alt="OpenProof logo"
+        />
+      </div>
+      <div class="brand-title">OPENPROOF<span>.NET — RPO v0.1</span></div>
+    </div>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a class="chip" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Sandbox</a>
+      <a class="chip" href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+      <a class="chip current" href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+      <a class="chip" href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+    </nav>
+
+    <!-- CTA MUST GO SOMEWHERE -->
+    <a class="top-cta" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Try the live demo</a>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Proof of determinism <span>in the browser</span></div>
+
+          <h1>
+            Tests
+            <span class="line2">reproducibility,</span>
+            <span class="line3">tamper-evidence</span>
+          </h1>
+
+          <p class="lead">
+            These tests are intentionally simple: they validate the core promise of the Sandbox.
+            <b>Same input → same output</b>, stable extraction of basic anchors, and reproducible
+            <b>sha256</b> integrity anchors.
+          </p>
+
+          <p class="note">
+            Important: passing these tests does not mean “truth”. It means the pipeline is deterministic and auditable.
+          </p>
+
+          <div class="hero-ctas">
+            <button class="btn-primary" id="runTestsBtn" type="button">Run tests in browser</button>
+            <a class="btn-secondary" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Open the Sandbox</a>
+            <a class="btn-secondary" href="https://rpo.openproof.net" target="_blank" rel="noopener noreferrer">View the RPO spec</a>
           </div>
-          <div>
-            <div class="nav-title">OPENPROOF — RPO v0.1</div>
-            <div class="nav-subtitle">Signed JSON • Human-readable PDF • Public hash</div>
+        </div>
+
+        <aside class="panel">
+          <div class="panel-title">Test scope</div>
+          <div class="panel-text">
+            Determinism checks, extraction stability (dates/places), and sha256 reproducibility.
+            No backend. No external services. Runs locally in your browser.
           </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div class="h2">Test matrix</div>
+        <div class="rule"></div>
+      </div>
+
+      <div class="table" role="table" aria-label="Test matrix">
+        <div class="trow head" role="row">
+          <div class="cell" role="columnheader">Test</div>
+          <div class="cell" role="columnheader">What it verifies</div>
+          <div class="cell" role="columnheader">Status</div>
+          <div class="cell" role="columnheader">Notes</div>
+        </div>
+
+        <div class="trow" role="row" data-test="determinism">
+          <div class="cell" role="cell"><b>Determinism</b></div>
+          <div class="cell" role="cell">Same input produces identical <code>bundle</code> + <code>hash</code></div>
+          <div class="cell" role="cell"><span class="badge warn"><span class="dot"></span><span>not run</span></span></div>
+          <div class="cell" role="cell">Runs extraction twice and compares outputs.</div>
+        </div>
+
+        <div class="trow" role="row" data-test="sha256">
+          <div class="cell" role="cell"><b>sha256</b></div>
+          <div class="cell" role="cell">Hash is reproducible for the same canonical string</div>
+          <div class="cell" role="cell"><span class="badge warn"><span class="dot"></span><span>not run</span></span></div>
+          <div class="cell" role="cell">Uses WebCrypto <code>SHA-256</code> locally.</div>
+        </div>
+
+        <div class="trow" role="row" data-test="anchors">
+          <div class="cell" role="cell"><b>Anchors</b></div>
+          <div class="cell" role="cell">Basic anchors extracted consistently (dates, places)</div>
+          <div class="cell" role="cell"><span class="badge warn"><span class="dot"></span><span>not run</span></span></div>
+          <div class="cell" role="cell">Heuristic demo extraction (conservative).</div>
+        </div>
+      </div>
+
+      <div class="results" id="resultsBox" aria-live="polite">
+Click “Run tests in browser” to execute deterministic checks locally.
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="band">
+        <p>
+          Want the full pilot (CNRS × TruthX): interpretive coherence, structured narrative layers, advanced signal fusion,
+          and a human-readable probative report designed for professionals.
+        </p>
+        <a class="btn-primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
+          Request pilot access
         </a>
       </div>
 
-      <nav class="nav-links" aria-label="Primary navigation">
-        <!-- Public layer -->
-        <a href="overview.html" class="nav-link nav-link--overview">Overview</a>
-        <a href="demo-psycho.html" class="nav-link nav-link--psycho-demo">Psycho-legal demo</a>
-        <a href="demo-legal.html" class="nav-link nav-link--legal-demo">Legal demo</a>
-        <a href="demo-legal-mapping.html" class="nav-link nav-link--legal-mapping">Legal mapping</a>
-        <a href="sandbox.html" class="nav-link nav-link--sandbox">Sandbox</a>
-
-        <!-- Technical docs dropdown -->
-        <div class="nav-dropdown">
-          <button class="nav-link nav-dropdown-toggle" type="button">
-            Technical docs <span class="nav-dropdown-caret">▾</span>
-          </button>
-          <div class="nav-dropdown-menu" role="menu">
-            <a href="index.html" class="nav-link nav-link--spec" role="menuitem">Specification</a>
-            <a href="examples.html" class="nav-link nav-link--examples" role="menuitem">Examples</a>
-            <a href="tests.html" class="nav-link nav-link--tests" role="menuitem">Tests</a>
-          </div>
-        </div>
-      </nav>
-
-      <a
-        href="https://github.com/openproof-net/rpo-spec-v0.1"
-        class="btn-ghost"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <span>View on GitHub</span>
-      </a>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-kicker">RPO Test Suite • v0.1 Draft</div>
-      <h1 class="hero-title">
-        RPO <span>Test Suite</span> for Implementers
-      </h1>
-      <p class="hero-subtitle">
-        A minimal validation suite for RPO engines: JSON schema checks, hash integrity
-        verification, and PDF narrative linkage. These tests are examples, not a formal
-        certification harness.
-      </p>
-    </div>
-  </section>
-
-  <main class="main">
-    <!-- Section label -->
-    <div class="section-title">Core tests</div>
-
-    <!-- Card 1 -->
-    <section class="panel">
-      <h2>1. Schema validation test</h2>
-      <p>
-        Validates candidate bundles against <code>rpo-schema.json</code>.
-      </p>
-      <ul>
-        <li>Ensures required fields exist and are not empty.</li>
-        <li>Checks types and constraints for each section.</li>
-        <li>Verifies structural coherence of the JSON bundle.</li>
-      </ul>
-      <p>
-        View test file:
-        <a
-          href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/tests/schema-validation.test.js"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          schema-validation.test.js →
-        </a>
-      </p>
-    </section>
-
-    <!-- Card 2 -->
-    <section class="panel">
-      <h2>2. Hash integrity test</h2>
-      <p>
-        Ensures that the canonical JSON produces a stable, verifiable hash for the bundle.
-      </p>
-      <ul>
-        <li>Canonicalization of the JSON bundle prior to hashing.</li>
-        <li>SHA3-512 digest generation.</li>
-        <li>Comparison with the expected <code>public_hash</code> anchor.</li>
-      </ul>
-      <p>
-        View test file:
-        <a
-          href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/tests/hash-integrity.test.js"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          hash-integrity.test.js →
-        </a>
-      </p>
-    </section>
-
-    <!-- Card 3 -->
-    <section class="panel">
-      <h2>3. PDF output test</h2>
-      <p>
-        Ensures that narrative PDF content corresponds to the
-        <code>narrative.pdf_hash</code> field in the bundle.
-      </p>
-      <ul>
-        <li>PDF → text extraction (canonical representation of the narrative).</li>
-        <li>Hashing of the narrative output using the same algorithm.</li>
-        <li>Matching the result with <code>narrative.pdf_hash</code> in <code>rpo.json</code>.</li>
-      </ul>
-      <p>
-        View test file:
-        <a
-          href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/tests/pdf-output.test.js"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          pdf-output.test.js →
-        </a>
-      </p>
-    </section>
-
-    <!-- Section label -->
-    <div class="section-title">How to use these tests</div>
-
-    <!-- Card 4 -->
-    <section class="panel">
-      <h2>4. Using the suite in your pipeline</h2>
-      <p>
-        These tests are intentionally small. They are meant to be copied, adapted, and
-        extended inside your own CI pipeline.
-      </p>
-      <ul>
-        <li>Start from the reference tests in the repository.</li>
-        <li>Add project-specific checks (custom evidence fields, registries, signatures).</li>
-        <li>Run the tests on every bundle before anchoring it publicly.</li>
-        <li>Share your own improvements via pull requests if they may help other implementers.</li>
-      </ul>
-      <p>
-        The goal is not to enforce a single implementation, but to make
-        <strong>coherence and integrity</strong> testable in a reproducible way.
-      </p>
+      <footer>
+        This page is informational. The sandbox does not store case data, and it does not decide truth.
+        It demonstrates deterministic structure and verifiable integrity anchors.
+      </footer>
     </section>
   </main>
 
-  <!-- UNIVERSAL FOOTER -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <div class="footer-title">OpenProof — RPO Specification v0.1</div>
-        <div class="footer-text">
-          © 2026 OpenProof Consortium. Research collaboration: CNRS – GREYC – Université de Caen Normandie.
-          Specification editor: Gersende Ryard de Parcey.
-        </div>
-      </div>
-      <div class="footer-right footer-links">
-        <a href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">Technical site</a>
-        <span>•</span>
-        <a href="https://www.truthx-openproof.org" target="_blank" rel="noopener noreferrer">Governance</a>
-        <span>•</span>
-        <a href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">Contact</a>
-      </div>
-    </div>
-  </footer>
+  <!-- Interstellar field -->
+  <script>
+    (function () {
+      const canvas = document.getElementById("bg-field");
+      const ctx = canvas.getContext("2d");
+
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let particles = [];
+      const COUNT = 220;
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function createParticle() {
+        return {
+          x: (Math.random() * 2 - 1),
+          y: (Math.random() * 2 - 1),
+          z: Math.random() * 0.9 + 0.1,
+          speed: Math.random() * 0.004 + 0.0015,
+          vertical: Math.random() < 0.25,
+          code: Math.random() < 0.18,
+          value: Math.random() < 0.5
+            ? (0.6 + Math.random() * 0.4).toFixed(2)
+            : (10 + Math.floor(Math.random() * 90)) + "%",
+        };
+      }
+
+      function init() {
+        particles = [];
+        for (let i = 0; i < COUNT; i++) particles.push(createParticle());
+      }
+
+      function project(p) {
+        const f = 400;
+        const scale = f / (f * p.z);
+        return {
+          x: p.x * width * 0.5 * scale + width / 2,
+          y: p.y * height * 0.5 * scale + height / 2,
+          scale
+        };
+      }
+
+      function update() {
+        ctx.clearRect(0, 0, width, height);
+
+        const grad = ctx.createRadialGradient(
+          width * 0.5, height * 0.2, 0,
+          width * 0.5, height * 0.2, width * 0.6
+        );
+        grad.addColorStop(0, "rgba(241,230,163,0.22)");
+        grad.addColorStop(0.4, "rgba(241,230,163,0.04)");
+        grad.addColorStop(1, "transparent");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        particles.forEach(p => {
+          p.z -= p.speed;
+          if (p.z < 0.08) {
+            Object.assign(p, createParticle());
+            p.z = 1;
+          }
+
+          const proj = project(p);
+          const alpha = Math.min(1, (1.2 - p.z) * 1.1);
+          const radius = Math.max(0.8, 3.6 * (1.1 - p.z));
+
+          if (p.vertical && proj.y < height * 0.9) {
+            ctx.strokeStyle = `rgba(241,230,163,${0.14 * alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(proj.x, proj.y);
+            ctx.lineTo(proj.x, proj.y + 46 * (1.1 - p.z));
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(proj.x - 4, proj.y + 6);
+            ctx.lineTo(proj.x + 4, proj.y + 6);
+            ctx.moveTo(proj.x, proj.y + 2);
+            ctx.lineTo(proj.x, proj.y + 10);
+            ctx.stroke();
+          }
+
+          const gradDot = ctx.createRadialGradient(
+            proj.x, proj.y, 0,
+            proj.x, proj.y, radius * 3
+          );
+          gradDot.addColorStop(0, `rgba(248,238,192,${0.95 * alpha})`);
+          gradDot.addColorStop(0.4, `rgba(212,175,55,${0.9 * alpha})`);
+          gradDot.addColorStop(1, `rgba(0,0,0,0)`);
+          ctx.fillStyle = gradDot;
+          ctx.beginPath();
+          ctx.arc(proj.x, proj.y, radius * 3, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = `rgba(248,238,192,${0.8 * alpha})`;
+          ctx.beginPath();
+          ctx.arc(proj.x, proj.y, radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (p.code && proj.y > 40 && proj.y < height - 40 && Math.random() < 0.25) {
+            ctx.font = `${10 + 6 * (1.1 - p.z)}px "Orbitron", system-ui`;
+            ctx.fillStyle = `rgba(241,230,163,${0.78 * alpha})`;
+            ctx.fillText(p.value, proj.x + 6, proj.y - 4);
+          }
+        });
+
+        requestAnimationFrame(update);
+      }
+
+      window.addEventListener("resize", resize);
+      resize(); init(); update();
+    })();
+  </script>
+
+  <!-- Tests logic (local, deterministic) -->
+  <script>
+    const resultsBox = document.getElementById("resultsBox");
+    const btn = document.getElementById("runTestsBtn");
+
+    function setRowStatus(name, ok, note) {
+      const row = document.querySelector(`[data-test="${name}"]`);
+      if (!row) return;
+      const cell = row.querySelectorAll(".cell")[2];
+      const cls = ok ? "ok" : "bad";
+      const label = ok ? "pass" : "fail";
+      cell.innerHTML = `<span class="badge ${cls}"><span class="dot"></span><span>${label}</span></span>`;
+      if (note) {
+        const notesCell = row.querySelectorAll(".cell")[3];
+        notesCell.textContent = note;
+      }
+    }
+
+    function stableStringify(obj) {
+      if (obj === null || typeof obj !== "object") return JSON.stringify(obj);
+      if (Array.isArray(obj)) return "[" + obj.map(stableStringify).join(",") + "]";
+      const keys = Object.keys(obj).sort();
+      return "{" + keys.map(k => JSON.stringify(k) + ":" + stableStringify(obj[k])).join(",") + "}";
+    }
+
+    async function sha256Hex(str) {
+      const enc = new TextEncoder();
+      const data = enc.encode(str);
+      const digest = await crypto.subtle.digest("SHA-256", data);
+      const arr = Array.from(new Uint8Array(digest));
+      return arr.map(b => b.toString(16).padStart(2, "0")).join("");
+    }
+
+    // Conservative demo extraction (browser-only)
+    function extractAnchors(text) {
+      const t = (text || "").trim();
+
+      // date: very conservative ISO-like or "14 March 2024" style (demo only)
+      const dates = [];
+      const iso = t.match(/\b(20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\b/g) || [];
+      iso.forEach(d => dates.push(d));
+      const long = t.match(/\b(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+(20\d{2})\b/gi) || [];
+      long.forEach(d => dates.push(d));
+
+      // place: minimal keyword list (demo)
+      const places = [];
+      const placeKeywords = ["Paris", "London", "Berlin", "office", "court", "school", "hospital"];
+      placeKeywords.forEach(k => {
+        const re = new RegExp("\\b" + k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i");
+        if (re.test(t)) places.push(k.toLowerCase() === "office" ? "office" : k);
+      });
+
+      return { dates_detected: Array.from(new Set(dates)), places_detected: Array.from(new Set(places)) };
+    }
+
+    function buildBundle(inputText) {
+      const anchors = extractAnchors(inputText);
+      // minimal deterministic signals (demo)
+      const lower = (inputText || "").toLowerCase();
+      const signals = [];
+      if (/\bthreat\b|\bthreatened\b/.test(lower)) signals.push("threat");
+      if (/\bpressure\b|\bcoerc\w*\b/.test(lower)) signals.push("pressure");
+
+      const bundle = {
+        rpo_version: "0.1",
+        demo: true,
+        input_preview: (inputText || "").trim().slice(0, 220),
+        anchors,
+        signals,
+        proof: { hash_algo: "sha256", public_hash: "" }
+      };
+
+      const canonical = stableStringify(bundle);
+      return { bundle, canonical };
+    }
+
+    async function runAllTests() {
+      resultsBox.textContent = "Running tests…";
+
+      const sample = "On 14 March 2024, an incident occurred in the Paris office. The manager threatened the employee. Pressure increased over email.";
+      const a1 = buildBundle(sample);
+      const h1 = await sha256Hex(a1.canonical);
+      a1.bundle.proof.public_hash = h1;
+
+      const a2 = buildBundle(sample);
+      const h2 = await sha256Hex(a2.canonical);
+      a2.bundle.proof.public_hash = h2;
+
+      // Determinism: canonical string and hash must match
+      const determinismOk = (a1.canonical === a2.canonical) && (h1 === h2);
+
+      // sha256 reproducibility (already checked above, but explicit)
+      const shaOk = (h1 === h2) && (h1.length === 64);
+
+      // Anchors: should detect March 2024 (via "14 March 2024") and Paris + office (demo)
+      const anchorsOk =
+        a1.bundle.anchors.dates_detected.length >= 1 &&
+        a1.bundle.anchors.places_detected.length >= 1;
+
+      setRowStatus("determinism", determinismOk, determinismOk ? "Canonical bundle + hash are identical." : "Mismatch detected (should never happen).");
+      setRowStatus("sha256", shaOk, shaOk ? "WebCrypto SHA-256 returns stable 64-hex digest." : "Digest invalid or unstable.");
+      setRowStatus("anchors", anchorsOk, anchorsOk ? "Anchors extracted consistently from sample." : "Anchors missing (check extraction rules).");
+
+      const summary =
+`TEST RUN SUMMARY
+- determinism: ${determinismOk ? "PASS" : "FAIL"}
+- sha256:      ${shaOk ? "PASS" : "FAIL"}
+- anchors:     ${anchorsOk ? "PASS" : "FAIL"}
+
+SAMPLE HASH (sha256):
+${h1}
+
+CANONICAL (first 240 chars):
+${a1.canonical.slice(0, 240)}…`;
+
+      resultsBox.textContent = summary;
+    }
+
+    btn.addEventListener("click", () => {
+      if (!crypto || !crypto.subtle) {
+        resultsBox.textContent = "WebCrypto is not available in this browser. Please use a modern browser (Chrome/Firefox/Safari).";
+        setRowStatus("sha256", false, "WebCrypto unavailable.");
+        return;
+      }
+      runAllTests().catch(err => {
+        resultsBox.textContent = "Test runner error: " + (err && err.message ? err.message : String(err));
+        setRowStatus("determinism", false, "Runner error.");
+        setRowStatus("sha256", false, "Runner error.");
+        setRowStatus("anchors", false, "Runner error.");
+      });
+    });
+  </script>
 </body>
 </html>
+
