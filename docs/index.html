@@ -3,103 +3,575 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OpenProof — RPO v0.1 | Live Proof of Concept</title>
-
-  <meta name="description"
-        content="OpenProof presents the RPO standard. A live proof of concept that turns narratives into verifiable bundles. Try it. Then understand." />
-
+  <title>OpenProof — RPO v0.1 | Live demo</title>
+  <meta name="description" content="The fastest path to understand RPO v0.1: run the live sandbox, get a deterministic bundle (JSON + PDF path + public hash)." />
   <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://rpo.openproof.net/" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet">
 
-  <!-- Core style -->
-  <link rel="stylesheet" href="./assets/site.css">
+  <style>
+    :root{
+      --bg-deep:#04040e;
+      --bg-mid:#0b0f14;
+      --gold-soft:#f1e6a3;
+      --gold:#d4af37;
+      --gold-deep:#8f7633;
+      --ivory:#f7f3e8;
+      --ink-soft:#b3a48b;
+      --radius:24px;
+      --shadow-soft:0 26px 70px rgba(0,0,0,0.5);
+      --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
+      --line:rgba(212,175,55,0.45);
+      --line2:rgba(136,116,72,0.35);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      color:var(--ivory);
+      background:
+        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
+        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
+        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
+      overflow-x:hidden;
+    }
+
+    /* BACKGROUND CANVAS */
+    #bg-field{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      z-index:-1;
+      background:
+        radial-gradient(circle at top, rgba(241,230,163,0.12), transparent 60%),
+        radial-gradient(circle at bottom, rgba(241,230,163,0.06), transparent 65%),
+        radial-gradient(circle at center, #04040e, #020208 70%);
+    }
+
+    /* TOP BAR */
+    .top-bar{
+      position:fixed; top:0; left:0; right:0;
+      height:68px; padding:0 40px;
+      display:flex; align-items:center; justify-content:space-between;
+      z-index:10;
+      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(212,175,55,0.22);
+    }
+    .top-left{display:flex; align-items:center; gap:14px}
+    .emblem-wrap{
+      width:38px;height:38px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
+      box-shadow:0 0 22px rgba(241,230,163,0.8);
+      overflow:hidden;
+    }
+    .emblem-wrap img{width:30px;height:30px;object-fit:contain;display:block}
+    .brand-title{
+      font-family:"Orbitron",sans-serif;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      font-size:0.74rem;
+      color:var(--ink-soft);
+      white-space:nowrap;
+    }
+    .brand-title span{color:var(--gold-soft)}
+
+    .top-nav{
+      display:flex; gap:22px;
+      font-size:0.86rem;
+      color:var(--ink-soft);
+      align-items:center;
+    }
+    .top-nav a,.top-nav span{
+      text-decoration:none; color:inherit;
+      position:relative; padding-bottom:3px;
+      white-space:nowrap;
+    }
+    .top-nav a::after{
+      content:""; position:absolute; left:0; bottom:0;
+      width:0; height:1px;
+      background:linear-gradient(90deg, var(--gold-soft), var(--gold));
+      transition:width 0.18s ease-out;
+    }
+    .top-nav a:hover::after{width:100%}
+    .nav-current{color:var(--gold-soft)}
+
+    .top-cta{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:8px 18px; border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      font-size:0.8rem;
+      text-transform:uppercase; letter-spacing:0.12em;
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204; text-decoration:none;
+      box-shadow:0 12px 26px rgba(0,0,0,0.65);
+      white-space:nowrap;
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      min-height:100vh;
+      padding:96px 40px 72px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .hero-shell{
+      width:100%; max-width:1240px;
+      display:grid;
+      grid-template-columns:minmax(0, 1.5fr) minmax(0, 1.3fr);
+      gap:40px;
+      align-items:center;
+    }
+    .hero-left{position:relative; z-index:1}
+    .eyebrow{
+      font-family:"Orbitron",sans-serif;
+      font-size:0.78rem;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+      margin-bottom:14px;
+    }
+    .eyebrow span{color:var(--gold-soft)}
+    .hero-title{
+      font-family:"Orbitron",sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.07em;
+      line-height:1.08;
+      font-size:clamp(1.9rem, 3.8vw, 2.9rem);
+      margin-bottom:16px;
+      max-width:560px;
+    }
+    .hero-title .l2{display:block; color:var(--gold-soft)}
+    .hero-title .l3{display:block; color:var(--gold)}
+    .hero-text{
+      max-width:620px;
+      font-size:0.98rem;
+      line-height:1.7;
+      color:var(--ink-soft);
+      margin-bottom:18px;
+    }
+    .hero-highlight{color:var(--gold-soft)}
+    .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:10px}
+    .btn-primary{
+      padding:12px 26px;
+      border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      text-transform:uppercase; letter-spacing:0.14em;
+      font-size:0.8rem;
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204; text-decoration:none;
+      box-shadow:0 18px 34px rgba(0,0,0,0.75);
+      display:inline-flex; align-items:center; justify-content:center;
+      white-space:nowrap;
+    }
+    .btn-secondary{
+      padding:11px 22px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.6);
+      font-size:0.8rem;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:var(--gold-soft);
+      text-decoration:none;
+      background:rgba(7,8,20,0.7);
+      backdrop-filter:blur(10px);
+      white-space:nowrap;
+    }
+
+    /* RIGHT PANEL */
+    .hero-right{position:relative; z-index:1; display:flex; justify-content:flex-end}
+    .metrics{
+      width:100%; max-width:480px;
+      background:
+        radial-gradient(circle at 0 0, rgba(241,230,163,0.12), transparent 60%),
+        var(--panel);
+      border-radius:26px;
+      border:1px solid rgba(212,175,55,0.5);
+      box-shadow:var(--shadow-soft);
+      padding:26px 26px 18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .metrics::before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:inherit;
+      border:1px solid rgba(241,230,163,0.18);
+      pointer-events:none;
+    }
+    .metrics-header{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:8px;
+      margin-bottom:12px;
+      font-family:"Orbitron",sans-serif;
+    }
+    .metrics-title{
+      font-size:0.86rem;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+    }
+    .metrics-pill{
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:0.72rem;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.6);
+      background:radial-gradient(circle at 30% 0, rgba(241,230,163,0.25), rgba(7,8,20,0.9));
+    }
+    .metrics-pill-dot{
+      width:7px;height:7px;border-radius:999px;
+      background:#46ff99;
+      box-shadow:0 0 12px rgba(70,255,153,0.9);
+    }
+    .metrics-list{
+      margin-top:6px;
+      border-top:1px solid rgba(212,175,55,0.45);
+      padding-top:10px;
+    }
+    .metrics-row{
+      display:flex; justify-content:space-between; align-items:baseline;
+      font-size:0.92rem;
+      padding:8px 0;
+      color:var(--ink-soft);
+      gap:14px;
+    }
+    .metrics-row + .metrics-row{border-top:1px dashed var(--line2)}
+    .metrics-label{max-width:72%}
+    .metrics-value{
+      font-family:"Orbitron",sans-serif;
+      color:var(--gold-soft);
+      font-size:0.95rem;
+      text-align:right;
+      white-space:nowrap;
+    }
+    .metrics-foot{
+      margin-top:12px;
+      font-size:0.82rem;
+      color:rgba(198,186,150,0.82);
+      line-height:1.55;
+    }
+    .metrics-foot a{
+      color:var(--gold-soft);
+      text-decoration:none;
+      border-bottom:1px dotted rgba(241,230,163,0.6);
+    }
+
+    .scroll-hint{
+      position:absolute;
+      bottom:18px;
+      left:50%;
+      transform:translateX(-50%);
+      font-family:"Orbitron",sans-serif;
+      font-size:0.72rem;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:rgba(207,195,162,0.75);
+    }
+    .scroll-hint span{
+      display:inline-block;
+      margin-left:8px;
+      animation:pulse 1.6s infinite;
+    }
+    @keyframes pulse{
+      0%,100%{transform:translateY(0);opacity:0.3}
+      50%{transform:translateY(3px);opacity:1}
+    }
+
+    /* BELOW HERO (minimal, CTA-first) */
+    .below{
+      width:100%;
+      max-width:1240px;
+      margin:-22px auto 70px;
+      padding:0 40px;
+    }
+    .below-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:14px;
+    }
+    .mini{
+      border-radius:18px;
+      border:1px solid rgba(212,175,55,0.35);
+      background:linear-gradient(145deg, rgba(10,12,27,0.92), rgba(5,7,18,0.95));
+      box-shadow:0 18px 40px rgba(0,0,0,0.35);
+      padding:16px 16px 14px;
+    }
+    .mini h2{
+      font-family:"Orbitron",sans-serif;
+      font-size:0.92rem;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      color:var(--gold-soft);
+      margin-bottom:10px;
+    }
+    .mini p{color:var(--ink-soft); font-size:0.92rem; line-height:1.55}
+    .mini a{color:var(--gold-soft); text-decoration:none; border-bottom:1px dotted rgba(241,230,163,0.5)}
+    .kbd{
+      font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+      font-size:0.9em;
+      color:rgba(248,238,192,0.95);
+    }
+
+    @media (max-width: 960px){
+      .hero{padding:96px 20px 56px}
+      .hero-shell{grid-template-columns:1fr; gap:32px}
+      .hero-right{justify-content:flex-start}
+      .metrics{max-width:100%}
+      .below{padding:0 20px}
+      .below-grid{grid-template-columns:1fr}
+    }
+    @media (max-width: 720px){
+      .top-bar{padding:0 16px}
+      .top-nav{display:none}
+    }
+  </style>
 </head>
 
 <body>
+  <canvas id="bg-field"></canvas>
 
-  <!-- TOP NAV -->
   <header class="top-bar">
     <div class="top-left">
       <div class="emblem-wrap">
-        <img src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-             alt="OpenProof emblem">
+        <img
+          src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+          alt="OpenProof logo"
+        />
       </div>
-      <div class="brand-title">
-        OPENPROOF<span>.NET — RPO STANDARD</span>
-      </div>
+      <div class="brand-title">OPENPROOF<span>.NET — RPO v0.1</span></div>
     </div>
 
-    <nav class="top-nav">
-      <span class="nav-current">Proof of Concept</span>
+    <nav class="top-nav" aria-label="Primary">
+      <span class="nav-current">Home</span>
+      <a href="./sandbox.html">Sandbox</a>
       <a href="./overview.html">How it works</a>
-      <a href="./demo-psycho.html">Psycho</a>
-      <a href="./demo-legal.html">Legal</a>
-      <a href="./demo-legal-mapping.html">Mapping</a>
       <a href="./tests.html">Tests</a>
-      <a href="https://github.com/openproof-net/rpo-spec-v0.1" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="./examples.html">Examples</a>
     </nav>
 
-    <a href="./sandbox.html" class="top-cta">
-      Try the Sandbox
-    </a>
+    <a href="./sandbox.html" class="top-cta">Run the sandbox</a>
   </header>
 
-  <!-- HERO / LANDING -->
-  <main class="hero">
-    <section class="hero-shell single">
-
-      <div class="hero-left">
-
-        <div class="eyebrow">
-          From narratives to <span>verifiable proof bundles</span>
-        </div>
+  <main class="hero" role="main">
+    <div class="hero-shell">
+      <section class="hero-left">
+        <div class="eyebrow">From messy stories to <span>verifiable bundles</span></div>
 
         <h1 class="hero-title">
-          The RPO standard
-          <span class="hero-title-line-2">makes narratives</span>
-          <span class="hero-title-line-3">inspectable and reusable</span>
+          RPO v0.1
+          <span class="l2">is a proof bundle format,</span>
+          <span class="l3">not a storytelling machine.</span>
         </h1>
 
         <p class="hero-text">
-          This is not documentation.
-          This is a <span class="hero-highlight">live proof of concept</span>.
-          Paste a narrative and observe how it is deterministically structured into a
-          verifiable RPO bundle.
+          The RPO (Rapport Probatoire Ouvert) packages a case as one reusable bundle:
+          <span class="hero-highlight">signed JSON</span>, a <span class="hero-highlight">human-readable PDF path</span>,
+          and a <span class="hero-highlight">public hash</span>.
+          The point is simple: different institutions can read, verify, and re-check
+          the same file — without sharing private corpora.
         </p>
 
         <div class="hero-ctas">
-          <a href="./sandbox.html" class="btn-primary">
-            Try the Live Sandbox
-          </a>
-          <a href="./overview.html" class="btn-secondary">
-            Understand after
-          </a>
+          <a class="btn-primary" href="./sandbox.html">Try the live demo</a>
+          <a class="btn-secondary" href="./overview.html">See the mechanism</a>
         </div>
 
-        <p class="hero-footnote">
-          No AI. No interpretation. No decision.
-          A deterministic structure, observable by anyone.
+        <p class="hero-text" style="margin-top:14px; font-size:0.9rem;">
+          <span class="hero-highlight">No AI.</span> Deterministic pipeline: same input → same output.
+          The sandbox shows the format. Explanation comes after the result.
         </p>
+      </section>
 
-      </div>
+      <aside class="hero-right" aria-label="Quick facts">
+        <div class="metrics">
+          <div class="metrics-header">
+            <div class="metrics-title">What you get in 30 seconds</div>
+            <div class="metrics-pill">
+              <span class="metrics-pill-dot"></span>
+              <span>Deterministic • Auditable • Non-proprietary</span>
+            </div>
+          </div>
 
-    </section>
+          <div class="metrics-list">
+            <div class="metrics-row">
+              <div class="metrics-label">Input</div>
+              <div class="metrics-value">1–3 paragraphs</div>
+            </div>
+            <div class="metrics-row">
+              <div class="metrics-label">Outputs</div>
+              <div class="metrics-value">rpo.json + pdf path + hash</div>
+            </div>
+            <div class="metrics-row">
+              <div class="metrics-label">Integrity anchor</div>
+              <div class="metrics-value"><span class="kbd">sha256:…</span></div>
+            </div>
+            <div class="metrics-row">
+              <div class="metrics-label">Scope</div>
+              <div class="metrics-value">Format demo (non-binding)</div>
+            </div>
+          </div>
+
+          <div class="metrics-foot">
+            The hash proves integrity, not “truth”.
+            RPO makes the file verifiable; humans decide.
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="scroll-hint">NEXT: FAST LINKS <span>↓</span></div>
   </main>
 
-  <!-- Optional subtle nudge -->
-  <script>
-    // Gentle reminder after presence
-    setTimeout(function () {
-      if (!document.hidden) {
-        // window.location.href = "./sandbox.html";
-      }
-    }, 15000);
-  </script>
+  <section class="below" aria-label="Fast links">
+    <div class="below-grid">
+      <article class="mini">
+        <h2>Go straight to proof</h2>
+        <p>
+          If you want the “wow”, run the <a href="./sandbox.html">Sandbox</a>.
+          Everything else is secondary until you’ve seen the bundle.
+        </p>
+      </article>
 
-  <script src="./assets/site.js" defer></script>
+      <article class="mini">
+        <h2>Understand the format</h2>
+        <p>
+          Read <a href="./overview.html">How it works</a>, then check <a href="./tests.html">Tests</a>.
+          RPO lives or dies by reproducibility.
+        </p>
+      </article>
+
+      <article class="mini">
+        <h2>Browse examples</h2>
+        <p>
+          Open <a href="./examples.html">Examples</a> to see minimal bundles and fields
+          (<span class="kbd">case_id</span>, timeline, sources, coherence, uncertainty).
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      const canvas = document.getElementById("bg-field");
+      const ctx = canvas.getContext("2d");
+
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let particles = [];
+      const COUNT = 220;
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function createParticle() {
+        return {
+          x: (Math.random() * 2 - 1),
+          y: (Math.random() * 2 - 1),
+          z: Math.random() * 0.9 + 0.1,
+          speed: Math.random() * 0.004 + 0.0015,
+          vertical: Math.random() < 0.25,
+          code: Math.random() < 0.18,
+          value: Math.random() < 0.5
+            ? (0.6 + Math.random() * 0.4).toFixed(2)
+            : (10 + Math.floor(Math.random() * 90)) + "%",
+        };
+      }
+
+      function init() {
+        particles = [];
+        for (let i = 0; i < COUNT; i++) particles.push(createParticle());
+      }
+
+      function project(p) {
+        const f = 400;
+        const scale = f / (f * p.z);
+        return {
+          x: p.x * width * 0.5 * scale + width / 2,
+          y: p.y * height * 0.5 * scale + height / 2,
+          scale
+        };
+      }
+
+      function update() {
+        ctx.clearRect(0, 0, width, height);
+
+        const grad = ctx.createRadialGradient(
+          width * 0.5, height * 0.2, 0,
+          width * 0.5, height * 0.2, width * 0.6
+        );
+        grad.addColorStop(0, "rgba(241,230,163,0.22)");
+        grad.addColorStop(0.4, "rgba(241,230,163,0.04)");
+        grad.addColorStop(1, "transparent");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        particles.forEach(p => {
+          p.z -= p.speed;
+          if (p.z < 0.08) { Object.assign(p, createParticle()); p.z = 1; }
+
+          const proj = project(p);
+          const alpha = Math.min(1, (1.2 - p.z) * 1.1);
+          const radius = Math.max(0.8, 3.6 * (1.1 - p.z));
+
+          if (p.vertical && proj.y < height * 0.9) {
+            ctx.strokeStyle = `rgba(241,230,163,${0.14 * alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(proj.x, proj.y);
+            ctx.lineTo(proj.x, proj.y + 46 * (1.1 - p.z));
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(proj.x - 4, proj.y + 6);
+            ctx.lineTo(proj.x + 4, proj.y + 6);
+            ctx.moveTo(proj.x, proj.y + 2);
+            ctx.lineTo(proj.x, proj.y + 10);
+            ctx.stroke();
+          }
+
+          const gradDot = ctx.createRadialGradient(proj.x, proj.y, 0, proj.x, proj.y, radius * 3);
+          gradDot.addColorStop(0, `rgba(248,238,192,${0.95 * alpha})`);
+          gradDot.addColorStop(0.4, `rgba(212,175,55,${0.9 * alpha})`);
+          gradDot.addColorStop(1, `rgba(0,0,0,0)`);
+          ctx.fillStyle = gradDot;
+          ctx.beginPath();
+          ctx.arc(proj.x, proj.y, radius * 3, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = `rgba(248,238,192,${0.8 * alpha})`;
+          ctx.beginPath();
+          ctx.arc(proj.x, proj.y, radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (p.code && proj.y > 40 && proj.y < height - 40 && Math.random() < 0.25) {
+            ctx.font = `${10 + 6 * (1.1 - p.z)}px "Orbitron", system-ui`;
+            ctx.fillStyle = `rgba(241,230,163,${0.78 * alpha})`;
+            ctx.fillText(p.value, proj.x + 6, proj.y - 4);
+          }
+        });
+
+        requestAnimationFrame(update);
+      }
+
+      window.addEventListener("resize", resize);
+      resize(); init(); update();
+    })();
+  </script>
 </body>
 </html>
+
