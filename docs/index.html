@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OpenProof — RPO v0.1 | Live demo</title>
-  <meta name="description" content="RPO v0.1 turns narratives into verifiable proof bundles. Try the live demo and get a deterministic bundle: JSON, PDF path, public hash." />
+
+  <meta name="description" content="RPO v0.1 turns narratives into verifiable proof bundles. Try the live demo and observe a deterministic extraction: JSON, PDF path, public hash." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
 
@@ -22,8 +23,8 @@
       --gold-deep:#8f7633;
       --ivory:#f7f3e8;
       --ink-soft:#b3a48b;
-      --radius:24px;
-      --shadow-soft:0 26px 70px rgba(0,0,0,0.5);
+      --radius:26px;
+      --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
       --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
       --line2:rgba(136,116,72,0.35);
     }
@@ -41,32 +42,40 @@
       overflow-x:hidden;
     }
 
-    /* BACKGROUND */
+    /* BACKGROUND FIELD */
     #bg-field{
-      position:fixed; inset:0;
-      width:100%; height:100%;
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
       z-index:-1;
-      background:
-        radial-gradient(circle at top, rgba(241,230,163,0.12), transparent 60%),
-        radial-gradient(circle at bottom, rgba(241,230,163,0.06), transparent 65%),
-        radial-gradient(circle at center, #04040e, #020208 70%);
     }
 
     /* TOP BAR */
     .top-bar{
-      position:fixed; top:0; left:0; right:0;
-      height:68px; padding:0 40px;
-      display:flex; align-items:center; justify-content:space-between;
+      position:fixed;
+      top:0; left:0; right:0;
+      height:68px;
+      padding:0 40px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       z-index:10;
       background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
       backdrop-filter:blur(18px);
       border-bottom:1px solid rgba(212,175,55,0.22);
     }
 
-    .top-left{display:flex; align-items:center; gap:14px}
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
 
     .emblem{
-      width:34px;height:34px;border-radius:999px;
+      width:34px;
+      height:34px;
+      border-radius:999px;
       background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
       box-shadow:0 0 18px rgba(241,230,163,0.8);
     }
@@ -82,7 +91,8 @@
     .brand span{color:var(--gold-soft)}
 
     .top-nav{
-      display:flex; gap:22px;
+      display:flex;
+      gap:22px;
       font-size:0.86rem;
       color:var(--ink-soft);
     }
@@ -91,11 +101,11 @@
       text-decoration:none;
       position:relative;
       padding-bottom:3px;
-      white-space:nowrap;
     }
     .top-nav a::after{
       content:"";
-      position:absolute; left:0; bottom:0;
+      position:absolute;
+      left:0; bottom:0;
       width:0; height:1px;
       background:linear-gradient(90deg,var(--gold-soft),var(--gold));
       transition:width .2s ease;
@@ -159,10 +169,13 @@
       font-size:.98rem;
       line-height:1.7;
       color:var(--ink-soft);
-      margin-bottom:20px;
+      margin-bottom:22px;
     }
 
-    .hero-ctas{display:flex;gap:14px}
+    .hero-ctas{
+      display:flex;
+      gap:14px;
+    }
 
     .btn-primary{
       padding:12px 26px;
@@ -174,7 +187,6 @@
       letter-spacing:.14em;
       text-transform:uppercase;
       text-decoration:none;
-      white-space:nowrap;
     }
 
     .hero-note{
@@ -183,12 +195,13 @@
       color:var(--ink-soft);
     }
 
-    /* RIGHT PANEL */
+    /* PANEL */
     .panel{
       background:var(--panel);
       border-radius:26px;
       border:1px solid rgba(212,175,55,0.45);
-      padding:24px;
+      padding:26px;
+      box-shadow:var(--shadow-soft);
     }
 
     .panel h2{
@@ -200,7 +213,7 @@
       margin-bottom:10px;
     }
 
-    .panel .pill{
+    .pill{
       display:inline-flex;
       gap:8px;
       align-items:center;
@@ -220,6 +233,7 @@
       font-size:.9rem;
       color:var(--ink-soft);
     }
+
     .row{
       display:flex;
       justify-content:space-between;
@@ -231,39 +245,11 @@
       margin-top:12px;
       font-size:.82rem;
       color:rgba(198,186,150,.8);
+      line-height:1.5;
     }
-
-    /* FAST LINKS */
-    .below{
-      max-width:1240px;
-      margin:-20px auto 70px;
-      padding:0 40px;
-    }
-    .below-grid{
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:14px;
-    }
-    .mini{
-      background:var(--panel);
-      border-radius:18px;
-      border:1px solid rgba(212,175,55,.35);
-      padding:16px;
-    }
-    .mini h3{
-      font-family:"Orbitron",sans-serif;
-      font-size:.9rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color:var(--gold-soft);
-      margin-bottom:8px;
-    }
-    .mini p{font-size:.92rem;color:var(--ink-soft)}
-    .mini a{color:var(--gold-soft);text-decoration:none}
 
     @media(max-width:960px){
       .hero-shell{grid-template-columns:1fr}
-      .below-grid{grid-template-columns:1fr}
       .top-nav{display:none}
       .top-bar{padding:0 16px}
       .hero{padding:96px 20px 56px}
@@ -272,6 +258,7 @@
 </head>
 
 <body>
+
 <canvas id="bg-field"></canvas>
 
 <header class="top-bar">
@@ -293,18 +280,18 @@
 <main class="hero">
   <div class="hero-shell">
     <section>
-      <div class="eyebrow">From messy stories to <span>verifiable bundles</span></div>
+      <div class="eyebrow">From narratives to <span>verifiable proof</span></div>
 
       <h1 class="hero-title">
         RPO v0.1
         <span class="l2">is a proof bundle format,</span>
-        <span class="l3">not a storytelling machine.</span>
+        <span class="l3">not an AI storyteller.</span>
       </h1>
 
       <p class="hero-text">
-        RPO packages a case as one reusable bundle:
-        signed JSON, a human-readable PDF path, and a public hash —
-        readable and verifiable across institutions.
+        Paste a short narrative and observe a deterministic extraction.
+        You will get the same structured bundle every time:
+        signed JSON, a PDF path, and a public hash.
       </p>
 
       <div class="hero-ctas">
@@ -312,7 +299,7 @@
       </div>
 
       <div class="hero-note">
-        <strong>No AI.</strong> Deterministic pipeline. Same input → same output.
+        No AI. No interpretation. Same input → same output.
       </div>
     </section>
 
@@ -323,7 +310,7 @@
       <div class="list">
         <div class="row"><span>Input</span><span>1–3 paragraphs</span></div>
         <div class="row"><span>Outputs</span><span>rpo.json + pdf path + hash</span></div>
-        <div class="row"><span>Integrity anchor</span><span>sha256:…</span></div>
+        <div class="row"><span>Integrity anchor</span><span>sha256</span></div>
         <div class="row"><span>Scope</span><span>Format demo (non-binding)</span></div>
       </div>
 
@@ -335,23 +322,61 @@
   </div>
 </main>
 
-<section class="below">
-  <div class="below-grid">
-    <div class="mini">
-      <h3>Go straight to proof</h3>
-      <p>Run the <a href="./sandbox.html">live demo</a>. Everything else is secondary.</p>
-    </div>
-    <div class="mini">
-      <h3>Understand the format</h3>
-      <p>Read <a href="./overview.html">How it works</a>, then check <a href="./tests.html">Tests</a>.</p>
-    </div>
-    <div class="mini">
-      <h3>Browse examples</h3>
-      <p>Explore <a href="./examples.html">example bundles</a> and fields.</p>
-    </div>
-  </div>
-</section>
+<!-- BACKGROUND SCRIPT: identical to your reference -->
+<script>
+  (function () {
+    const canvas = document.getElementById("bg-field");
+    const ctx = canvas.getContext("2d");
+    let width, height, particles = [];
+    const COUNT = 220;
+
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = width * ratio;
+      canvas.height = height * ratio;
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+
+    function createParticle() {
+      return {
+        x:(Math.random()*2-1),
+        y:(Math.random()*2-1),
+        z:Math.random()*0.9+0.1,
+        speed:Math.random()*0.004+0.0015
+      };
+    }
+
+    function init(){
+      particles=[];
+      for(let i=0;i<COUNT;i++)particles.push(createParticle());
+    }
+
+    function project(p){
+      const f=400, s=f/(f*p.z);
+      return {x:p.x*width*0.5*s+width/2,y:p.y*height*0.5*s+height/2};
+    }
+
+    function loop(){
+      ctx.clearRect(0,0,width,height);
+      particles.forEach(p=>{
+        p.z-=p.speed;
+        if(p.z<0.08){Object.assign(p,createParticle());p.z=1;}
+        const {x,y}=project(p);
+        const a=Math.min(1,(1.2-p.z)*1.1);
+        ctx.fillStyle=`rgba(241,230,163,${0.6*a})`;
+        ctx.beginPath();
+        ctx.arc(x,y,1.6,0,Math.PI*2);
+        ctx.fill();
+      });
+      requestAnimationFrame(loop);
+    }
+
+    window.addEventListener("resize",resize);
+    resize(); init(); loop();
+  })();
+</script>
 
 </body>
 </html>
-
