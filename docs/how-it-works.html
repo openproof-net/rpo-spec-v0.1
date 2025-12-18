@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OpenProof.net — How it works (RPO v0.1)</title>
+  <meta name="description" content="How RPO works: deterministic extraction, proof hash (sha256), and a readable bundle (JSON + PDF + hash). Format demo, not legal advice." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-deep:#04040e;
+      --bg-mid:#0b0f14;
+      --gold-soft:#f1e6a3;
+      --gold:#d4af37;
+      --gold-deep:#8f7633;
+      --ivory:#f7f3e8;
+      --ink-soft:#b3a48b;
+      --ink-dim: rgba(243,237,215,0.72);
+      --line: rgba(212,175,55,0.22);
+      --panel: linear-gradient(145deg, rgba(10,12,27,0.96), rgba(5,7,18,0.98));
+      --panel2: radial-gradient(circle at 0 0, rgba(241,230,163,0.10), transparent 60%), var(--panel);
+      --radius:24px;
+      --shadow: 0 26px 70px rgba(0,0,0,0.5);
+      --shadow-strong: 0 28px 80px rgba(0,0,0,0.65);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{
+      min-height:100vh;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      color:var(--ivory);
+      background:
+        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
+        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
+        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
+      overflow-x:hidden;
+    }
+
+    /* Interstellar field canvas */
+    #bg-field{
+      position:fixed; inset:0; width:100%; height:100%;
+      z-index:-1;
+      background:
+        radial-gradient(circle at top, rgba(241,230,163,0.12), transparent 60%),
+        radial-gradient(circle at bottom, rgba(241,230,163,0.06), transparent 65%),
+        radial-gradient(circle at center, #04040e, #020208 70%);
+    }
+
+    /* Top bar */
+    header.top-bar{
+      position:fixed; top:0; left:0; right:0;
+      height:68px;
+      padding:0 40px;
+      display:flex; align-items:center; justify-content:space-between;
+      z-index:20;
+      background: linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
+      backdrop-filter: blur(18px);
+      border-bottom:1px solid var(--line);
+    }
+    .top-left{display:flex; align-items:center; gap:14px;}
+    .emblem-wrap{
+      width:38px;height:38px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background: radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
+      box-shadow: 0 0 22px rgba(241,230,163,0.8);
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .emblem-wrap img{width:30px;height:30px;object-fit:contain;display:block}
+    .brand-title{
+      font-family:Orbitron,sans-serif;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      font-size:0.74rem;
+      color:var(--ink-soft);
+      white-space:nowrap;
+    }
+    .brand-title span{color:var(--gold-soft)}
+
+    .top-nav{
+      display:flex; gap:14px; align-items:center;
+      font-size:0.86rem;
+      color:var(--ink-soft);
+    }
+    .chip{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.25);
+      background: rgba(7,8,20,0.45);
+      backdrop-filter: blur(10px);
+      color:inherit;
+      text-decoration:none;
+      transition: transform .12s ease, border-color .12s ease, background .12s ease;
+      font-family: Orbitron, sans-serif;
+      font-size:0.74rem;
+      letter-spacing:0.08em;
+      text-transform:uppercase;
+    }
+    .chip:hover{transform: translateY(-1px); border-color: rgba(241,230,163,0.5); background: rgba(7,8,20,0.62);}
+    .chip.current{border-color: rgba(241,230,163,0.65); color: var(--gold-soft);}
+
+    .top-cta{
+      display:inline-flex;
+      align-items:center; justify-content:center;
+      padding:8px 18px;
+      border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      font-size:0.8rem;
+      text-transform:uppercase;
+      letter-spacing:0.12em;
+      background: radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      text-decoration:none;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.65);
+      font-family: Orbitron, sans-serif;
+      white-space:nowrap;
+    }
+
+    /* Layout */
+    .wrap{position:relative; z-index:1;}
+    .container{width:min(1240px, 92vw); margin:0 auto;}
+    main{padding-top:88px; padding-bottom:70px;}
+
+    /* Hero */
+    .hero{
+      padding: 26px 0 10px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 34px;
+      align-items: start;
+    }
+    .eyebrow{
+      font-family:Orbitron,sans-serif;
+      font-size:0.78rem;
+      letter-spacing:0.22em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+      margin-bottom:12px;
+    }
+    .eyebrow span{color:var(--gold-soft)}
+    h1{
+      font-family:Orbitron,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.07em;
+      line-height:1.08;
+      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+      margin-bottom:14px;
+      max-width: 720px;
+    }
+    h1 .line2{display:block; color:var(--gold-soft)}
+    h1 .line3{display:block; color:var(--gold)}
+    .lead{
+      max-width: 720px;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      text-align: justify;
+      text-align-last: left;
+    }
+    .lead b{color:var(--gold-soft); font-weight:600}
+    .note{
+      margin-top:10px;
+      font-size:0.86rem;
+      color: var(--ink-dim);
+    }
+
+    .hero-panel{
+      background: var(--panel2);
+      border-radius: 26px;
+      border: 1px solid rgba(212,175,55,0.5);
+      box-shadow: var(--shadow);
+      padding: 22px 22px 18px;
+      position: relative;
+      overflow:hidden;
+    }
+    .hero-panel::before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:inherit;
+      border:1px solid rgba(241,230,163,0.16);
+      pointer-events:none;
+    }
+    .panel-title{
+      font-family:Orbitron,sans-serif;
+      font-size:0.86rem;
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+      margin-bottom:10px;
+    }
+    .panel-pill{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:0.72rem;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.6);
+      background: radial-gradient(circle at 30% 0, rgba(241,230,163,0.22), rgba(7,8,20,0.9));
+      margin-bottom:10px;
+      font-family:Orbitron,sans-serif;
+    }
+    .dot{width:7px;height:7px;border-radius:999px;background:#46ff99;box-shadow:0 0 12px rgba(70,255,153,0.9)}
+    .panel-list{
+      border-top:1px solid rgba(212,175,55,0.45);
+      padding-top:10px;
+      margin-top:8px;
+    }
+    .row{
+      display:flex; justify-content:space-between; align-items:baseline;
+      font-size:0.9rem;
+      padding:8px 0;
+      color:var(--ink-soft);
+      gap:14px;
+    }
+    .row + .row{border-top:1px dashed rgba(136,116,72,0.35)}
+    .val{
+      font-family:Orbitron,sans-serif;
+      color:var(--gold-soft);
+      font-size:0.95rem;
+      white-space:nowrap;
+    }
+    .panel-foot{
+      margin-top:12px;
+      font-size:0.78rem;
+      color: rgba(198,186,150,0.86);
+      line-height:1.55;
+    }
+
+    .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:14px;}
+    .btn-primary{
+      padding: 12px 24px;
+      border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      font-size:0.8rem;
+      background: radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      text-decoration:none;
+      box-shadow:0 18px 34px rgba(0,0,0,0.75);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-family:Orbitron,sans-serif;
+    }
+    .btn-secondary{
+      padding: 11px 20px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.6);
+      font-size:0.8rem;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color:var(--gold-soft);
+      text-decoration:none;
+      background: rgba(7,8,20,0.7);
+      backdrop-filter: blur(10px);
+      display:inline-flex; align-items:center; justify-content:center;
+      font-family:Orbitron,sans-serif;
+    }
+
+    /* Sections */
+    .section{margin-top:30px;}
+    .section-head{
+      display:flex; align-items:baseline; justify-content:space-between;
+      gap:18px;
+      margin: 16px 0 12px;
+    }
+    .h2{
+      font-family:Orbitron,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.16em;
+      font-size:0.95rem;
+      color:var(--ink-soft);
+    }
+    .rule{
+      height:1px;
+      flex: 1 1 auto;
+      background: linear-gradient(90deg, rgba(212,175,55,0.0), rgba(212,175,55,0.45), rgba(212,175,55,0.0));
+      opacity:0.9;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .card{
+      background: rgba(7,8,20,0.55);
+      border:1px solid rgba(241,230,163,0.20);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-strong);
+      padding: 16px 16px 14px;
+      backdrop-filter: blur(10px);
+      position:relative;
+      overflow:hidden;
+      min-height: 150px;
+    }
+    .card::before{
+      content:"";
+      position:absolute; left:0; right:0; top:0;
+      height:2px;
+      background: linear-gradient(90deg, rgba(241,230,163,0.2), rgba(212,175,55,0.55), rgba(241,230,163,0.2));
+      opacity:0.85;
+    }
+    .card-title{
+      font-family:Orbitron,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.10em;
+      font-size:0.84rem;
+      color: var(--gold-soft);
+      margin-bottom:8px;
+    }
+    .card-text{
+      color: var(--ink-soft);
+      font-size:0.95rem;
+      line-height:1.6;
+    }
+    .mini{
+      margin-top:10px;
+      font-size:0.82rem;
+      color: rgba(198,186,150,0.88);
+      line-height:1.5;
+    }
+    .mini code{color: var(--gold-soft);}
+
+    /* Steps */
+    .steps{
+      display:grid;
+      grid-template-columns: minmax(0,1fr);
+      gap: 12px;
+    }
+    .step{
+      display:grid;
+      grid-template-columns: 74px minmax(0,1fr);
+      gap: 14px;
+      align-items: start;
+      background: var(--panel2);
+      border:1px solid rgba(212,175,55,0.35);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px 14px;
+      overflow:hidden;
+      position:relative;
+    }
+    .badge{
+      width: 64px; height:64px; border-radius: 18px;
+      border:1px solid rgba(241,230,163,0.35);
+      background:
+        radial-gradient(circle at 30% 20%, rgba(241,230,163,0.22), rgba(7,8,20,0.9));
+      display:flex; align-items:center; justify-content:center;
+      font-family:Orbitron,sans-serif;
+      font-size: 1.05rem;
+      color: var(--gold-soft);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+    }
+    .step h3{
+      font-family:Orbitron,sans-serif;
+      text-transform:uppercase;
+      letter-spacing:0.10em;
+      font-size:0.92rem;
+      margin-bottom:6px;
+      color: var(--ivory);
+    }
+    .step p{color:var(--ink-soft); line-height:1.6; font-size:0.95rem;}
+    .step p b{color:var(--gold-soft); font-weight:600}
+
+    /* Code block */
+    pre{
+      background: rgba(3,4,14,0.72);
+      border:1px solid rgba(241,230,163,0.22);
+      border-radius: 18px;
+      padding: 14px 14px;
+      overflow:auto;
+      color: rgba(247,243,232,0.90);
+      box-shadow: 0 18px 46px rgba(0,0,0,0.55);
+      font-size: 0.86rem;
+      line-height:1.55;
+    }
+    .codehint{
+      margin-top:10px;
+      color: rgba(198,186,150,0.88);
+      font-size:0.84rem;
+      line-height:1.55;
+    }
+
+    /* Bottom CTA band */
+    .band{
+      margin-top: 22px;
+      border-radius: 26px;
+      background: rgba(7,8,20,0.60);
+      border:1px solid rgba(241,230,163,0.22);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      backdrop-filter: blur(10px);
+    }
+    .band p{
+      color: var(--ink-soft);
+      line-height:1.6;
+      max-width: 860px;
+    }
+
+    footer{
+      margin-top: 18px;
+      color: rgba(198,186,150,0.70);
+      font-size:0.86rem;
+      line-height:1.6;
+      padding-bottom: 6px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      header.top-bar{padding:0 16px}
+      .top-nav{display:none}
+      .hero-grid{grid-template-columns: 1fr; gap: 18px;}
+      .grid-3{grid-template-columns: 1fr; }
+      .band{flex-direction:column; align-items:flex-start}
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg-field"></canvas>
+
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="emblem-wrap">
+        <img
+          src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+          alt="OpenProof logo"
+        />
+      </div>
+      <div class="brand-title">OPENPROOF<span>.NET — RPO v0.1</span></div>
+    </div>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a class="chip" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Sandbox</a>
+      <a class="chip current" href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+      <a class="chip" href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+      <a class="chip" href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+    </nav>
+
+    <!-- CTA MUST GO SOMEWHERE -->
+    <a class="top-cta" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Try the live demo</a>
+  </header>
+
+  <div class="wrap">
+    <main class="container">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">From narratives to <span>verifiable proof bundles</span></div>
+
+            <h1>
+              How RPO works
+              <span class="line2">deterministic structure,</span>
+              <span class="line3">public integrity anchors</span>
+            </h1>
+
+            <p class="lead">
+              The Sandbox is deliberately strict: <b>no AI model</b>, no interpretation, no “storytelling”.
+              It performs a <b>deterministic extraction</b> of basic anchors (time, place, actions),
+              generates a draft <b>rpo.json</b>, and exposes a public <b>sha256</b> proof hash.
+            </p>
+
+            <p class="note">
+              Important: the hash proves <b>integrity</b>, not truth. This is a format demo, not legal advice.
+            </p>
+
+            <div class="hero-ctas">
+              <a class="btn-primary" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Open the Sandbox</a>
+              <a class="btn-secondary" href="./index.html" target="_blank" rel="noopener noreferrer">Back to overview</a>
+            </div>
+          </div>
+
+          <aside class="hero-panel">
+            <div class="panel-title">What you get in 30 seconds</div>
+            <div class="panel-pill"><span class="dot"></span><span>Deterministic • Auditable • Non-proprietary</span></div>
+
+            <div class="panel-list">
+              <div class="row"><div>Input</div><div class="val">1–3 paragraphs</div></div>
+              <div class="row"><div>Output</div><div class="val">draft rpo.json + sha256</div></div>
+              <div class="row"><div>Guarantee</div><div class="val">same input → same output</div></div>
+              <div class="row"><div>Scope</div><div class="val">format demo (non-binding)</div></div>
+            </div>
+
+            <div class="panel-foot">
+              The bundle is designed to be handed over to a professional who can decide what matters.
+              The format makes the file readable and verifiable; humans decide.
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="h2">The 4-step mechanism</div>
+          <div class="rule"></div>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="badge">1</div>
+            <div>
+              <h3>Write a short narrative</h3>
+              <p>
+                Keep it concrete: include at least one <b>time anchor</b> (date/time), one <b>place</b>, and 2–3 <b>actions</b>.
+                You may anonymize names and dates.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="badge">2</div>
+            <div>
+              <h3>Deterministic extraction</h3>
+              <p>
+                The sandbox extracts <b>basic anchors</b>, detects minimal signals, maps them to conservative axes and thresholds.
+                No “interpretation”, no inference, no hidden model.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="badge">3</div>
+            <div>
+              <h3>Bundle draft</h3>
+              <p>
+                You get a draft <b>rpo.json</b> (portable, machine-readable) designed to be paired with a human-readable report
+                in professional deployments.
+              </p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="badge">4</div>
+            <div>
+              <h3>Public integrity anchor</h3>
+              <p>
+                A <b>sha256</b> hash is computed. If the file changes, the hash changes.
+                That’s the whole point: <b>integrity</b>, not “truth”.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="h2">What RPO is (and what it is not)</div>
+          <div class="rule"></div>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="card-title">RPO is a file bundle format</div>
+            <div class="card-text">
+              A shared envelope: <code>rpo.json</code> + (optional) <code>rpo.pdf</code> + <code>proof_hash</code>.
+              Everyone reads the same structure.
+            </div>
+            <div class="mini">Goal: interoperability across courts, regulators, research, platforms.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">RPO is deterministic</div>
+            <div class="card-text">
+              The sandbox is conservative by design: <code>same input → same output</code>.
+              It’s meant to be auditable, not impressive.
+            </div>
+            <div class="mini">This is why we explicitly say “No AI model”.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">RPO does not decide truth</div>
+            <div class="card-text">
+              It helps package a coherent handover. It does not “judge”, it does not “prove intent”.
+              Integrity is measurable; truth requires human decision.
+            </div>
+            <div class="mini">Hash = tamper-evidence, not truth serum.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <div class="h2">Minimal draft example</div>
+          <div class="rule"></div>
+        </div>
+
+        <pre>{
+  "rpo_version": "0.1",
+  "context": "workplace",
+  "case": { "title": "Incident — March 2024" },
+  "issuer": { "label": "Internal audit team, Company X" },
+  "subject": { "label": "Employee — Sales department" },
+  "anchors": {
+    "dates_detected": ["2024-03-14T10:30:00"],
+    "places_detected": ["Paris office"]
+  },
+  "signals": ["threat", "pressure"],
+  "canonical_map": [
+    { "axis": "threats/coercion", "level": "present", "why": ["threat"] }
+  ],
+  "proof": {
+    "hash_algo": "sha256",
+    "public_hash": "…computed…"
+  },
+  "disclaimer": "Hash proves integrity, not truth. Format demo, not legal advice."
+}</pre>
+
+        <div class="codehint">
+          In the Sandbox you can <code>copy JSON</code> or <code>download rpo.json</code>.
+          For the full deployment track (with a human-readable report), you request pilot access below.
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="band">
+          <p>
+            Want the full pilot (CNRS × TruthX): interpretive coherence, structured narrative layers, advanced signal fusion,
+            and a human-readable probative report designed for professionals.
+          </p>
+          <a class="btn-primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
+            Request pilot access
+          </a>
+        </div>
+
+        <footer>
+          This page is informational. The sandbox does not store case data, and it does not decide truth.
+          It reveals structure and produces a verifiable integrity anchor.
+        </footer>
+      </section>
+    </main>
+  </div>
+
+  <!-- Interstellar field script -->
+  <script>
+    (function () {
+      const canvas = document.getElementById("bg-field");
+      const ctx = canvas.getContext("2d");
+
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let particles = [];
+      const COUNT = 220;
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function createParticle() {
+        return {
+          x: (Math.random() * 2 - 1),
+          y: (Math.random() * 2 - 1),
+          z: Math.random() * 0.9 + 0.1,
+          speed: Math.random() * 0.004 + 0.0015,
+          vertical: Math.random() < 0.25,
+          code: Math.random() < 0.18,
+          value: Math.random() < 0.5
+            ? (0.6 + Math.random() * 0.4).toFixed(2)
+            : (10 + Math.floor(Math.random() * 90)) + "%",
+        };
+      }
+
+      function init() {
+        particles = [];
+        for (let i = 0; i < COUNT; i++) particles.push(createParticle());
+      }
+
+      function project(p) {
+        const f = 400;
+        const scale = f / (f * p.z);
+        return {
+          x: p.x * width * 0.5 * scale + width / 2,
+          y: p.y * height * 0.5 * scale + height / 2,
+          scale
+        };
+      }
+
+      function update() {
+        ctx.clearRect(0, 0, width, height);
+
+        const grad = ctx.createRadialGradient(
+          width * 0.5, height * 0.2, 0,
+          width * 0.5, height * 0.2, width * 0.6
+        );
+        grad.addColorStop(0, "rgba(241,230,163,0.22)");
+        grad.addColorStop(0.4, "rgba(241,230,163,0.04)");
+        grad.addColorStop(1, "transparent");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        particles.forEach(p => {
+          p.z -= p.speed;
+          if (p.z < 0.08) {
+            Object.assign(p, createParticle());
+            p.z = 1;
+          }
+
+          const proj = project(p);
+          const alpha = Math.min(1, (1.2 - p.z) * 1.1);
+          const radius = Math.max(0.8, 3.6 * (1.1 - p.z));
+
+          if (p.vertical && proj.y < height * 0.9) {
+            ctx.strokeStyle = `rgba(241,230,163,${0.14 * alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(proj.x, proj.y);
+            ctx.lineTo(proj.x, proj.y + 46 * (1.1 - p.z));
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(proj.x - 4, proj.y + 6);
+            ctx.lineTo(proj.x + 4, proj.y + 6);
+            ctx.moveTo(proj.x, proj.y + 2);
+            ctx.lineTo(proj.x, proj.y + 10);
+            ctx.stroke();
+          }
+
+          const gradDot = ctx.createRadialGradient(
+            proj.x, proj.y, 0,
+            proj.x, proj.y, radius * 3
+          );
+          gradDot.addColorStop(0, `rgba(248,238,192,${0.95 * alpha})`);
+          gradDot.addColorStop(0.4, `rgba(212,175,55,${0.9 * alpha})`);
+          gradDot.addColorStop(1, `rgba(0,0,0,0)`);
+          ctx.fillStyle = gradDot;
+          ctx.beginPath();
+          ctx.arc(proj.x, proj.y, radius * 3, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = `rgba(248,238,192,${0.8 * alpha})`;
+          ctx.beginPath();
+          ctx.arc(proj.x, proj.y, radius, 0, Math.PI * 2);
+          ctx.fill();
+
+          if (p.code && proj.y > 40 && proj.y < height - 40 && Math.random() < 0.25) {
+            ctx.font = `${10 + 6 * (1.1 - p.z)}px "Orbitron", system-ui`;
+            ctx.fillStyle = `rgba(241,230,163,${0.78 * alpha})`;
+            ctx.fillText(p.value, proj.x + 6, proj.y - 4);
+          }
+        });
+
+        requestAnimationFrame(update);
+      }
+
+      window.addEventListener("resize", resize);
+      resize(); init(); update();
+    })();
+  </script>
+</body>
+</html>
