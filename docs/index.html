@@ -1,122 +1,105 @@
 <!DOCTYPE html>
-<html lang="en" data-page="spec">
+<html lang="en" data-page="home">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OPENPROOF — RPO v0.1 | Proof of Concept</title>
-  <meta name="description" content="Live proof of concept for the RPO (Open Evidential Report) format. Paste a narrative, observe deterministic extraction, and get a public hash." />
-  <meta name="robots" content="index, follow" />
-<link rel="stylesheet" href="./assets/site.css">
+  <title>OpenProof — RPO v0.1 | Live Proof of Concept</title>
 
+  <meta name="description"
+        content="OpenProof presents the RPO standard. A live proof of concept that turns narratives into verifiable bundles. Try it. Then understand." />
+
+  <meta name="robots" content="index, follow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet">
+
+  <!-- Core style -->
+  <link rel="stylesheet" href="./assets/site.css">
 </head>
-<script src="./assets/site.js" defer></script>
 
 <body>
-  <main class="wrap" role="main">
-    <section class="card left">
-      <h1><span class="gold">RPO v0.1</span> — Live Proof of Concept</h1>
 
-      <p>
-        This page is the shortest path to understanding what the RPO format does.
-        Paste a short narrative, and observe what the system extracts and structures.
-      </p>
+  <!-- TOP NAV -->
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="emblem-wrap">
+        <img src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+             alt="OpenProof emblem">
+      </div>
+      <div class="brand-title">
+        OPENPROOF<span>.NET — RPO STANDARD</span>
+      </div>
+    </div>
 
-      <ul class="bullets">
-        <li><b>No AI.</b> No hidden model, no probabilistic generation.</li>
-        <li><b>Deterministic.</b> Same input → same output, every time.</li>
-        <li><b>Two outputs.</b> A machine-verifiable JSON + a human-readable PDF path.</li>
-        <li><b>Public verification.</b> A public hash anchors the bundle for later checking.</li>
-      </ul>
+    <nav class="top-nav">
+      <span class="nav-current">Proof of Concept</span>
+      <a href="./overview.html">How it works</a>
+      <a href="./demo-psycho.html">Psycho</a>
+      <a href="./demo-legal.html">Legal</a>
+      <a href="./demo-legal-mapping.html">Mapping</a>
+      <a href="./tests.html">Tests</a>
+      <a href="https://github.com/openproof-net/rpo-spec-v0.1" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
 
-      <div class="pillrow">
-        <span class="pill">Signed JSON (structure)</span>
-        <span class="pill">Human-readable PDF</span>
-        <span class="pill">Public hash</span>
-        <span class="pill">Non-binding demo</span>
+    <a href="./sandbox.html" class="top-cta">
+      Try the Sandbox
+    </a>
+  </header>
+
+  <!-- HERO / LANDING -->
+  <main class="hero">
+    <section class="hero-shell single">
+
+      <div class="hero-left">
+
+        <div class="eyebrow">
+          From narratives to <span>verifiable proof bundles</span>
+        </div>
+
+        <h1 class="hero-title">
+          The RPO standard
+          <span class="hero-title-line-2">makes narratives</span>
+          <span class="hero-title-line-3">inspectable and reusable</span>
+        </h1>
+
+        <p class="hero-text">
+          This is not documentation.
+          This is a <span class="hero-highlight">live proof of concept</span>.
+          Paste a narrative and observe how it is deterministically structured into a
+          verifiable RPO bundle.
+        </p>
+
+        <div class="hero-ctas">
+          <a href="./sandbox.html" class="btn-primary">
+            Try the Live Sandbox
+          </a>
+          <a href="./overview.html" class="btn-secondary">
+            Understand after
+          </a>
+        </div>
+
+        <p class="hero-footnote">
+          No AI. No interpretation. No decision.
+          A deterministic structure, observable by anyone.
+        </p>
+
       </div>
 
-      <div class="ctaRow">
-        <a class="btn primary" href="./sandbox.html">Try the Live Demo</a>
-        <a class="btn" href="./overview.html">How it works</a>
-      </div>
-
-      <p class="small">
-        This proof of concept is illustrative and non-binding. It demonstrates a format and a deterministic pipeline
-        for making narratives verifiable — it does not qualify a case, issue legal conclusions, or decide truth.
-      </p>
-    </section>
-
-    <aside class="card right" aria-label="Quick guide">
-      <h2>What you will see</h2>
-
-      <div class="step">
-        <b>1) Paste a narrative</b><br/>
-        A short story (1–3 paragraphs) is enough.
-      </div>
-
-      <div class="step">
-        <b>2) Observe the extraction</b><br/>
-        Narrative blocks, evidence markers, dates/places, a coherence score, and a public hash.
-      </div>
-
-      <div class="step">
-        <b>3) Explore the lenses</b><br/>
-        The same narrative can be viewed through different RPO-compatible demos.
-      </div>
-
-      <div class="links">
-        <a class="link" href="./demo-psycho.html">Psycho-legal demo</a>
-        <a class="link" href="./demo-legal.html">Legal demo</a>
-        <a class="link" href="./demo-legal-mapping.html">Legal mapping</a>
-      </div>
-
-      <div class="links" style="margin-top:10px;">
-        <a class="link" href="./tests.html">Tests</a>
-        <a class="link" href="./examples.html">Examples</a>
-      </div>
-
-      <p class="small">
-        If you want the fastest “wow”, click <b>Try the Live Demo</b>.
-        Explanation comes after the result.
-      </p>
-    </aside>
-
-    <!-- ✅ MOVED INSIDE MAIN -->
-    <section class="panel" aria-label="Seal and public hash">
-      <h2>Seal and public hash</h2>
-
-      <p>
-        An RPO bundle may include a <code>seal</code> section containing a deterministic
-        <code>public_hash</code>. This hash is computed from canonical narrative fields
-        and allows later verification that the content has not been altered.
-      </p>
-
-      <p>
-        This mechanism enables a narrative to be structured, sealed and later re-evaluated
-        without rewriting history. The presence of a public hash does not imply legal
-        registration, certification or evidentiary value by itself.
-      </p>
-
-      <pre><code>{
-  "seal": {
-    "public_hash": "sha256:…",
-    "method": "sha256",
-    "scope": "rpo_version|bundle_id|issuer|subject|narrative",
-    "note": "Deterministic seal for integrity verification"
-  }
-}</code></pre>
     </section>
   </main>
 
+  <!-- Optional subtle nudge -->
   <script>
-    // Soft auto-redirect if someone lands here and does nothing.
-    // Keeps the page readable, but nudges toward the live demo.
+    // Gentle reminder after presence
     setTimeout(function () {
       if (!document.hidden) {
-        // Uncomment if you want an automatic redirect after 12s.
         // window.location.href = "./sandbox.html";
       }
-    }, 12000);
+    }, 15000);
   </script>
+
+  <script src="./assets/site.js" defer></script>
 </body>
 </html>
