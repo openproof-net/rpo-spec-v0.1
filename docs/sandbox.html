@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RPO Sandbox — Proof of Concept</title>
-  <meta name="description" content="Sandbox demonstration of the RPO format. Paste a narrative and observe deterministic signals, axes and a proof bundle." />
+  <title>OpenProof — RPO v0.1 | Sandbox</title>
+  <meta name="description" content="RPO v0.1 sandbox: paste 1–3 paragraphs, generate a deterministic draft bundle (rpo.json + public hash) and see signals, axes, and thresholds." />
   <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://rpo.openproof.net/sandbox.html" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,262 +15,1157 @@
 
   <style>
     :root{
-      --bg:#04040e;
-      --panel:#0b0f14;
-      --gold:#d4af37;
+      --bg-deep:#04040e;
+      --bg-mid:#0b0f14;
       --gold-soft:#f1e6a3;
-      --ink:#b3a48b;
+      --gold:#d4af37;
+      --gold-deep:#8f7633;
       --ivory:#f7f3e8;
-      --line:rgba(212,175,55,.35);
-      --radius:22px;
+      --paper:#fbf8f1;
+      --sand:#f5efe2;
+      --ink:#161616;
+      --ink-soft:#b3a48b;
+      --radius:24px;
+      --shadow-soft:0 26px 70px rgba(0,0,0,0.5);
+      --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
+      --line:rgba(212,175,55,0.35);
+      --line2:rgba(136,116,72,0.35);
+      --warn:#ffb86b;
+      --ok:#46ff99;
+      --bad:#ff6b6b;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     body{
-      font-family:Inter,system-ui;
-      color:var(--ivory);
-      background:radial-gradient(circle at top, rgba(241,230,163,.18), transparent 60%), var(--bg);
       min-height:100vh;
+      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      color:var(--ivory);
+      background:
+        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
+        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
+        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
+      overflow-x:hidden;
     }
 
-    header{
-      position:fixed;top:0;left:0;right:0;
-      height:64px;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 28px;
-      background:rgba(4,4,14,.9);
-      backdrop-filter:blur(14px);
-      border-bottom:1px solid var(--line);
+    /* BACKGROUND CANVAS */
+    #bg-field{
+      position:fixed; inset:0;
+      width:100%; height:100%;
+      z-index:-1;
+      background:
+        radial-gradient(circle at top, rgba(241,230,163,0.12), transparent 60%),
+        radial-gradient(circle at bottom, rgba(241,230,163,0.06), transparent 65%),
+        radial-gradient(circle at center, #04040e, #020208 70%);
+    }
+
+    /* TOP BAR */
+    .top-bar{
+      position:fixed; top:0; left:0; right:0;
+      height:68px; padding:0 40px;
+      display:flex; align-items:center; justify-content:space-between;
       z-index:10;
+      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(212,175,55,0.22);
     }
-
-    header .brand{
-      font-family:Orbitron;
-      font-size:.75rem;
-      letter-spacing:.18em;
+    .top-left{display:flex; align-items:center; gap:14px}
+    .emblem-wrap{
+      width:38px;height:38px;border-radius:999px;
+      display:flex;align-items:center;justify-content:center;
+      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
+      box-shadow:0 0 22px rgba(241,230,163,0.8);
+      overflow:hidden;
+    }
+    .emblem-wrap img{width:30px;height:30px;object-fit:contain;display:block}
+    .brand{
+      font-family:"Orbitron",sans-serif;
+      font-size:0.72rem;
+      letter-spacing:0.18em;
       text-transform:uppercase;
-      color:var(--ink);
+      color:var(--ink-soft);
+      white-space:nowrap;
     }
-    header .brand span{color:var(--gold-soft)}
-
-    header a{
+    .brand span{color:var(--gold-soft)}
+    .top-nav{
+      display:flex; gap:22px;
+      font-size:0.86rem;
+      color:var(--ink-soft);
+    }
+    .top-nav a{
+      color:inherit;
       text-decoration:none;
-      color:#2a1204;
-      background:radial-gradient(circle at 20% 0,#ffdfb0,#f48b45);
-      padding:8px 16px;
+      position:relative;
+      padding-bottom:3px;
+      white-space:nowrap;
+    }
+    .top-nav a::after{
+      content:"";
+      position:absolute; left:0; bottom:0;
+      width:0; height:1px;
+      background:linear-gradient(90deg,var(--gold-soft),var(--gold));
+      transition:width .2s ease;
+    }
+    .top-nav a:hover::after{width:100%}
+    .nav-current{color:var(--gold-soft)}
+    .top-cta{
+      padding:8px 18px;
       border-radius:999px;
-      font-size:.75rem;
+      border:1px solid rgba(244,186,120,0.9);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      font-size:0.8rem;
       letter-spacing:.12em;
       text-transform:uppercase;
+      text-decoration:none;
+      white-space:nowrap;
+      box-shadow:0 12px 26px rgba(0,0,0,0.65);
     }
 
-    main{
-      max-width:1100px;
-      margin:100px auto 80px;
-      padding:0 20px;
+    /* PAGE */
+    .wrap{
+      max-width:1240px;
+      margin:0 auto;
+      padding:92px 40px 60px;
+    }
+    .hero{
       display:grid;
-      gap:28px;
+      grid-template-columns: 1.4fr 1fr;
+      gap:22px;
+      align-items:start;
+      margin-top:22px;
+    }
+    .headline{
+      font-family:"Orbitron",sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      line-height:1.05;
+      font-size:clamp(1.7rem, 3.2vw, 2.6rem);
+      margin-bottom:10px;
+    }
+    .headline .g{color:var(--gold-soft)}
+    .sub{
+      color:rgba(243,237,215,0.74);
+      line-height:1.7;
+      font-size:0.98rem;
+      max-width:820px;
+    }
+    .chips{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin:14px 0 0;
+    }
+    .chip{
+      display:inline-flex; align-items:center;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.35);
+      background:rgba(7,8,20,0.55);
+      color:rgba(241,230,163,0.88);
+      font-size:0.72rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      backdrop-filter: blur(10px);
     }
 
-    .panel{
-      background:linear-gradient(145deg,#0b0f14,#050712);
-      border-radius:var(--radius);
-      border:1px solid var(--line);
-      padding:22px;
+    .note-panel{
+      background:var(--panel);
+      border-radius:26px;
+      border:1px solid rgba(212,175,55,0.35);
+      padding:18px 18px 16px;
+      box-shadow:var(--shadow-soft);
+      position:relative;
+      overflow:hidden;
     }
-
-    h1,h2{
-      font-family:Orbitron;
+    .note-panel::before{
+      content:"";
+      position:absolute; inset:-1px;
+      border-radius:inherit;
+      border:1px solid rgba(241,230,163,0.14);
+      pointer-events:none;
+    }
+    .note-title{
+      font-family:"Orbitron",sans-serif;
+      font-size:0.78rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+      margin-bottom:10px;
+    }
+    .note-panel ul{
+      margin-left:18px;
+      color:rgba(243,237,215,0.72);
+      font-size:0.92rem;
+      line-height:1.6;
+    }
+    .mode-pill{
+      position:absolute;
+      top:14px; right:14px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.45);
+      background:rgba(7,8,20,0.55);
+      font-size:0.7rem;
       letter-spacing:.14em;
       text-transform:uppercase;
+      color:rgba(241,230,163,0.9);
     }
 
-    h1{font-size:1.4rem;margin-bottom:10px}
-    h2{font-size:.85rem;color:var(--ink);margin-bottom:10px}
+    /* DEMO GRID */
+    .demo{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      margin-top:22px;
+      align-items:stretch;
+    }
 
-    p{color:var(--ink);line-height:1.6;font-size:.95rem}
-
-    textarea{
+    .card-ivory{
+      background:linear-gradient(180deg, var(--paper), var(--sand));
+      color:var(--ink);
+      border-radius:22px;
+      border:1px solid rgba(212,175,55,0.35);
+      box-shadow:0 18px 46px rgba(0,0,0,0.45);
+      padding:18px;
+      position:relative;
+    }
+    .card-ivory h2{
+      font-family:"Orbitron",sans-serif;
+      font-size:0.86rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:#4c3a1a;
+      margin-bottom:10px;
+    }
+    .help{
+      font-size:0.9rem;
+      line-height:1.55;
+      color:#5a4a34;
+      margin-bottom:10px;
+    }
+    .field{
+      margin:10px 0;
+    }
+    label{
+      display:block;
+      font-size:0.74rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      color:#6b5b43;
+      margin-bottom:6px;
+    }
+    input, select, textarea{
       width:100%;
-      min-height:160px;
-      background:#020208;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      color:var(--ivory);
-      font-family:Inter;
-      font-size:.95rem;
+      border-radius:12px;
+      border:1px solid rgba(145,120,70,0.25);
+      background:rgba(255,255,255,0.65);
+      padding:10px 12px;
+      font-family:"Inter",sans-serif;
+      font-size:0.95rem;
+      outline:none;
+      color:#151515;
+    }
+    textarea{
+      min-height:150px;
       resize:vertical;
+      line-height:1.45;
+    }
+    .hint{
+      margin-top:6px;
+      font-size:0.84rem;
+      color:#7b6a53;
     }
 
     .actions{
       display:flex;
-      gap:12px;
-      margin-top:12px;
       flex-wrap:wrap;
+      gap:10px;
+      margin-top:12px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,0.7);
+      background:rgba(7,8,20,0.08);
+      color:#3a2b16;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:0.78rem;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn-primary{
+      border:1px solid rgba(244,186,120,0.95);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      box-shadow:0 12px 24px rgba(0,0,0,0.22);
+    }
+    .btn-ghost{
+      border:1px solid rgba(145,120,70,0.35);
+      background:rgba(255,255,255,0.45);
+      color:#3a2b16;
     }
 
-    button{
-      border:none;
-      cursor:pointer;
-      border-radius:999px;
-      padding:10px 22px;
-      font-size:.8rem;
+    /* OUTPUT SIDE */
+    .kpis{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .kpi{
+      background:rgba(255,255,255,0.6);
+      border:1px solid rgba(145,120,70,0.25);
+      border-radius:14px;
+      padding:10px;
+    }
+    .kpi .k{
+      font-size:0.68rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:#6b5b43;
+      margin-bottom:6px;
+    }
+    .kpi .v{
+      font-family:"Orbitron",sans-serif;
+      font-size:1.05rem;
+      color:#3a2b16;
+    }
+    .kpi .v small{font-family:"Inter",sans-serif;font-size:0.9rem;color:#6b5b43}
+
+    .hashbox{
+      margin-top:10px;
+      border:1px dashed rgba(145,120,70,0.35);
+      border-radius:14px;
+      padding:10px;
+      background:rgba(255,255,255,0.45);
+      font-size:0.86rem;
+      color:#3a2b16;
+      word-break:break-all;
+    }
+    .hashbox .k{
+      font-size:0.68rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:#6b5b43;
+      margin-bottom:6px;
+    }
+
+    .section{
+      margin-top:12px;
+      padding-top:12px;
+      border-top:1px solid rgba(212,175,55,0.25);
+    }
+
+    .axis-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      overflow:hidden;
+      border-radius:14px;
+      border:1px solid rgba(145,120,70,0.25);
+      background:rgba(255,255,255,0.55);
+    }
+    .axis-table th, .axis-table td{
+      padding:10px 10px;
+      border-bottom:1px solid rgba(145,120,70,0.18);
+      vertical-align:top;
+      font-size:0.9rem;
+      color:#3a2b16;
+    }
+    .axis-table th{
+      font-size:0.7rem;
       letter-spacing:.14em;
       text-transform:uppercase;
+      color:#6b5b43;
+      background:rgba(255,255,255,0.65);
     }
-
-    .primary{
-      background:radial-gradient(circle at 20% 0,#ffdfb0,#f48b45);
-      color:#2a1204;
-    }
-
-    .secondary{
-      background:transparent;
-      border:1px solid var(--gold-soft);
-      color:var(--gold-soft);
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:20px;
-    }
-
-    .list{
-      border-top:1px solid var(--line);
-      margin-top:8px;
-    }
-
-    .row{
-      display:flex;
-      justify-content:space-between;
-      padding:8px 0;
-      font-size:.9rem;
-      color:var(--ink);
-    }
-    .row + .row{border-top:1px dashed rgba(136,116,72,.35)}
+    .axis-table tr:last-child td{border-bottom:none}
 
     .badge{
-      color:var(--gold-soft);
-      font-family:Orbitron;
-      font-size:.75rem;
+      display:inline-flex;
+      align-items:center;
+      padding:4px 10px;
+      border-radius:999px;
+      font-size:0.72rem;
+      letter-spacing:.08em;
+      border:1px solid rgba(145,120,70,0.25);
+      background:rgba(255,255,255,0.55);
+      color:#3a2b16;
       white-space:nowrap;
     }
+    .badge.ok{border-color:rgba(70,255,153,0.5); background:rgba(70,255,153,0.12)}
+    .badge.warn{border-color:rgba(255,184,107,0.6); background:rgba(255,184,107,0.12)}
+    .badge.bad{border-color:rgba(255,107,107,0.6); background:rgba(255,107,107,0.12)}
 
-    footer{
-      margin-top:40px;
-      padding-top:18px;
-      border-top:1px solid var(--line);
-      text-align:center;
-      font-size:.8rem;
-      color:rgba(198,186,150,.8);
+    .extract{
+      background:#0b0f14;
+      color:rgba(247,243,232,0.9);
+      border-radius:14px;
+      border:1px solid rgba(212,175,55,0.25);
+      padding:12px;
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:0.82rem;
+      line-height:1.45;
+      max-height:260px;
+      overflow:auto;
+      white-space:pre-wrap;
+      word-break:break-word;
     }
 
-    footer a{
-      color:var(--gold-soft);
+    .hl{
+      background:linear-gradient(90deg, rgba(241,230,163,0.75), rgba(244,186,120,0.55));
+      padding:0 3px;
+      border-radius:6px;
+    }
+
+    /* FOOTER CTA (pilot) */
+    .pilot{
+      margin-top:26px;
+      background:var(--panel);
+      border-radius:22px;
+      border:1px solid rgba(212,175,55,0.35);
+      padding:16px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .pilot p{
+      margin:0;
+      color:rgba(243,237,215,0.78);
+      line-height:1.5;
+      font-size:0.95rem;
+      max-width:860px;
+    }
+    .pilot a{
       text-decoration:none;
-      border-bottom:1px dotted rgba(241,230,163,.6);
     }
 
-    @media(max-width:900px){
-      .grid{grid-template-columns:1fr}
+    .disclaimer{
+      margin-top:14px;
+      color:rgba(243,237,215,0.62);
+      font-size:0.86rem;
+      line-height:1.55;
+    }
+    .disclaimer strong{color:rgba(241,230,163,0.9)}
+
+    @media(max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .demo{grid-template-columns:1fr}
+      .top-nav{display:none}
+      .top-bar{padding:0 16px}
+      .wrap{padding:92px 16px 54px}
+      .kpis{grid-template-columns:1fr 1fr}
+      .pilot{flex-direction:column; align-items:flex-start}
     }
   </style>
 </head>
 
 <body>
+  <canvas id="bg-field"></canvas>
 
-<header>
-  <div class="brand">OPENPROOF<span>.NET — SANDBOX</span></div>
-  <a href="#">Request access</a>
-</header>
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="emblem-wrap">
+        <img
+          src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%E2%80%8C%CC%81cran%202025-11-01%20a%E2%80%8C%CC%81%2016.30.35.png"
+          alt="OpenProof logo"
+        />
+      </div>
+      <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
+    </div>
 
-<main>
+    <nav class="top-nav">
+      <a class="nav-current" href="./sandbox.html">Sandbox</a>
+      <a href="./overview.html">How it works</a>
+      <a href="./tests.html">Tests</a>
+      <a href="./examples.html">Examples</a>
+    </nav>
 
-  <!-- INPUT -->
-  <section class="panel">
-    <h1>Sandbox — Proof of Concept</h1>
-    <p>
-      Paste a short narrative. The system performs a deterministic reading and
-      structures a proof bundle. No AI. No interpretation.
+    <a href="./sandbox.html" class="top-cta">Try the live demo</a>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <div class="chips">
+          <span class="chip">Experimental</span>
+          <span class="chip">Deterministic</span>
+          <span class="chip">No AI model</span>
+          <span class="chip">RPO-compatible</span>
+        </div>
+        <h1 class="headline">
+          Sandbox — <span class="g">from a short story</span><br>
+          to a draft RPO bundle
+        </h1>
+        <p class="sub">
+          Paste a short narrative (1–3 paragraphs). This sandbox extracts a minimal, deterministic structure:
+          <span style="color:rgba(241,230,163,0.95)">signals</span>, <span style="color:rgba(241,230,163,0.95)">axes</span>, <span style="color:rgba(241,230,163,0.95)">thresholds</span>,
+          and generates a draft <span style="color:rgba(241,230,163,0.95)">rpo.json</span> plus a public <span style="color:rgba(241,230,163,0.95)">sha256 proof hash</span>.
+        </p>
+        <p class="disclaimer">
+          <strong>Important:</strong> the hash proves integrity, not truth. This demo is a format illustration, not legal advice.
+        </p>
+      </div>
+
+      <aside class="note-panel">
+        <div class="mode-pill">demo mode</div>
+        <div class="note-title">What this page is designed to trigger</div>
+        <ul>
+          <li><strong>Relief:</strong> “I’m not crazy. My story has a structure.”</li>
+          <li><strong>Clarity:</strong> “Here are the signals I can point to.”</li>
+          <li><strong>Action:</strong> “I can hand a coherent bundle to a professional.”</li>
+          <li><strong>Safety:</strong> no account, runs locally in your browser.</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="demo" aria-label="Sandbox demo grid">
+      <!-- LEFT: INPUT -->
+      <div class="card-ivory">
+        <h2>1. Input narrative</h2>
+        <p class="help">
+          Write 5–12 sentences. You may anonymize names and dates.
+          <br><strong>Tip:</strong> include at least one time anchor (date/time), one place, and 2–3 concrete actions.
+        </p>
+
+        <div class="field">
+          <label for="context">Context</label>
+          <select id="context">
+            <option value="generic">Generic / unspecified</option>
+            <option value="domestic">Domestic</option>
+            <option value="work">Workplace</option>
+            <option value="institutional">Institutional</option>
+            <option value="platform">Online / platform</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="caseTitle">Case title</label>
+          <input id="caseTitle" type="text" placeholder="Incident in Paris office — March 2024" />
+        </div>
+
+        <div class="field">
+          <label for="issuer">Issuer (who files the bundle)</label>
+          <input id="issuer" type="text" placeholder="Internal audit team, Company X" />
+        </div>
+
+        <div class="field">
+          <label for="subject">Subject (who / what is concerned)</label>
+          <input id="subject" type="text" placeholder="Employee — Sales department" />
+        </div>
+
+        <div class="field">
+          <label for="narrative">Narrative (free text)</label>
+          <textarea id="narrative" placeholder="Describe what happened: who did what, when, where, and what changed after."></textarea>
+          <div class="hint">
+            This sandbox does not store your text. Refreshing the page clears everything.
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="btnAnalyze">Analyze & generate draft bundle</button>
+          <button class="btn btn-ghost" id="btnExample">Load example</button>
+          <button class="btn btn-ghost" id="btnReset">Reset</button>
+        </div>
+
+        <div class="disclaimer" style="margin-top:12px;">
+          <strong>No AI.</strong> Conservative rules only. Same input → same output.
+        </div>
+      </div>
+
+      <!-- RIGHT: OUTPUT -->
+      <div class="card-ivory">
+        <h2>2. Draft RPO bundle</h2>
+        <p class="help">
+          Deterministic extraction: basic anchors, signals, axes, and thresholds.
+          The goal is to create a <strong>coherent handover</strong> (not a judgment).
+        </p>
+
+        <div class="kpis">
+          <div class="kpi">
+            <div class="k">Phrases</div>
+            <div class="v" id="kPhrases">–</div>
+          </div>
+          <div class="kpi">
+            <div class="k">Signals</div>
+            <div class="v" id="kSignals">–</div>
+          </div>
+          <div class="kpi">
+            <div class="k">Coherence score</div>
+            <div class="v" id="kCoherence">– <small>/100</small></div>
+          </div>
+          <div class="kpi">
+            <div class="k">Dates detected</div>
+            <div class="v" id="kDates">–</div>
+          </div>
+          <div class="kpi">
+            <div class="k">Places detected</div>
+            <div class="v" id="kPlaces">–</div>
+          </div>
+          <div class="kpi">
+            <div class="k">Chronology confidence</div>
+            <div class="v" id="kChrono">– <small>%</small></div>
+          </div>
+        </div>
+
+        <div class="hashbox">
+          <div class="k">public_hash (sha256)</div>
+          <div id="hashValue">—</div>
+        </div>
+
+        <div class="section">
+          <h2 style="margin-bottom:8px;">Canonical map (signals → axes → thresholds)</h2>
+          <div class="hint" style="margin-bottom:10px;">
+            Draft table — conservative and approximate. It is meant to be readable and actionable.
+          </div>
+          <table class="axis-table" id="axisTable" aria-label="Axis table">
+            <thead>
+              <tr>
+                <th style="width:28%">Axis</th>
+                <th style="width:18%">Level</th>
+                <th style="width:54%">Why (signals)</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div class="section">
+          <h2 style="margin-bottom:8px;">Highlighted sensitive passages</h2>
+          <div class="hint" style="margin-bottom:10px;">
+            Passages are highlighted when they contain strong markers (threats, confinement, surveillance, economic pressure…).
+          </div>
+          <div id="passages" class="help" style="margin:0; padding:10px; border-radius:14px; border:1px solid rgba(145,120,70,0.25); background:rgba(255,255,255,0.55);">
+            — Nothing yet. Click “Analyze”.
+          </div>
+        </div>
+
+        <div class="section">
+          <h2 style="margin-bottom:8px;">rpo.json (draft)</h2>
+          <div class="actions" style="margin:8px 0 10px;">
+            <button class="btn btn-ghost" id="btnCopy">Copy JSON</button>
+            <button class="btn btn-ghost" id="btnDownload">Download rpo.json</button>
+          </div>
+          <pre class="extract" id="jsonOut">{}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pilot CTA (bottom of page, not homepage) -->
+    <section class="pilot" aria-label="Pilot CTA">
+      <p>
+        Want the full pilot (CNRS × TruthX): interpretive coherence, structured narrative layers, advanced signal fusion,
+        and a human-readable probative report designed for professionals.
+      </p>
+      <a class="top-cta" href="https://www.truthx.co/pilote-justice" target="_blank" rel="noopener noreferrer">
+        Request pilot access
+      </a>
+    </section>
+
+    <p class="disclaimer">
+      This sandbox illustrates a public format. It does not host case data, and it does not decide truth. It reveals structure.
     </p>
+  </main>
 
-    <textarea id="story">
-On March 12th, at around 2pm, he locked the door and told me I would not be allowed to leave
-unless I admitted what he was accusing me of. I felt trapped and threatened.
-    </textarea>
+  <script>
+    /* ===========================
+       0) Background starfield (same spirit as your reference)
+    ============================ */
+    (function () {
+      const canvas = document.getElementById("bg-field");
+      const ctx = canvas.getContext("2d");
 
-    <div class="actions">
-      <button class="primary" onclick="runDemo()">Analyze the narrative</button>
-      <button class="secondary" onclick="loadExample()">Use fictional example</button>
-    </div>
-  </section>
+      let width = window.innerWidth;
+      let height = window.innerHeight;
+      let particles = [];
+      const COUNT = 220;
 
-  <!-- OUTPUT -->
-  <section class="grid">
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        const ratio = window.devicePixelRatio || 1;
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
 
-    <div class="panel">
-      <h2>Detected signals</h2>
-      <div class="list" id="signals"></div>
-    </div>
+      function createParticle() {
+        return {
+          x: (Math.random() * 2 - 1),
+          y: (Math.random() * 2 - 1),
+          z: Math.random() * 0.9 + 0.1,
+          speed: Math.random() * 0.004 + 0.0015,
+          vertical: Math.random() < 0.25,
+          code: Math.random() < 0.14,
+          value: Math.random() < 0.5
+            ? (0.6 + Math.random() * 0.4).toFixed(2)
+            : (10 + Math.floor(Math.random() * 90)) + "%",
+        };
+      }
 
-    <div class="panel">
-      <h2>Activated axes</h2>
-      <div class="list" id="axes"></div>
-    </div>
+      function init() {
+        particles = [];
+        for (let i = 0; i < COUNT; i++) particles.push(createParticle());
+      }
 
-  </section>
+      function project(p) {
+        const f = 400;
+        const scale = f / (f * p.z);
+        return {
+          x: p.x * width * 0.5 * scale + width / 2,
+          y: p.y * height * 0.5 * scale + height / 2,
+          scale
+        };
+      }
 
-  <section class="panel">
-    <h2>Global reading</h2>
-    <div class="list" id="summary"></div>
-  </section>
+      function update() {
+        ctx.clearRect(0, 0, width, height);
 
-  <section class="panel">
-    <h2>RPO bundle</h2>
-    <div class="list">
-      <div class="row"><span>rpo.json</span><span class="badge">generated</span></div>
-      <div class="row"><span>rpo.pdf</span><span class="badge">generated</span></div>
-      <div class="row"><span>public hash</span><span class="badge">sha256:9f3a…</span></div>
-    </div>
-  </section>
+        const grad = ctx.createRadialGradient(
+          width * 0.5, height * 0.2, 0,
+          width * 0.5, height * 0.2, width * 0.6
+        );
+        grad.addColorStop(0, "rgba(241,230,163,0.22)");
+        grad.addColorStop(0.4, "rgba(241,230,163,0.04)");
+        grad.addColorStop(1, "transparent");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
 
-  <footer>
-    This sandbox demonstrates a format, not a legal qualification.<br/>
-    <a href="#">Access the CNRS × TruthX pilot</a>
-  </footer>
+        particles.forEach(p => {
+          p.z -= p.speed;
+          if (p.z < 0.08) {
+            Object.assign(p, createParticle());
+            p.z = 1;
+          }
 
-</main>
+          const proj = project(p);
+          const alpha = Math.min(1, (1.2 - p.z) * 1.1);
+          const radius = Math.max(0.8, 3.6 * (1.1 - p.z));
 
-<script>
-function loadExample(){
-  document.getElementById("story").value =
-`On March 12th, at around 2pm, he locked the door and said I would not leave
-unless I told the truth. He raised his voice and blocked the exit.`;
-}
+          if (p.vertical && proj.y < height * 0.9) {
+            ctx.strokeStyle = `rgba(241,230,163,${0.12 * alpha})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(proj.x, proj.y);
+            ctx.lineTo(proj.x, proj.y + 46 * (1.1 - p.z));
+            ctx.stroke();
+          }
 
-function runDemo(){
-  document.getElementById("signals").innerHTML = `
-    <div class="row"><span>Confinement</span><span>“he locked the door”</span></div>
-    <div class="row"><span>Conditional threat</span><span>“unless I told the truth”</span></div>
-    <div class="row"><span>Physical obstruction</span><span>“blocked the exit”</span></div>
-  `;
+          const gradDot = ctx.createRadialGradient(
+            proj.x, proj.y, 0,
+            proj.x, proj.y, radius * 3
+          );
+          gradDot.addColorStop(0, `rgba(248,238,192,${0.90 * alpha})`);
+          gradDot.addColorStop(0.4, `rgba(212,175,55,${0.85 * alpha})`);
+          gradDot.addColorStop(1, `rgba(0,0,0,0)`);
+          ctx.fillStyle = gradDot;
+          ctx.beginPath();
+          ctx.arc(proj.x, proj.y, radius * 3, 0, Math.PI * 2);
+          ctx.fill();
 
-  document.getElementById("axes").innerHTML = `
-    <div class="row"><span>Deprivation of liberty</span><span class="badge">Convergent</span></div>
-    <div class="row"><span>Threat & coercion</span><span class="badge">Present</span></div>
-    <div class="row"><span>Psychological pressure</span><span class="badge">Strong</span></div>
-  `;
+          ctx.fillStyle = `rgba(248,238,192,${0.7 * alpha})`;
+          ctx.beginPath();
+          ctx.arc(proj.x, proj.y, radius, 0, Math.PI * 2);
+          ctx.fill();
 
-  document.getElementById("summary").innerHTML = `
-    <div class="row"><span>Axes activated</span><span>3</span></div>
-    <div class="row"><span>Convergent axes</span><span>2</span></div>
-    <div class="row"><span>Narrative density</span><span>High</span></div>
-    <div class="row"><span>Coherence threshold</span><span class="badge">Reached</span></div>
-  `;
-}
-</script>
+          if (p.code && proj.y > 40 && proj.y < height - 40 && Math.random() < 0.22) {
+            ctx.font = `${10 + 6 * (1.1 - p.z)}px "Orbitron", system-ui`;
+            ctx.fillStyle = `rgba(241,230,163,${0.70 * alpha})`;
+            ctx.fillText(p.value, proj.x + 6, proj.y - 4);
+          }
+        });
 
+        requestAnimationFrame(update);
+      }
+
+      window.addEventListener("resize", resize);
+      resize();
+      init();
+      update();
+    })();
+
+    /* ===========================
+       1) Canonical draft map (signals → axes → thresholds)
+          (brouillon sérieux, conservateur)
+    ============================ */
+    const CANON = [
+      {
+        axis: "Isolation / confinement",
+        signals: ["locked", "trapped", "blocked the door", "wouldn’t let me leave", "enferm", "retenu", "empêch"],
+        thresholds: { present: 1, strong: 2 }
+      },
+      {
+        axis: "Threats / coercion",
+        signals: ["threat", "menace", "kill", "hurt", "ruin", "sanction", "punish", "or else", "sinon"],
+        thresholds: { present: 1, strong: 2 }
+      },
+      {
+        axis: "Control of communications",
+        signals: ["phone", "messages", "screenshots", "monitor", "read my", "téléphone", "messages", "surveill"],
+        thresholds: { present: 1, strong: 3 }
+      },
+      {
+        axis: "Economic / resource control",
+        signals: ["bank", "money", "account", "salary", "rent", "keys to the car", "revenus", "banque", "argent", "clés"],
+        thresholds: { present: 1, strong: 2 }
+      },
+      {
+        axis: "Harassment / humiliation",
+        signals: ["humiliate", "insult", "shout", "yell", "scream", "ridicule", "humiliation", "crié", "hurl"],
+        thresholds: { present: 1, strong: 3 }
+      },
+      {
+        axis: "Privacy / surveillance",
+        signals: ["followed", "tracked", "location", "spy", "camera", "stalk", "geoloc", "localisation", "espion"],
+        thresholds: { present: 1, strong: 2 }
+      }
+    ];
+
+    /* ===========================
+       2) Simple deterministic extraction (no AI)
+    ============================ */
+    const RX_DATE = /\b(\d{1,2}\s(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s\d{4})\b|\b(\d{1,2}\/\d{1,2}\/\d{2,4})\b|\b(\d{4}-\d{2}-\d{2})\b|\b(\d{1,2}\s(?:janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s\d{4})\b/gi;
+    const RX_TIME = /\b(\d{1,2}:\d{2})\b|\b(\d{1,2}\s?h(?:\s?\d{2})?)\b/gi;
+    const RX_PLACE = /\b(Paris|office|home|apartment|workplace|hospital|court|station|school|maison|bureau|tribunal|commissariat|hôpital|école)\b/gi;
+    const RX_ACTION = /\b(said|told|forced|locked|took|grabbed|threatened|demanded|removed|blocked|called|texted|emailed|warned|asked)\b/gi;
+
+    function splitSentences(text){
+      return text
+        .replace(/\s+/g," ")
+        .trim()
+        .split(/(?<=[\.\?\!])\s+/)
+        .filter(Boolean);
+    }
+
+    function countMatches(text, rx){
+      const m = text.match(rx);
+      return m ? m.length : 0;
+    }
+
+    function uniq(arr){
+      return Array.from(new Set(arr));
+    }
+
+    function extractAnchors(text){
+      const dates = uniq((text.match(RX_DATE) || []).map(s=>s.trim()));
+      const times = uniq((text.match(RX_TIME) || []).map(s=>s.trim()));
+      const places = uniq((text.match(RX_PLACE) || []).map(s=>s.trim().toLowerCase()));
+      const actions = countMatches(text, RX_ACTION);
+      return { dates, times, places, actions };
+    }
+
+    function scoreCoherence(sentences, anchors){
+      // Conservative: rewards anchors + concrete verbs + multi-sentence structure, penalizes extreme shortness.
+      const sCount = sentences.length;
+      let score = 35;
+
+      score += Math.min(20, anchors.dates.length * 10);
+      score += Math.min(12, anchors.times.length * 6);
+      score += Math.min(12, anchors.places.length * 6);
+      score += Math.min(14, Math.floor(anchors.actions / 2) * 2);
+
+      // structure
+      if (sCount >= 5) score += 10;
+      if (sCount >= 8) score += 5;
+
+      // too short penalty
+      const totalWords = sentences.join(" ").split(/\s+/).filter(Boolean).length;
+      if (totalWords < 45) score -= 18;
+      if (totalWords < 25) score -= 22;
+
+      // clamp
+      score = Math.max(0, Math.min(100, Math.round(score)));
+      return score;
+    }
+
+    function chronologyConfidence(anchors, sentences){
+      // Conservative proxy: dates/times presence + ordering words
+      const ordering = countMatches(sentences.join(" ").toLowerCase(), /\b(then|later|after|before|next|two days later|ensuite|puis|après|avant|le lendemain)\b/g);
+      let c = 35;
+      c += Math.min(25, anchors.dates.length * 15);
+      c += Math.min(20, anchors.times.length * 10);
+      c += Math.min(20, ordering * 6);
+      c = Math.max(0, Math.min(100, Math.round(c)));
+      return c;
+    }
+
+    function axisLevels(text){
+      const lower = text.toLowerCase();
+      return CANON.map(row => {
+        let hits = 0;
+        const matched = [];
+        for (const s of row.signals){
+          const key = s.toLowerCase();
+          if (lower.includes(key)){
+            hits += 1;
+            matched.push(s);
+          }
+        }
+        const level =
+          hits >= row.thresholds.strong ? "Strong" :
+          hits >= row.thresholds.present ? "Present" :
+          "None";
+
+        const badge =
+          level === "Strong" ? "bad" :
+          level === "Present" ? "warn" :
+          "ok";
+
+        return {
+          axis: row.axis,
+          level,
+          badge,
+          hits,
+          why: matched.length ? matched.slice(0,6).join(", ") : "—"
+        };
+      });
+    }
+
+    function highlightPassages(sentences){
+      // highlight sentences that contain strong-ish keywords
+      const STRONG_RX = /\b(threat|threatened|menace|locked|enferm|took my phone|téléphone|bank|argent|keys|clés|screenshots|surveill|punish|sanction|or else|sinon)\b/i;
+      const picked = [];
+      sentences.forEach(s=>{
+        if (STRONG_RX.test(s)) picked.push(s);
+      });
+      return picked.slice(0,5);
+    }
+
+    async function sha256Hex(str){
+      const enc = new TextEncoder();
+      const buf = enc.encode(str);
+      const hash = await crypto.subtle.digest("SHA-256", buf);
+      return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");
+    }
+
+    function buildRPOBundle({context, title, issuer, subject, narrative, analysis, anchors, public_hash}){
+      const nowIso = new Date().toISOString();
+
+      return {
+        rpo_version: "0.1",
+        bundle_id: `rpo-${public_hash.slice(0,8)}-${public_hash.slice(-6)}`,
+        created_at: nowIso,
+        issuer: { label: issuer || "—" },
+        subject: { label: subject || "—" },
+        case: { title: title || "—", context },
+        narrative: {
+          text: narrative,
+          phrases: analysis.phrases,
+          anchors: {
+            dates: anchors.dates,
+            times: anchors.times,
+            places: anchors.places
+          }
+        },
+        signals: {
+          total: analysis.signals_total,
+          axes: analysis.axes.map(a=>({
+            axis: a.axis,
+            level: a.level,
+            hits: a.hits,
+            why: a.why
+          }))
+        },
+        scores: {
+          coherence_score: analysis.coherence_score,           // /100
+          chronology_confidence: analysis.chronology_confidence // %
+        },
+        registry: {
+          public_hash: public_hash,
+          algorithm: "sha256",
+          note: "Hash proves integrity of this draft JSON payload, not truth."
+        },
+        disclaimer: [
+          "Deterministic demo. No AI model.",
+          "Not legal advice. Humans decide.",
+          "This is a format illustration (non-binding)."
+        ]
+      };
+    }
+
+    /* ===========================
+       3) UI wiring
+    ============================ */
+    const el = (id)=>document.getElementById(id);
+
+    const DEFAULT_EXAMPLE = {
+      context: "work",
+      caseTitle: "Incident in Paris office — March 2024",
+      issuer: "Internal audit team, Company X",
+      subject: "Employee — Sales department",
+      narrative:
+`On 14 March 2024, around 10:30 am, an argument broke out in the Paris office between a line manager and a sales employee.
+Several colleagues report that the manager raised his voice, threatened to remove key accounts from the employee, and asked him to leave the open space immediately.
+Later that day, around 3 pm, the same manager sent an email copying HR, questioning the employee’s “loyalty” and suggesting he should be excluded from client meetings.
+No formal warning or prior evaluation had been communicated before this incident.`
+    };
+
+    function setExample(){
+      el("context").value = DEFAULT_EXAMPLE.context;
+      el("caseTitle").value = DEFAULT_EXAMPLE.caseTitle;
+      el("issuer").value = DEFAULT_EXAMPLE.issuer;
+      el("subject").value = DEFAULT_EXAMPLE.subject;
+      el("narrative").value = DEFAULT_EXAMPLE.narrative;
+    }
+
+    function resetAll(){
+      el("context").value = "generic";
+      el("caseTitle").value = "";
+      el("issuer").value = "";
+      el("subject").value = "";
+      el("narrative").value = "";
+      el("kPhrases").textContent = "–";
+      el("kSignals").textContent = "–";
+      el("kCoherence").textContent = "–";
+      el("kDates").textContent = "–";
+      el("kPlaces").textContent = "–";
+      el("kChrono").textContent = "–";
+      el("hashValue").textContent = "—";
+      el("jsonOut").textContent = "{}";
+      el("passages").innerHTML = "— Nothing yet. Click “Analyze”.";
+      const tbody = el("axisTable").querySelector("tbody");
+      tbody.innerHTML = "";
+    }
+
+    function renderAxisTable(axes){
+      const tbody = el("axisTable").querySelector("tbody");
+      tbody.innerHTML = "";
+      axes.forEach(a=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${a.axis}</strong></td>
+          <td><span class="badge ${a.badge}">${a.level}${a.level !== "None" ? ` — ${a.hits} cue${a.hits>1?"s":""}` : ""}</span></td>
+          <td>${a.why}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderPassages(passages){
+      if (!passages.length){
+        el("passages").innerHTML = "No strong marker detected yet. Add concrete actions, threats, constraints, or anchors, then analyze again.";
+        return;
+      }
+      el("passages").innerHTML = passages.map(p=>{
+        const safe = p.replace(/[&<>]/g, s=>({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[s]));
+        const emphasized = safe.replace(
+          /\b(threat|threatened|menace|locked|enferm\w*|took my phone|téléphone|bank|argent|keys|clés|screenshots|surveill\w*|punish|sanction|or else|sinon)\b/gi,
+          m=>`<span class="hl">${m}</span>`
+        );
+        return `<div style="margin:8px 0; line-height:1.5;">• ${emphasized}</div>`;
+      }).join("");
+    }
+
+    async function analyze(){
+      const context = el("context").value;
+      const title = el("caseTitle").value.trim();
+      const issuer = el("issuer").value.trim();
+      const subject = el("subject").value.trim();
+      const narrative = el("narrative").value.trim();
+
+      if (!narrative){
+        alert("Please paste a short narrative first.");
+        return;
+      }
+
+      const sentences = splitSentences(narrative);
+      const anchors = extractAnchors(narrative);
+      const axes = axisLevels(narrative);
+
+      const signalsTotal = axes.reduce((sum,a)=>sum + (a.level==="None"?0:a.hits), 0);
+      const coherence = scoreCoherence(sentences, anchors);
+      const chrono = chronologyConfidence(anchors, sentences);
+
+      // Build deterministic payload base (without hash), then hash final JSON
+      const analysis = {
+        phrases: sentences.length,
+        signals_total: signalsTotal,
+        coherence_score: coherence,
+        chronology_confidence: chrono,
+        axes
+      };
+
+      const payloadForHash = JSON.stringify({
+        rpo_version:"0.1",
+        context, title, issuer, subject,
+        narrative,
+        analysis,
+        anchors
+      });
+
+      const public_hash = await sha256Hex(payloadForHash);
+
+      const bundle = buildRPOBundle({
+        context, title, issuer, subject, narrative,
+        analysis, anchors, public_hash
+      });
+
+      // Render KPIs
+      el("kPhrases").textContent = String(sentences.length);
+      el("kSignals").textContent = String(signalsTotal);
+      el("kCoherence").textContent = String(coherence);
+      el("kDates").textContent = String(anchors.dates.length);
+      el("kPlaces").textContent = String(anchors.places.length);
+      el("kChrono").textContent = String(chrono);
+      el("hashValue").textContent = public_hash;
+
+      renderAxisTable(axes);
+      renderPassages(highlightPassages(sentences));
+
+      const jsonPretty = JSON.stringify(bundle, null, 2);
+      el("jsonOut").textContent = jsonPretty;
+
+      // store for copy/download
+      window.__RPO_JSON__ = jsonPretty;
+      window.__RPO_HASH__ = public_hash;
+      window.__RPO_FILENAME__ = `rpo_${bundle.bundle_id}.json`;
+    }
+
+    function downloadJSON(){
+      const json = window.__RPO_JSON__ || "{}";
+      const name = window.__RPO_FILENAME__ || "rpo.json";
+      const blob = new Blob([json], {type:"application/json;charset=utf-8"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = name;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    async function copyJSON(){
+      const json = window.__RPO_JSON__ || "{}";
+      try{
+        await navigator.clipboard.writeText(json);
+        alert("JSON copied.");
+      }catch(e){
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = json;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        alert("JSON copied.");
+      }
+    }
+
+    // Bind
+    el("btnExample").addEventListener("click", setExample);
+    el("btnReset").addEventListener("click", resetAll);
+    el("btnAnalyze").addEventListener("click", analyze);
+    el("btnDownload").addEventListener("click", downloadJSON);
+    el("btnCopy").addEventListener("click", copyJSON);
+
+    // preload example once to reduce friction (the “people in suffering don’t want to think first” rule)
+    setExample();
+  </script>
 </body>
 </html>
+
