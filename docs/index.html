@@ -424,6 +424,21 @@
       overflow:hidden; clip:rect(0,0,0,0);
       white-space:nowrap; border:0;
     }
+    .hero-claim{
+  display:block;
+  margin-top:10px;
+  font-size:0.70em;          /* plus petit que le reste */
+  letter-spacing:.12em;      /* un peu plus “label” */
+  line-height:1.15;
+  color:rgba(241,230,163,.92);
+  text-transform:uppercase;
+  white-space:nowrap;        /* force sur une ligne */
+}
+
+@media (max-width: 520px){
+  .hero-claim{ white-space:normal; } /* sur mobile, on laisse respirer */
+}
+
   </style>
 </head>
 
@@ -454,10 +469,11 @@
         <div class="eyebrow">Decision-proof data <span>for regulated reality</span></div>
 
         <h1 class="hero-title" id="hero-title">
-          Data governance,
-          <span class="l2">when decisions become liability.</span>
-          <span class="l3">RPO v0.1 is the minimum proof format.</span>
-        </h1>
+  Data governance,
+  <span class="l2">when decisions become liability.</span>
+  <span class="l3 hero-claim">RPO v0.1 is the minimum proof format.</span>
+</h1>
+
 
         <p class="hero-text">
           Most organizations don’t fail because they lack data.
