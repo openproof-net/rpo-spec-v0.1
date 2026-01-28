@@ -429,12 +429,12 @@
     .badge.bad{ border-color: rgba(255,120,120,0.45); }
     .badge.muted{ opacity:0.8; }
     
-    .subline{
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-    max-width: 100%;
+   .subline{
+  white-space: normal;   /* autorise le retour à la ligne */
+  overflow: visible;     /* ne coupe rien */
+  display: block;
+  max-width: 100%;
+}
   </style>
 </head>
 
