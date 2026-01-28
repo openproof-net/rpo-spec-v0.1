@@ -64,6 +64,29 @@ If machines can verify integrity, and humans can read coherence, society can tru
 
 ___
 
+## 🧠 Why This Matters for Organizations (HR, Governance, CEOs)
+
+By 2027, organizations will not be challenged for making decisions —
+but for being unable to explain, reconstruct, and defend them over time.
+
+This applies directly to:
+- people decisions,
+- role assignments,
+- promotions,
+- exits,
+- restructurings,
+- compliance and risk arbitrations.
+
+The problem is not intent.
+The problem is traceability.
+
+Without a structured, auditable and integrity-safe data foundation,
+organizations are exposed — legally, socially, and reputationally.
+
+OpenProof does not replace HR systems.
+It provides a **proof layer** on top of them.
+
+___
 
 ## Table of Contents
 
@@ -100,6 +123,13 @@ A deterministic SHA-256 public hash anchoring immutability.
 
 OpenProof does not determine what is “true”.
 It ensures that any modification becomes detectable.
+
+In organizational contexts, the RPO acts as a decision trace:
+it captures **what data was available**, **what narrative was constructed**,
+and **what decision followed** — in a form that can be audited later.
+
+This is especially critical for HR, People Operations, and Governance teams,
+where decisions are sensitive, distributed, and often contested years later.
 
 ___
 
@@ -266,6 +296,24 @@ The Sandbox lets you transform any narrative into:
 - a deterministic SHA-256 hash.
 
 🔗 https://rpo.openproof.net/sandbox.html
+
+___
+
+## 🔐 Data, Trust and Governance Boundaries
+
+OpenProof is designed with a strict separation of concerns.
+
+- It does not decide how data should be interpreted.
+- It does not expose confidential content.
+- It does not automate judgment.
+
+Its role is to ensure that:
+- data is collected intentionally,
+- transformations are traceable,
+- decisions can be explained without rewriting history.
+
+This is a prerequisite for trust —
+both from employees and from regulators.
 
 ___
 
