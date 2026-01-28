@@ -23,9 +23,11 @@
     :root{
       --bg-deep:#04040e;
       --bg-mid:#0b0f14;
+
       --gold-soft:#f1e6a3;
       --gold:#d4af37;
       --gold-deep:#8f7633;
+
       --ivory:#f7f3e8;
       --ink-soft:#b3a48b;
 
@@ -35,14 +37,10 @@
       --line2:rgba(136,116,72,0.35);
 
       --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
-
-      --panel-glow: rgba(241,230,163,0.10);
-      --panel-glow-2: rgba(212,175,55,0.12);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
-
     body{
       min-height:100vh;
       font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
@@ -56,6 +54,7 @@
 
     a{color:inherit}
     a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
+    ::selection{background: rgba(212,175,55,.25);}
 
     /* BACKGROUND FIELD */
     #bg-field{
@@ -132,9 +131,7 @@
       transition:width .2s ease;
     }
     .top-nav a:hover::after{width:100%}
-    .top-nav a[aria-current="page"]{
-      color: var(--gold-soft);
-    }
+    .top-nav a[aria-current="page"]{color: var(--gold-soft);}
     .top-nav a[aria-current="page"]::after{width:100%}
 
     .top-cta{
@@ -150,6 +147,8 @@
       white-space:nowrap;
       box-shadow: 0 12px 30px rgba(0,0,0,0.35);
     }
+    .top-cta:hover{filter:brightness(1.03)}
+    .top-cta:active{transform:translateY(1px)}
 
     /* HERO */
     .hero{
@@ -161,11 +160,10 @@
     }
 
     .hero-shell{
-      max-width:1240px;
+      max-width:1280px;
       width:100%;
       display:grid;
-      /* slightly more room for the proof object */
-      grid-template-columns:1.42fr 1.08fr;
+      grid-template-columns:1.55fr 1.05fr; /* more space to the right panel without shrinking the left */
       gap:52px;
       align-items:center;
     }
@@ -184,22 +182,31 @@
       font-family:"Orbitron",sans-serif;
       text-transform:uppercase;
       letter-spacing:.06em;
-      line-height:1.08;
-      font-size:clamp(2rem,4vw,2.95rem);
-      margin-bottom:16px;
+      line-height:1.06;
+      font-size:clamp(2.15rem,4.2vw,3.05rem);
+      margin-bottom:14px;
     }
     .hero-title .l2{display:block;color:var(--gold-soft)}
-    .hero-title .l3{display:block;color:var(--gold)}
+    .hero-title .l3{display:block;color:var(--ivory)}
+    /* This is the “one-line, smaller” claim you asked for */
+    .hero-claim{
+      display:block;
+      margin-top:10px;
+      font-family:"Orbitron",sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:clamp(.92rem, 1.2vw, 1.05rem);
+      line-height:1.1;
+      color:rgba(212,175,55,.92);
+      white-space:nowrap;
+    }
+
     .hero-text{
-      max-width:680px;
-      font-size:.98rem;
+      max-width:700px;
+      font-size:1rem;
       line-height:1.75;
       color:var(--ink-soft);
       margin-bottom:22px;
-      /* justified only for the long paragraph */
-      text-align: justify;
-      text-justify: inter-word;
-      hyphens: auto;
     }
 
     .hero-ctas{
@@ -220,6 +227,8 @@
       text-decoration:none;
       box-shadow: 0 12px 30px rgba(0,0,0,0.35);
     }
+    .btn-primary:hover{filter:brightness(1.03)}
+    .btn-primary:active{transform:translateY(1px)}
     .btn-ghost{
       padding:12px 18px;
       border-radius:999px;
@@ -232,98 +241,82 @@
       text-decoration:none;
       backdrop-filter: blur(10px);
     }
+    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
+    .btn-ghost:active{transform:translateY(1px)}
 
     .hero-note{
       margin-top:14px;
-      font-size:.9rem;
+      font-size:.92rem;
       color:rgba(198,186,150,.88);
       line-height:1.55;
-      max-width: 680px;
+      max-width: 720px;
     }
 
-    /* PANEL (interactive "living" proof object) */
+    /* PANEL (INTERACTIVE “LIVING” CARD) */
     .panel{
       position:relative;
+      background:var(--panel);
       border-radius:var(--radius);
-      padding:1px; /* for animated border */
-      transform-style:preserve-3d;
-      will-change: transform;
+      border:1px solid rgba(212,175,55,0.45);
+      padding:26px;
       box-shadow:var(--shadow-soft);
-      isolation:isolate;
+      overflow:hidden;
+
+      transform-style:preserve-3d;
+      will-change:transform;
     }
 
-    /* animated border */
+    /* subtle animated energy field */
     .panel::before{
       content:"";
       position:absolute;
-      inset:0;
-      border-radius:var(--radius);
+      inset:-2px;
       background:
-        conic-gradient(
-          from var(--spin, 0deg),
-          rgba(241,230,163,0.85),
-          rgba(212,175,55,0.25),
-          rgba(241,230,163,0.12),
-          rgba(212,175,55,0.35),
-          rgba(241,230,163,0.85)
-        );
-      filter: blur(0.1px);
-      opacity:0.55;
-      z-index:0;
+        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
+        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
+        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
+      opacity:.95;
+      filter: blur(10px);
+      transform: translateZ(-2px);
+      pointer-events:none;
+      animation: fieldShift 10s ease-in-out infinite;
+    }
+
+    /* scan line */
+    .panel::after{
+      content:"";
+      position:absolute;
+      left:-30%;
+      top:-40%;
+      width:160%;
+      height:160%;
+      background: linear-gradient(90deg, transparent 0%, rgba(241,230,163,0.10) 35%, rgba(241,230,163,0.22) 50%, rgba(241,230,163,0.10) 65%, transparent 100%);
+      transform: rotate(12deg) translateY(-15%);
+      opacity:.55;
+      pointer-events:none;
+      animation: scanSweep 5.8s linear infinite;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes fieldShift{
+      0%,100%{transform: translateZ(-2px) translateY(0px)}
+      50%{transform: translateZ(-2px) translateY(10px)}
+    }
+    @keyframes scanSweep{
+      0%{transform: rotate(12deg) translateX(-35%) translateY(-15%); opacity:.35}
+      20%{opacity:.65}
+      100%{transform: rotate(12deg) translateX(35%) translateY(-15%); opacity:.35}
     }
 
     .panel-inner{
       position:relative;
       z-index:1;
-      border-radius:calc(var(--radius) - 1px);
-      background:var(--panel);
-      border:1px solid rgba(212,175,55,0.35);
-      padding:28px; /* slightly bigger */
-      overflow:hidden;
-      backdrop-filter: blur(10px);
-    }
-
-    /* spotlight follows cursor */
-    .panel-inner::after{
-      content:"";
-      position:absolute;
-      inset:-80px;
-      background:
-        radial-gradient(
-          420px 240px at var(--mx, 50%) var(--my, 35%),
-          var(--panel-glow),
-          transparent 60%
-        );
-      opacity:0.9;
-      pointer-events:none;
-      transform: translateZ(0);
-    }
-
-    /* subtle scan line */
-    .scan{
-      position:absolute;
-      left:-30%;
-      right:-30%;
-      height:2px;
-      top: 22%;
-      background: linear-gradient(90deg, transparent, rgba(241,230,163,0.35), transparent);
-      filter: blur(0.2px);
-      opacity:0.55;
-      transform: translateZ(20px);
-      animation: scan 4.8s linear infinite;
-      pointer-events:none;
-    }
-    @keyframes scan{
-      0%{transform: translateY(-30px) translateZ(20px); opacity:0}
-      10%{opacity:0.55}
-      50%{opacity:0.55}
-      90%{opacity:0.4}
-      100%{transform: translateY(210px) translateZ(20px); opacity:0}
+      transform: translateZ(14px);
     }
 
     .panel h2{
       font-family:"Orbitron",sans-serif;
-      font-size:.86rem;
+      font-size:.85rem;
       letter-spacing:.18em;
       text-transform:uppercase;
       color:var(--ink-soft);
@@ -337,58 +330,56 @@
       font-size:.72rem;
       letter-spacing:.14em;
       text-transform:uppercase;
-      padding:7px 12px;
+      padding:6px 12px;
       border-radius:999px;
-      border:1px solid rgba(241,230,163,.6);
+      border:1px solid rgba(241,230,163,.55);
       margin-bottom:12px;
       color: rgba(241,230,163,.92);
-      position:relative;
-      overflow:hidden;
+      background: rgba(10,12,27,0.22);
+      backdrop-filter: blur(10px);
     }
-    .pill::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: radial-gradient(circle at 20% 0, rgba(241,230,163,0.22), transparent 60%);
-      opacity:0.75;
-      pointer-events:none;
+
+    .pill .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: rgba(241,230,163,.95);
+      box-shadow: 0 0 14px rgba(241,230,163,.55);
+      animation: dotPulse 1.45s ease-in-out infinite;
     }
-    .pill .led{
-      width:10px; height:10px;
-      border-radius:999px;
-      background: rgba(241,230,163,0.95);
-      box-shadow: 0 0 0 0 rgba(241,230,163,0.0);
-      animation: ledpulse 2.4s ease-in-out infinite;
-      flex: 0 0 auto;
-    }
-    @keyframes ledpulse{
-      0%, 100%{ box-shadow: 0 0 0 0 rgba(241,230,163,0.0); opacity:0.85}
-      50%{ box-shadow: 0 0 22px 6px rgba(241,230,163,0.18); opacity:1}
+    @keyframes dotPulse{
+      0%,100%{transform:scale(1); opacity:.85}
+      50%{transform:scale(1.35); opacity:1}
     }
 
     .list{
       border-top:1px solid rgba(212,175,55,.28);
-      margin-top:8px;
-      padding-top:10px;
+      margin-top:10px;
+      padding-top:12px;
       font-size:.92rem;
       color:var(--ink-soft);
     }
+
     .row{
-      display:flex;
-      justify-content:space-between;
-      padding:9px 0;
+      display:grid;
+      grid-template-columns: 1fr 1.2fr;
+      align-items:flex-start;
       gap:18px;
+      padding:10px 0;
     }
-    .row span:last-child{color: rgba(241,230,163,.88)}
+
+    .row .k{color: rgba(179,164,139,.92)}
+    .row .v{
+      color: rgba(241,230,163,.88);
+      text-align:right;
+    }
     .row + .row{border-top:1px dashed var(--line2)}
 
     .micro{
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(212,175,55,.16);
-      font-size: .85rem;
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(212,175,55,.18);
+      font-size: .86rem;
       color: rgba(179,164,139,.92);
-      line-height: 1.6;
+      line-height: 1.65;
     }
     .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
 
@@ -399,21 +390,83 @@
       line-height:1.55;
     }
 
+    .statusbar{
+      margin-top:14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding-top:12px;
+      border-top: 1px solid rgba(212,175,55,.14);
+      font-size:.78rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: rgba(179,164,139,.92);
+    }
+    .statusbar .sig{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      white-space:nowrap;
+    }
+    .statusbar .sig i{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(244,186,120,.95);
+      box-shadow: 0 0 18px rgba(244,186,120,.38);
+      animation: warmBlink 2.2s ease-in-out infinite;
+    }
+    @keyframes warmBlink{
+      0%,100%{opacity:.55}
+      50%{opacity:1}
+    }
+    .statusbar .meter{
+      position:relative;
+      flex:1 1 auto;
+      height:8px;
+      border-radius:999px;
+      background: rgba(241,230,163,.10);
+      border: 1px solid rgba(212,175,55,.18);
+      overflow:hidden;
+    }
+    .statusbar .meter > span{
+      position:absolute; inset:0;
+      width:46%;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(241,230,163,.18), rgba(212,175,55,.42), rgba(241,230,163,.18));
+      filter: blur(.0px);
+      animation: meterMove 2.8s ease-in-out infinite;
+    }
+    @keyframes meterMove{
+      0%,100%{transform:translateX(-10%)}
+      50%{transform:translateX(120%)}
+    }
+
+    /* INTERACTION HELPERS */
+    .panel.is-hover{
+      border-color: rgba(241,230,163,0.55);
+      box-shadow: 0 34px 90px rgba(0,0,0,0.60);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1060px){
+      .hero-shell{grid-template-columns:1fr; gap:34px}
+      .hero-claim{white-space:normal}
+      .panel{max-width:720px}
+    }
+
     @media(max-width:960px){
-      .hero-shell{grid-template-columns:1fr}
       .top-nav{display:none}
       .top-bar{padding:0 16px}
       .hero{padding:96px 20px 56px}
       .top-left{min-width:auto}
-      .panel{max-width: 680px}
+      .row{grid-template-columns: 1fr; gap:8px}
+      .row .v{text-align:left}
     }
 
     @media (prefers-reduced-motion: reduce){
       .top-nav a::after{transition:none}
-      .scan{animation:none; display:none}
-      .pill .led{animation:none}
+      .panel::before,.panel::after,.pill .dot,.statusbar .sig i,.statusbar .meter > span{animation:none}
       .panel{transform:none !important}
-      .panel::before{opacity:0.35}
     }
 
     /* Utility */
@@ -424,21 +477,6 @@
       overflow:hidden; clip:rect(0,0,0,0);
       white-space:nowrap; border:0;
     }
-    .hero-claim{
-  display:block;
-  margin-top:10px;
-  font-size:0.70em;          /* plus petit que le reste */
-  letter-spacing:.12em;      /* un peu plus “label” */
-  line-height:1.15;
-  color:rgba(241,230,163,.92);
-  text-transform:uppercase;
-  white-space:nowrap;        /* force sur une ligne */
-}
-
-@media (max-width: 520px){
-  .hero-claim{ white-space:normal; } /* sur mobile, on laisse respirer */
-}
-
   </style>
 </head>
 
@@ -452,15 +490,16 @@
     </div>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="./index.html" aria-current="page">Home</a>
-      <a href="./sandbox.html">Sandbox</a>
-      <a href="./how-it-works.html">How it works</a>
-      <a href="./spec.html">Spec</a>
-      <a href="./tests.html">Tests</a>
-      <a href="./examples.html">Examples</a>
+      <!-- Per your default: open navigation to another page in a new tab -->
+      <a href="./index.html" aria-current="page" target="_blank" rel="noopener noreferrer">Home</a>
+      <a href="./sandbox.html" target="_blank" rel="noopener noreferrer">Sandbox</a>
+      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
+      <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
     </nav>
 
-    <a href="./sandbox.html" class="top-cta">Try the live demo</a>
+    <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Try the live demo</a>
   </header>
 
   <main class="hero" role="main">
@@ -469,11 +508,10 @@
         <div class="eyebrow">Decision-proof data <span>for regulated reality</span></div>
 
         <h1 class="hero-title" id="hero-title">
-  Data governance,
-  <span class="l2">when decisions become liability.</span>
-  <span class="l3 hero-claim">RPO v0.1 is the minimum proof format.</span>
-</h1>
-
+          Data governance,
+          <span class="l2">when decisions become liability.</span>
+          <span class="hero-claim">RPO v0.1 is the minimum proof format.</span>
+        </h1>
 
         <p class="hero-text">
           Most organizations don’t fail because they lack data.
@@ -482,8 +520,8 @@
         </p>
 
         <div class="hero-ctas">
-          <a href="./sandbox.html" class="btn-primary">Try the live demo</a>
-          <a href="./spec.html" class="btn-ghost">Read the spec</a>
+          <a href="./sandbox.html" class="btn-primary" target="_blank" rel="noopener noreferrer">Try the live demo</a>
+          <a href="./spec.html" class="btn-ghost" target="_blank" rel="noopener noreferrer">Read the spec</a>
         </div>
 
         <p class="hero-note">
@@ -492,23 +530,32 @@
         </p>
       </section>
 
-      <!-- Interactive proof object card -->
-      <aside class="panel" id="proofCard" aria-label="What you get">
+      <aside class="panel" id="liveCard" aria-label="What you get">
         <div class="panel-inner">
-          <div class="scan" aria-hidden="true"></div>
-
           <h2>What you get in 30 seconds</h2>
 
           <div class="pill" aria-label="Attributes">
-            <span class="led" aria-hidden="true"></span>
+            <span class="dot" aria-hidden="true"></span>
             Integrity • Readability • Verifiability
           </div>
 
           <div class="list" role="list">
-            <div class="row" role="listitem"><span>Input</span><span>1–3 paragraphs</span></div>
-            <div class="row" role="listitem"><span>Outputs</span><span>signed JSON + PDF path + public hash</span></div>
-            <div class="row" role="listitem"><span>Integrity anchor</span><span>sha256</span></div>
-            <div class="row" role="listitem"><span>Use case</span><span>decision traceability (demo)</span></div>
+            <div class="row" role="listitem">
+              <span class="k">Input</span>
+              <span class="v">1–3 paragraphs</span>
+            </div>
+            <div class="row" role="listitem">
+              <span class="k">Outputs</span>
+              <span class="v">signed JSON + PDF path + public hash</span>
+            </div>
+            <div class="row" role="listitem">
+              <span class="k">Integrity anchor</span>
+              <span class="v">sha256</span>
+            </div>
+            <div class="row" role="listitem">
+              <span class="k">Use case</span>
+              <span class="v">decision traceability (demo)</span>
+            </div>
           </div>
 
           <div class="micro">
@@ -519,13 +566,19 @@
           <div class="foot">
             RPO makes evidence verifiable; it does not “decide the truth”.
           </div>
+
+          <div class="statusbar" aria-label="Live status">
+            <div class="sig"><i aria-hidden="true"></i><span id="statusText">Live field</span></div>
+            <div class="meter" aria-hidden="true"><span></span></div>
+            <div class="sig"><span id="tickText">SYNC</span></div>
+          </div>
         </div>
       </aside>
     </div>
   </main>
 
   <script>
-    // Background star field (your original, unchanged)
+    // Background star field (kept: light + elegant)
     (function () {
       const canvas = document.getElementById("bg-field");
       const ctx = canvas.getContext("2d", { alpha: true });
@@ -592,57 +645,59 @@
       resize(); init(); loop();
     })();
 
-    // Interactive "living" card (tilt + spotlight + animated border spin)
+    // “Living” card interaction: subtle tilt + micro status tick
     (function(){
-      const card = document.getElementById("proofCard");
+      const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const card = document.getElementById("liveCard");
+      const statusText = document.getElementById("statusText");
+      const tickText = document.getElementById("tickText");
+
       if (!card) return;
 
-      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (reduceMotion) return;
+      const statuses = ["Live field", "Listening", "Ready", "Auditable", "Deterministic"];
+      let si = 0;
+      setInterval(() => {
+        si = (si + 1) % statuses.length;
+        statusText.textContent = statuses[si];
+        tickText.textContent = (si % 2 === 0) ? "SYNC" : "HASH";
+      }, 1600);
+
+      if (prefersReduce) return;
+
+      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
 
       let raf = null;
 
-      function setVars(mx, my){
-        card.style.setProperty("--mx", mx + "%");
-        card.style.setProperty("--my", my + "%");
-      }
-
-      function tiltFromEvent(e){
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width;  // 0..1
-        const y = (e.clientY - rect.top) / rect.height; // 0..1
-
-        // Spotlight
-        setVars((x*100).toFixed(2), (y*100).toFixed(2));
-
-        // Tilt (subtle)
-        const rx = (y - 0.5) * -8; // deg
-        const ry = (x - 0.5) * 10; // deg
-        card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(0)`;
-      }
-
       function onMove(e){
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+
+        const rotY = clamp((x - 0.5) * 10, -6, 6);
+        const rotX = clamp((0.5 - y) * 10, -6, 6);
+
         if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => tiltFromEvent(e));
+        raf = requestAnimationFrame(() => {
+          card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
+        });
+      }
+
+      function onEnter(){
+        card.classList.add("is-hover");
       }
 
       function onLeave(){
-        card.style.transform = `perspective(900px) rotateX(0deg) rotateY(0deg)`;
-        setVars(50, 35);
+        card.classList.remove("is-hover");
+        card.style.transform = "none";
       }
 
-      // Border spin
-      let t = 0;
-      function spin(){
-        t = (t + 0.6) % 360;
-        card.style.setProperty("--spin", t + "deg");
-        requestAnimationFrame(spin);
-      }
-      spin();
-
+      card.addEventListener("mouseenter", onEnter);
       card.addEventListener("mousemove", onMove);
       card.addEventListener("mouseleave", onLeave);
-      onLeave();
+
+      // Touch devices: no tilt (avoid annoying wobble)
+      card.addEventListener("touchstart", () => card.classList.add("is-hover"), {passive:true});
+      card.addEventListener("touchend", () => card.classList.remove("is-hover"), {passive:true});
     })();
   </script>
 </body>
