@@ -1,41 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr" data-page="tests">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OpenProof.net — Tests (RPO v0.1)</title>
-  <meta name="description" content="Deterministic tests for the RPO sandbox: same input → same output, stable extraction, and reproducible sha256 integrity anchors." />
+  <title>OpenProof — Tests | Reproductibilité & preuve de falsification (RPO v0.1)</title>
+
+  <!-- SEO -->
+  <meta name="description" content="Tests RPO v0.1 : reproductibilité, déterminisme et falsification détectable. Même entrée → même sortie, hash SHA-256 recalculable, ancres stables. 100% local, sans serveur." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://rpo.openproof.net/tests.html" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="OpenProof — Tests (RPO v0.1)" />
+  <meta property="og:description" content="Démonstration : déterminisme, reproductibilité SHA-256, falsification détectable. Même entrée → même sortie. Aucun serveur." />
+  <meta property="og:url" content="https://rpo.openproof.net/tests.html" />
+  <meta property="og:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
+
+  <!-- “Référencement caché” (propre) -->
+  <meta name="author" content="Gersende Ryard de Parcey" />
+  <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor" />
+  <link rel="me" href="https://www.linkedin.com/in/gryard/" />
+  <link rel="icon" type="image/png" href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
+
+  <!-- JSON-LD (SEO solide, non “spammy”) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebSite",
+        "name":"OpenProof — RPO",
+        "url":"https://rpo.openproof.net/",
+        "inLanguage":"fr-FR",
+        "publisher":{"@id":"https://rpo.openproof.net/#openproof"}
+      },
+      {
+        "@type":"Organization",
+        "@id":"https://rpo.openproof.net/#openproof",
+        "name":"OpenProof Consortium",
+        "url":"https://www.openproof.net",
+        "logo":"https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+      },
+      {
+        "@type":"Person",
+        "@id":"https://rpo.openproof.net/#gersende",
+        "name":"Gersende Ryard de Parcey",
+        "url":"https://www.linkedin.com/in/gryard/",
+        "sameAs":["https://www.linkedin.com/in/gryard/"],
+        "jobTitle":"OpenProof specification editor"
+      },
+      {
+        "@type":"WebPage",
+        "name":"Tests — RPO v0.1",
+        "url":"https://rpo.openproof.net/tests.html",
+        "inLanguage":"fr-FR",
+        "about":[{"@id":"https://rpo.openproof.net/#openproof"}],
+        "author":{"@id":"https://rpo.openproof.net/#gersende"},
+        "isPartOf":{"@id":"https://rpo.openproof.net/#openproof"}
+      }
+    ]
+  }
+  </script>
 
   <style>
     :root{
       --bg-deep:#04040e;
       --bg-mid:#0b0f14;
+
       --gold-soft:#f1e6a3;
       --gold:#d4af37;
       --gold-deep:#8f7633;
+
       --ivory:#f7f3e8;
       --ink-soft:#b3a48b;
-      --ink-dim: rgba(243,237,215,0.72);
-      --line: rgba(212,175,55,0.22);
-      --panel: linear-gradient(145deg, rgba(10,12,27,0.96), rgba(5,7,18,0.98));
-      --panel2: radial-gradient(circle at 0 0, rgba(241,230,163,0.10), transparent 60%), var(--panel);
-      --radius:24px;
-      --shadow: 0 26px 70px rgba(0,0,0,0.5);
-      --shadow-strong: 0 28px 80px rgba(0,0,0,0.65);
-      --ok: #46ff99;
-      --warn: #ffdfb0;
-      --bad: #ff6b6b;
+
+      --radius:26px;
+      --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
+      --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
+      --line2:rgba(136,116,72,0.35);
+
+      --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
     body{
       min-height:100vh;
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
       color:var(--ivory);
       background:
         radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
@@ -44,439 +101,587 @@
       overflow-x:hidden;
     }
 
+    a{color:inherit}
+    a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
+    ::selection{background: rgba(212,175,55,.25);}
+
+    /* BACKGROUND FIELD */
     #bg-field{
-      position:fixed; inset:0; width:100%; height:100%;
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
       z-index:-1;
-      background:
-        radial-gradient(circle at top, rgba(241,230,163,0.12), transparent 60%),
-        radial-gradient(circle at bottom, rgba(241,230,163,0.06), transparent 65%),
-        radial-gradient(circle at center, #04040e, #020208 70%);
     }
 
-    header.top-bar{
-      position:fixed; top:0; left:0; right:0;
+    /* TOP BAR */
+    .top-bar{
+      position:fixed;
+      top:0; left:0; right:0;
       height:68px;
       padding:0 40px;
-      display:flex; align-items:center; justify-content:space-between;
-      z-index:20;
-      background: linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
-      backdrop-filter: blur(18px);
-      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      z-index:10;
+      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(212,175,55,0.22);
     }
-    .top-left{display:flex; align-items:center; gap:14px;}
-    .emblem-wrap{
-      width:38px;height:38px;border-radius:999px;
-      display:flex;align-items:center;justify-content:center;
-      background: radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
-      box-shadow: 0 0 22px rgba(241,230,163,0.8);
-      overflow:hidden;
-      flex:0 0 auto;
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width: 280px;
     }
-    .emblem-wrap img{width:30px;height:30px;object-fit:contain;display:block}
-    .brand-title{
-      font-family:Orbitron,sans-serif;
+    .emblem{
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
+      box-shadow:0 0 18px rgba(241,230,163,0.8);
+      flex: 0 0 auto;
+    }
+    .brand{
+      font-family:"Orbitron",sans-serif;
+      font-size:0.72rem;
       letter-spacing:0.18em;
       text-transform:uppercase;
-      font-size:0.74rem;
       color:var(--ink-soft);
       white-space:nowrap;
     }
-    .brand-title span{color:var(--gold-soft)}
-
+    .brand span{color:var(--gold-soft)}
     .top-nav{
-      display:flex; gap:14px; align-items:center;
+      display:flex;
+      gap:22px;
       font-size:0.86rem;
       color:var(--ink-soft);
+      align-items:center;
+      justify-content:center;
+      flex: 1 1 auto;
     }
-    .chip{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:7px 12px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,0.25);
-      background: rgba(7,8,20,0.45);
-      backdrop-filter: blur(10px);
+    .top-nav a{
       color:inherit;
       text-decoration:none;
-      transition: transform .12s ease, border-color .12s ease, background .12s ease;
-      font-family: Orbitron, sans-serif;
-      font-size:0.74rem;
-      letter-spacing:0.08em;
-      text-transform:uppercase;
+      position:relative;
+      padding-bottom:3px;
+      white-space:nowrap;
     }
-    .chip:hover{transform: translateY(-1px); border-color: rgba(241,230,163,0.5); background: rgba(7,8,20,0.62);}
-    .chip.current{border-color: rgba(241,230,163,0.65); color: var(--gold-soft);}
+    .top-nav a::after{
+      content:"";
+      position:absolute;
+      left:0; bottom:0;
+      width:0; height:1px;
+      background:linear-gradient(90deg,var(--gold-soft),var(--gold));
+      transition:width .2s ease;
+    }
+    .top-nav a:hover::after{width:100%}
+    .top-nav a[aria-current="page"]{color: var(--gold-soft);}
+    .top-nav a[aria-current="page"]::after{width:100%}
 
     .top-cta{
-      display:inline-flex;
-      align-items:center; justify-content:center;
       padding:8px 18px;
       border-radius:999px;
       border:1px solid rgba(244,186,120,0.9);
-      font-size:0.8rem;
-      text-transform:uppercase;
-      letter-spacing:0.12em;
-      background: radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
       color:#2a1204;
+      font-size:0.8rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
       text-decoration:none;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.65);
-      font-family: Orbitron, sans-serif;
       white-space:nowrap;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .top-cta:hover{filter:brightness(1.03)}
+    .top-cta:active{transform:translateY(1px)}
+
+    /* LAYOUT */
+    main{
+      padding:104px 40px 56px;
+    }
+    .container{
+      max-width:1320px;
+      margin:0 auto;
+      width:100%;
     }
 
-    .container{width:min(1240px, 92vw); margin:0 auto;}
-    main{padding-top:88px; padding-bottom:70px;}
-
-    .hero{padding: 26px 0 10px;}
-    .hero-grid{
+    /* HERO */
+    .hero{
       display:grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 34px;
-      align-items: start;
+      grid-template-columns: 1.5fr 1fr;
+      gap:28px;
+      align-items:start;
+      padding:28px 0 18px;
     }
-
-    .eyebrow{
-      font-family:Orbitron,sans-serif;
-      font-size:0.78rem;
-      letter-spacing:0.22em;
+    .kicker{
+      font-family:"Orbitron",sans-serif;
+      font-size:.75rem;
+      letter-spacing:.22em;
       text-transform:uppercase;
       color:var(--ink-soft);
       margin-bottom:12px;
     }
-    .eyebrow span{color:var(--gold-soft)}
+    .kicker span{color:var(--gold-soft)}
     h1{
-      font-family:Orbitron,sans-serif;
+      font-family:"Orbitron",sans-serif;
       text-transform:uppercase;
-      letter-spacing:0.07em;
-      line-height:1.08;
-      font-size: clamp(1.8rem, 3.4vw, 2.6rem);
-      margin-bottom:14px;
-      max-width: 760px;
+      letter-spacing:.06em;
+      line-height:1.06;
+      font-size:clamp(2.0rem,4.2vw,3.05rem);
+      margin-bottom:10px;
     }
-    h1 .line2{display:block; color:var(--gold-soft)}
-    h1 .line3{display:block; color:var(--gold)}
+    h1 .gold{color:var(--gold-soft)}
+    .subhead{
+      font-size:1rem;
+      line-height:1.75;
+      color:var(--ink-soft);
+      max-width: 860px;
+    }
+    .subhead strong{color:rgba(241,230,163,.95); font-weight:600;}
+    .hero-actions{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-top:16px;
+      align-items:center;
+    }
+    .btn-primary{
+      padding:12px 26px;
+      border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      font-size:.8rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      text-decoration:none;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      cursor:pointer;
+    }
+    .btn-primary:hover{filter:brightness(1.03)}
+    .btn-primary:active{transform:translateY(1px)}
+    .btn-ghost{
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,0.35);
+      background: rgba(10,12,27,0.35);
+      color: var(--gold-soft);
+      font-size:.8rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      text-decoration:none;
+      backdrop-filter: blur(10px);
+      cursor:pointer;
+    }
+    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
+    .btn-ghost:active{transform:translateY(1px)}
 
-    .lead{
-      max-width: 760px;
-      font-size: 0.98rem;
-      line-height: 1.7;
-      color: var(--ink-soft);
-      text-align: justify;
-      text-align-last: left;
-    }
-    .lead b{color:var(--gold-soft); font-weight:600}
     .note{
-      margin-top:10px;
-      font-size:0.86rem;
-      color: var(--ink-dim);
+      margin-top:12px;
+      font-size:.92rem;
+      color:rgba(198,186,150,.88);
+      line-height:1.55;
     }
 
+    /* PANEL */
     .panel{
-      background: var(--panel2);
-      border-radius: 26px;
-      border: 1px solid rgba(212,175,55,0.5);
-      box-shadow: var(--shadow);
-      padding: 18px 18px 16px;
-      position: relative;
+      position:relative;
+      background:var(--panel);
+      border-radius:var(--radius);
+      border:1px solid rgba(212,175,55,0.45);
+      padding:26px;
+      box-shadow:var(--shadow-soft);
       overflow:hidden;
     }
     .panel::before{
       content:"";
-      position:absolute; inset:-1px;
-      border-radius:inherit;
-      border:1px solid rgba(241,230,163,0.16);
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
+        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
+        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
+      opacity:.95;
+      filter: blur(10px);
       pointer-events:none;
+      animation: fieldShift 10s ease-in-out infinite;
     }
+    @keyframes fieldShift{
+      0%,100%{transform: translateY(0px)}
+      50%{transform: translateY(10px)}
+    }
+    .panel > *{position:relative; z-index:1}
+
     .panel-title{
-      font-family:Orbitron,sans-serif;
-      font-size:0.86rem;
-      letter-spacing:0.18em;
+      font-family:"Orbitron",sans-serif;
+      font-size:.85rem;
+      letter-spacing:.18em;
       text-transform:uppercase;
       color:var(--ink-soft);
       margin-bottom:10px;
     }
-    .panel-text{color:var(--ink-soft); line-height:1.6; font-size:0.95rem;}
 
-    .hero-ctas{display:flex; flex-wrap:wrap; gap:12px; margin-top:14px;}
-    .btn-primary{
-      padding: 12px 24px;
+    .pill{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      font-size:.72rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      padding:6px 12px;
       border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-      font-size:0.8rem;
-      background: radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      text-decoration:none;
-      box-shadow:0 18px 34px rgba(0,0,0,0.75);
-      display:inline-flex; align-items:center; justify-content:center;
-      font-family:Orbitron,sans-serif;
-      cursor:pointer;
-    }
-    .btn-secondary{
-      padding: 11px 20px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,0.6);
-      font-size:0.8rem;
-      letter-spacing:0.12em;
-      text-transform:uppercase;
-      color:var(--gold-soft);
-      text-decoration:none;
-      background: rgba(7,8,20,0.7);
+      border:1px solid rgba(241,230,163,.55);
+      margin-bottom:12px;
+      color: rgba(241,230,163,.92);
+      background: rgba(10,12,27,0.22);
       backdrop-filter: blur(10px);
-      display:inline-flex; align-items:center; justify-content:center;
-      font-family:Orbitron,sans-serif;
-      cursor:pointer;
-    }
-
-    .section{margin-top:26px;}
-    .section-head{
-      display:flex; align-items:baseline; justify-content:space-between;
-      gap:18px;
-      margin: 12px 0 12px;
-    }
-    .h2{
-      font-family:Orbitron,sans-serif;
-      text-transform:uppercase;
-      letter-spacing:0.16em;
-      font-size:0.95rem;
-      color:var(--ink-soft);
-    }
-    .rule{
-      height:1px; flex:1 1 auto;
-      background: linear-gradient(90deg, rgba(212,175,55,0.0), rgba(212,175,55,0.45), rgba(212,175,55,0.0));
-      opacity:0.9;
-    }
-
-    .table{
-      border-radius: 26px;
-      overflow:hidden;
-      border:1px solid rgba(241,230,163,0.18);
-      box-shadow: var(--shadow-strong);
-      background: rgba(7,8,20,0.55);
-      backdrop-filter: blur(10px);
-    }
-    .trow{
-      display:grid;
-      grid-template-columns: 1.2fr 1fr 0.9fr 1.2fr;
-      gap: 12px;
-      padding: 14px 16px;
-      border-top: 1px dashed rgba(136,116,72,0.28);
-      align-items: start;
-    }
-    .trow.head{
-      border-top:none;
-      background: linear-gradient(180deg, rgba(241,230,163,0.08), rgba(7,8,20,0.0));
-      font-family:Orbitron,sans-serif;
-      text-transform:uppercase;
-      letter-spacing:0.14em;
-      font-size:0.76rem;
-      color: var(--ink-soft);
-    }
-    .cell{color: var(--ink-soft); font-size:0.93rem; line-height:1.55;}
-    .cell code{color: var(--gold-soft);}
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border:1px solid rgba(241,230,163,0.22);
-      background: rgba(3,4,14,0.58);
-      font-family: Orbitron, sans-serif;
-      font-size:0.72rem;
-      letter-spacing:0.10em;
-      text-transform:uppercase;
       white-space:nowrap;
-      width: fit-content;
     }
-    .dot{width:8px;height:8px;border-radius:999px; box-shadow: 0 0 12px rgba(0,0,0,0.35)}
-    .ok .dot{background: var(--ok); box-shadow: 0 0 14px rgba(70,255,153,0.8)}
-    .warn .dot{background: var(--warn); box-shadow: 0 0 14px rgba(255,223,176,0.7)}
-    .bad .dot{background: var(--bad); box-shadow: 0 0 14px rgba(255,107,107,0.7)}
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: rgba(241,230,163,.95);
+      box-shadow: 0 0 14px rgba(241,230,163,.55);
+      animation: dotPulse 1.45s ease-in-out infinite;
+    }
+    @keyframes dotPulse{
+      0%,100%{transform:scale(1); opacity:.85}
+      50%{transform:scale(1.35); opacity:1}
+    }
 
-    .results{
-      margin-top: 12px;
-      padding: 14px 16px;
+    /* “Scope” card */
+    .scope{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .scope p{
+      color:var(--ink-soft);
+      line-height:1.65;
+      font-size:.94rem;
+    }
+    .scope p strong{color:rgba(241,230,163,.95); font-weight:600;}
+    .scope .line{
+      margin-top:6px;
+      padding-top:12px;
+      border-top:1px solid rgba(212,175,55,.18);
+      color:rgba(198,186,150,.86);
+      font-size:.88rem;
+      line-height:1.55;
+    }
+
+    /* MATRIX */
+    .section{
+      margin-top:18px;
+    }
+
+    .matrix-wrap{
+      margin-top:16px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .matrix{
+      width:100%;
+      border-radius: 22px;
+      overflow:hidden;
+      border:1px solid rgba(212,175,55,0.28);
+      background: rgba(7,9,20,0.35);
+      backdrop-filter: blur(10px);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:.92rem;
+    }
+    thead th{
+      text-align:left;
+      padding:14px 16px;
+      font-family:"Orbitron",sans-serif;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:.72rem;
+      color:rgba(179,164,139,.92);
+      border-bottom:1px solid rgba(212,175,55,0.18);
+      background: rgba(4,4,14,0.35);
+    }
+    tbody td{
+      padding:14px 16px;
+      border-bottom:1px dashed rgba(136,116,72,0.22);
+      vertical-align:top;
+      color:rgba(179,164,139,.95);
+      line-height:1.55;
+    }
+    tbody tr:last-child td{border-bottom:none}
+    td strong{color:rgba(241,230,163,.92); font-weight:600;}
+
+    .status{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,0.22);
+      background: rgba(10,12,27,0.28);
+      color:rgba(241,230,163,.86);
+      font-family:"Orbitron",sans-serif;
+      letter-spacing:.10em;
+      text-transform:uppercase;
+      font-size:.70rem;
+      white-space:nowrap;
+    }
+    .led{
+      width:9px;height:9px;border-radius:50%;
+      background: rgba(198,186,150,.35);
+      box-shadow:none;
+    }
+    .status[data-state="idle"] .led{background: rgba(198,186,150,.35)}
+    .status[data-state="running"] .led{background: rgba(244,186,120,.92); box-shadow:0 0 16px rgba(244,186,120,.35)}
+    .status[data-state="pass"] .led{background: rgba(241,230,163,.95); box-shadow:0 0 18px rgba(241,230,163,.35)}
+    .status[data-state="fail"] .led{background: rgba(255,120,120,.9); box-shadow:0 0 18px rgba(255,120,120,.35)}
+
+    /* SIDE RESULT PANEL */
+    .side{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .log{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:.86rem;
+      line-height:1.7;
+      color:rgba(198,186,150,.86);
+      background: rgba(4,4,14,0.35);
+      border:1px solid rgba(212,175,55,0.18);
       border-radius: 18px;
-      border:1px solid rgba(241,230,163,0.22);
-      background: rgba(3,4,14,0.55);
-      color: rgba(247,243,232,0.88);
-      font-size: 0.92rem;
-      line-height:1.6;
-      box-shadow: 0 18px 46px rgba(0,0,0,0.55);
-      min-height: 84px;
-      white-space: pre-wrap;
+      padding:14px;
+      min-height: 220px;
+      white-space:pre-wrap;
+      overflow:auto;
     }
+    .hint{
+      font-size:.90rem;
+      color:rgba(198,186,150,.86);
+      line-height:1.6;
+    }
+    .hint strong{color:rgba(241,230,163,.95); font-weight:600;}
 
-    .band{
-      margin-top: 20px;
-      border-radius: 26px;
-      background: rgba(7,8,20,0.60);
-      border:1px solid rgba(241,230,163,0.22);
-      box-shadow: var(--shadow);
-      padding: 16px;
+    /* FOOT CTA */
+    .footer-cta{
+      margin-top:18px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:16px;
+      gap:14px;
+      flex-wrap:wrap;
+      padding:18px 20px;
+      border-radius: 22px;
+      border:1px solid rgba(212,175,55,0.22);
+      background: rgba(10,12,27,0.28);
       backdrop-filter: blur(10px);
-    }
-    .band p{color: var(--ink-soft); line-height:1.6; max-width: 860px;}
-
-    footer{
-      margin-top: 14px;
-      color: rgba(198,186,150,0.70);
-      font-size:0.86rem;
-      line-height:1.6;
-      padding-bottom: 6px;
+      color:rgba(198,186,150,.88);
+      line-height:1.55;
     }
 
-    @media (max-width: 980px){
-      header.top-bar{padding:0 16px}
+    /* Utility */
+    .sr-only{
+      position:absolute;
+      width:1px; height:1px;
+      padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0);
+      white-space:nowrap; border:0;
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1100px){
+      .hero{grid-template-columns: 1fr; gap:16px}
+      .matrix-wrap{grid-template-columns:1fr; }
+      main{padding:104px 20px 56px}
+      .top-bar{padding:0 16px}
+    }
+    @media(max-width:960px){
       .top-nav{display:none}
-      .hero-grid{grid-template-columns: 1fr; gap: 18px;}
-      .trow{grid-template-columns: 1fr;}
-      .band{flex-direction:column; align-items:flex-start}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .panel::before,.dot{animation:none}
     }
   </style>
 </head>
 
 <body>
-  <canvas id="bg-field"></canvas>
+  <canvas id="bg-field" aria-hidden="true"></canvas>
 
   <header class="top-bar">
     <div class="top-left">
-      <div class="emblem-wrap">
-        <img
-          src="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-          alt="OpenProof logo"
-        />
-      </div>
-      <div class="brand-title">OPENPROOF<span>.NET — RPO v0.1</span></div>
+      <div class="emblem" aria-hidden="true"></div>
+      <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
     </div>
 
     <nav class="top-nav" aria-label="Primary">
-      <a class="chip" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Sandbox</a>
-      <a class="chip" href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
-      <a class="chip current" href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
-      <a class="chip" href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+      <!-- Par ta règle : ouvrir toute navigation “page” dans un nouvel onglet -->
+      <a href="./index.html" target="_blank" rel="noopener noreferrer">Maison</a>
+      <a href="./sandbox.html" target="_blank" rel="noopener noreferrer">Bac à sable</a>
+      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">Comment ça marche</a>
+      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spéc.</a>
+      <a href="./tests.html" aria-current="page" target="_blank" rel="noopener noreferrer">Tests</a>
+      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Exemples</a>
     </nav>
 
-    <!-- CTA MUST GO SOMEWHERE -->
-    <a class="top-cta" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Try the live demo</a>
+    <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Essayez la démo en direct</a>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-grid">
-        <div>
-          <div class="eyebrow">Proof of determinism <span>in the browser</span></div>
+  <main role="main">
+    <div class="container">
 
-          <h1>
-            Tests
-            <span class="line2">reproducibility,</span>
-            <span class="line3">tamper-evidence</span>
+      <section class="hero" aria-labelledby="t">
+        <div>
+          <div class="kicker">Preuve de déterminisme <span>dans le navigateur</span></div>
+
+          <h1 id="t">
+            <span class="gold">Tests</span> reproductibilité,<br />
+            preuve de <span class="gold">falsification</span>
           </h1>
 
-          <p class="lead">
-            These tests are intentionally simple: they validate the core promise of the Sandbox.
-            <b>Same input → same output</b>, stable extraction of basic anchors, and reproducible
-            <b>sha256</b> integrity anchors.
+          <p class="subhead">
+            Ces tests sont volontairement simples. Ils démontrent une propriété clé du RPO :
+            <strong>le déterminisme opposable</strong>.
+            <br />
+            Même entrée → même sortie, hash <strong>SHA-256</strong> recalculable, altération détectable.
+            <br />
+            Aucun serveur, aucun service externe : tout s’exécute <strong>localement</strong>.
           </p>
+
+          <div class="hero-actions">
+            <button class="btn-primary" id="runAll">Exécuter les tests dans le navigateur</button>
+            <a class="btn-ghost" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Ouvrir le bac à sable</a>
+            <a class="btn-ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Consultez les spécifications RPO</a>
+          </div>
 
           <p class="note">
-            Important: passing these tests does not mean “truth”. It means the pipeline is deterministic and auditable.
+            Important : la réussite de ces tests ne “prouve” pas une vérité. Elle prouve que le
+            <strong>processus est auditable</strong>, et que les transformations deviennent explicables.
           </p>
-
-          <div class="hero-ctas">
-            <button class="btn-primary" id="runTestsBtn" type="button">Run tests in browser</button>
-            <a class="btn-secondary" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Open the Sandbox</a>
-            <a class="btn-secondary" href="https://rpo.openproof.net" target="_blank" rel="noopener noreferrer">View the RPO spec</a>
-          </div>
         </div>
 
-        <aside class="panel">
-          <div class="panel-title">Test scope</div>
-          <div class="panel-text">
-            Determinism checks, extraction stability (dates/places), and sha256 reproducibility.
-            No backend. No external services. Runs locally in your browser.
-          </div>
+        <aside class="panel scope" aria-label="Portée de test">
+          <div class="panel-title">Portée de test</div>
+          <div class="pill"><span class="dot" aria-hidden="true"></span> Intégrité • Lisibilité • Vérifiabilité</div>
+
+          <p>
+            Vérifications : <strong>déterminisme</strong>, stabilité de l’extraction (dates/lieux) et
+            reproductibilité <strong>SHA-256</strong>.
+          </p>
+          <p class="line">
+            Ce que ça démontre, côté dirigeant : vous n’êtes pas contesté pour ce que vous avez décidé,
+            mais pour ce que vous ne pouvez plus <strong>reconstruire</strong>, et donc défendre.
+          </p>
         </aside>
-      </div>
-    </section>
+      </section>
 
-    <section class="section">
-      <div class="section-head">
-        <div class="h2">Test matrix</div>
-        <div class="rule"></div>
-      </div>
+      <section class="section panel" aria-label="Matrice de test">
+        <div class="panel-title">Matrice de test</div>
 
-      <div class="table" role="table" aria-label="Test matrix">
-        <div class="trow head" role="row">
-          <div class="cell" role="columnheader">Test</div>
-          <div class="cell" role="columnheader">What it verifies</div>
-          <div class="cell" role="columnheader">Status</div>
-          <div class="cell" role="columnheader">Notes</div>
+        <div class="matrix-wrap">
+          <div class="matrix" role="region" aria-label="Table des tests">
+            <table>
+              <thead>
+                <tr>
+                  <th style="width:22%">Test</th>
+                  <th>Ce que cela vérifie</th>
+                  <th style="width:18%">Statut</th>
+                  <th style="width:26%">Notes</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Déterminisme</strong></td>
+                  <td>Une même entrée produit un <strong>bundle</strong> identique et un <strong>hash</strong> identique.</td>
+                  <td>
+                    <span class="status" id="stDet" data-state="idle"><span class="led"></span><span>Ne pas courir</span></span>
+                  </td>
+                  <td>Exécute l’extraction 2 fois, compare la structure canonique et le SHA-256.</td>
+                </tr>
+                <tr>
+                  <td><strong>SHA-256</strong></td>
+                  <td>Le hachage est <strong>reproductible</strong> pour une même chaîne canonique.</td>
+                  <td>
+                    <span class="status" id="stSha" data-state="idle"><span class="led"></span><span>Ne pas courir</span></span>
+                  </td>
+                  <td>Utilise WebCrypto <strong>SHA-256</strong> en local (pas de backend).</td>
+                </tr>
+                <tr>
+                  <td><strong>Ancres</strong></td>
+                  <td>Données de base extraites de manière stable (dates, lieux) : <strong>pas de réécriture</strong>.</td>
+                  <td>
+                    <span class="status" id="stAnc" data-state="idle"><span class="led"></span><span>Ne pas courir</span></span>
+                  </td>
+                  <td>Extraction conservatrice (heuristique minimale) : stabilité plutôt que “brillance”.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="side">
+            <div class="panel-title">Sortie (preuve)</div>
+            <div class="log" id="log" aria-live="polite">Clique sur “Exécuter les tests…” pour obtenir une preuve locale : résultats + hash + payload canonique.</div>
+            <div class="hint">
+              À retenir : ces tests ne valident pas un “outil”.
+              Ils valident une <strong>frontière de confiance</strong> :
+              le système ne peut pas “changer d’avis” à votre insu.
+            </div>
+            <button class="btn-ghost" id="reset">Réinitialiser</button>
+          </div>
         </div>
+      </section>
 
-        <div class="trow" role="row" data-test="determinism">
-          <div class="cell" role="cell"><b>Determinism</b></div>
-          <div class="cell" role="cell">Same input produces identical <code>bundle</code> + <code>hash</code></div>
-          <div class="cell" role="cell"><span class="badge warn"><span class="dot"></span><span>not run</span></span></div>
-          <div class="cell" role="cell">Runs extraction twice and compares outputs.</div>
-        </div>
-
-        <div class="trow" role="row" data-test="sha256">
-          <div class="cell" role="cell"><b>sha256</b></div>
-          <div class="cell" role="cell">Hash is reproducible for the same canonical string</div>
-          <div class="cell" role="cell"><span class="badge warn"><span class="dot"></span><span>not run</span></span></div>
-          <div class="cell" role="cell">Uses WebCrypto <code>SHA-256</code> locally.</div>
-        </div>
-
-        <div class="trow" role="row" data-test="anchors">
-          <div class="cell" role="cell"><b>Anchors</b></div>
-          <div class="cell" role="cell">Basic anchors extracted consistently (dates, places)</div>
-          <div class="cell" role="cell"><span class="badge warn"><span class="dot"></span><span>not run</span></span></div>
-          <div class="cell" role="cell">Heuristic demo extraction (conservative).</div>
-        </div>
-      </div>
-
-      <div class="results" id="resultsBox" aria-live="polite">
-Click “Run tests in browser” to execute deterministic checks locally.
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="band">
-        <p>
-          Want the full pilot (CNRS × TruthX): interpretive coherence, structured narrative layers, advanced signal fusion,
-          and a human-readable probative report designed for professionals.
+      <section class="section panel" aria-label="Pourquoi cela compte">
+        <div class="panel-title">Pourquoi cela compte (en une phrase)</div>
+        <p class="subhead" style="margin-top:6px;">
+          On ne vous conteste pas vos décisions.
+          On vous conteste ce que vous ne pouvez pas <strong>reconstituer</strong> — et donc pas défendre.
         </p>
-        <a class="btn-primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
-          Request pilot access
-        </a>
-      </div>
+      </section>
 
-      <footer>
-        This page is informational. The sandbox does not store case data, and it does not decide truth.
-        It demonstrates deterministic structure and verifiable integrity anchors.
-      </footer>
-    </section>
+      <section class="footer-cta" aria-label="Accès pilote">
+        <div>
+          Vous voulez le pilote complet (CNRS × TruthX) : cohérence interprétative, couches narratives structurées,
+          fusion avancée des signaux et rapport probant lisible par l’humain, conçu pour les professionnels.
+        </div>
+        <a class="btn-primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
+          Demande d’accès pilote
+        </a>
+      </section>
+
+      <p class="note" style="margin-top:14px;">
+        Cette page est informative. L’environnement de test ne stocke pas les données des cas et ne détermine pas la vérité.
+        Il illustre une structure déterministe et des ancres d’intégrité vérifiables.
+      </p>
+
+      <!-- “Référencement caché” propre : accessible, pas “display:none” -->
+      <p class="sr-only">
+        Gersende Ryard de Parcey est l’éditrice de la spécification OpenProof RPO v0.1 (Rapport Probatoire Ouvert),
+        standard de preuve numérique basé sur JSON signé, PDF lisible et hash public SHA-256.
+      </p>
+
+    </div>
   </main>
 
-  <!-- Interstellar field -->
   <script>
+    // ===== Background star field (léger & élégant) =====
     (function () {
       const canvas = document.getElementById("bg-field");
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d", { alpha: true });
 
-      let width = window.innerWidth;
-      let height = window.innerHeight;
-      let particles = [];
+      let width, height, particles = [];
       const COUNT = 220;
 
       function resize() {
         width = window.innerWidth;
         height = window.innerHeight;
         const ratio = window.devicePixelRatio || 1;
+
         canvas.width = width * ratio;
         canvas.height = height * ratio;
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -487,12 +692,7 @@ Click “Run tests in browser” to execute deterministic checks locally.
           x: (Math.random() * 2 - 1),
           y: (Math.random() * 2 - 1),
           z: Math.random() * 0.9 + 0.1,
-          speed: Math.random() * 0.004 + 0.0015,
-          vertical: Math.random() < 0.25,
-          code: Math.random() < 0.18,
-          value: Math.random() < 0.5
-            ? (0.6 + Math.random() * 0.4).toFixed(2)
-            : (10 + Math.floor(Math.random() * 90)) + "%",
+          speed: Math.random() * 0.004 + 0.0015
         };
       }
 
@@ -503,218 +703,203 @@ Click “Run tests in browser” to execute deterministic checks locally.
 
       function project(p) {
         const f = 400;
-        const scale = f / (f * p.z);
+        const s = f / (f * p.z);
         return {
-          x: p.x * width * 0.5 * scale + width / 2,
-          y: p.y * height * 0.5 * scale + height / 2,
-          scale
+          x: p.x * width * 0.5 * s + width / 2,
+          y: p.y * height * 0.5 * s + height / 2
         };
       }
 
-      function update() {
+      function loop() {
         ctx.clearRect(0, 0, width, height);
 
-        const grad = ctx.createRadialGradient(
-          width * 0.5, height * 0.2, 0,
-          width * 0.5, height * 0.2, width * 0.6
-        );
-        grad.addColorStop(0, "rgba(241,230,163,0.22)");
-        grad.addColorStop(0.4, "rgba(241,230,163,0.04)");
-        grad.addColorStop(1, "transparent");
-        ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, width, height);
-
-        particles.forEach(p => {
+        for (const p of particles) {
           p.z -= p.speed;
           if (p.z < 0.08) {
             Object.assign(p, createParticle());
             p.z = 1;
           }
 
-          const proj = project(p);
-          const alpha = Math.min(1, (1.2 - p.z) * 1.1);
-          const radius = Math.max(0.8, 3.6 * (1.1 - p.z));
+          const { x, y } = project(p);
+          const a = Math.min(1, (1.2 - p.z) * 1.1);
 
-          if (p.vertical && proj.y < height * 0.9) {
-            ctx.strokeStyle = `rgba(241,230,163,${0.14 * alpha})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(proj.x, proj.y);
-            ctx.lineTo(proj.x, proj.y + 46 * (1.1 - p.z));
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.moveTo(proj.x - 4, proj.y + 6);
-            ctx.lineTo(proj.x + 4, proj.y + 6);
-            ctx.moveTo(proj.x, proj.y + 2);
-            ctx.lineTo(proj.x, proj.y + 10);
-            ctx.stroke();
-          }
-
-          const gradDot = ctx.createRadialGradient(
-            proj.x, proj.y, 0,
-            proj.x, proj.y, radius * 3
-          );
-          gradDot.addColorStop(0, `rgba(248,238,192,${0.95 * alpha})`);
-          gradDot.addColorStop(0.4, `rgba(212,175,55,${0.9 * alpha})`);
-          gradDot.addColorStop(1, `rgba(0,0,0,0)`);
-          ctx.fillStyle = gradDot;
+          ctx.fillStyle = `rgba(241,230,163,${0.6 * a})`;
           ctx.beginPath();
-          ctx.arc(proj.x, proj.y, radius * 3, 0, Math.PI * 2);
+          ctx.arc(x, y, 1.6, 0, Math.PI * 2);
           ctx.fill();
+        }
 
-          ctx.fillStyle = `rgba(248,238,192,${0.8 * alpha})`;
-          ctx.beginPath();
-          ctx.arc(proj.x, proj.y, radius, 0, Math.PI * 2);
-          ctx.fill();
-
-          if (p.code && proj.y > 40 && proj.y < height - 40 && Math.random() < 0.25) {
-            ctx.font = `${10 + 6 * (1.1 - p.z)}px "Orbitron", system-ui`;
-            ctx.fillStyle = `rgba(241,230,163,${0.78 * alpha})`;
-            ctx.fillText(p.value, proj.x + 6, proj.y - 4);
-          }
-        });
-
-        requestAnimationFrame(update);
+        requestAnimationFrame(loop);
       }
 
       window.addEventListener("resize", resize);
-      resize(); init(); update();
+      resize(); init(); loop();
     })();
-  </script>
 
-  <!-- Tests logic (local, deterministic) -->
-  <script>
-    const resultsBox = document.getElementById("resultsBox");
-    const btn = document.getElementById("runTestsBtn");
+    // ===== Helpers (RPO-ish minimal demo payload) =====
+    const $ = (id) => document.getElementById(id);
 
-    function setRowStatus(name, ok, note) {
-      const row = document.querySelector(`[data-test="${name}"]`);
-      if (!row) return;
-      const cell = row.querySelectorAll(".cell")[2];
-      const cls = ok ? "ok" : "bad";
-      const label = ok ? "pass" : "fail";
-      cell.innerHTML = `<span class="badge ${cls}"><span class="dot"></span><span>${label}</span></span>`;
-      if (note) {
-        const notesCell = row.querySelectorAll(".cell")[3];
-        notesCell.textContent = note;
-      }
+    function setStatus(el, state, label){
+      el.dataset.state = state;
+      el.querySelector("span:last-child").textContent = label;
     }
 
-    function stableStringify(obj) {
-      if (obj === null || typeof obj !== "object") return JSON.stringify(obj);
-      if (Array.isArray(obj)) return "[" + obj.map(stableStringify).join(",") + "]";
-      const keys = Object.keys(obj).sort();
-      return "{" + keys.map(k => JSON.stringify(k) + ":" + stableStringify(obj[k])).join(",") + "}";
+    function stableAnchors(text){
+      // Extraction conservatrice et DÉTERMINISTE (pas “smart”, pas d’ambiguïté)
+      // Date (YYYY-MM-DD)
+      const d = (text.match(/\b(20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\b/) || [null])[0];
+      // Ville/lieu (simple : mot après "à " / "a " en français)
+      const place = (text.match(/\b(?:à|a)\s+([A-ZÉÈÊËÀÂÄÎÏÔÖÙÛÜÇ][\p{L}\-']{2,})/u) || [null, null])[1];
+      return { date: d || null, place: place || null };
     }
 
-    async function sha256Hex(str) {
+    function canonicalPayload(bundle){
+      // Canonicalisation minimale : ordre fixe, concat stable
+      // (Ce n’est pas la “vraie spec” complète : c’est une preuve pédagogique)
+      return [
+        "rpo_version=" + bundle.rpo_version,
+        "bundle_id=" + bundle.bundle_id,
+        "created_at=" + bundle.created_at,
+        "issuer=" + bundle.issuer.label,
+        "subject=" + bundle.subject.label,
+        "title=" + bundle.narrative.title,
+        "narrative=" + bundle.narrative.text
+      ].join("|");
+    }
+
+    async function sha256Hex(str){
       const enc = new TextEncoder();
       const data = enc.encode(str);
-      const digest = await crypto.subtle.digest("SHA-256", data);
-      const arr = Array.from(new Uint8Array(digest));
-      return arr.map(b => b.toString(16).padStart(2, "0")).join("");
+      const hash = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");
     }
 
-    // Conservative demo extraction (browser-only)
-    function extractAnchors(text) {
-      const t = (text || "").trim();
-
-      // date: very conservative ISO-like or "14 March 2024" style (demo only)
-      const dates = [];
-      const iso = t.match(/\b(20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\b/g) || [];
-      iso.forEach(d => dates.push(d));
-      const long = t.match(/\b(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+(20\d{2})\b/gi) || [];
-      long.forEach(d => dates.push(d));
-
-      // place: minimal keyword list (demo)
-      const places = [];
-      const placeKeywords = ["Paris", "London", "Berlin", "office", "court", "school", "hospital"];
-      placeKeywords.forEach(k => {
-        const re = new RegExp("\\b" + k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "\\b", "i");
-        if (re.test(t)) places.push(k.toLowerCase() === "office" ? "office" : k);
-      });
-
-      return { dates_detected: Array.from(new Set(dates)), places_detected: Array.from(new Set(places)) };
-    }
-
-    function buildBundle(inputText) {
-      const anchors = extractAnchors(inputText);
-      // minimal deterministic signals (demo)
-      const lower = (inputText || "").toLowerCase();
-      const signals = [];
-      if (/\bthreat\b|\bthreatened\b/.test(lower)) signals.push("threat");
-      if (/\bpressure\b|\bcoerc\w*\b/.test(lower)) signals.push("pressure");
-
-      const bundle = {
+    function buildBundle(inputText){
+      // Deterministic bundle generator (fixed IDs for demo)
+      const anchors = stableAnchors(inputText);
+      return {
         rpo_version: "0.1",
-        demo: true,
-        input_preview: (inputText || "").trim().slice(0, 220),
-        anchors,
-        signals,
-        proof: { hash_algo: "sha256", public_hash: "" }
+        bundle_id: "demo-bundle-0001",
+        created_at: "2026-01-28T00:00:00Z",
+        issuer: { label: "OpenProof Demo (browser-local)" },
+        subject: { label: "Decision traceability (demo)" },
+        narrative: {
+          title: "Decision record (demo)",
+          text: inputText.trim()
+        },
+        anchors: anchors
       };
-
-      const canonical = stableStringify(bundle);
-      return { bundle, canonical };
     }
 
-    async function runAllTests() {
-      resultsBox.textContent = "Running tests…";
+    // ===== Tests =====
+    const sampleInput =
+`Le 2026-01-28, à Paris, une décision de recrutement a été prise après arbitrage.
+Les données étaient dispersées (SIRH, emails, réunions). Le risque n’est pas l’intention, mais l’irréversibilité.
+Objectif : rendre la chaîne reconstructible, pas “décider la vérité”.`;
 
-      const sample = "On 14 March 2024, an incident occurred in the Paris office. The manager threatened the employee. Pressure increased over email.";
-      const a1 = buildBundle(sample);
-      const h1 = await sha256Hex(a1.canonical);
-      a1.bundle.proof.public_hash = h1;
-
-      const a2 = buildBundle(sample);
-      const h2 = await sha256Hex(a2.canonical);
-      a2.bundle.proof.public_hash = h2;
-
-      // Determinism: canonical string and hash must match
-      const determinismOk = (a1.canonical === a2.canonical) && (h1 === h2);
-
-      // sha256 reproducibility (already checked above, but explicit)
-      const shaOk = (h1 === h2) && (h1.length === 64);
-
-      // Anchors: should detect March 2024 (via "14 March 2024") and Paris + office (demo)
-      const anchorsOk =
-        a1.bundle.anchors.dates_detected.length >= 1 &&
-        a1.bundle.anchors.places_detected.length >= 1;
-
-      setRowStatus("determinism", determinismOk, determinismOk ? "Canonical bundle + hash are identical." : "Mismatch detected (should never happen).");
-      setRowStatus("sha256", shaOk, shaOk ? "WebCrypto SHA-256 returns stable 64-hex digest." : "Digest invalid or unstable.");
-      setRowStatus("anchors", anchorsOk, anchorsOk ? "Anchors extracted consistently from sample." : "Anchors missing (check extraction rules).");
-
-      const summary =
-`TEST RUN SUMMARY
-- determinism: ${determinismOk ? "PASS" : "FAIL"}
-- sha256:      ${shaOk ? "PASS" : "FAIL"}
-- anchors:     ${anchorsOk ? "PASS" : "FAIL"}
-
-SAMPLE HASH (sha256):
-${h1}
-
-CANONICAL (first 240 chars):
-${a1.canonical.slice(0, 240)}…`;
-
-      resultsBox.textContent = summary;
+    function logLine(s){
+      const el = $("log");
+      el.textContent += (el.textContent.endsWith("\n") || el.textContent.length===0) ? "" : "\n";
+      el.textContent += s + "\n";
+      el.scrollTop = el.scrollHeight;
     }
 
-    btn.addEventListener("click", () => {
-      if (!crypto || !crypto.subtle) {
-        resultsBox.textContent = "WebCrypto is not available in this browser. Please use a modern browser (Chrome/Firefox/Safari).";
-        setRowStatus("sha256", false, "WebCrypto unavailable.");
+    function resetUI(){
+      setStatus($("stDet"), "idle", "Ne pas courir");
+      setStatus($("stSha"), "idle", "Ne pas courir");
+      setStatus($("stAnc"), "idle", "Ne pas courir");
+      $("log").textContent = "Clique sur “Exécuter les tests…” pour obtenir une preuve locale : résultats + hash + payload canonique.";
+    }
+
+    async function runAll(){
+      if (!crypto?.subtle){
+        $("log").textContent = "WebCrypto n’est pas disponible dans ce navigateur. Impossible de calculer SHA-256 en local.";
         return;
       }
-      runAllTests().catch(err => {
-        resultsBox.textContent = "Test runner error: " + (err && err.message ? err.message : String(err));
-        setRowStatus("determinism", false, "Runner error.");
-        setRowStatus("sha256", false, "Runner error.");
-        setRowStatus("anchors", false, "Runner error.");
-      });
-    });
+
+      resetUI();
+      $("log").textContent = "";
+      logLine("OPENPROOF RPO v0.1 — TESTS (local)");
+      logLine("--------------------------------------------------");
+      logLine("Input (sample):");
+      logLine(sampleInput);
+      logLine("--------------------------------------------------");
+
+      // 1) Determinism
+      setStatus($("stDet"), "running", "En cours");
+      try{
+        const b1 = buildBundle(sampleInput);
+        const b2 = buildBundle(sampleInput);
+
+        const p1 = canonicalPayload(b1);
+        const p2 = canonicalPayload(b2);
+
+        const h1 = await sha256Hex(p1);
+        const h2 = await sha256Hex(p2);
+
+        const ok = (p1 === p2) && (h1 === h2);
+
+        logLine("[Determinisme] payload match: " + (p1 === p2));
+        logLine("[Determinisme] hash match:    " + (h1 === h2));
+        logLine("[Determinisme] sha256:        " + h1);
+
+        setStatus($("stDet"), ok ? "pass" : "fail", ok ? "OK" : "Échec");
+        if (!ok) throw new Error("Determinism mismatch.");
+      }catch(e){
+        setStatus($("stDet"), "fail", "Échec");
+        logLine("⚠️ [Determinisme] " + (e?.message || "Erreur"));
+      }
+
+      // 2) sha256 reproducibility (same payload → same hash)
+      setStatus($("stSha"), "running", "En cours");
+      try{
+        const b = buildBundle(sampleInput);
+        const payload = canonicalPayload(b);
+        const hA = await sha256Hex(payload);
+        const hB = await sha256Hex(payload);
+
+        const ok = (hA === hB);
+
+        logLine("--------------------------------------------------");
+        logLine("[SHA-256] recompute match: " + ok);
+        logLine("[SHA-256] payload (canonical):");
+        logLine(payload);
+
+        setStatus($("stSha"), ok ? "pass" : "fail", ok ? "OK" : "Échec");
+        if (!ok) throw new Error("SHA-256 non reproductible.");
+      }catch(e){
+        setStatus($("stSha"), "fail", "Échec");
+        logLine("⚠️ [SHA-256] " + (e?.message || "Erreur"));
+      }
+
+      // 3) anchors stability (conservative extraction)
+      setStatus($("stAnc"), "running", "En cours");
+      try{
+        const a1 = stableAnchors(sampleInput);
+        const a2 = stableAnchors(sampleInput);
+        const ok = (JSON.stringify(a1) === JSON.stringify(a2));
+
+        logLine("--------------------------------------------------");
+        logLine("[Ancres] stable extraction: " + ok);
+        logLine("[Ancres] date:  " + (a1.date || "null"));
+        logLine("[Ancres] lieu:  " + (a1.place || "null"));
+
+        setStatus($("stAnc"), ok ? "pass" : "fail", ok ? "OK" : "Échec");
+        if (!ok) throw new Error("Anchors mismatch.");
+      }catch(e){
+        setStatus($("stAnc"), "fail", "Échec");
+        logLine("⚠️ [Ancres] " + (e?.message || "Erreur"));
+      }
+
+      logLine("--------------------------------------------------");
+      logLine("Conclusion : ces tests ne prouvent pas une vérité. Ils prouvent une propriété : auditabilité locale et falsification détectable.");
+    }
+
+    $("runAll").addEventListener("click", runAll);
+    $("reset").addEventListener("click", resetUI);
+
+    // Initial
+    resetUI();
   </script>
 </body>
 </html>
-
