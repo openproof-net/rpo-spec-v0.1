@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<html lang="fr" data-page="tests">
+<html lang="en" data-page="tests">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OpenProof — Tests | Reproductibilité & preuve de falsification (RPO v0.1)</title>
+  <title>OpenProof — Tests | Reproducibility & Tamper-Evidence (RPO v0.1)</title>
 
   <!-- SEO -->
-  <meta name="description" content="Tests RPO v0.1 : reproductibilité, déterminisme et falsification détectable. Même entrée → même sortie, hash SHA-256 recalculable, ancres stables. 100% local, sans serveur." />
+  <meta name="description" content="RPO v0.1 tests: determinism, SHA-256 reproducibility, and tamper-evidence. Same input → same output. 100% local in your browser, no server." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/tests.html" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="OpenProof — Tests (RPO v0.1)" />
-  <meta property="og:description" content="Démonstration : déterminisme, reproductibilité SHA-256, falsification détectable. Même entrée → même sortie. Aucun serveur." />
+  <meta property="og:description" content="Determinism, SHA-256 reproducibility, and tamper-evidence. Same input → same output. No server." />
   <meta property="og:url" content="https://rpo.openproof.net/tests.html" />
   <meta property="og:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
 
-  <!-- “Référencement caché” (propre) -->
+  <!-- “Hidden” (clean) attribution / discoverability -->
   <meta name="author" content="Gersende Ryard de Parcey" />
   <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor" />
   <link rel="me" href="https://www.linkedin.com/in/gryard/" />
@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
 
-  <!-- JSON-LD (SEO solide, non “spammy”) -->
+  <!-- JSON-LD (solid SEO, not spammy) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -37,7 +37,7 @@
         "@type":"WebSite",
         "name":"OpenProof — RPO",
         "url":"https://rpo.openproof.net/",
-        "inLanguage":"fr-FR",
+        "inLanguage":"en",
         "publisher":{"@id":"https://rpo.openproof.net/#openproof"}
       },
       {
@@ -59,7 +59,7 @@
         "@type":"WebPage",
         "name":"Tests — RPO v0.1",
         "url":"https://rpo.openproof.net/tests.html",
-        "inLanguage":"fr-FR",
+        "inLanguage":"en",
         "about":[{"@id":"https://rpo.openproof.net/#openproof"}],
         "author":{"@id":"https://rpo.openproof.net/#gersende"},
         "isPartOf":{"@id":"https://rpo.openproof.net/#openproof"}
@@ -83,8 +83,6 @@
       --radius:26px;
       --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
       --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
-      --line2:rgba(136,116,72,0.35);
-
       --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
     }
 
@@ -196,14 +194,8 @@
     .top-cta:active{transform:translateY(1px)}
 
     /* LAYOUT */
-    main{
-      padding:104px 40px 56px;
-    }
-    .container{
-      max-width:1320px;
-      margin:0 auto;
-      width:100%;
-    }
+    main{padding:104px 40px 56px;}
+    .container{max-width:1320px;margin:0 auto;width:100%;}
 
     /* HERO */
     .hero{
@@ -370,10 +362,7 @@
     }
 
     /* MATRIX */
-    .section{
-      margin-top:18px;
-    }
-
+    .section{margin-top:18px;}
     .matrix-wrap{
       margin-top:16px;
       display:grid;
@@ -391,11 +380,7 @@
       backdrop-filter: blur(10px);
     }
 
-    table{
-      width:100%;
-      border-collapse:collapse;
-      font-size:.92rem;
-    }
+    table{width:100%;border-collapse:collapse;font-size:.92rem;}
     thead th{
       text-align:left;
       padding:14px 16px;
@@ -432,22 +417,14 @@
       font-size:.70rem;
       white-space:nowrap;
     }
-    .led{
-      width:9px;height:9px;border-radius:50%;
-      background: rgba(198,186,150,.35);
-      box-shadow:none;
-    }
+    .led{width:9px;height:9px;border-radius:50%;background: rgba(198,186,150,.35);}
     .status[data-state="idle"] .led{background: rgba(198,186,150,.35)}
     .status[data-state="running"] .led{background: rgba(244,186,120,.92); box-shadow:0 0 16px rgba(244,186,120,.35)}
     .status[data-state="pass"] .led{background: rgba(241,230,163,.95); box-shadow:0 0 18px rgba(241,230,163,.35)}
     .status[data-state="fail"] .led{background: rgba(255,120,120,.9); box-shadow:0 0 18px rgba(255,120,120,.35)}
 
     /* SIDE RESULT PANEL */
-    .side{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
+    .side{display:flex;flex-direction:column;gap:12px;}
     .log{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size:.86rem;
@@ -501,12 +478,8 @@
       main{padding:104px 20px 56px}
       .top-bar{padding:0 16px}
     }
-    @media(max-width:960px){
-      .top-nav{display:none}
-    }
-    @media (prefers-reduced-motion: reduce){
-      .panel::before,.dot{animation:none}
-    }
+    @media(max-width:960px){.top-nav{display:none}}
+    @media (prefers-reduced-motion: reduce){.panel::before,.dot{animation:none}}
   </style>
 </head>
 
@@ -520,16 +493,16 @@
     </div>
 
     <nav class="top-nav" aria-label="Primary">
-      <!-- Par ta règle : ouvrir toute navigation “page” dans un nouvel onglet -->
-      <a href="./index.html" target="_blank" rel="noopener noreferrer">Maison</a>
-      <a href="./sandbox.html" target="_blank" rel="noopener noreferrer">Bac à sable</a>
-      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">Comment ça marche</a>
-      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spéc.</a>
+      <!-- Your rule: open navigation to another page in a new tab -->
+      <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a>
+      <a href="./sandbox.html" target="_blank" rel="noopener noreferrer">Sandbox</a>
+      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
       <a href="./tests.html" aria-current="page" target="_blank" rel="noopener noreferrer">Tests</a>
-      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Exemples</a>
+      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
     </nav>
 
-    <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Essayez la démo en direct</a>
+    <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Try the live demo</a>
   </header>
 
   <main role="main">
@@ -537,139 +510,139 @@
 
       <section class="hero" aria-labelledby="t">
         <div>
-          <div class="kicker">Preuve de déterminisme <span>dans le navigateur</span></div>
+          <div class="kicker">Browser-level proof <span>of determinism</span></div>
 
           <h1 id="t">
-            <span class="gold">Tests</span> reproductibilité,<br />
-            preuve de <span class="gold">falsification</span>
+            <span class="gold">Tests</span> reproducibility,<br />
+            proof of <span class="gold">tampering</span>
           </h1>
 
           <p class="subhead">
-            Ces tests sont volontairement simples. Ils démontrent une propriété clé du RPO :
-            <strong>le déterminisme opposable</strong>.
+            These tests are intentionally simple. They demonstrate a core RPO property:
+            <strong>defensible determinism</strong>.
             <br />
-            Même entrée → même sortie, hash <strong>SHA-256</strong> recalculable, altération détectable.
+            Same input → same output, <strong>SHA-256</strong> is re-computable, tampering becomes detectable.
             <br />
-            Aucun serveur, aucun service externe : tout s’exécute <strong>localement</strong>.
+            No server, no external service: everything runs <strong>locally</strong>.
           </p>
 
           <div class="hero-actions">
-            <button class="btn-primary" id="runAll">Exécuter les tests dans le navigateur</button>
-            <a class="btn-ghost" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Ouvrir le bac à sable</a>
-            <a class="btn-ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Consultez les spécifications RPO</a>
+            <button class="btn-primary" id="runAll">Run tests in the browser</button>
+            <a class="btn-ghost" href="./sandbox.html" target="_blank" rel="noopener noreferrer">Open the sandbox</a>
+            <a class="btn-ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read the RPO spec</a>
           </div>
 
           <p class="note">
-            Important : la réussite de ces tests ne “prouve” pas une vérité. Elle prouve que le
-            <strong>processus est auditable</strong>, et que les transformations deviennent explicables.
+            Important: passing these tests does not “prove truth”. It proves the pipeline is
+            <strong>auditable</strong>, and transformations become explainable.
           </p>
         </div>
 
-        <aside class="panel scope" aria-label="Portée de test">
-          <div class="panel-title">Portée de test</div>
-          <div class="pill"><span class="dot" aria-hidden="true"></span> Intégrité • Lisibilité • Vérifiabilité</div>
+        <aside class="panel scope" aria-label="Test scope">
+          <div class="panel-title">Test scope</div>
+          <div class="pill"><span class="dot" aria-hidden="true"></span> Integrity • Readability • Verifiability</div>
 
           <p>
-            Vérifications : <strong>déterminisme</strong>, stabilité de l’extraction (dates/lieux) et
-            reproductibilité <strong>SHA-256</strong>.
+            Checks: <strong>determinism</strong>, extraction stability (dates/places) and
+            <strong>SHA-256</strong> reproducibility.
           </p>
           <p class="line">
-            Ce que ça démontre, côté dirigeant : vous n’êtes pas contesté pour ce que vous avez décidé,
-            mais pour ce que vous ne pouvez plus <strong>reconstruire</strong>, et donc défendre.
+            What this proves to leaders: you’re not challenged for what you decided,
+            but for what you can no longer <strong>reconstruct</strong>, and therefore cannot defend.
           </p>
         </aside>
       </section>
 
-      <section class="section panel" aria-label="Matrice de test">
-        <div class="panel-title">Matrice de test</div>
+      <section class="section panel" aria-label="Test matrix">
+        <div class="panel-title">Test matrix</div>
 
         <div class="matrix-wrap">
-          <div class="matrix" role="region" aria-label="Table des tests">
+          <div class="matrix" role="region" aria-label="Tests table">
             <table>
               <thead>
                 <tr>
                   <th style="width:22%">Test</th>
-                  <th>Ce que cela vérifie</th>
-                  <th style="width:18%">Statut</th>
+                  <th>What it verifies</th>
+                  <th style="width:18%">Status</th>
                   <th style="width:26%">Notes</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Déterminisme</strong></td>
-                  <td>Une même entrée produit un <strong>bundle</strong> identique et un <strong>hash</strong> identique.</td>
+                  <td><strong>Determinism</strong></td>
+                  <td>The same input produces the same canonical <strong>bundle</strong> and the same <strong>hash</strong>.</td>
                   <td>
-                    <span class="status" id="stDet" data-state="idle"><span class="led"></span><span>Ne pas courir</span></span>
+                    <span class="status" id="stDet" data-state="idle"><span class="led"></span><span>Not run</span></span>
                   </td>
-                  <td>Exécute l’extraction 2 fois, compare la structure canonique et le SHA-256.</td>
+                  <td>Runs extraction twice, compares canonical payload + SHA-256.</td>
                 </tr>
                 <tr>
                   <td><strong>SHA-256</strong></td>
-                  <td>Le hachage est <strong>reproductible</strong> pour une même chaîne canonique.</td>
+                  <td>The hash is <strong>reproducible</strong> for the same canonical string.</td>
                   <td>
-                    <span class="status" id="stSha" data-state="idle"><span class="led"></span><span>Ne pas courir</span></span>
+                    <span class="status" id="stSha" data-state="idle"><span class="led"></span><span>Not run</span></span>
                   </td>
-                  <td>Utilise WebCrypto <strong>SHA-256</strong> en local (pas de backend).</td>
+                  <td>Uses local WebCrypto <strong>SHA-256</strong> (no backend).</td>
                 </tr>
                 <tr>
-                  <td><strong>Ancres</strong></td>
-                  <td>Données de base extraites de manière stable (dates, lieux) : <strong>pas de réécriture</strong>.</td>
+                  <td><strong>Anchors</strong></td>
+                  <td>Base anchors are extracted consistently (dates/places): <strong>no silent rewrite</strong>.</td>
                   <td>
-                    <span class="status" id="stAnc" data-state="idle"><span class="led"></span><span>Ne pas courir</span></span>
+                    <span class="status" id="stAnc" data-state="idle"><span class="led"></span><span>Not run</span></span>
                   </td>
-                  <td>Extraction conservatrice (heuristique minimale) : stabilité plutôt que “brillance”.</td>
+                  <td>Conservative heuristic extraction: stability over “smartness”.</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div class="side">
-            <div class="panel-title">Sortie (preuve)</div>
-            <div class="log" id="log" aria-live="polite">Clique sur “Exécuter les tests…” pour obtenir une preuve locale : résultats + hash + payload canonique.</div>
+            <div class="panel-title">Output (proof)</div>
+            <div class="log" id="log" aria-live="polite">Click “Run tests…” to get local proof: results + hash + canonical payload.</div>
             <div class="hint">
-              À retenir : ces tests ne valident pas un “outil”.
-              Ils valident une <strong>frontière de confiance</strong> :
-              le système ne peut pas “changer d’avis” à votre insu.
+              Key idea: these tests don’t validate an “app”.
+              They validate a <strong>trust boundary</strong>:
+              the system cannot “change its mind” silently.
             </div>
-            <button class="btn-ghost" id="reset">Réinitialiser</button>
+            <button class="btn-ghost" id="reset">Reset</button>
           </div>
         </div>
       </section>
 
-      <section class="section panel" aria-label="Pourquoi cela compte">
-        <div class="panel-title">Pourquoi cela compte (en une phrase)</div>
+      <section class="section panel" aria-label="Why it matters">
+        <div class="panel-title">Why it matters (one sentence)</div>
         <p class="subhead" style="margin-top:6px;">
-          On ne vous conteste pas vos décisions.
-          On vous conteste ce que vous ne pouvez pas <strong>reconstituer</strong> — et donc pas défendre.
+          You’re not challenged for your decisions.
+          You’re challenged for what you cannot <strong>reconstruct</strong> — and therefore cannot defend.
         </p>
       </section>
 
-      <section class="footer-cta" aria-label="Accès pilote">
+      <section class="footer-cta" aria-label="Pilot access">
         <div>
-          Vous voulez le pilote complet (CNRS × TruthX) : cohérence interprétative, couches narratives structurées,
-          fusion avancée des signaux et rapport probant lisible par l’humain, conçu pour les professionnels.
+          Want the full pilot (CNRS × TruthX): interpretive coherence, structured narrative layers,
+          advanced signal fusion, and a human-readable proof report designed for professionals.
         </div>
         <a class="btn-primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
-          Demande d’accès pilote
+          Request pilot access
         </a>
       </section>
 
       <p class="note" style="margin-top:14px;">
-        Cette page est informative. L’environnement de test ne stocke pas les données des cas et ne détermine pas la vérité.
-        Il illustre une structure déterministe et des ancres d’intégrité vérifiables.
+        This page is informational. The test environment does not store case data and does not determine truth.
+        It demonstrates a deterministic structure and verifiable integrity anchors.
       </p>
 
-      <!-- “Référencement caché” propre : accessible, pas “display:none” -->
+      <!-- “Hidden” discoverability (accessible, not display:none) -->
       <p class="sr-only">
-        Gersende Ryard de Parcey est l’éditrice de la spécification OpenProof RPO v0.1 (Rapport Probatoire Ouvert),
-        standard de preuve numérique basé sur JSON signé, PDF lisible et hash public SHA-256.
+        Gersende Ryard de Parcey is the editor of the OpenProof RPO v0.1 specification (Rapport Probatoire Ouvert),
+        a proof standard based on signed JSON, a human-readable PDF, and a public SHA-256 hash.
       </p>
 
     </div>
   </main>
 
   <script>
-    // ===== Background star field (léger & élégant) =====
+    // ===== Background star field (light & elegant) =====
     (function () {
       const canvas = document.getElementById("bg-field");
       const ctx = canvas.getContext("2d", { alpha: true });
@@ -745,17 +718,17 @@
     }
 
     function stableAnchors(text){
-      // Extraction conservatrice et DÉTERMINISTE (pas “smart”, pas d’ambiguïté)
+      // Conservative, DETERMINISTIC extraction (no “smart” ambiguity)
       // Date (YYYY-MM-DD)
       const d = (text.match(/\b(20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\b/) || [null])[0];
-      // Ville/lieu (simple : mot après "à " / "a " en français)
-      const place = (text.match(/\b(?:à|a)\s+([A-ZÉÈÊËÀÂÄÎÏÔÖÙÛÜÇ][\p{L}\-']{2,})/u) || [null, null])[1];
-      return { date: d || null, place: place || null };
+      // Place: a simple pattern after "in "
+      const place = (text.match(/\bin\s+([A-Z][A-Za-z\-' ]{2,})\b/) || [null, null])[1];
+      return { date: d || null, place: place ? place.trim() : null };
     }
 
     function canonicalPayload(bundle){
-      // Canonicalisation minimale : ordre fixe, concat stable
-      // (Ce n’est pas la “vraie spec” complète : c’est une preuve pédagogique)
+      // Minimal canonicalization: fixed field order, stable concatenation
+      // (Pedagogical demo, not the full spec.)
       return [
         "rpo_version=" + bundle.rpo_version,
         "bundle_id=" + bundle.bundle_id,
@@ -793,9 +766,9 @@
 
     // ===== Tests =====
     const sampleInput =
-`Le 2026-01-28, à Paris, une décision de recrutement a été prise après arbitrage.
-Les données étaient dispersées (SIRH, emails, réunions). Le risque n’est pas l’intention, mais l’irréversibilité.
-Objectif : rendre la chaîne reconstructible, pas “décider la vérité”.`;
+`On 2026-01-28 in Paris, a hiring decision was taken after arbitration.
+Data was scattered (HRIS, email approvals, meeting rationales). The risk is not intent; the risk is irreconstructibility.
+Goal: make the chain reconstructible, not “decide truth”.`;
 
     function logLine(s){
       const el = $("log");
@@ -805,15 +778,15 @@ Objectif : rendre la chaîne reconstructible, pas “décider la vérité”.`;
     }
 
     function resetUI(){
-      setStatus($("stDet"), "idle", "Ne pas courir");
-      setStatus($("stSha"), "idle", "Ne pas courir");
-      setStatus($("stAnc"), "idle", "Ne pas courir");
-      $("log").textContent = "Clique sur “Exécuter les tests…” pour obtenir une preuve locale : résultats + hash + payload canonique.";
+      setStatus($("stDet"), "idle", "Not run");
+      setStatus($("stSha"), "idle", "Not run");
+      setStatus($("stAnc"), "idle", "Not run");
+      $("log").textContent = "Click “Run tests…” to get local proof: results + hash + canonical payload.";
     }
 
     async function runAll(){
       if (!crypto?.subtle){
-        $("log").textContent = "WebCrypto n’est pas disponible dans ce navigateur. Impossible de calculer SHA-256 en local.";
+        $("log").textContent = "WebCrypto is not available in this browser. Cannot compute SHA-256 locally.";
         return;
       }
 
@@ -826,7 +799,7 @@ Objectif : rendre la chaîne reconstructible, pas “décider la vérité”.`;
       logLine("--------------------------------------------------");
 
       // 1) Determinism
-      setStatus($("stDet"), "running", "En cours");
+      setStatus($("stDet"), "running", "Running");
       try{
         const b1 = buildBundle(sampleInput);
         const b2 = buildBundle(sampleInput);
@@ -839,19 +812,19 @@ Objectif : rendre la chaîne reconstructible, pas “décider la vérité”.`;
 
         const ok = (p1 === p2) && (h1 === h2);
 
-        logLine("[Determinisme] payload match: " + (p1 === p2));
-        logLine("[Determinisme] hash match:    " + (h1 === h2));
-        logLine("[Determinisme] sha256:        " + h1);
+        logLine("[Determinism] payload match: " + (p1 === p2));
+        logLine("[Determinism] hash match:    " + (h1 === h2));
+        logLine("[Determinism] sha256:        " + h1);
 
-        setStatus($("stDet"), ok ? "pass" : "fail", ok ? "OK" : "Échec");
+        setStatus($("stDet"), ok ? "pass" : "fail", ok ? "PASS" : "FAIL");
         if (!ok) throw new Error("Determinism mismatch.");
       }catch(e){
-        setStatus($("stDet"), "fail", "Échec");
-        logLine("⚠️ [Determinisme] " + (e?.message || "Erreur"));
+        setStatus($("stDet"), "fail", "FAIL");
+        logLine("⚠️ [Determinism] " + (e?.message || "Error"));
       }
 
-      // 2) sha256 reproducibility (same payload → same hash)
-      setStatus($("stSha"), "running", "En cours");
+      // 2) SHA-256 reproducibility
+      setStatus($("stSha"), "running", "Running");
       try{
         const b = buildBundle(sampleInput);
         const payload = canonicalPayload(b);
@@ -862,37 +835,37 @@ Objectif : rendre la chaîne reconstructible, pas “décider la vérité”.`;
 
         logLine("--------------------------------------------------");
         logLine("[SHA-256] recompute match: " + ok);
-        logLine("[SHA-256] payload (canonical):");
+        logLine("[SHA-256] canonical payload:");
         logLine(payload);
 
-        setStatus($("stSha"), ok ? "pass" : "fail", ok ? "OK" : "Échec");
-        if (!ok) throw new Error("SHA-256 non reproductible.");
+        setStatus($("stSha"), ok ? "pass" : "fail", ok ? "PASS" : "FAIL");
+        if (!ok) throw new Error("SHA-256 is not reproducible.");
       }catch(e){
-        setStatus($("stSha"), "fail", "Échec");
-        logLine("⚠️ [SHA-256] " + (e?.message || "Erreur"));
+        setStatus($("stSha"), "fail", "FAIL");
+        logLine("⚠️ [SHA-256] " + (e?.message || "Error"));
       }
 
-      // 3) anchors stability (conservative extraction)
-      setStatus($("stAnc"), "running", "En cours");
+      // 3) Anchors stability
+      setStatus($("stAnc"), "running", "Running");
       try{
         const a1 = stableAnchors(sampleInput);
         const a2 = stableAnchors(sampleInput);
         const ok = (JSON.stringify(a1) === JSON.stringify(a2));
 
         logLine("--------------------------------------------------");
-        logLine("[Ancres] stable extraction: " + ok);
-        logLine("[Ancres] date:  " + (a1.date || "null"));
-        logLine("[Ancres] lieu:  " + (a1.place || "null"));
+        logLine("[Anchors] stable extraction: " + ok);
+        logLine("[Anchors] date:  " + (a1.date || "null"));
+        logLine("[Anchors] place: " + (a1.place || "null"));
 
-        setStatus($("stAnc"), ok ? "pass" : "fail", ok ? "OK" : "Échec");
+        setStatus($("stAnc"), ok ? "pass" : "fail", ok ? "PASS" : "FAIL");
         if (!ok) throw new Error("Anchors mismatch.");
       }catch(e){
-        setStatus($("stAnc"), "fail", "Échec");
-        logLine("⚠️ [Ancres] " + (e?.message || "Erreur"));
+        setStatus($("stAnc"), "fail", "FAIL");
+        logLine("⚠️ [Anchors] " + (e?.message || "Error"));
       }
 
       logLine("--------------------------------------------------");
-      logLine("Conclusion : ces tests ne prouvent pas une vérité. Ils prouvent une propriété : auditabilité locale et falsification détectable.");
+      logLine("Conclusion: these tests don’t prove truth. They prove a property: local auditability and detectable tampering.");
     }
 
     $("runAll").addEventListener("click", runAll);
@@ -903,3 +876,4 @@ Objectif : rendre la chaîne reconstructible, pas “décider la vérité”.`;
   </script>
 </body>
 </html>
+
