@@ -35,6 +35,9 @@
       --line2:rgba(136,116,72,0.35);
 
       --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
+
+      --panel-glow: rgba(241,230,163,0.10);
+      --panel-glow-2: rgba(212,175,55,0.12);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -161,8 +164,9 @@
       max-width:1240px;
       width:100%;
       display:grid;
-      grid-template-columns:1.55fr 1.15fr;
-      gap:44px;
+      /* slightly more room for the proof object */
+      grid-template-columns:1.42fr 1.08fr;
+      gap:52px;
       align-items:center;
     }
 
@@ -187,11 +191,15 @@
     .hero-title .l2{display:block;color:var(--gold-soft)}
     .hero-title .l3{display:block;color:var(--gold)}
     .hero-text{
-      max-width:660px;
+      max-width:680px;
       font-size:.98rem;
       line-height:1.75;
       color:var(--ink-soft);
       margin-bottom:22px;
+      /* justified only for the long paragraph */
+      text-align: justify;
+      text-justify: inter-word;
+      hyphens: auto;
     }
 
     .hero-ctas{
@@ -230,21 +238,92 @@
       font-size:.9rem;
       color:rgba(198,186,150,.88);
       line-height:1.55;
-      max-width: 640px;
+      max-width: 680px;
     }
 
-    /* PANEL */
+    /* PANEL (interactive "living" proof object) */
     .panel{
-      background:var(--panel);
+      position:relative;
       border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,0.45);
-      padding:26px;
+      padding:1px; /* for animated border */
+      transform-style:preserve-3d;
+      will-change: transform;
       box-shadow:var(--shadow-soft);
+      isolation:isolate;
+    }
+
+    /* animated border */
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius:var(--radius);
+      background:
+        conic-gradient(
+          from var(--spin, 0deg),
+          rgba(241,230,163,0.85),
+          rgba(212,175,55,0.25),
+          rgba(241,230,163,0.12),
+          rgba(212,175,55,0.35),
+          rgba(241,230,163,0.85)
+        );
+      filter: blur(0.1px);
+      opacity:0.55;
+      z-index:0;
+    }
+
+    .panel-inner{
+      position:relative;
+      z-index:1;
+      border-radius:calc(var(--radius) - 1px);
+      background:var(--panel);
+      border:1px solid rgba(212,175,55,0.35);
+      padding:28px; /* slightly bigger */
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+
+    /* spotlight follows cursor */
+    .panel-inner::after{
+      content:"";
+      position:absolute;
+      inset:-80px;
+      background:
+        radial-gradient(
+          420px 240px at var(--mx, 50%) var(--my, 35%),
+          var(--panel-glow),
+          transparent 60%
+        );
+      opacity:0.9;
+      pointer-events:none;
+      transform: translateZ(0);
+    }
+
+    /* subtle scan line */
+    .scan{
+      position:absolute;
+      left:-30%;
+      right:-30%;
+      height:2px;
+      top: 22%;
+      background: linear-gradient(90deg, transparent, rgba(241,230,163,0.35), transparent);
+      filter: blur(0.2px);
+      opacity:0.55;
+      transform: translateZ(20px);
+      animation: scan 4.8s linear infinite;
+      pointer-events:none;
+    }
+    @keyframes scan{
+      0%{transform: translateY(-30px) translateZ(20px); opacity:0}
+      10%{opacity:0.55}
+      50%{opacity:0.55}
+      90%{opacity:0.4}
+      100%{transform: translateY(210px) translateZ(20px); opacity:0}
     }
 
     .panel h2{
       font-family:"Orbitron",sans-serif;
-      font-size:.85rem;
+      font-size:.86rem;
       letter-spacing:.18em;
       text-transform:uppercase;
       color:var(--ink-soft);
@@ -258,28 +337,60 @@
       font-size:.72rem;
       letter-spacing:.14em;
       text-transform:uppercase;
-      padding:6px 12px;
+      padding:7px 12px;
       border-radius:999px;
       border:1px solid rgba(241,230,163,.6);
       margin-bottom:12px;
       color: rgba(241,230,163,.92);
+      position:relative;
+      overflow:hidden;
+    }
+    .pill::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle at 20% 0, rgba(241,230,163,0.22), transparent 60%);
+      opacity:0.75;
+      pointer-events:none;
+    }
+    .pill .led{
+      width:10px; height:10px;
+      border-radius:999px;
+      background: rgba(241,230,163,0.95);
+      box-shadow: 0 0 0 0 rgba(241,230,163,0.0);
+      animation: ledpulse 2.4s ease-in-out infinite;
+      flex: 0 0 auto;
+    }
+    @keyframes ledpulse{
+      0%, 100%{ box-shadow: 0 0 0 0 rgba(241,230,163,0.0); opacity:0.85}
+      50%{ box-shadow: 0 0 22px 6px rgba(241,230,163,0.18); opacity:1}
     }
 
     .list{
-      border-top:1px solid rgba(212,175,55,.35);
+      border-top:1px solid rgba(212,175,55,.28);
       margin-top:8px;
       padding-top:10px;
-      font-size:.9rem;
+      font-size:.92rem;
       color:var(--ink-soft);
     }
     .row{
       display:flex;
       justify-content:space-between;
-      padding:8px 0;
-      gap: 18px;
+      padding:9px 0;
+      gap:18px;
     }
     .row span:last-child{color: rgba(241,230,163,.88)}
     .row + .row{border-top:1px dashed var(--line2)}
+
+    .micro{
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(212,175,55,.16);
+      font-size: .85rem;
+      color: rgba(179,164,139,.92);
+      line-height: 1.6;
+    }
+    .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
 
     .foot{
       margin-top:12px;
@@ -288,26 +399,21 @@
       line-height:1.55;
     }
 
-    .micro{
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid rgba(212,175,55,.2);
-      font-size: .84rem;
-      color: rgba(179,164,139,.92);
-      line-height: 1.6;
-    }
-    .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
-
     @media(max-width:960px){
       .hero-shell{grid-template-columns:1fr}
       .top-nav{display:none}
       .top-bar{padding:0 16px}
       .hero{padding:96px 20px 56px}
       .top-left{min-width:auto}
+      .panel{max-width: 680px}
     }
 
     @media (prefers-reduced-motion: reduce){
       .top-nav a::after{transition:none}
+      .scan{animation:none; display:none}
+      .pill .led{animation:none}
+      .panel{transform:none !important}
+      .panel::before{opacity:0.35}
     }
 
     /* Utility */
@@ -345,55 +451,65 @@
   <main class="hero" role="main">
     <div class="hero-shell">
       <section aria-labelledby="hero-title">
-  <div class="eyebrow">Decision-proof data <span>for regulated reality</span></div>
+        <div class="eyebrow">Decision-proof data <span>for regulated reality</span></div>
 
-  <h1 class="hero-title" id="hero-title">
-    Data governance,
-    <span class="l2">when decisions become liability.</span>
-    <span class="l3">RPO v0.1 is the minimum proof format.</span>
-  </h1>
+        <h1 class="hero-title" id="hero-title">
+          Data governance,
+          <span class="l2">when decisions become liability.</span>
+          <span class="l3">RPO v0.1 is the minimum proof format.</span>
+        </h1>
 
-  <p class="hero-text">
-    Most organizations don’t fail because they lack data.
-    They fail because they can’t prove how data was produced, changed, and used when a decision is challenged months or years later.
-    RPO v0.1 turns a narrative into a deterministic proof bundle: traceable, auditable, defensible.
-  </p>
+        <p class="hero-text">
+          Most organizations don’t fail because they lack data.
+          They fail because they can’t prove how data was produced, changed, and used when a decision is challenged months or years later.
+          RPO v0.1 turns a narrative into a deterministic proof bundle: traceable, auditable, defensible.
+        </p>
 
-  <div class="hero-ctas">
-    <a href="./sandbox.html" class="btn-primary">Try the live demo</a>
-    <a href="./spec.html" class="btn-ghost">Read the spec</a>
-  </div>
+        <div class="hero-ctas">
+          <a href="./sandbox.html" class="btn-primary">Try the live demo</a>
+          <a href="./spec.html" class="btn-ghost">Read the spec</a>
+        </div>
 
-  <p class="hero-note">
-    No AI. No interpretation. Same input → same output.<br />
-    The hash proves integrity, not truth. Humans remain accountable.
-  </p>
-</section>
+        <p class="hero-note">
+          No AI. No interpretation. Same input → same output.<br />
+          The hash proves integrity, not truth. Humans remain accountable.
+        </p>
+      </section>
 
-      <aside class="panel" aria-label="What you get">
-  <h2>What you get in 30 seconds</h2>
-  <div class="pill" aria-label="Attributes">Integrity • Readability • Verifiability</div>
+      <!-- Interactive proof object card -->
+      <aside class="panel" id="proofCard" aria-label="What you get">
+        <div class="panel-inner">
+          <div class="scan" aria-hidden="true"></div>
 
-  <div class="list" role="list">
-    <div class="row" role="listitem"><span>Input</span><span>1–3 paragraphs</span></div>
-    <div class="row" role="listitem"><span>Outputs</span><span>signed JSON + PDF path + public hash</span></div>
-    <div class="row" role="listitem"><span>Integrity anchor</span><span>sha256</span></div>
-    <div class="row" role="listitem"><span>Use case</span><span>decision traceability (demo)</span></div>
-  </div>
+          <h2>What you get in 30 seconds</h2>
 
-  <div class="micro">
-    <strong>RPO =</strong> signed JSON + human-readable PDF + public hash.<br />
-    Deterministic, auditable, non-proprietary.
-  </div>
+          <div class="pill" aria-label="Attributes">
+            <span class="led" aria-hidden="true"></span>
+            Integrity • Readability • Verifiability
+          </div>
 
-  <div class="foot">
-    RPO makes evidence verifiable; it does not “decide the truth”.
-  </div>
-</aside>
+          <div class="list" role="list">
+            <div class="row" role="listitem"><span>Input</span><span>1–3 paragraphs</span></div>
+            <div class="row" role="listitem"><span>Outputs</span><span>signed JSON + PDF path + public hash</span></div>
+            <div class="row" role="listitem"><span>Integrity anchor</span><span>sha256</span></div>
+            <div class="row" role="listitem"><span>Use case</span><span>decision traceability (demo)</span></div>
+          </div>
+
+          <div class="micro">
+            <strong>RPO =</strong> signed JSON + human-readable PDF + public hash.<br />
+            Deterministic, auditable, non-proprietary.
+          </div>
+
+          <div class="foot">
+            RPO makes evidence verifiable; it does not “decide the truth”.
+          </div>
+        </div>
+      </aside>
     </div>
   </main>
 
   <script>
+    // Background star field (your original, unchanged)
     (function () {
       const canvas = document.getElementById("bg-field");
       const ctx = canvas.getContext("2d", { alpha: true });
@@ -458,6 +574,59 @@
 
       window.addEventListener("resize", resize);
       resize(); init(); loop();
+    })();
+
+    // Interactive "living" card (tilt + spotlight + animated border spin)
+    (function(){
+      const card = document.getElementById("proofCard");
+      if (!card) return;
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (reduceMotion) return;
+
+      let raf = null;
+
+      function setVars(mx, my){
+        card.style.setProperty("--mx", mx + "%");
+        card.style.setProperty("--my", my + "%");
+      }
+
+      function tiltFromEvent(e){
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;  // 0..1
+        const y = (e.clientY - rect.top) / rect.height; // 0..1
+
+        // Spotlight
+        setVars((x*100).toFixed(2), (y*100).toFixed(2));
+
+        // Tilt (subtle)
+        const rx = (y - 0.5) * -8; // deg
+        const ry = (x - 0.5) * 10; // deg
+        card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateZ(0)`;
+      }
+
+      function onMove(e){
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => tiltFromEvent(e));
+      }
+
+      function onLeave(){
+        card.style.transform = `perspective(900px) rotateX(0deg) rotateY(0deg)`;
+        setVars(50, 35);
+      }
+
+      // Border spin
+      let t = 0;
+      function spin(){
+        t = (t + 0.6) % 360;
+        card.style.setProperty("--spin", t + "deg");
+        requestAnimationFrame(spin);
+      }
+      spin();
+
+      card.addEventListener("mousemove", onMove);
+      card.addEventListener("mouseleave", onLeave);
+      onLeave();
     })();
   </script>
 </body>
