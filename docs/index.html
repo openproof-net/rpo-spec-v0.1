@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>OpenProof — RPO v0.1 | Live demo</title>
 
-  <meta name="description" content="RPO v0.1 turns narratives into verifiable proof bundles. Try the live demo and observe a deterministic extraction: JSON, PDF path, public hash." />
+  <meta name="description" content="RPO v0.1 turns narratives into verifiable proof bundles. Try the live demo and observe a deterministic extraction: signed JSON, PDF path, public hash." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="OpenProof — RPO v0.1" />
+  <meta property="og:description" content="RPO = signed JSON + human-readable PDF + public hash. Deterministic. Auditable. Non-proprietary." />
+  <meta property="og:type" content="website" />
+
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
 
   <style>
     :root{
@@ -23,13 +28,17 @@
       --gold-deep:#8f7633;
       --ivory:#f7f3e8;
       --ink-soft:#b3a48b;
+
       --radius:26px;
       --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
       --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
       --line2:rgba(136,116,72,0.35);
+
+      --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
 
     body{
       min-height:100vh;
@@ -41,6 +50,9 @@
         linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
       overflow-x:hidden;
     }
+
+    a{color:inherit}
+    a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
 
     /* BACKGROUND FIELD */
     #bg-field{
@@ -70,6 +82,7 @@
       display:flex;
       align-items:center;
       gap:14px;
+      min-width: 280px;
     }
 
     .emblem{
@@ -78,6 +91,7 @@
       border-radius:999px;
       background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
       box-shadow:0 0 18px rgba(241,230,163,0.8);
+      flex: 0 0 auto;
     }
 
     .brand{
@@ -95,12 +109,16 @@
       gap:22px;
       font-size:0.86rem;
       color:var(--ink-soft);
+      align-items:center;
+      justify-content:center;
+      flex: 1 1 auto;
     }
     .top-nav a{
       color:inherit;
       text-decoration:none;
       position:relative;
       padding-bottom:3px;
+      white-space:nowrap;
     }
     .top-nav a::after{
       content:"";
@@ -111,6 +129,10 @@
       transition:width .2s ease;
     }
     .top-nav a:hover::after{width:100%}
+    .top-nav a[aria-current="page"]{
+      color: var(--gold-soft);
+    }
+    .top-nav a[aria-current="page"]::after{width:100%}
 
     .top-cta{
       padding:8px 18px;
@@ -123,6 +145,7 @@
       text-transform:uppercase;
       text-decoration:none;
       white-space:nowrap;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
     }
 
     /* HERO */
@@ -138,8 +161,8 @@
       max-width:1240px;
       width:100%;
       display:grid;
-      grid-template-columns:1.5fr 1.2fr;
-      gap:40px;
+      grid-template-columns:1.55fr 1.15fr;
+      gap:44px;
       align-items:center;
     }
 
@@ -158,16 +181,15 @@
       text-transform:uppercase;
       letter-spacing:.06em;
       line-height:1.08;
-      font-size:clamp(2rem,4vw,2.9rem);
+      font-size:clamp(2rem,4vw,2.95rem);
       margin-bottom:16px;
     }
     .hero-title .l2{display:block;color:var(--gold-soft)}
     .hero-title .l3{display:block;color:var(--gold)}
-
     .hero-text{
-      max-width:620px;
+      max-width:660px;
       font-size:.98rem;
-      line-height:1.7;
+      line-height:1.75;
       color:var(--ink-soft);
       margin-bottom:22px;
     }
@@ -175,8 +197,9 @@
     .hero-ctas{
       display:flex;
       gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
     }
-
     .btn-primary{
       padding:12px 26px;
       border-radius:999px;
@@ -187,18 +210,33 @@
       letter-spacing:.14em;
       text-transform:uppercase;
       text-decoration:none;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .btn-ghost{
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,0.35);
+      background: rgba(10,12,27,0.35);
+      color: var(--gold-soft);
+      font-size:.8rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      text-decoration:none;
+      backdrop-filter: blur(10px);
     }
 
     .hero-note{
       margin-top:14px;
       font-size:.9rem;
-      color:var(--ink-soft);
+      color:rgba(198,186,150,.88);
+      line-height:1.55;
+      max-width: 640px;
     }
 
     /* PANEL */
     .panel{
       background:var(--panel);
-      border-radius:26px;
+      border-radius:var(--radius);
       border:1px solid rgba(212,175,55,0.45);
       padding:26px;
       box-shadow:var(--shadow-soft);
@@ -215,7 +253,7 @@
 
     .pill{
       display:inline-flex;
-      gap:8px;
+      gap:10px;
       align-items:center;
       font-size:.72rem;
       letter-spacing:.14em;
@@ -224,6 +262,7 @@
       border-radius:999px;
       border:1px solid rgba(241,230,163,.6);
       margin-bottom:12px;
+      color: rgba(241,230,163,.92);
     }
 
     .list{
@@ -233,150 +272,192 @@
       font-size:.9rem;
       color:var(--ink-soft);
     }
-
     .row{
       display:flex;
       justify-content:space-between;
       padding:8px 0;
+      gap: 18px;
     }
+    .row span:last-child{color: rgba(241,230,163,.88)}
     .row + .row{border-top:1px dashed var(--line2)}
 
     .foot{
       margin-top:12px;
       font-size:.82rem;
-      color:rgba(198,186,150,.8);
-      line-height:1.5;
+      color:rgba(198,186,150,.82);
+      line-height:1.55;
     }
+
+    .micro{
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(212,175,55,.2);
+      font-size: .84rem;
+      color: rgba(179,164,139,.92);
+      line-height: 1.6;
+    }
+    .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
 
     @media(max-width:960px){
       .hero-shell{grid-template-columns:1fr}
       .top-nav{display:none}
       .top-bar{padding:0 16px}
       .hero{padding:96px 20px 56px}
+      .top-left{min-width:auto}
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .top-nav a::after{transition:none}
+    }
+
+    /* Utility */
+    .sr-only{
+      position:absolute;
+      width:1px; height:1px;
+      padding:0; margin:-1px;
+      overflow:hidden; clip:rect(0,0,0,0);
+      white-space:nowrap; border:0;
     }
   </style>
 </head>
 
 <body>
+  <canvas id="bg-field" aria-hidden="true"></canvas>
 
-<canvas id="bg-field"></canvas>
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="emblem" aria-hidden="true"></div>
+      <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
+    </div>
 
-<header class="top-bar">
-  <div class="top-left">
-    <div class="emblem"></div>
-    <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
-  </div>
+    <nav class="top-nav" aria-label="Primary">
+      <a href="./index.html" aria-current="page">Home</a>
+      <a href="./sandbox.html">Sandbox</a>
+      <a href="./how-it-works.html">How it works</a>
+      <a href="./spec.html">Spec</a>
+      <a href="./tests.html">Tests</a>
+      <a href="./examples.html">Examples</a>
+    </nav>
 
-  <nav class="top-nav">
-    <a href="./sandbox.html">Sandbox</a>
-    <a href="./how-it-works.html">How it works</a>
-    <a href="./tests.html">Tests</a>
-    <a href="./examples.html">Examples</a>
-  </nav>
+    <a href="./sandbox.html" class="top-cta">Try the live demo</a>
+  </header>
 
-  <a href="./sandbox.html" class="top-cta">Try the live demo</a>
-</header>
+  <main class="hero" role="main">
+    <div class="hero-shell">
+      <section aria-labelledby="hero-title">
+        <div class="eyebrow">From narratives to <span>verifiable proof</span></div>
 
-<main class="hero">
-  <div class="hero-shell">
-    <section>
-      <div class="eyebrow">From narratives to <span>verifiable proof</span></div>
+        <h1 class="hero-title" id="hero-title">
+          RPO v0.1
+          <span class="l2">is a proof bundle format,</span>
+          <span class="l3">not an AI storyteller.</span>
+        </h1>
 
-      <h1 class="hero-title">
-        RPO v0.1
-        <span class="l2">is a proof bundle format,</span>
-        <span class="l3">not an AI storyteller.</span>
-      </h1>
+        <p class="hero-text">
+          RPO is a deterministic container: it produces the same structured bundle every time
+          from the same input. You get a signed JSON payload, a human-readable PDF path, and a public hash.
+        </p>
 
-      <p class="hero-text">
-        Paste a short narrative and observe a deterministic extraction.
-        You will get the same structured bundle every time:
-        signed JSON, a PDF path, and a public hash.
-      </p>
+        <div class="hero-ctas">
+          <a href="./sandbox.html" class="btn-primary">Try the live demo</a>
+          <a href="./spec.html" class="btn-ghost">Read the spec</a>
+        </div>
 
-      <div class="hero-ctas">
-        <a href="./sandbox.html" class="btn-primary">Try the live demo</a>
-      </div>
+        <p class="hero-note">
+          No AI. No interpretation. Same input → same output.<br />
+          The hash proves integrity, not truth. Humans decide.
+        </p>
+      </section>
 
-      <div class="hero-note">
-        No AI. No interpretation. Same input → same output.
-      </div>
-    </section>
+      <aside class="panel" aria-label="What you get">
+        <h2>What you get in 30 seconds</h2>
+        <div class="pill" aria-label="Attributes">Integrity • Readability • Verifiability</div>
 
-    <aside class="panel">
-      <h2>What you get in 30 seconds</h2>
-      <div class="pill">Deterministic • Auditable • Non-proprietary</div>
+        <div class="list" role="list">
+          <div class="row" role="listitem"><span>Input</span><span>1–3 paragraphs</span></div>
+          <div class="row" role="listitem"><span>Outputs</span><span>signed JSON + PDF path + public hash</span></div>
+          <div class="row" role="listitem"><span>Integrity anchor</span><span>sha256</span></div>
+          <div class="row" role="listitem"><span>Scope</span><span>Format demo (non-binding)</span></div>
+        </div>
 
-      <div class="list">
-        <div class="row"><span>Input</span><span>1–3 paragraphs</span></div>
-        <div class="row"><span>Outputs</span><span>rpo.json + pdf path + hash</span></div>
-        <div class="row"><span>Integrity anchor</span><span>sha256</span></div>
-        <div class="row"><span>Scope</span><span>Format demo (non-binding)</span></div>
-      </div>
+        <div class="micro">
+          <strong>RPO =</strong> signed JSON + human-readable PDF + public hash.<br />
+          Deterministic, auditable, non-proprietary.
+        </div>
 
-      <div class="foot">
-        The hash proves integrity, not truth.
-        RPO makes files verifiable; humans decide.
-      </div>
-    </aside>
-  </div>
-</main>
+        <div class="foot">
+          RPO makes files verifiable; it does not “decide the truth”.
+        </div>
+      </aside>
+    </div>
+  </main>
 
-<!-- BACKGROUND SCRIPT: identical to your reference -->
-<script>
-  (function () {
-    const canvas = document.getElementById("bg-field");
-    const ctx = canvas.getContext("2d");
-    let width, height, particles = [];
-    const COUNT = 220;
+  <script>
+    (function () {
+      const canvas = document.getElementById("bg-field");
+      const ctx = canvas.getContext("2d", { alpha: true });
 
-    function resize() {
-      width = window.innerWidth;
-      height = window.innerHeight;
-      const ratio = window.devicePixelRatio || 1;
-      canvas.width = width * ratio;
-      canvas.height = height * ratio;
-      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-    }
+      let width, height, particles = [];
+      const COUNT = 220;
 
-    function createParticle() {
-      return {
-        x:(Math.random()*2-1),
-        y:(Math.random()*2-1),
-        z:Math.random()*0.9+0.1,
-        speed:Math.random()*0.004+0.0015
-      };
-    }
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        const ratio = window.devicePixelRatio || 1;
 
-    function init(){
-      particles=[];
-      for(let i=0;i<COUNT;i++)particles.push(createParticle());
-    }
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
 
-    function project(p){
-      const f=400, s=f/(f*p.z);
-      return {x:p.x*width*0.5*s+width/2,y:p.y*height*0.5*s+height/2};
-    }
+      function createParticle() {
+        return {
+          x: (Math.random() * 2 - 1),
+          y: (Math.random() * 2 - 1),
+          z: Math.random() * 0.9 + 0.1,
+          speed: Math.random() * 0.004 + 0.0015
+        };
+      }
 
-    function loop(){
-      ctx.clearRect(0,0,width,height);
-      particles.forEach(p=>{
-        p.z-=p.speed;
-        if(p.z<0.08){Object.assign(p,createParticle());p.z=1;}
-        const {x,y}=project(p);
-        const a=Math.min(1,(1.2-p.z)*1.1);
-        ctx.fillStyle=`rgba(241,230,163,${0.6*a})`;
-        ctx.beginPath();
-        ctx.arc(x,y,1.6,0,Math.PI*2);
-        ctx.fill();
-      });
-      requestAnimationFrame(loop);
-    }
+      function init() {
+        particles = [];
+        for (let i = 0; i < COUNT; i++) particles.push(createParticle());
+      }
 
-    window.addEventListener("resize",resize);
-    resize(); init(); loop();
-  })();
-</script>
+      function project(p) {
+        const f = 400;
+        const s = f / (f * p.z);
+        return {
+          x: p.x * width * 0.5 * s + width / 2,
+          y: p.y * height * 0.5 * s + height / 2
+        };
+      }
 
+      function loop() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (const p of particles) {
+          p.z -= p.speed;
+          if (p.z < 0.08) {
+            Object.assign(p, createParticle());
+            p.z = 1;
+          }
+
+          const { x, y } = project(p);
+          const a = Math.min(1, (1.2 - p.z) * 1.1);
+
+          ctx.fillStyle = `rgba(241,230,163,${0.6 * a})`;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener("resize", resize);
+      resize(); init(); loop();
+    })();
+  </script>
 </body>
 </html>
