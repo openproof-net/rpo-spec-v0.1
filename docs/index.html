@@ -477,6 +477,109 @@
       overflow:hidden; clip:rect(0,0,0,0);
       white-space:nowrap; border:0;
     }
+    /* --- HERO STORY (CEO-scan) --- */
+.hero-story{
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.story-card{
+  border: 1px solid rgba(212,175,55,.22);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  padding: 12px 14px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+.story-kicker{
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  opacity: .75;
+  margin-bottom: 6px;
+}
+
+.story-title{
+  font-weight: 700;
+  letter-spacing: .02em;
+  margin-bottom: 8px;
+  line-height: 1.25;
+}
+
+.story-chips{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 8px 0 8px 0;
+}
+
+.chip{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,.18);
+  background: rgba(0,0,0,.22);
+  font-size: 12px;
+  opacity: .92;
+}
+
+.story-line{
+  margin: 8px 0 0 0;
+  opacity: .86;
+  line-height: 1.4;
+  font-size: 14px;
+}
+
+.story-list{
+  margin: 8px 0 0 0;
+  padding-left: 18px;
+  opacity: .9;
+  font-size: 14px;
+}
+
+.story-list li{
+  margin: 4px 0;
+}
+
+.story-sentence{
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: .92;
+}
+
+.hl{
+  color: var(--gold, #d4af37);
+}
+
+.hl-strong{
+  color: var(--gold, #d4af37);
+  font-weight: 800;
+}
+
+/* Subtle personality per card (still soft) */
+.story-now{ border-color: rgba(212,175,55,.18); }
+.story-gap{ border-color: rgba(212,175,55,.26); }
+.story-sentence{ border-color: rgba(212,175,55,.34); }
+
+@media (min-width: 860px){
+  .hero-story{
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+  .story-card{
+    padding: 14px 14px;
+  }
+  .story-title{
+    font-size: 15px;
+  }
+}
+
   </style>
 </head>
 
@@ -518,26 +621,43 @@
 
         <div class="hero-blocks">
 
-  <p class="hero-block">
-    <strong>Most executives don’t fail because their decisions were wrong.</strong><br />
-    They fail because they can no longer explain how those decisions were made.
-  </p>
+  <div class="hero-story" aria-label="Why data becomes risk over time">
+  <div class="story-card story-now">
+    <div class="story-kicker">NOW</div>
+    <div class="story-title">Data exists. It feels documented.</div>
+    <div class="story-chips" aria-label="Common data sources">
+      <span class="chip">Emails</span>
+      <span class="chip">HR systems</span>
+      <span class="chip">Dashboards</span>
+      <span class="chip">Approvals</span>
+      <span class="chip">Meetings</span>
+    </div>
+    <p class="story-line">But it’s fragmented across tools and versions.</p>
+  </div>
 
-  <p class="hero-block hero-block--time">
-    Emails. HR systems. Dashboards. Approvals. Meetings.<br />
-    <strong>Six months later, the chain is broken.</strong>
-  </p>
+  <div class="story-card story-gap">
+    <div class="story-kicker">+ 6 MONTHS</div>
+    <div class="story-title">The time gap breaks the chain.</div>
+    <ul class="story-list">
+      <li>Decision is challenged</li>
+      <li>Context is missing</li>
+      <li>Versions diverge</li>
+      <li>Reconstruction becomes impossible</li>
+    </ul>
+    <p class="story-line">Not a data problem. A <span class="hl">proof</span> problem.</p>
+  </div>
 
-  <p class="hero-block hero-block--sentence">
-    At that point, the decision becomes a <strong>liability</strong> —<br />
-    not because it was wrong,<br />
-    <strong>but because it cannot be defended.</strong>
-  </p>
+  <div class="story-card story-sentence">
+    <div class="story-kicker">REALITY</div>
+    <div class="story-title">The decision becomes a <span class="hl">liability</span>.</div>
+    <div class="story-sentence">
+      Not because it was wrong, <br />
+      but because it <span class="hl-strong">cannot be defended</span>.
+    </div>
+    <p class="story-line">RPO turns data trails into deterministic proof bundles.</p>
+  </div>
+</div>
 
-  <p class="hero-block hero-block--solution">
-    RPO v0.1 turns decisions into deterministic proof bundles —<br />
-    traceable, auditable, re-verifiable.
-  </p>
 
 </div>
 
