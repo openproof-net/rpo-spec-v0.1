@@ -579,6 +579,24 @@
     font-size: 15px;
   }
 }
+.hero-blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.story-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.story-line,
+.story-list,
+.story-sentence {
+  margin-top: auto;
+}
 
   </style>
 </head>
@@ -624,7 +642,7 @@
   <div class="hero-story" aria-label="Why data becomes risk over time">
   <div class="story-card story-now">
     <div class="story-kicker">NOW</div>
-    <div class="story-title">Data exists. It feels documented.</div>
+    <div class="story-title">Data exists. It feels reliable.</div>
     <div class="story-chips" aria-label="Common data sources">
       <span class="chip">Emails</span>
       <span class="chip">HR systems</span>
@@ -653,6 +671,8 @@
     <div class="story-sentence">
       Not because it was wrong, <br />
       but because it <span class="hl-strong">cannot be defended</span>.
+  Legal. Reputational. Operational.<br />
+  <span class="hl-strong">Data becomes unprovable.</span>
     </div>
     <p class="story-line">RPO turns data trails into deterministic proof bundles.</p>
   </div>
