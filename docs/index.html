@@ -4,24 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- SEO -->
   <title>Decision-Proof Data & Accountability | OpenProof RPO v0.1</title>
+
   <meta name="description" content="When decisions are challenged, data becomes liability. OpenProof RPO turns HR and governance data into deterministic, auditable proof bundles. No AI. No interpretation. Same input, same accountability." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Decision-Proof Data & Accountability | OpenProof RPO v0.1" />
   <meta property="og:description" content="When decisions are challenged, data becomes liability. Deterministic proof bundles: signed JSON, human-readable PDF, public hash. No AI. Humans remain accountable." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rpo.openproof.net/" />
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Decision-Proof Data & Accountability | OpenProof RPO v0.1" />
   <meta name="twitter:description" content="Deterministic proof bundles for regulated reality: signed JSON + PDF path + public hash. No AI. Same input → same accountability." />
 
-  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -55,7 +52,6 @@
   }
   </script>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
@@ -240,7 +236,15 @@
       white-space:nowrap;
     }
 
-    /* --- HERO STORY (3 cards) --- */
+    .hero-note{
+      margin-top:14px;
+      font-size:.92rem;
+      color:rgba(198,186,150,.88);
+      line-height:1.55;
+      max-width: 720px;
+    }
+
+    /* HERO STORY (3 cards) */
     .hero-story{
       margin-top: 14px;
       display: grid;
@@ -249,10 +253,7 @@
       max-width: 720px;
     }
     @media (min-width: 860px){
-      .hero-story{
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 14px;
-      }
+      .hero-story{ grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
     }
 
     .story-card{
@@ -264,7 +265,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
       display:flex;
       flex-direction:column;
-      min-height: 245px;
+      min-height: 260px;
     }
 
     .story-kicker{
@@ -278,16 +279,24 @@
     .story-title{
       font-weight: 700;
       letter-spacing: .02em;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       line-height: 1.25;
       font-size: 15px;
+    }
+
+    .story-punch{
+      margin-top: 2px;
+      font-size: 13px;
+      line-height: 1.35;
+      color: rgba(241,230,163,.86);
+      opacity: .95;
     }
 
     .story-chips{
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin: 8px 0 8px 0;
+      margin: 10px 0 10px 0;
     }
 
     .chip{
@@ -303,7 +312,7 @@
     }
 
     .story-list{
-      margin: 8px 0 0 0;
+      margin: 10px 0 0 0;
       padding-left: 18px;
       opacity: .9;
       font-size: 14px;
@@ -328,55 +337,53 @@
     .hl{ color: var(--gold, #d4af37); }
     .hl-strong{ color: var(--gold, #d4af37); font-weight: 800; }
 
-    .story-now{ border-color: rgba(212,175,55,.18); }
-    .story-gap{ border-color: rgba(212,175,55,.26); }
-    .story-real{ border-color: rgba(212,175,55,.34); }
-
-    /* CTA ROW (kept in place, made smaller + aligned) */
+    /* CTA BLOCK (same width, same line) */
     .hero-ctas{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      align-items:center;
       margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+      max-width: 720px;
     }
 
     .btn-primary,
     .btn-ghost{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:44px;
+      width:100%;
+      min-height:52px;
       border-radius:999px;
       text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 18px;
       text-transform:uppercase;
       letter-spacing:.12em;
       font-size:13px;
-      padding:12px 18px;
     }
 
-    /* Primary: still primary, but controlled */
     .btn-primary{
       flex-direction:column;
       gap:6px;
       border:1px solid rgba(244,186,120,0.9);
       background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
       color:#2a1204;
-      box-shadow:none; /* deliberate: less “marketing”, more “protocol” */
+      box-shadow:none;
     }
-    .btn-primary:hover{filter:brightness(1.03)}
-    .btn-primary:active{transform:translateY(1px)}
 
     .btn-primary .cta-main{
       font-size:13px;
       font-weight:600;
       letter-spacing:.12em;
+      text-align:center;
     }
+
     .btn-primary .cta-sub{
       font-size:11px;
       letter-spacing:.08em;
       opacity:.78;
       text-transform:none;
+      text-align:center;
     }
 
     .btn-ghost{
@@ -385,18 +392,16 @@
       color: var(--gold-soft);
       backdrop-filter: blur(10px);
     }
-    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
-    .btn-ghost:active{transform:translateY(1px)}
 
-    .hero-note{
-      margin-top:14px;
-      font-size:.92rem;
-      color:rgba(198,186,150,.88);
-      line-height:1.55;
-      max-width: 720px;
+    .btn-primary:hover{filter:brightness(1.03)}
+    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
+    .btn-primary:active,.btn-ghost:active{transform:translateY(1px)}
+
+    @media (max-width: 560px){
+      .hero-ctas{ grid-template-columns: 1fr; }
     }
 
-    /* PANEL (INTERACTIVE “LIVING” CARD) */
+    /* PANEL */
     .panel{
       position:relative;
       background:var(--panel);
@@ -608,7 +613,6 @@
       .panel{transform:none !important}
     }
 
-    /* Utility */
     .sr-only{
       position:absolute;
       width:1px; height:1px;
@@ -651,15 +655,15 @@
           <span class="hero-claim">RPO v0.1 is the minimum standard for defensible decisions.</span>
         </h1>
 
-        <!-- SEO-only: who this is for -->
         <p class="sr-only">
           OpenProof RPO is designed for executives, HR leaders, compliance officers and legal teams operating in regulated environments.
         </p>
 
         <div class="hero-story" aria-label="Why data becomes risk over time">
-          <div class="story-card story-now">
+          <div class="story-card">
             <div class="story-kicker">NOW</div>
             <div class="story-title">Data exists. It looks governed.</div>
+            <div class="story-punch">Everyone has dashboards. Nobody has a chain of custody.</div>
             <div class="story-chips" aria-label="Common data sources">
               <span class="chip">Emails</span>
               <span class="chip">HR systems</span>
@@ -670,9 +674,10 @@
             <div class="story-foot">But it’s fragmented across tools and versions.</div>
           </div>
 
-          <div class="story-card story-gap">
+          <div class="story-card">
             <div class="story-kicker">+ 6 MONTHS</div>
             <div class="story-title">The time gap breaks the chain.</div>
+            <div class="story-punch">What you can’t reconstruct, you can’t defend.</div>
             <ul class="story-list">
               <li>Decision is challenged</li>
               <li>Context is missing</li>
@@ -682,7 +687,7 @@
             <div class="story-foot">Not a data problem. A <span class="hl">proof</span> problem.</div>
           </div>
 
-          <div class="story-card story-real">
+          <div class="story-card">
             <div class="story-kicker">REALITY</div>
             <div class="story-title">The decision becomes a <span class="hl">liability</span>.</div>
             <div class="story-sentence">
@@ -697,7 +702,7 @@
           </div>
         </div>
 
-        <div class="hero-ctas">
+        <div class="hero-ctas" role="group" aria-label="Primary actions">
           <a href="./sandbox.html"
              class="btn-primary"
              target="_blank"
@@ -769,7 +774,7 @@
   </main>
 
   <script>
-    // Background star field (light + elegant)
+    // Background star field
     (function () {
       const canvas = document.getElementById("bg-field");
       const ctx = canvas.getContext("2d", { alpha: true });
@@ -836,7 +841,7 @@
       resize(); init(); loop();
     })();
 
-    // “Living” card interaction: subtle tilt + micro status tick
+    // Living card interaction
     (function(){
       const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const card = document.getElementById("liveCard");
@@ -856,7 +861,6 @@
       if (prefersReduce) return;
 
       function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-
       let raf = null;
 
       function onMove(e){
@@ -889,6 +893,7 @@
   </script>
 </body>
 </html>
+
 
 
 
