@@ -4,45 +4,50 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- SEO (primary) -->
-  <title>OpenProof RPO v0.1 — Open Standard for HR Decision Governance | Gersende Ryard de Parcey</title>
-  <meta name="description" content="OpenProof RPO v0.1 is an open standard for HR decision governance. It turns HR data into deterministic proof bundles (signed JSON + human-readable PDF + public hash) so decisions remain auditable and defensible over time. Created by Gersende Ryard de Parcey." />
+  <!-- SEO: ultra clair + mots-clés stables -->
+  <title>HR Decision Governance (RPO v0.1) | Auditable & Defensible Decisions — Gersende Ryard de Parcey</title>
+  <meta name="description" content="OpenProof RPO v0.1 is an open standard for HR decision governance: signed JSON + human-readable PDF + public hash. Deterministic, auditable, defensible. No AI. Built by Gersende Ryard de Parcey (Paris)." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
 
-  <!-- Open Graph / Twitter -->
-  <meta property="og:title" content="OpenProof RPO v0.1 — HR Decision Governance Standard | Gersende Ryard de Parcey" />
-  <meta property="og:description" content="Open standard for HR decision governance. Deterministic proof bundles: signed JSON + human-readable PDF + public hash. No AI. Same input → same output. Humans remain accountable." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="HR Decision Governance (RPO v0.1) | Auditable & Defensible Decisions" />
+  <meta property="og:description" content="Deterministic proof bundles for HR & governance decisions: signed JSON + PDF + public hash. No AI. Same input → same output." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rpo.openproof.net/" />
 
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="OpenProof RPO v0.1 — HR Decision Governance Standard" />
-  <meta name="twitter:description" content="Deterministic proof bundles for defensible HR decisions: signed JSON + human-readable PDF + public hash. No AI. Same input → same output." />
+  <meta name="twitter:title" content="HR Decision Governance (RPO v0.1) | Auditable & Defensible Decisions" />
+  <meta name="twitter:description" content="Open standard for auditable, defensible HR decisions. Signed JSON + PDF + public hash. No AI." />
 
-  <!-- Structured Data (Person + Organization + WebSite + WebPage) -->
+  <!-- Structured data: Person + Organization + WebSite + WebPage -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Organization",
-        "@id": "https://rpo.openproof.net/#org",
-        "name": "OpenProof",
+        "@type": "Person",
+        "@id": "https://rpo.openproof.net/#gersende",
+        "name": "Gersende Ryard de Parcey",
+        "jobTitle": "HR Decision Governance Architect",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Paris",
+          "addressCountry": "FR"
+        },
         "url": "https://rpo.openproof.net/",
-        "description": "OpenProof RPO is an open standard for HR decision governance, producing deterministic proof bundles (signed JSON + human-readable PDF + public hash).",
         "sameAs": [
           "https://www.truthx.co/"
         ]
       },
       {
-        "@type": "Person",
-        "@id": "https://rpo.openproof.net/#gersende",
-        "name": "Gersende Ryard de Parcey",
-        "jobTitle": "Architect of HR Decision Governance",
-        "description": "Creator of OpenProof RPO, an open standard for HR decision governance and defensible decision systems.",
+        "@type": "Organization",
+        "@id": "https://rpo.openproof.net/#org",
+        "name": "OpenProof",
         "url": "https://rpo.openproof.net/",
-        "worksFor": { "@id": "https://rpo.openproof.net/#org" }
+        "description": "OpenProof RPO defines deterministic proof bundles for HR decision governance: signed JSON + human-readable PDF + public hash.",
+        "founder": { "@id": "https://rpo.openproof.net/#gersende" }
       },
       {
         "@type": "WebSite",
@@ -56,20 +61,19 @@
         "@type": "WebPage",
         "@id": "https://rpo.openproof.net/#webpage",
         "url": "https://rpo.openproof.net/",
-        "name": "OpenProof RPO v0.1 — Open Standard for HR Decision Governance",
+        "name": "HR Decision Governance (RPO v0.1) | Auditable & Defensible Decisions — Gersende Ryard de Parcey",
         "isPartOf": { "@id": "https://rpo.openproof.net/#website" },
         "about": [
           { "@id": "https://rpo.openproof.net/#org" },
           { "@id": "https://rpo.openproof.net/#gersende" }
         ],
         "inLanguage": "en",
-        "description": "OpenProof RPO v0.1 is an open standard for HR decision governance. It turns HR data into deterministic proof bundles (signed JSON + PDF + public hash) so decisions remain auditable and defensible over time."
+        "description": "OpenProof RPO v0.1 is an open standard for HR decision governance: signed JSON + PDF + public hash. Deterministic, auditable, defensible. No AI."
       }
     ]
   }
   </script>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
@@ -88,10 +92,9 @@
 
       --radius:26px;
       --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
-
       --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
       --line:rgba(212,175,55,0.22);
-      --line2:rgba(136,116,72,0.35);
+      --line2:rgba(136,116,72,0.30);
 
       --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
     }
@@ -103,23 +106,24 @@
       font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
       color:var(--ivory);
       background:
-        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
-        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
+        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.22), transparent 55%),
+        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.16), transparent 55%),
         linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
       overflow-x:hidden;
     }
 
     a{color:inherit}
-    a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
+    a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 12px;}
     ::selection{background: rgba(212,175,55,.25);}
 
-    /* Background stars */
+    /* Background field */
     #bg-field{
       position:fixed;
       inset:0;
       width:100%;
       height:100%;
       z-index:-1;
+      opacity:.9;
     }
 
     /* Top bar */
@@ -138,19 +142,15 @@
     }
 
     .top-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
+      display:flex; align-items:center; gap:14px;
       min-width: 280px;
     }
 
     .emblem{
-      width:34px;
-      height:34px;
-      border-radius:999px;
+      width:34px;height:34px;border-radius:999px;
       background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
-      box-shadow:0 0 18px rgba(241,230,163,0.8);
-      flex: 0 0 auto;
+      box-shadow:0 0 18px rgba(241,230,163,0.75);
+      flex:0 0 auto;
     }
 
     .brand{
@@ -209,30 +209,32 @@
 
     /* Layout */
     main{
-      padding:96px 40px 84px;
+      padding-top: 92px;
+      padding-left: 40px;
+      padding-right: 40px;
     }
 
     .shell{
-      max-width:1180px;
-      margin:0 auto;
+      max-width: 1180px;
+      margin: 0 auto;
     }
 
-    /* Hero */
+    /* HERO: ultra lisible */
     .hero{
-      padding-top: 34px;
+      padding: 34px 0 26px;
       display:grid;
-      grid-template-columns: 1.25fr 0.85fr;
-      gap:42px;
+      grid-template-columns: 1.35fr 0.95fr;
+      gap: 42px;
       align-items:start;
     }
 
     .eyebrow{
       font-family:"Orbitron",sans-serif;
-      font-size:.75rem;
+      font-size:.72rem;
       letter-spacing:.22em;
       text-transform:uppercase;
       color:var(--ink-soft);
-      margin-bottom:14px;
+      margin-bottom:12px;
     }
     .eyebrow span{color:var(--gold-soft)}
 
@@ -240,27 +242,117 @@
       font-family:"Orbitron",sans-serif;
       text-transform:uppercase;
       letter-spacing:.06em;
-      line-height:1.06;
-      font-size:clamp(2.15rem,4.0vw,3.0rem);
+      line-height:1.04;
+      font-size: clamp(2.05rem, 4.6vw, 3.25rem);
     }
-    h1 .hl{color:var(--gold-soft); display:block; margin-top:10px;}
+    h1 .l2{display:block; color: var(--gold-soft); margin-top: 8px;}
 
-    .lead{
-      margin-top:16px;
-      max-width: 820px;
-      font-size:1.02rem;
-      line-height:1.6;
-      color:rgba(198,186,150,.92);
+    .sub{
+      margin-top: 14px;
+      max-width: 740px;
+      font-size: 1.02rem;
+      line-height: 1.6;
+      color: rgba(198,186,150,.92);
+    }
+    .sub strong{color: rgba(241,230,163,.96); font-weight:600;}
+
+    /* 3 bullets = “Pourquoi je suis là” */
+    .value{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      max-width: 740px;
     }
 
-    .proofline{
-      margin-top:14px;
+    .vrow{
       display:flex;
-      flex-wrap:wrap;
-      gap:10px;
+      gap: 12px;
+      align-items:flex-start;
+      padding: 12px 14px;
+      border: 1px solid rgba(212,175,55,.18);
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      backdrop-filter: blur(10px);
+    }
+    .dot{
+      width:10px;height:10px;border-radius:50%;
+      margin-top: 6px;
+      background: rgba(241,230,163,.95);
+      box-shadow: 0 0 14px rgba(241,230,163,.45);
+      flex: 0 0 auto;
+    }
+    .vrow p{
+      font-size: .98rem;
+      line-height: 1.5;
+      color: rgba(198,186,150,.92);
+    }
+    .vrow b{color: rgba(241,230,163,.96); font-weight:600;}
+
+    /* CTA: un seul “main” + un “secondary” */
+    .ctas{
+      margin-top: 18px;
+      display:flex;
+      gap: 14px;
+      flex-wrap: wrap;
       align-items:center;
-      color:rgba(179,164,139,.95);
-      font-size:.95rem;
+    }
+
+    .btn-primary, .btn-ghost{
+      border-radius: 999px;
+      padding: 12px 18px;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height: 50px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    .btn-primary{
+      border:1px solid rgba(244,186,120,0.9);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+      gap: 10px;
+    }
+    .btn-primary small{
+      letter-spacing: .06em;
+      text-transform:none;
+      opacity:.75;
+      font-size: .78rem;
+    }
+
+    .btn-ghost{
+      border:1px solid rgba(212,175,55,0.35);
+      background: rgba(10,12,27,0.30);
+      color: var(--gold-soft);
+      backdrop-filter: blur(10px);
+    }
+    .btn-primary:hover{filter:brightness(1.03)}
+    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
+    .btn-primary:active,.btn-ghost:active{transform:translateY(1px)}
+
+    /* Right panel: “What you get” (sobre, corporate) */
+    .panel{
+      position:relative;
+      background:var(--panel);
+      border-radius:var(--radius);
+      border:1px solid rgba(212,175,55,0.40);
+      padding:22px;
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
+    }
+
+    .panel h2{
+      font-family:"Orbitron",sans-serif;
+      font-size:.8rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+      margin-bottom: 12px;
     }
 
     .pill{
@@ -272,254 +364,135 @@
       text-transform:uppercase;
       padding:6px 12px;
       border-radius:999px;
-      border:1px solid rgba(241,230,163,.55);
-      color: rgba(241,230,163,.92);
+      border:1px solid rgba(241,230,163,.45);
+      margin-bottom:12px;
+      color: rgba(241,230,163,.90);
       background: rgba(10,12,27,0.22);
       backdrop-filter: blur(10px);
     }
-    .pill .dot{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(241,230,163,.95);
-      box-shadow: 0 0 14px rgba(241,230,163,.55);
-      animation: dotPulse 1.45s ease-in-out infinite;
-    }
-    @keyframes dotPulse{
-      0%,100%{transform:scale(1); opacity:.85}
-      50%{transform:scale(1.35); opacity:1}
-    }
 
-    .ctas{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      max-width: 720px;
-    }
-
-    .btn-primary,
-    .btn-ghost{
-      width:100%;
-      min-height:52px;
-      border-radius:999px;
-      text-decoration:none;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px 18px;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      font-size:13px;
-    }
-
-    .btn-primary{
-      flex-direction:column;
-      gap:6px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-    }
-    .btn-primary .sub{
-      font-size:11px;
-      letter-spacing:.08em;
-      opacity:.78;
-      text-transform:none;
-    }
-
-    .btn-ghost{
-      border:1px solid rgba(212,175,55,0.35);
-      background: rgba(10,12,27,0.35);
-      color: var(--gold-soft);
-      backdrop-filter: blur(10px);
-    }
-
-    .btn-primary:hover{filter:brightness(1.03)}
-    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
-    .btn-primary:active,.btn-ghost:active{transform:translateY(1px)}
-
-    /* Right panel (1 panel only, for clarity) */
-    .panel{
-      position:relative;
-      background:var(--panel);
-      border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,0.45);
-      padding:22px;
-      box-shadow:var(--shadow-soft);
-      overflow:hidden;
-    }
-
-    .panel::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
-        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
-        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
-      opacity:.95;
-      filter: blur(10px);
-      pointer-events:none;
-      animation: fieldShift 10s ease-in-out infinite;
-    }
-    @keyframes fieldShift{
-      0%,100%{transform: translateY(0px)}
-      50%{transform: translateY(10px)}
-    }
-
-    .panel-inner{position:relative; z-index:1;}
-    .panel h2{
-      font-family:"Orbitron",sans-serif;
-      font-size:.85rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      margin-bottom:10px;
-    }
-
-    .kv{
-      margin-top:12px;
-      border-top:1px solid rgba(212,175,55,.22);
+    .list{
+      border-top:1px solid rgba(212,175,55,.20);
       padding-top:12px;
       display:grid;
       gap:10px;
-      font-size:.92rem;
+      font-size: .95rem;
     }
-    .kv .row{
-      display:grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap:14px;
-      align-items:start;
+    .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 14px;
+      color: rgba(198,186,150,.92);
     }
-    .kv .k{color: rgba(179,164,139,.92)}
-    .kv .v{color: rgba(241,230,163,.88); text-align:right;}
-    .kv .row + .row{border-top:1px dashed rgba(136,116,72,0.35); padding-top:10px;}
-
+    .row span:last-child{color: rgba(241,230,163,.88); text-align:right;}
     .micro{
-      margin-top:14px;
-      padding-top:14px;
-      border-top: 1px solid rgba(212,175,55,.18);
-      font-size: .90rem;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(212,175,55,.16);
+      font-size: .92rem;
       color: rgba(179,164,139,.92);
-      line-height: 1.65;
+      line-height: 1.6;
     }
     .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
 
-    /* Section: How it works (3 steps, minimal) */
+    /* Section: How it works (minimal) */
     .section{
-      margin-top:64px;
-      padding-top:46px;
-      border-top: 1px solid rgba(212,175,55,0.18);
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(212,175,55,.14);
     }
 
     .section-title{
       font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      color:rgba(241,230,163,.92);
-      font-size:1.05rem;
+      font-size: .82rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 14px;
     }
 
-    .cards{
-      margin-top:16px;
+    .steps{
       display:grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap:14px;
+      gap: 14px;
     }
 
     .card{
-      border: 1px solid rgba(212,175,55,.20);
+      border: 1px solid rgba(212,175,55,.18);
       border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      padding: 16px;
+      background: rgba(255,255,255,.03);
       backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      min-height: 168px;
+      padding: 16px;
     }
 
-    .card .kicker{
-      font-size: 11px;
-      letter-spacing: .18em;
+    .card .k{
+      font-family:"Orbitron",sans-serif;
+      font-size: .72rem;
+      letter-spacing: .16em;
       text-transform: uppercase;
-      opacity: .75;
+      color: rgba(241,230,163,.85);
       margin-bottom: 8px;
-      color: rgba(179,164,139,.95);
-    }
-    .card .title{
-      font-weight: 650;
-      letter-spacing: .02em;
-      margin-bottom: 6px;
-      line-height: 1.25;
-      font-size: 15px;
-      color: rgba(241,230,163,.92);
     }
     .card p{
-      font-size: 14px;
-      line-height: 1.5;
-      color: rgba(198,186,150,.88);
+      color: rgba(198,186,150,.92);
+      line-height: 1.55;
+      font-size: .96rem;
     }
 
-    /* About block (SEO + corporate credibility) */
+    /* About author (SEO + crédibilité) */
     .about{
       display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap:18px;
-      align-items:start;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 14px;
+      align-items: start;
     }
 
     .about p{
-      margin-top:12px;
-      line-height:1.7;
-      color:rgba(198,186,150,.90);
-      font-size: 0.98rem;
-      max-width: 920px;
+      color: rgba(198,186,150,.92);
+      line-height: 1.65;
+      font-size: .98rem;
     }
 
-    .about-aside{
-      border:1px solid rgba(212,175,55,.20);
-      border-radius:18px;
-      padding:16px;
-      background: rgba(10,12,27,0.35);
+    .factbox{
+      border: 1px solid rgba(212,175,55,.22);
+      border-radius: 18px;
+      background: rgba(10,12,27,0.30);
       backdrop-filter: blur(10px);
+      padding: 16px;
     }
-
-    .about-aside .line{
+    .factbox .r{
       display:flex;
       justify-content:space-between;
-      gap:10px;
-      padding:8px 0;
-      font-size: .92rem;
+      gap: 12px;
+      padding: 8px 0;
       color: rgba(179,164,139,.92);
+      font-size: .95rem;
     }
-    .about-aside .line + .line{border-top: 1px dashed rgba(136,116,72,0.35);}
+    .factbox .r + .r{border-top:1px dashed rgba(136,116,72,0.28)}
+    .factbox .r span:last-child{color: rgba(241,230,163,.90); text-align:right;}
 
     footer{
-      margin-top:68px;
-      padding:24px 0 10px;
-      border-top:1px solid rgba(212,175,55,0.14);
-      color: rgba(179,164,139,.88);
-      font-size:.92rem;
-      line-height:1.6;
+      margin-top: 30px;
+      padding: 18px 0 34px;
+      color: rgba(179,164,139,.86);
+      font-size: .88rem;
+      border-top: 1px solid rgba(212,175,55,.12);
     }
-    footer a{ text-decoration:none; color: rgba(241,230,163,.92); }
-    footer a:hover{ text-decoration:underline; }
+    footer a{color: rgba(241,230,163,.88); text-decoration:none;}
+    footer a:hover{text-decoration:underline;}
 
     /* Responsive */
     @media(max-width:1060px){
-      .hero{grid-template-columns:1fr; gap:22px}
-      .cards{grid-template-columns:1fr; }
-      .about{grid-template-columns:1fr;}
-      .panel{max-width:780px}
+      .hero{grid-template-columns: 1fr; gap: 18px;}
+      .panel{max-width: 760px;}
+      .steps{grid-template-columns: 1fr;}
+      .about{grid-template-columns: 1fr;}
+      main{padding-left: 20px; padding-right: 20px;}
     }
     @media(max-width:960px){
       .top-nav{display:none}
       .top-bar{padding:0 16px}
-      main{padding:96px 20px 84px}
-      .top-left{min-width:auto}
-      .kv .row{grid-template-columns:1fr; }
-      .kv .v{text-align:left}
-      .ctas{grid-template-columns:1fr;}
-    }
-    @media (prefers-reduced-motion: reduce){
-      .pill .dot, .panel::before{animation:none}
     }
 
     .sr-only{
@@ -550,173 +523,134 @@
       <a href="./examples.html">Examples</a>
     </nav>
 
-    <a href="./sandbox.html" class="top-cta" aria-label="Try the live demo in the sandbox">Try the live demo</a>
+    <a href="./sandbox.html" class="top-cta">Try the live demo</a>
   </header>
 
-  <main class="shell" role="main">
+  <main>
+    <div class="shell">
+      <!-- HERO -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <div class="eyebrow">Open standard for <span>HR decision governance</span></div>
 
-    <!-- HERO (one message, one CTA) -->
-    <section class="hero" aria-labelledby="h1">
-      <div>
-        <div class="eyebrow">Open standard <span>for HR decision governance</span></div>
+          <h1 id="hero-title">
+            HR decisions will be challenged.
+            <span class="l2">Make them auditable and defensible.</span>
+          </h1>
 
-        <h1 id="h1">
-          HR decisions will be challenged.
-          <span class="hl">Make them auditable and defensible.</span>
-        </h1>
+          <p class="sub">
+            OpenProof RPO v0.1 turns HR and governance decision trails into a <strong>deterministic proof bundle</strong>:
+            signed JSON, human-readable PDF, and a public hash. <strong>No AI.</strong> No interpretation. Humans remain accountable.
+          </p>
 
-        <p class="lead">
-          OpenProof RPO v0.1 turns HR data into a deterministic proof bundle:
-          signed JSON, a human-readable PDF, and a public hash.
-          No AI. No interpretation. Same input → same output. Humans remain accountable.
-        </p>
+          <div class="value" aria-label="Why you are here">
+            <div class="vrow">
+              <span class="dot" aria-hidden="true"></span>
+              <p><b>Same input → same output.</b> Deterministic structure, designed for audit, compliance and legal readiness.</p>
+            </div>
+            <div class="vrow">
+              <span class="dot" aria-hidden="true"></span>
+              <p><b>Integrity, not “truth”.</b> The hash proves integrity and traceability, not the correctness of the narrative.</p>
+            </div>
+            <div class="vrow">
+              <span class="dot" aria-hidden="true"></span>
+              <p><b>Decision lineage you can defend.</b> Source of truth, data lineage, business rules, accountability perimeter.</p>
+            </div>
+          </div>
 
-        <div class="proofline" aria-label="Core attributes">
-          <span class="pill"><span class="dot" aria-hidden="true"></span>Integrity • Readability • Verifiability</span>
-          <span>Built for HR governance, compliance, internal audit, and legal readiness.</span>
+          <div class="ctas" role="group" aria-label="Primary actions">
+            <a class="btn-primary" href="./sandbox.html" aria-label="Go to the sandbox and stress-test an HR decision trail">
+              Go to the sandbox <small>Stress-test a decision trail</small>
+            </a>
+            <a class="btn-ghost" href="./spec.html">Read the spec</a>
+          </div>
+
+          <p class="sr-only">
+            Keywords: HR decision governance, auditability, defensible decisions, data lineage, source of truth, signed JSON, public hash.
+          </p>
         </div>
 
-        <div class="ctas" role="group" aria-label="Primary actions">
-          <a href="./sandbox.html" class="btn-primary" aria-label="Go to the sandbox to test a decision trail">
-            <span>Go to the sandbox</span>
-            <span class="sub">Stress-test an HR decision trail (demo)</span>
-          </a>
-
-          <a href="./spec.html" class="btn-ghost" aria-label="Read the RPO specification">
-            Read the spec
-          </a>
-        </div>
-
-        <p class="sr-only">
-          This page explains OpenProof RPO v0.1, an open standard for HR decision governance. It creates deterministic proof bundles for defensible HR decisions.
-        </p>
-      </div>
-
-      <!-- Right panel (the only "card": what you get) -->
-      <aside class="panel" aria-label="What you get">
-        <div class="panel-inner">
+        <!-- Right panel -->
+        <aside class="panel" aria-label="What you get">
           <h2>What you get in 30 seconds</h2>
+          <div class="pill">Integrity • Readability • Verifiability</div>
 
-          <div class="kv" role="list">
-            <div class="row" role="listitem">
-              <span class="k">Input</span>
-              <span class="v">1–3 paragraphs</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Output</span>
-              <span class="v">signed JSON + PDF + hash</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Integrity anchor</span>
-              <span class="v">sha256</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Purpose</span>
-              <span class="v">HR decision governance</span>
-            </div>
+          <div class="list" role="list">
+            <div class="row" role="listitem"><span>Input</span><span>1–3 paragraphs</span></div>
+            <div class="row" role="listitem"><span>Output</span><span>signed JSON + PDF + hash</span></div>
+            <div class="row" role="listitem"><span>Integrity anchor</span><span>sha256</span></div>
+            <div class="row" role="listitem"><span>Purpose</span><span>HR decision governance (demo)</span></div>
           </div>
 
           <div class="micro">
             <strong>RPO =</strong> signed JSON + human-readable PDF + public hash.<br />
             Deterministic, auditable, non-proprietary.
           </div>
+        </aside>
+      </section>
 
-          <div class="micro" style="margin-top:10px;">
-            The hash proves integrity, not “truth”. It enables verification and accountability.
+      <!-- HOW IT WORKS -->
+      <section class="section" aria-labelledby="how-title">
+        <div class="section-title" id="how-title">How it works</div>
+
+        <div class="steps">
+          <div class="card">
+            <div class="k">Step 1 — Capture</div>
+            <p>Write the decision context (what was known at decision time). No retroactive reconstruction.</p>
+          </div>
+          <div class="card">
+            <div class="k">Step 2 — Bundle</div>
+            <p>Generate a deterministic bundle: signed JSON, PDF rendering, public hash for integrity.</p>
+          </div>
+          <div class="card">
+            <div class="k">Step 3 — Verify</div>
+            <p>Anyone can verify integrity and traceability, then audit accountability over time.</p>
           </div>
         </div>
-      </aside>
-    </section>
+      </section>
 
-    <!-- HOW IT WORKS (minimal, 3 steps, no noise) -->
-    <section class="section" aria-label="How it works">
-      <div class="section-title">How it works</div>
+      <!-- ABOUT AUTHOR (SEO + crédibilité, sans blabla) -->
+      <section class="section" aria-labelledby="about-title">
+        <div class="section-title" id="about-title">About the author</div>
 
-      <div class="cards">
-        <article class="card">
-          <div class="kicker">Step 1</div>
-          <div class="title">Capture the decision context</div>
-          <p>
-            A short narrative, with sources available at the time of decision.
-            No data fishing, no retroactive reconstruction.
-          </p>
-        </article>
+        <div class="about">
+          <div>
+            <p>
+              RPO v0.1 was created by <strong>Gersende Ryard de Parcey</strong>, an HR decision governance architect (Paris).
+              This public sandbox demonstrates how deterministic proof bundles strengthen auditability, data lineage, and defensibility
+              for contested HR decisions—without replacing human judgement.
+            </p>
+          </div>
 
-        <article class="card">
-          <div class="kicker">Step 2</div>
-          <div class="title">Generate a deterministic bundle</div>
-          <p>
-            Same input, same output: signed JSON, PDF rendering, and a public hash
-            to guarantee integrity over time.
-          </p>
-        </article>
-
-        <article class="card">
-          <div class="kicker">Step 3</div>
-          <div class="title">Verify, audit, defend</div>
-          <p>
-            Anyone can verify the bundle. Auditors can trace what existed, when,
-            and under which responsibility perimeter.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- ABOUT (SEO + corporate identity) -->
-    <section class="section" aria-label="About the author">
-      <div class="section-title">About the author</div>
-
-      <div class="about" style="margin-top:10px;">
-        <div>
-          <p>
-            OpenProof RPO v0.1 was created by <strong>Gersende Ryard de Parcey</strong>,
-            architect of HR decision governance systems and founder of TruthX.
-            Her work focuses on defensible HR decisions, data lineage, single source of truth architectures,
-            and accountable decision infrastructures for regulated environments.
-          </p>
-
-          <p>
-            This website provides the public sandbox, the specification, and examples
-            to evaluate how deterministic proof bundles can strengthen HR governance
-            without replacing human judgment.
-          </p>
+          <div class="factbox" aria-label="Author facts">
+            <div class="r"><span>Role</span><span>HR Decision Governance</span></div>
+            <div class="r"><span>Standard</span><span>OpenProof RPO v0.1</span></div>
+            <div class="r"><span>Outputs</span><span>JSON + PDF + Hash</span></div>
+            <div class="r"><span>Location</span><span>Paris</span></div>
+          </div>
         </div>
+      </section>
 
-        <aside class="about-aside" aria-label="Key references">
-          <div class="line"><span>Role</span><span>HR Decision Governance</span></div>
-          <div class="line"><span>Standard</span><span>OpenProof RPO v0.1</span></div>
-          <div class="line"><span>Outputs</span><span>JSON • PDF • Hash</span></div>
-          <div class="line"><span>Location</span><span>Paris</span></div>
-        </aside>
-      </div>
-    </section>
-
-    <footer aria-label="Footer">
-      <div>
-        © OpenProof — RPO v0.1. Created by <strong>Gersende Ryard de Parcey</strong>.
-        <span> </span>
-        <a href="./spec.html">Read the specification</a> · <a href="./sandbox.html">Try the sandbox</a>
-      </div>
-      <div style="margin-top:8px; opacity:.92;">
-        Keywords: HR decision governance, defensible HR decisions, data lineage, single source of truth, auditability, accountability, proof bundle, signed JSON, public hash.
-      </div>
-    </footer>
+      <footer>
+        © OpenProof — RPO v0.1. Built by Gersende Ryard de Parcey.  
+        <a href="./sandbox.html">Try the sandbox</a> · <a href="./spec.html">Specification</a>
+      </footer>
+    </div>
   </main>
 
   <script>
-    // Background star field (kept)
+    // Background star field (plus discret, moins “cinéma”, plus corporate)
     (function () {
       const canvas = document.getElementById("bg-field");
       const ctx = canvas.getContext("2d", { alpha: true });
 
       let width, height, particles = [];
-      const COUNT = 220;
+      const COUNT = 140; // ↓ densité pour calmer le bruit visuel
 
       function resize() {
         width = window.innerWidth;
         height = window.innerHeight;
         const ratio = window.devicePixelRatio || 1;
-
         canvas.width = width * ratio;
         canvas.height = height * ratio;
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -727,7 +661,7 @@
           x: (Math.random() * 2 - 1),
           y: (Math.random() * 2 - 1),
           z: Math.random() * 0.9 + 0.1,
-          speed: Math.random() * 0.004 + 0.0015
+          speed: Math.random() * 0.003 + 0.0012
         };
       }
 
@@ -737,7 +671,7 @@
       }
 
       function project(p) {
-        const f = 400;
+        const f = 420;
         const s = f / (f * p.z);
         return {
           x: p.x * width * 0.5 * s + width / 2,
@@ -747,23 +681,19 @@
 
       function loop() {
         ctx.clearRect(0, 0, width, height);
-
         for (const p of particles) {
           p.z -= p.speed;
           if (p.z < 0.08) {
             Object.assign(p, createParticle());
             p.z = 1;
           }
-
           const { x, y } = project(p);
-          const a = Math.min(1, (1.2 - p.z) * 1.1);
-
-          ctx.fillStyle = `rgba(241,230,163,${0.6 * a})`;
+          const a = Math.min(1, (1.2 - p.z) * 1.05);
+          ctx.fillStyle = `rgba(241,230,163,${0.45 * a})`;
           ctx.beginPath();
-          ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+          ctx.arc(x, y, 1.4, 0, Math.PI * 2);
           ctx.fill();
         }
-
         requestAnimationFrame(loop);
       }
 
