@@ -1,800 +1,1096 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="en" data-page="sandbox">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>OpenProof RPO v0.1 — Sandbox</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts (Orbitron + Inter) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>Sandbox — Deterministic Proof Bundle Simulator | OpenProof RPO v0.1</title>
+  <meta name="description" content="OpenProof RPO v0.1 sandbox simulator. Generate deterministic proof bundles for HR decision governance: signed JSON + human-readable PDF + public hash (SHA-256). No AI. No storage. Humans remain accountable." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://rpo.openproof.net/sandbox.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
 
   <style>
     :root{
-      --bg0:#04040e;
-      --bg1:#0b0f14;
-      --ink:#f4f1e8;
-      --muted:rgba(244,241,232,.72);
-      --muted2:rgba(244,241,232,.55);
+      --bg-deep:#04040e;
+      --bg-mid:#0b0f14;
 
-      /* Accent GOLD (accentue ici) */
+      --gold-soft:#f1e6a3;
       --gold:#d4af37;
-      --gold2:#f1e6a3;
-      --goldGlow: rgba(241,230,163,.22);
-      --goldLine: rgba(212,175,55,.38);
-      --goldLine2: rgba(212,175,55,.22);
+      --gold-deep:#8f7633;
 
-      --panel: rgba(9,12,18,.62);
-      --panel2: rgba(9,12,18,.42);
-      --stroke: rgba(241,230,163,.18);
-      --shadow: 0 20px 70px rgba(0,0,0,.55);
+      --ivory:#f7f3e8;
+      --ink-soft:#b3a48b;
 
-      /* Largeur (respire +) */
-      --container: 1360px; /* monte à 1480 si tu veux */
-      --radius: 18px;
-      --radius2: 26px;
+      --radius:26px;
+      --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
+      --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
+      --line2:rgba(136,116,72,0.35);
+
+      --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
     }
 
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
     body{
-      margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--ink);
+      min-height:100vh;
+      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
+      color:var(--ivory);
       background:
-        radial-gradient(1200px 700px at 25% 10%, rgba(241,230,163,.14), transparent 55%),
-        radial-gradient(900px 600px at 70% 20%, rgba(212,175,55,.12), transparent 60%),
-        radial-gradient(1200px 900px at 70% 80%, rgba(0,0,0,.55), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
+        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
+        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
       overflow-x:hidden;
     }
 
-    /* subtle starfield */
-    .stars{
-      position:fixed; inset:0;
-      background-image:
-        radial-gradient(1px 1px at 12% 22%, rgba(241,230,163,.28) 0, transparent 60%),
-        radial-gradient(1px 1px at 55% 18%, rgba(241,230,163,.22) 0, transparent 60%),
-        radial-gradient(1px 1px at 78% 34%, rgba(241,230,163,.18) 0, transparent 60%),
-        radial-gradient(1px 1px at 32% 64%, rgba(241,230,163,.22) 0, transparent 60%),
-        radial-gradient(1px 1px at 88% 78%, rgba(241,230,163,.18) 0, transparent 60%),
-        radial-gradient(1px 1px at 8% 85%, rgba(241,230,163,.16) 0, transparent 60%),
-        radial-gradient(1px 1px at 48% 88%, rgba(241,230,163,.14) 0, transparent 60%);
-      opacity:.65;
-      pointer-events:none;
-      filter: blur(.2px);
+    a{color:inherit}
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+      outline:none; box-shadow: var(--focus); border-radius: 10px;
+    }
+    ::selection{background: rgba(212,175,55,.25);}
+
+    /* BACKGROUND FIELD */
+    #bg-field{
+      position:fixed;
+      inset:0;
+      width:100%;
+      height:100%;
+      z-index:-1;
     }
 
-    .wrap{position:relative; z-index:1}
-    .container{max-width:var(--container); margin:0 auto; padding:0 24px}
-
-    /* NAV */
-    header{
-      position:sticky; top:0; z-index:5;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(4,4,14,.86), rgba(4,4,14,.58));
-      border-bottom:1px solid rgba(241,230,163,.10);
+    /* TOP BAR (same as home) */
+    .top-bar{
+      position:fixed;
+      top:0; left:0; right:0;
+      height:68px;
+      padding:0 40px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      z-index:10;
+      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
+      backdrop-filter:blur(18px);
+      border-bottom:1px solid rgba(212,175,55,0.22);
     }
-    .nav{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:18px;
+    .top-left{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width: 280px;
+    }
+    .emblem{
+      width:34px;
+      height:34px;
+      border-radius:999px;
+      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
+      box-shadow:0 0 18px rgba(241,230,163,0.8);
+      flex: 0 0 auto;
     }
     .brand{
-      display:flex; align-items:center; gap:12px;
-      letter-spacing:.12em;
-      font-family: Orbitron, sans-serif;
-      font-size:12px;
+      font-family:"Orbitron",sans-serif;
+      font-size:0.72rem;
+      letter-spacing:0.18em;
       text-transform:uppercase;
-      color:rgba(241,230,163,.82);
-    }
-    .dot{
-      width:12px; height:12px; border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, var(--gold2), var(--gold));
-      box-shadow: 0 0 0 6px rgba(241,230,163,.08), 0 0 28px rgba(241,230,163,.20);
-    }
-    nav a{
-      color:rgba(244,241,232,.68);
-      text-decoration:none;
-      font-size:13px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid transparent;
-    }
-    nav a:hover{color:rgba(244,241,232,.9); border-color:rgba(241,230,163,.14); background:rgba(9,12,18,.35)}
-    nav a.active{
-      color:rgba(241,230,163,.95);
-      border-color:rgba(241,230,163,.24);
-      background:rgba(9,12,18,.42)
-    }
-    .ctaTop{
-      display:flex; gap:10px; align-items:center;
-    }
-    .btn{
-      appearance:none; border:1px solid rgba(241,230,163,.18);
-      background:rgba(9,12,18,.35);
-      color:rgba(244,241,232,.86);
-      border-radius:999px;
-      padding:10px 14px;
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      cursor:pointer;
-      transition: transform .15s ease, border-color .15s ease, background .15s ease;
-    }
-    .btn:hover{transform: translateY(-1px); border-color:rgba(241,230,163,.28); background:rgba(9,12,18,.50)}
-    .btnGold{
-      background: linear-gradient(180deg, rgba(241,230,163,.95), rgba(212,175,55,.95));
-      color:#10121a;
-      border-color: rgba(241,230,163,.55);
-      box-shadow: 0 18px 50px rgba(212,175,55,.18);
-    }
-    .btnGold:hover{transform: translateY(-1px); filter:saturate(1.08)}
-    .btnSmall{padding:8px 12px; font-size:11px}
-
-    /* HERO */
-    .hero{padding:46px 0 22px}
-    .kicker{
-      font-family: Orbitron, sans-serif;
-      font-size:11px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(241,230,163,.72);
-      margin:0 0 14px;
-    }
-    .hgrid{
-      display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:22px;
-      align-items:start;
-    }
-    h1{
-      margin:0;
-      font-family: Orbitron, sans-serif;
-      font-weight:700;
-      letter-spacing:.02em;
-      line-height:1.02;
-      font-size: clamp(34px, 4.2vw, 64px);
-      text-transform: none;
-    }
-    .accent{color:rgba(241,230,163,.96)}
-    .lead{
-      margin:16px 0 14px;
-      color:rgba(244,241,232,.74);
-      max-width: 72ch;
-      line-height:1.55;
-      font-size:14px;
-    }
-    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 16px}
-    .chip{
-      font-size:11px;
-      color:rgba(241,230,163,.86);
-      border:1px solid rgba(241,230,163,.16);
-      background: rgba(9,12,18,.40);
-      padding:7px 10px;
-      border-radius:999px;
-      letter-spacing:.04em;
+      color:var(--ink-soft);
       white-space:nowrap;
     }
-    .heroActions{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:12px}
-    .fineprint{
-      margin-top:10px;
-      font-size:12px;
-      color:rgba(244,241,232,.55);
-      line-height:1.45;
+    .brand span{color:var(--gold-soft)}
+    .top-nav{
+      display:flex;
+      gap:22px;
+      font-size:0.86rem;
+      color:var(--ink-soft);
+      align-items:center;
+      justify-content:center;
+      flex: 1 1 auto;
+    }
+    .top-nav a{
+      color:inherit;
+      text-decoration:none;
+      position:relative;
+      padding-bottom:3px;
+      white-space:nowrap;
+    }
+    .top-nav a::after{
+      content:"";
+      position:absolute;
+      left:0; bottom:0;
+      width:0; height:1px;
+      background:linear-gradient(90deg,var(--gold-soft),var(--gold));
+      transition:width .2s ease;
+    }
+    .top-nav a:hover::after{width:100%}
+    .top-nav a[aria-current="page"]{color: var(--gold-soft);}
+    .top-nav a[aria-current="page"]::after{width:100%}
+
+    /* CTA stays orange (home signature) */
+    .top-cta{
+      padding:8px 18px;
+      border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      font-size:0.8rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      text-decoration:none;
+      white-space:nowrap;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .top-cta:hover{filter:brightness(1.03)}
+    .top-cta:active{transform:translateY(1px)}
+
+    /* LAYOUT */
+    .wrap{
+      max-width: 1520px;
+      margin:0 auto;
+      padding:96px 56px 72px;
     }
 
-    /* GLASS CARD */
-    .card{
-      border-radius: var(--radius2);
-      background: linear-gradient(180deg, rgba(9,12,18,.55), rgba(9,12,18,.38));
-      border:1px solid rgba(241,230,163,.18);
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
+    /* HERO */
+    .hero{
+      padding-top: 10px;
+      display:grid;
+      grid-template-columns: 1.6fr 1.1fr;
+      gap:48px;
+      align-items:start;
     }
-    .card::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background: radial-gradient(900px 380px at 30% 10%, rgba(241,230,163,.12), transparent 60%);
-      pointer-events:none;
-      opacity:.9;
-    }
-    .cardInner{position:relative; padding:18px 18px 16px}
-    .cardTitle{
-      display:flex; justify-content:space-between; align-items:center; gap:10px;
-      margin-bottom:10px;
-      font-family: Orbitron, sans-serif;
-      letter-spacing:.14em;
+
+    .eyebrow{
+      font-family:"Orbitron",sans-serif;
+      font-size:.72rem;
+      letter-spacing:.22em;
       text-transform:uppercase;
-      font-size:11px;
-      color:rgba(241,230,163,.78);
+      color:var(--ink-soft);
+      margin-bottom:14px;
     }
-    .pills{display:flex; gap:8px; flex-wrap:wrap}
-    .pill{
-      font-size:10px;
-      letter-spacing:.10em;
+    .eyebrow span{color:var(--gold-soft)}
+
+    .h1{
+      font-family:"Orbitron",sans-serif;
       text-transform:uppercase;
+      letter-spacing:.06em;
+      line-height:1.06;
+      font-size:clamp(2.1rem,4.1vw,3.1rem);
+      margin-bottom:14px;
+    }
+    .h1 .gold{display:block;color:var(--gold-soft)}
+
+    .lead{
+      margin-top:10px;
+      font-size:0.98rem;
+      color:rgba(198,186,150,.90);
+      line-height:1.7;
+      max-width: 72ch;
+      text-align: justify;
+    }
+
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin:14px 0 16px 0;
+      max-width: 78ch;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid rgba(241,230,163,.18);
-      background: rgba(9,12,18,.38);
-      color:rgba(244,241,232,.70);
-    }
-    .kv{
-      margin-top:12px;
-      width:100%;
-      border-collapse: collapse;
+      border:1px solid rgba(212,175,55,.18);
+      background: rgba(0,0,0,.22);
       font-size:12px;
-      color:rgba(244,241,232,.78);
+      color:rgba(241,230,163,.90);
+      white-space:nowrap;
     }
-    .kv td{
-      padding:10px 0;
-      border-top:1px solid rgba(241,230,163,.12);
-      vertical-align:top;
+
+    .ctas{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      max-width: 640px;
     }
-    .kv td:first-child{color:rgba(244,241,232,.55); width:34%}
-    .kv td:last-child{color:rgba(241,230,163,.88); text-align:right}
-    .bar{
-      margin-top:14px;
-      border-top:1px solid rgba(241,230,163,.12);
+    .btn-primary,
+    .btn-ghost{
+      min-height:52px;
+      border-radius:999px;
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 18px;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:13px;
+      width:100%;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn-primary{
+      border:1px solid rgba(244,186,120,0.9);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+    }
+    .btn-ghost{
+      border:1px solid rgba(212,175,55,0.35);
+      background: rgba(10,12,27,0.35);
+      color: var(--gold-soft);
+      backdrop-filter: blur(10px);
+    }
+    .btn-primary:hover{filter:brightness(1.03)}
+    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
+    .btn-primary:active,.btn-ghost:active{transform:translateY(1px)}
+
+    .micro{
+      margin-top: 12px;
+      font-size: .9rem;
+      color: rgba(179,164,139,.92);
+      line-height: 1.7;
+      max-width: 86ch;
+      text-align: justify;
+    }
+    .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
+
+    /* COCKPIT PANEL (same as home) */
+    .panel{
+      position:relative;
+      background:var(--panel);
+      border-radius:var(--radius);
+      border:1px solid rgba(212,175,55,0.45);
+      padding:24px;
+      box-shadow:var(--shadow-soft);
+      overflow:hidden;
+      transform-style:preserve-3d;
+      will-change:transform;
+      min-height: 360px;
+    }
+    .panel::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
+        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
+        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
+      opacity:.95;
+      filter: blur(10px);
+      pointer-events:none;
+    }
+    .scanline{
+      position:absolute;
+      left:-30%;
+      top:0;
+      width:160%;
+      height:2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(241,230,163,0.05) 20%, rgba(241,230,163,0.55) 50%, rgba(241,230,163,0.05) 80%, transparent 100%);
+      opacity:.55;
+      pointer-events:none;
+      animation: scanY 3.8s linear infinite;
+      mix-blend-mode: screen;
+    }
+    @keyframes scanY{
+      0%{transform:translateY(-10px)}
+      100%{transform:translateY(420px)}
+    }
+    .panel-inner{position:relative; z-index:2; transform: translateZ(12px);}
+    .panel-title{
+      font-family:"Orbitron",sans-serif;
+      font-size:.78rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:var(--ink-soft);
+      margin-bottom:10px;
+    }
+    .pill{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      font-size:.72rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,.55);
+      margin-bottom:12px;
+      color: rgba(241,230,163,.92);
+      background: rgba(10,12,27,0.22);
+      backdrop-filter: blur(10px);
+    }
+    .pill .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: rgba(241,230,163,.95);
+      box-shadow: 0 0 14px rgba(241,230,163,.55);
+      animation: dotPulse 1.45s ease-in-out infinite;
+    }
+    @keyframes dotPulse{
+      0%,100%{transform:scale(1); opacity:.85}
+      50%{transform:scale(1.35); opacity:1}
+    }
+
+    .list{
+      border-top:1px solid rgba(212,175,55,.28);
+      margin-top:10px;
       padding-top:12px;
-      display:flex; justify-content:space-between; align-items:center; gap:10px;
-      font-size:11px;
-      color:rgba(244,241,232,.55);
+      font-size:.92rem;
+      color:var(--ink-soft);
     }
-    .progress{
-      flex:1;
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 1.3fr;
+      align-items:flex-start;
+      gap:14px;
+      padding:9px 0;
+    }
+    .row .k{color: rgba(179,164,139,.92)}
+    .row .v{color: rgba(241,230,163,.88); text-align:right}
+    .row + .row{border-top:1px dashed var(--line2)}
+
+    .state{
+      margin-top:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding-top:12px;
+      border-top: 1px solid rgba(212,175,55,.14);
+      font-size:.78rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: rgba(179,164,139,.92);
+    }
+    .state .sig{display:flex; align-items:center; gap:10px; white-space:nowrap;}
+    .state .sig i{
+      width:10px;height:10px;border-radius:50%;
+      background: rgba(244,186,120,.95);
+      box-shadow: 0 0 18px rgba(244,186,120,.38);
+      animation: warmBlink 2.2s ease-in-out infinite;
+    }
+    @keyframes warmBlink{
+      0%,100%{opacity:.55}
+      50%{opacity:1}
+    }
+    .state .meter{
+      position:relative;
+      flex:1 1 auto;
       height:8px;
       border-radius:999px;
       background: rgba(241,230,163,.10);
-      border:1px solid rgba(241,230,163,.10);
+      border: 1px solid rgba(212,175,55,.18);
       overflow:hidden;
     }
-    .progress > i{
-      display:block; height:100%;
-      width: 42%;
-      background: linear-gradient(90deg, rgba(241,230,163,.95), rgba(212,175,55,.95));
-      filter:saturate(1.15);
+    .state .meter > span{
+      position:absolute; inset:0;
+      width:46%;
+      border-radius:999px;
+      background: linear-gradient(90deg, rgba(241,230,163,.18), rgba(212,175,55,.42), rgba(241,230,163,.18));
+      animation: meterMove 2.8s ease-in-out infinite;
+    }
+    @keyframes meterMove{
+      0%,100%{transform:translateX(-10%)}
+      50%{transform:translateX(120%)}
     }
 
-    /* MAIN GRID (Sandbox) */
-    .main{padding:18px 0 56px}
-    .grid2{
+    .hash{
+      margin-top:10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: .78rem;
+      color: rgba(241,230,163,.78);
+      opacity:.95;
+      word-break: break-all;
+      border-top: 1px solid rgba(212,175,55,.14);
+      padding-top: 10px;
+    }
+
+    /* MAIN SIMULATOR GRID */
+    .section{
+      margin-top: 34px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(212,175,55,0.14);
+    }
+
+    .section-title{
+      font-family:"Orbitron",sans-serif;
+      font-size:.78rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color:rgba(179,164,139,.92);
+      margin-bottom:14px;
+    }
+
+    .sim-grid{
       display:grid;
-      grid-template-columns: 1.05fr .95fr;
+      grid-template-columns: 1.25fr 1fr;
       gap:18px;
       align-items:start;
     }
-    .panel{
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(9,12,18,.56), rgba(9,12,18,.36));
-      border:1px solid rgba(241,230,163,.16);
-      box-shadow: 0 18px 60px rgba(0,0,0,.45);
-      overflow:hidden;
+
+    .card{
+      border: 1px solid rgba(212,175,55,.22);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      padding: 18px 18px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-    .panelHeader{
-      display:flex; justify-content:space-between; align-items:center; gap:12px;
-      padding:14px 14px 12px;
-      border-bottom:1px solid rgba(241,230,163,.12);
-      background: rgba(9,12,18,.34);
-    }
-    .panelHeader h2{
-      margin:0;
-      font-size:11px;
-      letter-spacing:.16em;
+
+    .card h3{
+      font-family:"Orbitron",sans-serif;
+      font-size:.78rem;
+      letter-spacing:.18em;
       text-transform:uppercase;
-      font-family: Orbitron, sans-serif;
-      color:rgba(241,230,163,.78);
+      color:rgba(179,164,139,.92);
+      margin-bottom:12px;
       font-weight:600;
     }
-    .panelBody{padding:14px}
-    .row2{
+
+    .form-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:12px;
     }
-    label{
+
+    .field label{
       display:block;
-      font-size:11px;
-      letter-spacing:.10em;
+      font-family:"Orbitron",sans-serif;
+      font-size:.70rem;
+      letter-spacing:.18em;
       text-transform:uppercase;
-      color:rgba(244,241,232,.55);
-      margin:0 0 8px;
-      font-family: Orbitron, sans-serif;
-    }
-    input, select, textarea{
-      width:100%;
-      border-radius: 12px;
-      border:1px solid rgba(241,230,163,.14);
-      background: rgba(4,4,14,.36);
-      color:rgba(244,241,232,.88);
-      padding:11px 12px;
-      outline:none;
-      font-size:13px;
-    }
-    textarea{min-height:86px; resize:vertical; line-height:1.45}
-    input:focus, select:focus, textarea:focus{
-      border-color: rgba(241,230,163,.32);
-      box-shadow: 0 0 0 4px rgba(241,230,163,.08);
+      color:rgba(179,164,139,.90);
+      margin-bottom:8px;
     }
 
-    .checkGrid{
+    input, select, textarea{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(212,175,55,.20);
+      background: rgba(10,12,27,0.45);
+      color: var(--ivory);
+      padding:11px 12px;
+      font-size:0.95rem;
+      outline:none;
+    }
+    textarea{min-height: 92px; resize: vertical; line-height:1.55;}
+    input::placeholder, textarea::placeholder{color: rgba(179,164,139,.75);}
+
+    .source-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:10px;
       margin-top:10px;
     }
-    .check{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:10px 10px;
-      border-radius: 14px;
-      border:1px solid rgba(241,230,163,.12);
-      background: rgba(9,12,18,.28);
+    .source{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:16px;
+      border:1px solid rgba(212,175,55,.18);
+      background: rgba(10,12,27,0.28);
     }
-    .check input{width:auto; margin-top:2px}
-    .check b{
+    .source input{width:auto; margin-top:3px;}
+    .source strong{
       display:block;
-      font-size:12px;
-      color:rgba(244,241,232,.86);
-      margin-bottom:3px;
+      font-size:0.92rem;
+      color: rgba(241,230,163,.92);
+      font-weight:600;
+      margin-bottom:4px;
     }
-    .check span{
+    .source span{
       display:block;
-      font-size:11px;
-      color:rgba(244,241,232,.55);
-      line-height:1.35;
+      font-size:0.88rem;
+      color: rgba(198,186,150,.86);
+      line-height:1.45;
+      text-align: justify;
     }
 
-    .subCards{
+    .mini-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:12px;
       margin-top:12px;
     }
     .mini{
-      border-radius: 14px;
-      border:1px solid rgba(241,230,163,.12);
-      background: rgba(9,12,18,.26);
-      padding:12px;
-      min-height:86px;
+      border: 1px solid rgba(212,175,55,.18);
+      border-radius: 16px;
+      background: rgba(10,12,27,0.28);
+      padding: 12px;
     }
-    .mini h3{
-      margin:0 0 8px;
-      font-size:10px;
-      letter-spacing:.16em;
+    .mini .k{
+      font-family:"Orbitron",sans-serif;
+      font-size:.70rem;
+      letter-spacing:.18em;
       text-transform:uppercase;
-      font-family: Orbitron, sans-serif;
-      color:rgba(241,230,163,.72);
-      font-weight:600;
+      color:rgba(179,164,139,.92);
+      margin-bottom:8px;
     }
-    .mini p{
-      margin:0;
-      font-size:12px;
-      color:rgba(244,241,232,.62);
-      line-height:1.45;
+    .mini .v{
+      font-size:0.92rem;
+      color: rgba(198,186,150,.86);
+      line-height:1.55;
+      text-align: justify;
     }
 
     .actions{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
       margin-top:14px;
-      padding-top:12px;
-      border-top:1px solid rgba(241,230,163,.10);
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:10px;
     }
-    .hint{
-      margin-top:8px;
-      font-size:11px;
-      color:rgba(244,241,232,.50);
-      line-height:1.4;
-    }
-
-    /* OUTPUT PANEL */
-    .badges{
-      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
-    }
-    .badge{
-      font-size:10px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      padding:6px 10px;
+    .btn{
+      min-height:46px;
       border-radius:999px;
-      border:1px solid rgba(241,230,163,.16);
-      background: rgba(9,12,18,.35);
-      color:rgba(244,241,232,.70);
-    }
-    .badge strong{color:rgba(241,230,163,.92); font-weight:600}
-    .scoreLine{
-      display:flex; justify-content:space-between; gap:10px;
-      padding:10px 0;
-      border-top:1px solid rgba(241,230,163,.10);
+      border:1px solid rgba(212,175,55,0.35);
+      background: rgba(10,12,27,0.35);
+      color: var(--gold-soft);
+      backdrop-filter: blur(10px);
+      text-transform:uppercase;
+      letter-spacing:.12em;
       font-size:12px;
-      color:rgba(244,241,232,.70);
-    }
-    .scoreLine b{color:rgba(241,230,163,.88)}
-    .tabs{
-      display:flex; gap:8px; flex-wrap:wrap;
-      margin:12px 0 10px;
-    }
-    .tab{
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,.14);
-      background: rgba(9,12,18,.32);
-      color:rgba(244,241,232,.70);
-      font-size:11px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
       cursor:pointer;
     }
-    .tab.active{
-      color:#12131b;
-      border-color: rgba(241,230,163,.52);
-      background: linear-gradient(180deg, rgba(241,230,163,.92), rgba(212,175,55,.92));
+    .btn:hover{border-color:rgba(212,175,55,0.55)}
+    .btn:active{transform:translateY(1px)}
+    .btn.hot{
+      border:1px solid rgba(244,186,120,0.9);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
     }
+
+    .right-stack{
+      display:grid;
+      gap:14px;
+    }
+
+    .kv{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 14px;
+      font-size: 0.92rem;
+      color: rgba(198,186,150,.86);
+    }
+    .kv .k{color: rgba(179,164,139,.92)}
+    .kv .v{color: rgba(241,230,163,.90); text-align:right}
+
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin: 10px 0 12px;
+    }
+    .tab{
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,.30);
+      background: rgba(10,12,27,0.26);
+      color: rgba(241,230,163,.92);
+      font-family:"Orbitron",sans-serif;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:.68rem;
+      cursor:pointer;
+    }
+    .tab[aria-selected="true"]{
+      border-color: rgba(241,230,163,.70);
+      background: rgba(10,12,27,0.42);
+      box-shadow: 0 0 0 3px rgba(241,230,163,.08);
+    }
+
     pre{
-      margin:0;
-      padding:12px;
-      border-radius: 14px;
-      border:1px solid rgba(241,230,163,.12);
-      background: rgba(4,4,14,.38);
-      color: rgba(244,241,232,.78);
-      font-size:12px;
-      line-height:1.4;
+      border: 1px solid rgba(212,175,55,.18);
+      border-radius: 16px;
+      background: rgba(10,12,27,0.35);
+      padding: 14px;
+      font-size: 0.86rem;
+      color: rgba(241,230,163,.86);
       overflow:auto;
-      max-height: 300px;
+      max-height: 320px;
+      line-height:1.45;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       white-space: pre-wrap;
       word-break: break-word;
     }
 
-    .footerNote{
+    .note{
       margin-top:10px;
-      font-size:11px;
-      color:rgba(244,241,232,.52);
-      line-height:1.45;
+      font-size:0.88rem;
+      color: rgba(179,164,139,.90);
+      line-height:1.6;
+      text-align: justify;
     }
+    .note strong{color: rgba(241,230,163,.95); font-weight:600;}
 
-    /* Responsive */
-    @media (max-width: 980px){
-      .hgrid, .grid2{grid-template-columns: 1fr}
+    footer{
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(212,175,55,0.14);
+      color: rgba(179,164,139,.85);
+      font-size: 0.88rem;
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
     }
-    @media (max-width: 560px){
-      .row2, .checkGrid, .subCards{grid-template-columns: 1fr}
-      nav{display:none}
-    }
+    footer a{opacity:.9}
+    footer a:hover{opacity:1}
 
-    /* Print view for "PDF" */
-    .printSheet{
-      display:none;
-    }
+    /* PRINT VIEW */
     @media print{
-      body{background:#fff; color:#000}
-      header,.hero,.main,.stars{display:none !important}
-      .printSheet{display:block}
-      .printSheet h1{font-family: Inter, sans-serif; font-size:18px; margin:0 0 10px}
-      .printSheet pre{background:#f7f7f7; border:1px solid #ddd; color:#111}
+      .top-bar, #bg-field, .top-nav, .top-cta, .hero, footer {display:none !important;}
+      body{background:#fff; color:#111}
+      .wrap{padding:24px}
+      .card, pre{border:1px solid #ddd; background:#f7f7f7; color:#111}
+      pre{max-height:none}
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1180px){
+      .hero{grid-template-columns:1fr; gap:22px}
+      .sim-grid{grid-template-columns:1fr; }
+      .wrap{padding:96px 28px 56px}
+      .actions{grid-template-columns:1fr}
+      .form-grid{grid-template-columns:1fr}
+      .mini-grid{grid-template-columns:1fr}
+      .source-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:960px){
+      .top-nav{display:none}
+      .top-bar{padding:0 16px}
+      .wrap{padding:96px 20px 56px}
+      .ctas{grid-template-columns:1fr}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .scanline, .pill .dot, .state .sig i, .state .meter > span {animation:none}
+      .panel{transform:none !important}
+      #bg-field{display:none}
     }
   </style>
 </head>
 
 <body>
-  <div class="stars"></div>
+  <canvas id="bg-field" aria-hidden="true"></canvas>
 
-  <div class="wrap">
-    <header>
-      <div class="container">
-        <div class="nav">
-          <div class="brand">
-            <span class="dot"></span>
-            <span>OPENPROOF.NET — RPO v0.1</span>
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="emblem" aria-hidden="true"></div>
+      <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
+    </div>
+
+    <nav class="top-nav" aria-label="Primary">
+      <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a>
+      <a href="./sandbox.html" aria-current="page" target="_blank" rel="noopener noreferrer">Sandbox</a>
+      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
+      <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+    </nav>
+
+    <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Try the live demo</a>
+  </header>
+
+  <main class="wrap" role="main">
+    <!-- =============================== -->
+    <!-- HERO -->
+    <!-- =============================== -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div>
+        <div class="eyebrow">Deterministic <span>proof bundle simulator</span></div>
+
+        <h1 class="h1" id="hero-title">
+          Freeze the context.
+          <span class="gold">Generate an auditable decision bundle.</span>
+        </h1>
+
+        <p class="lead">
+          This sandbox does not “choose” a candidate. It captures decision scope, declared sources and constraints,
+          then generates deterministic outputs: JSON + print view + public hash (SHA-256).
+          No AI. No storage. Same input → same output.
+        </p>
+
+        <div class="chips" aria-label="Core concepts">
+          <span class="chip">Decision scope (moment T)</span>
+          <span class="chip">Declared sources</span>
+          <span class="chip">Deterministic rules</span>
+          <span class="chip">Audit-ready</span>
+          <span class="chip">Public hash</span>
+        </div>
+
+        <div class="ctas" role="group" aria-label="Primary actions">
+          <button class="btn-primary" id="btnGenerateTop" type="button">Generate bundle</button>
+          <button class="btn-ghost" id="btnLoadTop" type="button">Load example</button>
+        </div>
+
+        <p class="micro">
+          <strong>RPO =</strong> signed JSON + human-readable PDF + public hash.
+          The hash proves integrity, not “truth”. Verification is public. Responsibility is human.
+        </p>
+      </div>
+
+      <!-- Cockpit (interactive like home, but now tied to your real inputs) -->
+      <aside class="panel" id="cockpit" aria-label="Simulator cockpit">
+        <div class="scanline" aria-hidden="true"></div>
+
+        <div class="panel-inner">
+          <div class="panel-title">Simulator cockpit (live)</div>
+
+          <div class="pill" aria-label="Attributes">
+            <span class="dot" aria-hidden="true"></span>
+            Integrity • Readability • Verifiability
           </div>
 
-          <nav>
-            <a href="#" title="Home">Home</a>
-            <a class="active" href="#" title="Sandbox">Bac à sable</a>
-            <a href="#" title="How it works">Comment ça marche</a>
-            <a href="#" title="Spec">Spéc.</a>
-            <a href="#" title="Tests">Tests</a>
-            <a href="#" title="Examples">Exemples</a>
-          </nav>
+          <div class="list" role="list">
+            <div class="row" role="listitem">
+              <span class="k">Scope</span>
+              <span class="v" id="cpScope">—</span>
+            </div>
+            <div class="row" role="listitem">
+              <span class="k">Moment T</span>
+              <span class="v" id="cpMoment">—</span>
+            </div>
+            <div class="row" role="listitem">
+              <span class="k">Coverage</span>
+              <span class="v" id="cpCoverage">—</span>
+            </div>
+            <div class="row" role="listitem">
+              <span class="k">Defensibility</span>
+              <span class="v" id="cpDef">—</span>
+            </div>
+          </div>
 
-          <div class="ctaTop">
-            <button class="btn btnSmall" id="btnExamples">Voir un exemple</button>
-            <button class="btn btnGold btnSmall" id="btnLive">Essayez la démo en direct</button>
+          <div class="state" aria-label="Live status">
+            <div class="sig"><i aria-hidden="true"></i><span id="stateText">CAPTURE</span></div>
+            <div class="meter" aria-hidden="true"><span></span></div>
+            <div class="sig"><span id="tickText">SYNC</span></div>
+          </div>
+
+          <div class="hash" aria-label="Public hash preview">
+            hash: <span id="hashText">—</span>
           </div>
         </div>
-      </div>
-    </header>
+      </aside>
+    </section>
 
-    <section class="hero">
-      <div class="container">
-        <div class="hgrid">
-          <div>
-            <p class="kicker">Démonstration déterministe — décision RH opposable</p>
-            <h1>Sandbox,<br><span class="accent">des données RH à la décision justifiée.</span></h1>
-            <p class="lead">
-              Ici, on ne “choisit” pas. On produit un artefact de gouvernance : périmètre, sources, règles, hypothèses,
-              et un hash public pour prouver l’intégrité. Pas d’IA. Pas de stockage. Même entrée → même bundle.
-            </p>
+    <!-- =============================== -->
+    <!-- SIMULATOR -->
+    <!-- =============================== -->
+    <section class="section" aria-labelledby="sim-title">
+      <h2 class="section-title" id="sim-title">Sandbox — deterministic simulator</h2>
 
-            <div class="chips">
-              <span class="chip">Pas d’IA</span>
-              <span class="chip">Pas de stockage</span>
-              <span class="chip">Déterministe</span>
-              <span class="chip">Audit-ready</span>
-              <span class="chip">Hash SHA-256 public</span>
+      <div class="sim-grid">
+        <!-- LEFT: INPUTS -->
+        <div class="card" aria-label="Inputs">
+          <h3>Input — decision perimeter</h3>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="decisionType">Decision type</label>
+              <select id="decisionType">
+                <option value="Nomination / sensitive role">Nomination / sensitive role</option>
+                <option value="Promotion (multi-criteria)">Promotion (multi-criteria)</option>
+                <option value="Disciplinary / compliance action">Disciplinary / compliance action</option>
+                <option value="Compensation adjustment / internal equity">Compensation adjustment / internal equity</option>
+                <option value="Access to restricted perimeter">Access to restricted perimeter</option>
+              </select>
             </div>
 
-            <div class="heroActions">
-              <button class="btn btnGold" id="btnScroll">Générer un bundle</button>
-              <button class="btn" id="btnSpec">Lire la spécification</button>
+            <div class="field">
+              <label for="momentT">Decision date (moment T)</label>
+              <input id="momentT" type="date" />
             </div>
 
-            <div class="fineprint">
-              RPO = JSON signé (logique), rendu “lisible humain” (print), + hash public. Le hash prouve l’intégrité, pas le “vrai”.
-              Vérification publique. Responsabilité humaine.
+            <div class="field">
+              <label for="orgScope">Organization / scope</label>
+              <input id="orgScope" type="text" placeholder="Company X — multi-sites, multi-entities" />
             </div>
-          </div>
 
-          <!-- Preview Bundle (interactive like Home) -->
-          <div class="card" id="previewCard" role="button" tabindex="0" aria-label="Preview bundle">
-            <div class="cardInner">
-              <div class="cardTitle">
-                <span>Preview bundle (30 seconds)</span>
-                <div class="pills">
-                  <span class="pill">Integrity • hash public</span>
-                  <span class="pill">Readability • print</span>
-                  <span class="pill">Verifiability • reproductible</span>
-                </div>
-              </div>
-
-              <table class="kv" aria-label="Key-value preview">
-                <tr><td>Input</td><td id="pvInput">contexte décisionnel + sources déclarées</td></tr>
-                <tr><td>Output</td><td id="pvOutput">decision_bundle.json + hash sha256</td></tr>
-                <tr><td>Usage</td><td id="pvUsage">audit • litige • gouvernance</td></tr>
-                <tr><td>Hash</td><td id="pvHash">—</td></tr>
-              </table>
-
-              <div class="bar">
-                <span id="pvLeft">• bundle</span>
-                <div class="progress" aria-hidden="true"><i id="pvBar"></i></div>
-                <span id="pvRight">rules</span>
-              </div>
+            <div class="field">
+              <label for="owner">Decision owner</label>
+              <input id="owner" type="text" placeholder="CEO / Executive committee" />
             </div>
           </div>
 
+          <div class="field" style="margin-top:12px">
+            <label for="context">Decision context (1–3 paragraphs)</label>
+            <textarea id="context" placeholder="Regulated environment. Audit exposure. Decision may be challenged."></textarea>
+          </div>
+
+          <h3 style="margin-top:18px">Declared sources (what was actually available)</h3>
+
+          <div class="source-grid">
+            <label class="source">
+              <input type="checkbox" id="srcLms" checked />
+              <div>
+                <strong>LMS / training files</strong>
+                <span>Certifications, training attestations, documented evidence.</span>
+              </div>
+            </label>
+
+            <label class="source">
+              <input type="checkbox" id="srcHris" checked />
+              <div>
+                <strong>HRIS / career history</strong>
+                <span>Roles, tenure, mobility, grade changes, official trace.</span>
+              </div>
+            </label>
+
+            <label class="source">
+              <input type="checkbox" id="srcPerf" checked />
+              <div>
+                <strong>Performance reviews</strong>
+                <span>Objectives, annual reviews, formal evaluation trail.</span>
+              </div>
+            </label>
+
+            <label class="source">
+              <input type="checkbox" id="srcOps" checked />
+              <div>
+                <strong>Operational results</strong>
+                <span>Attested KPIs, certified deliverables, traceable metrics.</span>
+              </div>
+            </label>
+
+            <label class="source">
+              <input type="checkbox" id="src360" />
+              <div>
+                <strong>360 feedback</strong>
+                <span>Only if documented and attributable (otherwise excluded).</span>
+              </div>
+            </label>
+
+            <label class="source">
+              <input type="checkbox" id="srcLegal" checked />
+              <div>
+                <strong>Legal / compliance</strong>
+                <span>Constraints, disputes, regulatory considerations, opposable items.</span>
+              </div>
+            </label>
+          </div>
+
+          <div class="mini-grid">
+            <div class="mini">
+              <div class="k">Known missing data</div>
+              <div class="v">
+                Comparable KPIs not attested for all candidates; some evidence exists but is not attributable; missing documented crisis leadership trace.
+              </div>
+            </div>
+            <div class="mini">
+              <div class="k">Constraints (optional)</div>
+              <div class="v">
+                Urgency, business continuity, social sensitivity, upcoming audit window. Decision must remain reconstructible.
+              </div>
+            </div>
+          </div>
+
+          <div class="actions" aria-label="Actions">
+            <button class="btn hot" id="btnGenerate" type="button">Generate</button>
+            <button class="btn" id="btnLoad" type="button">Load example</button>
+            <button class="btn" id="btnReset" type="button">Reset</button>
+          </div>
+
+          <div class="note">
+            <strong>Local-only:</strong> no data is sent. The bundle is generated in your browser. Deterministic rules only.
+          </div>
+        </div>
+
+        <!-- RIGHT: OUTPUTS -->
+        <div class="right-stack">
+          <div class="card" aria-label="Report">
+            <h3>Output — decision preparation report</h3>
+
+            <div class="kv" style="margin-top:4px">
+              <div class="k">Coverage</div><div class="v" id="outCoverage">—</div>
+              <div class="k">Missing</div><div class="v" id="outMissing">—</div>
+              <div class="k">Defensibility</div><div class="v" id="outDef">—</div>
+              <div class="k">Seal</div><div class="v" id="outSeal">—</div>
+            </div>
+
+            <div class="tabs" role="tablist" aria-label="Output tabs">
+              <button class="tab" role="tab" aria-selected="true" id="tabSummary">Summary</button>
+              <button class="tab" role="tab" aria-selected="false" id="tabJson">JSON</button>
+              <button class="tab" role="tab" aria-selected="false" id="tabPrint">PDF (print)</button>
+            </div>
+
+            <div id="paneSummary">
+              <pre id="summaryPre">Click “Generate”.</pre>
+
+              <div class="actions" style="grid-template-columns: 1fr 1fr 1fr; margin-top:12px">
+                <button class="btn" id="btnCopyHash" type="button">Copy hash</button>
+                <button class="btn" id="btnCopyJson" type="button">Copy JSON</button>
+                <button class="btn hot" id="btnDownload" type="button">Download JSON</button>
+              </div>
+
+              <div class="note">
+                This artifact documents <strong>scope + declared sources + deterministic rules</strong>. It does not “decide truth”.
+                Accountability remains human.
+              </div>
+            </div>
+
+            <div id="paneJson" style="display:none">
+              <pre id="jsonPre">{}</pre>
+            </div>
+
+            <div id="panePrint" style="display:none">
+              <pre>
+Use your browser print (Cmd/Ctrl+P) to export a clean PDF.
+It’s a human-readable rendering of the same deterministic bundle.
+              </pre>
+              <div class="actions" style="grid-template-columns: 1fr; margin-top:12px">
+                <button class="btn hot" id="btnPrint" type="button">Print / Export PDF</button>
+              </div>
+            </div>
+
+            <div class="hash" style="margin-top:12px">
+              hash: <span id="hashOut">—</span>
+            </div>
+          </div>
+
+          <!-- SECONDARY: mini “Proof bundle preview” (extra delight) -->
+          <div class="card" aria-label="Preview">
+            <h3>Proof bundle preview</h3>
+            <div class="kv">
+              <div class="k">Input</div><div class="v" id="pvIn">Decision context + declared sources</div>
+              <div class="k">Output</div><div class="v" id="pvOut">signed JSON + PDF + hash</div>
+              <div class="k">Lineage</div><div class="v" id="pvLin">sources + rules + timestamps</div>
+              <div class="k">Use</div><div class="v" id="pvUse">audit, dispute, governance</div>
+            </div>
+            <div class="note" style="margin-top:10px">
+              Same input → same output. If someone disputes later, you can reconstruct the perimeter without improvising.
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="main" id="sandbox">
-      <div class="container">
-        <div class="grid2">
-
-          <!-- INPUT -->
-          <div class="panel">
-            <div class="panelHeader">
-              <h2>Ensemble d’entrée</h2>
-              <div class="badge">Scope • sources • responsabilité</div>
-            </div>
-
-            <div class="panelBody">
-              <div class="row2">
-                <div>
-                  <label for="decisionType">Type de décision</label>
-                  <select id="decisionType">
-                    <option value="Nomination / mobilité sensible (rôle critique)">Nomination / mobilité sensible (rôle critique)</option>
-                    <option value="Promotion (multi-critères)">Promotion (multi-critères)</option>
-                    <option value="Discipline / conformité">Discipline / conformité</option>
-                    <option value="Rémunération / équité interne">Rémunération / équité interne</option>
-                    <option value="Accès à un périmètre restreint">Accès à un périmètre restreint</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="decisionDate">Date de décision (moment T)</label>
-                  <input id="decisionDate" type="date" value="2026-01-28" />
-                </div>
-              </div>
-
-              <div class="row2" style="margin-top:12px">
-                <div>
-                  <label for="orgScope">Organisation / périmètre</label>
-                  <input id="orgScope" type="text" value="Company X — France scope (multi-sites, multi-entités)" />
-                </div>
-                <div>
-                  <label for="decisionOwner">Responsable de la décision</label>
-                  <input id="decisionOwner" type="text" value="CEO / Executive committee" />
-                </div>
-              </div>
-
-              <div style="margin-top:12px">
-                <label for="context">Contexte court (1–3 paragraphes)</label>
-                <textarea id="context">Décision sensible en environnement réglementé. Exigence de traçabilité des sources et de stabilité des définitions. La décision peut être contestée et doit rester vérifiable dans le temps.</textarea>
-              </div>
-
-              <div style="margin-top:14px">
-                <label>Sources déclarées (ce qui était réellement disponible)</label>
-                <div class="checkGrid">
-                  <div class="check">
-                    <input type="checkbox" id="srcLms" checked />
-                    <div>
-                      <b>LMS / Dossiers formation</b>
-                      <span>Formations, habilitations, attestations documentées.</span>
-                    </div>
-                  </div>
-
-                  <div class="check">
-                    <input type="checkbox" id="srcHris" checked />
-                    <div>
-                      <b>SIRH / Historique professionnel</b>
-                      <span>Rôles, ancienneté, mobilité, changements de grade.</span>
-                    </div>
-                  </div>
-
-                  <div class="check">
-                    <input type="checkbox" id="srcPerf" checked />
-                    <div>
-                      <b>Évaluations de performance</b>
-                      <span>Objectifs, revues annuelles, événements formels.</span>
-                    </div>
-                  </div>
-
-                  <div class="check">
-                    <input type="checkbox" id="srcOps" checked />
-                    <div>
-                      <b>Résultats opérationnels</b>
-                      <span>KPI attestés, éléments traçables.</span>
-                    </div>
-                  </div>
-
-                  <div class="check">
-                    <input type="checkbox" id="src360" />
-                    <div>
-                      <b>360 / retours d’information</b>
-                      <span>Uniquement si documenté et attribuable.</span>
-                    </div>
-                  </div>
-
-                  <div class="check">
-                    <input type="checkbox" id="srcLegal" checked />
-                    <div>
-                      <b>Juridique / conformité</b>
-                      <span>Contraintes, contentieux, éléments opposables.</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="subCards">
-                <div class="mini">
-                  <h3>Données manquantes connues</h3>
-                  <p id="missingKnown">Exemple : feedback 360 non attribuable ; KPI non attestés à périmètre égal ; historique d’incident non scellé.</p>
-                </div>
-                <div class="mini">
-                  <h3>Contraintes (facultatif)</h3>
-                  <p id="constraints">Exemple : urgence, calendrier réglementaire, sensibilité sociale, audit à venir.</p>
-                </div>
-              </div>
-
-              <div class="actions">
-                <button class="btn btnGold" id="btnGenerate">Générer le bundle</button>
-                <button class="btn" id="btnLoad">Example (neutre)</button>
-                <button class="btn" id="btnReset">Réinitialiser</button>
-              </div>
-
-              <div class="hint">
-                Rappel : aucune donnée n’est envoyée. Le bundle est calculé localement dans ton navigateur.
-              </div>
-            </div>
-          </div>
-
-          <!-- OUTPUT -->
-          <div class="panel">
-            <div class="panelHeader">
-              <h2>Rapport de préparation à la décision</h2>
-              <div class="badges">
-                <span class="badge">Defensibility: <strong id="defensibility">—</strong></span>
-                <span class="badge">Coverage: <strong id="coverage">—</strong></span>
-                <span class="badge">Missing: <strong id="missingCount">—</strong></span>
-              </div>
-            </div>
-
-            <div class="panelBody">
-              <div class="scoreLine">
-                <span>Capture (moment T)</span>
-                <b id="capDate">—</b>
-              </div>
-              <div class="scoreLine">
-                <span>Évaluation (déterministe)</span>
-                <b id="scoreLine">—</b>
-              </div>
-              <div class="scoreLine">
-                <span>Scellement</span>
-                <b id="sealLine">—</b>
-              </div>
-
-              <div class="tabs">
-                <button class="tab active" data-tab="summary">Synthèse</button>
-                <button class="tab" data-tab="json">JSON</button>
-                <button class="tab" data-tab="print">PDF (print)</button>
-              </div>
-
-              <div id="tab_summary">
-                <pre id="summaryText">Clique “Générer le bundle”.</pre>
-
-                <div class="actions" style="margin-top:12px">
-                  <button class="btn" id="btnCopyHash">Copier le hachage</button>
-                  <button class="btn" id="btnCopyJson">Copier le JSON</button>
-                  <button class="btn btnGold" id="btnDownloadJson">Télécharger decision_bundle.json</button>
-                </div>
-
-                <div class="footerNote">
-                  Ce rapport porte sur la justification (périmètre/sources/règles), pas sur “le vrai”.
-                  L’intégrité est vérifiable via le hash public.
-                </div>
-              </div>
-
-              <div id="tab_json" style="display:none">
-                <pre id="jsonOut">{}</pre>
-              </div>
-
-              <div id="tab_print" style="display:none">
-                <pre>Utilise “Imprimer” (Ctrl/Cmd+P) pour obtenir un PDF propre, lisible, partageable.</pre>
-                <div class="actions" style="margin-top:12px">
-                  <button class="btn btnGold" id="btnPrint">Imprimer / Export PDF</button>
-                </div>
-              </div>
-
-              <div style="margin-top:12px">
-                <label>Hash (SHA-256)</label>
-                <pre id="hashOut">—</pre>
-              </div>
-            </div>
-          </div>
-
-        </div>
+    <footer>
+      <div>© OpenProof — RPO v0.1. Created by Gersende Ryard de Parcey.</div>
+      <div>
+        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
+        <a href="./sandbox.html" target="_blank" rel="noopener noreferrer">Sandbox</a> ·
+        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
       </div>
-    </section>
-
-    <!-- Hidden print sheet -->
-    <section class="printSheet">
-      <h1>RPO v0.1 — Decision Preparation Report</h1>
-      <p><b>Date (moment T):</b> <span id="printDate">—</span></p>
-      <p><b>Decision type:</b> <span id="printType">—</span></p>
-      <p><b>Scope:</b> <span id="printScope">—</span></p>
-      <p><b>Owner:</b> <span id="printOwner">—</span></p>
-      <p><b>Coverage:</b> <span id="printCoverage">—</span> • <b>Defensibility:</b> <span id="printDef">—</span></p>
-      <p><b>Hash:</b></p>
-      <pre id="printHash">—</pre>
-      <p><b>Bundle (JSON):</b></p>
-      <pre id="printJson">{}</pre>
-    </section>
-  </div>
+    </footer>
+  </main>
 
   <script>
-    // --------- Helpers ----------
-    const $ = (id)=>document.getElementById(id);
+    // ===============================
+    // Star field background (same as home)
+    // ===============================
+    (function () {
+      const canvas = document.getElementById("bg-field");
+      const ctx = canvas.getContext("2d", { alpha: true });
+
+      let width, height, particles = [];
+      const COUNT = 220;
+
+      function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        const ratio = window.devicePixelRatio || 1;
+
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      }
+
+      function createParticle() {
+        return {
+          x: (Math.random() * 2 - 1),
+          y: (Math.random() * 2 - 1),
+          z: Math.random() * 0.9 + 0.1,
+          speed: Math.random() * 0.004 + 0.0015
+        };
+      }
+
+      function init() {
+        particles = [];
+        for (let i = 0; i < COUNT; i++) particles.push(createParticle());
+      }
+
+      function project(p) {
+        const f = 420;
+        const s = f / (f * p.z);
+        return {
+          x: p.x * width * 0.5 * s + width / 2,
+          y: p.y * height * 0.5 * s + height / 2
+        };
+      }
+
+      function loop() {
+        ctx.clearRect(0, 0, width, height);
+
+        for (const p of particles) {
+          p.z -= p.speed;
+          if (p.z < 0.08) {
+            Object.assign(p, createParticle());
+            p.z = 1;
+          }
+
+          const { x, y } = project(p);
+          const a = Math.min(1, (1.2 - p.z) * 1.1);
+
+          ctx.fillStyle = `rgba(241,230,163,${0.55 * a})`;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        requestAnimationFrame(loop);
+      }
+
+      window.addEventListener("resize", resize);
+      resize(); init(); loop();
+    })();
+
+    // ===============================
+    // Cockpit 3D hover (same as home)
+    // ===============================
+    (function(){
+      const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const card = document.getElementById("cockpit");
+      if (!card || prefersReduce) return;
+
+      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+      let raf = null;
+
+      function onMove(e){
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top) / r.height;
+
+        const rotY = clamp((x - 0.5) * 10, -6, 6);
+        const rotX = clamp((0.5 - y) * 10, -6, 6);
+
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
+        });
+      }
+      function onLeave(){ card.style.transform = "none"; }
+
+      card.addEventListener("mousemove", onMove);
+      card.addEventListener("mouseleave", onLeave);
+    })();
+
+    // ===============================
+    // Deterministic engine (real simulator)
+    // ===============================
+    const $ = (id) => document.getElementById(id);
 
     function stableStringify(obj){
-      // deterministic stringify with sorted keys
       const seen = new WeakSet();
-      const sorter = (value)=>{
-        if(value && typeof value === 'object'){
-          if(seen.has(value)) return value;
-          seen.add(value);
-
-          if(Array.isArray(value)) return value.map(sorter);
-
+      const sorter = (v)=>{
+        if(v && typeof v === "object"){
+          if(seen.has(v)) return v;
+          seen.add(v);
+          if(Array.isArray(v)) return v.map(sorter);
           const out = {};
-          Object.keys(value).sort().forEach(k=>{
-            out[k] = sorter(value[k]);
-          });
+          Object.keys(v).sort().forEach(k => out[k]=sorter(v[k]));
           return out;
         }
-        return value;
+        return v;
       };
       return JSON.stringify(sorter(obj), null, 2);
     }
@@ -802,144 +1098,186 @@
     async function sha256Hex(text){
       const enc = new TextEncoder();
       const data = enc.encode(text);
-      const digest = await crypto.subtle.digest('SHA-256', data);
+      const digest = await crypto.subtle.digest("SHA-256", data);
       const bytes = Array.from(new Uint8Array(digest));
-      return bytes.map(b=>b.toString(16).padStart(2,'0')).join('');
+      return bytes.map(b => b.toString(16).padStart(2,"0")).join("");
     }
 
-    function computeCoverage(flags){
-      // simple deterministic scoring: % = (checked / total)*100
-      const total = Object.keys(flags).length;
-      const checked = Object.values(flags).filter(Boolean).length;
-      return Math.round((checked/total)*100);
+    function sources(){
+      return {
+        lms: $("srcLms").checked,
+        hris: $("srcHris").checked,
+        performance: $("srcPerf").checked,
+        ops: $("srcOps").checked,
+        feedback360: $("src360").checked,
+        legal: $("srcLegal").checked
+      };
     }
 
-    function defensibilityFrom(coverage, missing){
-      // deterministic mapping (simple & explainable)
+    function coveragePct(src){
+      const total = Object.keys(src).length;
+      const yes = Object.values(src).filter(Boolean).length;
+      return Math.round((yes/total)*100);
+    }
+
+    function missingCount(src){
+      return Object.values(src).filter(v => !v).length;
+    }
+
+    function defensibility(coverage, missing){
+      // simple, explainable, deterministic mapping
       if(coverage >= 90 && missing <= 2) return "HIGH";
       if(coverage >= 75 && missing <= 4) return "MEDIUM";
       return "LOW";
     }
 
-    function missingFrom(flags){
-      // missing = unchecked sources count (simple proxy)
-      return Object.values(flags).filter(v=>!v).length;
+    function nowISODate(){
+      const d = new Date();
+      const pad = (n)=> String(n).padStart(2,"0");
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
     }
 
-    function setPreview(hash, pct){
-      $("pvHash").textContent = hash ? hash.slice(0, 10) + "…" + hash.slice(-10) : "—";
-      $("pvBar").style.width = Math.max(18, Math.min(92, pct)) + "%";
-    }
-
-    function setTab(name){
-      const tabs = document.querySelectorAll(".tab");
-      tabs.forEach(t=>t.classList.toggle("active", t.dataset.tab === name));
-      $("tab_summary").style.display = (name==="summary") ? "block" : "none";
-      $("tab_json").style.display = (name==="json") ? "block" : "none";
-      $("tab_print").style.display = (name==="print") ? "block" : "none";
-    }
-
-    // --------- Main generation ----------
-    async function generateBundle(fromExample=false){
-      const flags = {
-        lms: $("srcLms").checked,
-        hris: $("srcHris").checked,
-        perf: $("srcPerf").checked,
-        ops: $("srcOps").checked,
-        s360: $("src360").checked,
-        legal: $("srcLegal").checked
+    function setTab(which){
+      const map = {
+        summary: ["tabSummary","paneSummary"],
+        json: ["tabJson","paneJson"],
+        print: ["tabPrint","panePrint"]
       };
+      Object.entries(map).forEach(([k,[t,p]])=>{
+        $(t).setAttribute("aria-selected", k===which ? "true" : "false");
+        $(p).style.display = k===which ? "block" : "none";
+      });
+    }
 
-      const coverage = computeCoverage(flags);
-      const missing = missingFrom(flags);
-      const defensibility = defensibilityFrom(coverage, missing);
+    // Cockpit state machine: now driven by generation phases
+    const phases = [
+      { s:"CAPTURE", t:"SYNC" },
+      { s:"BUNDLE",  t:"RULES" },
+      { s:"SEAL",    t:"HASH" },
+      { s:"VERIFY",  t:"OK" }
+    ];
+    let phaseIndex = 0;
+    function setPhase(i){
+      phaseIndex = i % phases.length;
+      $("stateText").textContent = phases[phaseIndex].s;
+      $("tickText").textContent = phases[phaseIndex].t;
+    }
+    setPhase(0);
 
-      const context = $("context").value.trim();
-      const decisionType = $("decisionType").value;
-      const date = $("decisionDate").value || new Date().toISOString().slice(0,10);
-      const orgScope = $("orgScope").value.trim();
-      const owner = $("decisionOwner").value.trim();
+    function syncCockpit(coverage, def, scope, moment, hash){
+      $("cpScope").textContent = scope || "—";
+      $("cpMoment").textContent = moment || "—";
+      $("cpCoverage").textContent = (coverage!=null) ? `${coverage}%` : "—";
+      $("cpDef").textContent = def || "—";
+      $("hashText").textContent = hash || "—";
+    }
 
+    function buildBundle(){
+      const src = sources();
+      const cov = coveragePct(src);
+      const miss = missingCount(src);
+      const def = defensibility(cov, miss);
+
+      const momentT = $("momentT").value || nowISODate();
+      const scope = $("orgScope").value.trim() || "Company X — multi-sites, multi-entities";
+      const owner = $("owner").value.trim() || "CEO / Executive committee";
+      const dtype = $("decisionType").value;
+      const context = ($("context").value || "").trim() || "Regulated environment. Audit exposure. Decision may be challenged and must remain reconstructible.";
+
+      // Deterministic bundle
       const bundle = {
         standard: "OpenProof RPO v0.1",
-        artifact_type: "HR_DECISION_DEFENSIBILITY",
-        moment_t: date,
+        artifact_type: "HR_DECISION_GOVERNANCE_BUNDLE",
+        moment_t: momentT,
         decision: {
-          type: decisionType,
-          scope: orgScope,
+          type: dtype,
+          scope: scope,
           owner: owner,
           context: context
         },
-        declared_sources: flags,
+        declared_sources: src,
         deterministic_assessment: {
-          coverage_pct: coverage,
-          missing_sources: missing,
-          defensibility: defensibility,
-          note: "Deterministic mapping from declared sources → defensibility. No AI."
+          coverage_pct: cov,
+          missing_sources: miss,
+          defensibility: def,
+          method: "Deterministic mapping from declared sources → defensibility. No AI."
         },
         outputs: {
           json: "decision_bundle.json",
-          print: "browser_print_to_pdf",
+          pdf: "browser_print_to_pdf",
           hash: "sha256"
         }
       };
 
-      // deterministic JSON
+      return { bundle, cov, miss, def, scope, momentT };
+    }
+
+    async function generate(){
+      setPhase(0);
+
+      const { bundle, cov, miss, def, scope, momentT } = buildBundle();
+      syncCockpit(null, null, scope, momentT, "—");
+
+      // phase: bundle
+      setPhase(1);
       const json = stableStringify(bundle);
+
+      // phase: seal/hash
+      setPhase(2);
       const hash = await sha256Hex(json);
 
-      // Update UI
-      $("capDate").textContent = date;
-      $("coverage").textContent = coverage + "%";
-      $("missingCount").textContent = String(missing);
-      $("defensibility").textContent = defensibility;
+      // phase: verify
+      setPhase(3);
 
-      const score = Math.round((coverage*10) - (missing*7)); // deterministic, simple
-      $("scoreLine").textContent = `Score ${Math.max(0, score)}/100 • Risk ${defensibility}`;
-      $("sealLine").textContent = `SHA-256 sealed`;
-
-      $("jsonOut").textContent = json;
+      // update right panel
+      $("outCoverage").textContent = `${cov}%`;
+      $("outMissing").textContent = `${miss}`;
+      $("outDef").textContent = def;
+      $("outSeal").textContent = "SHA-256 sealed";
       $("hashOut").textContent = hash;
 
+      // cockpit now shows real values
+      syncCockpit(cov, def, scope, momentT, hash);
+
+      // summary
+      const yesSources = Object.entries(bundle.declared_sources).filter(([_,v])=>v).map(([k])=>k).join(", ");
       const summary =
-`Décision : ${decisionType}
-Périmètre : ${orgScope}
-Moment T : ${date}
-Sources déclarées : ${Object.entries(flags).filter(([k,v])=>v).map(([k])=>k).join(", ") || "—"}
-Coverage : ${coverage}% • Missing : ${missing} • Defensibility : ${defensibility}
+`Decision: ${bundle.decision.type}
+Scope: ${bundle.decision.scope}
+Owner: ${bundle.decision.owner}
+Moment T: ${bundle.moment_t}
 
-Lecture probatoire : périmètre + sources + règles implicites → audit & contestation possibles, sans reconstruction a posteriori.
-Hash (SHA-256) : ${hash}`;
-      $("summaryText").textContent = summary;
+Declared sources: ${yesSources || "—"}
+Coverage: ${cov}%  |  Missing: ${miss}  |  Defensibility: ${def}
 
-      // Preview card (interactive like Home)
-      $("pvInput").textContent = "contexte décisionnel + sources déclarées";
-      $("pvOutput").textContent = "decision_bundle.json + hash sha256";
-      $("pvUsage").textContent = "audit • litige • gouvernance";
-      setPreview(hash, coverage);
+Interpretation:
+- This bundle documents scope + declared sources + deterministic rules.
+- It enables audit / dispute reconstruction without retroactive improvisation.
+- The hash proves integrity over time (not “truth”).
 
-      // Print sheet
-      $("printDate").textContent = date;
-      $("printType").textContent = decisionType;
-      $("printScope").textContent = orgScope;
-      $("printOwner").textContent = owner;
-      $("printCoverage").textContent = coverage + "%";
-      $("printDef").textContent = defensibility;
-      $("printHash").textContent = hash;
-      $("printJson").textContent = json;
+hash (SHA-256): ${hash}`;
+      $("summaryPre").textContent = summary;
 
-      // Store for copy/download
+      $("jsonPre").textContent = json;
+
+      // preview block stays consistent (optional, keep as static + “alive” by coherence)
+      $("pvIn").textContent = "Decision context + declared sources";
+      $("pvOut").textContent = "signed JSON + PDF + hash";
+      $("pvLin").textContent = "sources + rules + timestamps";
+      $("pvUse").textContent = "audit, dispute, governance";
+
+      // store for copy/download
       window.__bundle_json = json;
       window.__bundle_hash = hash;
     }
 
     function loadExample(){
-      $("decisionType").value = "Nomination / mobilité sensible (rôle critique)";
-      $("decisionDate").value = "2026-01-28";
-      $("orgScope").value = "Company X — France scope (multi-sites, multi-entités)";
-      $("decisionOwner").value = "CEO / Executive committee";
-      $("context").value =
-"Décision sensible en environnement réglementé. Exigence de traçabilité des sources et stabilité des définitions.\nLa décision peut être contestée et doit rester vérifiable dans le temps.";
+      $("decisionType").value = "Nomination / sensitive role";
+      $("momentT").value = "2026-01-28";
+      $("orgScope").value = "Company X — France scope (multi-sites, multi-entities)";
+      $("owner").value = "CEO / Executive committee";
+      $("context").value = "Sensitive decision in a regulated environment. Traceability of declared sources and stability of definitions are required.\nDecision may be challenged and must remain reconstructible over time.";
+
       $("srcLms").checked = true;
       $("srcHris").checked = true;
       $("srcPerf").checked = true;
@@ -947,11 +1285,16 @@ Hash (SHA-256) : ${hash}`;
       $("src360").checked = false;
       $("srcLegal").checked = true;
 
-      generateBundle(true);
+      generate();
     }
 
     function resetAll(){
+      $("decisionType").value = "Nomination / sensitive role";
+      $("momentT").value = "";
+      $("orgScope").value = "";
+      $("owner").value = "";
       $("context").value = "";
+
       $("srcLms").checked = true;
       $("srcHris").checked = true;
       $("srcPerf").checked = true;
@@ -959,44 +1302,32 @@ Hash (SHA-256) : ${hash}`;
       $("src360").checked = false;
       $("srcLegal").checked = true;
 
-      $("capDate").textContent = "—";
-      $("coverage").textContent = "—";
-      $("missingCount").textContent = "—";
-      $("defensibility").textContent = "—";
-      $("scoreLine").textContent = "—";
-      $("sealLine").textContent = "—";
-      $("summaryText").textContent = "Clique “Générer le bundle”.";
-      $("jsonOut").textContent = "{}";
+      $("outCoverage").textContent = "—";
+      $("outMissing").textContent = "—";
+      $("outDef").textContent = "—";
+      $("outSeal").textContent = "—";
       $("hashOut").textContent = "—";
-      setPreview("", 42);
+      $("summaryPre").textContent = "Click “Generate”.";
+      $("jsonPre").textContent = "{}";
+
       window.__bundle_json = null;
       window.__bundle_hash = null;
+
+      setPhase(0);
+      syncCockpit(null, null, "—", "—", "—");
     }
 
-    // --------- Events ----------
-    document.querySelectorAll(".tab").forEach(t=>{
-      t.addEventListener("click", ()=>setTab(t.dataset.tab));
-    });
+    async function copy(text){
+      if(!text) return;
+      try{
+        await navigator.clipboard.writeText(text);
+        return true;
+      }catch(e){
+        return false;
+      }
+    }
 
-    $("btnGenerate").addEventListener("click", ()=>generateBundle(false));
-    $("btnLoad").addEventListener("click", loadExample);
-    $("btnReset").addEventListener("click", resetAll);
-
-    $("btnCopyHash").addEventListener("click", async ()=>{
-      if(!window.__bundle_hash) return;
-      await navigator.clipboard.writeText(window.__bundle_hash);
-      $("btnCopyHash").textContent = "Copié";
-      setTimeout(()=>$("btnCopyHash").textContent="Copier le hachage", 900);
-    });
-
-    $("btnCopyJson").addEventListener("click", async ()=>{
-      if(!window.__bundle_json) return;
-      await navigator.clipboard.writeText(window.__bundle_json);
-      $("btnCopyJson").textContent = "Copié";
-      setTimeout(()=>$("btnCopyJson").textContent="Copier le JSON", 900);
-    });
-
-    $("btnDownloadJson").addEventListener("click", ()=>{
+    function downloadJson(){
       if(!window.__bundle_json) return;
       const blob = new Blob([window.__bundle_json], {type:"application/json"});
       const url = URL.createObjectURL(blob);
@@ -1007,29 +1338,56 @@ Hash (SHA-256) : ${hash}`;
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+    }
+
+    // Live “input → cockpit refresh” (without hashing each keystroke)
+    function quickSync(){
+      const src = sources();
+      const cov = coveragePct(src);
+      const miss = missingCount(src);
+      const def = defensibility(cov, miss);
+      const momentT = $("momentT").value || "—";
+      const scope = ($("orgScope").value || "").trim() || "—";
+      syncCockpit(cov, def, scope, momentT, window.__bundle_hash ? window.__bundle_hash : "—");
+    }
+
+    // Tabs
+    $("tabSummary").addEventListener("click", ()=>setTab("summary"));
+    $("tabJson").addEventListener("click", ()=>setTab("json"));
+    $("tabPrint").addEventListener("click", ()=>setTab("print"));
+
+    // Buttons
+    $("btnGenerate").addEventListener("click", generate);
+    $("btnGenerateTop").addEventListener("click", generate);
+    $("btnLoad").addEventListener("click", loadExample);
+    $("btnLoadTop").addEventListener("click", loadExample);
+    $("btnReset").addEventListener("click", resetAll);
+
+    $("btnCopyHash").addEventListener("click", async ()=>{
+      const ok = await copy(window.__bundle_hash);
+      $("btnCopyHash").textContent = ok ? "Copied" : "Copy hash";
+      setTimeout(()=>$("btnCopyHash").textContent="Copy hash", 900);
     });
 
+    $("btnCopyJson").addEventListener("click", async ()=>{
+      const ok = await copy(window.__bundle_json);
+      $("btnCopyJson").textContent = ok ? "Copied" : "Copy JSON";
+      setTimeout(()=>$("btnCopyJson").textContent="Copy JSON", 900);
+    });
+
+    $("btnDownload").addEventListener("click", downloadJson);
     $("btnPrint").addEventListener("click", ()=>window.print());
 
-    // Preview card interaction (mini delight, like Home)
-    const preview = $("previewCard");
-    preview.addEventListener("mouseenter", ()=>{ $("pvLeft").textContent="• seal"; $("pvRight").textContent="hash"; });
-    preview.addEventListener("mouseleave", ()=>{ $("pvLeft").textContent="• bundle"; $("pvRight").textContent="rules"; });
-    preview.addEventListener("click", ()=>setTab("summary"));
-    preview.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); setTab("summary"); }});
-
-    $("btnScroll").addEventListener("click", ()=>{
-      document.getElementById("sandbox").scrollIntoView({behavior:"smooth", block:"start"});
+    // Live sync events
+    ["decisionType","momentT","orgScope","owner","context","srcLms","srcHris","srcPerf","srcOps","src360","srcLegal"].forEach(id=>{
+      $(id).addEventListener("input", quickSync);
+      $(id).addEventListener("change", quickSync);
     });
 
-    // top buttons placeholders
-    $("btnSpec").addEventListener("click", ()=>alert("Spec: connecte ce bouton à ta page /spec"));
-    $("btnExamples").addEventListener("click", loadExample);
-    $("btnLive").addEventListener("click", ()=>alert("Démo live: connecte ce bouton à ton endpoint /sandbox"));
-
-    // init
-    setPreview("", 42);
-    // Option: auto-load an example on first visit
+    // init defaults
+    resetAll();
+    setTab("summary");
+    // optional: auto-load example on first view
     loadExample();
   </script>
 </body>
