@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" data-page="sandbox">
+<html lang="fr" data-page="sandbox">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OpenProof — RPO v0.1 | HR Decision Sandbox</title>
-
-  <meta name="description" content="HR Decision Sandbox — deterministic decision defensibility bundle: coverage, missing data, risks, hypotheses, public sha256, exportable decision_bundle.json. No AI. No storage." />
+  <title>OpenProof — RPO v0.1 | Sandbox Décision RH</title>
+  <meta name="description" content="Sandbox RPO : transformer un contexte de décision RH en bundle probatoire déterministe (JSON + hash public). Pas d’IA. Pas de stockage. Vérifiable par audit." />
   <meta name="robots" content="index, follow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,47 +21,58 @@
       --gold1:#d4af37;
       --gold2:#8f7633;
       --line: rgba(241,230,163,0.22);
+      --line2: rgba(241,230,163,0.14);
       --glass: rgba(11,15,20,0.55);
-      --glass2: rgba(11,15,20,0.42);
+      --glass2: rgba(11,15,20,0.40);
       --shadow: 0 18px 60px rgba(0,0,0,0.45);
       --radius: 22px;
       --radius2: 16px;
-      --font-title: "Orbitron", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      --font-body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --title: "Orbitron", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --body: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+      --ok: rgba(127, 221, 170, 0.85);
+      --warn: rgba(241, 230, 163, 0.95);
+      --bad: rgba(255, 120, 120, 0.85);
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{ box-sizing:border-box; }
+    html, body { height:100%; }
     body{
       margin:0;
-      background: radial-gradient(1400px 700px at 50% 0%, rgba(241,230,163,0.12), transparent 60%),
-                  radial-gradient(1000px 600px at 25% 45%, rgba(212,175,55,0.08), transparent 60%),
-                  linear-gradient(180deg, var(--bg0), var(--bg1));
       color: var(--ivory);
-      font-family: var(--font-body);
+      font-family: var(--body);
       overflow-x:hidden;
+      background:
+        radial-gradient(1400px 700px at 50% 0%, rgba(241,230,163,0.12), transparent 60%),
+        radial-gradient(1000px 600px at 20% 40%, rgba(212,175,55,0.08), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
     }
 
-    /* canvas bg */
-    #bg-field{
-      position:fixed;
-      inset:0;
-      z-index:0;
-      opacity:0.9;
-      pointer-events:none;
+    /* Subtle starfield */
+    #bgField{
+      position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0.9;
     }
 
-    /* top nav (minimal) */
+    a{ color: inherit; text-decoration:none; }
+    .muted{ opacity:0.78; }
+    .small{ font-size: 12px; opacity:0.82; }
+    .kicker{
+      font-family: var(--title);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-size: 11px;
+      opacity:0.78;
+    }
+
+    /* Top nav */
     .top{
-      position:sticky;
-      top:0;
-      z-index:5;
+      position:sticky; top:0; z-index:10;
       backdrop-filter: blur(10px);
       background: linear-gradient(180deg, rgba(4,4,14,0.86), rgba(4,4,14,0.38));
-      border-bottom: 1px solid rgba(241,230,163,0.14);
+      border-bottom: 1px solid var(--line2);
     }
-    .top-inner{
-      max-width: 1280px;
+    .topInner{
+      max-width: 1560px;
       margin: 0 auto;
       padding: 14px 18px;
       display:flex;
@@ -72,1217 +82,1051 @@
     }
     .brand{
       display:flex; align-items:center; gap:10px;
-      font-family: var(--font-title);
+      font-family: var(--title);
       letter-spacing: 0.08em;
       font-size: 12px;
-      opacity: 0.9;
+      opacity: 0.92;
+      white-space:nowrap;
     }
     .dot{
       width:18px;height:18px;border-radius:50%;
       background: radial-gradient(circle at 30% 30%, var(--gold0), var(--gold1));
       box-shadow: 0 0 18px rgba(241,230,163,0.28);
+      flex: 0 0 auto;
     }
     .nav{
-      display:flex; gap:18px; align-items:center;
-      font-size: 12px; opacity:0.85;
+      display:flex;
+      gap: 14px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:center;
     }
     .nav a{
-      color: var(--ivory2);
-      text-decoration:none;
+      font-size: 12px;
+      opacity: 0.80;
       padding: 8px 10px;
       border-radius: 999px;
       border: 1px solid transparent;
     }
-    .nav a[aria-current="page"]{
-      border-color: rgba(241,230,163,0.24);
-      background: rgba(241,230,163,0.06);
-    }
+    .nav a:hover{ opacity: 0.95; border-color: rgba(241,230,163,0.16); background: rgba(11,15,20,0.25); }
+    .nav a.active{ opacity: 1; border-color: rgba(241,230,163,0.26); background: rgba(11,15,20,0.30); }
+
     .cta{
-      font-family: var(--font-title);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      padding: 10px 14px;
+      display:flex; align-items:center; gap:10px;
+      padding: 9px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(241,230,163,0.26);
-      background: linear-gradient(180deg, rgba(241,230,163,0.20), rgba(241,230,163,0.08));
-      color: var(--ivory);
-      text-decoration:none;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      border: 1px solid rgba(241,230,163,0.22);
+      background: radial-gradient(140px 60px at 30% 30%, rgba(241,230,163,0.20), rgba(11,15,20,0.25));
+      box-shadow: 0 10px 30px rgba(0,0,0,0.28);
+      font-family: var(--title);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 11px;
+      opacity: 0.95;
       white-space:nowrap;
     }
+    .cta:hover{ border-color: rgba(241,230,163,0.36); opacity: 1; }
 
-    /* main layout */
-    .wrap{
-      position:relative;
-      z-index:1;
-      max-width: 1280px;
+    /* Layout */
+    .page{
+      position:relative; z-index:1;
+      max-width: 1560px;
       margin: 0 auto;
-      padding: 26px 18px 44px;
+      padding: 28px 18px 70px;
     }
 
     .hero{
       display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      margin-bottom: 16px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 18px;
+      align-items:start;
+      margin: 10px 0 18px;
     }
-
-    .kicker{
-      font-family: var(--font-title);
-      font-size: 12px;
-      letter-spacing: 0.16em;
-      opacity: 0.75;
-      text-transform: uppercase;
+    .heroLeft{
+      padding: 18px 4px;
     }
-
-    .h1{
-      font-family: var(--font-title);
-      font-size: clamp(34px, 4.2vw, 54px);
-      line-height: 1.05;
+    .heroTitle{
+      font-family: var(--title);
+      font-size: clamp(32px, 4.0vw, 56px);
+      line-height: 1.02;
+      margin: 10px 0 10px;
       letter-spacing: 0.02em;
-      margin: 0;
     }
-    .h1 .gold{ color: var(--gold0); }
-    .subline{
-      margin-top: 8px;
-      max-width: 78ch;
-      color: rgba(251,248,241,0.78);
+    .heroTitle .gold{ color: var(--gold0); }
+    .heroSub{
+      max-width: 72ch;
       font-size: 14px;
-      line-height: 1.55;
+      line-height: 1.6;
+      opacity: 0.86;
     }
-
     .chips{
-      display:flex; flex-wrap:wrap; gap:10px;
-      margin-top: 10px;
+      display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px;
     }
     .chip{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding: 8px 10px;
+      font-size: 11px;
+      padding: 7px 10px;
       border-radius: 999px;
       border: 1px solid rgba(241,230,163,0.18);
-      background: rgba(11,15,20,0.35);
-      font-family: var(--font-title);
-      font-size: 11px;
-      letter-spacing: 0.10em;
-      opacity: 0.9;
-    }
-    .chip i{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(241,230,163,0.70);
-      box-shadow: 0 0 10px rgba(241,230,163,0.25);
+      background: rgba(11,15,20,0.32);
+      opacity: 0.90;
+      white-space:nowrap;
     }
 
-    /* ✅ 50/50 panels */
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-      align-items: start;
-      margin-top: 18px;
-    }
-    @media (max-width: 980px){
-      .grid{ grid-template-columns: 1fr; }
+    .heroRight{
+      display:flex;
+      justify-content:flex-end;
     }
 
+    /* Panels */
     .panel{
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(11,15,20,0.62), rgba(11,15,20,0.38));
       border: 1px solid rgba(241,230,163,0.18);
+      background: linear-gradient(180deg, rgba(11,15,20,0.60), rgba(11,15,20,0.36));
       box-shadow: var(--shadow);
+      position:relative;
       overflow:hidden;
-      min-height: 720px; /* gives both sides same “weight” */
     }
-    .panel-inner{ padding: 16px; }
-
-    .panel-title{
-      font-family: var(--font-title);
-      letter-spacing: 0.14em;
+    .panel::before{
+      content:"";
+      position:absolute; inset:0;
+      background: radial-gradient(800px 260px at 30% 0%, rgba(241,230,163,0.06), transparent 62%);
+      pointer-events:none;
+    }
+    .panelHeader{
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid rgba(241,230,163,0.12);
+      display:flex; align-items:flex-start; justify-content:space-between; gap:12px;
+      position:relative; z-index:1;
+    }
+    .panelHeader h3{
+      margin:0;
+      font-family: var(--title);
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       font-size: 12px;
-      opacity: 0.85;
-      margin: 2px 0 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
+      opacity: 0.9;
+    }
+    .panelBody{
+      padding: 16px 18px 18px;
+      position:relative; z-index:1;
     }
 
+    /* Main grid */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items:start;
+      margin-top: 10px;
+    }
+
+    /* Form */
     .row{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
+      margin-bottom: 12px;
     }
-    @media (max-width: 560px){
-      .row{ grid-template-columns: 1fr; }
+    .field{
+      display:flex; flex-direction:column; gap: 6px;
+      min-width: 0;
     }
-
     label{
-      display:block;
-      font-family: var(--font-title);
       font-size: 11px;
-      letter-spacing: 0.14em;
-      opacity: 0.75;
-      margin: 8px 0 6px;
+      opacity: 0.78;
+      letter-spacing: 0.10em;
+      font-family: var(--title);
       text-transform: uppercase;
     }
-
-    input[type="text"], textarea, select{
-      width:100%;
+    input, select, textarea{
+      width: 100%;
       border-radius: 14px;
-      border: 1px solid rgba(241,230,163,0.18);
-      background: rgba(4,4,14,0.35);
+      border: 1px solid rgba(241,230,163,0.16);
+      background: rgba(4,4,14,0.45);
       color: var(--ivory);
-      padding: 12px 12px;
+      padding: 10px 11px;
       outline: none;
-      font-family: var(--font-body);
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.14);
+      font-family: var(--body);
+      font-size: 13px;
     }
-    textarea{ min-height: 94px; resize: vertical; }
-    select{ padding: 12px; }
+    textarea{ min-height: 90px; resize: vertical; }
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(241,230,163,0.34);
+      box-shadow: 0 0 0 3px rgba(241,230,163,0.07);
+    }
 
-    .sources{
+    .sourceGrid{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 10px;
       margin-top: 6px;
     }
-    @media (max-width: 560px){ .sources{ grid-template-columns: 1fr; } }
-
-    .src{
+    .checkCard{
       border-radius: 16px;
-      border: 1px solid rgba(241,230,163,0.16);
+      border: 1px solid rgba(241,230,163,0.14);
       background: rgba(11,15,20,0.26);
-      padding: 12px 12px;
-      display:flex;
-      gap: 10px;
-      align-items:flex-start;
+      padding: 10px 10px;
+      display:flex; gap:10px; align-items:flex-start;
+      min-height: 72px;
     }
-    .src input{ margin-top: 3px; }
-    .src strong{
-      display:block;
-      font-family: var(--font-title);
-      letter-spacing: 0.10em;
+    .checkCard input{ width:auto; margin-top: 3px; }
+    .checkCard .t{
       font-size: 12px;
+      font-weight: 600;
+      opacity: 0.92;
+      margin:0 0 2px;
     }
-    .src span{
-      display:block;
-      color: rgba(251,248,241,0.70);
-      font-size: 12px;
-      margin-top: 4px;
+    .checkCard .d{
+      font-size: 11px;
+      opacity: 0.70;
       line-height: 1.35;
+      margin:0;
     }
 
+    /* Actions */
     .actions{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
+      display:flex; gap:10px; flex-wrap:wrap;
       margin-top: 12px;
     }
     .btn{
-      cursor:pointer;
+      padding: 10px 12px;
       border-radius: 999px;
-      padding: 10px 14px;
-      font-family: var(--font-title);
-      letter-spacing: 0.12em;
-      font-size: 12px;
-      text-transform: uppercase;
-      border: 1px solid rgba(241,230,163,0.26);
-      background: rgba(11,15,20,0.22);
-      color: var(--ivory);
-    }
-    .btn.primary{
-      background: linear-gradient(180deg, rgba(241,230,163,0.22), rgba(241,230,163,0.08));
-    }
-
-    .note{
-      margin-top: 10px;
-      color: rgba(251,248,241,0.65);
-      font-size: 12px;
-      line-height: 1.4;
-    }
-
-    /* Right panel: report */
-    .pill{
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-family: var(--font-title);
-      font-size: 11px;
-      letter-spacing: 0.12em;
       border: 1px solid rgba(241,230,163,0.18);
-      background: rgba(11,15,20,0.26);
+      background: rgba(11,15,20,0.28);
+      color: var(--ivory);
+      font-size: 12px;
+      letter-spacing: 0.10em;
+      text-transform: uppercase;
+      font-family: var(--title);
+      cursor:pointer;
+      opacity: 0.92;
+    }
+    .btn:hover{ opacity: 1; border-color: rgba(241,230,163,0.34); }
+    .btn.primary{
+      background: radial-gradient(180px 80px at 30% 30%, rgba(241,230,163,0.26), rgba(11,15,20,0.24));
+      border-color: rgba(241,230,163,0.28);
+    }
+    .btn.ghost{
+      background: transparent;
+      border-color: rgba(241,230,163,0.14);
+      opacity: 0.82;
+    }
+
+    /* Output */
+    .statusPills{
+      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .pill{
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(241,230,163,0.16);
+      background: rgba(11,15,20,0.25);
+      font-size: 11px;
+      opacity: 0.90;
       white-space:nowrap;
     }
-    .pill.ok{ border-color: rgba(160,255,190,0.45); }
-    .pill.warn{ border-color: rgba(255,220,140,0.45); }
-    .pill.bad{ border-color: rgba(255,120,120,0.45); }
-    .pill.muted{ opacity:0.8; }
-
-    .steps{
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    .step{
-      border-radius: 16px;
-      border: 1px solid rgba(241,230,163,0.16);
-      background: rgba(11,15,20,0.22);
-      padding: 10px;
-    }
-    .step small{
-      display:block;
-      font-family: var(--font-title);
-      font-size: 10px;
-      letter-spacing: 0.14em;
-      opacity: 0.7;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .step b{
-      display:block;
-      font-size: 12px;
-      color: rgba(251,248,241,0.80);
-      font-weight: 500;
-    }
-
-    .bar{
-      margin-top: 10px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(241,230,163,0.10);
-      border: 1px solid rgba(241,230,163,0.14);
-      overflow:hidden;
-    }
-    #barFill{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, rgba(241,230,163,0.32), rgba(212,175,55,0.22));
-    }
-
-    .tabs{
-      display:flex;
-      gap: 10px;
-      margin-top: 12px;
-      flex-wrap:wrap;
-    }
-    .tab{
-      cursor:pointer;
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-family: var(--font-title);
-      letter-spacing: 0.12em;
-      font-size: 11px;
-      text-transform: uppercase;
-      border: 1px solid rgba(241,230,163,0.18);
-      background: rgba(11,15,20,0.20);
-      color: var(--ivory);
-    }
-    .tab[aria-selected="true"]{
-      border-color: rgba(241,230,163,0.34);
-      background: rgba(241,230,163,0.10);
-    }
-
-    .pane{ display:none; margin-top: 12px; }
-    .pane.active{ display:block; }
+    .pill strong{ font-family: var(--title); letter-spacing:0.08em; font-size: 10px; opacity:0.9; }
 
     .kv{
       display:grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: 160px 1fr;
       gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px dashed rgba(241,230,163,0.12);
-      font-size: 12px;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(241,230,163,0.14);
     }
-    .kv .k{ color: rgba(251,248,241,0.72); }
-    .kv .v{ color: rgba(241,230,163,0.82); font-family: var(--font-title); letter-spacing:0.08em; }
+    .kv:last-child{ border-bottom: none; }
+    .k{ font-size: 12px; opacity: 0.72; }
+    .v{ font-size: 12px; opacity: 0.92; text-align:right; }
 
-    .mini-actions{
-      display:flex; gap: 10px; flex-wrap:wrap;
+    .meter{
       margin-top: 10px;
-    }
-
-    textarea.code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: 12px;
-      line-height: 1.4;
-      min-height: 260px;
-      background: rgba(4,4,14,0.40);
-    }
-
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
       border-radius: 999px;
-      padding: 7px 10px;
-      border: 1px solid rgba(241,230,163,0.18);
+      border: 1px solid rgba(241,230,163,0.16);
+      background: rgba(4,4,14,0.40);
+      height: 10px;
+      overflow:hidden;
+    }
+    .meter > div{
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, rgba(241,230,163,0.75), rgba(212,175,55,0.75));
+      box-shadow: 0 0 20px rgba(241,230,163,0.18);
+      transition: width 200ms ease;
+    }
+
+    .bundleBox{
+      margin-top: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(241,230,163,0.14);
       background: rgba(11,15,20,0.22);
-      font-family: var(--font-title);
+      padding: 12px;
+    }
+    pre{
+      margin: 0;
+      max-height: 260px;
+      overflow:auto;
       font-size: 11px;
+      line-height: 1.45;
+      opacity: 0.92;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .hashLine{
+      margin-top: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      opacity: 0.90;
+    }
+    .hashLine .tag{
+      font-family: var(--title);
       letter-spacing: 0.12em;
       text-transform: uppercase;
+      font-size: 10px;
+      opacity: 0.78;
+      margin-right: 6px;
     }
-    .badge.ok{ border-color: rgba(160,255,190,0.45); }
-    .badge.warn{ border-color: rgba(255,220,140,0.45); }
-    .badge.bad{ border-color: rgba(255,120,120,0.45); }
-    .badge.muted{ opacity:0.8; }
-    
-   .subline{
-  white-space: normal;   /* autorise le retour à la ligne */
-  overflow: visible;     /* ne coupe rien */
-  display: block;
-  max-width: 100%;
-}
+
+    .warnBox{
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(241,230,163,0.14);
+      background: rgba(4,4,14,0.32);
+      font-size: 12px;
+      opacity: 0.86;
+      line-height: 1.5;
+    }
+
+    /* Footer note */
+    .footerNote{
+      margin-top: 14px;
+      font-size: 12px;
+      opacity: 0.72;
+      line-height: 1.5;
+    }
+    .footerNote strong{ color: var(--gold0); }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .heroRight{ justify-content:flex-start; }
+      .grid{ grid-template-columns: 1fr; }
+      .row{ grid-template-columns: 1fr; }
+      .kv{ grid-template-columns: 1fr; }
+      .v{ text-align:left; }
+      .statusPills{ justify-content:flex-start; }
+      .sourceGrid{ grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 
 <body>
-  <canvas id="bg-field" aria-hidden="true"></canvas>
+  <canvas id="bgField"></canvas>
 
   <header class="top">
-    <div class="top-inner">
-      <div class="brand"><span class="dot"></span> OPENPROOF.NET — HR DECISION SANDBOX</div>
-      <nav class="nav" aria-label="Primary">
-        <a href="index.html" target="_blank" rel="noopener noreferrer">Home</a>
-        <a href="sandbox.html" aria-current="page">Sandbox</a>
-        <a href="how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
-        <a href="spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
-        <a href="tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
-        <a href="examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+    <div class="topInner">
+      <div class="brand" title="OpenProof — RPO v0.1">
+        <span class="dot"></span>
+        OPENPROOF.NET — RPO v0.1
+      </div>
+
+      <nav class="nav" aria-label="Navigation">
+        <a href="./index.html">Home</a>
+        <a class="active" href="./sandbox.html">Bac à sable</a>
+        <a href="./how-it-works.html">Comment ça marche</a>
+        <a href="./spec.html">Spéc.</a>
+        <a href="./tests.html">Tests</a>
+        <a href="./examples.html">Exemples</a>
       </nav>
-      <a class="cta" href="sandbox.html">TRY THE LIVE DEMO</a>
+
+      <a class="cta" href="./sandbox.html">
+        Essayez la démo en direct
+      </a>
     </div>
   </header>
 
-  <div class="wrap">
+  <main class="page">
     <section class="hero">
-      <div class="kicker">Live demo for governed HR decisions</div>
+      <div class="heroLeft">
+        <div class="kicker">Démonstration déterministe — décision RH opposable</div>
+        <h1 class="heroTitle">
+          Sandbox,<br/>
+          <span class="gold">des données RH</span> à la<br/>
+          décision justifiée.
+        </h1>
+        <p class="heroSub">
+          Ici, on ne “choisit” pas un candidat. On produit un <strong>artefact de gouvernance</strong> :
+          périmètre, sources, règles, hypothèses, et un <strong>hash public</strong> pour prouver l’intégrité.
+          <strong>Pas d’IA.</strong> <strong>Pas de stockage.</strong> Même entrée ⇒ même bundle.
+        </p>
 
-      <h1 class="h1">
-        SANDBOX,<br/>
-        <span class="gold">FROM HR DATA TO DEFENSIBLE DECISION.</span><br/>
-        <span style="font-size:0.72em; opacity:0.9;">Same inputs → same accountability bundle.</span>
-      </h1>
-
-      <div class="subline">
-        This demo does not “pick the best candidate”. It produces a deterministic Decision Readiness Report: coverage, missing data,
-        explicit hypotheses, and a defensibility level. No AI. No storage. Humans remain accountable.
+        <div class="chips" role="list" aria-label="Propriétés">
+          <span class="chip" role="listitem">Pas d’IA</span>
+          <span class="chip" role="listitem">Pas de stockage</span>
+          <span class="chip" role="listitem">Déterministe</span>
+          <span class="chip" role="listitem">Audit-ready</span>
+          <span class="chip" role="listitem">Hash SHA-256 public</span>
+        </div>
       </div>
 
-      <div class="chips" role="list" aria-label="Principles">
-        <div class="chip" role="listitem"><i></i> NO AI</div>
-        <div class="chip" role="listitem"><i></i> LOCAL ONLY</div>
-        <div class="chip" role="listitem"><i></i> DETERMINISTIC</div>
-        <div class="chip" role="listitem"><i></i> OPPOSABLE STRUCTURE</div>
+      <div class="heroRight">
+        <div class="panel" style="min-width:min(520px, 100%);">
+          <div class="panelHeader">
+            <h3>Preview bundle (30 secondes)</h3>
+            <div class="statusPills">
+              <span class="pill"><strong>INTEGRITY</strong> · hash public</span>
+              <span class="pill"><strong>READABILITY</strong> · JSON lisible</span>
+              <span class="pill"><strong>VERIFIABILITY</strong> · reproductible</span>
+            </div>
+          </div>
+          <div class="panelBody">
+            <div class="kv">
+              <div class="k">Input</div>
+              <div class="v">contexte décisionnel + sources déclarées</div>
+            </div>
+            <div class="kv">
+              <div class="k">Output</div>
+              <div class="v">decision_bundle.json + hash sha256</div>
+            </div>
+            <div class="kv">
+              <div class="k">Usage</div>
+              <div class="v">audit · litige · gouvernance</div>
+            </div>
+            <div class="meter" aria-label="Meter demo">
+              <div id="heroMeter"></div>
+            </div>
+            <div class="footerNote">
+              <strong>Point clé :</strong> la gouvernance ne consiste pas à “avoir raison”.
+              Elle consiste à <strong>rendre des comptes</strong>.
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div class="note">Bad decisions are not the problem. Undocumented decisions are.</div>
     </section>
 
-    <section class="grid" aria-label="Sandbox layout">
-      <!-- LEFT: inputs -->
-      <article class="panel" aria-label="Inputs">
-        <div class="panel-inner">
-          <div class="panel-title">Input bundle</div>
+    <section class="grid" aria-label="Sandbox">
+      <!-- INPUT -->
+      <div class="panel">
+        <div class="panelHeader">
+          <h3>Ensemble d’entrée</h3>
+          <div class="statusPills">
+            <span class="pill">Scope · sources · responsabilité</span>
+          </div>
+        </div>
 
+        <div class="panelBody">
           <div class="row">
-            <div>
-              <label for="decisionType">Decision type</label>
-              <select id="decisionType">
-                <option value="">Select…</option>
-                <option value="internal_dg">Internal DG appointment</option>
-                <option value="promotion">Promotion / role change</option>
-                <option value="termination">Termination</option>
-                <option value="remuneration">Remuneration decision</option>
-                <option value="other">Other</option>
+            <div class="field">
+              <label for="scenario">Type de décision</label>
+              <select id="scenario">
+                <option value="nomination_dg">Nomination / succession (niveau CODIR)</option>
+                <option value="role_sensible">Affectation rôle sensible (sécurité / export-control)</option>
+                <option value="mobilite_internationale">Mobilité internationale (pays / conformité)</option>
+                <option value="reorga_critique">Réorganisation critique (risque social / continuité)</option>
+                <option value="sanction">Sanction / séparation (risque juridique)</option>
               </select>
             </div>
-            <div>
-              <label for="decisionDate">Decision date (moment T)</label>
-              <input id="decisionDate" type="text" placeholder="Example: 2026-01-28" />
+
+            <div class="field">
+              <label for="decisionDate">Date de décision (moment T)</label>
+              <input id="decisionDate" type="date" />
             </div>
           </div>
 
           <div class="row">
-            <div>
-              <label for="orgLabel">Organisation / perimeter</label>
-              <input id="orgLabel" type="text" placeholder="Example: Company X — France scope" />
+            <div class="field">
+              <label for="orgScope">Organisation / périmètre</label>
+              <input id="orgScope" type="text" placeholder="Ex : MBDA — France / multi-sites / multi-entités" />
             </div>
-            <div>
-              <label for="issuer">Decision owner</label>
-              <input id="issuer" type="text" placeholder="Example: CEO / Executive committee" />
-            </div>
-          </div>
-
-          <label>Selected data sources (what was really available)</label>
-          <div class="sources">
-            <div class="src">
-              <input id="srcLMS" type="checkbox" checked />
-              <div>
-                <strong>LMS / TRAINING RECORDS</strong>
-                <span>Documented trainings, certifications, completions</span>
-              </div>
-            </div>
-
-            <div class="src">
-              <input id="srcHRIS" type="checkbox" checked />
-              <div>
-                <strong>HRIS / JOB HISTORY</strong>
-                <span>Roles, seniority, mobility, grade changes</span>
-              </div>
-            </div>
-
-            <div class="src">
-              <input id="srcPerf" type="checkbox" checked />
-              <div>
-                <strong>PERFORMANCE REVIEWS</strong>
-                <span>Official annual reviews, objectives, ratings</span>
-              </div>
-            </div>
-
-            <div class="src">
-              <input id="srcMobility" type="checkbox" />
-              <div>
-                <strong>MOBILITY & EXPOSURE</strong>
-                <span>International, transversal scope, P&amp;L exposure</span>
-              </div>
-            </div>
-
-            <div class="src">
-              <input id="srcOps" type="checkbox" checked />
-              <div>
-                <strong>OPERATIONAL OUTCOMES</strong>
-                <span>Turnover, engagement, delivery KPIs (attested)</span>
-              </div>
-            </div>
-
-            <div class="src">
-              <input id="src360" type="checkbox" />
-              <div>
-                <strong>360 / FEEDBACK</strong>
-                <span>If documented and attributable</span>
-              </div>
+            <div class="field">
+              <label for="decisionOwner">Responsable de la décision</label>
+              <input id="decisionOwner" type="text" placeholder="Ex : DG / Comité exécutif / DRH Groupe" />
             </div>
           </div>
 
-          <label for="candA">Candidate A — notes (official elements only)</label>
-          <textarea id="candA" placeholder="Example: 20y tenure, 3 roles, 2 leadership roles, last rating: exceeds..."></textarea>
+          <div class="field" style="margin-top:4px;">
+            <label>Sources déclarées (ce qui était réellement disponible)</label>
+            <div class="sourceGrid">
+              <div class="checkCard">
+                <input id="src_lms" type="checkbox" checked />
+                <div>
+                  <p class="t">LMS / Dossiers formation</p>
+                  <p class="d">Formations, certifications, attestations documentées.</p>
+                </div>
+              </div>
 
-          <label for="candB">Candidate B — notes (official elements only)</label>
-          <textarea id="candB" placeholder="Example: 12y tenure, mobility abroad, mixed ratings, 1 crisis situation..."></textarea>
+              <div class="checkCard">
+                <input id="src_hris" type="checkbox" checked />
+                <div>
+                  <p class="t">SIRH / Historique professionnel</p>
+                  <p class="d">Rôles, ancienneté, mobilités, changements de grade.</p>
+                </div>
+              </div>
 
-          <label for="candC">Candidate C — notes (official elements only)</label>
-          <textarea id="candC" placeholder="Example: 8y tenure, strong ops KPIs, no 360, no international..."></textarea>
+              <div class="checkCard">
+                <input id="src_perf" type="checkbox" checked />
+                <div>
+                  <p class="t">Évaluations de performance</p>
+                  <p class="d">Objectifs, revues annuelles, éléments formels.</p>
+                </div>
+              </div>
 
-          <label for="missingData">Known missing data (absence = data)</label>
-          <textarea id="missingData" placeholder="Example: leadership in crisis, international exposure, documented 360 feedback..."></textarea>
+              <div class="checkCard">
+                <input id="src_ops" type="checkbox" checked />
+                <div>
+                  <p class="t">Résultats opérationnels</p>
+                  <p class="d">Indicateurs attestés, éléments traçables.</p>
+                </div>
+              </div>
 
-          <label for="constraints">Decision constraints (optional)</label>
-          <textarea id="constraints" placeholder="Example: urgency, regulatory timeline, union sensitivity, business continuity requirements..."></textarea>
+              <div class="checkCard">
+                <input id="src_mob" type="checkbox" />
+                <div>
+                  <p class="t">Mobilité & exposition</p>
+                  <p class="d">Portée internationale, exposition au P&L, preuves.</p>
+                </div>
+              </div>
+
+              <div class="checkCard">
+                <input id="src_360" type="checkbox" />
+                <div>
+                  <p class="t">360 / retours d’information</p>
+                  <p class="d">Uniquement si documenté et attribuable.</p>
+                </div>
+              </div>
+
+              <div class="checkCard">
+                <input id="src_security" type="checkbox" />
+                <div>
+                  <p class="t">Sécurité / habilitations</p>
+                  <p class="d">Habilitation, export-control, restrictions d’accès.</p>
+                </div>
+              </div>
+
+              <div class="checkCard">
+                <input id="src_legal" type="checkbox" />
+                <div>
+                  <p class="t">Juridique / conformité</p>
+                  <p class="d">Avertissements, contentieux, éléments opposables.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:12px;">
+            <div class="field">
+              <label for="knownMissing">Données manquantes connues (absence = donnée)</label>
+              <textarea id="knownMissing" placeholder="Ex : leadership en crise non documenté ; 360 non comparable ; KPI ops non attestés pour tous."></textarea>
+            </div>
+            <div class="field">
+              <label for="constraints">Contraintes (facultatif)</label>
+              <textarea id="constraints" placeholder="Ex : urgence continuité ; climat social sensible ; exigences export-control ; calendrier audit."></textarea>
+            </div>
+          </div>
 
           <div class="actions">
-            <button class="btn primary" id="generateBtn">Generate decision bundle</button>
-            <button class="btn" id="loadExampleBtn">Load example</button>
-            <button class="btn" id="resetBtn">Reset</button>
+            <button class="btn primary" id="btnGenerate">Générer le bundle</button>
+            <button class="btn" id="btnExample">Exemple MBDA-like</button>
+            <button class="btn ghost" id="btnReset">Réinitialiser</button>
           </div>
 
-          <div class="note">No account, no storage. Refresh clears everything. Deterministic rules only: same inputs → same outputs.</div>
+          <div class="footerNote">
+            <strong>Rappel :</strong> aucune donnée n’est envoyée. Aucun stockage local.
+            Le bundle est calculé <strong>dans ton navigateur</strong>.
+          </div>
         </div>
-      </article>
+      </div>
 
-      <!-- RIGHT: report -->
-      <aside class="panel" aria-label="Decision readiness report">
-        <div class="panel-inner">
-          <div class="panel-title">
-            Decision readiness report
-            <span class="pill muted" id="statusPill"><span id="statusText">NO BUNDLE YET</span></span>
+      <!-- OUTPUT -->
+      <div class="panel">
+        <div class="panelHeader">
+          <h3>Rapport de préparation à la décision</h3>
+          <div class="statusPills">
+            <span class="pill" id="pillDef">DEFENSIBILITY · —</span>
+            <span class="pill" id="pillCov">COVERAGE · —</span>
+            <span class="pill" id="pillMiss">MISSING · —</span>
           </div>
-
-          <div class="steps">
-            <div class="step"><small>Input</small><b id="vInput">Awaiting snapshots</b><span class="badge muted" id="s1">—</span></div>
-            <div class="step"><small>Assess</small><b id="vExtract">Coverage / risks</b><span class="badge muted" id="s2">—</span></div>
-            <div class="step"><small>Seal</small><b id="vSeal">Public hash</b><span class="badge muted" id="s3">—</span></div>
-          </div>
-
-          <div class="bar" aria-label="Progress"><div id="barFill"></div></div>
-          <div class="kv"><div class="k">READY</div><div class="v" id="readyLabel">READY</div></div>
-          <div class="kv" style="border-bottom:none;"><div class="k">SYNC</div><div class="v" id="syncLabel">SYNC</div></div>
-
-          <div class="tabs" role="tablist" aria-label="Report tabs">
-            <button class="tab" role="tab" id="tabBundle" aria-selected="true">Bundle</button>
-            <button class="tab" role="tab" id="tabJson" aria-selected="false">JSON</button>
-            <button class="tab" role="tab" id="tabVerify" aria-selected="false">Verify</button>
-          </div>
-
-          <!-- Bundle pane -->
-          <div class="pane active" id="paneBundle" role="tabpanel" aria-labelledby="tabBundle">
-            <div class="kv"><div class="k">Coverage (global)</div><div class="v" id="mCoverage">—</div></div>
-            <div class="kv"><div class="k">Missing data</div><div class="v" id="mMissing">—</div></div>
-            <div class="kv"><div class="k">Defensibility</div><div class="v" id="mDef">—</div></div>
-
-            <div class="kv"><div class="k">Candidate A</div><div class="v" id="mA">—</div></div>
-            <div class="kv"><div class="k">Candidate B</div><div class="v" id="mB">—</div></div>
-            <div class="kv"><div class="k">Candidate C</div><div class="v" id="mC">—</div></div>
-
-            <div class="kv"><div class="k">Public hash (sha256)</div><div class="v" id="mHash">—</div></div>
-
-            <div class="mini-actions">
-              <button class="btn" id="copyHashBtn">Copy hash</button>
-              <button class="btn" id="copyJsonBtn">Copy JSON</button>
-              <button class="btn primary" id="downloadJsonBtn">Download decision_bundle.json</button>
-            </div>
-
-            <div class="note">
-              This report is about defensibility, not “truth” and not “recommendation”. Governance is not about being right. It’s about being accountable.
-            </div>
-          </div>
-
-          <!-- JSON pane -->
-          <div class="pane" id="paneJson" role="tabpanel" aria-labelledby="tabJson">
-            <label for="jsonOut" style="margin-top:0;">Decision bundle JSON</label>
-            <textarea id="jsonOut" class="code" spellcheck="false" placeholder="Generate a bundle to see JSON here…"></textarea>
-          </div>
-
-          <!-- Verify pane -->
-          <div class="pane" id="paneVerify" role="tabpanel" aria-labelledby="tabVerify">
-            <div class="mini-actions">
-              <button class="btn" id="useLastBtn">Use last payload</button>
-              <span class="badge muted" id="verifyBadge">NO CHECK YET</span>
-            </div>
-
-            <label for="verifyPayload">Payload (stable JSON used for hashing)</label>
-            <textarea id="verifyPayload" class="code" spellcheck="false" placeholder="Paste payload JSON here…"></textarea>
-
-            <label for="verifyHash">Expected sha256 (hex)</label>
-            <input id="verifyHash" type="text" placeholder="Paste expected sha256 here…" />
-
-            <div class="actions">
-              <button class="btn primary" id="verifyBtn">Verify</button>
-            </div>
-
-            <div class="note" id="verifyMsg">—</div>
-          </div>
-
         </div>
-      </aside>
+
+        <div class="panelBody">
+          <div class="kv">
+            <div class="k">Capture (moment T)</div>
+            <div class="v" id="outCapture">—</div>
+          </div>
+          <div class="kv">
+            <div class="k">Évaluation (déterministe)</div>
+            <div class="v" id="outEval">—</div>
+          </div>
+          <div class="kv">
+            <div class="k">Scellement</div>
+            <div class="v" id="outSeal">—</div>
+          </div>
+
+          <div class="meter" aria-label="Coverage meter">
+            <div id="covMeter"></div>
+          </div>
+
+          <div class="warnBox" id="outSummary">
+            Génère un bundle pour obtenir : couverture, données manquantes, niveau de défendabilité, hash public.
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="btnCopyHash" disabled>Copier le hachage</button>
+            <button class="btn" id="btnCopyJson" disabled>Copier le JSON</button>
+            <button class="btn primary" id="btnDownload" disabled>Télécharger decision_bundle.json</button>
+          </div>
+
+          <div class="hashLine">
+            <span class="tag">hash (sha-256)</span>
+            <span id="hashText">—</span>
+          </div>
+
+          <div class="bundleBox">
+            <pre id="jsonPreview">{}</pre>
+          </div>
+
+          <div class="footerNote">
+            Ce rapport porte sur la <strong>justification</strong> (périmètre/sources/règles), pas sur “le vrai”.
+            L’intégrité est vérifiable via le hash.
+          </div>
+        </div>
+      </div>
     </section>
-  </div>
+  </main>
 
-  <!-- ✅ PARTIE 2: JS juste après -->
-<script>
-/* =========================================================
-Background field (starfield) — visual only
-========================================================= */
-(function () {
-  const canvas = document.getElementById("bg-field");
-  if (!canvas) return;
-  const ctx = canvas.getContext("2d", { alpha: true });
-  let width, height, particles = [];
-  const COUNT = 220;
-
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    const ratio = window.devicePixelRatio || 1;
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
-    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-  }
-
-  function createParticle() {
-    return {
-      x: (Math.random() * 2 - 1),
-      y: (Math.random() * 2 - 1),
-      z: Math.random() * 0.9 + 0.1,
-      speed: Math.random() * 0.004 + 0.0015
-    };
-  }
-
-  function init() {
-    particles = [];
-    for (let i = 0; i < COUNT; i++) particles.push(createParticle());
-  }
-
-  function project(p) {
-    const f = 400;
-    const s = f / (f * p.z);
-    return {
-      x: p.x * width * 0.5 * s + width / 2,
-      y: p.y * height * 0.5 * s + height / 2
-    };
-  }
-
-  function loop() {
-    ctx.clearRect(0, 0, width, height);
-
-    const grad = ctx.createRadialGradient(
-      width * 0.5, height * 0.18, 0,
-      width * 0.5, height * 0.18, width * 0.65
-    );
-    grad.addColorStop(0, "rgba(241,230,163,0.18)");
-    grad.addColorStop(0.42, "rgba(241,230,163,0.04)");
-    grad.addColorStop(1, "transparent");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, width, height);
-
-    for (const p of particles) {
-      p.z -= p.speed;
-      if (p.z < 0.08) {
-        Object.assign(p, createParticle());
-        p.z = 1;
+  <script>
+    // ---------- Background starfield (subtle) ----------
+    (function starfield(){
+      const c = document.getElementById("bgField");
+      const ctx = c.getContext("2d", { alpha: true });
+      let w=0,h=0,pts=[];
+      function resize(){
+        w = c.width = Math.floor(window.innerWidth * devicePixelRatio);
+        h = c.height = Math.floor(window.innerHeight * devicePixelRatio);
+        c.style.width = window.innerWidth+"px";
+        c.style.height = window.innerHeight+"px";
+        pts = [];
+        const n = Math.floor((window.innerWidth * window.innerHeight) / 18000);
+        for(let i=0;i<n;i++){
+          pts.push({
+            x: Math.random()*w,
+            y: Math.random()*h,
+            r: (Math.random()*1.2 + 0.3) * devicePixelRatio,
+            a: Math.random()*0.5 + 0.15
+          });
+        }
       }
-      const { x, y } = project(p);
-      const a = Math.min(1, (1.2 - p.z) * 1.1);
-      ctx.fillStyle = `rgba(241,230,163,${0.55 * a})`;
-      ctx.beginPath();
-      ctx.arc(x, y, 1.6, 0, Math.PI * 2);
-      ctx.fill();
+      function draw(){
+        ctx.clearRect(0,0,w,h);
+        ctx.fillStyle = "rgba(241,230,163,0.55)";
+        for(const p of pts){
+          ctx.globalAlpha = p.a;
+          ctx.beginPath();
+          ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+      window.addEventListener("resize", resize);
+      resize(); draw();
+    })();
+
+    // Hero meter animation
+    (function(){
+      const el = document.getElementById("heroMeter");
+      let t = 0;
+      setInterval(()=> {
+        t = (t + 1) % 120;
+        const v = 52 + Math.round(35 * Math.sin(t/18));
+        el.style.width = v + "%";
+      }, 120);
+    })();
+
+    // ---------- Deterministic helpers ----------
+    function nowISO(){
+      // "moment T" should be the provided decisionDate; generation timestamp is still included
+      return new Date().toISOString();
     }
-    requestAnimationFrame(loop);
-  }
-
-  window.addEventListener("resize", resize);
-  resize(); init(); loop();
-})();
-
-/* =========================================================
-Deterministic HR decision logic (no AI)
-========================================================= */
-const $ = (id) => document.getElementById(id);
-
-function must(id){
-  const el = $(id);
-  if (!el) throw new Error(`Missing element #${id} (ID mismatch between HTML and JS).`);
-  return el;
-}
-
-const EXAMPLE = {
-  decisionType: "internal_dg",
-  decisionDate: "2026-01-28",
-  orgLabel: "Company X — France scope",
-  issuer: "CEO / Executive committee",
-  sources: { lms:true, hris:true, perf:true, mobility:false, ops:true, s360:false },
-  candA: "20y tenure. 3 roles incl. 2 leadership roles. Last 2 reviews: exceeds objectives. Documented team retention stable.",
-  candB: "12y tenure. 1 leadership role. Mobility abroad not documented in HRIS. Last review: meets objectives. No attested ops KPIs available.",
-  candC: "8y tenure. Strong ops delivery KPIs (attested). 1 leadership role. No documented 360 feedback.",
-  missingData: "Leadership under crisis; international exposure; documented 360 feedback; comparable ops KPIs for all candidates.",
-  constraints: "Urgency: business continuity. Sensitive social climate. Need quick appointment within 30 days."
-};
-
-const SOURCE_WEIGHTS = [
-  { key: "lms",      w: 14 },
-  { key: "hris",     w: 18 },
-  { key: "perf",     w: 22 },
-  { key: "mobility", w: 16 },
-  { key: "ops",      w: 20 },
-  { key: "s360",     w: 10 }
-];
-
-const COVERAGE_KEYWORDS = {
-  lms:      ["training","certif","certification","course","lms"],
-  hris:     ["role","tenure","job","mobility","grade","promotion"],
-  perf:     ["review","rating","objectives","meets","exceeds","performance"],
-  mobility: ["international","abroad","cross","transversal","global","p&l","exposure"],
-  ops:      ["kpi","results","delivery","turnover","retention","engagement","ops"],
-  s360:     ["360","feedback","peer","manager feedback"]
-};
-
-function safeText(v){ return (v || "").toString().trim(); }
-function nowISO(){ return new Date().toISOString(); }
-function normalizeLower(s){ return safeText(s).toLowerCase(); }
-function bool(id){ return !!must(id).checked; }
-
-function selectedSources(){
-  return {
-    lms: bool("srcLMS"),
-    hris: bool("srcHRIS"),
-    perf: bool("srcPerf"),
-    mobility: bool("srcMobility"),
-    ops: bool("srcOps"),
-    s360: bool("src360")
-  };
-}
-
-function computeGlobalCoverage(sources){
-  const total = SOURCE_WEIGHTS.reduce((a,x)=>a+x.w,0);
-  const on = SOURCE_WEIGHTS.reduce((a,x)=> a + (sources[x.key] ? x.w : 0), 0);
-  return Math.round(100 * (on / total));
-}
-
-function computeCandidateCoverage(candidateText, sources){
-  const t = normalizeLower(candidateText);
-  const totalOn = SOURCE_WEIGHTS.reduce((a,x)=> a + (sources[x.key] ? x.w : 0), 0);
-  let covered = 0;
-
-  for (const src of SOURCE_WEIGHTS){
-    if (!sources[src.key]) continue;
-    const kws = COVERAGE_KEYWORDS[src.key] || [];
-    const hit = kws.some(k => t.includes(k));
-    covered += hit ? src.w : Math.round(src.w * 0.55);
-  }
-
-  const pct = totalOn > 0 ? Math.round(100 * (covered / totalOn)) : 0;
-  return Math.max(0, Math.min(100, pct));
-}
-
-function countMissingItems(missingText){
-  const t = safeText(missingText);
-  if (!t) return 0;
-  const parts = t.split(/[\n,;]+/g).map(x=>x.trim()).filter(Boolean);
-  return Math.min(12, parts.length);
-}
-
-function defensibilityLevel(globalCoverage, missingCount, sources){
-  const hasCore = sources.perf && sources.hris;
-  if (globalCoverage >= 75 && missingCount <= 2 && hasCore) return "HIGH";
-  if (globalCoverage >= 55 && missingCount <= 6) return "MEDIUM";
-  return "LOW";
-}
-
-function risksFrom(missingText, globalCoverage){
-  const risks = [];
-  if (globalCoverage < 55) risks.push("Low evidential coverage at moment T");
-
-  const m = normalizeLower(missingText);
-  if (m.includes("crisis") || m.includes("crise")) risks.push("Crisis leadership not documented");
-  if (m.includes("international") || m.includes("abroad") || m.includes("exposure")) risks.push("International exposure unclear");
-  if (m.includes("360") || m.includes("feedback")) risks.push("Feedback/360 not attributable");
-  if (m.includes("kpi") || m.includes("ops") || m.includes("turnover") || m.includes("engagement")) risks.push("Operational comparability incomplete");
-
-  if (!risks.length) risks.push("Known gaps explicitly stated; residual uncertainty remains");
-  return risks.slice(0, 6);
-}
-
-function hypothesesFrom(input, analysis){
-  const h = [];
-  const m = normalizeLower(input.missingData || "");
-  const c = normalizeLower(input.constraints || "");
-
-  const covs = analysis.candidates.map(x => x.coverage).slice().sort((a,b)=>b-a);
-  const gapTop = covs.length >= 2 ? (covs[0] - covs[1]) : 100;
-
-  if (gapTop <= 5) h.push("Candidates are within a narrow coverage band; decision likely depends on qualitative criteria.");
-  if (m.includes("crisis") || m.includes("crise")) h.push("If crisis leadership is decisive, require at least 1 documented crisis episode per candidate.");
-  if (m.includes("international") || m.includes("abroad")) h.push("If international exposure is required, validate assignments via HRIS + references.");
-  if (m.includes("360") || m.includes("feedback")) h.push("If leadership style matters, collect attributable 360 feedback with date + author role.");
-  if (m.includes("kpi") || m.includes("ops")) h.push("If ops performance is central, align candidates on comparable KPIs, same period, same scope.");
-
-  if (c.includes("30") || c.includes("urgent") || c.includes("urgence")) h.push("Under urgency, document why a lighter evidential bundle is acceptable (risk acceptance note).");
-  if (c.includes("social") || c.includes("climate") || c.includes("climat")) h.push("If social climate is sensitive, add an impact note: stakeholder map + mitigation actions.");
-
-  if (!h.length) h.push("Decision hinges on explicit criteria; document the weighting before appointment.");
-  return h.slice(0, 6);
-}
-
-async function sha256Hex(str){
-  const enc = new TextEncoder();
-  const data = enc.encode(str);
-  const hash = await crypto.subtle.digest("SHA-256", data);
-  const bytes = Array.from(new Uint8Array(hash));
-  return bytes.map(b=>b.toString(16).padStart(2,"0")).join("");
-}
-
-function stablePayload(input, analysis){
-  const srcKeys = Object.keys(input.sources).sort();
-  const sources = {};
-  srcKeys.forEach(k => sources[k] = !!input.sources[k]);
-
-  const candidates = [...analysis.candidates]
-    .map(c => ({ id: c.id, coverage: c.coverage }))
-    .sort((a,b)=> a.id.localeCompare(b.id));
-
-  const risks = [...analysis.risks].slice().sort();
-
-  return JSON.stringify({
-    v: "0.1",
-    decision_type: input.decisionType,
-    decision_date: input.decisionDate,
-    organisation: input.orgLabel,
-    decision_owner: input.issuer,
-    sources,
-    candidates,
-    global_coverage: analysis.globalCoverage,
-    missing_count: analysis.missingCount,
-    defensibility: analysis.defensibility,
-    risks
-  });
-}
-
-function buildDecisionBundle(input, analysis){
-  const bundleId = "decision-" + analysis.public_hash.slice(0, 12);
-
-  return {
-    rpo_version: "0.1",
-    bundle_id: bundleId,
-    created_at: nowISO(),
-    decision: {
-      type: input.decisionType || "other",
-      moment_t: input.decisionDate || "—",
-      organisation: input.orgLabel || "—",
-      owner: input.issuer || "—"
-    },
-    input_state: {
-      sources_available: input.sources,
-      candidates_snapshots: { A: input.candA || "", B: input.candB || "", C: input.candC || "" },
-      known_missing_data: input.missingData || "",
-      constraints: input.constraints || ""
-    },
-    assessment: {
-      global_coverage_pct: analysis.globalCoverage,
-      missing_items_count: analysis.missingCount,
-      candidates: analysis.candidates.map(c => ({ id: c.id, coverage_pct: c.coverage, risk_level: c.risk })),
-      defensibility: analysis.defensibility,
-      explicit_hypotheses: analysis.hypotheses,
-      known_risks: analysis.risks
-    },
-    integrity: {
-      public_hash_sha256: analysis.public_hash,
-      statement: "Hash proves integrity of the payload, not correctness of the decision."
-    },
-    disclaimer: "Deterministic sandbox. No AI. No storage. Not legal advice."
-  };
-}
-
-function riskLevelFromCoverage(cov){
-  if (cov >= 85) return "LOW";
-  if (cov >= 65) return "MEDIUM";
-  return "UNKNOWN";
-}
-
-/* =========================================================
-UI + Orchestration
-========================================================= */
-let LAST = { input:null, analysis:null, payload:null, hash:null, bundle:null };
-
-function readInput(){
-  const sources = selectedSources();
-  return {
-    decisionType: safeText(must("decisionType").value),
-    decisionDate: safeText(must("decisionDate").value),
-    orgLabel: safeText(must("orgLabel").value),
-    issuer: safeText(must("issuer").value),
-    candA: safeText(must("candA").value),
-    candB: safeText(must("candB").value),
-    candC: safeText(must("candC").value),
-    missingData: safeText(must("missingData").value),
-    constraints: safeText(must("constraints").value),
-    sources
-  };
-}
-
-function setBadge(el, label, kind){
-  el.classList.remove("ok","warn","bad","muted");
-  if (kind) el.classList.add(kind);
-  el.textContent = label;
-}
-
-function setPill(level){
-  const pill = must("statusPill");
-  pill.classList.remove("ok","warn","bad","muted");
-  const txt = must("statusText");
-
-  if (level === "HIGH"){ pill.classList.add("ok"); txt.textContent = "DEFENSIBILITY: HIGH"; return; }
-  if (level === "MEDIUM"){ pill.classList.add("warn"); txt.textContent = "DEFENSIBILITY: MEDIUM"; return; }
-  pill.classList.add("bad"); txt.textContent = "DEFENSIBILITY: LOW";
-}
-
-function setProgress(globalCoverage){
-  must("barFill").style.width = `${Math.max(2, Math.min(100, globalCoverage))}%`;
-  must("readyLabel").textContent = "READY";
-  must("syncLabel").textContent = "SYNC";
-}
-
-function renderBundle(bundle, analysis){
-  must("mCoverage").textContent = `${analysis.globalCoverage}%`;
-  must("mMissing").textContent = `${analysis.missingCount}`;
-  must("mDef").textContent = analysis.defensibility;
-
-  const cA = analysis.candidates.find(x=>x.id==="A");
-  const cB = analysis.candidates.find(x=>x.id==="B");
-  const cC = analysis.candidates.find(x=>x.id==="C");
-
-  must("mA").textContent = `A: Coverage ${cA.coverage}% — Risk ${cA.risk}`;
-  must("mB").textContent = `B: Coverage ${cB.coverage}% — Risk ${cB.risk}`;
-  must("mC").textContent = `C: Coverage ${cC.coverage}% — Risk ${cC.risk}`;
-
-  must("mHash").textContent = analysis.public_hash;
-
-  setBadge(must("s1"), "OK", "ok");
-  setBadge(must("s2"), "OK", "ok");
-  setBadge(must("s3"), "SEALED", "ok");
-
-  must("vInput").textContent = "Input captured";
-  must("vExtract").textContent = "Deterministic assessment";
-  must("vSeal").textContent = "Public hash sealed";
-
-  setPill(analysis.defensibility);
-  setProgress(analysis.globalCoverage);
-
-  must("jsonOut").value = JSON.stringify(bundle, null, 2);
-}
-
-function downloadJson(filename, text){
-  const blob = new Blob([text], { type: "application/json;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  URL.revokeObjectURL(url);
-}
-
-async function generate(){
-  const input = readInput();
-  const sources = input.sources;
-
-  const globalCoverage = computeGlobalCoverage(sources);
-  const missingCount = countMissingItems(input.missingData);
-
-  const cA = computeCandidateCoverage(input.candA, sources);
-  const cB = computeCandidateCoverage(input.candB, sources);
-  const cC = computeCandidateCoverage(input.candC, sources);
-
-  const analysis = {
-    globalCoverage,
-    missingCount,
-    candidates: [
-      { id:"A", coverage: cA, risk: riskLevelFromCoverage(cA) },
-      { id:"B", coverage: cB, risk: riskLevelFromCoverage(cB) },
-      { id:"C", coverage: cC, risk: riskLevelFromCoverage(cC) }
-    ],
-    defensibility: defensibilityLevel(globalCoverage, missingCount, sources),
-    risks: risksFrom(input.missingData, globalCoverage),
-    hypotheses: [] // set below
-  };
-
-  analysis.hypotheses = hypothesesFrom(input, analysis);
-
-  // Stable payload + public hash
-  const payload = stablePayload(input, analysis);
-  const hash = await sha256Hex(payload);
-
-  analysis.public_hash = hash;
-
-  const bundle = buildDecisionBundle(input, analysis);
-
-  // Persist last state for Verify tab + buttons
-  LAST = { input, analysis, payload, hash, bundle };
-
-  renderBundle(bundle, analysis);
-
-  // Status pill / progress already set by renderBundle()
-  return LAST;
-}
-
-/* =========================================================
-UI helpers (Reset, Load example, Tabs, Copy, Verify)
-========================================================= */
-
-function setActiveTab(tabId){
-  const tabs = ["tabBundle","tabJson","tabVerify"];
-  const panes = ["paneBundle","paneJson","paneVerify"];
-
-  tabs.forEach(id => must(id).setAttribute("aria-selected", id === tabId ? "true" : "false"));
-  panes.forEach(pid => must(pid).classList.toggle("active", pid === ("pane" + tabId.replace("tab",""))));
-}
-
-function resetUI(){
-  // Right panel: neutral state
-  must("statusPill").classList.remove("ok","warn","bad");
-  must("statusPill").classList.add("muted");
-  must("statusText").textContent = "NO BUNDLE YET";
-
-  setBadge(must("s1"), "—", "muted");
-  setBadge(must("s2"), "—", "muted");
-  setBadge(must("s3"), "—", "muted");
-
-  must("vInput").textContent = "Awaiting snapshots";
-  must("vExtract").textContent = "Coverage / risks";
-  must("vSeal").textContent = "Public hash";
-
-  must("barFill").style.width = "0%";
-  must("readyLabel").textContent = "READY";
-  must("syncLabel").textContent = "SYNC";
-
-  // Bundle metrics
-  ["mCoverage","mMissing","mDef","mA","mB","mC","mHash"].forEach(id => must(id).textContent = "—");
-
-  // JSON/Verify panes
-  must("jsonOut").value = "";
-  must("verifyPayload").value = "";
-  must("verifyHash").value = "";
-  must("verifyMsg").textContent = "—";
-  must("verifyBadge").classList.remove("ok","warn","bad","muted");
-  must("verifyBadge").classList.add("muted");
-  must("verifyBadge").textContent = "NO CHECK YET";
-
-  // Tab back to bundle
-  setActiveTab("tabBundle");
-
-  LAST = { input:null, analysis:null, payload:null, hash:null, bundle:null };
-}
-
-function loadExample(){
-  must("decisionType").value = EXAMPLE.decisionType;
-  must("decisionDate").value = EXAMPLE.decisionDate;
-  must("orgLabel").value = EXAMPLE.orgLabel;
-  must("issuer").value = EXAMPLE.issuer;
-
-  must("srcLMS").checked = !!EXAMPLE.sources.lms;
-  must("srcHRIS").checked = !!EXAMPLE.sources.hris;
-  must("srcPerf").checked = !!EXAMPLE.sources.perf;
-  must("srcMobility").checked = !!EXAMPLE.sources.mobility;
-  must("srcOps").checked = !!EXAMPLE.sources.ops;
-  must("src360").checked = !!EXAMPLE.sources.s360;
-
-  must("candA").value = EXAMPLE.candA;
-  must("candB").value = EXAMPLE.candB;
-  must("candC").value = EXAMPLE.candC;
-  must("missingData").value = EXAMPLE.missingData;
-  must("constraints").value = EXAMPLE.constraints;
-
-  // Optionnel mais utile : auto-génère après load
-  generate().catch(console.error);
-}
-
-function resetAll(){
-  // Clear left inputs
-  must("decisionType").value = "";
-  must("decisionDate").value = "";
-  must("orgLabel").value = "";
-  must("issuer").value = "";
-
-  // Default checks as in HTML initial state
-  must("srcLMS").checked = true;
-  must("srcHRIS").checked = true;
-  must("srcPerf").checked = true;
-  must("srcMobility").checked = false;
-  must("srcOps").checked = true;
-  must("src360").checked = false;
-
-  must("candA").value = "";
-  must("candB").value = "";
-  must("candC").value = "";
-  must("missingData").value = "";
-  must("constraints").value = "";
-
-  resetUI();
-}
-
-async function copyToClipboard(text){
-  try{
-    await navigator.clipboard.writeText(text);
-    return true;
-  }catch(e){
-    // Fallback
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.style.position = "fixed";
-    ta.style.left = "-9999px";
-    document.body.appendChild(ta);
-    ta.select();
-    const ok = document.execCommand("copy");
-    ta.remove();
-    return ok;
-  }
-}
-
-async function verifyHash(){
-  const payload = safeText(must("verifyPayload").value);
-  const expected = normalizeLower(must("verifyHash").value);
-  if (!payload || !expected){
-    must("verifyMsg").textContent = "Provide both payload and expected hash.";
-    must("verifyBadge").classList.remove("ok","warn","bad","muted");
-    must("verifyBadge").classList.add("warn");
-    must("verifyBadge").textContent = "MISSING INPUT";
-    return;
-  }
-
-  const computed = await sha256Hex(payload);
-  const ok = computed === expected;
-
-  must("verifyBadge").classList.remove("ok","warn","bad","muted");
-  must("verifyBadge").classList.add(ok ? "ok" : "bad");
-  must("verifyBadge").textContent = ok ? "MATCH" : "MISMATCH";
-
-  must("verifyMsg").textContent = ok
-    ? "Match. Payload integrity is consistent with the expected hash."
-    : `Mismatch. Computed: ${computed}`;
-}
-
-/* =========================================================
-Wire events (IMPORTANT: after DOM exists)
-========================================================= */
-function wire(){
-  // Buttons
-  must("generateBtn").addEventListener("click", () => generate().catch(console.error));
-  must("loadExampleBtn").addEventListener("click", loadExample);
-  must("resetBtn").addEventListener("click", resetAll);
-
-  // Tabs
-  must("tabBundle").addEventListener("click", () => setActiveTab("tabBundle"));
-  must("tabJson").addEventListener("click", () => setActiveTab("tabJson"));
-  must("tabVerify").addEventListener("click", () => setActiveTab("tabVerify"));
-
-  // Copy / download
-  must("copyHashBtn").addEventListener("click", async () => {
-    if (!LAST?.analysis?.public_hash) return;
-    await copyToClipboard(LAST.analysis.public_hash);
-  });
-
-  must("copyJsonBtn").addEventListener("click", async () => {
-    const v = safeText(must("jsonOut").value);
-    if (!v) return;
-    await copyToClipboard(v);
-  });
-
-  must("downloadJsonBtn").addEventListener("click", () => {
-    const v = safeText(must("jsonOut").value);
-    if (!v) return;
-    downloadJson("decision_bundle.json", v);
-  });
-
-  // Verify pane
-  must("useLastBtn").addEventListener("click", () => {
-    if (!LAST?.payload || !LAST?.hash) return;
-    must("verifyPayload").value = LAST.payload;
-    must("verifyHash").value = LAST.hash;
-    must("verifyMsg").textContent = "Loaded last payload + hash.";
-    must("verifyBadge").classList.remove("ok","warn","bad","muted");
-    must("verifyBadge").classList.add("muted");
-    must("verifyBadge").textContent = "NO CHECK YET";
-  });
-
-  must("verifyBtn").addEventListener("click", () => verifyHash().catch(console.error));
-
-  // Optional: live update (comment out if you want “manual only”)
-  const liveIds = [
-    "decisionType","decisionDate","orgLabel","issuer",
-    "srcLMS","srcHRIS","srcPerf","srcMobility","srcOps","src360",
-    "candA","candB","candC","missingData","constraints"
-  ];
-  liveIds.forEach(id => {
-    const el = must(id);
-    el.addEventListener(el.tagName === "INPUT" || el.tagName === "SELECT" ? "change" : "input", () => {
-      // Generate only if we already generated once OR if user starts typing a meaningful bundle
-      const anyText = safeText(must("candA").value) || safeText(must("candB").value) || safeText(must("candC").value);
-      if (!anyText && !LAST?.bundle) return;
-      generate().catch(console.error);
+
+    function normalizeText(s){
+      return (s || "").trim().replace(/\s+/g, " ");
+    }
+
+    // stable stringify with sorted keys (deterministic)
+    function stableStringify(obj){
+      const seen = new WeakSet();
+      const sorter = (value) => {
+        if(value && typeof value === "object"){
+          if(seen.has(value)) return value; // avoid cycles (shouldn't happen)
+          seen.add(value);
+
+          if(Array.isArray(value)) return value.map(sorter);
+
+          const keys = Object.keys(value).sort();
+          const out = {};
+          for(const k of keys) out[k] = sorter(value[k]);
+          return out;
+        }
+        return value;
+      };
+      return JSON.stringify(sorter(obj), null, 2);
+    }
+
+    async function sha256Hex(text){
+      const enc = new TextEncoder();
+      const data = enc.encode(text);
+      const hash = await crypto.subtle.digest("SHA-256", data);
+      const arr = Array.from(new Uint8Array(hash));
+      return arr.map(b => b.toString(16).padStart(2,"0")).join("");
+    }
+
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    // ---------- Scoring (simple, explainable, deterministic) ----------
+    function computeCoverage(sources){
+      const keys = Object.keys(sources);
+      const total = keys.length;
+      const selected = keys.filter(k => sources[k]).length;
+      // weight: security/legal matter more in regulated contexts
+      const weights = {
+        src_lms: 1.0,
+        src_hris: 1.0,
+        src_perf: 1.0,
+        src_ops: 1.0,
+        src_mob: 1.1,
+        src_360: 0.9,
+        src_security: 1.4,
+        src_legal: 1.2
+      };
+      let wTotal = 0, wSel = 0;
+      for(const k of keys){
+        const w = weights[k] ?? 1.0;
+        wTotal += w;
+        if(sources[k]) wSel += w;
+      }
+      const pct = Math.round((wSel / wTotal) * 100);
+      return { pct, selected, total, wSel: +wSel.toFixed(2), wTotal: +wTotal.toFixed(2) };
+    }
+
+    function computeMissingCount(knownMissingText){
+      const t = normalizeText(knownMissingText);
+      if(!t) return 0;
+      // naive split on separators: ; or line breaks
+      const parts = t.split(/[\n;]+/).map(s => normalizeText(s)).filter(Boolean);
+      return parts.length;
+    }
+
+    function scenarioRiskMultiplier(scenario){
+      switch(scenario){
+        case "role_sensible": return 1.25;
+        case "nomination_dg": return 1.20;
+        case "mobilite_internationale": return 1.15;
+        case "reorga_critique": return 1.10;
+        case "sanction": return 1.20;
+        default: return 1.0;
+      }
+    }
+
+    function computeDefensibility({coveragePct, missingCount, sources, scenario}){
+      // Base score from coverage; penalties for missing, bonuses for security/legal presence
+      let score = coveragePct;
+
+      // Missing data penalty (bigger for high-stakes scenario)
+      const mult = scenarioRiskMultiplier(scenario);
+      score -= Math.round(missingCount * 6 * mult);
+
+      // Bonuses for regulated artefacts
+      if(sources.src_security) score += 6;
+      if(sources.src_legal) score += 4;
+
+      // 360 is weak if alone; small bonus if present
+      if(sources.src_360) score += 1;
+
+      score = clamp(score, 0, 100);
+
+      // Bucket
+      let level = "LOW";
+      if(score >= 82) level = "HIGH";
+      else if(score >= 62) level = "MEDIUM";
+
+      // Risk tag for executives
+      let risk = "HIGH";
+      if(level === "HIGH") risk = "LOW";
+      else if(level === "MEDIUM") risk = "MEDIUM";
+
+      return { score, level, risk };
+    }
+
+    function buildDeterministicBundle(input){
+      const coverage = computeCoverage(input.sources);
+      const missingCount = computeMissingCount(input.knownMissing);
+
+      const def = computeDefensibility({
+        coveragePct: coverage.pct,
+        missingCount,
+        sources: input.sources,
+        scenario: input.scenario
+      });
+
+      // Deterministic explanations (human-readable, audit-friendly)
+      const rationale = [];
+      rationale.push(`Coverage computed from declared sources (weighted).`);
+      if(missingCount > 0) rationale.push(`Known missing data items reduce defensibility (absence = data).`);
+      if(input.sources.src_security) rationale.push(`Security/clearance artefacts increase audit strength in regulated contexts.`);
+      if(input.sources.src_legal) rationale.push(`Legal/compliance artefacts increase opposability and boundary clarity.`);
+      rationale.push(`No AI. No storage. Same input => same output.`);
+
+      return {
+        standard: "OpenProof RPO v0.1",
+        bundle_type: "HR_DECISION_DEFENSIBILITY",
+        deterministic: true,
+        no_ai: true,
+        no_storage: true,
+        generated_at: nowISO(),
+        decision_moment_t: input.decisionDate || null,
+        decision: {
+          scenario: input.scenario,
+          org_scope: input.orgScope,
+          decision_owner: input.decisionOwner
+        },
+        declared_sources: input.sources,
+        known_missing_data: normalizeText(input.knownMissing),
+        constraints: normalizeText(input.constraints),
+        metrics: {
+          coverage_pct: coverage.pct,
+          sources_selected: coverage.selected,
+          sources_total: coverage.total,
+          missing_items_count: missingCount,
+          defensibility_score: def.score,
+          defensibility_level: def.level,
+          executive_risk: def.risk
+        },
+        rationale
+      };
+    }
+
+    // ---------- UI wiring ----------
+    const el = (id) => document.getElementById(id);
+
+    const scenario = el("scenario");
+    const decisionDate = el("decisionDate");
+    const orgScope = el("orgScope");
+    const decisionOwner = el("decisionOwner");
+
+    const srcIds = ["src_lms","src_hris","src_perf","src_ops","src_mob","src_360","src_security","src_legal"];
+    const knownMissing = el("knownMissing");
+    const constraints = el("constraints");
+
+    const btnGenerate = el("btnGenerate");
+    const btnExample = el("btnExample");
+    const btnReset = el("btnReset");
+
+    const pillDef = el("pillDef");
+    const pillCov = el("pillCov");
+    const pillMiss = el("pillMiss");
+
+    const outCapture = el("outCapture");
+    const outEval = el("outEval");
+    const outSeal = el("outSeal");
+    const outSummary = el("outSummary");
+
+    const covMeter = el("covMeter");
+    const hashText = el("hashText");
+    const jsonPreview = el("jsonPreview");
+
+    const btnCopyHash = el("btnCopyHash");
+    const btnCopyJson = el("btnCopyJson");
+    const btnDownload = el("btnDownload");
+
+    let lastBundle = null;
+    let lastBundleString = "";
+    let lastHash = "";
+
+    function collectInput(){
+      const sources = {};
+      for(const id of srcIds) sources[id] = !!el(id).checked;
+
+      return {
+        scenario: scenario.value,
+        decisionDate: decisionDate.value || "",
+        orgScope: normalizeText(orgScope.value),
+        decisionOwner: normalizeText(decisionOwner.value),
+        sources,
+        knownMissing: knownMissing.value || "",
+        constraints: constraints.value || ""
+      };
+    }
+
+    function setDefPill(level){
+      pillDef.textContent = `DEFENSIBILITY · ${level}`;
+      let col = "rgba(241,230,163,0.16)";
+      if(level === "HIGH") col = "rgba(127,221,170,0.22)";
+      if(level === "MEDIUM") col = "rgba(241,230,163,0.18)";
+      if(level === "LOW") col = "rgba(255,120,120,0.18)";
+      pillDef.style.borderColor = col;
+      pillDef.style.background = "rgba(11,15,20,0.25)";
+    }
+
+    function enableOutputs(enabled){
+      btnCopyHash.disabled = !enabled;
+      btnCopyJson.disabled = !enabled;
+      btnDownload.disabled = !enabled;
+    }
+
+    async function generate(){
+      const input = collectInput();
+
+      // Minimal required fields for credibility
+      if(!input.orgScope || !input.decisionOwner || !input.decisionDate){
+        outSummary.innerHTML = `⚠️ Renseigne au minimum <strong>périmètre</strong>, <strong>responsable</strong> et <strong>date (moment T)</strong>.`;
+        enableOutputs(false);
+        return;
+      }
+
+      const bundle = buildDeterministicBundle(input);
+      const bundleStr = stableStringify(bundle);
+      const hash = await sha256Hex(bundleStr);
+
+      // Seal
+      bundle.integrity = {
+        hash_alg: "SHA-256",
+        public_hash: hash
+      };
+
+      // Re-stringify after adding integrity (still deterministic)
+      const finalStr = stableStringify(bundle);
+      const finalHash = await sha256Hex(finalStr); // should match the same "final" structure
+      bundle.integrity.public_hash = finalHash;
+      const finalFinalStr = stableStringify(bundle);
+
+      lastBundle = bundle;
+      lastBundleString = finalFinalStr;
+      lastHash = finalHash;
+
+      // UI
+      const cov = bundle.metrics.coverage_pct;
+      const miss = bundle.metrics.missing_items_count;
+      const lvl = bundle.metrics.defensibility_level;
+
+      setDefPill(lvl);
+      pillCov.textContent = `COVERAGE · ${cov}%`;
+      pillMiss.textContent = `MISSING · ${miss}`;
+
+      outCapture.textContent = input.decisionDate;
+      outEval.textContent = `Score ${bundle.metrics.defensibility_score}/100 · Risk ${bundle.metrics.executive_risk}`;
+      outSeal.textContent = `SHA-256 sealed`;
+
+      covMeter.style.width = cov + "%";
+      hashText.textContent = finalHash;
+      jsonPreview.textContent = finalFinalStr;
+
+      outSummary.innerHTML = [
+        `<strong>Décision :</strong> ${scenario.options[scenario.selectedIndex].text}`,
+        `<strong>Couverture :</strong> ${cov}% · <strong>Manquants connus :</strong> ${miss}`,
+        `<strong>Défendabilité :</strong> ${lvl} · <strong>Risque DG :</strong> ${bundle.metrics.executive_risk}`,
+        `<span class="muted">Lecture probatoire : périmètre + sources + règles implicites ⇒ audit & contestation.</span>`
+      ].join("<br/>");
+
+      enableOutputs(true);
+    }
+
+    function loadExample(){
+      // “MBDA-like” scenario: sensitive / regulated
+      scenario.value = "role_sensible";
+      decisionDate.value = "2026-01-28";
+      orgScope.value = "MBDA — France scope (multi-sites, multi-entités)";
+      decisionOwner.value = "CEO / Executive committee";
+
+      el("src_lms").checked = true;
+      el("src_hris").checked = true;
+      el("src_perf").checked = true;
+      el("src_ops").checked = true;
+      el("src_mob").checked = true;
+      el("src_360").checked = false;
+      el("src_security").checked = true;
+      el("src_legal").checked = true;
+
+      knownMissing.value = "Comparable ops KPIs not attested for all candidates; documented crisis leadership evidence missing; 360 feedback not attributable.";
+      constraints.value = "Urgency: business continuity. Export-control constraints. Audit trail required. Decision may be contested.";
+
+      // Generate immediately for “demo impact”
+      generate();
+    }
+
+    function resetAll(){
+      scenario.value = "nomination_dg";
+      decisionDate.value = "";
+      orgScope.value = "";
+      decisionOwner.value = "";
+      for(const id of srcIds) el(id).checked = (id !== "src_mob" && id !== "src_360" && id !== "src_security" && id !== "src_legal");
+      knownMissing.value = "";
+      constraints.value = "";
+
+      lastBundle = null;
+      lastBundleString = "";
+      lastHash = "";
+
+      pillDef.textContent = "DEFENSIBILITY · —";
+      pillCov.textContent = "COVERAGE · —";
+      pillMiss.textContent = "MISSING · —";
+
+      outCapture.textContent = "—";
+      outEval.textContent = "—";
+      outSeal.textContent = "—";
+
+      covMeter.style.width = "0%";
+      hashText.textContent = "—";
+      jsonPreview.textContent = "{}";
+
+      outSummary.textContent = "Génère un bundle pour obtenir : couverture, données manquantes, niveau de défendabilité, hash public.";
+      enableOutputs(false);
+    }
+
+    async function copyText(txt){
+      await navigator.clipboard.writeText(txt);
+    }
+
+    function downloadJson(filename, content){
+      const blob = new Blob([content], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Events
+    btnGenerate.addEventListener("click", generate);
+    btnExample.addEventListener("click", loadExample);
+    btnReset.addEventListener("click", resetAll);
+
+    btnCopyHash.addEventListener("click", async ()=>{
+      if(!lastHash) return;
+      await copyText(lastHash);
+      btnCopyHash.textContent = "Copié ✓";
+      setTimeout(()=> btnCopyHash.textContent = "Copier le hachage", 900);
     });
-  });
 
-  // Start in clean state
-  resetUI();
-}
+    btnCopyJson.addEventListener("click", async ()=>{
+      if(!lastBundleString) return;
+      await copyText(lastBundleString);
+      btnCopyJson.textContent = "Copié ✓";
+      setTimeout(()=> btnCopyJson.textContent = "Copier le JSON", 900);
+    });
 
-// Ensure wiring happens after the DOM is ready
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", wire);
-} else {
-  wire();
-}
-</script>
+    btnDownload.addEventListener("click", ()=>{
+      if(!lastBundleString) return;
+      downloadJson("decision_bundle.json", lastBundleString);
+    });
+
+    // Init
+    resetAll();
+  </script>
+</body>
+</html>
+
