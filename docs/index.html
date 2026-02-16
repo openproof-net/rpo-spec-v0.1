@@ -245,6 +245,110 @@
     }
 
     /* HERO STORY (3 cards) */
+    <!-- CORPORATE "HOW IT WORKS" BLOCK (insert between .hero-story and .hero-ctas) -->
+<section class="corp-flow" aria-label="How RPO works in practice">
+  <div class="corp-head">
+    <h2 class="corp-title">How RPO works (in practice)</h2>
+    <p class="corp-sub">
+      Capture the decision context, declare what exists, apply rules, compute a defensibility level, then seal a deterministic bundle.
+    </p>
+  </div>
+
+  <div class="corp-steps" role="list" aria-label="RPO steps">
+    <div class="corp-step" role="listitem">
+      <div class="corp-step-top">
+        <span class="corp-step-n">01</span>
+        <span class="corp-step-name">Decision context</span>
+      </div>
+      <div class="corp-step-body">
+        Type, scope, owner, decision date, documented rationale.
+      </div>
+      <div class="corp-tags" aria-label="Inputs">
+        <span class="corp-tag">Type</span>
+        <span class="corp-tag">Owner</span>
+        <span class="corp-tag">Scope</span>
+      </div>
+    </div>
+
+    <div class="corp-step" role="listitem">
+      <div class="corp-step-top">
+        <span class="corp-step-n">02</span>
+        <span class="corp-step-name">Declared sources</span>
+      </div>
+      <div class="corp-step-body">
+        Select what is truly available (systems, evidence, logs).
+      </div>
+      <div class="corp-tags" aria-label="Sources">
+        <span class="corp-tag">HRIS</span>
+        <span class="corp-tag">LMS</span>
+        <span class="corp-tag">KPIs</span>
+        <span class="corp-tag">360</span>
+      </div>
+    </div>
+
+    <div class="corp-step" role="listitem">
+      <div class="corp-step-top">
+        <span class="corp-step-n">03</span>
+        <span class="corp-step-name">Rules applied</span>
+      </div>
+      <div class="corp-step-body">
+        Business rules define what counts as admissible and attributable.
+      </div>
+      <div class="corp-tags" aria-label="Rules">
+        <span class="corp-tag">Attribution</span>
+        <span class="corp-tag">Traceability</span>
+        <span class="corp-tag">Opposability</span>
+      </div>
+    </div>
+
+    <div class="corp-step" role="listitem">
+      <div class="corp-step-top">
+        <span class="corp-step-n">04</span>
+        <span class="corp-step-name">Defensibility level</span>
+      </div>
+      <div class="corp-step-body">
+        A deterministic score based on coverage, gaps, and declared assumptions.
+      </div>
+      <div class="corp-tags" aria-label="Outputs">
+        <span class="corp-tag">Coverage</span>
+        <span class="corp-tag">Missing data</span>
+        <span class="corp-tag">Risk</span>
+      </div>
+    </div>
+
+    <div class="corp-step corp-step--accent" role="listitem">
+      <div class="corp-step-top">
+        <span class="corp-step-n">05</span>
+        <span class="corp-step-name">Sealed bundle</span>
+      </div>
+      <div class="corp-step-body">
+        Signed JSON + human-readable PDF path + public hash (sha256).
+      </div>
+      <div class="corp-tags" aria-label="Bundle">
+        <span class="corp-tag">Signed JSON</span>
+        <span class="corp-tag">PDF</span>
+        <span class="corp-tag">sha256</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="corp-foot">
+    <div class="corp-foot-left">
+      <div class="corp-eq">
+        <span class="corp-eq-k">Deterministic rule:</span>
+        <span class="corp-eq-v">Same input → Same output → Same accountability</span>
+      </div>
+      <div class="corp-note">
+        No AI. No interpretation. The hash proves integrity, not truth.
+      </div>
+    </div>
+
+    <a class="corp-cta" href="./sandbox.html" target="_blank" rel="noopener noreferrer">
+      Open the sandbox →
+    </a>
+  </div>
+</section>
+
     .hero-story{
       margin-top: 14px;
       display: grid;
@@ -620,6 +724,162 @@
       overflow:hidden; clip:rect(0,0,0,0);
       white-space:nowrap; border:0;
     }
+    /* CORPORATE FLOW BLOCK */
+.corp-flow{
+  margin-top: 18px;
+  max-width: 720px;
+  border: 1px solid rgba(212,175,55,.22);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  padding: 16px 16px;
+}
+
+.corp-head{
+  padding: 6px 6px 12px 6px;
+  border-bottom: 1px solid rgba(212,175,55,.14);
+  margin-bottom: 12px;
+}
+
+.corp-title{
+  font-family:"Orbitron",sans-serif;
+  font-size: .82rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(241,230,163,.92);
+  margin: 0 0 6px 0;
+}
+
+.corp-sub{
+  font-size: .9rem;
+  line-height: 1.55;
+  color: rgba(198,186,150,.88);
+  margin: 0;
+}
+
+.corp-steps{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+@media (min-width: 860px){
+  .corp-steps{ grid-template-columns: 1fr 1fr; }
+}
+
+.corp-step{
+  border: 1px solid rgba(212,175,55,.18);
+  border-radius: 16px;
+  background: rgba(0,0,0,.18);
+  padding: 12px 12px;
+}
+
+.corp-step--accent{
+  border-color: rgba(241,230,163,.32);
+  background: radial-gradient(circle at 20% 0, rgba(241,230,163,.10), rgba(0,0,0,.18));
+}
+
+.corp-step-top{
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.corp-step-n{
+  font-family:"Orbitron",sans-serif;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  color: rgba(179,164,139,.9);
+}
+
+.corp-step-name{
+  font-weight: 650;
+  color: rgba(241,230,163,.92);
+  font-size: .92rem;
+  line-height: 1.2;
+}
+
+.corp-step-body{
+  font-size: .86rem;
+  line-height: 1.5;
+  color: rgba(198,186,150,.88);
+}
+
+.corp-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.corp-tag{
+  display:inline-flex;
+  align-items:center;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,.16);
+  background: rgba(0,0,0,.20);
+  font-size: .75rem;
+  color: rgba(241,230,163,.86);
+  white-space: nowrap;
+}
+
+.corp-foot{
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(212,175,55,.14);
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap: 14px;
+}
+
+.corp-eq{
+  display:flex;
+  flex-wrap:wrap;
+  gap: 8px;
+  align-items:baseline;
+}
+
+.corp-eq-k{
+  font-family:"Orbitron",sans-serif;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(179,164,139,.92);
+}
+
+.corp-eq-v{
+  font-size: .9rem;
+  color: rgba(241,230,163,.92);
+}
+
+.corp-note{
+  margin-top: 6px;
+  font-size: .82rem;
+  color: rgba(198,186,150,.82);
+  line-height: 1.45;
+}
+
+.corp-cta{
+  flex: 0 0 auto;
+  text-decoration:none;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(212,175,55,.35);
+  background: rgba(10,12,27,0.35);
+  color: rgba(241,230,163,.92);
+  letter-spacing: .10em;
+  text-transform: uppercase;
+  font-size: .72rem;
+  white-space: nowrap;
+}
+.corp-cta:hover{ border-color: rgba(241,230,163,.55); }
+.corp-cta:active{ transform: translateY(1px); }
+
   </style>
 </head>
 
