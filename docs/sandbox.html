@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-page="sandbox">
+<html lang="fr" data-page="sandbox">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>Sandbox — Deterministic HR Decision Bundle Simulator | OpenProof RPO v0.1</title>
-  <meta name="description" content="Sandbox simulator for OpenProof RPO v0.1. Freeze decision scope, declared sources and constraints; generate deterministic outputs (signed JSON + print-ready PDF view + public hash). No AI. Local-only." />
+  <title>Sandbox — Faisceau de preuves déterministes (RPO v0.1) | OpenProof</title>
+  <meta name="description" content="Sandbox OpenProof RPO v0.1 : figer le périmètre décisionnel, déclarer les sources, générer un bundle déterministe (JSON + aperçu imprimable + hash SHA-256). Local-only. Sans IA." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://rpo.openproof.net/sandbox.html" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,12 +24,14 @@
       --ivory:#f7f3e8;
       --ink-soft:#b3a48b;
 
-      --radius:26px;
+      --radius:24px;
       --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
       --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
+      --line:rgba(212,175,55,0.16);
       --line2:rgba(136,116,72,0.35);
 
       --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -40,24 +41,21 @@
       font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
       color:var(--ivory);
       background:
-        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
-        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
+        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.22), transparent 55%),
+        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.16), transparent 55%),
         linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
       overflow-x:hidden;
     }
-
     a{color:inherit}
-    a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+      outline:none; box-shadow:var(--focus); border-radius:10px;
+    }
     ::selection{background: rgba(212,175,55,.25);}
 
-    #bg-field{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-1;
-    }
+    /* BACKGROUND FIELD */
+    #bg-field{position:fixed; inset:0; width:100%; height:100%; z-index:-1;}
 
+    /* TOP BAR */
     .top-bar{
       position:fixed;
       top:0; left:0; right:0;
@@ -71,7 +69,7 @@
       backdrop-filter:blur(18px);
       border-bottom:1px solid rgba(212,175,55,0.22);
     }
-    .top-left{display:flex;align-items:center;gap:14px;min-width:280px;}
+    .top-left{display:flex; align-items:center; gap:14px; min-width:280px;}
     .emblem{
       width:34px;height:34px;border-radius:999px;
       background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
@@ -92,7 +90,7 @@
       align-items:center; justify-content:center; flex:1 1 auto;
     }
     .top-nav a{
-      color:inherit;text-decoration:none;position:relative;padding-bottom:3px;white-space:nowrap;
+      color:inherit; text-decoration:none; position:relative; padding-bottom:3px; white-space:nowrap;
     }
     .top-nav a::after{
       content:""; position:absolute; left:0; bottom:0; width:0; height:1px;
@@ -119,28 +117,29 @@
     .top-cta:hover{filter:brightness(1.03)}
     .top-cta:active{transform:translateY(1px)}
 
+    /* WRAP */
     .wrap{
       max-width: 1440px;
       margin:0 auto;
       padding:96px 56px 72px;
     }
 
-    /* HERO */
+    /* HERO (compact) */
     .hero{
       display:grid;
-      grid-template-columns: 1.6fr 1.1fr;
-      gap:72px;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap:24px;
       align-items:start;
-      padding-top: 10px;
+      margin-bottom:18px;
+      padding-top:8px;
     }
-
     .eyebrow{
       font-family:"Orbitron",sans-serif;
       font-size:.72rem;
       letter-spacing:.22em;
       text-transform:uppercase;
       color:var(--ink-soft);
-      margin-bottom:14px;
+      margin-bottom:12px;
     }
     .eyebrow span{color:var(--gold-soft)}
     .h1{
@@ -148,116 +147,74 @@
       text-transform:uppercase;
       letter-spacing:.06em;
       line-height:1.06;
-      font-size:clamp(2.1rem,4.1vw,3.1rem);
-      margin-bottom:14px;
+      font-size:clamp(1.8rem,3.1vw,2.4rem);
+      margin-bottom:10px;
     }
     .h1 .gold{display:block;color:var(--gold-soft)}
     .lead{
-      margin-top:10px;
       font-size:0.98rem;
       color:rgba(198,186,150,.90);
-      line-height:1.7;
-      max-width: 70ch;
+      line-height:1.75;
+      max-width:72ch;
       text-align: justify;
     }
-
     .chips{
-      display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 16px 0;max-width:72ch;
+      display:flex; flex-wrap:wrap; gap:8px; margin-top:12px;
     }
     .chip{
-      display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;
+      display:inline-flex; align-items:center;
+      padding:6px 10px; border-radius:999px;
       border:1px solid rgba(212,175,55,.18);
       background: rgba(0,0,0,.22);
       font-size:12px;
-      color:rgba(241,230,163,.92);
+      color:rgba(241,230,163,.90);
       white-space:nowrap;
     }
 
-    .ctas{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      max-width: 560px;
-    }
-    .btn-primary,.btn-ghost{
-      min-height:52px;border-radius:999px;text-decoration:none;display:flex;
-      align-items:center;justify-content:center;padding:12px 18px;
-      text-transform:uppercase;letter-spacing:.12em;font-size:13px;width:100%;
-      border:none;
-      cursor:pointer;
-    }
-    .btn-primary{
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-    }
-    .btn-ghost{
-      border:1px solid rgba(212,175,55,0.35);
-      background: rgba(10,12,27,0.35);
-      color: var(--gold-soft);
-      backdrop-filter: blur(10px);
-    }
-    .btn-primary:hover{filter:brightness(1.03)}
-    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
-    .btn-primary:active,.btn-ghost:active{transform:translateY(1px)}
-    .micro{
-      margin-top: 12px;
-      font-size: .9rem;
-      color: rgba(179,164,139,.92);
-      line-height: 1.7;
-      max-width: 78ch;
-      text-align: justify;
-    }
-    .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
-
-    /* COCKPIT PANEL (RIGHT) */
-    .panel{
-      position:relative;
+    /* COCKPIT (hero-right) */
+    .cockpit{
       background:var(--panel);
       border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,0.45);
-      padding:24px;
+      border:1px solid rgba(212,175,55,0.38);
+      padding:18px;
       box-shadow:var(--shadow-soft);
+      position:relative;
       overflow:hidden;
-      transform-style:preserve-3d;
-      will-change:transform;
-      min-height: 340px;
+      min-height: 168px;
     }
-    .panel::before{
+    .cockpit::before{
       content:"";
-      position:absolute;
-      inset:-2px;
+      position:absolute; inset:-2px;
       background:
-        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
-        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
-        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
-      opacity:.95;
-      filter: blur(10px);
+        radial-gradient(900px 380px at 20% 0%, rgba(241,230,163,0.10), transparent 55%),
+        radial-gradient(700px 360px at 110% 70%, rgba(212,175,55,0.09), transparent 55%),
+        linear-gradient(120deg, rgba(241,230,163,0.06), transparent 40%, rgba(241,230,163,0.05));
+      opacity:.9; filter: blur(10px);
       pointer-events:none;
     }
-    .scanline{
-      position:absolute; left:-30%; top:0; width:160%; height:2px;
-      background: linear-gradient(90deg, transparent 0%, rgba(241,230,163,0.05) 20%, rgba(241,230,163,0.55) 50%, rgba(241,230,163,0.05) 80%, transparent 100%);
-      opacity:.55; pointer-events:none; animation: scanY 3.8s linear infinite;
-      mix-blend-mode: screen;
-    }
-    @keyframes scanY{0%{transform:translateY(-10px)}100%{transform:translateY(360px)}}
-    .panel-inner{position:relative; z-index:2; transform: translateZ(12px);}
-    .panel-title{
+    .cockpit-inner{position:relative; z-index:2}
+    .cockpit-title{
       font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
+      font-size:.74rem;
       letter-spacing:.18em;
       text-transform:uppercase;
-      color:var(--ink-soft);
+      color:rgba(179,164,139,.92);
       margin-bottom:10px;
     }
     .pill{
-      display:inline-flex; gap:10px; align-items:center; font-size:.72rem;
-      letter-spacing:.14em; text-transform:uppercase; padding:6px 12px;
-      border-radius:999px; border:1px solid rgba(241,230,163,.55);
-      margin-bottom:12px; color: rgba(241,230,163,.92);
-      background: rgba(10,12,27,0.22); backdrop-filter: blur(10px);
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      font-size:.70rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,.45);
+      margin-bottom:10px;
+      color: rgba(241,230,163,.90);
+      background: rgba(10,12,27,0.20);
+      backdrop-filter: blur(10px);
     }
     .pill .dot{
       width:8px;height:8px;border-radius:50%;
@@ -265,85 +222,82 @@
       box-shadow: 0 0 14px rgba(241,230,163,.55);
       animation: dotPulse 1.45s ease-in-out infinite;
     }
-    @keyframes dotPulse{0%,100%{transform:scale(1); opacity:.85}50%{transform:scale(1.35); opacity:1}}
+    @keyframes dotPulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.35);opacity:1}}
 
-    .list{border-top:1px solid rgba(212,175,55,.28);margin-top:10px;padding-top:12px;font-size:.92rem;color:var(--ink-soft);}
-    .row{display:grid;grid-template-columns: 1fr 1.3fr;align-items:flex-start;gap:14px;padding:9px 0;}
-    .row .k{color: rgba(179,164,139,.92)}
-    .row .v{color: rgba(241,230,163,.88);text-align:right;}
-    .row + .row{border-top:1px dashed var(--line2)}
-    .state{
-      margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:12px;
-      padding-top:12px; border-top: 1px solid rgba(212,175,55,.14);
-      font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
-      color: rgba(179,164,139,.92);
-    }
-    .state .sig{display:flex; align-items:center; gap:10px; white-space:nowrap;}
-    .state .sig i{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(244,186,120,.95);
-      box-shadow: 0 0 18px rgba(244,186,120,.38);
-      animation: warmBlink 2.2s ease-in-out infinite;
-    }
-    @keyframes warmBlink{0%,100%{opacity:.55}50%{opacity:1}}
-    .state .meter{
-      position:relative; flex:1 1 auto; height:8px; border-radius:999px;
-      background: rgba(241,230,163,.10);
-      border: 1px solid rgba(212,175,55,.18);
-      overflow:hidden;
-    }
-    .state .meter > span{
-      position:absolute; inset:0; width:46%; border-radius:999px;
-      background: linear-gradient(90deg, rgba(241,230,163,.18), rgba(212,175,55,.42), rgba(241,230,163,.18));
-      animation: meterMove 2.8s ease-in-out infinite;
-    }
-    @keyframes meterMove{0%,100%{transform:translateX(-10%)}50%{transform:translateX(120%)}}
-    .hash{
-      margin-top:10px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: .78rem;
-      color: rgba(241,230,163,.78);
-      opacity:.95;
-      word-break: break-all;
-      border-top: 1px solid rgba(212,175,55,.14);
-      padding-top: 10px;
-    }
-
-    /* SIMULATOR GRID */
-    .sim{
-      margin-top: 28px;
+    .kv{
       display:grid;
-      grid-template-columns: 1.25fr 1fr;
+      grid-template-columns: 1fr 1fr;
+      gap:10px 14px;
+      font-size:0.9rem;
+      color: rgba(198,186,150,.86);
+      border-top:1px solid rgba(212,175,55,.18);
+      padding-top:10px;
+      margin-top:8px;
+    }
+    .kv .k{color: rgba(179,164,139,.92)}
+    .kv .v{color: rgba(241,230,163,.90); text-align:right}
+
+    /* MAIN GRID (50/50 strict) */
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr; /* 50/50 */
       gap:18px;
       align-items:start;
+      margin-top:18px;
     }
 
-    .card{
-      border: 1px solid rgba(212,175,55,.22);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      padding: 18px 18px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    .panel{
+      background:var(--panel);
+      border-radius:var(--radius);
+      border:1px solid rgba(212,175,55,0.30);
+      padding:18px;
+      box-shadow: 0 16px 50px rgba(0,0,0,0.45);
+      position:relative;
+      overflow:hidden;
     }
-    .card-title{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    .panel::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(900px 380px at 20% 0%, rgba(241,230,163,0.08), transparent 55%),
+        radial-gradient(700px 360px at 110% 70%, rgba(212,175,55,0.07), transparent 55%);
+      opacity:.9; filter: blur(10px);
+      pointer-events:none;
+    }
+    .panel > *{position:relative; z-index:2}
+
+    .panel-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+      padding-bottom:12px;
+      border-bottom:1px solid rgba(212,175,55,0.16);
+    }
+    .panel-title{
       font-family:"Orbitron",sans-serif;
       font-size:.78rem;
       letter-spacing:.18em;
       text-transform:uppercase;
       color:rgba(179,164,139,.92);
-      margin-bottom:12px;
     }
-    .badge{
-      display:inline-flex;align-items:center;gap:8px;
-      font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
-      padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(212,175,55,.22);
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:.70rem;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,.28);
       color: rgba(241,230,163,.88);
-      background: rgba(0,0,0,.18);
+      background: rgba(10,12,27,0.18);
+      white-space:nowrap;
     }
 
+    /* Form */
     .form{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -351,80 +305,98 @@
     }
     .field{display:flex; flex-direction:column; gap:6px;}
     label{
-      font-size:0.78rem;
-      letter-spacing:.14em;
+      font-family:"Orbitron",sans-serif;
+      font-size:.64rem;
+      letter-spacing:.16em;
       text-transform:uppercase;
-      color: rgba(179,164,139,.92);
+      color:rgba(179,164,139,.92);
     }
-    select,input,textarea{
+    input, select, textarea{
       width:100%;
-      border-radius: 14px;
-      border:1px solid rgba(212,175,55,.18);
-      background: rgba(5,7,18,0.55);
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(212,175,55,0.20);
+      background: rgba(0,0,0,0.18);
       color: rgba(241,230,163,.92);
-      padding:10px 12px;
       font-size:0.95rem;
       outline:none;
     }
-    textarea{min-height:92px; resize:vertical; grid-column: 1 / -1; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:0.9rem; color: rgba(241,230,163,.88);}
-    select:focus, input:focus, textarea:focus{box-shadow: var(--focus); border-color: rgba(212,175,55,.35);}
+    textarea{min-height:110px; resize:vertical; font-family: var(--mono); font-size:.9rem; line-height:1.55; color: rgba(241,230,163,.82);}
+    .full{grid-column: 1 / -1;}
 
+    /* Sources grid (compact, inside left panel) */
     .sources{
-      margin-top: 12px;
+      margin-top:12px;
+      border-top:1px solid rgba(212,175,55,0.14);
+      padding-top:12px;
+    }
+    .sources-head{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom:10px;
+    }
+    .sources-head .hint{
+      font-size:.86rem;
+      color: rgba(179,164,139,.88);
+      line-height:1.45;
+    }
+    .sources-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:10px;
     }
     .src{
-      border:1px solid rgba(212,175,55,.18);
-      border-radius: 16px;
-      padding:12px;
-      background: rgba(0,0,0,.18);
       display:flex;
       gap:10px;
+      border:1px solid rgba(212,175,55,.18);
+      border-radius:16px;
+      background: rgba(0,0,0,.18);
+      padding:12px;
+      min-height:72px;
       align-items:flex-start;
     }
-    .src input{width:auto; margin-top:3px}
-    .src strong{display:block; color: rgba(241,230,163,.92); font-weight:600; margin-bottom:4px}
-    .src span{display:block; color: rgba(198,186,150,.86); font-size:0.92rem; line-height:1.5}
+    .src input{width:auto; padding:0; border:none; background:transparent; box-shadow:none}
+    .src strong{display:block; font-size:.92rem; color: rgba(241,230,163,.92); margin-bottom:4px; font-weight:600}
+    .src span{display:block; font-size:.86rem; color: rgba(198,186,150,.84); line-height:1.45}
 
-    .bottom-row{
-      margin-top: 12px;
+    /* Output metrics */
+    .metrics{
       display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap:12px;
-      align-items:end;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-bottom:10px;
     }
-    .note{
-      grid-column: 1 / -1;
-      color: rgba(198,186,150,.86);
-      font-size:0.92rem;
-      line-height:1.6;
-      border-top:1px solid rgba(212,175,55,.14);
-      padding-top:10px;
-      margin-top:10px;
-      text-align: justify;
-    }
-    .softbox{
+    .metric{
       border:1px solid rgba(212,175,55,.18);
-      border-radius: 16px;
+      border-radius:16px;
+      background: rgba(0,0,0,.18);
       padding:12px;
-      background: rgba(0,0,0,.16);
-      color: rgba(198,186,150,.88);
-      font-size:0.92rem;
-      line-height:1.55;
+      min-height:64px;
+    }
+    .metric .k{
+      font-family:"Orbitron",sans-serif;
+      font-size:.64rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color: rgba(179,164,139,.92);
+      margin-bottom:6px;
+    }
+    .metric .v{
+      font-family: var(--mono);
+      font-size:1rem;
+      color: rgba(241,230,163,.92);
     }
 
-    /* OUTPUT */
+    /* Tabs */
     .tabs{
-      display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px;
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin:10px 0 10px;
     }
     .tab{
-      padding:8px 12px;
       border-radius:999px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(0,0,0,.18);
-      color: rgba(241,230,163,.88);
+      border:1px solid rgba(212,175,55,0.30);
+      background: rgba(10,12,27,0.18);
+      color: rgba(241,230,163,.90);
+      padding:8px 12px;
       font-size:.78rem;
       letter-spacing:.14em;
       text-transform:uppercase;
@@ -433,114 +405,179 @@
     }
     .tab[aria-selected="true"]{
       border-color: rgba(241,230,163,.55);
-      background: rgba(10,12,27,0.28);
-      color: rgba(241,230,163,.95);
-    }
-    .out-metrics{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-bottom: 10px;
-    }
-    .metric{
-      border:1px solid rgba(212,175,55,.18);
-      border-radius: 16px;
-      padding:12px;
-      background: rgba(0,0,0,.16);
-    }
-    .metric .k{
-      font-size:0.72rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: rgba(179,164,139,.92);
-      margin-bottom:6px;
-    }
-    .metric .v{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size:1.05rem;
-      color: rgba(241,230,163,.92);
+      box-shadow: 0 0 0 1px rgba(241,230,163,.12) inset;
     }
 
-    pre{
+    .outputBox{
       border:1px solid rgba(212,175,55,.18);
-      border-radius: 16px;
-      padding:12px;
+      border-radius:16px;
       background: rgba(0,0,0,.18);
-      overflow:auto;
-      max-height: 320px;
-      color: rgba(241,230,163,.86);
-      font-size:0.86rem;
+      padding:12px;
+      min-height:210px;
+      font-family: var(--mono);
+      font-size:.90rem;
+      color: rgba(241,230,163,.82);
       line-height:1.55;
+      white-space:pre-wrap;
+      word-break:break-word;
     }
 
+    /* Action row */
     .actions{
-      margin-top: 10px;
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      margin-top:14px;
+      display:flex;
       gap:12px;
+      justify-content:center;
+      flex-wrap:wrap;
+      border-top:1px solid rgba(212,175,55,0.14);
+      padding-top:14px;
     }
-    .btn-sm{
-      min-height:46px;
+    .btn{
+      min-height:52px;
       border-radius:999px;
-      padding:10px 12px;
+      padding:12px 18px;
       text-transform:uppercase;
       letter-spacing:.12em;
-      font-size:12px;
+      font-size:13px;
       cursor:pointer;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(10,12,27,0.35);
-      color: rgba(241,230,163,.92);
+      border:1px solid rgba(212,175,55,0.35);
+      background: rgba(10,12,27,0.25);
+      color: var(--gold-soft);
+      backdrop-filter: blur(10px);
+      min-width: 220px;
     }
-    .btn-sm.primary{
+    .btn:hover{border-color: rgba(212,175,55,0.55)}
+    .btn:active{transform:translateY(1px)}
+    .btn-primary{
+      border:1px solid rgba(244,186,120,0.9);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      min-width: 260px;
+    }
+
+    /* Utility buttons inside output */
+    .mini-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .mini{
+      min-height:44px;
+      border-radius:999px;
+      padding:10px 14px;
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      cursor:pointer;
+      border:1px solid rgba(212,175,55,0.30);
+      background: rgba(10,12,27,0.18);
+      color: rgba(241,230,163,.90);
+    }
+    .mini:hover{border-color: rgba(241,230,163,.55)}
+    .mini-primary{
       border:1px solid rgba(244,186,120,0.9);
       background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
       color:#2a1204;
     }
-    .btn-sm:hover{filter:brightness(1.03)}
-    .btn-sm:active{transform:translateY(1px)}
-    .footnote{
-      margin-top:10px;
-      color: rgba(198,186,150,.86);
-      font-size:0.9rem;
-      line-height:1.6;
-      text-align: justify;
-      border-top:1px solid rgba(212,175,55,.14);
-      padding-top:10px;
-    }
 
-    footer{
-      margin-top: 40px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(212,175,55,0.14);
-      color: rgba(179,164,139,.85);
-      font-size: 0.88rem;
+    /* Footer + accordion */
+    .bottom{
+      margin-top:18px;
+      border-top:1px solid rgba(212,175,55,0.14);
+      padding-top:14px;
+      color: rgba(179,164,139,.86);
+      font-size:0.9rem;
       display:flex;
+      align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap:12px;
       flex-wrap:wrap;
     }
 
-    @media(max-width:1060px){
-      .hero{grid-template-columns:1fr; gap:26px}
-      .ctas{max-width: 720px}
-      .wrap{padding:96px 28px 56px}
-      .sim{grid-template-columns:1fr}
+    details.tech{
+      margin-top:18px;
+      border:1px solid rgba(212,175,55,0.18);
+      border-radius:18px;
+      background: rgba(0,0,0,.16);
+      overflow:hidden;
     }
-    @media(max-width:960px){
+    details.tech summary{
+      list-style:none;
+      cursor:pointer;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      user-select:none;
+    }
+    details.tech summary::-webkit-details-marker{display:none}
+    .sum-left{
+      display:flex; flex-direction:column; gap:4px;
+    }
+    .sum-title{
+      font-family:"Orbitron",sans-serif;
+      font-size:.74rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      color: rgba(179,164,139,.92);
+    }
+    .sum-sub{
+      font-size:.92rem;
+      color: rgba(198,186,150,.82);
+      line-height:1.5;
+    }
+    .chev{
+      font-family: var(--mono);
+      color: rgba(241,230,163,.75);
+      opacity:.85;
+    }
+    details[open] .chev{transform: rotate(180deg)}
+    .tech-body{
+      padding:16px;
+      border-top:1px solid rgba(212,175,55,0.12);
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap:12px;
+    }
+    .tcard{
+      border:1px solid rgba(212,175,55,.16);
+      border-radius:16px;
+      background: rgba(0,0,0,.14);
+      padding:14px;
+      min-height: 110px;
+    }
+    .tcard h4{
+      font-family:"Orbitron",sans-serif;
+      font-size:.68rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color: rgba(179,164,139,.92);
+      margin-bottom:8px;
+    }
+    .tcard p{
+      color: rgba(198,186,150,.84);
+      line-height:1.6;
+      font-size:.92rem;
+      text-align: justify;
+    }
+
+    /* Responsive */
+    @media(max-width:1060px){
+      .wrap{padding:96px 28px 56px}
+      .hero{grid-template-columns: 1fr; gap:14px}
+      .grid{grid-template-columns:1fr}
+      .tech-body{grid-template-columns:1fr}
+      .sources-grid{grid-template-columns:1fr}
+      .form{grid-template-columns:1fr}
+      .metrics{grid-template-columns:1fr}
       .top-nav{display:none}
       .top-bar{padding:0 16px}
-      .wrap{padding:96px 20px 56px}
-      .ctas{grid-template-columns:1fr}
-      .form{grid-template-columns:1fr}
-      .sources{grid-template-columns:1fr}
-      .actions{grid-template-columns:1fr}
-      .row{grid-template-columns: 1fr; gap:6px}
-      .row .v{text-align:left}
     }
     @media (prefers-reduced-motion: reduce){
-      .scanline, .pill .dot, .state .sig i, .state .meter > span {animation:none}
-      .panel{transform:none !important}
       #bg-field{display:none}
+      .pill .dot{animation:none}
     }
   </style>
 </head>
@@ -555,284 +592,273 @@
     </div>
 
     <nav class="top-nav" aria-label="Primary">
-      <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a>
-      <a href="./sandbox.html" aria-current="page" target="_blank" rel="noopener noreferrer">Sandbox</a>
-      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
-      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
+      <a href="./index.html" target="_blank" rel="noopener noreferrer">Maison</a>
+      <a href="./sandbox.html" aria-current="page" target="_blank" rel="noopener noreferrer">Bac à sable</a>
+      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">Comment ça marche</a>
+      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spéc.</a>
       <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
-      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Exemples</a>
     </nav>
 
-    <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Try the live demo</a>
+    <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Essayez la démo en direct</a>
   </header>
 
   <main class="wrap" role="main">
+    <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div>
-        <div class="eyebrow">Deterministic <span>proof bundle simulator</span></div>
+        <div class="eyebrow">Simulateur de <span>faisceaux de preuves déterministes</span></div>
 
         <h1 class="h1" id="hero-title">
-          Freeze the context.
-          <span class="gold">Generate an auditable decision bundle.</span>
+          Figez le contexte.
+          <span class="gold">Générez un dossier de décision auditable.</span>
         </h1>
 
         <p class="lead">
-          This sandbox does not “choose” a candidate. It captures decision scope, declared sources and constraints,
-          then generates deterministic outputs: JSON + print view + public hash (SHA-256).
-          No AI. No storage. Same input → same output.
+          Ce bac à sable ne “choisit” rien. Il capture un périmètre décisionnel (moment T), les sources déclarées et des règles
+          déterministes — puis génère un bundle local : JSON + aperçu imprimable + hash SHA-256.
+          Pas d’IA. Pas de stockage. Même entrée → même sortie.
         </p>
 
-        <div class="chips" aria-label="Core concepts">
-          <span class="chip">Decision scope (moment T)</span>
-          <span class="chip">Declared sources</span>
-          <span class="chip">Deterministic rules</span>
+        <div class="chips" aria-label="Concepts">
+          <span class="chip">Moment T</span>
+          <span class="chip">Sources déclarées</span>
+          <span class="chip">Règles déterministes</span>
           <span class="chip">Audit-ready</span>
-          <span class="chip">Public hash</span>
+          <span class="chip">Hash public</span>
         </div>
-
-        <div class="ctas" role="group" aria-label="Primary actions">
-          <button class="btn-primary" id="btnGenerateTop">Generate bundle</button>
-          <button class="btn-ghost" id="btnLoadTop">Load example</button>
-        </div>
-
-        <p class="micro">
-          <strong>RPO =</strong> signed JSON (logic) + print-ready view + public hash.
-          The hash proves integrity, not “truth”. Verification is public. Responsibility is human.
-        </p>
       </div>
 
-      <aside class="panel" id="cockpit" aria-label="Simulator cockpit (live)">
-        <div class="scanline" aria-hidden="true"></div>
+      <aside class="cockpit" aria-label="Cockpit simulateur">
+        <div class="cockpit-inner">
+          <div class="cockpit-title">Cockpit (live)</div>
+          <div class="pill"><span class="dot" aria-hidden="true"></span>Intégrité • Lisibilité • Vérifiabilité</div>
 
-        <div class="panel-inner">
-          <div class="panel-title">Simulator cockpit (live)</div>
-
-          <div class="pill" aria-label="Attributes">
-            <span class="dot" aria-hidden="true"></span>
-            Integrity • Readability • Verifiability
-          </div>
-
-          <div class="list" role="list">
-            <div class="row" role="listitem">
-              <span class="k">Scope</span>
-              <span class="v" id="ckScope">Company X — multi-entity scope</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Moment T</span>
-              <span class="v" id="ckDate">—</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Coverage</span>
-              <span class="v" id="ckCoverage">—</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Defensibility</span>
-              <span class="v" id="ckDef">—</span>
-            </div>
-          </div>
-
-          <div class="state" aria-label="Live status">
-            <div class="sig"><i aria-hidden="true"></i><span id="ckState">CAPTURE</span></div>
-            <div class="meter" aria-hidden="true"><span></span></div>
-            <div class="sig"><span id="ckTick">SYNC</span></div>
-          </div>
-
-          <div class="hash" aria-label="Public hash preview">
-            hash: <span id="ckHash">—</span>
+          <div class="kv" role="list">
+            <div class="k">Portée</div><div class="v" id="cScope">—</div>
+            <div class="k">Moment T</div><div class="v" id="cMoment">—</div>
+            <div class="k">Couverture</div><div class="v" id="cCoverage">—</div>
+            <div class="k">Défendabilité</div><div class="v" id="cDef">—</div>
           </div>
         </div>
       </aside>
     </section>
 
-    <section class="sim" aria-label="Sandbox simulator">
-      <!-- INPUT -->
-      <div class="card" aria-label="Input — decision perimeter">
-        <div class="card-title">
-          <span>Input — decision perimeter</span>
-          <span class="badge">Scope • sources • accountability</span>
+    <!-- MAIN 50/50 -->
+    <section class="grid" aria-label="Simulateur">
+      <!-- LEFT: INPUT -->
+      <div class="panel" aria-label="Entrée — périmètre décisionnel">
+        <div class="panel-head">
+          <div class="panel-title">Entrée — périmètre de décision</div>
+          <div class="tag">Portée • Sources • Responsabilité</div>
         </div>
 
         <div class="form">
           <div class="field">
-            <label for="decisionType">Decision type</label>
+            <label for="decisionType">Type de décision</label>
             <select id="decisionType">
-              <option value="Nomination / sensitive role">Nomination / sensitive role</option>
-              <option value="Mobility / international posting">Mobility / international posting</option>
-              <option value="Compensation change / exception">Compensation change / exception</option>
-              <option value="Exit / termination decision">Exit / termination decision</option>
-              <option value="Performance action / improvement plan">Performance action / improvement plan</option>
+              <option>Nomination / rôle sensible</option>
+              <option>Mobilité interne (poste critique)</option>
+              <option>Rémunération (ajustement significatif)</option>
+              <option>Rupture / séparation</option>
+              <option>Sanction / mesure disciplinaire</option>
+              <option>Organisation (restructuration)</option>
             </select>
           </div>
 
           <div class="field">
-            <label for="momentT">Decision date (moment T)</label>
+            <label for="momentT">Date de décision (moment T)</label>
             <input id="momentT" type="date" />
           </div>
 
           <div class="field">
-            <label for="scope">Organization / scope</label>
-            <input id="scope" type="text" value="Company X — multi-sites, multi-entities" />
+            <label for="scope">Organisation / étendue</label>
+            <input id="scope" type="text" value="Company X — multi-sites, multi-entités" />
           </div>
 
           <div class="field">
-            <label for="owner">Decision owner</label>
+            <label for="owner">Responsable de la décision</label>
             <input id="owner" type="text" value="CEO / Executive committee" />
           </div>
 
-          <div class="field" style="grid-column:1/-1;">
-            <label for="context">Decision context (1–3 paragraphs)</label>
-            <textarea id="context">Regulated environment. Audit exposure. Decision may be challenged. Traceability of declared sources and stable definitions are required.</textarea>
+          <div class="field full">
+            <label for="context">Contexte de la décision (1 à 3 paragraphes)</label>
+            <textarea id="context">Environnement régulé. Exposition audit. Décision potentiellement contestable. Traçabilité des sources déclarées et stabilité des définitions requises.</textarea>
           </div>
         </div>
 
-        <div class="sources" aria-label="Declared sources">
-          <div class="src">
-            <input type="checkbox" id="srcLms" checked />
-            <div>
-              <strong>LMS / training files</strong>
-              <span>Certifications, training attestations, documented evidence.</span>
-            </div>
+        <div class="sources" aria-label="Sources déclarées">
+          <div class="sources-head">
+            <div class="panel-title">Sources déclarées (ce qui était réellement disponible)</div>
+            <div class="hint">Coche uniquement ce qui existe, est attribuable et re-vérifiable.</div>
           </div>
 
-          <div class="src">
-            <input type="checkbox" id="srcHris" checked />
-            <div>
-              <strong>HRIS / career history</strong>
-              <span>Roles, tenure, grade changes, official trace.</span>
-            </div>
-          </div>
+          <div class="sources-grid" role="list">
+            <label class="src" role="listitem">
+              <input type="checkbox" class="srcChk" data-key="lms" checked />
+              <div>
+                <strong>LMS / fichiers de formation</strong>
+                <span>Certifications, habilitations, attestations documentées.</span>
+              </div>
+            </label>
 
-          <div class="src">
-            <input type="checkbox" id="srcPerf" checked />
-            <div>
-              <strong>Performance reviews</strong>
-              <span>Objectives, annual reviews, formal evaluation trail.</span>
-            </div>
-          </div>
+            <label class="src" role="listitem">
+              <input type="checkbox" class="srcChk" data-key="hris" checked />
+              <div>
+                <strong>SIRH / parcours professionnel</strong>
+                <span>Rôles, titularisation, changements de grade, traces officielles.</span>
+              </div>
+            </label>
 
-          <div class="src">
-            <input type="checkbox" id="srcOps" checked />
-            <div>
-              <strong>Operational results</strong>
-              <span>Attested KPIs, certified deliverables, traceable metrics.</span>
-            </div>
-          </div>
+            <label class="src" role="listitem">
+              <input type="checkbox" class="srcChk" data-key="perf" checked />
+              <div>
+                <strong>Évaluations de performance</strong>
+                <span>Objectifs, revues annuelles, procédure formelle d’évaluation.</span>
+              </div>
+            </label>
 
-          <div class="src">
-            <input type="checkbox" id="src360" />
-            <div>
-              <strong>360 feedback</strong>
-              <span>Only if documented and attributable (otherwise excluded).</span>
-            </div>
-          </div>
+            <label class="src" role="listitem">
+              <input type="checkbox" class="srcChk" data-key="ops" checked />
+              <div>
+                <strong>Résultats opérationnels</strong>
+                <span>KPI attestés, livrables certifiés, mesures traçables.</span>
+              </div>
+            </label>
 
-          <div class="src">
-            <input type="checkbox" id="srcLegal" checked />
-            <div>
-              <strong>Legal / compliance</strong>
-              <span>Constraints, disputes, regulatory considerations, opposable items.</span>
-            </div>
-          </div>
-        </div>
+            <label class="src" role="listitem">
+              <input type="checkbox" class="srcChk" data-key="fb360" />
+              <div>
+                <strong>Commentaires à 360 degrés</strong>
+                <span>Uniquement si documenté et attribuable (sinon exclu).</span>
+              </div>
+            </label>
 
-        <div class="bottom-row" style="margin-top:12px;">
-          <div class="softbox">
-            <div style="font-family:Orbitron,sans-serif;letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;color:rgba(179,164,139,.92);margin-bottom:6px;">
-              Known missing data
-            </div>
-            Comparable KPIs not attested for all candidates; some evidence exists but is not attributable; missing documented crisis leadership trace.
+            <label class="src" role="listitem">
+              <input type="checkbox" class="srcChk" data-key="legal" checked />
+              <div>
+                <strong>Juridique / conformité</strong>
+                <span>Contraintes, litiges, considérations réglementaires, éléments opposables.</span>
+              </div>
+            </label>
           </div>
-          <div class="softbox">
-            <div style="font-family:Orbitron,sans-serif;letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;color:rgba(179,164,139,.92);margin-bottom:6px;">
-              Constraints (optional)
-            </div>
-            Urgency, business continuity, social sensitivity, upcoming audit window. Decision must remain reconstructible.
-          </div>
-          <div class="softbox">
-            <div style="font-family:Orbitron,sans-serif;letter-spacing:.18em;text-transform:uppercase;font-size:.72rem;color:rgba(179,164,139,.92);margin-bottom:6px;">
-              Local-only
-            </div>
-            No data is sent. Bundle is generated in your browser. Deterministic rules only.
-          </div>
-        </div>
-
-        <div class="ctas" style="margin-top:14px;max-width:none;">
-          <button class="btn-primary" id="btnGenerate">Generate</button>
-          <button class="btn-ghost" id="btnLoad">Load example</button>
-        </div>
-        <div class="ctas" style="margin-top:10px;max-width:none;grid-template-columns:1fr;">
-          <button class="btn-ghost" id="btnReset">Reset</button>
         </div>
       </div>
 
-      <!-- OUTPUT -->
-      <div class="card" aria-label="Output — decision preparation report">
-        <div class="card-title">
-          <span>Output — decision preparation report</span>
-          <span class="badge" id="badgeStatus">Click “Generate”.</span>
+      <!-- RIGHT: OUTPUT -->
+      <div class="panel" aria-label="Résultat — rapport">
+        <div class="panel-head">
+          <div class="panel-title">Résultat — rapport de préparation à la décision</div>
+          <div class="tag" id="sealedTag">Bundle scellé (local-only)</div>
         </div>
 
-        <div class="out-metrics" aria-label="Key metrics">
+        <div class="metrics" aria-label="Indicateurs">
           <div class="metric">
-            <div class="k">Coverage</div>
+            <div class="k">Couverture probatoire</div>
             <div class="v" id="mCoverage">—</div>
           </div>
           <div class="metric">
-            <div class="k">Missing</div>
+            <div class="k">Manquant</div>
             <div class="v" id="mMissing">—</div>
           </div>
           <div class="metric">
-            <div class="k">Defensibility</div>
+            <div class="k">Défendabilité</div>
             <div class="v" id="mDef">—</div>
           </div>
           <div class="metric">
-            <div class="k">Seal</div>
+            <div class="k">Joint</div>
             <div class="v" id="mSeal">—</div>
           </div>
         </div>
 
-        <div class="tabs" role="tablist" aria-label="Output tabs">
-          <div class="tab" role="tab" tabindex="0" id="tabSummary" aria-selected="true">Summary</div>
-          <div class="tab" role="tab" tabindex="0" id="tabJson" aria-selected="false">JSON</div>
-          <div class="tab" role="tab" tabindex="0" id="tabPrint" aria-selected="false">PDF (print)</div>
+        <div class="tabs" role="tablist" aria-label="Vues">
+          <button class="tab" role="tab" aria-selected="true" id="tabSummary">Résumé</button>
+          <button class="tab" role="tab" aria-selected="false" id="tabJson">JSON</button>
+          <button class="tab" role="tab" aria-selected="false" id="tabPdf">PDF (impression)</button>
         </div>
 
-        <pre id="outBox">Click “Generate”.</pre>
+        <div class="outputBox" id="outputBox" aria-label="Sortie">
+Clique sur “GÉNÉRER”.
 
-        <div class="actions" role="group" aria-label="Actions">
-          <button class="btn-sm" id="btnCopyHash">Copy hash</button>
-          <button class="btn-sm" id="btnCopyJson">Copy JSON</button>
-          <button class="btn-sm primary" id="btnDownload">Download JSON</button>
+Tu peux aussi modifier les champs à gauche : le bundle est calculé à partir de tes entrées, sans “Load example”.
         </div>
 
-        <div class="footnote">
-          This artifact documents <strong>scope + declared sources + deterministic rules</strong>. It does not “decide truth”.
-          Accountability remains human. The public hash proves integrity over time.
-          <div style="margin-top:8px;font-family:ui-monospace,monospace;color:rgba(241,230,163,.82);">hash: <span id="hashLine">—</span></div>
+        <div class="mini-actions" aria-label="Actions sortie">
+          <button class="mini" id="copyHash">Copier le hachage</button>
+          <button class="mini" id="copyJson">Copier le JSON</button>
+          <button class="mini mini-primary" id="downloadJson">Télécharger JSON</button>
+        </div>
+
+        <div style="margin-top:12px; border-top:1px solid rgba(212,175,55,0.12); padding-top:10px; color:rgba(179,164,139,.88); line-height:1.6; text-align:justify;">
+          RPO = JSON signé (logique) + vue prête à imprimer + hash public. Le hash garantit l’intégrité (pas la “vérité”).
+          Vérification publique. Responsabilité humaine.
+          <div style="margin-top:10px; font-family:var(--mono); color:rgba(241,230,163,.78); word-break:break-word;">
+            hash : <span id="hashLine">—</span>
+          </div>
         </div>
       </div>
     </section>
 
-    <footer>
-      <div>© OpenProof — RPO v0.1. Local-only deterministic sandbox.</div>
-      <div>
-        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
-        <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a> ·
-        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+    <!-- ACTIONS (clean, centered) -->
+    <div class="actions" aria-label="Actions globales">
+      <button class="btn btn-primary" id="generateBtn">Générer</button>
+      <button class="btn" id="loadExampleBtn">Exemple de chargement</button>
+      <button class="btn" id="resetBtn">Réinitialiser</button>
+    </div>
+
+    <!-- TECH / HYPOTHESES (moved DOWN + collapsible) -->
+    <details class="tech">
+      <summary>
+        <div class="sum-left">
+          <div class="sum-title">Informations techniques & hypothèses</div>
+          <div class="sum-sub">Ce qui est utile pour l’audit — mais inutile à la première lecture.</div>
+        </div>
+        <div class="chev">⌄</div>
+      </summary>
+
+      <div class="tech-body">
+        <div class="tcard">
+          <h4>Données manquantes connues</h4>
+          <p id="techMissingText">
+            À compléter : preuves non attribuables, KPI non attestés, historique non scellé, etc.
+          </p>
+        </div>
+        <div class="tcard">
+          <h4>Contraintes (facultatives)</h4>
+          <p id="techConstraintsText">
+            Ex : urgence, fenêtre d’audit, sensibilité sociale, continuité d’activité.
+          </p>
+        </div>
+        <div class="tcard">
+          <h4>Local uniquement</h4>
+          <p>
+            Aucune donnée n’est envoyée. Le bundle est généré dans ton navigateur.
+            Règles déterministes uniquement.
+          </p>
+        </div>
       </div>
-    </footer>
+    </details>
+
+    <div class="bottom">
+      <div>© OpenProof — RPO v0.1. Bac à sable déterministe (local-only).</div>
+      <div>
+        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spécifications</a> ·
+        <a href="./index.html" target="_blank" rel="noopener noreferrer">Accueil</a> ·
+        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Exemples</a>
+      </div>
+    </div>
   </main>
 
   <script>
-    /* =========================
-       STAR FIELD (same as home)
-    ========================== */
+    /**********************
+     * Background starfield
+     **********************/
     (function () {
       const canvas = document.getElementById("bg-field");
       const ctx = canvas.getContext("2d", { alpha: true });
 
       let width, height, particles = [];
-      const COUNT = 220;
+      const COUNT = 200;
 
       function resize() {
         width = window.innerWidth;
@@ -844,7 +870,12 @@
       }
 
       function createParticle() {
-        return { x:(Math.random()*2-1), y:(Math.random()*2-1), z:Math.random()*0.9+0.1, speed:Math.random()*0.004+0.0015 };
+        return {
+          x: (Math.random() * 2 - 1),
+          y: (Math.random() * 2 - 1),
+          z: Math.random() * 0.9 + 0.1,
+          speed: Math.random() * 0.004 + 0.0015
+        };
       }
 
       function init() {
@@ -855,18 +886,26 @@
       function project(p) {
         const f = 420;
         const s = f / (f * p.z);
-        return { x: p.x * width * 0.5 * s + width / 2, y: p.y * height * 0.5 * s + height / 2 };
+        return {
+          x: p.x * width * 0.5 * s + width / 2,
+          y: p.y * height * 0.5 * s + height / 2
+        };
       }
 
       function loop() {
         ctx.clearRect(0, 0, width, height);
         for (const p of particles) {
           p.z -= p.speed;
-          if (p.z < 0.08) { Object.assign(p, createParticle()); p.z = 1; }
+          if (p.z < 0.08) {
+            Object.assign(p, createParticle());
+            p.z = 1;
+          }
           const { x, y } = project(p);
           const a = Math.min(1, (1.2 - p.z) * 1.1);
-          ctx.fillStyle = `rgba(241,230,163,${0.55 * a})`;
-          ctx.beginPath(); ctx.arc(x, y, 1.5, 0, Math.PI * 2); ctx.fill();
+          ctx.fillStyle = `rgba(241,230,163,${0.50 * a})`;
+          ctx.beginPath();
+          ctx.arc(x, y, 1.4, 0, Math.PI * 2);
+          ctx.fill();
         }
         requestAnimationFrame(loop);
       }
@@ -875,329 +914,388 @@
       resize(); init(); loop();
     })();
 
-    /* =========================
-       COCKPIT 3D hover
-    ========================== */
-    (function(){
-      const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const card = document.getElementById("cockpit");
-      if (!card || prefersReduce) return;
+    /**********************
+     * Deterministic bundle simulator
+     **********************/
+    const $ = (id) => document.getElementById(id);
 
-      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-      let raf = null;
-
-      function onMove(e){
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top) / r.height;
-        const rotY = clamp((x - 0.5) * 10, -6, 6);
-        const rotX = clamp((0.5 - y) * 10, -6, 6);
-
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
-        });
-      }
-      function onLeave(){ card.style.transform = "none"; }
-
-      card.addEventListener("mousemove", onMove);
-      card.addEventListener("mouseleave", onLeave);
-    })();
-
-    /* =========================
-       DETERMINISTIC BUNDLE LOGIC
-    ========================== */
     const els = {
-      decisionType: document.getElementById("decisionType"),
-      momentT: document.getElementById("momentT"),
-      scope: document.getElementById("scope"),
-      owner: document.getElementById("owner"),
-      context: document.getElementById("context"),
-      srcLms: document.getElementById("srcLms"),
-      srcHris: document.getElementById("srcHris"),
-      srcPerf: document.getElementById("srcPerf"),
-      srcOps: document.getElementById("srcOps"),
-      src360: document.getElementById("src360"),
-      srcLegal: document.getElementById("srcLegal"),
-      btnGenerate: document.getElementById("btnGenerate"),
-      btnGenerateTop: document.getElementById("btnGenerateTop"),
-      btnLoad: document.getElementById("btnLoad"),
-      btnLoadTop: document.getElementById("btnLoadTop"),
-      btnReset: document.getElementById("btnReset"),
-      badgeStatus: document.getElementById("badgeStatus"),
+      decisionType: $("decisionType"),
+      momentT: $("momentT"),
+      scope: $("scope"),
+      owner: $("owner"),
+      context: $("context"),
+      srcChecks: Array.from(document.querySelectorAll(".srcChk")),
+
       // cockpit
-      ckScope: document.getElementById("ckScope"),
-      ckDate: document.getElementById("ckDate"),
-      ckCoverage: document.getElementById("ckCoverage"),
-      ckDef: document.getElementById("ckDef"),
-      ckState: document.getElementById("ckState"),
-      ckTick: document.getElementById("ckTick"),
-      ckHash: document.getElementById("ckHash"),
+      cScope: $("cScope"),
+      cMoment: $("cMoment"),
+      cCoverage: $("cCoverage"),
+      cDef: $("cDef"),
+
       // metrics
-      mCoverage: document.getElementById("mCoverage"),
-      mMissing: document.getElementById("mMissing"),
-      mDef: document.getElementById("mDef"),
-      mSeal: document.getElementById("mSeal"),
+      mCoverage: $("mCoverage"),
+      mMissing: $("mMissing"),
+      mDef: $("mDef"),
+      mSeal: $("mSeal"),
+
       // output
-      tabSummary: document.getElementById("tabSummary"),
-      tabJson: document.getElementById("tabJson"),
-      tabPrint: document.getElementById("tabPrint"),
-      outBox: document.getElementById("outBox"),
-      btnCopyHash: document.getElementById("btnCopyHash"),
-      btnCopyJson: document.getElementById("btnCopyJson"),
-      btnDownload: document.getElementById("btnDownload"),
-      hashLine: document.getElementById("hashLine")
+      outputBox: $("outputBox"),
+      hashLine: $("hashLine"),
+
+      // tabs
+      tabSummary: $("tabSummary"),
+      tabJson: $("tabJson"),
+      tabPdf: $("tabPdf"),
+
+      // buttons
+      generateBtn: $("generateBtn"),
+      loadExampleBtn: $("loadExampleBtn"),
+      resetBtn: $("resetBtn"),
+      copyHash: $("copyHash"),
+      copyJson: $("copyJson"),
+      downloadJson: $("downloadJson"),
+
+      // tech
+      techMissingText: $("techMissingText"),
+      techConstraintsText: $("techConstraintsText"),
     };
 
-    // utilities
+    const TOTAL_SOURCES = () => els.srcChecks.length;
+
+    function todayISO(){
+      const d = new Date();
+      const pad = (n)=>String(n).padStart(2,"0");
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    }
+
+    // Ensure momentT has a default (so it "works" without example)
+    if (!els.momentT.value) els.momentT.value = todayISO();
+
+    function getCheckedSources(){
+      return els.srcChecks.filter(c => c.checked).map(c => c.dataset.key);
+    }
+
+    function coveragePercent(checkedCount){
+      const total = TOTAL_SOURCES();
+      if (total === 0) return 0;
+      return Math.round((checkedCount / total) * 100);
+    }
+
+    // Simple deterministic heuristics (no AI) for "missing" and "defensibility"
+    function computeMissing(coverage, ctx){
+      let missing = 0;
+
+      // If coverage is weak, count missing
+      if (coverage < 60) missing += 2;
+      else if (coverage < 80) missing += 1;
+
+      // If context is too short, count missing
+      const len = (ctx || "").trim().length;
+      if (len < 60) missing += 1;
+
+      return missing;
+    }
+
+    function computeDefensibility(coverage, missing){
+      // Rule-of-thumb (deterministic)
+      if (coverage >= 85 && missing === 0) return "HIGH";
+      if (coverage >= 75 && missing <= 1) return "MEDIUM";
+      return "LOW";
+    }
+
     function stableStringify(obj){
+      // Deterministic JSON stringify (sorted keys)
       const allKeys = [];
-      JSON.stringify(obj, (k, v) => (allKeys.push(k), v));
+      JSON.stringify(obj, (k, v) => { allKeys.push(k); return v; });
       allKeys.sort();
       return JSON.stringify(obj, allKeys, 2);
     }
 
     async function sha256Hex(str){
       const enc = new TextEncoder();
-      const buf = await crypto.subtle.digest("SHA-256", enc.encode(str));
-      const arr = Array.from(new Uint8Array(buf));
-      return arr.map(b => b.toString(16).padStart(2, "0")).join("");
+      const buf = enc.encode(str);
+      const hash = await crypto.subtle.digest("SHA-256", buf);
+      const bytes = Array.from(new Uint8Array(hash));
+      return bytes.map(b => b.toString(16).padStart(2,"0")).join("");
     }
 
-    function selectedSources(){
+    function setTab(selected){
+      const map = [
+        { el: els.tabSummary, key: "summary" },
+        { el: els.tabJson, key: "json" },
+        { el: els.tabPdf, key: "pdf" }
+      ];
+      map.forEach(x => x.el.setAttribute("aria-selected", String(x.key === selected)));
+      state.view = selected;
+      renderOutput();
+    }
+
+    function formatSummary(bundle){
       return [
-        els.srcLms.checked ? "lms" : null,
-        els.srcHris.checked ? "hris" : null,
-        els.srcPerf.checked ? "performance" : null,
-        els.srcOps.checked ? "ops" : null,
-        els.src360.checked ? "feedback360" : null,
-        els.srcLegal.checked ? "legal" : null,
-      ].filter(Boolean);
-    }
-
-    function computeMetrics(){
-      const src = selectedSources();
-      const total = 6;
-      const present = src.length;
-      const coverage = Math.round((present / total) * 100);
-
-      // missing = items NOT selected (simple, deterministic)
-      const missing = total - present;
-
-      // defensibility heuristic (deterministic, not “AI”)
-      let def = "LOW";
-      if (coverage >= 85) def = "MEDIUM";
-      if (coverage >= 95 && els.srcLegal.checked && els.srcHris.checked) def = "HIGH";
-
-      // if no legal OR no hris in regulated contexts => cap at MEDIUM
-      if (!els.srcLegal.checked || !els.srcHris.checked) def = (coverage >= 85 ? "MEDIUM" : "LOW");
-
-      return { coverage, missing, def };
-    }
-
-    function liveUpdateCockpit(){
-      const { coverage, missing, def } = computeMetrics();
-      const d = els.momentT.value ? els.momentT.value : "—";
-      els.ckScope.textContent = els.scope.value.trim() || "Company X — multi-entity scope";
-      els.ckDate.textContent = d;
-      els.ckCoverage.textContent = `${coverage}% (missing: ${missing})`;
-      els.ckDef.textContent = def;
-    }
-
-    function setTabs(active){
-      const map = { summary: els.tabSummary, json: els.tabJson, print: els.tabPrint };
-      Object.values(map).forEach(t => t.setAttribute("aria-selected", "false"));
-      map[active].setAttribute("aria-selected", "true");
-    }
-
-    // current bundle state
-    let lastBundle = null;
-    let lastHash = null;
-    let lastPrint = null;
-
-    function renderSummary(bundle, hash){
-      const lines = [];
-      lines.push(`Decision: ${bundle.decision.type}`);
-      lines.push(`Scope: ${bundle.decision.scope}`);
-      lines.push(`Owner: ${bundle.decision.owner}`);
-      lines.push(`Moment T: ${bundle.decision.momentT}`);
-      lines.push("");
-      lines.push(`Declared sources: ${bundle.sources.declared.join(", ") || "—"}`);
-      lines.push(`Rules: deterministic (local-only)`);
-      lines.push("");
-      lines.push("Interpretation:");
-      lines.push("- This bundle documents scope + declared sources + deterministic rules.");
-      lines.push("- It enables audit / dispute reconstruction without retroactive improvisation.");
-      lines.push("- Hash proves integrity over time (not “truth”).");
-      lines.push("");
-      lines.push(`hash (sha256): ${hash}`);
-      return lines.join("\n");
-    }
-
-    function renderPrint(bundle, hash, metrics){
-      // “PDF (print)” here is a print-ready view (user can print to PDF)
-      return [
-        "OPENPROOF RPO v0.1 — PRINT VIEW",
-        "--------------------------------",
-        `Decision type: ${bundle.decision.type}`,
-        `Scope: ${bundle.decision.scope}`,
-        `Owner: ${bundle.decision.owner}`,
-        `Moment T: ${bundle.decision.momentT}`,
-        "",
-        "Decision context:",
-        bundle.decision.context,
-        "",
-        `Declared sources: ${bundle.sources.declared.join(", ") || "—"}`,
-        `Coverage: ${metrics.coverage}%`,
-        `Missing: ${metrics.missing}`,
-        `Defensibility: ${metrics.def}`,
-        "",
-        "Public integrity seal:",
-        `sha256: ${hash}`,
-        "",
-        "Note: This artifact proves integrity and reconstructibility. It does not decide truth. Accountability remains human."
+        `Decision: ${bundle.decision.type}`,
+        `Portée:  ${bundle.decision.scope}`,
+        `Owner:   ${bundle.decision.owner}`,
+        `Moment T:${bundle.decision.momentT}`,
+        ``,
+        `Sources déclarées: ${bundle.sources.declared.join(", ") || "—"}`,
+        `Règles: déterministes (local-only)`,
+        ``,
+        `Synthèse exécutive:`,
+        `- Ce bundle fige périmètre + sources déclarées + règles déterministes.`,
+        `- Il permet une reconstruction audit / litige sans improvisation a posteriori.`,
+        `- Le hash prouve l’intégrité dans le temps (pas la “vérité”).`,
+        ``,
+        `hash (sha256): ${bundle.hash.sha256}`,
       ].join("\n");
     }
 
-    async function generateBundle(){
-      els.badgeStatus.textContent = "Generating…";
-      els.ckState.textContent = "SEAL";
-      els.ckTick.textContent = "HASH";
+    function formatPdfText(bundle){
+      // We render a "print view" in a new window (pseudo-PDF via browser print)
+      return `
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RPO — Aperçu imprimable</title>
+<style>
+  body{font-family: Inter, system-ui, -apple-system, sans-serif; padding:32px; color:#111}
+  h1{font-family: Orbitron, sans-serif; letter-spacing:.06em; text-transform:uppercase; font-size:18px; margin:0 0 10px}
+  .meta{margin:12px 0 18px; font-size:13px; line-height:1.6}
+  .box{border:1px solid #ddd; border-radius:12px; padding:14px; margin:12px 0}
+  .k{color:#555; font-weight:600}
+  pre{white-space:pre-wrap; word-break:break-word; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size:12px}
+  .small{font-size:12px; color:#666}
+</style>
+</head>
+<body>
+  <h1>RPO v0.1 — Dossier de préparation à la décision</h1>
+  <div class="meta">
+    <div><span class="k">Décision</span> : ${escapeHtml(bundle.decision.type)}</div>
+    <div><span class="k">Portée</span> : ${escapeHtml(bundle.decision.scope)}</div>
+    <div><span class="k">Owner</span> : ${escapeHtml(bundle.decision.owner)}</div>
+    <div><span class="k">Moment T</span> : ${escapeHtml(bundle.decision.momentT)}</div>
+  </div>
 
-      const metrics = computeMetrics();
+  <div class="box">
+    <div class="k">Sources déclarées</div>
+    <div class="small">${escapeHtml(bundle.sources.declared.join(", ") || "—")}</div>
+  </div>
 
-      const bundle = {
-        bundle_type: "RPO_DECISION_BUNDLE",
-        version: "v0.1",
-        created_local: true,
-        decision: {
-          type: els.decisionType.value,
-          momentT: els.momentT.value || new Date().toISOString().slice(0,10),
-          scope: els.scope.value.trim() || "Company X — multi-entity scope",
-          owner: els.owner.value.trim() || "CEO / Executive committee",
-          context: (els.context.value || "").trim()
-        },
-        sources: {
-          declared: selectedSources()
-        },
-        deterministic_rules: {
-          same_input_same_output: true,
-          scoring: "coverage-based (non-AI heuristic)",
-          accountability: "human"
-        },
-        metrics: {
-          coverage_percent: metrics.coverage,
-          missing_count: metrics.missing,
-          defensibility: metrics.def
-        }
-      };
+  <div class="box">
+    <div class="k">Contexte (moment T)</div>
+    <pre>${escapeHtml(bundle.decision.context || "—")}</pre>
+  </div>
 
-      const canonical = stableStringify(bundle);
-      const hash = await sha256Hex(canonical);
+  <div class="box">
+    <div class="k">Indicateurs</div>
+    <div class="small">Couverture probatoire : ${bundle.metrics.coveragePct}%</div>
+    <div class="small">Manquant : ${bundle.metrics.missing}</div>
+    <div class="small">Défendabilité : ${bundle.metrics.defensibility}</div>
+  </div>
 
-      lastBundle = bundle;
-      lastHash = hash;
-      lastPrint = renderPrint(bundle, hash, metrics);
+  <div class="box">
+    <div class="k">Hash public (SHA-256)</div>
+    <pre>${escapeHtml(bundle.hash.sha256)}</pre>
+  </div>
 
-      // Update cockpit + metrics
-      els.ckHash.textContent = hash;
-      els.ckState.textContent = "VERIFY";
-      els.ckTick.textContent = "OK";
+  <div class="small">
+    Ce document prouve l’intégrité (stabilité) du bundle, pas la “vérité”.
+    Généré localement, règles déterministes uniquement.
+  </div>
 
-      els.mCoverage.textContent = `${metrics.coverage}%`;
-      els.mMissing.textContent = `${metrics.missing}`;
-      els.mDef.textContent = metrics.def;
-      els.mSeal.textContent = "SHA-256 sealed";
-
-      els.hashLine.textContent = hash;
-      els.badgeStatus.textContent = "Bundle sealed (local-only)";
-
-      // default tab = summary
-      setTabs("summary");
-      els.outBox.textContent = renderSummary(bundle, hash);
+<script>
+  window.onload = () => window.print();
+</script>
+</body>
+</html>`;
     }
 
-    function loadExample(){
-      els.decisionType.value = "Nomination / sensitive role";
-      els.momentT.value = "2026-01-28";
-      els.scope.value = "Company X — France scope (multi-sites, multi-entities)";
-      els.owner.value = "CEO / Executive committee";
-      els.context.value = "Sensitive decision in a regulated environment. Traceability of declared sources and stability of definitions are required. Decision may be challenged and must remain reconstructible over time.";
-
-      els.srcLms.checked = true;
-      els.srcHris.checked = true;
-      els.srcPerf.checked = true;
-      els.srcOps.checked = true;
-      els.src360.checked = false;
-      els.srcLegal.checked = true;
-
-      liveUpdateCockpit();
-      els.badgeStatus.textContent = "Example loaded.";
-      els.outBox.textContent = "Click “Generate”.";
-      els.hashLine.textContent = "—";
-      els.ckHash.textContent = "—";
-      els.mCoverage.textContent = "—";
-      els.mMissing.textContent = "—";
-      els.mDef.textContent = "—";
-      els.mSeal.textContent = "—";
-      lastBundle = null; lastHash = null; lastPrint = null;
+    function escapeHtml(s){
+      return String(s)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
 
-    function resetAll(){
-      els.decisionType.selectedIndex = 0;
-      els.momentT.value = "";
-      els.scope.value = "Company X — multi-sites, multi-entities";
-      els.owner.value = "CEO / Executive committee";
-      els.context.value = "Regulated environment. Audit exposure. Decision may be challenged. Traceability of declared sources and stable definitions are required.";
+    const state = {
+      view: "summary",
+      lastBundle: null,
+      lastJson: "",
+      lastHash: ""
+    };
 
-      els.srcLms.checked = true;
-      els.srcHris.checked = true;
-      els.srcPerf.checked = true;
-      els.srcOps.checked = true;
-      els.src360.checked = false;
-      els.srcLegal.checked = true;
-
-      liveUpdateCockpit();
-      els.badgeStatus.textContent = "Click “Generate”.";
-      setTabs("summary");
-      els.outBox.textContent = "Click “Generate”.";
-      els.hashLine.textContent = "—";
-      els.ckHash.textContent = "—";
-      els.mCoverage.textContent = "—";
-      els.mMissing.textContent = "—";
-      els.mDef.textContent = "—";
-      els.mSeal.textContent = "—";
-      lastBundle = null; lastHash = null; lastPrint = null;
-      els.ckState.textContent = "CAPTURE";
-      els.ckTick.textContent = "SYNC";
+    function updateCockpit(bundle){
+      els.cScope.textContent = (bundle?.decision?.scope || "—");
+      els.cMoment.textContent = (bundle?.decision?.momentT || "—");
+      els.cCoverage.textContent = bundle ? `${bundle.metrics.coveragePct}%` : "—";
+      els.cDef.textContent = bundle ? bundle.metrics.defensibility : "—";
     }
 
-    function renderActiveTab(){
-      if (!lastBundle || !lastHash){
-        els.outBox.textContent = "Click “Generate”.";
+    function updateMetrics(bundle){
+      els.mCoverage.textContent = bundle ? `${bundle.metrics.coveragePct}%` : "—";
+      els.mMissing.textContent = bundle ? String(bundle.metrics.missing) : "—";
+      els.mDef.textContent = bundle ? bundle.metrics.defensibility : "—";
+      els.mSeal.textContent = bundle ? "SHA-256 scellé" : "—";
+      els.hashLine.textContent = bundle ? bundle.hash.sha256 : "—";
+    }
+
+    function renderOutput(){
+      const b = state.lastBundle;
+      if (!b){
+        els.outputBox.textContent = `Clique sur “GÉNÉRER”.\n\nTu peux aussi modifier les champs à gauche : le bundle est calculé à partir de tes entrées, sans “Load example”.`;
         return;
       }
-      const isJson = els.tabJson.getAttribute("aria-selected") === "true";
-      const isPrint = els.tabPrint.getAttribute("aria-selected") === "true";
-      if (isJson) els.outBox.textContent = stableStringify(lastBundle);
-      else if (isPrint) els.outBox.textContent = lastPrint;
-      else els.outBox.textContent = renderSummary(lastBundle, lastHash);
-    }
 
-    async function copyToClipboard(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        els.badgeStatus.textContent = "Copied.";
-        setTimeout(()=> els.badgeStatus.textContent = (lastHash ? "Bundle sealed (local-only)" : "Click “Generate”."), 900);
-      }catch(e){
-        els.badgeStatus.textContent = "Copy blocked by browser.";
-        setTimeout(()=> els.badgeStatus.textContent = (lastHash ? "Bundle sealed (local-only)" : "Click “Generate”."), 1200);
+      if (state.view === "summary"){
+        els.outputBox.textContent = formatSummary(b);
+      } else if (state.view === "json"){
+        els.outputBox.textContent = state.lastJson;
+      } else if (state.view === "pdf"){
+        els.outputBox.textContent =
+          `PDF (impression)\n\nClique ici : “Télécharger JSON” ne fait pas le PDF.\nPour l’aperçu imprimable : on ouvre une fenêtre et ton navigateur génère le PDF via “Imprimer”.\n\n→ Clique sur l’onglet PDF puis sur “Ouvrir l’aperçu imprimable”.`;
+        // Add a one-off helper button inside output area (without ruining layout)
+        // We keep it simple: open print view immediately when selecting tab PDF.
       }
     }
 
-    function downloadJson(){
-      if (!lastBundle) return;
-      const blob = new Blob([stableStringify(lastBundle)], { type:"application/json" });
+    async function buildBundle(){
+      const type = els.decisionType.value.trim();
+      const momentT = (els.momentT.value || todayISO());
+      const scope = els.scope.value.trim() || "—";
+      const owner = els.owner.value.trim() || "—";
+      const context = els.context.value.trim();
+
+      const declared = getCheckedSources();
+      const cov = coveragePercent(declared.length);
+      const missing = computeMissing(cov, context);
+      const def = computeDefensibility(cov, missing);
+
+      // Deterministic payload
+      const bundle = {
+        spec: { name: "OpenProof RPO", version: "v0.1", mode: "local-only", ai: "none" },
+        decision: { type, momentT, scope, owner, context },
+        sources: { declared },
+        rules: {
+          deterministic: true,
+          notes: "Same input → same output. Hash proves integrity, not truth."
+        },
+        metrics: {
+          coveragePct: cov,
+          missing,
+          defensibility: def
+        },
+        hash: { sha256: "" }
+      };
+
+      // Stable stringify → sha
+      const jsonStable = stableStringify(bundle);
+      const hash = await sha256Hex(jsonStable);
+
+      bundle.hash.sha256 = hash;
+
+      // Re-stringify with hash filled (still deterministic because we fill it deterministically)
+      const jsonFinal = stableStringify(bundle);
+
+      state.lastBundle = bundle;
+      state.lastJson = jsonFinal;
+      state.lastHash = hash;
+
+      updateCockpit(bundle);
+      updateMetrics(bundle);
+
+      // Tech panel texts (kept minimal and not ugly)
+      els.techMissingText.textContent =
+        missing === 0
+          ? "Aucun manque détecté par règles déterministes (couverture + contexte)."
+          : `Manques probables (heuristiques déterministes) : ${missing}. Ex : preuve non attribuable, KPI non attesté, contexte trop court, etc.`;
+
+      els.techConstraintsText.textContent =
+        "Si besoin, documente ici : urgence, fenêtre d’audit, sensibilité sociale, continuité d’activité. (À implémenter en v0.1.1 si tu veux.)";
+
+      renderOutput();
+    }
+
+    // Buttons
+    els.generateBtn.addEventListener("click", async () => {
+      await buildBundle();
+    });
+
+    els.loadExampleBtn.addEventListener("click", () => {
+      els.decisionType.value = "Nomination / rôle sensible";
+      els.momentT.value = "2026-01-28";
+      els.scope.value = "Company X — France scope (multi-sites, multi-entités)";
+      els.owner.value = "CEO / Executive committee";
+      els.context.value =
+`Décision sensible en environnement régulé. Exigence de traçabilité des sources et stabilité des définitions.
+La décision peut être contestée et doit rester vérifiable dans le temps.`;
+
+      // Example checks (deterministic)
+      els.srcChecks.forEach(c => c.checked = false);
+      const on = new Set(["lms","hris","perf","ops","legal"]);
+      els.srcChecks.forEach(c => { if (on.has(c.dataset.key)) c.checked = true; });
+
+      // Immediately build (so user sees it “work”)
+      buildBundle();
+    });
+
+    els.resetBtn.addEventListener("click", () => {
+      els.decisionType.value = "Nomination / rôle sensible";
+      els.momentT.value = todayISO();
+      els.scope.value = "Company X — multi-sites, multi-entités";
+      els.owner.value = "CEO / Executive committee";
+      els.context.value = "Environnement régulé. Exposition audit. Décision potentiellement contestable. Traçabilité des sources déclarées et stabilité des définitions requises.";
+      els.srcChecks.forEach(c => c.checked = false);
+      // default sensible baseline
+      ["lms","hris","perf","ops","legal"].forEach(k => {
+        const el = els.srcChecks.find(x => x.dataset.key === k);
+        if (el) el.checked = true;
+      });
+
+      state.lastBundle = null;
+      state.lastJson = "";
+      state.lastHash = "";
+      updateCockpit(null);
+      updateMetrics(null);
+      setTab("summary");
+      renderOutput();
+    });
+
+    // Tabs
+    els.tabSummary.addEventListener("click", () => setTab("summary"));
+    els.tabJson.addEventListener("click", () => setTab("json"));
+    els.tabPdf.addEventListener("click", () => {
+      setTab("pdf");
+      // open print view if bundle exists
+      if (state.lastBundle){
+        const w = window.open("", "_blank", "noopener,noreferrer");
+        w.document.open();
+        w.document.write(formatPdfText(state.lastBundle));
+        w.document.close();
+      }
+    });
+
+    // Copy / download
+    els.copyHash.addEventListener("click", async () => {
+      if (!state.lastHash) return;
+      await navigator.clipboard.writeText(state.lastHash);
+      els.copyHash.textContent = "Hachage copié";
+      setTimeout(()=>els.copyHash.textContent="Copier le hachage", 1200);
+    });
+
+    els.copyJson.addEventListener("click", async () => {
+      if (!state.lastJson) return;
+      await navigator.clipboard.writeText(state.lastJson);
+      els.copyJson.textContent = "JSON copié";
+      setTimeout(()=>els.copyJson.textContent="Copier le JSON", 1200);
+    });
+
+    els.downloadJson.addEventListener("click", () => {
+      if (!state.lastJson) return;
+      const blob = new Blob([state.lastJson], { type: "application/json;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -1206,49 +1304,27 @@
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+    });
+
+    // Cockpit updates when user edits inputs (lightweight, not rebuilding hash)
+    function updateCockpitPreview(){
+      els.cScope.textContent = els.scope.value.trim() || "—";
+      els.cMoment.textContent = els.momentT.value || todayISO();
+      const declared = getCheckedSources();
+      const cov = coveragePercent(declared.length);
+      const miss = computeMissing(cov, els.context.value || "");
+      const def = computeDefensibility(cov, miss);
+      els.cCoverage.textContent = `${cov}%`;
+      els.cDef.textContent = def;
     }
-
-    // events
-    const liveFields = [els.decisionType, els.momentT, els.scope, els.owner, els.context, els.srcLms, els.srcHris, els.srcPerf, els.srcOps, els.src360, els.srcLegal];
-    liveFields.forEach(el => el.addEventListener("input", liveUpdateCockpit));
-    liveFields.forEach(el => el.addEventListener("change", liveUpdateCockpit));
-
-    els.btnGenerate.addEventListener("click", generateBundle);
-    els.btnGenerateTop.addEventListener("click", generateBundle);
-    els.btnLoad.addEventListener("click", loadExample);
-    els.btnLoadTop.addEventListener("click", loadExample);
-    els.btnReset.addEventListener("click", resetAll);
-
-    els.tabSummary.addEventListener("click", ()=>{ setTabs("summary"); renderActiveTab(); });
-    els.tabJson.addEventListener("click", ()=>{ setTabs("json"); renderActiveTab(); });
-    els.tabPrint.addEventListener("click", ()=>{ setTabs("print"); renderActiveTab(); });
-
-    els.btnCopyHash.addEventListener("click", ()=> { if (lastHash) copyToClipboard(lastHash); });
-    els.btnCopyJson.addEventListener("click", ()=> { if (lastBundle) copyToClipboard(stableStringify(lastBundle)); });
-    els.btnDownload.addEventListener("click", downloadJson);
-
-    // tiny cockpit tick loop (keeps it alive even before generate)
-    (function(){
-      const states = [
-        { s: "CAPTURE", t: "SYNC" },
-        { s: "BUNDLE",  t: "RULES" },
-        { s: "SEAL",    t: "HASH" },
-        { s: "VERIFY",  t: "OK" }
-      ];
-      let i = 0;
-      setInterval(()=>{
-        if (lastHash) return; // once sealed, keep stable
-        i = (i + 1) % states.length;
-        els.ckState.textContent = states[i].s;
-        els.ckTick.textContent = states[i].t;
-      }, 1400);
-    })();
-
-    // init
-    resetAll();
+    ["input","change"].forEach(ev => {
+      [els.scope, els.momentT, els.context, ...els.srcChecks].forEach(el => el.addEventListener(ev, updateCockpitPreview));
+    });
+    updateCockpitPreview();
   </script>
 </body>
 </html>
+
 
 
 
