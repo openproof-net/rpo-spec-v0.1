@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Sandbox — Decision Defensibility Simulator | OpenProof RPO v0.1</title>
   <meta name="description" content="Deterministic simulator for decision defensibility: scope + lineage + quality checks → sealed JSON + print view + public hash (SHA-256). No AI. No storage. Humans remain accountable." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://rpo.openproof.net/sandbox.html" />
+  <link rel="canonical" href="https://openproof.net/sandbox.html" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
@@ -31,11 +33,11 @@
       --warn: rgba(255, 208, 126, .92);
       --bad: rgba(255, 126, 126, .92);
 
-      /* NEW: layout tokens (safe) */
-      --wrap-max: 1720px;      /* was 1520px => you have room */
-      --wrap-pad-x: 64px;      /* was 56px */
-      --hero-gap: 56px;        /* was 48px */
-      --grid-gap: 24px;        /* was 18px */
+      /* Layout tokens */
+      --wrap-max: 1720px;
+      --wrap-pad-x: 64px;
+      --hero-gap: 56px;
+      --grid-gap: 24px;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -60,6 +62,7 @@
 
     #bg-field{position:fixed; inset:0; width:100%; height:100%; z-index:-1;}
 
+    /* Top bar */
     .top-bar{
       position:fixed;
       top:0; left:0; right:0;
@@ -120,17 +123,18 @@
     .top-cta:hover{filter:brightness(1.03)}
     .top-cta:active{transform:translateY(1px)}
 
-    /* WIDER WRAP (safe) */
+    /* Wrap */
     .wrap{
       max-width:var(--wrap-max);
       margin:0 auto;
       padding:96px var(--wrap-pad-x) 72px;
     }
 
+    /* Hero */
     .hero{
       padding-top:10px;
       display:grid;
-      grid-template-columns: 1.7fr 1.1fr; /* slightly wider left */
+      grid-template-columns: 1.7fr 1.1fr;
       gap:var(--hero-gap);
       align-items:start;
     }
@@ -211,6 +215,7 @@
     }
     .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
 
+    /* Cockpit panel */
     .panel{
       position:relative;
       background:var(--panel);
@@ -346,6 +351,7 @@
       padding-top: 10px;
     }
 
+    /* Section */
     .section{margin-top: 34px; padding-top: 22px; border-top: 1px solid rgba(212,175,55,0.14);}
     .section-title{
       font-family:"Orbitron",sans-serif;
@@ -356,11 +362,11 @@
       margin-bottom:14px;
     }
 
-    /* MAIN FIX: more space + better rhythm */
+    /* Main grid */
     .sim-grid{
       display:grid;
-      grid-template-columns: 1.20fr 1fr; /* was 1.25fr 1fr (slightly tighter, less “left dominance”) */
-      gap:var(--grid-gap);              /* was 18px */
+      grid-template-columns: 1.20fr 1fr;
+      gap:var(--grid-gap);
       align-items:start;
     }
 
@@ -413,17 +419,8 @@
       background: rgba(10,12,27,0.28);
     }
     .source input{width:auto; margin-top:3px;}
-
-    /* FIX: removed the weird hidden char in margin-bottom */
-    .source strong{
-      display:block; font-size:0.92rem; color: rgba(241,230,163,.92);
-      font-weight:600; margin-bottom:4px;
-    }
-
-    .source span{
-      display:block; font-size:0.88rem; color: rgba(198,186,150,.86);
-      line-height:1.45; text-align: justify;
-    }
+    .source strong{display:block; font-size:0.92rem; color: rgba(241,230,163,.92); font-weight:600; margin-bottom:4px;}
+    .source span{display:block; font-size:0.88rem; color: rgba(198,186,150,.86); line-height:1.45; text-align: justify;}
 
     .mini-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;}
     .mini{
@@ -469,12 +466,12 @@
       color:#2a1204;
     }
 
-    /* RIGHT COLUMN: sticky “cockpit” effect (doesn't change layout, just reduces perceived imbalance) */
+    /* Right column: sticky stack */
     .right-stack{
       display:grid;
       gap:14px;
       position: sticky;
-      top: 86px;                /* below top-bar (68px) + breathing */
+      top: 86px;
       align-self:start;
     }
 
@@ -600,7 +597,6 @@
       pre{max-height:none}
     }
 
-    /* Responsive stays safe */
     @media(max-width:1180px){
       .hero{grid-template-columns:1fr; gap:22px}
       .sim-grid{grid-template-columns:1fr;}
@@ -610,7 +606,7 @@
       .mini-grid{grid-template-columns:1fr}
       .source-grid{grid-template-columns:1fr}
       .subgrid{grid-template-columns:1fr}
-      .right-stack{position:static;} /* sticky off on smaller screens */
+      .right-stack{position:static;}
     }
 
     @media(max-width:960px){
@@ -637,7 +633,8 @@
       <div class="emblem" aria-hidden="true"></div>
       <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
     </div>
-    <nav class="top-nav" aria-label="Primary">
+
+    <nav class="top-nav" aria-label="Primary navigation">
       <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a>
       <a href="./sandbox.html" aria-current="page" target="_blank" rel="noopener noreferrer">Sandbox</a>
       <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
@@ -645,6 +642,7 @@
       <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
       <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
     </nav>
+
     <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Try the live demo</a>
   </header>
 
@@ -654,10 +652,12 @@
     <section class="hero" aria-labelledby="hero-title">
       <div>
         <div class="eyebrow">Decision <span>defensibility simulator</span></div>
+
         <h1 class="h1" id="hero-title">
           Freeze the perimeter.
           <span class="gold">Make decisions reconstructible.</span>
         </h1>
+
         <p class="lead">
           This sandbox does not “choose” a candidate. It captures scope, declared systems, lineage hints and constraints,
           then generates deterministic outputs: sealed JSON + print view + public hash (SHA-256).
@@ -684,15 +684,17 @@
         </p>
       </div>
 
-      <!-- Cockpit -->
+      <!-- COCKPIT -->
       <aside class="panel" id="cockpit" aria-label="Simulator cockpit">
         <div class="scanline" aria-hidden="true"></div>
         <div class="panel-inner">
           <div class="panel-title">Simulator cockpit (live)</div>
-          <div class="pill" aria-label="Attributes">
+
+          <div class="pill" aria-label="Pillars">
             <span class="dot" aria-hidden="true"></span>
             Integrity • Readability • Verifiability
           </div>
+
           <div class="list" role="list">
             <div class="row" role="listitem">
               <span class="k">Scope</span>
@@ -734,7 +736,8 @@
       <h2 class="section-title" id="sim-title">Sandbox — deterministic simulator</h2>
 
       <div class="sim-grid">
-        <!-- LEFT -->
+
+        <!-- LEFT COLUMN -->
         <div class="card" aria-label="Inputs">
           <h3>Input — decision perimeter</h3>
 
@@ -749,14 +752,17 @@
                 <option value="Access to restricted perimeter">Access to restricted perimeter</option>
               </select>
             </div>
+
             <div class="field">
-              <label for="momentT">Decision date (moment T)</label>
+              <label for="momentT">Decision date (Moment T)</label>
               <input id="momentT" type="date" />
             </div>
+
             <div class="field">
               <label for="orgScope">Organization / scope</label>
-              <input id="orgScope" type="text" placeholder="MBDA — Europe scope (multi-sites, multi-entities)" />
+              <input id="orgScope" type="text" placeholder="Defense Group — Europe scope (multi-sites, multi-entities)" />
             </div>
+
             <div class="field">
               <label for="owner">Decision owner</label>
               <input id="owner" type="text" placeholder="CHRO / Executive committee" />
@@ -846,8 +852,9 @@
           </div>
         </div>
 
-        <!-- RIGHT -->
+        <!-- RIGHT COLUMN -->
         <div class="right-stack">
+
           <div class="card" aria-label="Report">
             <h3>Output — decision defensibility report</h3>
 
@@ -899,7 +906,6 @@ It’s a human-readable rendering of the same sealed core bundle.
             </div>
           </div>
 
-          <!-- CONNECTORS MAP -->
           <div class="card" aria-label="Connectors">
             <h3>Connectors map (declared)</h3>
             <div class="subgrid">
@@ -916,8 +922,7 @@ It’s a human-readable rendering of the same sealed core bundle.
             </div>
           </div>
 
-          <!-- LINEAGE + QUALITY -->
-          <div class="card" aria-label="Lineage & quality">
+          <div class="card" aria-label="Lineage and quality">
             <h3>Lineage & quality checks</h3>
             <div class="lineage">
               <div class="lt">Lineage snapshot</div>
@@ -936,11 +941,10 @@ It’s a human-readable rendering of the same sealed core bundle.
             </div>
             <div class="note">
               These checks are deterministic proxies. They surface <strong>audit exposure</strong> and <strong>reconstruction risk</strong>
-              without implying any “truth” judgement.
+              without implying any “truth” judgment.
             </div>
           </div>
 
-          <!-- DECISION SUPPORT -->
           <div class="card" aria-label="Decision support">
             <h3>Decision support (deterministic)</h3>
             <div class="kv">
@@ -953,6 +957,7 @@ It’s a human-readable rendering of the same sealed core bundle.
               This is not a “decision engine”. It is a <strong>defensibility layer</strong>: it tells you what is missing to make a decision reconstructible.
             </div>
           </div>
+
         </div>
       </div>
     </section>
@@ -1261,7 +1266,7 @@ It’s a human-readable rendering of the same sealed core bundle.
     function buildCoreBundle(){
       const src = sources();
       const momentT = $("momentT").value || nowISODate();
-      const scope = ($("orgScope").value || "").trim() || "Company X — multi-sites, multi-entities";
+      const scope = ($("orgScope").value || "").trim() || "Defense Group — Europe scope (multi-sites, multi-entities)";
       const owner = ($("owner").value || "").trim() || "CHRO / Executive committee";
       const dtype = $("decisionType").value;
       const ctx = ($("context").value || "").trim() || "Regulated environment. Audit exposure. Decision may be challenged and must remain reconstructible.";
@@ -1392,9 +1397,9 @@ Interpretation:
     function loadExample(){
       $("decisionType").value = "Nomination / sensitive role";
       $("momentT").value = "2026-02-10";
-      $("orgScope").value = "MBDA — Europe scope (multi-sites, multi-entities)";
+      $("orgScope").value = "Defense Group — Europe scope (multi-sites, multi-entities)";
       $("owner").value = "Global CHRO / Executive committee";
-      $("context").value = "Sensitive decision in a regulated defense environment. Traceability across HR systems and stability of definitions are required.\nDecision may be challenged and must remain reconstructible over time (audit window).";
+      $("context").value = "Sensitive decision in a regulated environment. Traceability across HR systems and stability of definitions are required.\nDecision may be challenged and must remain reconstructible over time (audit window).";
       $("srcLms").checked = true;
       $("srcHris").checked = true;
       $("srcPerf").checked = true;
@@ -1530,11 +1535,10 @@ Interpretation:
       $(id).addEventListener("change", quickSync);
     });
 
-    // init
+    // Init
     resetAll();
     setTab("summary");
     loadExample();
   </script>
 </body>
 </html>
-
