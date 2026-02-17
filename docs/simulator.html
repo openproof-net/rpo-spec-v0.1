@@ -689,6 +689,7 @@
       #bg-field{display:none}
     }
   </style>
+  <script src="./assets/contexts.js"></script>
 </head>
 
 <body>
@@ -1991,6 +1992,50 @@ Interpretation:
       loadExample();
     })();
   </script>
+  <script>
+  (function () {
+    const params = new URLSearchParams(location.search);
+    const key = params.get("context") || "governance";
+    const ctx = (window.CONTEXTS && window.CONTEXTS[key]) ? window.CONTEXTS[key] : window.CONTEXTS.governance;
+
+    // 1) Set dropdown if it exists
+    const select = document.querySelector('[data-context-select]');
+    if (select) select.value = ctx.key;
+
+    // 2) Update description if placeholder exists
+    const desc = document.querySelector('[data-context-description]');
+    if (desc) desc.textContent = ctx.ui.description;
+
+    // 3) Update chips if placeholder exists
+    const chipsWrap = document.querySelector('[data-context-chips]');
+    if (chipsWrap && ctx.presets && Array.isArray(ctx.presets.chips)) {
+      chipsWrap.innerHTML = ctx.presets.chips.map(t => `<span class="chip">${t}</span>`).join("");
+    }
+
+    // 4) Update section titles if placeholders exist
+    const st = ctx.presets && ctx.presets.sectionTitles ? ctx.presets.sectionTitles : {};
+    const titleMap = [
+      ["input",  "[data-title-input]"],
+      ["cockpit","[data-title-cockpit]"],
+      ["preview","[data-title-preview]"],
+      ["report", "[data-title-report]"]
+    ];
+    titleMap.forEach(([k, sel]) => {
+      const el = document.querySelector(sel);
+      if (el && st[k]) el.textContent = st[k];
+    });
+
+    // 5) Pass context to sandbox engine if it exposes a hook (non-breaking)
+    // If sandbox.js defines window.Sandbox or similar, we call it softly.
+    if (window.Sandbox && typeof window.Sandbox.setContext === "function") {
+      window.Sandbox.setContext(ctx);
+    } else {
+      // Store for sandbox to read if it wants
+      window.__RPO_CONTEXT__ = ctx;
+    }
+  })();
+</script>
+
 </body>
 </html>
 
