@@ -71,3 +71,56 @@ Proof remains:
 - Traceable
 - Context-aware
 - Contestable
+
+---
+
+## Power Distortion Indicators
+
+In high-instability environments, structural power asymmetries
+may influence narrative construction.
+
+This section defines non-accusatory indicators that increase
+structural scrutiny without inferring intent.
+
+### 1. Narrative Concentration
+
+- Recurrent framing controlled by a limited number of actors
+- Reduced plurality of documented perspectives
+- Repetition of identical lexical constructs across sources
+
+### 2. Asymmetrical Documentation Density
+
+- Uneven archival depth between parties
+- Selective preservation patterns
+- Missing procedural trace segments
+
+### 3. Temporal Compression or Expansion
+
+- Sudden acceleration of decision sequences
+- Delayed formalization of prior actions
+- Retrospective justification layering
+
+### 4. Reputational Pre-Framing
+
+- Early character qualification preceding evidence review
+- Implicit credibility weighting without formal basis
+
+### 5. Institutional Silence Zones
+
+- Absence of procedural response despite formal triggers
+- Lack of traceable oversight escalation
+
+---
+
+These indicators do not establish misconduct.
+
+They increase interpretive resolution
+in environments where structural power may distort coherence.
+
+All flagged signals remain:
+
+- Contextual
+- Probabilistic
+- Explicitly reviewable
+- Subject to human adjudication
+
