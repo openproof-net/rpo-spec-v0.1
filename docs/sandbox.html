@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Sandbox — Decision Defensibility Simulator | OpenProof RPO v0.1</title>
   <meta name="description" content="Deterministic simulator for decision defensibility: scope + lineage + quality checks → sealed JSON + print view + public hash (SHA-256). No AI. No storage. Humans remain accountable." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/sandbox.html" />
-
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
@@ -17,11 +15,9 @@
     :root{
       --bg-deep:#04040e;
       --bg-mid:#0b0f14;
-
       --gold-soft:#f1e6a3;
       --gold:#d4af37;
       --gold-deep:#8f7633;
-
       --ivory:#f7f3e8;
       --ink-soft:#b3a48b;
 
@@ -29,16 +25,22 @@
       --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
       --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
       --line2:rgba(136,116,72,0.35);
-
       --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
 
       --ok: rgba(126, 255, 185, .92);
       --warn: rgba(255, 208, 126, .92);
       --bad: rgba(255, 126, 126, .92);
+
+      /* NEW: layout tokens (safe) */
+      --wrap-max: 1720px;      /* was 1520px => you have room */
+      --wrap-pad-x: 64px;      /* was 56px */
+      --hero-gap: 56px;        /* was 48px */
+      --grid-gap: 24px;        /* was 18px */
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
+
     body{
       min-height:100vh;
       font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
@@ -71,6 +73,7 @@
       backdrop-filter:blur(18px);
       border-bottom:1px solid rgba(212,175,55,0.22);
     }
+
     .top-left{display:flex; align-items:center; gap:14px; min-width:280px;}
     .emblem{
       width:34px;height:34px;border-radius:999px;
@@ -117,13 +120,18 @@
     .top-cta:hover{filter:brightness(1.03)}
     .top-cta:active{transform:translateY(1px)}
 
-    .wrap{max-width:1520px; margin:0 auto; padding:96px 56px 72px;}
+    /* WIDER WRAP (safe) */
+    .wrap{
+      max-width:var(--wrap-max);
+      margin:0 auto;
+      padding:96px var(--wrap-pad-x) 72px;
+    }
 
     .hero{
       padding-top:10px;
       display:grid;
-      grid-template-columns: 1.6fr 1.1fr;
-      gap:48px;
+      grid-template-columns: 1.7fr 1.1fr; /* slightly wider left */
+      gap:var(--hero-gap);
       align-items:start;
     }
 
@@ -136,7 +144,6 @@
       margin-bottom:14px;
     }
     .eyebrow span{color:var(--gold-soft)}
-
     .h1{
       font-family:"Orbitron",sans-serif;
       text-transform:uppercase;
@@ -146,7 +153,6 @@
       margin-bottom:14px;
     }
     .h1 .gold{display:block;color:var(--gold-soft)}
-
     .lead{
       margin-top:10px;
       font-size:0.98rem;
@@ -155,7 +161,6 @@
       max-width: 74ch;
       text-align: justify;
     }
-
     .chips{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 16px 0; max-width:78ch;}
     .chip{
       display:inline-flex; align-items:center;
@@ -166,7 +171,6 @@
       color:rgba(241,230,163,.90);
       white-space:nowrap;
     }
-
     .ctas{
       margin-top:12px;
       display:grid;
@@ -313,6 +317,7 @@
       animation: warmBlink 2.2s ease-in-out infinite;
     }
     @keyframes warmBlink{ 0%,100%{opacity:.55} 50%{opacity:1} }
+
     .state .meter{
       position:relative;
       flex:1 1 auto;
@@ -351,10 +356,11 @@
       margin-bottom:14px;
     }
 
+    /* MAIN FIX: more space + better rhythm */
     .sim-grid{
       display:grid;
-      grid-template-columns: 1.25fr 1fr;
-      gap:18px;
+      grid-template-columns: 1.20fr 1fr; /* was 1.25fr 1fr (slightly tighter, less “left dominance”) */
+      gap:var(--grid-gap);              /* was 18px */
       align-items:start;
     }
 
@@ -366,7 +372,6 @@
       backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
-
     .card h3{
       font-family:"Orbitron",sans-serif;
       font-size:.78rem;
@@ -378,7 +383,6 @@
     }
 
     .form-grid{display:grid; grid-template-columns: 1fr 1fr; gap:12px;}
-
     .field label{
       display:block;
       font-family:"Orbitron",sans-serif;
@@ -388,7 +392,6 @@
       color:rgba(179,164,139,.90);
       margin-bottom:8px;
     }
-
     input, select, textarea{
       width:100%;
       border-radius:14px;
@@ -410,8 +413,17 @@
       background: rgba(10,12,27,0.28);
     }
     .source input{width:auto; margin-top:3px;}
-    .source strong{display:block; font-size:0.92rem; color: rgba(241,230,163,.92); font-weight:600; margin-bottom:4px;}
-    .source span{display:block; font-size:0.88rem; color: rgba(198,186,150,.86); line-height:1.45; text-align: justify;}
+
+    /* FIX: removed the weird hidden char in margin-bottom */
+    .source strong{
+      display:block; font-size:0.92rem; color: rgba(241,230,163,.92);
+      font-weight:600; margin-bottom:4px;
+    }
+
+    .source span{
+      display:block; font-size:0.88rem; color: rgba(198,186,150,.86);
+      line-height:1.45; text-align: justify;
+    }
 
     .mini-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;}
     .mini{
@@ -436,6 +448,7 @@
       grid-template-columns: 1fr 1fr 1fr;
       gap:10px;
     }
+
     .btn{
       min-height:46px;
       border-radius:999px;
@@ -456,9 +469,22 @@
       color:#2a1204;
     }
 
-    .right-stack{display:grid; gap:14px;}
+    /* RIGHT COLUMN: sticky “cockpit” effect (doesn't change layout, just reduces perceived imbalance) */
+    .right-stack{
+      display:grid;
+      gap:14px;
+      position: sticky;
+      top: 86px;                /* below top-bar (68px) + breathing */
+      align-self:start;
+    }
 
-    .kv{display:grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; font-size: 0.92rem; color: rgba(198,186,150,.86);}
+    .kv{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 14px;
+      font-size: 0.92rem;
+      color: rgba(198,186,150,.86);
+    }
     .kv .k{color: rgba(179,164,139,.92)}
     .kv .v{color: rgba(241,230,163,.90); text-align:right}
 
@@ -499,7 +525,6 @@
     .note{margin-top:10px; font-size:0.88rem; color: rgba(179,164,139,.90); line-height:1.6; text-align: justify;}
     .note strong{color: rgba(241,230,163,.95); font-weight:600;}
 
-    /* NEW: connector + quality badges */
     .badge{
       display:inline-flex; align-items:center; gap:8px;
       padding:6px 10px;
@@ -525,6 +550,7 @@
       gap:10px;
       margin-top:10px;
     }
+
     .lineage{
       margin-top:10px;
       border:1px solid rgba(212,175,55,.18);
@@ -574,6 +600,7 @@
       pre{max-height:none}
     }
 
+    /* Responsive stays safe */
     @media(max-width:1180px){
       .hero{grid-template-columns:1fr; gap:22px}
       .sim-grid{grid-template-columns:1fr;}
@@ -583,13 +610,17 @@
       .mini-grid{grid-template-columns:1fr}
       .source-grid{grid-template-columns:1fr}
       .subgrid{grid-template-columns:1fr}
+      .right-stack{position:static;} /* sticky off on smaller screens */
     }
+
     @media(max-width:960px){
       .top-nav{display:none}
       .top-bar{padding:0 16px}
       .wrap{padding:96px 20px 56px}
       .ctas{grid-template-columns:1fr}
+      .right-stack{position:static;}
     }
+
     @media (prefers-reduced-motion: reduce){
       .scanline, .pill .dot, .state .sig i, .state .meter > span {animation:none}
       .panel{transform:none !important}
@@ -606,7 +637,6 @@
       <div class="emblem" aria-hidden="true"></div>
       <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
     </div>
-
     <nav class="top-nav" aria-label="Primary">
       <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a>
       <a href="./sandbox.html" aria-current="page" target="_blank" rel="noopener noreferrer">Sandbox</a>
@@ -615,21 +645,19 @@
       <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
       <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
     </nav>
-
     <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Try the live demo</a>
   </header>
 
   <main class="wrap" role="main">
+
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div>
         <div class="eyebrow">Decision <span>defensibility simulator</span></div>
-
         <h1 class="h1" id="hero-title">
           Freeze the perimeter.
           <span class="gold">Make decisions reconstructible.</span>
         </h1>
-
         <p class="lead">
           This sandbox does not “choose” a candidate. It captures scope, declared systems, lineage hints and constraints,
           then generates deterministic outputs: sealed JSON + print view + public hash (SHA-256).
@@ -661,12 +689,10 @@
         <div class="scanline" aria-hidden="true"></div>
         <div class="panel-inner">
           <div class="panel-title">Simulator cockpit (live)</div>
-
           <div class="pill" aria-label="Attributes">
             <span class="dot" aria-hidden="true"></span>
             Integrity • Readability • Verifiability
           </div>
-
           <div class="list" role="list">
             <div class="row" role="listitem">
               <span class="k">Scope</span>
@@ -723,17 +749,14 @@
                 <option value="Access to restricted perimeter">Access to restricted perimeter</option>
               </select>
             </div>
-
             <div class="field">
               <label for="momentT">Decision date (moment T)</label>
               <input id="momentT" type="date" />
             </div>
-
             <div class="field">
               <label for="orgScope">Organization / scope</label>
               <input id="orgScope" type="text" placeholder="MBDA — Europe scope (multi-sites, multi-entities)" />
             </div>
-
             <div class="field">
               <label for="owner">Decision owner</label>
               <input id="owner" type="text" placeholder="CHRO / Executive committee" />
@@ -876,7 +899,7 @@ It’s a human-readable rendering of the same sealed core bundle.
             </div>
           </div>
 
-          <!-- NEW: CONNECTORS MAP -->
+          <!-- CONNECTORS MAP -->
           <div class="card" aria-label="Connectors">
             <h3>Connectors map (declared)</h3>
             <div class="subgrid">
@@ -893,20 +916,17 @@ It’s a human-readable rendering of the same sealed core bundle.
             </div>
           </div>
 
-          <!-- NEW: LINEAGE + QUALITY -->
+          <!-- LINEAGE + QUALITY -->
           <div class="card" aria-label="Lineage & quality">
             <h3>Lineage & quality checks</h3>
-
             <div class="lineage">
               <div class="lt">Lineage snapshot</div>
-
               <div class="lin-row">
                 <div class="k">HRIS system</div><div class="v" id="linHrisSys">—</div>
                 <div class="k">Extract id</div><div class="v" id="linHrisExt">—</div>
                 <div class="k">Steward</div><div class="v" id="linSteward">—</div>
                 <div class="k">Attributable</div><div class="v" id="linAttr">—</div>
               </div>
-
               <div class="lin-row">
                 <div class="k">Freshness</div><div class="v" id="qFresh">—</div>
                 <div class="k">Completeness</div><div class="v" id="qComp">—</div>
@@ -914,14 +934,13 @@ It’s a human-readable rendering of the same sealed core bundle.
                 <div class="k">Duplicates</div><div class="v" id="qDup">—</div>
               </div>
             </div>
-
             <div class="note">
               These checks are deterministic proxies. They surface <strong>audit exposure</strong> and <strong>reconstruction risk</strong>
               without implying any “truth” judgement.
             </div>
           </div>
 
-          <!-- NEW: DECISION SUPPORT -->
+          <!-- DECISION SUPPORT -->
           <div class="card" aria-label="Decision support">
             <h3>Decision support (deterministic)</h3>
             <div class="kv">
@@ -955,7 +974,6 @@ It’s a human-readable rendering of the same sealed core bundle.
     (function () {
       const canvas = document.getElementById("bg-field");
       const ctx = canvas.getContext("2d", { alpha: true });
-
       let width, height, particles = [];
       const COUNT = 220;
 
@@ -1004,24 +1022,20 @@ It’s a human-readable rendering of the same sealed core bundle.
       const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const card = document.getElementById("cockpit");
       if (!card || prefersReduce) return;
-
       function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
       let raf = null;
-
       function onMove(e){
         const r = card.getBoundingClientRect();
         const x = (e.clientX - r.left) / r.width;
         const y = (e.clientY - r.top) / r.height;
         const rotY = clamp((x - 0.5) * 10, -6, 6);
         const rotX = clamp((0.5 - y) * 10, -6, 6);
-
         if (raf) cancelAnimationFrame(raf);
         raf = requestAnimationFrame(() => {
           card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
         });
       }
       function onLeave(){ card.style.transform = "none"; }
-
       card.addEventListener("mousemove", onMove);
       card.addEventListener("mouseleave", onLeave);
     })();
@@ -1077,22 +1091,17 @@ It’s a human-readable rendering of the same sealed core bundle.
     }
 
     function defensibility(coverage, missing, quality){
-      // deterministic & explainable:
-      // base from coverage, penalty from missing + quality risk
       let score = coverage;
       score -= missing * 9;
       score -= quality.riskPenalty;
       score = Math.max(0, Math.min(100, Math.round(score)));
-
       let band = "LOW";
       if(score >= 78) band = "HIGH";
       else if(score >= 58) band = "MEDIUM";
-
       return { score, band };
     }
 
     function exposureFrom(defBand, quality){
-      // deterministic: exposure increases if def low or quality high risk
       if(defBand === "LOW") return "HIGH";
       if(defBand === "MEDIUM" && quality.riskLevel !== "LOW") return "MEDIUM";
       if(defBand === "HIGH" && quality.riskLevel === "HIGH") return "MEDIUM";
@@ -1120,9 +1129,10 @@ It’s a human-readable rendering of the same sealed core bundle.
     const phases = [
       { s:"CAPTURE", t:"SYNC" },
       { s:"LINEAGE", t:"CHECK" },
-      { s:"SEAL",    t:"HASH" },
-      { s:"READY",   t:"VERIFY" }
+      { s:"SEAL", t:"HASH" },
+      { s:"READY", t:"VERIFY" }
     ];
+
     function setPhase(i){
       const p = phases[i % phases.length];
       $("stateText").textContent = p.s;
@@ -1139,12 +1149,9 @@ It’s a human-readable rendering of the same sealed core bundle.
       $("hashText").textContent = hash || "—";
     }
 
-    // deterministic simulated lineage + deterministic quality checks (proxy)
     function buildLineage(src, scope){
-      // deterministic-ish (no randomness): derive extract ids from scope + src state
       const base = (scope || "scope").toLowerCase().replace(/[^a-z0-9]+/g,"-").slice(0,28) || "scope";
       const ext = (tag)=> `${tag}-${base}-v01`;
-
       const lineage = {
         hris: src.hris ? {
           system: "Workday",
@@ -1183,7 +1190,7 @@ It’s a human-readable rendering of the same sealed core bundle.
           artifact: "documented_feedback (attributable only)",
           extract_id: ext("360"),
           steward: "HRBP",
-          attributable: false, // conservative default: 360 often disputed
+          attributable: false,
           last_sync: "T-90d"
         } : null,
         legal: src.legal ? {
@@ -1195,19 +1202,11 @@ It’s a human-readable rendering of the same sealed core bundle.
           last_sync: "T-7d"
         } : null
       };
-
       return lineage;
     }
 
     function qualityChecks(src, ctxText){
-      // deterministic proxy:
-      // - freshness risk increases if perf/360 are used (older cycles)
-      // - completeness falls if fewer sources
-      // - definition drift flagged if scope includes multi-entities keywords
-      // - duplicates risk if HRIS is on but OPS is off (common reconciliation pain)
       const cov = coveragePct(src);
-      const miss = missingCount(src);
-
       const scopeText = ($("orgScope").value || "").toLowerCase();
       const multi = /(multi|entities|sites|countries|europe|global|group)/.test(scopeText);
 
@@ -1216,9 +1215,7 @@ It’s a human-readable rendering of the same sealed core bundle.
       const drift = multi ? "MEDIUM" : "LOW";
       const duplicates = (src.hris && !src.ops) ? "MEDIUM" : "LOW";
 
-      // context missing penalty
       const ctxPenalty = (ctxText || "").trim().length < 40 ? 8 : 0;
-
       const riskLevel = (freshness==="MEDIUM" || drift==="MEDIUM" || duplicates==="MEDIUM" || completeness==="LOW") ? "MEDIUM" : "LOW";
       const riskPenalty =
         (freshness==="MEDIUM" ? 6 : 0) +
@@ -1237,7 +1234,7 @@ It’s a human-readable rendering of the same sealed core bundle.
       if(!src.lms) b.push("Training evidence missing (LMS)");
       if(src.feedback360) b.push("360 is contested unless attributable");
       if(q.drift !== "LOW") b.push("Definition drift risk (multi-entity scope)");
-      if((q.completeness === "LOW")) b.push("Low completeness (too few declared sources)");
+      if(q.completeness === "LOW") b.push("Low completeness (too few declared sources)");
       return b.slice(0,3);
     }
 
@@ -1268,13 +1265,10 @@ It’s a human-readable rendering of the same sealed core bundle.
       const owner = ($("owner").value || "").trim() || "CHRO / Executive committee";
       const dtype = $("decisionType").value;
       const ctx = ($("context").value || "").trim() || "Regulated environment. Audit exposure. Decision may be challenged and must remain reconstructible.";
-
       const lineage = buildLineage(src, scope);
       const q = qualityChecks(src, ctx);
-
       const cov = coveragePct(src);
       const miss = missingCount(src);
-
       const def = defensibility(cov, miss, q);
       const exposure = exposureFrom(def.band, q);
 
@@ -1303,7 +1297,6 @@ It’s a human-readable rendering of the same sealed core bundle.
         outputs: { json: "decision_bundle.json", pdf: "browser_print_to_pdf", seal: "sha256_core_hash" }
       };
 
-      // decision support text (still deterministic)
       core.decision_support = {
         top_blockers: blockers(src, q),
         next_actions: nextActions(src, q),
@@ -1315,19 +1308,14 @@ It’s a human-readable rendering of the same sealed core bundle.
 
     async function generate(){
       setPhase(0);
-
       const { core, cov, miss, def, exposure, scope, momentT, lineage, q } = buildCoreBundle();
       syncCockpit(null, null, null, scope, momentT, "—");
-
-      // phase: lineage/check
       setPhase(1);
-
-      // phase: seal/hash (core only => stable)
       setPhase(2);
+
       const coreJson = stableStringify(core);
       const hash = await sha256Hex(coreJson);
 
-      // add metadata OUTSIDE the sealed core (so same inputs => same hash)
       const bundle = {
         sealed_core: core,
         meta: {
@@ -1338,11 +1326,8 @@ It’s a human-readable rendering of the same sealed core bundle.
       };
 
       const fullJson = stableStringify(bundle);
-
-      // phase: ready
       setPhase(3);
 
-      // right panel
       $("outCoverage").textContent = `${cov}%`;
       $("outMissing").textContent = `${miss}`;
       $("outDef").textContent = `${def.band} (${def.score}/100)`;
@@ -1350,10 +1335,8 @@ It’s a human-readable rendering of the same sealed core bundle.
       $("outSeal").textContent = "SHA-256 sealed (core)";
       $("hashOut").textContent = hash;
 
-      // cockpit
       syncCockpit(cov, `${def.band} (${def.score})`, exposure, scope, momentT, hash);
 
-      // lineage UI
       const h = lineage.hris || {system:"—", extract_id:"—", steward:"—", attributable:"—"};
       $("linHrisSys").textContent = h.system || "—";
       $("linHrisExt").textContent = h.extract_id || "—";
@@ -1365,13 +1348,11 @@ It’s a human-readable rendering of the same sealed core bundle.
       $("qDrift").textContent = q.drift;
       $("qDup").textContent = q.duplicates;
 
-      // decision support UI
       $("dsExposure").textContent = exposure;
       $("dsBlockers").textContent = core.decision_support.top_blockers.join(" | ") || "—";
       $("dsActions").textContent = core.decision_support.next_actions.join(" | ") || "—";
       $("dsImprove").textContent = core.decision_support.what_improves_score || "—";
 
-      // summary
       const yesSources = Object.entries(core.declared_sources).filter(([_,v])=>v).map(([k])=>k).join(", ");
       const bl = core.decision_support.top_blockers.map(x=>`- ${x}`).join("\n") || "- —";
       const na = core.decision_support.next_actions.map(x=>`- ${x}`).join("\n") || "- —";
@@ -1381,38 +1362,29 @@ It’s a human-readable rendering of the same sealed core bundle.
 Scope: ${core.decision.scope}
 Owner: ${core.decision.owner}
 Moment T: ${core.moment_t}
-
 Declared sources: ${yesSources || "—"}
-Coverage: ${cov}%  |  Missing: ${miss}
+Coverage: ${cov}% | Missing: ${miss}
 Defensibility: ${def.band} (${def.score}/100)
 Audit exposure: ${exposure}
-
 Lineage (example):
 - HRIS: ${(lineage.hris && lineage.hris.system) ? lineage.hris.system : "—"} | extract_id: ${(lineage.hris && lineage.hris.extract_id) ? lineage.hris.extract_id : "—"}
-
 Quality checks:
 - Freshness: ${q.freshness} | Completeness: ${q.completeness}
 - Definition drift: ${q.drift} | Duplicates: ${q.duplicates}
-
 Top blockers:
 ${bl}
-
 Next actions:
 ${na}
-
 Seal:
 - Sealed core hash (SHA-256): ${hash}
-
 Interpretation:
 - This bundle documents scope + declared systems + lineage hints + deterministic rules.
 - The hash proves integrity over time (not “truth”).
 - Humans remain accountable.`;
 
       $("summaryPre").textContent = summary;
-
       $("jsonPre").textContent = fullJson;
 
-      // store for copy/download
       window.__bundle_json = fullJson;
       window.__bundle_hash = hash;
     }
@@ -1423,14 +1395,12 @@ Interpretation:
       $("orgScope").value = "MBDA — Europe scope (multi-sites, multi-entities)";
       $("owner").value = "Global CHRO / Executive committee";
       $("context").value = "Sensitive decision in a regulated defense environment. Traceability across HR systems and stability of definitions are required.\nDecision may be challenged and must remain reconstructible over time (audit window).";
-
       $("srcLms").checked = true;
       $("srcHris").checked = true;
       $("srcPerf").checked = true;
       $("srcOps").checked = true;
       $("src360").checked = false;
       $("srcLegal").checked = true;
-
       generate();
     }
 
@@ -1440,7 +1410,6 @@ Interpretation:
       $("orgScope").value = "";
       $("owner").value = "";
       $("context").value = "";
-
       $("srcLms").checked = true;
       $("srcHris").checked = true;
       $("srcPerf").checked = true;
@@ -1454,6 +1423,7 @@ Interpretation:
       $("outExposure").textContent = "—";
       $("outSeal").textContent = "—";
       $("hashOut").textContent = "—";
+
       $("summaryPre").textContent = "Click “Generate”.";
       $("jsonPre").textContent = "{}";
 
@@ -1485,7 +1455,6 @@ Interpretation:
         await navigator.clipboard.writeText(text);
         return true;
       }catch(e){
-        // fallback
         try{
           const ta = document.createElement("textarea");
           ta.value = text;
@@ -1568,3 +1537,4 @@ Interpretation:
   </script>
 </body>
 </html>
+
