@@ -808,6 +808,109 @@
         </div>
       </aside>
     </section>
+<!-- COMPARATIVE COCKPIT (Mode D) -->
+<section class="section" aria-labelledby="cmp-title">
+  <h2 class="section-title" id="cmp-title">Comparative Cockpit — baseline vs alternative vs stress</h2>
+
+  <div class="card" style="margin-top:14px">
+    <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+      <div class="field">
+        <label for="cmpBase">Baseline context</label>
+        <select id="cmpBase">
+          <option value="governance">Governance</option>
+          <option value="legal">Legal Proceedings</option>
+          <option value="institutional">Institutional Crisis</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="cmpAlt">Alternative context</label>
+        <select id="cmpAlt">
+          <option value="legal">Legal Proceedings</option>
+          <option value="institutional">Institutional Crisis</option>
+          <option value="governance">Governance</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="cmpStress">Stress scenario (hypothetical)</label>
+        <select id="cmpStress">
+          <option value="none">None</option>
+          <option value="audit-triggered">Audit triggered</option>
+          <option value="litigation-triggered">Litigation triggered</option>
+          <option value="media-escalation">Media escalation</option>
+          <option value="internal-investigation">Internal investigation</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-grid" style="grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 12px;">
+      <div class="field">
+        <label for="cmpStressLevel">Stress level</label>
+        <input id="cmpStressLevel" type="range" min="0" max="100" value="35" />
+        <div class="note" style="margin-top:8px">
+          Deterministic “what-if”: stress increases penalty on weak signals. Same input → same output.
+        </div>
+      </div>
+
+      <div class="actions" style="grid-template-columns: 1fr 1fr; align-items:end">
+        <button class="btn hot" id="btnCompare" type="button">Run comparison</button>
+        <button class="btn" id="btnCompareAuto" type="button">Auto (sync with Generate)</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sim-grid" style="margin-top: 18px;">
+    <!-- BASELINE -->
+    <div class="card">
+      <h3 id="cmpBaseTitle">Baseline — Governance</h3>
+      <div class="kv" style="margin-top:6px">
+        <div class="k">Coverage</div><div class="v" id="cmpBaseCov">—</div>
+        <div class="k">Defensibility</div><div class="v" id="cmpBaseDef">—</div>
+        <div class="k">Exposure</div><div class="v" id="cmpBaseExp">—</div>
+        <div class="k">Seal</div><div class="v" id="cmpBaseHash">—</div>
+      </div>
+      <pre id="cmpBaseSummary" style="margin-top:10px; white-space:pre-wrap">—</pre>
+    </div>
+
+    <!-- ALTERNATIVE -->
+    <div class="card">
+      <h3 id="cmpAltTitle">Alternative — Legal Proceedings</h3>
+      <div class="kv" style="margin-top:6px">
+        <div class="k">Coverage</div><div class="v" id="cmpAltCov">—</div>
+        <div class="k">Defensibility</div><div class="v" id="cmpAltDef">—</div>
+        <div class="k">Exposure</div><div class="v" id="cmpAltExp">—</div>
+        <div class="k">Seal</div><div class="v" id="cmpAltHash">—</div>
+      </div>
+      <pre id="cmpAltSummary" style="margin-top:10px; white-space:pre-wrap">—</pre>
+    </div>
+
+    <!-- STRESS -->
+    <div class="card">
+      <h3 id="cmpStressTitle">Stress — hypothetical</h3>
+      <div class="kv" style="margin-top:6px">
+        <div class="k">Coverage</div><div class="v" id="cmpStressCov">—</div>
+        <div class="k">Defensibility</div><div class="v" id="cmpStressDef">—</div>
+        <div class="k">Exposure</div><div class="v" id="cmpStressExp">—</div>
+        <div class="k">Seal</div><div class="v" id="cmpStressHash">—</div>
+      </div>
+      <pre id="cmpStressSummary" style="margin-top:10px; white-space:pre-wrap">—</pre>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h3>Delta & weakest link</h3>
+    <div class="kv" style="margin-top:8px">
+      <div class="k">Δ Defensibility</div><div class="v" id="cmpDeltaDef">—</div>
+      <div class="k">Δ Exposure</div><div class="v" id="cmpDeltaExp">—</div>
+      <div class="k">Weakest link</div><div class="v" id="cmpWeakest">—</div>
+      <div class="k">Pilot action</div><div class="v" id="cmpPilotAction">—</div>
+    </div>
+    <div class="note" style="margin-top:10px">
+      The structure stays identical (RPO JSON/PDF/hash). Only framing + weights + stress mapping change.
+    </div>
+  </div>
+</section>
 
     <!-- SIMULATOR -->
     <section class="section" aria-labelledby="sim-title">
@@ -1940,6 +2043,211 @@ Interpretation:
 
       // Also reflect exposure label in chip if needed (chips are rebuilt by applyContext)
     }
+// ===============================
+// Comparative Stress Engine (Mode D)
+// Baseline vs Alternative vs Stress (hypothetical)
+// ===============================
+
+const STRESS_SCENARIOS = {
+  none: { label: "None", mult: {} },
+  "audit-triggered": {
+    label: "Audit triggered",
+    mult: { definition_drift: 1.25, timestamp_rigor: 1.15, chain_of_custody: 1.10 }
+  },
+  "litigation-triggered": {
+    label: "Litigation triggered",
+    mult: { chain_of_custody: 1.35, contradictions: 1.30, attribution: 1.25, timestamp_rigor: 1.20 }
+  },
+  "media-escalation": {
+    label: "Media escalation",
+    mult: { contradictions: 1.35, uncertainty_logging: 1.30, attribution: 1.15 }
+  },
+  "internal-investigation": {
+    label: "Internal investigation",
+    mult: { attribution: 1.25, chain_of_custody: 1.20, contradictions: 1.20, uncertainty_logging: 1.10 }
+  }
+};
+
+function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+function stressWeights(baseWeights, scenarioKey, stressLevelPct){
+  const s = STRESS_SCENARIOS[scenarioKey] || STRESS_SCENARIOS.none;
+  const level = clamp((stressLevelPct||0)/100, 0, 1);
+  const out = { ...baseWeights };
+
+  // Deterministic blend: weight := weight * (1 + level * (mult-1))
+  Object.entries(s.mult || {}).forEach(([k, m]) => {
+    const w = (out[k] ?? 1.0);
+    out[k] = w * (1 + level * (m - 1));
+  });
+  return out;
+}
+
+// Minimal penalty model (deterministic): converts qualitative proxies to numeric penalty
+function signalPenalty(qVal){
+  if(qVal === "LOW") return 0;
+  if(qVal === "MEDIUM") return 1;
+  if(qVal === "HIGH") return 2;
+  if(qVal === "CRITICAL") return 3;
+  return 1;
+}
+
+// Re-score using (cov, miss, q, weights) without changing sealed core structure
+function rescoreWithWeights(baseDerived, weights){
+  // Base score already exists, but we compute a "stress-adjusted" score delta deterministically
+  const q = baseDerived.q || {};
+  const w = weights || {};
+
+  const p =
+    (signalPenalty(q.freshness) * (w.timestamp_rigor ?? 1)) +
+    (signalPenalty(q.completeness) * (w.chain_of_custody ?? 1)) +
+    (signalPenalty(q.drift) * (w.definition_drift ?? 1)) +
+    (signalPenalty(q.duplicates) * (w.contradictions ?? 1));
+
+  // Convert penalty to score reduction (calibrated for readability, not “truth”)
+  const reduce = Math.round(p * 4); // 0..~60 typical
+  const score = clamp(baseDerived.def.score - reduce, 1, 100);
+
+  // Band mapping
+  const band = score >= 85 ? "VERY HIGH" :
+               score >= 70 ? "HIGH" :
+               score >= 55 ? "MEDIUM" :
+               score >= 40 ? "LOW" : "VERY LOW";
+
+  return { score, band, reduce };
+}
+
+// Build + hash bundle for a given context key (no UI side-effects)
+async function buildBundleForContext(ctxKeyOverride){
+  const saved = window.__CTX_KEY;
+  window.__CTX_KEY = ctxKeyOverride;
+  const ctx = CONTEXTS[ctxKeyOverride] || CONTEXTS.governance;
+
+  const { core, cov, miss, def, exposure, scope, momentT, lineage, q } = buildCoreBundle();
+  const coreJson = stableStringify(core);
+  const hash = await sha256Hex(coreJson);
+
+  const yesSources = Object.entries(core.declared_sources).filter(([_,v])=>v).map(([k])=>k).join(", ");
+  const bl = core.decision_support.top_blockers.map(x=>`- ${x}`).join("\n") || "- —";
+  const na = core.decision_support.next_actions.map(x=>`- ${x}`).join("\n") || "- —";
+
+  const derived = {
+    labels: ctx.ui.labels,
+    cov, miss, def, exposure, hash, q,
+    yesSources,
+    blockers: bl,
+    nextActions: na,
+    hrisSys: (lineage.hris && lineage.hris.system) ? lineage.hris.system : "—",
+    hrisExt: (lineage.hris && lineage.hris.extract_id) ? lineage.hris.extract_id : "—"
+  };
+
+  // Restore
+  window.__CTX_KEY = saved;
+
+  return { ctxKey: ctxKeyOverride, ctx, core, derived, hash };
+}
+
+function setCmpCard(prefix, ctxName, pack){
+  $(prefix+"Title").textContent = `${ctxName}`;
+  $(prefix+"Cov").textContent = `${pack.derived.cov}%`;
+  $(prefix+"Def").textContent = `${pack.derived.def.band} (${pack.derived.def.score}/100)`;
+  $(prefix+"Exp").textContent = `${pack.derived.exposure}`;
+  $(prefix+"Hash").textContent = `${pack.derived.hash}`;
+  $(prefix+"Summary").textContent = pack.ctx.summary.template(pack.core, pack.derived);
+}
+
+function weakestLink(basePack, otherPack, scenarioLabel){
+  // Compare by “effective” weights and visible weak signals
+  const bq = basePack.derived.q || {};
+  const oq = otherPack.derived.q || {};
+
+  const candidates = [
+    { key:"timestamp_rigor", label:"Timestamp rigor", a: bq.freshness, b: oq.freshness },
+    { key:"chain_of_custody", label:"Chain-of-custody", a: bq.completeness, b: oq.completeness },
+    { key:"definition_drift", label:"Definition drift", a: bq.drift, b: oq.drift },
+    { key:"contradictions", label:"Contradictions / duplicates proxy", a: bq.duplicates, b: oq.duplicates }
+  ];
+
+  // Pick first non-LOW in other (simple + deterministic)
+  const pick = candidates.find(x => (x.b && x.b !== "LOW")) || candidates[0];
+
+  const action =
+    pick.key === "chain_of_custody" ? "Lock chain-of-custody markers (extract id, timestamp, steward) — before escalation." :
+    pick.key === "timestamp_rigor" ? "Freeze Moment T snapshots and timestamp rigor — before escalation." :
+    pick.key === "definition_drift" ? "Freeze definitions (single dictionary) and record drift explicitly." :
+    "Surface contradictions + log uncertainty explicitly (Heidenlogger-style).";
+
+  return {
+    weakest: `${scenarioLabel}: ${pick.label} becomes a leverage point (${pick.b}).`,
+    action
+  };
+}
+
+async function runComparison(opts = { auto:false }){
+  const baseKey = $("cmpBase").value || window.__CTX_KEY || "governance";
+  const altKey  = $("cmpAlt").value  || "legal";
+  const stressKey = $("cmpStress").value || "none";
+  const stressLevel = parseInt($("cmpStressLevel").value || "0", 10);
+
+  // Titles
+  $("cmpBaseTitle").textContent = `Baseline — ${CONTEXTS[baseKey].name}`;
+  $("cmpAltTitle").textContent  = `Alternative — ${CONTEXTS[altKey].name}`;
+  const stressLabel = (STRESS_SCENARIOS[stressKey]?.label || "Stress") + ` (${stressLevel}%)`;
+  $("cmpStressTitle").textContent = `Stress — ${stressLabel}`;
+
+  // Build baseline + alternative
+  const basePack = await buildBundleForContext(baseKey);
+  const altPack  = await buildBundleForContext(altKey);
+
+  // Stress run: baseline context + stress-adjusted scoring (deterministic hypothetical)
+  const stressPack = await buildBundleForContext(baseKey);
+
+  // Apply stress weights to derive a “what-if” score/band (without claiming truth)
+  const baseWeights = (CONTEXTS[baseKey].weights || {});
+  const sw = stressWeights(baseWeights, stressKey, stressLevel);
+  const rescored = rescoreWithWeights(stressPack.derived, sw);
+
+  // Override ONLY derived score/band/exposure for stress view (core stays the same framing baseline)
+  stressPack.derived = {
+    ...stressPack.derived,
+    def: { score: rescored.score, band: rescored.band },
+    exposure: exposureFrom(rescored.band, stressPack.derived.q)
+  };
+
+  // Render cards
+  setCmpCard("cmpBase", `Baseline — ${basePack.ctx.name}`, basePack);
+  setCmpCard("cmpAlt",  `Alternative — ${altPack.ctx.name}`, altPack);
+  setCmpCard("cmpStress", `Stress — ${stressLabel}`, stressPack);
+
+  // Delta
+  const deltaScore = altPack.derived.def.score - basePack.derived.def.score;
+  const deltaStress = stressPack.derived.def.score - basePack.derived.def.score;
+  $("cmpDeltaDef").textContent = `Alt: ${deltaScore >= 0 ? "+" : ""}${deltaScore} | Stress: ${deltaStress >= 0 ? "+" : ""}${deltaStress}`;
+  $("cmpDeltaExp").textContent = `Alt: ${basePack.derived.exposure} → ${altPack.derived.exposure} | Stress: ${basePack.derived.exposure} → ${stressPack.derived.exposure}`;
+
+  // Weakest link (choose the “worst” between alt and stress)
+  const worst = (stressPack.derived.def.score < altPack.derived.def.score) ? stressPack : altPack;
+  const worstLabel = (worst === stressPack) ? `Stress (${stressLabel})` : `Alternative (${altPack.ctx.name})`;
+  const wl = weakestLink(basePack, worst, worstLabel);
+
+  $("cmpWeakest").textContent = wl.weakest;
+  $("cmpPilotAction").textContent = wl.action;
+
+  // Optional: keep baseline dropdown in sync with main context
+  if(opts.auto){
+    $("cmpBase").value = window.__CTX_KEY || "governance";
+  }
+}
+
+// Wire buttons
+$("btnCompare").addEventListener("click", () => runComparison({ auto:false }));
+$("btnCompareAuto").addEventListener("click", () => runComparison({ auto:true }));
+
+// Convenience: sync baseline with main Context dropdown on page
+// If you want: whenever main context changes, update cmpBase
+$("contextSelect").addEventListener("change", () => {
+  $("cmpBase").value = window.__CTX_KEY || "governance";
+});
 
     // ===============================
     // Wire events
@@ -1974,11 +2282,18 @@ Interpretation:
       });
 
     // Context dropdown
-    $("contextSelect").addEventListener("change", (e)=>{
-      const key = e.target.value;
-      applyContext(key);
-      // Optional: refresh example narrative if user hasn't typed yet
-    });
+$("contextSelect").addEventListener("change", (e)=>{
+  const key = e.target.value;
+
+  applyContext(key);
+
+  // keep comparative baseline aligned
+  const cmp = $("cmpBase");
+  if (cmp) cmp.value = key;
+
+  // Optional: refresh example narrative if user hasn't typed yet
+});
+
 
     // Init
     (function init(){
@@ -1996,7 +2311,7 @@ Interpretation:
   (function () {
     const params = new URLSearchParams(location.search);
     const key = params.get("context") || "governance";
-    const ctx = (window.CONTEXTS && window.CONTEXTS[key]) ? window.CONTEXTS[key] : window.CONTEXTS.governance;
+    const ctx = (window.CONTEXTS && window.CONTEXTS[key]) ? window.CONTEXTS[key] : window.CONTEXTS.governance;ƒ
 
     // 1) Set dropdown if it exists
     const select = document.querySelector('[data-context-select]');
