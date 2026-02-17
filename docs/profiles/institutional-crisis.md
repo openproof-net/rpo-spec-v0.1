@@ -124,3 +124,51 @@ All flagged signals remain:
 - Explicitly reviewable
 - Subject to human adjudication
 
+---
+
+## Epistemic Stress Index (ESI)
+
+The Epistemic Stress Index measures the structural instability
+of knowledge production within a contested institutional environment.
+
+It does not assess truth.
+It evaluates coherence pressure.
+
+### Definition
+
+Epistemic Stress occurs when:
+
+- Interpretive coherence degrades
+- Documentation asymmetry increases
+- Narrative volatility accelerates
+- Decision traceability weakens
+
+### Core Variables
+
+1. Coherence Deviation Rate (CDR)
+   Variation in interpretive consistency across documented events.
+
+2. Narrative Volatility Score (NVS)
+   Frequency of framing shifts or lexical realignment over time.
+
+3. Trace Integrity Ratio (TIR)
+   Ratio between formal decisions and traceable procedural anchors.
+
+4. Asymmetry Gradient (AG)
+   Disparity in evidentiary density between actors.
+
+### Index Behavior
+
+Low ESI → Stable knowledge production  
+Moderate ESI → Narrative tension, resolvable through audit  
+High ESI → Systemic epistemic distortion risk  
+
+### Interpretation Rule
+
+The ESI does not indicate wrongdoing.
+
+It signals environments where:
+
+- Power may influence interpretive outcomes
+- Oversight mechanisms require reinforcement
+- Independent review becomes structurally advisable
