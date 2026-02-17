@@ -32,22 +32,32 @@
 
 window.Sandbox = window.Sandbox || {};
 
-window.Sandbox.setContext = function(ctx) {
-  window.__RPO_CONTEXT__ = ctx;
+window.Sandbox.setContext = function setContext(ctx) {
+  // Always store
+  window.__RPO_CONTEXT__ = ctx || null;
 
-  // 1) Update summary template
-  if (ctx.summary && ctx.summary.template) {
+  // Debug (safe)
+  try { console.log("[Sandbox.setContext]", ctx?.key || ctx); } catch (_) {}
+
+  // 1) Summary template
+  if (ctx?.summary?.template) {
     window.__RPO_SUMMARY_TEMPLATE__ = ctx.summary.template;
   }
 
-  // 2) Update weights
-  if (ctx.weights) {
+  // 2) Weights
+  if (ctx?.weights) {
     window.__RPO_WEIGHTS__ = ctx.weights;
   }
 
-  // 3) Update label mapping
-  if (ctx.ui && ctx.ui.labels) {
+  // 3) UI labels
+  if (ctx?.ui?.labels) {
     window.__RPO_LABELS__ = ctx.ui.labels;
   }
+
+  // 4) UI help/tooltips (if you add them)
+  if (ctx?.ui?.help) {
+    window.__RPO_HELP__ = ctx.ui.help;
+  }
 };
+
 
