@@ -1,35 +1,68 @@
-/* docs/assets/sandbox.js
-   OpenProof RPO Sandbox engine (safe to load on any page).
-   - Exposes window.Sandbox.setContext(ctx)
-   - Optionally binds a dropdown via window.Sandbox.bindContextDropdown(...)
-   - Generates a deterministic draft RPO JSON from a narrative form (if present)
+/* assets/sandbox.js
+   Deterministic Sandbox engine (no AI). Robust, null-safe, context-aware.
+   Works with existing DOM ids provided by Gersende.
 */
+
 (() => {
   "use strict";
 
-  // -------------------------
-  // Safe DOM helpers
-  // -------------------------
-  const byId = (id) => document.getElementById(id);
-  const setText = (el, txt) => { if (el) el.textContent = String(txt ?? ""); };
-  const setDisplay = (el, val) => { if (el) el.style.display = val; };
+  // ---------------------------
+  // Small utilities
+  // ---------------------------
+  const $ = (id) => document.getElementById(id);
+  const on = (el, evt, fn) => el && el.addEventListener(evt, fn, { passive: true });
+  const setText = (el, txt) => { if (el) el.textContent = String(txt ?? "—"); };
+  const show = (el, yes) => { if (el) el.style.display = yes ? "" : "none"; };
 
-  // -------------------------
-  // Public API namespace
-  // -------------------------
+  // stable stringify (deterministic key order)
+  function stableStringify(obj) {
+    const seen = new WeakSet();
+    const sort = (v) => {
+      if (v && typeof v === "object") {
+        if (seen.has(v)) return v;
+        seen.add(v);
+        if (Array.isArray(v)) return v.map(sort);
+        const out = {};
+        Object.keys(v).sort().forEach((k) => out[k] = sort(v[k]));
+        return out;
+      }
+      return v;
+    };
+    return JSON.stringify(sort(obj), null, 2);
+  }
+
+  async function sha256Hex(text) {
+    const enc = new TextEncoder();
+    const data = enc.encode(text);
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    const bytes = Array.from(new Uint8Array(digest));
+    return bytes.map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  function nowISO() {
+    return new Date().toISOString();
+  }
+
+  // ---------------------------
+  // Context plumbing (optional)
+  // ---------------------------
+  // Supported sources:
+  // - window.__RPO_CONTEXT__ set by simulator or contexts loader
+  // - window.Sandbox.setContext(ctx) called by page
+  //
+  // What we store:
+  // - window.__RPO_CONTEXT__
+  // - window.__RPO_WEIGHTS__
+  // - window.__RPO_LABELS__
+  // - window.__RPO_SUMMARY_TEMPLATE__
+  //
+  // Important: this file works even without contexts.
   window.Sandbox = window.Sandbox || {};
 
-  // Persisted context slots (read by sandbox + can be read by other scripts)
-  window.__RPO_CONTEXT__ = window.__RPO_CONTEXT__ || null;
-  window.__RPO_SUMMARY_TEMPLATE__ = window.__RPO_SUMMARY_TEMPLATE__ || null;
-  window.__RPO_WEIGHTS__ = window.__RPO_WEIGHTS__ || null;
-  window.__RPO_LABELS__ = window.__RPO_LABELS__ || null;
-
-  // Core: called by Simulator when dropdown changes
   window.Sandbox.setContext = function setContext(ctx) {
     window.__RPO_CONTEXT__ = ctx || null;
 
-    if (ctx && ctx.summary && ctx.summary.template) {
+    if (ctx && ctx.summary && typeof ctx.summary.template === "function") {
       window.__RPO_SUMMARY_TEMPLATE__ = ctx.summary.template;
     }
     if (ctx && ctx.weights) {
@@ -39,334 +72,356 @@
       window.__RPO_LABELS__ = ctx.ui.labels;
     }
 
-    // Optional: emit an event so Simulator/UI can react
-    try {
-      window.dispatchEvent(new CustomEvent("rpo:context-changed", { detail: { ctx } }));
-    } catch (_) {
-      // ignore
+    // If UI already mounted, apply immediately
+    try { applyContextToUI(); } catch (_) {}
+  };
+
+  function getLabels() {
+    return window.__RPO_LABELS__ || {};
+  }
+
+  // ---------------------------
+  // DOM bindings (your IDs)
+  // ---------------------------
+  const els = {
+    generateBtn: $("generate-btn"),
+    resetBtn: $("reset-btn"),
+    loadExampleBtn: $("load-example-btn"),
+
+    titleInput: $("case-title"),
+    issuerInput: $("issuer"),
+    subjectInput: $("subject"),
+    narrativeInput: $("narrative"),
+
+    taglineEl: $("result-tagline"),
+    metricsEl: $("metrics"),
+    sentencesEl: $("metric-sentences"),
+    markersEl: $("metric-markers"),
+    scoreEl: $("metric-score"),
+    datesEl: $("metric-dates"),
+    placesEl: $("metric-places"),
+    densityEl: $("metric-density"),
+    chronoEl: $("metric-chrono"),
+
+    hashBlockEl: $("hash-block"),
+    hashValueEl: $("hash-value"),
+
+    anchorsBlockEl: $("anchors-block"),
+    anchorsDatesEl: $("anchors-dates"),
+    anchorsPlacesEl: $("anchors-places"),
+    anchorsTemporalEl: $("anchors-temporal"),
+
+    jsonEl: $("rpo-json"),
+    outputActions: $("output-actions"),
+    copyBtn: $("copy-json-btn"),
+    downloadBtn: $("download-json-btn"),
+  };
+
+  function applyContextToUI() {
+    // This is deliberately minimal because I don’t know your full sandbox.html,
+    // but we can still update visible labels if they exist.
+    const L = getLabels();
+
+    // If you have label placeholders, you can extend this.
+    // For now: tagline gets a context hint.
+    if (els.taglineEl && window.__RPO_CONTEXT__ && window.__RPO_CONTEXT__.name) {
+      setText(els.taglineEl, `Deterministic bundle — context: ${window.__RPO_CONTEXT__.name}`);
     }
-  };
-
-  // Optional helper: bind a dropdown to setContext in one line.
-  // Usage (from simulator/page JS):
-  //   Sandbox.bindContextDropdown("context-select", window.RPO_CONTEXTS, "defaultKey");
-  window.Sandbox.bindContextDropdown = function bindContextDropdown(selectOrId, contexts, defaultKey) {
-    const selectEl = typeof selectOrId === "string" ? byId(selectOrId) : selectOrId;
-    if (!selectEl || !contexts) return false;
-
-    const apply = (key) => {
-      const ctx = contexts[key] || contexts[defaultKey] || null;
-      window.Sandbox.setContext(ctx);
-    };
-
-    // init
-    const initKey = selectEl.value || defaultKey;
-    apply(initKey);
-
-    // on change
-    selectEl.addEventListener("change", () => apply(selectEl.value));
-    return true;
-  };
-
-  // -------------------------
-  // Utilities (deterministic-ish heuristics)
-  // -------------------------
-  function normaliseText(text) {
-    return (text || "").replace(/\s+/g, " ").trim();
   }
 
-  function countSentences(text) {
-    const cleaned = normaliseText(text);
-    if (!cleaned) return 0;
-    return cleaned
-      .split(/[.!?]+/g)
-      .map((s) => s.trim())
-      .filter(Boolean).length;
+  // ---------------------------
+  // Deterministic extraction (lightweight)
+  // ---------------------------
+  function tokenizeSentences(text) {
+    const t = String(text || "").trim();
+    if (!t) return [];
+    // Split on . ! ? (keep it simple, deterministic)
+    return t.split(/[\.\!\?]+/g).map(s => s.trim()).filter(Boolean);
   }
 
-  function countEvidenceMarkers(text) {
-    const digits = (text.match(/\b\d{2,}\b/g) || []).length;
-    const markers = (text.match(/\b(on|at|since|because|when|where|witness|email|report|contract|invoice)\b/gi) || []).length;
-    return digits + markers;
+  function extractDates(text) {
+    const t = String(text || "");
+    // ISO / FR / common: 2026-02-10, 10/02/2026, 10-02-2026
+    const re = /\b(\d{4}-\d{2}-\d{2}|\d{2}[\/-]\d{2}[\/-]\d{4})\b/g;
+    return Array.from(new Set((t.match(re) || [])));
   }
 
-  function detectDates(text) {
-    const months = "january february march april may june july august september october november december".split(" ");
-    const lower = (text || "").toLowerCase();
-    const found = new Set();
+  function extractPlaces(text) {
+    // Deterministic heuristic: capitalized tokens longer than 2 that look like locations.
+    // (No AI, no geo DB.)
+    const t = String(text || "");
+    const candidates = t.match(/\b([A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,}){0,2})\b/g) || [];
+    const blacklist = new Set(["I", "We", "The", "This", "That", "And", "But", "For", "With"]);
+    const cleaned = candidates
+      .map(x => x.trim())
+      .filter(x => !blacklist.has(x))
+      .slice(0, 12);
+    return Array.from(new Set(cleaned));
+  }
 
-    months.forEach((m) => {
-      if (lower.includes(m)) found.add(m.charAt(0).toUpperCase() + m.slice(1));
+  function markerCount(text) {
+    const t = String(text || "");
+    // Count explicit anchors like [A], [1], (evidence), "Exhibit", "Annex"
+    const bracket = (t.match(/\[[^\]]+\]/g) || []).length;
+    const exhibit = (t.match(/\b(exhibit|annex|appendix|evidence|proof)\b/gi) || []).length;
+    return bracket + exhibit;
+  }
+
+  function density(sentences, markers) {
+    if (!sentences) return 0;
+    return sentences.length ? Math.round((markers / sentences.length) * 100) / 100 : 0;
+  }
+
+  function computeScore({ sentences, markers, dates, places }) {
+    // Purely deterministic scoring, tuned for “coherence of anchors”
+    // Not truth, not interpretation.
+    let score = 0;
+
+    // sentences: 0..25
+    score += Math.min(25, sentences * 2);
+
+    // markers: 0..25
+    score += Math.min(25, markers * 3);
+
+    // dates: 0..25
+    score += Math.min(25, dates * 8);
+
+    // places: 0..15
+    score += Math.min(15, places * 3);
+
+    // density bonus: 0..10 if enough anchoring
+    const d = density(sentences, markers);
+    if (d >= 0.6) score += 10;
+    else if (d >= 0.35) score += 6;
+    else if (d >= 0.2) score += 3;
+
+    // clamp
+    score = Math.max(0, Math.min(100, Math.round(score)));
+
+    // If there are weights from context, apply them *only* as a deterministic multiplier
+    // (still no AI). If not present, do nothing.
+    const W = window.__RPO_WEIGHTS__;
+    if (W && typeof W === "object") {
+      // Keep it conservative: small adjustment only.
+      const w =
+        (Number(W.timestamp_rigor || 1) +
+         Number(W.attribution || 1) +
+         Number(W.chain_of_custody || 1)) / 3;
+      score = Math.max(0, Math.min(100, Math.round(score * Math.min(1.15, Math.max(0.85, w)))));
+    }
+
+    return score;
+  }
+
+  function chronoHint(dates) {
+    // Deterministic: if multiple dates, say “multi-point timeline”
+    if (!dates || dates.length === 0) return "No explicit timeline anchors";
+    if (dates.length === 1) return "Single time anchor";
+    return "Multi-point timeline (reconstructible)";
+  }
+
+  function buildBundle() {
+    const title = (els.titleInput?.value || "").trim();
+    const issuer = (els.issuerInput?.value || "").trim();
+    const subject = (els.subjectInput?.value || "").trim();
+    const narrative = (els.narrativeInput?.value || "").trim();
+
+    const sentences = tokenizeSentences(narrative);
+    const dates = extractDates(narrative);
+    const places = extractPlaces(narrative);
+    const markers = markerCount(narrative);
+
+    const score = computeScore({
+      sentences: sentences.length,
+      markers,
+      dates: dates.length,
+      places: places.length
     });
 
-    // years like 2024 etc
-    (text.match(/\b(19|20)\d{2}\b/g) || []).forEach((y) => found.add(y));
-    return Array.from(found);
-  }
-
-  function detectPlaces(text) {
-    const placeWords =
-      "office headquarters store shop factory plant school university court hospital paris lyon marseille london berlin brussels new york sydney"
-        .split(" ");
-    const lower = (text || "").toLowerCase();
-    const found = new Set();
-    placeWords.forEach((p) => { if (lower.includes(p)) found.add(p); });
-    return Array.from(found);
-  }
-
-  function countTemporalMarkers(text) {
-    const markers = (text.match(/\b(yesterday|today|tomorrow|morning|evening|night|week|month|year|before|after|during)\b/gi) || []);
-    return markers.length;
-  }
-
-  function computeCoherenceScore(sentences, markers) {
-    const base = Math.min(40, sentences * 6);
-    const detail = Math.min(40, markers * 4);
-    const floor = 20;
-    return Math.max(0, Math.min(100, floor + base + detail));
-  }
-
-  function computeChronologyConfidence(datesCount, temporalMarkers, contradictions = 0) {
-    const base = 5;
-    const dateWeight = Math.min(40, datesCount * 20);
-    const temporalWeight = Math.min(40, temporalMarkers * 8);
-    const penalty = contradictions * 15;
-    return Math.max(0, Math.min(100, base + dateWeight + temporalWeight - penalty));
-  }
-
-  async function sha256(text) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(text);
-    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-  }
-
-  function safeToFixed(n, digits) {
-    return Number.isFinite(n) ? Number(n).toFixed(digits) : "0";
-  }
-
-  // -------------------------
-  // Wire up UI if the sandbox form exists on the page
-  // (If it doesn't exist, sandbox.js becomes "context-only" and does nothing.)
-  // -------------------------
-  function initIfPresent() {
-    const generateBtn = byId("generate-btn");
-    const resetBtn = byId("reset-btn");
-    const loadExampleBtn = byId("load-example-btn");
-
-    const titleInput = byId("case-title");
-    const issuerInput = byId("issuer");
-    const subjectInput = byId("subject");
-    const narrativeInput = byId("narrative");
-
-    // If page doesn't contain the sandbox form, stop here safely.
-    if (!generateBtn || !titleInput || !issuerInput || !subjectInput || !narrativeInput) {
-      return;
-    }
-
-    const taglineEl = byId("result-tagline");
-    const metricsEl = byId("metrics");
-    const sentencesEl = byId("metric-sentences");
-    const markersEl = byId("metric-markers");
-    const scoreEl = byId("metric-score");
-    const datesEl = byId("metric-dates");
-    const placesEl = byId("metric-places");
-    const densityEl = byId("metric-density");
-    const chronoEl = byId("metric-chrono");
-
-    const hashBlockEl = byId("hash-block");
-    const hashValueEl = byId("hash-value");
-
-    const anchorsBlockEl = byId("anchors-block");
-    const anchorsDatesEl = byId("anchors-dates");
-    const anchorsPlacesEl = byId("anchors-places");
-    const anchorsTemporalEl = byId("anchors-temporal");
-
-    const jsonEl = byId("rpo-json");
-    const outputActions = byId("output-actions");
-    const copyBtn = byId("copy-json-btn");
-    const downloadBtn = byId("download-json-btn");
-
-    async function generateBundle() {
-      const title = normaliseText(titleInput.value) || "Untitled case";
-      const issuer = normaliseText(issuerInput.value) || "Unknown issuer";
-      const subject = normaliseText(subjectInput.value) || "Unspecified subject";
-      const narrative = (narrativeInput.value || "").trim();
-
-      if (!normaliseText(narrative)) {
-        alert("Please paste a narrative before generating the bundle.");
-        return;
-      }
-
-      const sentences = countSentences(narrative);
-      const markers = countEvidenceMarkers(narrative);
-      const dates = detectDates(narrative);
-      const places = detectPlaces(narrative);
-      const temporalMarkers = countTemporalMarkers(narrative);
-
-      const coherenceScore = computeCoherenceScore(sentences, markers);
-      const densityRatio = sentences ? markers / sentences : 0;
-      const chronologyConfidence = computeChronologyConfidence(dates.length, temporalMarkers);
-
-      // Canonical content for deterministic sealing (draft)
-      const canonicalForHash = [
-        "rpo_version:" + "0.1",
-        "issuer:" + issuer,
-        "subject:" + subject,
-        "title:" + title,
-        "narrative:" + normaliseText(narrative),
-      ].join("|");
-
-      const publicHash = await sha256(canonicalForHash);
-      const bundleId = "rpo-" + publicHash.slice(0, 12);
-      const createdAt = new Date().toISOString();
-
-      const ctx = window.__RPO_CONTEXT__ || null;
-
-      const rpo = {
-        rpo_version: "0.1",
-        bundle_id: bundleId,
-        created_at: createdAt,
-
-        issuer: { label: issuer },
-        subject: { label: subject },
-
-        narrative: {
-          title: title,
-          text: narrative,
-          pdf_hash: null
-        },
-
-        evidence: [
-          {
-            id: "E1",
-            type: "narrative_block",
-            source: "user_input",
-            description: "Raw narrative provided in the open sandbox.",
-            text_ref: "narrative.text"
-          }
-        ],
-
-        seal: {
-          public_hash: publicHash,
-          method: "sha256",
-          scope: "rpo_version|bundle_id|created_at|issuer|subject|title|narrative",
-          note: "Open sandbox seal. No registry anchor, no legal effect."
-        },
-
-        meta: {
-          playground: true,
-          engine: {
-            kind: "deterministic-heuristics",
-            ai: false,
-            note: "Open demonstrator. No psycho-forensic model embedded."
-          },
-          context: ctx || null
-        },
-
-        heuristic_scores: {
-          coherence_score: coherenceScore,
-          evidence_markers: markers,
-          sentence_count: sentences,
-          dates_detected: dates.length,
-          places_detected: places.length,
-          density_ratio: Number(safeToFixed(densityRatio, 2)),
-          chronology_confidence: chronologyConfidence
-        },
-
-        heuristic_anchors: {
-          dates,
-          places,
-          temporal_markers: temporalMarkers
+    const core = {
+      standard: "OpenProof RPO v0.1",
+      artifact_type: "SANDBOX_NARRATIVE_BUNDLE",
+      context_frame: window.__RPO_CONTEXT__?.key || "default",
+      generated_at: nowISO(),
+      case: {
+        title: title || "—",
+        issuer: issuer || "—",
+        subject: subject || "—",
+      },
+      narrative: {
+        text: narrative || "—",
+        stats: {
+          sentences: sentences.length,
+          markers,
+          dates: dates.length,
+          places: places.length,
+          density: density(sentences.length, markers),
+          chrono: chronoHint(dates),
         }
-      };
+      },
+      deterministic_outputs: {
+        coherence_score_pct: score, // YOUR “% score” requirement, deterministic
+        note: "Deterministic proxies only. No AI. No truth claim."
+      }
+    };
 
-      // UI updates (only if elements exist)
-      setText(sentencesEl, sentences);
-      setText(markersEl, markers);
-      setText(scoreEl, coherenceScore + "%");
-      setText(datesEl, dates.length);
-      setText(placesEl, places.length);
-      setText(densityEl, safeToFixed(densityRatio, 2));
-      setText(chronoEl, chronologyConfidence + "%");
-
-      setDisplay(metricsEl, "grid");
-
-      setDisplay(hashBlockEl, "block");
-      setText(hashValueEl, publicHash);
-
-      setDisplay(anchorsBlockEl, "block");
-      setText(anchorsDatesEl, "Dates: " + (dates.length ? dates.join(", ") : "—"));
-      setText(anchorsPlacesEl, "Places: " + (places.length ? places.join(", ") : "—"));
-      setText(anchorsTemporalEl, "Temporal markers: " + temporalMarkers);
-
-      setText(taglineEl, "This draft bundle illustrates how a narrative can be structured, sealed and later re-evaluated without rewriting history.");
-
-      if (jsonEl) jsonEl.textContent = JSON.stringify(rpo, null, 2);
-      setDisplay(outputActions, "flex");
+    // Optional: custom summary template (if provided by context)
+    let summary = null;
+    const tpl = window.__RPO_SUMMARY_TEMPLATE__;
+    if (typeof tpl === "function") {
+      try { summary = tpl(core, { score }); } catch (_) { summary = null; }
     }
 
-    generateBtn.addEventListener("click", generateBundle);
+    return { core, summary };
+  }
 
-    if (resetBtn) {
-      resetBtn.addEventListener("click", () => {
-        titleInput.value = "";
-        issuerInput.value = "";
-        subjectInput.value = "";
-        narrativeInput.value = "";
+  async function render() {
+    const { core, summary } = buildBundle();
+    const coreJson = stableStringify(core);
+    const hash = await sha256Hex(coreJson);
 
-        setText(taglineEl, "Fill the form and click “Generate” to produce a draft RPO bundle.");
-        setDisplay(metricsEl, "none");
-        setDisplay(hashBlockEl, "none");
-        setDisplay(anchorsBlockEl, "none");
-        if (jsonEl) jsonEl.textContent = "";
-        setDisplay(outputActions, "none");
-      });
-    }
+    const bundle = {
+      sealed_core: core,
+      meta: {
+        sealed_core_hash_sha256: hash,
+        note: "Meta is not part of sealed core hash."
+      },
+      summary: summary
+    };
 
-    if (loadExampleBtn) {
-      loadExampleBtn.addEventListener("click", async () => {
-        titleInput.value = "Incident in Paris office — March 2024";
-        issuerInput.value = "Internal audit team, Company X";
-        subjectInput.value = "Employee — Sales department";
-        narrativeInput.value =
-          "On 14 March 2024, around 10:30 am, an argument broke out in the Paris office between a line manager and a sales employee. " +
-          "Several colleagues report that the manager raised his voice, threatened to remove key accounts from the employee and asked him to leave the open space immediately. " +
-          "Later that day, around 3 pm, the same manager sent an email copying HR, questioning the employee's loyalty and suggesting exclusion from client meetings.";
-        await generateBundle();
-      });
-    }
+    const fullJson = stableStringify(bundle);
+    window.__SANDBOX_JSON__ = fullJson;
+    window.__SANDBOX_HASH__ = hash;
 
-    if (copyBtn) {
-      copyBtn.addEventListener("click", async () => {
-        if (!jsonEl || !jsonEl.textContent) return;
-        await navigator.clipboard.writeText(jsonEl.textContent);
-        const prev = copyBtn.textContent;
-        copyBtn.textContent = "Copied!";
-        setTimeout(() => (copyBtn.textContent = prev || "Copy JSON"), 1200);
-      });
-    }
+    // Tagline + metrics
+    setText(els.taglineEl, "Bundle generated — deterministic anchors extracted");
+    show(els.metricsEl, true);
 
-    if (downloadBtn) {
-      downloadBtn.addEventListener("click", () => {
-        if (!jsonEl || !jsonEl.textContent) return;
-        const blob = new Blob([jsonEl.textContent], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "rpo.json";
-        a.click();
-        URL.revokeObjectURL(url);
-      });
+    setText(els.sentencesEl, core.narrative.stats.sentences);
+    setText(els.markersEl, core.narrative.stats.markers);
+    setText(els.scoreEl, `${core.deterministic_outputs.coherence_score_pct}%`);
+    setText(els.datesEl, core.narrative.stats.dates);
+    setText(els.placesEl, core.narrative.stats.places);
+    setText(els.densityEl, core.narrative.stats.density);
+    setText(els.chronoEl, core.narrative.stats.chrono);
+
+    // Hash
+    show(els.hashBlockEl, true);
+    setText(els.hashValueEl, hash);
+
+    // Anchors block (optional)
+    show(els.anchorsBlockEl, true);
+    setText(els.anchorsDatesEl, extractDates(core.narrative.text).join(", ") || "—");
+    setText(els.anchorsPlacesEl, extractPlaces(core.narrative.text).join(", ") || "—");
+    setText(els.anchorsTemporalEl, chronoHint(extractDates(core.narrative.text)));
+
+    // JSON output
+    if (els.jsonEl) els.jsonEl.textContent = fullJson;
+    show(els.outputActions, true);
+  }
+
+  function reset() {
+    if (els.titleInput) els.titleInput.value = "";
+    if (els.issuerInput) els.issuerInput.value = "";
+    if (els.subjectInput) els.subjectInput.value = "";
+    if (els.narrativeInput) els.narrativeInput.value = "";
+
+    setText(els.taglineEl, "—");
+    show(els.metricsEl, false);
+    show(els.hashBlockEl, false);
+    show(els.anchorsBlockEl, false);
+    if (els.jsonEl) els.jsonEl.textContent = "{}";
+    show(els.outputActions, false);
+
+    window.__SANDBOX_JSON__ = null;
+    window.__SANDBOX_HASH__ = null;
+  }
+
+  function loadExample() {
+    if (els.titleInput) els.titleInput.value = "Case — Company X (decision trace)";
+    if (els.issuerInput) els.issuerInput.value = "HR Governance Office";
+    if (els.subjectInput) els.subjectInput.value = "Decision defensibility — reconstructible perimeter";
+
+    const sample =
+`On 10/02/2026, a nomination decision was prepared for a sensitive role.
+Evidence perimeter included HRIS trace, training records, and formal performance review.
+Two entities were involved (multi-site). Definitions were frozen at Moment T. [Annex A]
+Paris and Toulouse stakeholders validated the decision perimeter on 2026-02-10.`;
+
+    if (els.narrativeInput) els.narrativeInput.value = sample;
+  }
+
+  async function copyToClipboard(text) {
+    if (!text) return false;
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (_) {
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand("copy");
+        ta.remove();
+        return ok;
+      } catch (__) {
+        return false;
+      }
     }
   }
 
-  // Init
-  document.addEventListener("DOMContentLoaded", () => {
-    // If Simulator already set a context before sandbox loads, keep it.
-    // Otherwise sandbox stays neutral until Simulator calls setContext.
-    initIfPresent();
-  });
+  function downloadJson() {
+    const json = window.__SANDBOX_JSON__;
+    if (!json) return;
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sandbox_bundle.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  // ---------------------------
+  // Wire events + init
+  // ---------------------------
+  function init() {
+    // If a context was preloaded (by another script), apply it.
+    applyContextToUI();
+
+    on(els.generateBtn, "click", () => { render(); });
+    on(els.resetBtn, "click", () => { reset(); });
+    on(els.loadExampleBtn, "click", () => { loadExample(); render(); });
+
+    on(els.copyBtn, "click", async () => {
+      const ok = await copyToClipboard(window.__SANDBOX_JSON__);
+      if (els.copyBtn) {
+        const old = els.copyBtn.textContent;
+        els.copyBtn.textContent = ok ? "Copied" : old;
+        setTimeout(() => { els.copyBtn.textContent = old; }, 900);
+      }
+    });
+
+    on(els.downloadBtn, "click", () => { downloadJson(); });
+
+    // Optional: live re-render when typing (if you want)
+    // on(els.narrativeInput, "input", () => { /* quick preview could be added */ });
+
+    // Default UI state
+    reset();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
 })();
+
 
