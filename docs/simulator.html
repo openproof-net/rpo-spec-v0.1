@@ -1,13 +1,13 @@
+<!-- A) docs/simulator.html -->
 <!DOCTYPE html>
-<html lang="en" data-page="sandbox">
+<html lang="en" data-page="simulator">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <title>Sandbox — Decision Defensibility Simulator | OpenProof RPO v0.1</title>
-  <meta name="description" content="Deterministic simulator for decision defensibility: scope + lineage + quality checks → sealed JSON + print view + public hash (SHA-256). No AI. No storage. Humans remain accountable." />
+  <title>Simulator — Decision Defensibility | OpenProof RPO v0.1</title>
+  <meta name="description" content="Deterministic simulator. Three contexts. No AI. No interpretation." />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://openproof.net/sandbox.html" />
+  <link rel="canonical" href="https://openproof.net/simulator.html" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -42,7 +42,6 @@
 
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
-
     body{
       min-height:100vh;
       font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
@@ -53,13 +52,11 @@
         linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
       overflow-x:hidden;
     }
-
     a{color:inherit}
     a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
       outline:none; box-shadow: var(--focus); border-radius: 10px;
     }
     ::selection{background: rgba(212,175,55,.25);}
-
     #bg-field{position:fixed; inset:0; width:100%; height:100%; z-index:-1;}
 
     /* Top bar */
@@ -76,7 +73,6 @@
       backdrop-filter:blur(18px);
       border-bottom:1px solid rgba(212,175,55,0.22);
     }
-
     .top-left{display:flex; align-items:center; gap:14px; min-width:280px;}
     .emblem{
       width:34px;height:34px;border-radius:999px;
@@ -106,7 +102,6 @@
     .top-nav a:hover::after{width:100%}
     .top-nav a[aria-current="page"]{color: var(--gold-soft);}
     .top-nav a[aria-current="page"]::after{width:100%}
-
     .top-cta{
       padding:8px 18px;
       border-radius:999px;
@@ -138,7 +133,6 @@
       gap:var(--hero-gap);
       align-items:start;
     }
-
     .eyebrow{
       font-family:"Orbitron",sans-serif;
       font-size:.72rem;
@@ -154,7 +148,7 @@
       letter-spacing:.06em;
       line-height:1.06;
       font-size:clamp(2.05rem,4.0vw,3.1rem);
-      margin-bottom:14px;
+      margin-bottom:12px;
     }
     .h1 .gold{display:block;color:var(--gold-soft)}
     .lead{
@@ -162,10 +156,42 @@
       font-size:0.98rem;
       color:rgba(198,186,150,.90);
       line-height:1.7;
-      max-width: 74ch;
+      max-width: 82ch;
       text-align: justify;
     }
-    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 16px 0; max-width:78ch;}
+    .context-bar{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .context-pill{
+      display:inline-flex; align-items:center;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(212,175,55,.22);
+      background: rgba(0,0,0,.18);
+      color: rgba(241,230,163,.92);
+      font-family:"Orbitron",sans-serif;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      font-size:.68rem;
+    }
+    .context-pill select{
+      margin-left:10px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,.25);
+      background: rgba(10,12,27,0.45);
+      color: var(--ivory);
+      padding:8px 10px;
+      font-size:0.86rem;
+      outline:none;
+      letter-spacing:0;
+      text-transform:none;
+      font-family:"Inter",system-ui,-apple-system,sans-serif;
+      min-width: 280px;
+    }
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 16px 0; max-width:90ch;}
     .chip{
       display:inline-flex; align-items:center;
       padding:6px 10px; border-radius:999px;
@@ -189,6 +215,7 @@
       text-transform:uppercase; letter-spacing:.12em;
       font-size:13px; width:100%;
       cursor:pointer; user-select:none;
+      border:none;
     }
     .btn-primary{
       border:1px solid rgba(244,186,120,0.9);
@@ -204,13 +231,12 @@
     .btn-primary:hover{filter:brightness(1.03)}
     .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
     .btn-primary:active,.btn-ghost:active{transform:translateY(1px)}
-
     .micro{
       margin-top: 12px;
       font-size: .9rem;
       color: rgba(179,164,139,.92);
       line-height: 1.7;
-      max-width: 92ch;
+      max-width: 96ch;
       text-align: justify;
     }
     .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
@@ -250,7 +276,6 @@
       mix-blend-mode: screen;
     }
     @keyframes scanY{ 0%{transform:translateY(-10px)} 100%{transform:translateY(460px)} }
-
     .panel-inner{position:relative; z-index:2; transform: translateZ(12px);}
     .panel-title{
       font-family:"Orbitron",sans-serif;
@@ -282,7 +307,6 @@
       animation: dotPulse 1.45s ease-in-out infinite;
     }
     @keyframes dotPulse{ 0%,100%{transform:scale(1); opacity:.85} 50%{transform:scale(1.35); opacity:1} }
-
     .list{
       border-top:1px solid rgba(212,175,55,.28);
       margin-top:10px;
@@ -300,7 +324,6 @@
     .row .k{color: rgba(179,164,139,.92)}
     .row .v{color: rgba(241,230,163,.88); text-align:right}
     .row + .row{border-top:1px dashed var(--line2)}
-
     .state{
       margin-top:12px;
       display:flex;
@@ -322,7 +345,6 @@
       animation: warmBlink 2.2s ease-in-out infinite;
     }
     @keyframes warmBlink{ 0%,100%{opacity:.55} 50%{opacity:1} }
-
     .state .meter{
       position:relative;
       flex:1 1 auto;
@@ -339,7 +361,6 @@
       animation: meterMove 2.8s ease-in-out infinite;
     }
     @keyframes meterMove{ 0%,100%{transform:translateX(-10%)} 50%{transform:translateX(120%)} }
-
     .hash{
       margin-top:10px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
@@ -369,7 +390,6 @@
       gap:var(--grid-gap);
       align-items:start;
     }
-
     .card{
       border: 1px solid rgba(212,175,55,.22);
       border-radius: 18px;
@@ -387,7 +407,6 @@
       margin-bottom:12px;
       font-weight:600;
     }
-
     .form-grid{display:grid; grid-template-columns: 1fr 1fr; gap:12px;}
     .field label{
       display:block;
@@ -411,6 +430,13 @@
     textarea{min-height: 92px; resize: vertical; line-height:1.55;}
     input::placeholder, textarea::placeholder{color: rgba(179,164,139,.75);}
 
+    .hint{
+      margin-top:8px;
+      font-size:.86rem;
+      color: rgba(179,164,139,.92);
+      line-height:1.5;
+    }
+
     .source-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
     .source{
       display:flex; gap:10px; align-items:flex-start;
@@ -421,7 +447,6 @@
     .source input{width:auto; margin-top:3px;}
     .source strong{display:block; font-size:0.92rem; color: rgba(241,230,163,.92); font-weight:600; margin-bottom:4px;}
     .source span{display:block; font-size:0.88rem; color: rgba(198,186,150,.86); line-height:1.45; text-align: justify;}
-
     .mini-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;}
     .mini{
       border: 1px solid rgba(212,175,55,.18);
@@ -445,7 +470,6 @@
       grid-template-columns: 1fr 1fr 1fr;
       gap:10px;
     }
-
     .btn{
       min-height:46px;
       border-radius:999px;
@@ -474,7 +498,6 @@
       top: 86px;
       align-self:start;
     }
-
     .kv{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -484,7 +507,6 @@
     }
     .kv .k{color: rgba(179,164,139,.92)}
     .kv .v{color: rgba(241,230,163,.90); text-align:right}
-
     .tabs{display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0 12px;}
     .tab{
       padding:8px 12px;
@@ -503,7 +525,6 @@
       background: rgba(10,12,27,0.42);
       box-shadow: 0 0 0 3px rgba(241,230,163,.08);
     }
-
     pre{
       border: 1px solid rgba(212,175,55,.18);
       border-radius: 16px;
@@ -518,7 +539,6 @@
       white-space: pre-wrap;
       word-break: break-word;
     }
-
     .note{margin-top:10px; font-size:0.88rem; color: rgba(179,164,139,.90); line-height:1.6; text-align: justify;}
     .note strong{color: rgba(241,230,163,.95); font-weight:600;}
 
@@ -575,8 +595,54 @@
     .lin-row .k{color: rgba(179,164,139,.92)}
     .lin-row .v{color: rgba(241,230,163,.90); text-align:right}
 
+    /* Pilot CTA block */
+    .pilot{
+      margin-top: 36px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(212,175,55,0.14);
+      display:grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 16px;
+      align-items:center;
+    }
+    .pilot h3{
+      font-family:"Orbitron",sans-serif;
+      font-size: 1.05rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color: rgba(241,230,163,.95);
+      margin-bottom:8px;
+    }
+    .pilot p{
+      color: rgba(198,186,150,.90);
+      line-height:1.7;
+      text-align: justify;
+      max-width: 90ch;
+    }
+    .pilot a{
+      justify-self:end;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:52px;
+      padding: 12px 18px;
+      border-radius:999px;
+      border:1px solid rgba(244,186,120,0.9);
+      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
+      color:#2a1204;
+      text-decoration:none;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:13px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+      width: 100%;
+      max-width: 320px;
+    }
+    .pilot a:hover{filter:brightness(1.03)}
+    .pilot a:active{transform:translateY(1px)}
+
     footer{
-      margin-top: 40px;
+      margin-top: 28px;
       padding-top: 18px;
       border-top: 1px solid rgba(212,175,55,0.14);
       color: rgba(179,164,139,.85);
@@ -586,17 +652,16 @@
       gap:14px;
       flex-wrap:wrap;
     }
-    footer a{opacity:.9}
+    footer a{opacity:.9; text-decoration:none}
     footer a:hover{opacity:1}
 
     @media print{
-      .top-bar, #bg-field, .top-nav, .top-cta, .hero, footer {display:none !important;}
+      .top-bar, #bg-field, .top-nav, .top-cta, .hero, footer, .pilot {display:none !important;}
       body{background:#fff; color:#111}
       .wrap{padding:24px}
       .card, pre{border:1px solid #ddd; background:#f7f7f7; color:#111}
       pre{max-height:none}
     }
-
     @media(max-width:1180px){
       .hero{grid-template-columns:1fr; gap:22px}
       .sim-grid{grid-template-columns:1fr;}
@@ -607,16 +672,17 @@
       .source-grid{grid-template-columns:1fr}
       .subgrid{grid-template-columns:1fr}
       .right-stack{position:static;}
+      .pilot{grid-template-columns:1fr}
+      .pilot a{justify-self:start; max-width:none}
     }
-
     @media(max-width:960px){
       .top-nav{display:none}
       .top-bar{padding:0 16px}
       .wrap{padding:96px 20px 56px}
       .ctas{grid-template-columns:1fr}
       .right-stack{position:static;}
+      .context-pill select{min-width: 240px;}
     }
-
     @media (prefers-reduced-motion: reduce){
       .scanline, .pill .dot, .state .sig i, .state .meter > span {animation:none}
       .panel{transform:none !important}
@@ -635,41 +701,53 @@
     </div>
 
     <nav class="top-nav" aria-label="Primary navigation">
-      <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a>
-      <a href="./sandbox.html" aria-current="page" target="_blank" rel="noopener noreferrer">Sandbox</a>
-      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
-      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
-      <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
-      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+      <a href="./index.html">Home</a>
+      <a href="./simulator.html" aria-current="page">Simulator</a>
+      <a href="./how-it-works.html">How it works</a>
+      <a href="./spec.html">Spec</a>
+      <a href="./tests.html">Tests</a>
+      <a href="./examples.html">Examples</a>
+      <a href="./contexts.html">Contexts</a>
     </nav>
 
-    <a href="./sandbox.html" class="top-cta" target="_blank" rel="noopener noreferrer">Try the live demo</a>
+    <a class="top-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
   </header>
 
   <main class="wrap" role="main">
-
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-title">
       <div>
-        <div class="eyebrow">Decision <span>defensibility simulator</span></div>
+        <div class="eyebrow">Deterministic <span>simulator</span></div>
 
         <h1 class="h1" id="hero-title">
-          Freeze the perimeter.
-          <span class="gold">Make decisions reconstructible.</span>
+          Simulator.
+          <span class="gold">Three contexts. No AI. No interpretation.</span>
         </h1>
 
-        <p class="lead">
-          This sandbox does not “choose” a candidate. It captures scope, declared systems, lineage hints and constraints,
-          then generates deterministic outputs: sealed JSON + print view + public hash (SHA-256).
-          No AI. No storage. Same inputs → same sealed core.
+        <p class="lead" id="ctxDesc">
+          Governance context: decision defensibility under audit exposure. Focus on scope, lineage, definitions, and reconstructibility at Moment T.
         </p>
 
-        <div class="chips" aria-label="Core concepts">
+        <div class="context-bar" role="group" aria-label="Context controls">
+          <div class="context-pill" title="Choose the probatory framing (lexicon + weights + toggles + presets)">
+            Context
+            <select id="contextSelect" aria-label="Context">
+              <option value="governance">Governance</option>
+              <option value="legal">Legal Proceedings</option>
+              <option value="institutional">Institutional Crisis</option>
+            </select>
+          </div>
+          <div class="hint" id="ctxHint">
+            This changes lexicon, weighting, visibility rules, and narrative template — without changing the sealed RPO structure.
+          </div>
+        </div>
+
+        <div class="chips" aria-label="Core concepts" id="chipRow">
           <span class="chip">Moment T</span>
           <span class="chip">Declared systems</span>
           <span class="chip">Lineage</span>
           <span class="chip">Quality checks</span>
-          <span class="chip">Audit exposure</span>
+          <span class="chip" id="chipExposure">Audit exposure</span>
           <span class="chip">Public hash</span>
         </div>
 
@@ -678,7 +756,7 @@
           <button class="btn-ghost" id="btnLoadTop" type="button">Load example</button>
         </div>
 
-        <p class="micro">
+        <p class="micro" id="microText">
           <strong>RPO =</strong> sealed JSON core + human-readable print view + public hash.
           The hash proves integrity over time, not “truth”. Verification is public. Accountability remains human.
         </p>
@@ -688,8 +766,7 @@
       <aside class="panel" id="cockpit" aria-label="Simulator cockpit">
         <div class="scanline" aria-hidden="true"></div>
         <div class="panel-inner">
-          <div class="panel-title">Simulator cockpit (live)</div>
-
+          <div class="panel-title" id="cpTitle">Simulator cockpit (live)</div>
           <div class="pill" aria-label="Pillars">
             <span class="dot" aria-hidden="true"></span>
             Integrity • Readability • Verifiability
@@ -697,7 +774,7 @@
 
           <div class="list" role="list">
             <div class="row" role="listitem">
-              <span class="k">Scope</span>
+              <span class="k" id="lblCpScope">Scope</span>
               <span class="v" id="cpScope">—</span>
             </div>
             <div class="row" role="listitem">
@@ -705,15 +782,15 @@
               <span class="v" id="cpMoment">—</span>
             </div>
             <div class="row" role="listitem">
-              <span class="k">Coverage</span>
+              <span class="k" id="lblCpCoverage">Coverage</span>
               <span class="v" id="cpCoverage">—</span>
             </div>
             <div class="row" role="listitem">
-              <span class="k">Defensibility</span>
+              <span class="k" id="lblCpDef">Defensibility</span>
               <span class="v" id="cpDef">—</span>
             </div>
             <div class="row" role="listitem">
-              <span class="k">Audit exposure</span>
+              <span class="k" id="lblCpExposure">Audit exposure</span>
               <span class="v" id="cpExposure">—</span>
             </div>
           </div>
@@ -733,17 +810,16 @@
 
     <!-- SIMULATOR -->
     <section class="section" aria-labelledby="sim-title">
-      <h2 class="section-title" id="sim-title">Sandbox — deterministic simulator</h2>
+      <h2 class="section-title" id="sim-title">Simulator — deterministic bundle builder</h2>
 
       <div class="sim-grid">
-
         <!-- LEFT COLUMN -->
         <div class="card" aria-label="Inputs">
-          <h3>Input — decision perimeter</h3>
+          <h3 id="hdrInput">Input — decision perimeter</h3>
 
           <div class="form-grid">
             <div class="field">
-              <label for="decisionType">Decision type</label>
+              <label for="decisionType" id="lblDecisionType">Decision type</label>
               <select id="decisionType">
                 <option value="Nomination / sensitive role">Nomination / sensitive role</option>
                 <option value="Promotion (multi-criteria)">Promotion (multi-criteria)</option>
@@ -759,84 +835,78 @@
             </div>
 
             <div class="field">
-              <label for="orgScope">Organization / scope</label>
-              <input id="orgScope" type="text" placeholder="Defense Group — Europe scope (multi-sites, multi-entities)" />
+              <label for="orgScope" id="lblOrgScope">Organization / scope</label>
+              <input id="orgScope" type="text" placeholder="Organization — scope (multi-sites, multi-entities)" />
             </div>
 
             <div class="field">
-              <label for="owner">Decision owner</label>
-              <input id="owner" type="text" placeholder="CHRO / Executive committee" />
+              <label for="owner" id="lblOwner">Decision owner</label>
+              <input id="owner" type="text" placeholder="Authority / decision maker" />
             </div>
           </div>
 
           <div class="field" style="margin-top:12px">
-            <label for="context">Decision context (1–3 paragraphs)</label>
-            <textarea id="context" placeholder="Regulated environment. Audit exposure. Decision may be challenged."></textarea>
+            <label for="context" id="lblContextText">Decision context (1–3 paragraphs)</label>
+            <textarea id="context" placeholder="Explain why, constraints, audit/litigation window, and what must remain reconstructible."></textarea>
           </div>
 
-          <h3 style="margin-top:18px">Declared sources (what was actually available)</h3>
-
+          <h3 style="margin-top:18px" id="hdrSources">Declared sources (what was actually available)</h3>
           <div class="source-grid">
             <label class="source">
               <input type="checkbox" id="srcLms" checked />
               <div>
-                <strong>LMS / training files</strong>
-                <span>Certifications, training attestations, documented evidence.</span>
+                <strong id="srcLmsTitle">LMS / training files</strong>
+                <span id="srcLmsDesc">Certifications, training attestations, documented evidence.</span>
               </div>
             </label>
-
             <label class="source">
               <input type="checkbox" id="srcHris" checked />
               <div>
-                <strong>HRIS / career history</strong>
-                <span>Roles, tenure, mobility, grade changes, official trace.</span>
+                <strong id="srcHrisTitle">HRIS / career history</strong>
+                <span id="srcHrisDesc">Roles, tenure, mobility, grade changes, official trace.</span>
               </div>
             </label>
-
             <label class="source">
               <input type="checkbox" id="srcPerf" checked />
               <div>
-                <strong>Performance reviews</strong>
-                <span>Objectives, annual reviews, formal evaluation trail.</span>
+                <strong id="srcPerfTitle">Performance reviews</strong>
+                <span id="srcPerfDesc">Objectives, annual reviews, formal evaluation trail.</span>
               </div>
             </label>
-
             <label class="source">
               <input type="checkbox" id="srcOps" checked />
               <div>
-                <strong>Operational results</strong>
-                <span>Attested KPIs, certified deliverables, traceable metrics.</span>
+                <strong id="srcOpsTitle">Operational results</strong>
+                <span id="srcOpsDesc">Attested KPIs, certified deliverables, traceable metrics.</span>
               </div>
             </label>
-
             <label class="source">
               <input type="checkbox" id="src360" />
               <div>
-                <strong>360 feedback</strong>
-                <span>Only if documented and attributable (otherwise excluded).</span>
+                <strong id="src360Title">360 feedback</strong>
+                <span id="src360Desc">Only if documented and attributable (otherwise excluded).</span>
               </div>
             </label>
-
             <label class="source">
               <input type="checkbox" id="srcLegal" checked />
               <div>
-                <strong>Legal / compliance</strong>
-                <span>Constraints, disputes, regulatory considerations, opposable items.</span>
+                <strong id="srcLegalTitle">Legal / compliance</strong>
+                <span id="srcLegalDesc">Constraints, disputes, regulatory considerations, opposable items.</span>
               </div>
             </label>
           </div>
 
           <div class="mini-grid">
             <div class="mini">
-              <div class="k">Known missing data</div>
-              <div class="v">
-                Comparable KPIs not attested for all candidates; some evidence exists but is not attributable; definition drift across entities.
+              <div class="k" id="miniMissingK">Known missing data</div>
+              <div class="v" id="miniMissingV">
+                Comparable KPIs not attested for all parties; some evidence exists but is not attributable; definition drift across entities.
               </div>
             </div>
             <div class="mini">
-              <div class="k">Constraints (optional)</div>
-              <div class="v">
-                Urgency, business continuity, social sensitivity, upcoming audit window. Decision must remain reconstructible.
+              <div class="k" id="miniConstraintsK">Constraints (optional)</div>
+              <div class="v" id="miniConstraintsV">
+                Urgency, business continuity, social sensitivity, audit/litigation window. The decision must remain reconstructible.
               </div>
             </div>
           </div>
@@ -847,42 +917,38 @@
             <button class="btn" id="btnReset" type="button">Reset</button>
           </div>
 
-          <div class="note">
+          <div class="note" id="localOnlyNote">
             <strong>Local-only:</strong> no data is sent. The bundle is generated in your browser. Deterministic rules only.
           </div>
         </div>
 
         <!-- RIGHT COLUMN -->
         <div class="right-stack">
-
           <div class="card" aria-label="Report">
-            <h3>Output — decision defensibility report</h3>
-
+            <h3 id="hdrOutput">Output — decision defensibility report</h3>
             <div class="kv" style="margin-top:4px">
-              <div class="k">Coverage</div><div class="v" id="outCoverage">—</div>
-              <div class="k">Missing</div><div class="v" id="outMissing">—</div>
-              <div class="k">Defensibility</div><div class="v" id="outDef">—</div>
-              <div class="k">Audit exposure</div><div class="v" id="outExposure">—</div>
-              <div class="k">Seal</div><div class="v" id="outSeal">—</div>
+              <div class="k" id="lblOutCoverage">Coverage</div><div class="v" id="outCoverage">—</div>
+              <div class="k" id="lblOutMissing">Missing</div><div class="v" id="outMissing">—</div>
+              <div class="k" id="lblOutDef">Defensibility</div><div class="v" id="outDef">—</div>
+              <div class="k" id="lblOutExposure">Audit exposure</div><div class="v" id="outExposure">—</div>
+              <div class="k" id="lblOutSeal">Seal</div><div class="v" id="outSeal">—</div>
             </div>
 
             <div class="tabs" role="tablist" aria-label="Output tabs">
-              <button class="tab" role="tab" aria-selected="true" id="tabSummary">Summary</button>
+              <button class="tab" role="tab" aria-selected="true" id="tabSummary">Preview</button>
               <button class="tab" role="tab" aria-selected="false" id="tabJson">JSON</button>
               <button class="tab" role="tab" aria-selected="false" id="tabPrint">PDF (print)</button>
             </div>
 
             <div id="paneSummary">
               <pre id="summaryPre">Click “Generate”.</pre>
-
               <div class="actions" style="grid-template-columns: 1fr 1fr 1fr; margin-top:12px">
                 <button class="btn" id="btnCopyHash" type="button">Copy hash</button>
                 <button class="btn" id="btnCopyJson" type="button">Copy JSON</button>
                 <button class="btn hot" id="btnDownload" type="button">Download JSON</button>
               </div>
-
-              <div class="note">
-                This artifact documents <strong>scope + systems + lineage hints + deterministic rules</strong>.
+              <div class="note" id="previewNote">
+                This artifact documents <strong>scope + declared systems + lineage hints + deterministic rules</strong>.
                 It does not “decide truth”. Humans remain accountable.
               </div>
             </div>
@@ -892,7 +958,7 @@
             </div>
 
             <div id="panePrint" style="display:none">
-              <pre>
+              <pre id="printPre">
 Use your browser print (Cmd/Ctrl+P) to export a clean PDF.
 It’s a human-readable rendering of the same sealed core bundle.
               </pre>
@@ -907,8 +973,8 @@ It’s a human-readable rendering of the same sealed core bundle.
           </div>
 
           <div class="card" aria-label="Connectors">
-            <h3>Connectors map (declared)</h3>
-            <div class="subgrid">
+            <h3 id="hdrConnectors">Connectors map (declared)</h3>
+            <div class="subgrid" id="connectorsGrid">
               <span class="badge ok"><i></i> Workday (HRIS) — declared</span>
               <span class="badge ok"><i></i> LMS — declared</span>
               <span class="badge ok"><i></i> Perf / Talent — declared</span>
@@ -916,65 +982,410 @@ It’s a human-readable rendering of the same sealed core bundle.
               <span class="badge ok"><i></i> Compliance — declared</span>
               <span class="badge warn"><i></i> Finance — optional</span>
             </div>
-            <div class="note" style="margin-top:10px">
+            <div class="note" style="margin-top:10px" id="connectorsNote">
               In production, each connector exposes an <strong>extract id</strong>, a <strong>timestamp</strong> and traceable <strong>definitions</strong>.
-              In this sandbox, those are simulated as lineage hints.
+              In this simulator, those are deterministic lineage hints.
             </div>
           </div>
 
           <div class="card" aria-label="Lineage and quality">
-            <h3>Lineage & quality checks</h3>
+            <h3 id="hdrLineage">Lineage & quality checks</h3>
             <div class="lineage">
-              <div class="lt">Lineage snapshot</div>
+              <div class="lt" id="ltSnapshot">Lineage snapshot</div>
               <div class="lin-row">
-                <div class="k">HRIS system</div><div class="v" id="linHrisSys">—</div>
-                <div class="k">Extract id</div><div class="v" id="linHrisExt">—</div>
-                <div class="k">Steward</div><div class="v" id="linSteward">—</div>
-                <div class="k">Attributable</div><div class="v" id="linAttr">—</div>
+                <div class="k" id="kHrisSystem">HRIS system</div><div class="v" id="linHrisSys">—</div>
+                <div class="k" id="kExtractId">Extract id</div><div class="v" id="linHrisExt">—</div>
+                <div class="k" id="kSteward">Steward</div><div class="v" id="linSteward">—</div>
+                <div class="k" id="kAttributable">Attributable</div><div class="v" id="linAttr">—</div>
               </div>
+
               <div class="lin-row">
-                <div class="k">Freshness</div><div class="v" id="qFresh">—</div>
-                <div class="k">Completeness</div><div class="v" id="qComp">—</div>
-                <div class="k">Definition drift</div><div class="v" id="qDrift">—</div>
-                <div class="k">Duplicates</div><div class="v" id="qDup">—</div>
+                <div class="k" id="kFreshness">Freshness</div><div class="v" id="qFresh">—</div>
+                <div class="k" id="kCompleteness">Completeness</div><div class="v" id="qComp">—</div>
+                <div class="k" id="kDrift">Definition drift</div><div class="v" id="qDrift">—</div>
+                <div class="k" id="kDup">Duplicates</div><div class="v" id="qDup">—</div>
               </div>
             </div>
-            <div class="note">
-              These checks are deterministic proxies. They surface <strong>audit exposure</strong> and <strong>reconstruction risk</strong>
+
+            <div class="note" id="lineageNote">
+              These checks are deterministic proxies. They surface <strong>exposure</strong> and <strong>reconstruction risk</strong>
               without implying any “truth” judgment.
             </div>
           </div>
 
           <div class="card" aria-label="Decision support">
-            <h3>Decision support (deterministic)</h3>
+            <h3 id="hdrSupport">Decision support (deterministic)</h3>
             <div class="kv">
-              <div class="k">Audit exposure</div><div class="v" id="dsExposure">—</div>
-              <div class="k">Top blockers</div><div class="v" id="dsBlockers">—</div>
-              <div class="k">Next actions</div><div class="v" id="dsActions">—</div>
-              <div class="k">What improves score</div><div class="v" id="dsImprove">—</div>
+              <div class="k" id="kDsExposure">Audit exposure</div><div class="v" id="dsExposure">—</div>
+              <div class="k" id="kDsBlockers">Top blockers</div><div class="v" id="dsBlockers">—</div>
+              <div class="k" id="kDsActions">Next actions</div><div class="v" id="dsActions">—</div>
+              <div class="k" id="kDsImprove">What improves score</div><div class="v" id="dsImprove">—</div>
             </div>
-            <div class="note" style="margin-top:10px">
+            <div class="note" style="margin-top:10px" id="supportNote">
               This is not a “decision engine”. It is a <strong>defensibility layer</strong>: it tells you what is missing to make a decision reconstructible.
             </div>
           </div>
-
         </div>
       </div>
+    </section>
+
+    <!-- Pilot CTA -->
+    <section class="pilot" aria-label="Pilot Cockpit CTA">
+      <div>
+        <h3>Ready for the Pilot Cockpit?</h3>
+        <p>
+          Move from a deterministic simulator to a real ProofOps workflow: connectors, traceable extracts, sealed bundles, and repeatable decision defense.
+          Same principle: integrity, readability, verifiability — with an operational cockpit.
+        </p>
+      </div>
+      <a href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
     </section>
 
     <footer>
       <div>© OpenProof — RPO v0.1. Created by Gersende Ryard de Parcey.</div>
       <div>
-        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
-        <a href="./sandbox.html" target="_blank" rel="noopener noreferrer">Sandbox</a> ·
-        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+        <a href="./spec.html">Spec</a> ·
+        <a href="./simulator.html">Simulator</a> ·
+        <a href="./examples.html">Examples</a>
       </div>
     </footer>
   </main>
 
   <script>
     // ===============================
-    // Star field background
+    // Centralized contexts mapping
+    // ===============================
+    const CONTEXTS = {
+      governance: {
+        key: "governance",
+        name: "Governance",
+        description:
+          "Governance context: decision defensibility under audit exposure. Focus on scope, lineage, definitions, and reconstructibility at Moment T.",
+        ui: {
+          labels: {
+            exposure: "Audit exposure",
+            owner: "Authority / decision maker",
+            outputTitle: "Output — decision defensibility report",
+            inputTitle: "Input — decision perimeter",
+            previewTab: "Preview",
+            reportNote:
+              "This artifact documents scope + declared systems + lineage hints + deterministic rules. It does not “decide truth”. Humans remain accountable.",
+            supportTitle: "Decision support (deterministic)"
+          },
+          tooltips: {
+            context:
+              "Context changes lexicon, weights, visibility rules, and narrative template — without changing the sealed RPO structure."
+          },
+          chips: ["Moment T", "Declared systems", "Lineage", "Quality checks", "Audit exposure", "Public hash"]
+        },
+        weights: {
+          // Higher = more impact on risk penalty
+          timestamp_rigor: 1.10,
+          chain_of_custody: 1.00,
+          contradictions: 0.90,
+          uncertainty_logging: 1.00,
+          definition_drift: 1.15,
+          attribution: 1.00
+        },
+        toggles: {
+          show_connectors: true,
+          show_lineage: true,
+          show_support: true,
+          recommend_360: true
+        },
+        presets: {
+          placeholders: {
+            orgScope: "Organization — scope (multi-sites, multi-entities)",
+            owner: "Authority / decision maker",
+            context:
+              "Regulated environment. Audit exposure. Definition stability and reconstructibility are required.\nDecision may be challenged and must remain reconstructible over time (audit window)."
+          }
+        },
+        summary: {
+          template: (core, derived) => {
+            const yesSources = derived.yesSources || "—";
+            const bl = derived.blockers || "- —";
+            const na = derived.nextActions || "- —";
+            return `Decision: ${core.decision.type}
+Scope: ${core.decision.scope}
+Authority: ${core.decision.owner}
+Moment T: ${core.moment_t}
+Declared sources: ${yesSources}
+Coverage: ${derived.cov}% | Missing: ${derived.miss}
+Defensibility: ${derived.def.band} (${derived.def.score}/100)
+${derived.labels.exposure}: ${derived.exposure}
+
+Lineage (example):
+- HRIS: ${derived.hrisSys} | extract_id: ${derived.hrisExt}
+
+Quality checks:
+- Freshness: ${derived.q.freshness} | Completeness: ${derived.q.completeness}
+- Definition drift: ${derived.q.drift} | Duplicates: ${derived.q.duplicates}
+
+Top blockers:
+${bl}
+
+Next actions:
+${na}
+
+Seal:
+- Sealed core hash (SHA-256): ${derived.hash}
+
+Interpretation:
+- This bundle documents scope + declared systems + lineage hints + deterministic rules.
+- The hash proves integrity over time (not “truth”).
+- Humans remain accountable.`;
+          }
+        }
+      },
+
+      legal: {
+        key: "legal",
+        name: "Legal Proceedings",
+        description:
+          "Legal proceedings context: evidentiary defensibility under litigation exposure. Focus on chain-of-custody, attribution, contradictions, and reconstructibility for court-grade review.",
+        ui: {
+          labels: {
+            exposure: "Litigation exposure",
+            owner: "Authority / decision maker",
+            outputTitle: "Output — evidentiary defensibility report",
+            inputTitle: "Input — evidentiary perimeter",
+            previewTab: "Preview",
+            reportNote:
+              "This artifact documents perimeter + sources + lineage hints + deterministic proxies. It does not establish “truth”. It supports evidentiary defensibility and reconstruction.",
+            supportTitle: "Evidentiary support (deterministic)"
+          },
+          tooltips: {
+            context:
+              "Legal proceedings framing prioritizes chain-of-custody, attribution, contradictions, and timestamp rigor."
+          },
+          chips: ["Moment T", "Declared sources", "Chain-of-custody", "Attribution", "Contradictions", "Litigation exposure", "Public hash"]
+        },
+        weights: {
+          timestamp_rigor: 1.30,
+          chain_of_custody: 1.35,
+          contradictions: 1.25,
+          uncertainty_logging: 1.15,
+          definition_drift: 0.95,
+          attribution: 1.30
+        },
+        toggles: {
+          show_connectors: true,
+          show_lineage: true,
+          show_support: true,
+          recommend_360: false
+        },
+        presets: {
+          placeholders: {
+            orgScope: "Case perimeter — parties / entities / jurisdictions",
+            owner: "Authority / decision maker",
+            context:
+              "Active or expected litigation. Evidence must be attributable, timestamped, and reconstructible.\nFocus: chain-of-custody, contradictions, and court-grade defensibility."
+          }
+        },
+        summary: {
+          template: (core, derived) => {
+            const yesSources = derived.yesSources || "—";
+            const bl = derived.blockers || "- —";
+            const na = derived.nextActions || "- —";
+            return `Matter: ${core.decision.type}
+Perimeter: ${core.decision.scope}
+Authority: ${core.decision.owner}
+Moment T: ${core.moment_t}
+Declared sources: ${yesSources}
+Evidentiary completeness: ${derived.cov}% | Missing: ${derived.miss}
+Defensibility: ${derived.def.band} (${derived.def.score}/100)
+${derived.labels.exposure}: ${derived.exposure}
+
+Chain-of-custody (example):
+- HRIS: ${derived.hrisSys} | extract_id: ${derived.hrisExt}
+
+Deterministic checks:
+- Timestamp rigor: ${derived.q.freshness}
+- Completeness: ${derived.q.completeness}
+- Contradiction risk proxy: ${derived.q.drift}
+- Duplicate risk proxy: ${derived.q.duplicates}
+
+Top blockers:
+${bl}
+
+Next actions:
+${na}
+
+Seal:
+- Sealed core hash (SHA-256): ${derived.hash}
+
+Interpretation:
+- This bundle supports evidentiary defensibility and reconstruction.
+- Integrity is proven by the hash over time; “truth” remains a human/judicial determination.`;
+          }
+        }
+      },
+
+      institutional: {
+        key: "institutional",
+        name: "Institutional Crisis",
+        description:
+          "Institutional crisis context: reconstructibility under institutional exposure. Focus on uncertainty logging, contradictions, escalation risk, and narrative stabilization — while keeping the probatory chain intact.",
+        ui: {
+          labels: {
+            exposure: "Institutional exposure",
+            owner: "Authority / decision maker",
+            outputTitle: "Output — crisis defensibility report",
+            inputTitle: "Input — crisis perimeter",
+            previewTab: "Preview",
+            reportNote:
+              "This artifact documents perimeter + sources + lineage hints + deterministic proxies. It supports stabilization, reconstruction, and defensibility during crisis escalation.",
+            supportTitle: "Crisis support (deterministic)"
+          },
+          tooltips: {
+            context:
+              "Crisis framing prioritizes uncertainty logging, contradiction surfacing, escalation risk, and reconstructibility under pressure."
+          },
+          chips: ["Moment T", "Declared sources", "Uncertainty logging", "Contradictions", "Escalation risk", "Institutional exposure", "Public hash"]
+        },
+        weights: {
+          timestamp_rigor: 1.15,
+          chain_of_custody: 1.05,
+          contradictions: 1.35,
+          uncertainty_logging: 1.40,
+          definition_drift: 1.00,
+          attribution: 1.10
+        },
+        toggles: {
+          show_connectors: true,
+          show_lineage: true,
+          show_support: true,
+          recommend_360: true
+        },
+        presets: {
+          placeholders: {
+            orgScope: "Institution — perimeter (units, channels, stakeholders)",
+            owner: "Authority / decision maker",
+            context:
+              "Crisis situation. Information is fragmented, contested, and fast-moving.\nGoal: stabilize the narrative perimeter, surface uncertainty, and keep the chain reconstructible at Moment T."
+          }
+        },
+        summary: {
+          template: (core, derived) => {
+            const yesSources = derived.yesSources || "—";
+            const bl = derived.blockers || "- —";
+            const na = derived.nextActions || "- —";
+            return `Situation: ${core.decision.type}
+Perimeter: ${core.decision.scope}
+Authority: ${core.decision.owner}
+Moment T: ${core.moment_t}
+Declared sources: ${yesSources}
+Coverage: ${derived.cov}% | Missing: ${derived.miss}
+Defensibility: ${derived.def.band} (${derived.def.score}/100)
+${derived.labels.exposure}: ${derived.exposure}
+
+Stabilization cues:
+- Uncertainty logging proxy: ${derived.q.freshness}
+- Completeness: ${derived.q.completeness}
+- Contradictions proxy: ${derived.q.drift}
+- Duplicates proxy: ${derived.q.duplicates}
+
+Top blockers:
+${bl}
+
+Next actions:
+${na}
+
+Seal:
+- Sealed core hash (SHA-256): ${derived.hash}
+
+Interpretation:
+- This bundle supports crisis stabilization and reconstruction.
+- The hash proves integrity over time; interpretation and decisions remain human.`;
+          }
+        }
+      }
+    };
+
+    // ===============================
+    // Helpers
+    // ===============================
+    const $ = (id) => document.getElementById(id);
+
+    function getContextKeyFromQuery() {
+      const sp = new URLSearchParams(window.location.search);
+      const c = (sp.get("context") || "").toLowerCase().trim();
+      if (!c) return null;
+      if (c === "governance") return "governance";
+      if (c === "legal" || c === "legal-proceedings" || c === "proceedings") return "legal";
+      if (c === "institutional" || c === "institutional-crisis" || c === "crisis") return "institutional";
+      return null;
+    }
+
+    function setQueryContext(key) {
+      const url = new URL(window.location.href);
+      url.searchParams.set("context", key);
+      window.history.replaceState({}, "", url.toString());
+    }
+
+    function applyContext(key) {
+      const ctx = CONTEXTS[key] || CONTEXTS.governance;
+      window.__CTX_KEY = ctx.key;
+
+      // Description
+      $("ctxDesc").textContent = ctx.description;
+      $("ctxHint").textContent = ctx.ui.tooltips.context;
+
+      // Chips (including exposure chip)
+      const chipRow = $("chipRow");
+      chipRow.innerHTML = "";
+      ctx.ui.chips.forEach(txt => {
+        const s = document.createElement("span");
+        s.className = "chip";
+        s.textContent = txt;
+        chipRow.appendChild(s);
+      });
+
+      // Cockpit labels
+      $("lblCpExposure").textContent = ctx.ui.labels.exposure;
+      $("lblCpScope").textContent = (key === "legal" ? "Perimeter" : "Scope");
+      $("lblCpCoverage").textContent = (key === "legal" ? "Completeness" : "Coverage");
+      $("lblCpDef").textContent = "Defensibility";
+
+      // Input labels
+      $("hdrInput").textContent = ctx.ui.labels.inputTitle;
+      $("hdrOutput").textContent = ctx.ui.labels.outputTitle;
+      $("lblOwner").textContent = (key === "legal" ? "Authority / decision maker" : "Decision owner");
+      $("owner").placeholder = ctx.presets.placeholders.owner;
+
+      // Output labels
+      $("lblOutExposure").textContent = ctx.ui.labels.exposure;
+      $("kDsExposure").textContent = ctx.ui.labels.exposure;
+
+      // Connectors/help copy (small but relevant)
+      $("previewNote").innerHTML = ctx.ui.labels.reportNote.replace("scope + declared systems + lineage hints + deterministic rules", "<strong>scope + declared systems + lineage hints + deterministic rules</strong>");
+      $("supportNote").innerHTML =
+        (key === "legal")
+          ? 'This is not a “decision engine”. It is an <strong>evidentiary defensibility layer</strong>: it tells you what is missing to make a case reconstructible.'
+          : (key === "institutional")
+            ? 'This is not a “decision engine”. It is a <strong>stabilization layer</strong>: it tells you what is missing to keep a crisis perimeter reconstructible.'
+            : 'This is not a “decision engine”. It is a <strong>defensibility layer</strong>: it tells you what is missing to make a decision reconstructible.';
+
+      // Visibility toggles (soft: we keep components, we can mark some as recommended)
+      // Here: recommend/disable 360 by default for legal
+      if (key === "legal") {
+        $("src360").checked = false;
+      }
+
+      // Preset placeholders for scope/context
+      $("orgScope").placeholder = ctx.presets.placeholders.orgScope;
+      if (!($("context").value || "").trim()) $("context").placeholder = ctx.presets.placeholders.context;
+
+      // Update querystring
+      setQueryContext(ctx.key);
+
+      // Sync cockpit immediately
+      quickSync();
+    }
+
+    // ===============================
+    // Star field background (from sandbox)
     // ===============================
     (function () {
       const canvas = document.getElementById("bg-field");
@@ -990,19 +1401,15 @@ It’s a human-readable rendering of the same sealed core bundle.
         canvas.height = height * ratio;
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
       }
-
       function createParticle() {
         return { x: (Math.random() * 2 - 1), y: (Math.random() * 2 - 1), z: Math.random() * 0.9 + 0.1, speed: Math.random() * 0.004 + 0.0015 };
       }
-
       function init() { particles = []; for (let i = 0; i < COUNT; i++) particles.push(createParticle()); }
-
       function project(p) {
         const f = 420;
         const s = f / (f * p.z);
         return { x: p.x * width * 0.5 * s + width / 2, y: p.y * height * 0.5 * s + height / 2 };
       }
-
       function loop() {
         ctx.clearRect(0, 0, width, height);
         for (const p of particles) {
@@ -1015,13 +1422,12 @@ It’s a human-readable rendering of the same sealed core bundle.
         }
         requestAnimationFrame(loop);
       }
-
       window.addEventListener("resize", resize);
       resize(); init(); loop();
     })();
 
     // ===============================
-    // Cockpit 3D hover
+    // Cockpit 3D hover (from sandbox)
     // ===============================
     (function(){
       const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -1046,10 +1452,8 @@ It’s a human-readable rendering of the same sealed core bundle.
     })();
 
     // ===============================
-    // Deterministic engine
+    // Deterministic engine (same logic, with central context mapping)
     // ===============================
-    const $ = (id) => document.getElementById(id);
-
     function stableStringify(obj){
       const seen = new WeakSet();
       const sorter = (v)=>{
@@ -1084,13 +1488,11 @@ It’s a human-readable rendering of the same sealed core bundle.
         legal: $("srcLegal").checked
       };
     }
-
     function coveragePct(src){
       const total = Object.keys(src).length;
       const yes = Object.values(src).filter(Boolean).length;
       return Math.round((yes/total)*100);
     }
-
     function missingCount(src){
       return Object.values(src).filter(v => !v).length;
     }
@@ -1105,7 +1507,6 @@ It’s a human-readable rendering of the same sealed core bundle.
       else if(score >= 58) band = "MEDIUM";
       return { score, band };
     }
-
     function exposureFrom(defBand, quality){
       if(defBand === "LOW") return "HIGH";
       if(defBand === "MEDIUM" && quality.riskLevel !== "LOW") return "MEDIUM";
@@ -1118,13 +1519,12 @@ It’s a human-readable rendering of the same sealed core bundle.
       const pad = (n)=> String(n).padStart(2,"0");
       return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
     }
-
     function nowISODateTime(){
       return new Date().toISOString();
     }
 
     function setTab(which){
-      const map = { summary:["tabSummary","paneSummary"], json:["tabJson","paneJson"], print:["tabPrint","panePrint"] };
+      const map = { preview:["tabSummary","paneSummary"], json:["tabJson","paneJson"], print:["tabPrint","panePrint"] };
       Object.entries(map).forEach(([k,[t,p]])=>{
         $(t).setAttribute("aria-selected", k===which ? "true" : "false");
         $(p).style.display = k===which ? "block" : "none";
@@ -1137,7 +1537,6 @@ It’s a human-readable rendering of the same sealed core bundle.
       { s:"SEAL", t:"HASH" },
       { s:"READY", t:"VERIFY" }
     ];
-
     function setPhase(i){
       const p = phases[i % phases.length];
       $("stateText").textContent = p.s;
@@ -1211,65 +1610,92 @@ It’s a human-readable rendering of the same sealed core bundle.
     }
 
     function qualityChecks(src, ctxText){
+      // SAME deterministic logic + contextual weighting applied only to riskPenalty aggregation
+      const ctxKey = window.__CTX_KEY || "governance";
+      const W = (CONTEXTS[ctxKey] || CONTEXTS.governance).weights;
+
       const cov = coveragePct(src);
       const scopeText = ($("orgScope").value || "").toLowerCase();
-      const multi = /(multi|entities|sites|countries|europe|global|group)/.test(scopeText);
+      const multi = /(multi|entities|sites|countries|europe|global|group|jurisdiction|parties|stakeholders|institution)/.test(scopeText);
 
+      // Original proxies
       const freshness = (src.performance || src.feedback360) ? "MEDIUM" : "LOW";
       const completeness = cov >= 85 ? "HIGH" : (cov >= 65 ? "MEDIUM" : "LOW");
       const drift = multi ? "MEDIUM" : "LOW";
       const duplicates = (src.hris && !src.ops) ? "MEDIUM" : "LOW";
+      const ctxPenaltyBase = (ctxText || "").trim().length < 40 ? 8 : 0;
 
-      const ctxPenalty = (ctxText || "").trim().length < 40 ? 8 : 0;
       const riskLevel = (freshness==="MEDIUM" || drift==="MEDIUM" || duplicates==="MEDIUM" || completeness==="LOW") ? "MEDIUM" : "LOW";
-      const riskPenalty =
-        (freshness==="MEDIUM" ? 6 : 0) +
-        (drift==="MEDIUM" ? 7 : 0) +
-        (duplicates==="MEDIUM" ? 6 : 0) +
-        (completeness==="LOW" ? 10 : 0) +
-        ctxPenalty;
 
-      return { freshness, completeness, drift, duplicates, riskLevel, riskPenalty };
+      // Weighted penalty (context framing, not a different engine)
+      const riskPenalty =
+        (freshness==="MEDIUM" ? 6 * W.timestamp_rigor : 0) +
+        (drift==="MEDIUM" ? 7 * W.definition_drift : 0) +
+        (duplicates==="MEDIUM" ? 6 * W.chain_of_custody : 0) +
+        (completeness==="LOW" ? 10 * W.attribution : 0) +
+        (ctxPenaltyBase * W.uncertainty_logging);
+
+      return {
+        freshness, completeness, drift, duplicates,
+        riskLevel,
+        riskPenalty: Math.round(riskPenalty)
+      };
     }
 
     function blockers(src, q){
+      const ctxKey = window.__CTX_KEY || "governance";
+      const isLegal = ctxKey === "legal";
+      const isCrisis = ctxKey === "institutional";
+
       const b = [];
-      if(!src.legal) b.push("No opposable constraints (Legal/Compliance missing)");
-      if(!src.hris) b.push("No authoritative career trace (HRIS missing)");
-      if(!src.lms) b.push("Training evidence missing (LMS)");
-      if(src.feedback360) b.push("360 is contested unless attributable");
-      if(q.drift !== "LOW") b.push("Definition drift risk (multi-entity scope)");
-      if(q.completeness === "LOW") b.push("Low completeness (too few declared sources)");
+      if(!src.legal) b.push(isLegal ? "No opposable constraints snapshot (Legal/Compliance missing)" : "No opposable constraints (Legal/Compliance missing)");
+      if(!src.hris) b.push(isLegal ? "No authoritative trace extract (HRIS missing)" : "No authoritative career trace (HRIS missing)");
+      if(!src.lms) b.push(isLegal ? "Training evidence missing (LMS)" : "Training evidence missing (LMS)");
+      if(src.feedback360 && isLegal) b.push("360 is contested unless attributable");
+      if(q.drift !== "LOW") b.push(isCrisis ? "Contradiction proxy elevated (multi-stakeholder perimeter)" : "Definition drift risk (multi-entity scope)");
+      if(q.completeness === "LOW") b.push(isLegal ? "Low evidentiary completeness (too few declared sources)" : "Low completeness (too few declared sources)");
       return b.slice(0,3);
     }
 
     function nextActions(src, q){
+      const ctxKey = window.__CTX_KEY || "governance";
+      const isLegal = ctxKey === "legal";
+      const isCrisis = ctxKey === "institutional";
+
       const a = [];
-      if(!src.legal) a.push("Attach compliance constraints snapshot (opposable items)");
+      if(!src.legal) a.push(isLegal ? "Attach opposable legal snapshot (constraints, disputes)" : "Attach compliance constraints snapshot (opposable items)");
       if(!src.hris) a.push("Add HRIS extract id + steward (authoritative trace)");
-      if(q.drift !== "LOW") a.push("Freeze indicator definitions (single dictionary) at Moment T");
-      if(q.duplicates !== "LOW") a.push("Run monthly reconciliation controls (HRIS ↔ OPS)");
-      if(($("context").value || "").trim().length < 40) a.push("Write decision context (why, constraints, audit window)");
+      if(q.drift !== "LOW") a.push(isCrisis ? "Log uncertainties + contradictions explicitly at Moment T" : "Freeze indicator definitions (single dictionary) at Moment T");
+      if(q.duplicates !== "LOW") a.push(isLegal ? "Preserve chain-of-custody markers (extract ids, timestamps)" : "Run monthly reconciliation controls (HRIS ↔ OPS)");
+      if(($("context").value || "").trim().length < 40) a.push(isLegal ? "Write matter context (claims, timeline, constraints)" : isCrisis ? "Write crisis context (signals, stakeholders, constraints)" : "Write decision context (why, constraints, audit window)");
       return a.slice(0,3);
     }
 
     function improveHint(src, q){
+      const ctxKey = window.__CTX_KEY || "governance";
+      const isLegal = ctxKey === "legal";
+      const isCrisis = ctxKey === "institutional";
+
       const hints = [];
-      if(!src.legal) hints.push("+ Legal snapshot");
+      if(!src.legal) hints.push(isLegal ? "+ Opposable snapshot" : "+ Legal snapshot");
       if(!src.hris) hints.push("+ HRIS extract");
       if(!src.ops) hints.push("+ Attested KPIs");
-      if(q.drift !== "LOW") hints.push("+ Frozen definitions");
-      if(hints.length === 0) hints.push("Stabilize freshness + evidence attribution");
+      if(q.drift !== "LOW") hints.push(isCrisis ? "+ Uncertainty log" : "+ Frozen definitions");
+      if(hints.length === 0) hints.push(isLegal ? "Strengthen attribution + chain-of-custody" : isCrisis ? "Stabilize uncertainty + contradictions" : "Stabilize freshness + evidence attribution");
       return hints.join(" · ");
     }
 
     function buildCoreBundle(){
+      const ctxKey = window.__CTX_KEY || "governance";
+
       const src = sources();
       const momentT = $("momentT").value || nowISODate();
-      const scope = ($("orgScope").value || "").trim() || "Defense Group — Europe scope (multi-sites, multi-entities)";
-      const owner = ($("owner").value || "").trim() || "CHRO / Executive committee";
+      const scope = ($("orgScope").value || "").trim() || CONTEXTS[ctxKey].presets.placeholders.orgScope;
+      const owner = ($("owner").value || "").trim() || CONTEXTS[ctxKey].presets.placeholders.owner;
       const dtype = $("decisionType").value;
-      const ctx = ($("context").value || "").trim() || "Regulated environment. Audit exposure. Decision may be challenged and must remain reconstructible.";
+
+      const ctx = ($("context").value || "").trim() || CONTEXTS[ctxKey].presets.placeholders.context;
+
       const lineage = buildLineage(src, scope);
       const q = qualityChecks(src, ctx);
       const cov = coveragePct(src);
@@ -1280,6 +1706,7 @@ It’s a human-readable rendering of the same sealed core bundle.
       const core = {
         standard: "OpenProof RPO v0.1",
         artifact_type: "DECISION_DEFENSIBILITY_BUNDLE",
+        context_frame: ctxKey, // NOTE: inside sealed core (changes hash, by design: it is framing, not AI)
         moment_t: momentT,
         decision: { type: dtype, scope, owner, context: ctx },
         declared_sources: src,
@@ -1289,7 +1716,7 @@ It’s a human-readable rendering of the same sealed core bundle.
           missing_sources: miss,
           defensibility_band: def.band,
           defensibility_score: def.score,
-          audit_exposure: exposure,
+          exposure: exposure,
           quality_checks: {
             freshness: q.freshness,
             completeness: q.completeness,
@@ -1297,7 +1724,7 @@ It’s a human-readable rendering of the same sealed core bundle.
             duplicates: q.duplicates,
             risk_level: q.riskLevel
           },
-          method: "Deterministic mapping from declared sources + quality proxies → defensibility/exposure. No AI."
+          method: "Deterministic mapping from declared sources + weighted proxies (by context) → defensibility/exposure. No AI."
         },
         outputs: { json: "decision_bundle.json", pdf: "browser_print_to_pdf", seal: "sha256_core_hash" }
       };
@@ -1313,7 +1740,11 @@ It’s a human-readable rendering of the same sealed core bundle.
 
     async function generate(){
       setPhase(0);
+      const ctxKey = window.__CTX_KEY || "governance";
+      const ctx = CONTEXTS[ctxKey] || CONTEXTS.governance;
+
       const { core, cov, miss, def, exposure, scope, momentT, lineage, q } = buildCoreBundle();
+
       syncCockpit(null, null, null, scope, momentT, "—");
       setPhase(1);
       setPhase(2);
@@ -1329,10 +1760,11 @@ It’s a human-readable rendering of the same sealed core bundle.
           note: "Meta is not part of the sealed core hash."
         }
       };
-
       const fullJson = stableStringify(bundle);
+
       setPhase(3);
 
+      // Output KPIs (labels already contextual)
       $("outCoverage").textContent = `${cov}%`;
       $("outMissing").textContent = `${miss}`;
       $("outDef").textContent = `${def.band} (${def.score}/100)`;
@@ -1340,54 +1772,43 @@ It’s a human-readable rendering of the same sealed core bundle.
       $("outSeal").textContent = "SHA-256 sealed (core)";
       $("hashOut").textContent = hash;
 
+      // Cockpit sync
       syncCockpit(cov, `${def.band} (${def.score})`, exposure, scope, momentT, hash);
 
+      // Lineage display
       const h = lineage.hris || {system:"—", extract_id:"—", steward:"—", attributable:"—"};
       $("linHrisSys").textContent = h.system || "—";
       $("linHrisExt").textContent = h.extract_id || "—";
       $("linSteward").textContent = h.steward || "—";
       $("linAttr").textContent = (h.attributable === true) ? "YES" : (h.attributable === false ? "NO" : "—");
 
+      // Quality display
       $("qFresh").textContent = q.freshness;
       $("qComp").textContent = q.completeness;
       $("qDrift").textContent = q.drift;
       $("qDup").textContent = q.duplicates;
 
+      // Support display
       $("dsExposure").textContent = exposure;
       $("dsBlockers").textContent = core.decision_support.top_blockers.join(" | ") || "—";
       $("dsActions").textContent = core.decision_support.next_actions.join(" | ") || "—";
       $("dsImprove").textContent = core.decision_support.what_improves_score || "—";
 
+      // Contextual Summary template
       const yesSources = Object.entries(core.declared_sources).filter(([_,v])=>v).map(([k])=>k).join(", ");
       const bl = core.decision_support.top_blockers.map(x=>`- ${x}`).join("\n") || "- —";
       const na = core.decision_support.next_actions.map(x=>`- ${x}`).join("\n") || "- —";
+      const derived = {
+        labels: ctx.ui.labels,
+        cov, miss, def, exposure, hash, q,
+        yesSources,
+        blockers: bl,
+        nextActions: na,
+        hrisSys: (lineage.hris && lineage.hris.system) ? lineage.hris.system : "—",
+        hrisExt: (lineage.hris && lineage.hris.extract_id) ? lineage.hris.extract_id : "—"
+      };
 
-      const summary =
-`Decision: ${core.decision.type}
-Scope: ${core.decision.scope}
-Owner: ${core.decision.owner}
-Moment T: ${core.moment_t}
-Declared sources: ${yesSources || "—"}
-Coverage: ${cov}% | Missing: ${miss}
-Defensibility: ${def.band} (${def.score}/100)
-Audit exposure: ${exposure}
-Lineage (example):
-- HRIS: ${(lineage.hris && lineage.hris.system) ? lineage.hris.system : "—"} | extract_id: ${(lineage.hris && lineage.hris.extract_id) ? lineage.hris.extract_id : "—"}
-Quality checks:
-- Freshness: ${q.freshness} | Completeness: ${q.completeness}
-- Definition drift: ${q.drift} | Duplicates: ${q.duplicates}
-Top blockers:
-${bl}
-Next actions:
-${na}
-Seal:
-- Sealed core hash (SHA-256): ${hash}
-Interpretation:
-- This bundle documents scope + declared systems + lineage hints + deterministic rules.
-- The hash proves integrity over time (not “truth”).
-- Humans remain accountable.`;
-
-      $("summaryPre").textContent = summary;
+      $("summaryPre").textContent = ctx.summary.template(core, derived);
       $("jsonPre").textContent = fullJson;
 
       window.__bundle_json = fullJson;
@@ -1395,17 +1816,22 @@ Interpretation:
     }
 
     function loadExample(){
+      const ctxKey = window.__CTX_KEY || "governance";
+      const P = (CONTEXTS[ctxKey] || CONTEXTS.governance).presets.placeholders;
+
       $("decisionType").value = "Nomination / sensitive role";
       $("momentT").value = "2026-02-10";
-      $("orgScope").value = "Defense Group — Europe scope (multi-sites, multi-entities)";
+      $("orgScope").value = P.orgScope;
       $("owner").value = "Global CHRO / Executive committee";
-      $("context").value = "Sensitive decision in a regulated environment. Traceability across HR systems and stability of definitions are required.\nDecision may be challenged and must remain reconstructible over time (audit window).";
+      $("context").value = P.context;
+
       $("srcLms").checked = true;
       $("srcHris").checked = true;
-      $("srcPerf").checked = true;
+      $("srcPerf").checked = (ctxKey !== "institutional"); // in crisis, perf may be less central
       $("srcOps").checked = true;
-      $("src360").checked = false;
+      $("src360").checked = (ctxKey !== "legal"); // legal: default false
       $("srcLegal").checked = true;
+
       generate();
     }
 
@@ -1415,6 +1841,7 @@ Interpretation:
       $("orgScope").value = "";
       $("owner").value = "";
       $("context").value = "";
+
       $("srcLms").checked = true;
       $("srcHris").checked = true;
       $("srcPerf").checked = true;
@@ -1428,7 +1855,6 @@ Interpretation:
       $("outExposure").textContent = "—";
       $("outSeal").textContent = "—";
       $("hashOut").textContent = "—";
-
       $("summaryPre").textContent = "Click “Generate”.";
       $("jsonPre").textContent = "{}";
 
@@ -1493,21 +1919,34 @@ Interpretation:
       const src = sources();
       const cov = coveragePct(src);
       const miss = missingCount(src);
+
       const scope = ($("orgScope").value || "").trim() || "—";
       const momentT = $("momentT").value || "—";
       const ctx = ($("context").value || "");
+
       const q = qualityChecks(src, ctx);
       const def = defensibility(cov, miss, q);
       const exposure = exposureFrom(def.band, q);
-      syncCockpit(cov, `${def.band} (${def.score})`, exposure, scope, momentT, window.__bundle_hash ? window.__bundle_hash : "—");
+
+      syncCockpit(
+        cov,
+        `${def.band} (${def.score})`,
+        exposure,
+        scope,
+        momentT,
+        window.__bundle_hash ? window.__bundle_hash : "—"
+      );
+
+      // Also reflect exposure label in chip if needed (chips are rebuilt by applyContext)
     }
 
-    // Tabs
-    $("tabSummary").addEventListener("click", ()=>setTab("summary"));
+    // ===============================
+    // Wire events
+    // ===============================
+    $("tabSummary").addEventListener("click", ()=>setTab("preview"));
     $("tabJson").addEventListener("click", ()=>setTab("json"));
     $("tabPrint").addEventListener("click", ()=>setTab("print"));
 
-    // Buttons
     $("btnGenerate").addEventListener("click", generate);
     $("btnGenerateTop").addEventListener("click", generate);
     $("btnLoad").addEventListener("click", loadExample);
@@ -1519,26 +1958,39 @@ Interpretation:
       $("btnCopyHash").textContent = ok ? "Copied" : "Copy hash";
       setTimeout(()=>$("btnCopyHash").textContent="Copy hash", 900);
     });
-
     $("btnCopyJson").addEventListener("click", async ()=>{
       const ok = await copy(window.__bundle_json);
       $("btnCopyJson").textContent = ok ? "Copied" : "Copy JSON";
       setTimeout(()=>$("btnCopyJson").textContent="Copy JSON", 900);
     });
-
     $("btnDownload").addEventListener("click", downloadJson);
     $("btnPrint").addEventListener("click", ()=>window.print());
 
-    // Live sync events
-    ["decisionType","momentT","orgScope","owner","context","srcLms","srcHris","srcPerf","srcOps","src360","srcLegal"].forEach(id=>{
-      $(id).addEventListener("input", quickSync);
-      $(id).addEventListener("change", quickSync);
+    ["decisionType","momentT","orgScope","owner","context","srcLms","srcHris","srcPerf","srcOps","src360","srcLegal"]
+      .forEach(id=>{
+        $(id).addEventListener("input", quickSync);
+        $(id).addEventListener("change", quickSync);
+      });
+
+    // Context dropdown
+    $("contextSelect").addEventListener("change", (e)=>{
+      const key = e.target.value;
+      applyContext(key);
+      // Optional: refresh example narrative if user hasn't typed yet
     });
 
     // Init
-    resetAll();
-    setTab("summary");
-    loadExample();
+    (function init(){
+      const qKey = getContextKeyFromQuery();
+      const startKey = qKey || "governance";
+      $("contextSelect").value = startKey;
+      applyContext(startKey);
+
+      resetAll();
+      setTab("preview");
+      loadExample();
+    })();
   </script>
 </body>
 </html>
+
