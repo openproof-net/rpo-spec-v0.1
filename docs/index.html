@@ -5,26 +5,52 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- SEO -->
-  <title>Decision Governance (RPO) — Auditable, Defensible, Deterministic | OpenProof RPO v0.1</title>
-  <meta name="description" content="OpenProof RPO v0.1 is an open standard for decision governance: source of truth, data lineage, business rules, and defensible decisions. Deterministic proof bundles: sealed JSON + human-readable preview + public hash. No AI. Humans remain accountable." />
+  <!-- Primary SEO -->
+  <title>Gersende Ryard de Parcey — Decision Governance (RPO) | OpenProof RPO v0.1</title>
+  <meta name="description" content="Gersende Ryard de Parcey — Architect of decision governance and probative infrastructure. OpenProof RPO v0.1: deterministic proof bundles (sealed JSON + human-readable preview + public hash) for auditable, defensible HR decisions. No AI. Humans remain accountable." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
+  <meta name="author" content="Gersende Ryard de Parcey" />
+  <meta name="keywords" content="Gersende Ryard de Parcey, OpenProof, RPO, decision governance, HR governance, proof bundle, sealed JSON, public hash, audit-ready, defensible decisions" />
 
   <!-- OpenGraph / Twitter -->
-  <meta property="og:title" content="Decision Governance (RPO) — Auditable, Defensible, Deterministic | OpenProof RPO v0.1" />
-  <meta property="og:description" content="Open standard for decision governance: sealed JSON + human-readable preview + public hash. Deterministic. Auditable. Defensible. No AI." />
+  <meta property="og:title" content="Gersende Ryard de Parcey — Decision Governance (RPO) | OpenProof RPO v0.1" />
+  <meta property="og:description" content="Deterministic proof bundles for auditable, defensible decisions: sealed JSON + human-readable preview + public hash. No AI. Humans remain accountable. By Gersende Ryard de Parcey." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rpo.openproof.net/" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="OpenProof RPO v0.1 — Decision Governance" />
-  <meta name="twitter:description" content="Defensible decisions via deterministic proof bundles (sealed JSON + readable preview + public hash). No AI. Humans remain accountable." />
-  <meta name="keywords" content="decision governance, HR decision governance, data governance, decision traceability, data lineage, source of truth, business rules, audit readiness, defensible decisions, sealed JSON, human-readable preview, public hash, OpenProof, RPO" />
+  <meta name="twitter:title" content="Gersende Ryard de Parcey — OpenProof RPO v0.1" />
+  <meta name="twitter:description" content="Deterministic proof bundles for auditable, defensible decisions. Sealed JSON + readable preview + public hash. No AI. By Gersende Ryard de Parcey." />
+
+  <!-- Structured data (Person) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Gersende Ryard de Parcey",
+    "url": "https://rpo.openproof.net/",
+    "jobTitle": "Decision Governance Architect",
+    "description": "Architect of decision governance and probative infrastructure. Creator of OpenProof RPO v0.1.",
+    "knowsAbout": [
+      "Decision governance",
+      "HR data governance",
+      "Audit readiness",
+      "Defensible decisions",
+      "Proof bundles",
+      "Data lineage",
+      "Business rules",
+      "Chain of custody"
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/in/gryard/"
+    ]
+  }
+  </script>
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     :root{
@@ -406,9 +432,7 @@
     }
 
     /* Section blocks */
-    .section{
-      margin: 16px 0 0;
-    }
+    .section{ margin: 16px 0 0; }
     .sectionTitleRow{
       display:flex;
       justify-content:space-between;
@@ -425,10 +449,7 @@
       color: rgba(241,230,163,.88);
       font-weight: 800;
     }
-    .sectionTitleRow .meta{
-      font-size: 11px;
-      color: rgba(167,176,194,.82);
-    }
+    .sectionTitleRow .meta{ font-size: 11px; color: rgba(167,176,194,.82); }
 
     .cards3{
       display:grid;
@@ -495,7 +516,6 @@
       opacity:.9;
     }
     .ctxCard > *{ position:relative; z-index:1; }
-
     .ctxCard h3{
       margin:0 0 8px;
       font-size: 13px;
@@ -528,7 +548,6 @@
       color: rgba(241,230,163,.88);
       white-space:nowrap;
     }
-
     .openBtn{
       display:inline-flex;
       align-items:center;
@@ -675,15 +694,15 @@
           </div>
         </div>
 
-        <div class="navlinks" aria-label="Primary navigation">
-          <a class="active" href="./index.html">Home</a>
+        <nav class="navlinks" aria-label="Primary navigation">
+          <a class="active" href="./index.html" aria-current="page">Home</a>
           <a href="./simulator.html">Simulator</a>
           <a href="./how-it-works.html">How it works</a>
           <a href="./spec.html">Spec</a>
           <a href="./tests.html">Tests</a>
           <a href="./examples.html">Examples</a>
           <a href="./contexts.html">Contexts</a>
-        </div>
+        </nav>
 
         <div class="cta">
           <a class="btn ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read spec</a>
@@ -702,6 +721,10 @@
             <!-- Left -->
             <div>
               <div class="kicker">Open standard for decision governance</div>
+
+              <p class="lead" style="margin-top:6px; margin-bottom:10px;">
+                By Gersende Ryard de Parcey — decision governance & probative infrastructure.
+              </p>
 
               <h1>
                 Decisions will be challenged.
@@ -738,7 +761,7 @@
               </div>
             </div>
 
-            <!-- Right: teaser (mini-simulator vibe) -->
+            <!-- Right: teaser -->
             <aside class="panel inset" aria-label="Simulator teaser">
               <div class="inner">
                 <div class="teaserHead">
@@ -959,12 +982,11 @@
 
       function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
-      // Simple cycle: show a plausible run ramping from "draft" to "sealed"
       const frames = [
-        { cov: 62, def: 48, expo: "HIGH",  hash: "—",  defTag:"LOW",  expoTag:"HIGH"  },
-        { cov: 74, def: 62, expo: "MEDIUM",hash: "—",  defTag:"MEDIUM",expoTag:"MEDIUM"},
-        { cov: 78, def: 64, expo: "MEDIUM",hash: "sealing…", defTag:"MEDIUM",expoTag:"MEDIUM"},
-        { cov: 78, def: 64, expo: "MEDIUM",hash: "", defTag:"MEDIUM",expoTag:"MEDIUM"},
+        { cov: 62, def: 48, expo: "HIGH",   hash: "—",        defTag:"LOW",    expoTag:"HIGH"   },
+        { cov: 74, def: 62, expo: "MEDIUM", hash: "—",        defTag:"MEDIUM", expoTag:"MEDIUM" },
+        { cov: 78, def: 64, expo: "MEDIUM", hash: "sealing…", defTag:"MEDIUM", expoTag:"MEDIUM" },
+        { cov: 78, def: 64, expo: "MEDIUM", hash: "",         defTag:"MEDIUM", expoTag:"MEDIUM" }
       ];
 
       function badgeClassForDef(tag){
@@ -1000,8 +1022,7 @@
           elHash.textContent = "sealing…";
         } else if(f.hash === "—"){
           elHash.textContent = "—";
-        } else if(f.hash === ""){
-          // Deterministic demo seed (stable-ish): hash of a tiny fixed payload
+        } else {
           const seed = JSON.stringify({
             rpo_version: "0.1",
             mode: "deterministic",
@@ -1023,5 +1044,6 @@
   </script>
 </body>
 </html>
+
 
 
