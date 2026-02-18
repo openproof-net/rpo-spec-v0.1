@@ -1,881 +1,1179 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-page="tests">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OpenProof — Tests | Reproducibility & Tamper-Evidence (RPO v0.1)</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>OpenProof RPO v0.1 — Deterministic Evidence Tests | Reproducibility & Tamper-Evidence (SHA-256)</title>
 
   <!-- SEO -->
-  <meta name="description" content="RPO v0.1 tests: determinism, SHA-256 reproducibility, and tamper-evidence. Same input → same output. 100% local in your browser, no server." />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://rpo.openproof.net/tests.html" />
+  <meta name="description" content="OpenProof RPO v0.1 deterministic tests. Same input → same sealed JSON core → same SHA-256 hash. Any tamper → different hash. A governance layer for institutional decision defense and verifiable integrity over time."/>
+  <meta name="robots" content="index, follow"/>
+  <link rel="canonical" href="https://rpo.openproof.net/tests.html"/>
 
   <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="OpenProof — Tests (RPO v0.1)" />
-  <meta property="og:description" content="Determinism, SHA-256 reproducibility, and tamper-evidence. Same input → same output. No server." />
-  <meta property="og:url" content="https://rpo.openproof.net/tests.html" />
-  <meta property="og:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="OpenProof RPO v0.1 — Deterministic Evidence Tests"/>
+  <meta property="og:description" content="Reproducibility + tamper-evidence tests for sealed JSON cores (SHA-256). Integrity over time — not “truth” judgment."/>
+  <meta property="og:url" content="https://rpo.openproof.net/tests.html"/>
+  <meta property="og:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"/>
 
-  <!-- “Hidden” (clean) attribution / discoverability -->
-  <meta name="author" content="Gersende Ryard de Parcey" />
-  <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor" />
-  <link rel="me" href="https://www.linkedin.com/in/gryard/" />
-  <link rel="icon" type="image/png" href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
+  <!-- “Hidden” clean attribution / discoverability -->
+  <meta name="author" content="Gersende Ryard de Parcey"/>
+  <meta name="creator" content="Gersende Ryard de Parcey — OpenProof specification editor"/>
+  <link rel="me" href="https://www.linkedin.com/in/gryard/"/>
+
+  <link rel="icon" type="image/png" href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99eCC%81cran%202025-11-01%20a%CC%80%2016.30.35.png">
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- JSON-LD (solid SEO, not spammy) -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
-    "@graph":[
-      {
-        "@type":"WebSite",
-        "name":"OpenProof — RPO",
-        "url":"https://rpo.openproof.net/",
-        "inLanguage":"en",
-        "publisher":{"@id":"https://rpo.openproof.net/#openproof"}
-      },
-      {
-        "@type":"Organization",
-        "@id":"https://rpo.openproof.net/#openproof",
-        "name":"OpenProof Consortium",
-        "url":"https://www.openproof.net",
-        "logo":"https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-      },
-      {
-        "@type":"Person",
-        "@id":"https://rpo.openproof.net/#gersende",
-        "name":"Gersende Ryard de Parcey",
-        "url":"https://www.linkedin.com/in/gryard/",
-        "sameAs":["https://www.linkedin.com/in/gryard/"],
-        "jobTitle":"OpenProof specification editor"
-      },
-      {
-        "@type":"WebPage",
-        "name":"Tests — RPO v0.1",
-        "url":"https://rpo.openproof.net/tests.html",
-        "inLanguage":"en",
-        "about":[{"@id":"https://rpo.openproof.net/#openproof"}],
-        "author":{"@id":"https://rpo.openproof.net/#gersende"},
-        "isPartOf":{"@id":"https://rpo.openproof.net/#openproof"}
-      }
-    ]
+    "@type":"TechArticle",
+    "headline":"Deterministic Evidence Tests — OpenProof RPO v0.1",
+    "description":"Deterministic reproducibility and tamper-evidence tests for sealed JSON cores (SHA-256) to support institutional decision defense and public verifiability.",
+    "url":"https://rpo.openproof.net/tests.html",
+    "keywords":[
+      "deterministic evidence",
+      "tamper evidence",
+      "SHA-256",
+      "sealed JSON",
+      "public hash",
+      "decision governance",
+      "reproducibility tests"
+    ],
+    "author":{"@type":"Person","name":"Gersende Ryard de Parcey","url":"https://www.linkedin.com/in/gryard/"},
+    "publisher":{"@type":"Organization","name":"OpenProof Consortium","url":"https://rpo.openproof.net/"}
   }
   </script>
 
   <style>
     :root{
-      --bg-deep:#04040e;
-      --bg-mid:#0b0f14;
-
-      --gold-soft:#f1e6a3;
+      --bg0:#04040e;
+      --bg1:#0b0f14;
+      --panel: rgba(255,255,255,.04);
+      --panel2: rgba(255,255,255,.03);
+      --stroke: rgba(212,175,55,.22);
+      --stroke2: rgba(212,175,55,.14);
       --gold:#d4af37;
-      --gold-deep:#8f7633;
+      --gold2:#f1e6a3;
+      --text:#e9eef7;
+      --muted:#a7b0c2;
+      --muted2:#8c95a8;
+      --danger:#ff6b6b;
+      --ok:#7dffb3;
+      --warn:#ffd166;
 
-      --ivory:#f7f3e8;
-      --ink-soft:#b3a48b;
+      --r:18px;
+      --shadow: 0 20px 70px rgba(0,0,0,.55);
+      --shadow2: 0 10px 40px rgba(0,0,0,.45);
 
-      --radius:26px;
-      --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
-      --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
-      --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
+      --max: 1760px;
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      min-height:100vh;
-      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-      color:var(--ivory);
+      margin:0;
       background:
-        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
-        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
-        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
-      overflow-x:hidden;
+        radial-gradient(1200px 700px at 20% 10%, rgba(212,175,55,.10), transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, rgba(241,230,163,.08), transparent 55%),
+        radial-gradient(900px 700px at 60% 85%, rgba(212,175,55,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      letter-spacing:.1px;
     }
 
-    a{color:inherit}
-    a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
-    ::selection{background: rgba(212,175,55,.25);}
+    a{ color:inherit; text-decoration:none; }
 
-    /* BACKGROUND FIELD */
-    #bg-field{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-1;
+    .container{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px;
     }
 
-    /* TOP BAR */
-    .top-bar{
-      position:fixed;
-      top:0; left:0; right:0;
-      height:68px;
-      padding:0 40px;
+    /* Top nav */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(4,4,14,.86), rgba(4,4,14,.55));
+      border-bottom: 1px solid rgba(212,175,55,.12);
+    }
+    .nav{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      z-index:10;
-      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid rgba(212,175,55,0.22);
-    }
-    .top-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width: 280px;
-    }
-    .emblem{
-      width:34px;
-      height:34px;
-      border-radius:999px;
-      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
-      box-shadow:0 0 18px rgba(241,230,163,0.8);
-      flex: 0 0 auto;
+      padding: 14px 0;
+      gap: 18px;
     }
     .brand{
-      font-family:"Orbitron",sans-serif;
-      font-size:0.72rem;
-      letter-spacing:0.18em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      white-space:nowrap;
-    }
-    .brand span{color:var(--gold-soft)}
-    .top-nav{
       display:flex;
-      gap:22px;
-      font-size:0.86rem;
-      color:var(--ink-soft);
       align-items:center;
-      justify-content:center;
-      flex: 1 1 auto;
-    }
-    .top-nav a{
-      color:inherit;
-      text-decoration:none;
-      position:relative;
-      padding-bottom:3px;
-      white-space:nowrap;
-    }
-    .top-nav a::after{
-      content:"";
-      position:absolute;
-      left:0; bottom:0;
-      width:0; height:1px;
-      background:linear-gradient(90deg,var(--gold-soft),var(--gold));
-      transition:width .2s ease;
-    }
-    .top-nav a:hover::after{width:100%}
-    .top-nav a[aria-current="page"]{color: var(--gold-soft);}
-    .top-nav a[aria-current="page"]::after{width:100%}
-
-    .top-cta{
-      padding:8px 18px;
-      border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      font-size:0.8rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      text-decoration:none;
-      white-space:nowrap;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    }
-    .top-cta:hover{filter:brightness(1.03)}
-    .top-cta:active{transform:translateY(1px)}
-
-    /* LAYOUT */
-    main{padding:104px 40px 56px;}
-    .container{max-width:1320px;margin:0 auto;width:100%;}
-
-    /* HERO */
-    .hero{
-      display:grid;
-      grid-template-columns: 1.5fr 1fr;
-      gap:28px;
-      align-items:start;
-      padding:28px 0 18px;
-    }
-    .kicker{
-      font-family:"Orbitron",sans-serif;
-      font-size:.75rem;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      margin-bottom:12px;
-    }
-    .kicker span{color:var(--gold-soft)}
-    h1{
-      font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-      line-height:1.06;
-      font-size:clamp(2.0rem,4.2vw,3.05rem);
-      margin-bottom:10px;
-    }
-    h1 .gold{color:var(--gold-soft)}
-    .subhead{
-      font-size:1rem;
-      line-height:1.75;
-      color:var(--ink-soft);
-      max-width: 860px;
-    }
-    .subhead strong{color:rgba(241,230,163,.95); font-weight:600;}
-    .hero-actions{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      margin-top:16px;
-      align-items:center;
-    }
-    .btn-primary{
-      padding:12px 26px;
-      border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      font-size:.8rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      text-decoration:none;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      cursor:pointer;
-    }
-    .btn-primary:hover{filter:brightness(1.03)}
-    .btn-primary:active{transform:translateY(1px)}
-    .btn-ghost{
-      padding:12px 18px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,0.35);
-      background: rgba(10,12,27,0.35);
-      color: var(--gold-soft);
-      font-size:.8rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      text-decoration:none;
-      backdrop-filter: blur(10px);
-      cursor:pointer;
-    }
-    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
-    .btn-ghost:active{transform:translateY(1px)}
-
-    .note{
-      margin-top:12px;
-      font-size:.92rem;
-      color:rgba(198,186,150,.88);
-      line-height:1.55;
-    }
-
-    /* PANEL */
-    .panel{
-      position:relative;
-      background:var(--panel);
-      border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,0.45);
-      padding:26px;
-      box-shadow:var(--shadow-soft);
-      overflow:hidden;
-    }
-    .panel::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
-        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
-        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
-      opacity:.95;
-      filter: blur(10px);
-      pointer-events:none;
-      animation: fieldShift 10s ease-in-out infinite;
-    }
-    @keyframes fieldShift{
-      0%,100%{transform: translateY(0px)}
-      50%{transform: translateY(10px)}
-    }
-    .panel > *{position:relative; z-index:1}
-
-    .panel-title{
-      font-family:"Orbitron",sans-serif;
-      font-size:.85rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      margin-bottom:10px;
-    }
-
-    .pill{
-      display:inline-flex;
       gap:10px;
-      align-items:center;
-      font-size:.72rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      padding:6px 12px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,.55);
-      margin-bottom:12px;
-      color: rgba(241,230,163,.92);
-      background: rgba(10,12,27,0.22);
-      backdrop-filter: blur(10px);
-      white-space:nowrap;
+      min-width: 240px;
     }
     .dot{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(241,230,163,.95);
-      box-shadow: 0 0 14px rgba(241,230,163,.55);
-      animation: dotPulse 1.45s ease-in-out infinite;
+      width:7px;height:7px;border-radius:10px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      box-shadow: 0 0 0 4px rgba(212,175,55,.10);
+      flex: 0 0 auto;
     }
-    @keyframes dotPulse{
-      0%,100%{transform:scale(1); opacity:.85}
-      50%{transform:scale(1.35); opacity:1}
+    .brand-title{
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      letter-spacing:.9px;
+      font-size: 13px;
+      color: rgba(233,238,247,.92);
     }
+    .brand-sub{
+      font-size: 11px;
+      color: rgba(167,176,194,.85);
+      margin-top: 2px;
+    }
+    .brand-stack{ display:flex; flex-direction:column; line-height:1.1; }
 
-    /* “Scope” card */
-    .scope{
+    .navlinks{
       display:flex;
-      flex-direction:column;
-      gap:12px;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
+      justify-content:center;
     }
-    .scope p{
-      color:var(--ink-soft);
-      line-height:1.65;
-      font-size:.94rem;
+    .navlinks a{
+      font-size: 12px;
+      color: rgba(233,238,247,.86);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(255,255,255,.02);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
     }
-    .scope p strong{color:rgba(241,230,163,.95); font-weight:600;}
-    .scope .line{
-      margin-top:6px;
-      padding-top:12px;
-      border-top:1px solid rgba(212,175,55,.18);
-      color:rgba(198,186,150,.86);
-      font-size:.88rem;
-      line-height:1.55;
+    .navlinks a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,175,55,.25);
+      background: rgba(255,255,255,.035);
+    }
+    .navlinks a.active{
+      border-color: rgba(212,175,55,.32);
+      background: linear-gradient(180deg, rgba(212,175,55,.14), rgba(255,255,255,.02));
+      color: rgba(241,230,163,.96);
     }
 
-    /* MATRIX */
-    .section{margin-top:18px;}
-    .matrix-wrap{
-      margin-top:16px;
+    .cta{ display:flex; align-items:center; gap:10px; min-width: 240px; justify-content:flex-end; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(255,255,255,.02);
+      color: rgba(233,238,247,.92);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform .15s ease, filter .15s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(212,175,55,.30); }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(212,175,55,.92), rgba(241,230,163,.92));
+      color: rgba(12,14,18,.92);
+      border-color: rgba(241,230,163,.45);
+      box-shadow: 0 12px 40px rgba(212,175,55,.14);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.015);
+      border-color: rgba(212,175,55,.14);
+      color: rgba(233,238,247,.86);
+    }
+    .btn.small{ padding:8px 12px; font-size: 11px; }
+
+    /* Panels */
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(212,175,55,.16);
+      border-radius: var(--r);
+      box-shadow: var(--shadow2);
+    }
+    .panel.inset{
+      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018));
+      border: 1px solid rgba(212,175,55,.14);
+    }
+    .panel .inner{ padding: 18px; }
+
+    /* Hero */
+    .hero{ margin: 18px 0 16px; }
+    .hero .panel{ box-shadow: var(--shadow); }
+    .kicker{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: rgba(241,230,163,.85);
+      margin-bottom: 8px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-family: Orbitron, Inter, sans-serif;
+      letter-spacing: .2px;
+      font-weight: 700;
+      line-height: 1.1;
+      font-size: clamp(28px, 3.2vw, 46px);
+      color: rgba(233,238,247,.96);
+    }
+    h1 .hl{
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead{
+      margin: 0 0 14px;
+      color: rgba(167,176,194,.92);
+      max-width: 110ch;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* Chips */
+    .chips{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      margin: 12px 0 12px;
+    }
+    .chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border-radius: 999px;
+      padding: 7px 10px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      font-size: 11px;
+      color: rgba(233,238,247,.86);
+    }
+    .chip b{ font-weight:700; color: rgba(241,230,163,.92); }
+    .chip .pill{
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.09);
+      color: rgba(241,230,163,.92);
+      font-size: 10px;
+      letter-spacing:.3px;
+      text-transform: uppercase;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      margin-top: 10px;
+    }
+    .note{
+      margin-top: 10px;
+      color: rgba(167,176,194,.82);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .note b{ color: rgba(241,230,163,.9); }
+
+    /* Layout */
+    .grid{
       display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:18px;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 22px;
       align-items:start;
+      margin: 16px 0 24px;
     }
 
-    .matrix{
-      width:100%;
-      border-radius: 22px;
-      overflow:hidden;
-      border:1px solid rgba(212,175,55,0.28);
-      background: rgba(7,9,20,0.35);
-      backdrop-filter: blur(10px);
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      margin: 0 0 10px;
+    }
+    .section-title h2{
+      margin:0;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      font-weight: 700;
+    }
+    .section-title .meta{
+      font-size: 11px;
+      color: rgba(167,176,194,.82);
     }
 
-    table{width:100%;border-collapse:collapse;font-size:.92rem;}
-    thead th{
-      text-align:left;
-      padding:14px 16px;
-      font-family:"Orbitron",sans-serif;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.72rem;
-      color:rgba(179,164,139,.92);
-      border-bottom:1px solid rgba(212,175,55,0.18);
-      background: rgba(4,4,14,0.35);
-    }
-    tbody td{
-      padding:14px 16px;
-      border-bottom:1px dashed rgba(136,116,72,0.22);
-      vertical-align:top;
-      color:rgba(179,164,139,.95);
-      line-height:1.55;
-    }
-    tbody tr:last-child td{border-bottom:none}
-    td strong{color:rgba(241,230,163,.92); font-weight:600;}
-
-    .status{
+    /* Badges */
+    .badge{
       display:inline-flex;
       align-items:center;
-      gap:10px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,0.22);
-      background: rgba(10,12,27,0.28);
-      color:rgba(241,230,163,.86);
-      font-family:"Orbitron",sans-serif;
-      letter-spacing:.10em;
-      text-transform:uppercase;
-      font-size:.70rem;
-      white-space:nowrap;
+      justify-content:center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing:.3px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.10);
+      color: rgba(241,230,163,.95);
+      white-space: nowrap;
     }
-    .led{width:9px;height:9px;border-radius:50%;background: rgba(198,186,150,.35);}
-    .status[data-state="idle"] .led{background: rgba(198,186,150,.35)}
-    .status[data-state="running"] .led{background: rgba(244,186,120,.92); box-shadow:0 0 16px rgba(244,186,120,.35)}
-    .status[data-state="pass"] .led{background: rgba(241,230,163,.95); box-shadow:0 0 18px rgba(241,230,163,.35)}
-    .status[data-state="fail"] .led{background: rgba(255,120,120,.9); box-shadow:0 0 18px rgba(255,120,120,.35)}
+    .badge.ok{ border-color: rgba(125,255,179,.25); background: rgba(125,255,179,.10); color: rgba(180,255,220,.92); }
+    .badge.warn{ border-color: rgba(255,209,102,.25); background: rgba(255,209,102,.10); color: rgba(255,236,180,.92); }
+    .badge.bad{ border-color: rgba(255,107,107,.25); background: rgba(255,107,107,.10); color: rgba(255,200,200,.92); }
 
-    /* SIDE RESULT PANEL */
-    .side{display:flex;flex-direction:column;gap:12px;}
-    .log{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:.86rem;
-      line-height:1.7;
-      color:rgba(198,186,150,.86);
-      background: rgba(4,4,14,0.35);
-      border:1px solid rgba(212,175,55,0.18);
-      border-radius: 18px;
-      padding:14px;
-      min-height: 220px;
-      white-space:pre-wrap;
-      overflow:auto;
+    /* Cards (stress tests) */
+    .cards{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
     }
-    .hint{
-      font-size:.90rem;
-      color:rgba(198,186,150,.86);
-      line-height:1.6;
+    .card{
+      border-radius: 16px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: linear-gradient(180deg, rgba(0,0,0,.20), rgba(255,255,255,.02));
+      padding: 14px 14px;
     }
-    .hint strong{color:rgba(241,230,163,.95); font-weight:600;}
-
-    /* FOOT CTA */
-    .footer-cta{
-      margin-top:18px;
+    .card .top{
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap:12px;
+      align-items:flex-start;
+      margin-bottom: 10px;
+    }
+    .card .title{
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 13px;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.92);
+      font-weight: 700;
+      margin:0 0 6px;
+    }
+    .card .desc{
+      margin:0;
+      color: rgba(167,176,194,.86);
+      font-size: 12px;
+      line-height: 1.5;
+      max-width: 95ch;
+    }
+    .card .mini{
+      margin-top: 8px;
+      color: rgba(167,176,194,.74);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .card .actions{
+      display:flex;
+      gap:10px;
       flex-wrap:wrap;
-      padding:18px 20px;
-      border-radius: 22px;
-      border:1px solid rgba(212,175,55,0.22);
-      background: rgba(10,12,27,0.28);
-      backdrop-filter: blur(10px);
-      color:rgba(198,186,150,.88);
-      line-height:1.55;
+      margin-top: 12px;
+      align-items:center;
     }
 
-    /* Utility */
-    .sr-only{
-      position:absolute;
-      width:1px; height:1px;
-      padding:0; margin:-1px;
-      overflow:hidden; clip:rect(0,0,0,0);
-      white-space:nowrap; border:0;
+    /* Console + outputs */
+    .mono{
+      margin-top: 12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.24);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+      line-height: 1.75;
+      color: rgba(233,238,247,.88);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
     }
 
-    /* RESPONSIVE */
-    @media(max-width:1100px){
-      .hero{grid-template-columns: 1fr; gap:16px}
-      .matrix-wrap{grid-template-columns:1fr; }
-      main{padding:104px 20px 56px}
-      .top-bar{padding:0 16px}
+    .kv{
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      margin-top: 10px;
     }
-    @media(max-width:960px){.top-nav{display:none}}
-    @media (prefers-reduced-motion: reduce){.panel::before,.dot{animation:none}}
+    .row{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,.10);
+      background: rgba(0,0,0,.18);
+    }
+    .row .k{
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: rgba(167,176,194,.78);
+    }
+    .row .v{
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(233,238,247,.90);
+      text-align:right;
+      max-width: 70%;
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .row .v.monoish{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+
+    .toggle{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,.10);
+      background: rgba(0,0,0,.18);
+      margin-top: 10px;
+    }
+    .toggle input{
+      width: 16px; height: 16px;
+      accent-color: var(--gold);
+    }
+    .toggle .t{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .toggle .t .name{
+      font-size: 12px; font-weight:700; color: rgba(241,230,163,.92);
+    }
+    .toggle .t .desc{
+      font-size: 11px; color: rgba(167,176,194,.78); line-height: 1.35;
+      margin:0;
+    }
+
+    /* Footer */
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: rgba(167,176,194,.72);
+      font-size: 11px;
+      padding: 18px 0 28px;
+      border-top: 1px solid rgba(212,175,55,.10);
+      margin-top: 18px;
+    }
+    .foot a{
+      color: rgba(167,176,194,.82);
+      border-bottom: 1px dotted rgba(212,175,55,.18);
+    }
+    .foot a:hover{
+      color: rgba(241,230,163,.92);
+      border-bottom-color: rgba(241,230,163,.35);
+    }
+
+    /* Responsive */
+    @media (max-width: 1100px){
+      .grid{ grid-template-columns: 1fr; }
+      .brand{ min-width: 0; }
+      .cta{ min-width: 0; }
+    }
   </style>
 </head>
 
 <body>
-  <canvas id="bg-field" aria-hidden="true"></canvas>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="nav">
+        <div class="brand">
+          <div class="dot" aria-hidden="true"></div>
+          <div class="brand-stack">
+            <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
+            <div class="brand-sub">Probative engine & governance</div>
+          </div>
+        </div>
 
-  <!-- B) docs/_nav.html (snippet to copy/paste on all pages) -->
-<header class="top-bar">
-  <div class="top-left">
-    <div class="emblem" aria-hidden="true"></div>
-    <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
+        <div class="navlinks" aria-label="Primary navigation">
+          <a href="https://rpo.openproof.net/index.html" target="_blank" rel="noopener noreferrer">Home</a>
+          <a href="https://rpo.openproof.net/simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a>
+          <a href="https://rpo.openproof.net/how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+          <a href="https://rpo.openproof.net/spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
+          <a class="active" href="https://rpo.openproof.net/tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+          <a href="https://rpo.openproof.net/examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+          <a href="https://rpo.openproof.net/contexts.html" target="_blank" rel="noopener noreferrer">Contexts</a>
+        </div>
+
+        <div class="cta">
+          <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <nav class="top-nav" aria-label="Primary navigation">
-    <a href="./index.html">Home</a>
-    <a href="./simulator.html">Simulator</a>
-    <a href="./how-it-works.html">How it works</a>
-    <a href="./spec.html">Spec</a>
-    <a href="./tests.html">Tests</a>
-    <a href="./examples.html">Examples</a>
-    <a href="./contexts.html">Contexts</a>
-  </nav>
-
-  <a class="top-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
-</header>
-
-
-  <main role="main">
-    <div class="container">
-
-      <section class="hero" aria-labelledby="t">
-        <div>
-          <div class="kicker">Browser-level proof <span>of determinism</span></div>
-
-          <h1 id="t">
-            <span class="gold">Tests</span> reproducibility,<br />
-            proof of <span class="gold">tampering</span>
-          </h1>
-
-          <p class="subhead">
-            These tests are intentionally simple. They demonstrate a core RPO property:
-            <strong>defensible determinism</strong>.
-            <br />
-            Same input → same output, <strong>SHA-256</strong> is re-computable, tampering becomes detectable.
-            <br />
-            No server, no external service: everything runs <strong>locally</strong>.
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="panel">
+        <div class="inner">
+          <div class="kicker">deterministic test suite</div>
+          <h1>Tests. <span class="hl">Reproducibility.</span> Tamper-evidence. Narrative integrity.</h1>
+          <p class="lead">
+            These tests prove a single property: <b>integrity over time</b>.
+            Same input → same sealed JSON core → same <b>SHA-256</b> hash. Any tamper → different hash.
+            This is not “truth”. It is <b>verifiable stability</b> for institutional decision defense.
           </p>
+
+          <div class="chips">
+            <span class="chip"><span class="pill">Mode</span> <b>Deterministic</b></span>
+            <span class="chip"><span class="pill">AI</span> <b>None</b></span>
+            <span class="chip"><span class="pill">Seal</span> <b>SHA-256</b></span>
+            <span class="chip"><span class="pill">Output</span> <b>Sealed JSON + readable preview + public hash</b></span>
+          </div>
 
           <div class="hero-actions">
-            <button class="btn-primary" id="runAll">Run tests in the browser</button>
-            <a class="btn-ghost" href="./simulator.html" target="_blank" rel="noopener noreferrer">Open the sandbox</a>
-            <a class="btn-ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read the RPO spec</a>
+            <button class="btn primary" id="runAll">Run all stress tests</button>
+            <button class="btn ghost" id="reset">Reset</button>
+            <button class="btn ghost" id="copyReport">Copy report</button>
           </div>
 
-          <p class="note">
-            Important: passing these tests does not “prove truth”. It proves the pipeline is
-            <strong>auditable</strong>, and transformations become explainable.
-          </p>
+          <div class="note">
+            Hash proves <b>tamper-evidence</b> (integrity), not factual truth. Accountability remains human.
+            This suite runs <b>100% locally</b> in your browser (no server).
+          </div>
         </div>
+      </div>
+    </section>
 
-        <aside class="panel scope" aria-label="Test scope">
-          <div class="panel-title">Test scope</div>
-          <div class="pill"><span class="dot" aria-hidden="true"></span> Integrity • Readability • Verifiability</div>
-
-          <p>
-            Checks: <strong>determinism</strong>, extraction stability (dates/places) and
-            <strong>SHA-256</strong> reproducibility.
-          </p>
-          <p class="line">
-            What this proves to leaders: you’re not challenged for what you decided,
-            but for what you can no longer <strong>reconstruct</strong>, and therefore cannot defend.
-          </p>
-        </aside>
-      </section>
-
-      <section class="section panel" aria-label="Test matrix">
-        <div class="panel-title">Test matrix</div>
-
-        <div class="matrix-wrap">
-          <div class="matrix" role="region" aria-label="Tests table">
-            <table>
-              <thead>
-                <tr>
-                  <th style="width:22%">Test</th>
-                  <th>What it verifies</th>
-                  <th style="width:18%">Status</th>
-                  <th style="width:26%">Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><strong>Determinism</strong></td>
-                  <td>The same input produces the same canonical <strong>bundle</strong> and the same <strong>hash</strong>.</td>
-                  <td>
-                    <span class="status" id="stDet" data-state="idle"><span class="led"></span><span>Not run</span></span>
-                  </td>
-                  <td>Runs extraction twice, compares canonical payload + SHA-256.</td>
-                </tr>
-                <tr>
-                  <td><strong>SHA-256</strong></td>
-                  <td>The hash is <strong>reproducible</strong> for the same canonical string.</td>
-                  <td>
-                    <span class="status" id="stSha" data-state="idle"><span class="led"></span><span>Not run</span></span>
-                  </td>
-                  <td>Uses local WebCrypto <strong>SHA-256</strong> (no backend).</td>
-                </tr>
-                <tr>
-                  <td><strong>Anchors</strong></td>
-                  <td>Base anchors are extracted consistently (dates/places): <strong>no silent rewrite</strong>.</td>
-                  <td>
-                    <span class="status" id="stAnc" data-state="idle"><span class="led"></span><span>Not run</span></span>
-                  </td>
-                  <td>Conservative heuristic extraction: stability over “smartness”.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="side">
-            <div class="panel-title">Output (proof)</div>
-            <div class="log" id="log" aria-live="polite">Click “Run tests…” to get local proof: results + hash + canonical payload.</div>
-            <div class="hint">
-              Key idea: these tests don’t validate an “app”.
-              They validate a <strong>trust boundary</strong>:
-              the system cannot “change its mind” silently.
+    <!-- Main grid -->
+    <section class="grid">
+      <!-- Left -->
+      <div>
+        <div class="panel inset">
+          <div class="inner">
+            <div class="section-title">
+              <h2>3 stress tests (from simple to crisis)</h2>
+              <div class="meta">
+                <span class="badge warn">Audit-ready</span>
+                <span class="badge bad">No AI</span>
+              </div>
             </div>
-            <button class="btn-ghost" id="reset">Reset</button>
+
+            <div class="cards">
+
+              <!-- Stress 1 -->
+              <div class="card" id="card1">
+                <div class="top">
+                  <div>
+                    <div class="title">Stress 1 — Reproducibility</div>
+                    <p class="desc">
+                      Board question: <b>“Can you reproduce the same evidence bundle months later?”</b>
+                      This test verifies stable rules: same fixture → same sealed core hash.
+                    </p>
+                    <div class="mini">Signal: reputational exposure, governance pressure, need for reconstructibility at Moment T.</div>
+                  </div>
+                  <div>
+                    <span class="badge warn" id="s1Badge">—</span>
+                  </div>
+                </div>
+
+                <div class="actions">
+                  <button class="btn primary small" id="runS1">Run Test 1</button>
+                  <button class="btn ghost small" id="showS1">Show sealed core</button>
+                </div>
+
+                <div class="kv" aria-label="Stress 1 KPIs">
+                  <div class="row"><div class="k">Expected hash</div><div class="v monoish" id="s1Expected">—</div></div>
+                  <div class="row"><div class="k">Computed hash</div><div class="v monoish" id="s1Computed">—</div></div>
+                  <div class="row"><div class="k">Result</div><div class="v" id="s1Result">—</div></div>
+                </div>
+
+                <div class="mono" id="s1Console" style="display:none;"></div>
+              </div>
+
+              <!-- Stress 2 -->
+              <div class="card" id="card2">
+                <div class="top">
+                  <div>
+                    <div class="title">Stress 2 — Internal Tamper / Sabotage</div>
+                    <p class="desc">
+                      Internal risk: <b>“One field was changed to ‘make the file look cleaner’.”</b>
+                      This test proves the seal breaks on any modification.
+                    </p>
+                    <div class="mini">Signal: internal manipulation, procedural drift, silent edits under pressure.</div>
+                  </div>
+                  <div>
+                    <span class="badge warn" id="s2Badge">—</span>
+                  </div>
+                </div>
+
+                <div class="toggle">
+                  <input type="checkbox" id="tamperToggle">
+                  <div class="t">
+                    <div class="name">Enable tamper</div>
+                    <p class="desc">Change one field (deadline) before hashing. Expected outcome: <b>FAIL</b> (hash mismatch).</p>
+                  </div>
+                </div>
+
+                <div class="actions">
+                  <button class="btn primary small" id="runS2">Run Test 2</button>
+                  <button class="btn ghost small" id="showS2">Show sealed core</button>
+                </div>
+
+                <div class="kv" aria-label="Stress 2 KPIs">
+                  <div class="row"><div class="k">Expected hash</div><div class="v monoish" id="s2Expected">—</div></div>
+                  <div class="row"><div class="k">Computed hash</div><div class="v monoish" id="s2Computed">—</div></div>
+                  <div class="row"><div class="k">Result</div><div class="v" id="s2Result">—</div></div>
+                </div>
+
+                <div class="mono" id="s2Console" style="display:none;"></div>
+              </div>
+
+              <!-- Stress 3 -->
+              <div class="card" id="card3">
+                <div class="top">
+                  <div>
+                    <div class="title">Stress 3 — Influence / Narrative Swap</div>
+                    <p class="desc">
+                      Crisis reality: <b>“The readable story was swapped while the core stayed unchanged.”</b>
+                      This test checks that readable preview is bound to the sealed core via a preview hash marker.
+                    </p>
+                    <div class="mini">Signal: reputational attack, hostile comms, “official narrative” drifting away from sealed facts.</div>
+                  </div>
+                  <div>
+                    <span class="badge warn" id="s3Badge">—</span>
+                  </div>
+                </div>
+
+                <div class="toggle">
+                  <input type="checkbox" id="swapPreviewToggle">
+                  <div class="t">
+                    <div class="name">Swap readable preview</div>
+                    <p class="desc">Replace readable preview without updating the core marker. Expected outcome: <b>FAIL</b> (preview mismatch).</p>
+                  </div>
+                </div>
+
+                <div class="actions">
+                  <button class="btn primary small" id="runS3">Run Test 3</button>
+                  <button class="btn ghost small" id="showS3">Show sealed core</button>
+                </div>
+
+                <div class="kv" aria-label="Stress 3 KPIs">
+                  <div class="row"><div class="k">Core hash</div><div class="v monoish" id="s3CoreHash">—</div></div>
+                  <div class="row"><div class="k">Preview hash</div><div class="v monoish" id="s3PreviewHash">—</div></div>
+                  <div class="row"><div class="k">Result</div><div class="v" id="s3Result">—</div></div>
+                </div>
+
+                <div class="mono" id="s3Console" style="display:none;"></div>
+              </div>
+
+            </div>
           </div>
         </div>
-      </section>
 
-      <section class="section panel" aria-label="Why it matters">
-        <div class="panel-title">Why it matters (one sentence)</div>
-        <p class="subhead" style="margin-top:6px;">
-          You’re not challenged for your decisions.
-          You’re challenged for what you cannot <strong>reconstruct</strong> — and therefore cannot defend.
-        </p>
-      </section>
+        <!-- What auditors verify -->
+        <div class="panel inset" style="margin-top:14px;">
+          <div class="inner">
+            <div class="section-title">
+              <h2 id="auditors">What auditors verify</h2>
+              <div class="meta">Minimal, sufficient, explicit</div>
+            </div>
 
-      <section class="footer-cta" aria-label="Pilot access">
-        <div>
-          Want the full pilot (CNRS × TruthX): interpretive coherence, structured narrative layers,
-          advanced signal fusion, and a human-readable proof report designed for professionals.
+            <div class="kv">
+              <div class="row"><div class="k">Determinism</div><div class="v">No AI, no randomness, stable rules</div></div>
+              <div class="row"><div class="k">Tamper-evidence</div><div class="v">SHA-256 seal breaks on any change</div></div>
+              <div class="row"><div class="k">Verifiability</div><div class="v">Hash can be checked publicly over time</div></div>
+              <div class="row"><div class="k">Discipline</div><div class="v">Fixtures + expected outputs are versioned</div></div>
+            </div>
+
+            <div class="note" style="margin-top:10px;">
+              This suite does not claim “truth”. It demonstrates that a bundle is <b>stable</b> and <b>tamper-evident</b> — which is what institutions need when narratives become contested.
+            </div>
+          </div>
         </div>
-        <a class="btn-primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
-          Request pilot access
-        </a>
-      </section>
 
-      <p class="note" style="margin-top:14px;">
-        This page is informational. The test environment does not store case data and does not determine truth.
-        It demonstrates a deterministic structure and verifiable integrity anchors.
-      </p>
+        <div class="foot" aria-label="Footer">
+          <div>© OpenProof — RPO v0.1. Created by Gersende Ryard de Parcey.</div>
+          <div>
+            <a href="https://rpo.openproof.net/spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
+            <a href="https://rpo.openproof.net/simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a> ·
+            <a href="https://rpo.openproof.net/examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+          </div>
+        </div>
+      </div>
 
-      <!-- “Hidden” discoverability (accessible, not display:none) -->
-      <p class="sr-only">
-        Gersende Ryard de Parcey is the editor of the OpenProof RPO v0.1 specification (Rapport Probatoire Ouvert),
-        a proof standard based on signed JSON, a human-readable PDF, and a public SHA-256 hash.
-      </p>
+      <!-- Right: Live test cockpit -->
+      <aside>
+        <div class="panel">
+          <div class="inner">
+            <div class="section-title" style="margin:0 0 10px;">
+              <h2>Test cockpit (live)</h2>
+              <div class="meta"><span class="badge warn">Integrity · Readability · Verifiability</span></div>
+            </div>
 
-    </div>
+            <div class="kv">
+              <div class="row"><div class="k">Suite</div><div class="v">RPO v0.1</div></div>
+              <div class="row"><div class="k">Runtime</div><div class="v" id="rt">—</div></div>
+              <div class="row"><div class="k">Crypto</div><div class="v">SHA-256</div></div>
+              <div class="row"><div class="k">Local</div><div class="v">Browser only</div></div>
+              <div class="row"><div class="k">Last run</div><div class="v" id="lastRun">—</div></div>
+              <div class="row"><div class="k">Suite status</div><div class="v" id="suiteStatus">—</div></div>
+            </div>
+
+            <div class="note" style="margin-top:12px;">
+              This cockpit is designed for executive stress: <b>reputation</b>, <b>hostile manipulation</b>, <b>audit pressure</b>.
+              It shows what holds — and what breaks — in a deterministic proof layer.
+            </div>
+
+            <div class="mono" id="reportConsole" style="margin-top:12px; min-height: 180px;"></div>
+          </div>
+        </div>
+      </aside>
+    </section>
   </main>
 
   <script>
-    // ===== Background star field (light & elegant) =====
-    (function () {
-      const canvas = document.getElementById("bg-field");
-      const ctx = canvas.getContext("2d", { alpha: true });
+    // -------------------------
+    // OpenProof RPO v0.1 — Deterministic Tests
+    // -------------------------
+    const $ = (id)=>document.getElementById(id);
 
-      let width, height, particles = [];
-      const COUNT = 220;
+    function nowStamp(){
+      const d = new Date();
+      const pad = (n)=>String(n).padStart(2,"0");
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    }
 
-      function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        const ratio = window.devicePixelRatio || 1;
+    function short(h){ return h ? (h.slice(0,10) + "…") : "—"; }
 
-        canvas.width = width * ratio;
-        canvas.height = height * ratio;
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-      }
+    function setBadge(el, kind, text){
+      el.classList.remove("ok","warn","bad");
+      if(kind) el.classList.add(kind);
+      el.textContent = text;
+    }
 
-      function createParticle() {
-        return {
-          x: (Math.random() * 2 - 1),
-          y: (Math.random() * 2 - 1),
-          z: Math.random() * 0.9 + 0.1,
-          speed: Math.random() * 0.004 + 0.0015
-        };
-      }
-
-      function init() {
-        particles = [];
-        for (let i = 0; i < COUNT; i++) particles.push(createParticle());
-      }
-
-      function project(p) {
-        const f = 400;
-        const s = f / (f * p.z);
-        return {
-          x: p.x * width * 0.5 * s + width / 2,
-          y: p.y * height * 0.5 * s + height / 2
-        };
-      }
-
-      function loop() {
-        ctx.clearRect(0, 0, width, height);
-
-        for (const p of particles) {
-          p.z -= p.speed;
-          if (p.z < 0.08) {
-            Object.assign(p, createParticle());
-            p.z = 1;
-          }
-
-          const { x, y } = project(p);
-          const a = Math.min(1, (1.2 - p.z) * 1.1);
-
-          ctx.fillStyle = `rgba(241,230,163,${0.6 * a})`;
-          ctx.beginPath();
-          ctx.arc(x, y, 1.6, 0, Math.PI * 2);
-          ctx.fill();
+    // Stable stringify: sorts keys recursively for deterministic hashing
+    function stableStringify(obj){
+      const seen = new WeakSet();
+      const normalize = (v)=>{
+        if(v && typeof v === "object"){
+          if(seen.has(v)) throw new Error("Cyclic structure not supported");
+          seen.add(v);
+          if(Array.isArray(v)) return v.map(normalize);
+          const out = {};
+          Object.keys(v).sort().forEach(k => out[k] = normalize(v[k]));
+          return out;
         }
-
-        requestAnimationFrame(loop);
-      }
-
-      window.addEventListener("resize", resize);
-      resize(); init(); loop();
-    })();
-
-    // ===== Helpers (RPO-ish minimal demo payload) =====
-    const $ = (id) => document.getElementById(id);
-
-    function setStatus(el, state, label){
-      el.dataset.state = state;
-      el.querySelector("span:last-child").textContent = label;
-    }
-
-    function stableAnchors(text){
-      // Conservative, DETERMINISTIC extraction (no “smart” ambiguity)
-      // Date (YYYY-MM-DD)
-      const d = (text.match(/\b(20\d{2})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\b/) || [null])[0];
-      // Place: a simple pattern after "in "
-      const place = (text.match(/\bin\s+([A-Z][A-Za-z\-' ]{2,})\b/) || [null, null])[1];
-      return { date: d || null, place: place ? place.trim() : null };
-    }
-
-    function canonicalPayload(bundle){
-      // Minimal canonicalization: fixed field order, stable concatenation
-      // (Pedagogical demo, not the full spec.)
-      return [
-        "rpo_version=" + bundle.rpo_version,
-        "bundle_id=" + bundle.bundle_id,
-        "created_at=" + bundle.created_at,
-        "issuer=" + bundle.issuer.label,
-        "subject=" + bundle.subject.label,
-        "title=" + bundle.narrative.title,
-        "narrative=" + bundle.narrative.text
-      ].join("|");
+        return v;
+      };
+      return JSON.stringify(normalize(obj));
     }
 
     async function sha256Hex(str){
       const enc = new TextEncoder();
-      const data = enc.encode(str);
-      const hash = await crypto.subtle.digest("SHA-256", data);
-      return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");
+      const buf = enc.encode(str);
+      const digest = await crypto.subtle.digest("SHA-256", buf);
+      const arr = Array.from(new Uint8Array(digest));
+      return arr.map(b=>b.toString(16).padStart(2,"0")).join("");
     }
 
-    function buildBundle(inputText){
-      // Deterministic bundle generator (fixed IDs for demo)
-      const anchors = stableAnchors(inputText);
-      return {
-        rpo_version: "0.1",
-        bundle_id: "demo-bundle-0001",
-        created_at: "2026-01-28T00:00:00Z",
-        issuer: { label: "OpenProof Demo (browser-local)" },
-        subject: { label: "Decision traceability (demo)" },
-        narrative: {
-          title: "Decision record (demo)",
-          text: inputText.trim()
+    // -------------------------
+    // Fixtures (deterministic)
+    // Expected hashes are computed from stableStringify(core) using SHA-256
+    // -------------------------
+    const FIX = {
+      reproducibility: {
+        name: "Stress 1 — Reproducibility",
+        core: {
+          rpo_version:"0.1",
+          mode:"deterministic",
+          context:"board_reputation",
+          decision_type:"institutional_statement",
+          moment_t:"2026-02-18",
+          scope:"Industrial group — multi-sites, multi-entities (EU + non-EU)",
+          authority:"Executive Office",
+          owner:"COMEX",
+          sla_hours:24,
+          deadline:"2026-02-19 18:00",
+          declared_sources:["HRIS","LEGAL","OPS"],
+          coverage_pct:72,
+          missing_sources:["SEC","LMS","EXT"],
+          defensibility:{label:"MEDIUM",score:66},
+          institutional_exposure:"MEDIUM",
+          invariants:{no_ai:true,no_interpretation:true,hash_means_integrity_not_truth:true},
+          readable_preview_sha256:"f4c83c2c7b9a7c12c4f6a2461dfe2b81d3e92c4430e8e70c9c9bcdadf8a4b3a0"
         },
-        anchors: anchors
+        preview:
+          "Executive defense note (Moment T)\n" +
+          "Scope: Industrial group — multi-sites, multi-entities (EU + non-EU)\n" +
+          "Exposure: MEDIUM | Defensibility: MEDIUM (66)\n" +
+          "Decision: institutional statement (board-facing)\n" +
+          "Owner: COMEX | SLA: 24h\n",
+        expected_core_hash: "bcab064df666a855b9aab201ab6c91e34d347731de9638fe3a6db4376ee05113"
+      },
+
+      tamper: {
+        name: "Stress 2 — Internal Tamper / Sabotage",
+        core: {
+          rpo_version:"0.1",
+          mode:"deterministic",
+          context:"internal_sabotage",
+          decision_type:"workforce_action",
+          moment_t:"2026-02-18",
+          scope:"Sensitive program — restricted access workforce action",
+          authority:"Group HR Authority",
+          owner:"RH",
+          sla_hours:48,
+          deadline:"2026-02-20 10:00",
+          declared_sources:["HRIS","LEGAL","LMS","OPS"],
+          coverage_pct:84,
+          missing_sources:["SEC","EXT"],
+          defensibility:{label:"HIGH",score:82},
+          institutional_exposure:"MEDIUM",
+          invariants:{no_ai:true,no_interpretation:true,hash_means_integrity_not_truth:true},
+          readable_preview_sha256:"1f0e5b7d9f0f8f0f7fd6de8f9d5d89f3d33a35b8a06f403b2d8d0a8a89b3d9d0"
+        },
+        preview:
+          "Workforce decision record (Moment T)\n" +
+          "Scope: Sensitive program — restricted access workforce action\n" +
+          "Exposure: MEDIUM | Defensibility: HIGH (82)\n" +
+          "Sources: HRIS, LEGAL, LMS, OPS\n" +
+          "Owner: RH | SLA: 48h\n",
+        expected_core_hash: "915ac3e54c0c96edb654acc2764a602de2ef40a35fb974e4540ce3cf8c99dd9e"
+      },
+
+      narrative: {
+        name: "Stress 3 — Influence / Narrative Swap",
+        core: {
+          rpo_version:"0.1",
+          mode:"deterministic",
+          context:"influence_attack",
+          decision_type:"security_incident_governance",
+          moment_t:"2026-02-18",
+          scope:"Suspected data exfiltration — public exposure risk",
+          authority:"CISO Office",
+          owner:"SEC",
+          sla_hours:12,
+          deadline:"2026-02-19 08:00",
+          declared_sources:["SEC","LEGAL","OPS"],
+          coverage_pct:78,
+          missing_sources:["HRIS","LMS","EXT"],
+          defensibility:{label:"MEDIUM",score:61},
+          institutional_exposure:"HIGH",
+          invariants:{no_ai:true,no_interpretation:true,hash_means_integrity_not_truth:true},
+          readable_preview_sha256:"b8c5a55d1e1c15d35c6d93a92ef4b5d6b7f3e9f0f2f04b8e2c9a2de7cf9c5e6f"
+        },
+        preview:
+          "Security incident governance (Moment T)\n" +
+          "Scope: Suspected data exfiltration — public exposure risk\n" +
+          "Exposure: HIGH | Defensibility: MEDIUM (61)\n" +
+          "Owner: SEC | SLA: 12h\n" +
+          "Action: contain, seal, escalate (Legal + COMEX)\n",
+        swapped_preview:
+          "Official statement (draft)\n" +
+          "Scope: Incident contained. No material impact identified.\n" +
+          "Exposure: LOW | Defensibility: HIGH (95)\n" +
+          "Owner: Communications\n" +
+          "Action: publish reassurance\n",
+        expected_core_hash: "2e831252df4dd8bea478ddf00559f18a5e8dd6df089db4d80a567a37ba959f71"
+      }
+    };
+
+    // IMPORTANT: These preview sha256 markers must match previews above.
+    // We verify them at runtime to avoid silent drift.
+    async function verifyPreviewMarkers(){
+      const issues = [];
+      for(const key of ["reproducibility","tamper","narrative"]){
+        const fx = FIX[key];
+        const got = await sha256Hex(fx.preview);
+        if(got !== fx.core.readable_preview_sha256){
+          issues.push(`${key}: preview marker mismatch (core.readable_preview_sha256 is not aligned)`);
+        }
+      }
+      return issues;
+    }
+
+    // UI: init expected hashes
+    function initExpectedUI(){
+      $("s1Expected").textContent = short(FIX.reproducibility.expected_core_hash);
+      $("s2Expected").textContent = short(FIX.tamper.expected_core_hash);
+
+      setBadge($("s1Badge"), "warn", "—");
+      setBadge($("s2Badge"), "warn", "—");
+      setBadge($("s3Badge"), "warn", "—");
+
+      $("reportConsole").textContent =
+        "Ready.\n" +
+        "Run the 3 stress tests to validate deterministic reproducibility and tamper-evidence.\n";
+      $("suiteStatus").textContent = "—";
+      $("lastRun").textContent = "—";
+      $("rt").textContent = `${navigator.userAgent.includes("Safari") ? "WebCrypto (Safari)" : "WebCrypto"}`;
+    }
+
+    function showCoreConsole(which){
+      const map = {
+        s1: { fx: FIX.reproducibility, el: $("s1Console") },
+        s2: { fx: FIX.tamper, el: $("s2Console") },
+        s3: { fx: FIX.narrative, el: $("s3Console") }
       };
+      const item = map[which];
+      const visible = item.el.style.display !== "none";
+      item.el.style.display = visible ? "none" : "block";
+      item.el.textContent =
+        `Sealed core (stable keys):\n` +
+        `${JSON.stringify(item.fx.core, null, 2)}\n`;
     }
 
-    // ===== Tests =====
-    const sampleInput =
-`On 2026-01-28 in Paris, a hiring decision was taken after arbitration.
-Data was scattered (HRIS, email approvals, meeting rationales). The risk is not intent; the risk is irreconstructibility.
-Goal: make the chain reconstructible, not “decide truth”.`;
+    async function runStress1(){
+      const fx = FIX.reproducibility;
+      const t0 = performance.now();
 
-    function logLine(s){
-      const el = $("log");
-      el.textContent += (el.textContent.endsWith("\n") || el.textContent.length===0) ? "" : "\n";
-      el.textContent += s + "\n";
-      el.scrollTop = el.scrollHeight;
+      const coreStr = stableStringify(fx.core);
+      const hash = await sha256Hex(coreStr);
+      const ok = (hash === fx.expected_core_hash);
+
+      $("s1Computed").textContent = short(hash);
+      $("s1Result").textContent = ok ? "PASS — reproducible" : "FAIL — mismatch";
+      setBadge($("s1Badge"), ok ? "ok" : "bad", ok ? "PASS" : "FAIL");
+
+      const dt = Math.round(performance.now() - t0);
+      return { name: fx.name, pass: ok, detail: ok ? `PASS (${dt}ms) hash=${hash}` : `FAIL expected=${fx.expected_core_hash} got=${hash}` };
     }
 
-    function resetUI(){
-      setStatus($("stDet"), "idle", "Not run");
-      setStatus($("stSha"), "idle", "Not run");
-      setStatus($("stAnc"), "idle", "Not run");
-      $("log").textContent = "Click “Run tests…” to get local proof: results + hash + canonical payload.";
+    async function runStress2(){
+      const fx = FIX.tamper;
+      const tamper = $("tamperToggle").checked;
+      const t0 = performance.now();
+
+      // Clone core
+      const core = JSON.parse(JSON.stringify(fx.core));
+      if(tamper){
+        // One-field change: deadline is shifted by 1 hour (tamper)
+        core.deadline = "2026-02-20 11:00";
+      }
+
+      const coreStr = stableStringify(core);
+      const hash = await sha256Hex(coreStr);
+
+      // EXPECTATION:
+      // - without tamper: PASS (hash == expected)
+      // - with tamper: FAIL (hash != expected)
+      const pass = tamper ? (hash !== fx.expected_core_hash) : (hash === fx.expected_core_hash);
+
+      $("s2Computed").textContent = short(hash);
+      $("s2Result").textContent = pass ? (tamper ? "PASS — tamper detected" : "PASS — stable") : "FAIL — unexpected";
+      setBadge($("s2Badge"), pass ? "ok" : "bad", pass ? "PASS" : "FAIL");
+
+      const dt = Math.round(performance.now() - t0);
+      const expectation = tamper ? "hash should differ" : "hash should match";
+      return { name: fx.name, pass, detail: `${pass ? "PASS" : "FAIL"} (${dt}ms) (${expectation}) hash=${hash}` };
+    }
+
+    async function runStress3(){
+      const fx = FIX.narrative;
+      const swap = $("swapPreviewToggle").checked;
+      const t0 = performance.now();
+
+      // Core hash is always computed from sealed core fixture (stable)
+      const coreStr = stableStringify(fx.core);
+      const coreHash = await sha256Hex(coreStr);
+
+      // Readable preview can be swapped (attack)
+      const preview = swap ? fx.swapped_preview : fx.preview;
+      const previewHash = await sha256Hex(preview);
+
+      // Validation rule:
+      // previewHash must equal the marker embedded in core (readable_preview_sha256)
+      // If swapped preview: mismatch => should FAIL (attack detected)
+      const marker = fx.core.readable_preview_sha256;
+      const pass = (previewHash === marker) && (coreHash === fx.expected_core_hash);
+
+      $("s3CoreHash").textContent = short(coreHash);
+      $("s3PreviewHash").textContent = short(previewHash);
+      $("s3Result").textContent = pass ? "PASS — narrative bound to core" : "FAIL — preview mismatch detected";
+      setBadge($("s3Badge"), pass ? "ok" : "bad", pass ? "PASS" : "FAIL");
+
+      const dt = Math.round(performance.now() - t0);
+      const why = pass ? "preview matches core marker" : `previewHash != core.readable_preview_sha256 (${short(marker)})`;
+      const expectedCoreOk = (coreHash === fx.expected_core_hash);
+      return { name: fx.name, pass, detail: `${pass ? "PASS" : "FAIL"} (${dt}ms) ${why} | coreHashOk=${expectedCoreOk}` };
+    }
+
+    function renderReport(lines){
+      $("reportConsole").textContent = lines.join("\n") + "\n";
+    }
+
+    function setSuiteStatus(passCount, total){
+      if(passCount === total){
+        $("suiteStatus").textContent = "ALL PASS";
+      }else if(passCount === 0){
+        $("suiteStatus").textContent = "ALL FAIL";
+      }else{
+        $("suiteStatus").textContent = `${passCount}/${total} PASS`;
+      }
     }
 
     async function runAll(){
-      if (!crypto?.subtle){
-        $("log").textContent = "WebCrypto is not available in this browser. Cannot compute SHA-256 locally.";
-        return;
+      const stamp = nowStamp();
+      $("lastRun").textContent = stamp;
+
+      const report = [];
+      report.push(`OpenProof — RPO v0.1 | Deterministic test report`);
+      report.push(`Run: ${stamp}`);
+      report.push(`Mode: deterministic | Crypto: SHA-256 | Local: browser`);
+      report.push(`—`);
+
+      // Sanity check: preview markers
+      const markerIssues = await verifyPreviewMarkers();
+      if(markerIssues.length){
+        report.push(`SANITY: FAIL (fixture drift)`);
+        markerIssues.forEach(x => report.push(`- ${x}`));
+        report.push(`—`);
+      }else{
+        report.push(`SANITY: PASS (preview markers aligned)`);
+        report.push(`—`);
       }
 
-      resetUI();
-      $("log").textContent = "";
-      logLine("OPENPROOF RPO v0.1 — TESTS (local)");
-      logLine("--------------------------------------------------");
-      logLine("Input (sample):");
-      logLine(sampleInput);
-      logLine("--------------------------------------------------");
+      const results = [];
+      results.push(await runStress1());
+      results.push(await runStress2());
+      results.push(await runStress3());
 
-      // 1) Determinism
-      setStatus($("stDet"), "running", "Running");
-      try{
-        const b1 = buildBundle(sampleInput);
-        const b2 = buildBundle(sampleInput);
-
-        const p1 = canonicalPayload(b1);
-        const p2 = canonicalPayload(b2);
-
-        const h1 = await sha256Hex(p1);
-        const h2 = await sha256Hex(p2);
-
-        const ok = (p1 === p2) && (h1 === h2);
-
-        logLine("[Determinism] payload match: " + (p1 === p2));
-        logLine("[Determinism] hash match:    " + (h1 === h2));
-        logLine("[Determinism] sha256:        " + h1);
-
-        setStatus($("stDet"), ok ? "pass" : "fail", ok ? "PASS" : "FAIL");
-        if (!ok) throw new Error("Determinism mismatch.");
-      }catch(e){
-        setStatus($("stDet"), "fail", "FAIL");
-        logLine("⚠️ [Determinism] " + (e?.message || "Error"));
+      let passCount = 0;
+      for(const r of results){
+        if(r.pass) passCount++;
+        report.push(`${r.pass ? "PASS" : "FAIL"} | ${r.name}`);
+        report.push(`  ${r.detail}`);
+        report.push(`—`);
       }
 
-      // 2) SHA-256 reproducibility
-      setStatus($("stSha"), "running", "Running");
-      try{
-        const b = buildBundle(sampleInput);
-        const payload = canonicalPayload(b);
-        const hA = await sha256Hex(payload);
-        const hB = await sha256Hex(payload);
+      setSuiteStatus(passCount, results.length);
+      renderReport(report);
 
-        const ok = (hA === hB);
-
-        logLine("--------------------------------------------------");
-        logLine("[SHA-256] recompute match: " + ok);
-        logLine("[SHA-256] canonical payload:");
-        logLine(payload);
-
-        setStatus($("stSha"), ok ? "pass" : "fail", ok ? "PASS" : "FAIL");
-        if (!ok) throw new Error("SHA-256 is not reproducible.");
-      }catch(e){
-        setStatus($("stSha"), "fail", "FAIL");
-        logLine("⚠️ [SHA-256] " + (e?.message || "Error"));
-      }
-
-      // 3) Anchors stability
-      setStatus($("stAnc"), "running", "Running");
-      try{
-        const a1 = stableAnchors(sampleInput);
-        const a2 = stableAnchors(sampleInput);
-        const ok = (JSON.stringify(a1) === JSON.stringify(a2));
-
-        logLine("--------------------------------------------------");
-        logLine("[Anchors] stable extraction: " + ok);
-        logLine("[Anchors] date:  " + (a1.date || "null"));
-        logLine("[Anchors] place: " + (a1.place || "null"));
-
-        setStatus($("stAnc"), ok ? "pass" : "fail", ok ? "PASS" : "FAIL");
-        if (!ok) throw new Error("Anchors mismatch.");
-      }catch(e){
-        setStatus($("stAnc"), "fail", "FAIL");
-        logLine("⚠️ [Anchors] " + (e?.message || "Error"));
-      }
-
-      logLine("--------------------------------------------------");
-      logLine("Conclusion: these tests don’t prove truth. They prove a property: local auditability and detectable tampering.");
+      // A subtle executive hint: In crisis we *expect* Stress 2/3 to FAIL when toggles are ON.
+      // We do not “force” toggles; user controls them.
     }
 
-    $("runAll").addEventListener("click", runAll);
-    $("reset").addEventListener("click", resetUI);
+    function resetAll(){
+      $("tamperToggle").checked = false;
+      $("swapPreviewToggle").checked = false;
 
-    // Initial
-    resetUI();
+      $("s1Computed").textContent = "—";
+      $("s2Computed").textContent = "—";
+      $("s3CoreHash").textContent = "—";
+      $("s3PreviewHash").textContent = "—";
+
+      $("s1Result").textContent = "—";
+      $("s2Result").textContent = "—";
+      $("s3Result").textContent = "—";
+
+      setBadge($("s1Badge"), "warn", "—");
+      setBadge($("s2Badge"), "warn", "—");
+      setBadge($("s3Badge"), "warn", "—");
+
+      $("s1Console").style.display = "none";
+      $("s2Console").style.display = "none";
+      $("s3Console").style.display = "none";
+
+      $("lastRun").textContent = "—";
+      $("suiteStatus").textContent = "—";
+      $("reportConsole").textContent =
+        "Ready.\n" +
+        "Run the 3 stress tests to validate deterministic reproducibility and tamper-evidence.\n";
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        return true;
+      }catch(e){
+        // Fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+      initExpectedUI();
+      resetAll();
+
+      $("runAll").addEventListener("click", runAll);
+      $("reset").addEventListener("click", resetAll);
+
+      $("runS1").addEventListener("click", async ()=>{
+        const stamp = nowStamp();
+        $("lastRun").textContent = stamp;
+        const r1 = await runStress1();
+        renderReport([
+          "OpenProof — RPO v0.1 | Single test report",
+          `Run: ${stamp}`,
+          "—",
+          `${r1.pass ? "PASS" : "FAIL"} | ${r1.name}`,
+          `  ${r1.detail}`
+        ]);
+        setSuiteStatus(r1.pass ? 1 : 0, 1);
+      });
+
+      $("runS2").addEventListener("click", async ()=>{
+        const stamp = nowStamp();
+        $("lastRun").textContent = stamp;
+        const r2 = await runStress2();
+        renderReport([
+          "OpenProof — RPO v0.1 | Single test report",
+          `Run: ${stamp}`,
+          `Tamper toggle: ${$("tamperToggle").checked ? "ON" : "OFF"}`,
+          "—",
+          `${r2.pass ? "PASS" : "FAIL"} | ${r2.name}`,
+          `  ${r2.detail}`
+        ]);
+        setSuiteStatus(r2.pass ? 1 : 0, 1);
+      });
+
+      $("runS3").addEventListener("click", async ()=>{
+        const stamp = nowStamp();
+        $("lastRun").textContent = stamp;
+        const r3 = await runStress3();
+        renderReport([
+          "OpenProof — RPO v0.1 | Single test report",
+          `Run: ${stamp}`,
+          `Swap preview toggle: ${$("swapPreviewToggle").checked ? "ON" : "OFF"}`,
+          "—",
+          `${r3.pass ? "PASS" : "FAIL"} | ${r3.name}`,
+          `  ${r3.detail}`
+        ]);
+        setSuiteStatus(r3.pass ? 1 : 0, 1);
+      });
+
+      $("showS1").addEventListener("click", ()=>showCoreConsole("s1"));
+      $("showS2").addEventListener("click", ()=>showCoreConsole("s2"));
+      $("showS3").addEventListener("click", ()=>showCoreConsole("s3"));
+
+      $("copyReport").addEventListener("click", async ()=>{
+        const ok = await copyText($("reportConsole").textContent || "");
+        const msg = ok ? "Report copied to clipboard." : "Copy failed.";
+        renderReport([$("reportConsole").textContent.trim(), "—", msg]);
+      });
+    });
   </script>
 </body>
 </html>
+
 
