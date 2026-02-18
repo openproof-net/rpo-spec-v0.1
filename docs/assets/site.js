@@ -37,7 +37,7 @@
     setTimeout(function () {
       if (!document.hidden) {
         // Uncomment if you want auto-redirect enabled
-        // window.location.href = "./sandbox.html";
+        // window.location.href = "./simulator.html";
       }
     }, AUTO_REDIRECT_DELAY);
   }
