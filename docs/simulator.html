@@ -451,12 +451,52 @@
     }
     .pill2 b{ color: rgba(241,230,163,.92); }
 
+    /* ✅ NEW: KPI strip for stronger hierarchy */
+    .kpiRow{
+      display:grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin: 10px 0 12px;
+    }
+    .kpiCard{
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(255,255,255,.02));
+      padding: 12px 12px;
+      min-height: 74px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .kpiCard .kk{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: rgba(167,176,194,.80);
+    }
+    .kpiCard .kvv{
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      letter-spacing:.2px;
+      font-size: 22px;
+      line-height: 1.0;
+      color: rgba(241,230,163,.96);
+    }
+    .kpiCard .sub{
+      font-size: 11px;
+      color: rgba(167,176,194,.78);
+      margin-top: 6px;
+    }
+    .kpiCard.danger .kvv{ color: rgba(255,200,200,.95); }
+    .kpiCard.warn .kvv{ color: rgba(255,236,180,.95); }
+    .kpiCard.ok .kvv{ color: rgba(180,255,220,.95); }
+
     /* ✅ V3: output grid (2 columns), airy & readable */
     .tableish{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 14px;
+      margin-top: 12px;
       align-items: start;
     }
     .trow{
@@ -467,6 +507,7 @@
       border-radius: 12px;
       border: 1px solid rgba(212,175,55,.10);
       background: rgba(0,0,0,.18);
+      min-height: 56px;
     }
     .trow .k{
       font-size: 11px;
@@ -490,6 +531,7 @@
     /* Full-width blocks inside grid */
     .span-2{ grid-column: 1 / -1; }
 
+    /* ✅ Hash full should WRAP (no horizontal scroll) */
     .hashbox{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size: 11px;
@@ -498,8 +540,9 @@
       border-radius: 12px;
       border: 1px solid rgba(212,175,55,.12);
       background: rgba(0,0,0,.22);
-      overflow:auto;
-      white-space: nowrap;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      line-height: 1.45;
     }
 
     /* ✅ V3: structured escalation inside output */
@@ -635,6 +678,8 @@
       .form{ grid-template-columns: 1fr; }
       .systems{ grid-template-columns: 1fr; }
       .monoBlock{ max-width: none; }
+
+      .kpiRow{ grid-template-columns: 1fr; }
 
       /* Output grid collapses cleanly */
       .tableish{ grid-template-columns: 1fr; }
@@ -869,6 +914,25 @@
               <div class="meta" id="outMeta">—</div>
             </div>
 
+            <!-- ✅ NEW: KPI hierarchy strip -->
+            <div class="kpiRow" aria-label="Executive summary KPIs">
+              <div class="kpiCard" id="kpiCoverageCard">
+                <div class="kk" id="kpiCovLabel">Coverage</div>
+                <div class="kvv" id="kpiCoverage">—</div>
+                <div class="sub" id="kpiCovSub">Evidence availability</div>
+              </div>
+              <div class="kpiCard" id="kpiDefCard">
+                <div class="kk" id="kpiDefLabel">Defensibility</div>
+                <div class="kvv" id="kpiDef">—</div>
+                <div class="sub" id="kpiDefSub">Decision integrity</div>
+              </div>
+              <div class="kpiCard" id="kpiExpoCard">
+                <div class="kk" id="kpiExpoLabel">Institutional exposure</div>
+                <div class="kvv" id="kpiExpo">—</div>
+                <div class="sub" id="kpiExpoSub">Risk band</div>
+              </div>
+            </div>
+
             <div class="topline">
               <span class="pill2"><b id="outCoveragePill">Coverage: —</b></span>
               <span class="pill2"><b id="outMissingPill">Missing sources: —</b></span>
@@ -877,38 +941,38 @@
 
             <!-- ✅ V3: grid output -->
             <div class="tableish">
-              <div class="trow">
+              <div class="trow" id="rowCoverage">
                 <div class="k" id="kCoverage">Coverage</div>
                 <div class="v" id="outCoverage">—</div>
               </div>
 
-              <div class="trow">
+              <div class="trow" id="rowDef">
                 <div class="k" id="kDef">Defensibility</div>
                 <div class="v" id="outDef">—</div>
               </div>
 
-              <div class="trow">
+              <div class="trow" id="rowSeal">
                 <div class="k">Seal</div>
                 <div class="v" id="outSeal">—</div>
               </div>
 
-              <div class="trow">
+              <div class="trow" id="rowHashShort">
                 <div class="k">Public hash (sealed core)</div>
                 <div class="v" id="outHashShort">—</div>
               </div>
 
-              <div class="trow span-2">
+              <div class="trow span-2" id="rowHashFull">
                 <div class="k">Public hash — full</div>
                 <div class="hashbox" id="outHashFull">—</div>
               </div>
 
-              <div class="trow span-2">
+              <div class="trow span-2" id="rowOwnerClock">
                 <div class="k">Decision record owner / clock</div>
                 <div class="v" id="outOwnerClock">—</div>
               </div>
 
               <!-- ✅ V3: structured escalation -->
-              <div class="trow span-2">
+              <div class="trow span-2" id="rowEscalation">
                 <div class="k">Escalation governance</div>
                 <div class="v">
                   <div class="escalation-grid" aria-label="Escalation governance grid">
@@ -920,7 +984,7 @@
                 </div>
               </div>
 
-              <div class="trow span-2">
+              <div class="trow span-2" id="rowNext">
                 <div class="k">Next institutional action</div>
                 <div class="v" id="outNext">—</div>
               </div>
@@ -950,11 +1014,13 @@
 
             <div class="tabs" role="tablist" aria-label="Preview tabs">
               <button class="tab active" data-tab="readable">Readable preview</button>
+              <button class="tab" data-tab="power">Power (what this enables)</button>
               <button class="tab" data-tab="json">Sealed JSON</button>
               <button class="tab" data-tab="invariants">Proof & invariants</button>
             </div>
 
             <div id="tab-readable" class="monoBlock" aria-live="polite"></div>
+            <div id="tab-power" class="monoBlock" style="display:none;"></div>
             <div id="tab-json" class="monoBlock" style="display:none;"></div>
             <div id="tab-invariants" class="monoBlock" style="display:none;"></div>
           </div>
@@ -962,7 +1028,7 @@
 
         <!-- Lineage & Quality -->
         <div class="stack">
-          <div class="panel inset">
+          <div class="panel inset" id="lineagePanel">
             <div class="inner">
               <div class="section-title">
                 <h2>Lineage & quality checks</h2>
@@ -987,7 +1053,7 @@
           </div>
 
           <!-- Decision support -->
-          <div class="panel inset">
+          <div class="panel inset" id="supportPanel">
             <div class="inner">
               <div class="section-title">
                 <h2>Decision support (deterministic)</h2>
@@ -1355,6 +1421,29 @@
       return lines.join("\n");
     }
 
+    function buildPowerTab(state, hash){
+      const vocab = viewMap[state.viewMode];
+      const lines = [];
+      lines.push(`What this enables (deterministic):`);
+      lines.push(``);
+      lines.push(`1) Decision defensibility`);
+      lines.push(`- You can show ${vocab.defLabel} + ${vocab.covLabel} at Moment T, with stable rules.`);
+      lines.push(`- You can justify escalation (or not) without “AI opinion”.`);
+      lines.push(``);
+      lines.push(`2) Institutional accountability`);
+      lines.push(`- Owner + SLA + deadline are explicit.`);
+      lines.push(`- Escalation path is traceable (IT/Sec, Legal, COMEX).`);
+      lines.push(``);
+      lines.push(`3) Public verifiability`);
+      lines.push(`- Hash proves integrity over time (sealed core), not truth.`);
+      lines.push(`- Hash short: ${hash ? (hash.slice(0,10)+"…") : "—"}`);
+      lines.push(``);
+      lines.push(`4) Operational discipline`);
+      lines.push(`- Missing sources = explicit blockers, not implicit blame.`);
+      lines.push(`- Next action is actionnable and repeatable.`);
+      return lines.join("\n");
+    }
+
     function buildInvariants(state, hash){
       return [
         `Invariant set (deterministic):`,
@@ -1427,6 +1516,16 @@
       }
     }
 
+    function setExecutiveDensity(){
+      // Executive = less dense: hide hash full + escalation grid + lineage panel (optional)
+      const isExec = (VIEW_MODE === "executive");
+      $("rowHashFull").style.display = isExec ? "none" : "flex";
+      $("rowEscalation").style.display = isExec ? "none" : "flex";
+
+      // keep support panel visible (it’s useful), but hide lineage panel in executive to reduce noise
+      $("lineagePanel").style.display = isExec ? "none" : "block";
+    }
+
     function applyViewVocabulary(){
       const v = viewMap[VIEW_MODE];
 
@@ -1442,9 +1541,13 @@
 
       $("kCoverage").textContent = v.covLabel;
       $("kCovC").textContent = v.covLabel;
+      $("kpiCovLabel").textContent = v.covLabel;
 
       $("kDef").textContent = v.defLabel;
       $("kDefC").textContent = v.defLabel;
+      $("kpiDefLabel").textContent = v.defLabel;
+
+      $("kpiExpoLabel").textContent = v.expoLabel;
 
       $("cockpitNote").textContent = v.cockpitNote;
 
@@ -1453,6 +1556,15 @@
       $("execSupport").style.display = (VIEW_MODE==="executive") ? "block" : "none";
 
       $("cView").textContent = v.label;
+
+      setExecutiveDensity();
+    }
+
+    function setKpiCardClass(el, band){
+      el.classList.remove("ok","warn","danger");
+      if(band==="HIGH") el.classList.add("ok");
+      else if(band==="MEDIUM") el.classList.add("warn");
+      else el.classList.add("danger");
     }
 
     function syncChips(state, hash){
@@ -1462,6 +1574,15 @@
       $("chipMoment").textContent = state.momentT;
       $("chipExpo").textContent = state.exposure;
       $("chipHash").textContent = shortHash(hash);
+
+      // KPI strip
+      $("kpiCoverage").textContent = `${state.coverage}%`;
+      $("kpiDef").textContent = `${state.def.score}`;
+      $("kpiExpo").textContent = `${state.exposure}`;
+
+      setKpiCardClass($("kpiCoverageCard"), state.coverage >= 80 ? "HIGH" : state.coverage >= 55 ? "MEDIUM" : "LOW");
+      setKpiCardClass($("kpiDefCard"), state.def.label);
+      setKpiCardClass($("kpiExpoCard"), state.exposure === "LOW" ? "HIGH" : state.exposure === "MEDIUM" ? "MEDIUM" : "LOW");
 
       $("cScope").textContent = state.scope || "—";
       $("cMoment").textContent = state.momentT || "—";
@@ -1487,7 +1608,6 @@
       $("outHashFull").textContent = hash || "—";
       $("outOwnerClock").textContent = `${state.owner} · SLA ${state.slaHours}h · Deadline ${state.deadline}`;
 
-      /* ✅ V3 escalation structured (no long sentence) */
       const e = state.escalation;
       $("escOwner").textContent = e.owner_set;
       $("escIT").textContent = e.add_it_sec;
@@ -1581,6 +1701,7 @@
       const hash = await sha256Hex(coreStr);
 
       $("tab-readable").textContent = buildReadablePreview(state, hash);
+      $("tab-power").textContent = buildPowerTab(state, hash);
       $("tab-json").textContent = JSON.stringify(core, null, 2);
       $("tab-invariants").textContent = buildInvariants(state, hash);
 
@@ -1612,6 +1733,7 @@
       autoDeadline();
 
       $("tab-readable").textContent = "";
+      $("tab-power").textContent = "";
       $("tab-json").textContent = "";
       $("tab-invariants").textContent = "";
 
@@ -1619,6 +1741,10 @@
       $("chipMoment").textContent = $("momentT").value;
       $("chipExpo").textContent = "—";
       $("chipHash").textContent = "—";
+
+      $("kpiCoverage").textContent = "—";
+      $("kpiDef").textContent = "—";
+      $("kpiExpo").textContent = "—";
 
       $("cScope").textContent = "—";
       $("cMoment").textContent = "—";
@@ -1702,6 +1828,7 @@
         }
       }
       $("tab-readable").style.display = name==="readable" ? "block":"none";
+      $("tab-power").style.display = name==="power" ? "block":"none";
       $("tab-json").style.display = name==="json" ? "block":"none";
       $("tab-invariants").style.display = name==="invariants" ? "block":"none";
     }
@@ -1777,6 +1904,7 @@
   </script>
 </body>
 </html>
+
 
 
 
