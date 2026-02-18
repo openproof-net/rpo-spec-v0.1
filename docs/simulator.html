@@ -598,6 +598,27 @@
       border-bottom-color: rgba(241,230,163,.35);
     }
 
+    /* NEW: view switch row */
+    .switchRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin: 10px 0 0;
+    }
+    .switchRow .left{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+    .miniLabel{
+      font-size: 11px;
+      color: rgba(167,176,194,.82);
+      letter-spacing:.2px;
+    }
+
     /* Responsive */
     @media (max-width: 1100px){
       .grid{ grid-template-columns: 1fr; }
@@ -653,13 +674,25 @@
             Context changes lexicon, weighting, visibility rules, and narrative template — without changing the sealed structure.
           </p>
 
+          <!-- NEW: view mode switch -->
+          <div class="switchRow">
+            <div class="left">
+              <span class="miniLabel">View mode</span>
+              <div class="tabs" style="margin-top:0;">
+                <button class="tab active" id="viewOperational" data-view="operational">Operational</button>
+                <button class="tab" id="viewExecutive" data-view="executive">Executive (COMEX)</button>
+              </div>
+            </div>
+            <span class="pill2" id="viewHint"><b>Operational:</b> traceability + reconstructibility</span>
+          </div>
+
           <div class="chips" id="chips">
             <span class="chip"><span class="pill">Context</span> <b id="chipContext">Institutional crisis</b></span>
             <span class="chip"><span class="pill">Moment T</span> <b id="chipMoment">—</b></span>
             <span class="chip"><span class="pill">Stakeholders</span> <b id="chipStake">enabled</b></span>
             <span class="chip"><span class="pill">Uncertainty log</span> <b id="chipUnc">enabled</b></span>
             <span class="chip"><span class="pill">Lineage</span> <b id="chipLin">enabled</b></span>
-            <span class="chip"><span class="pill">Institutional exposure</span> <b id="chipExpo">—</b></span>
+            <span class="chip"><span class="pill" id="chipExpoLabel">Institutional exposure</span> <b id="chipExpo">—</b></span>
             <span class="chip"><span class="pill">Public hash</span> <b id="chipHash">—</b></span>
           </div>
 
@@ -820,7 +853,7 @@
         <div class="panel inset output" id="outputPanel">
           <div class="inner">
             <div class="section-title">
-              <h2>Output — Institutional reaction bundle</h2>
+              <h2 id="outTitle">Output — Institutional reaction bundle</h2>
               <div class="meta" id="outMeta">—</div>
             </div>
 
@@ -831,8 +864,8 @@
             </div>
 
             <div class="tableish">
-              <div class="trow"><div class="k">Coverage</div><div class="v" id="outCoverage">—</div></div>
-              <div class="trow"><div class="k">Defensibility</div><div class="v" id="outDef">—</div></div>
+              <div class="trow"><div class="k" id="kCoverage">Coverage</div><div class="v" id="outCoverage">—</div></div>
+              <div class="trow"><div class="k" id="kDef">Defensibility</div><div class="v" id="outDef">—</div></div>
               <div class="trow"><div class="k">Seal</div><div class="v" id="outSeal">—</div></div>
 
               <div class="trow">
@@ -848,9 +881,16 @@
 
               <div class="trow"><div class="k">Escalation path (institutional)</div><div class="v" id="outEscalation">—</div></div>
               <div class="trow"><div class="k">Next institutional action</div><div class="v" id="outNext">—</div></div>
+
+              <!-- NEW: Executive layer rows (shown only in executive view) -->
+              <div id="execRows" style="display:none;">
+                <div class="trow"><div class="k">Executive risk vectors</div><div class="v" id="outVectors">—</div></div>
+                <div class="trow"><div class="k">COMEX answer</div><div class="v" id="outComex">—</div></div>
+                <div class="trow"><div class="k">Audit / litigation window</div><div class="v" id="outWindow">—</div></div>
+              </div>
             </div>
 
-            <div class="hint" style="margin-top:10px;">
+            <div class="hint" style="margin-top:10px;" id="outHint">
               This path is triggered by defensibility + exposure bands. It does not claim “truth”; it structures institutional reaction.
             </div>
 
@@ -901,13 +941,19 @@
               </div>
 
               <div class="tableish">
-                <div class="trow"><div class="k">Institutional exposure</div><div class="v" id="sExpo">—</div></div>
+                <div class="trow"><div class="k" id="kExpo2">Institutional exposure</div><div class="v" id="sExpo">—</div></div>
                 <div class="trow"><div class="k">Top blockers</div><div class="v" id="sBlockers">—</div></div>
                 <div class="trow"><div class="k">Next actions</div><div class="v" id="sActions">—</div></div>
                 <div class="trow"><div class="k">What improves score</div><div class="v" id="sImprove">—</div></div>
+
+                <!-- NEW: Executive quick summary (shown only in executive view) -->
+                <div id="execSupport" style="display:none;">
+                  <div class="trow"><div class="k">Risk vectors</div><div class="v" id="sVectors">—</div></div>
+                  <div class="trow"><div class="k">COMEX answer</div><div class="v" id="sComex">—</div></div>
+                </div>
               </div>
 
-              <div class="hint">
+              <div class="hint" id="supportHint">
                 This is not a “decision engine”. It is a defensibility layer: it tells you what is missing to make a decision reconstructible.
               </div>
             </div>
@@ -946,16 +992,24 @@
             </div>
 
             <div class="kv">
+              <div class="row"><div class="k">View</div><div class="v" id="cView">Operational</div></div>
               <div class="row"><div class="k">Scope</div><div class="v" id="cScope">—</div></div>
               <div class="row"><div class="k">Moment T</div><div class="v" id="cMoment">—</div></div>
-              <div class="row"><div class="k">Coverage</div><div class="v" id="cCoverage">—</div></div>
-              <div class="row"><div class="k">Defensibility</div><div class="v" id="cDef">—</div></div>
-              <div class="row"><div class="k">Institutional exposure</div><div class="v" id="cExpo">—</div></div>
+              <div class="row"><div class="k" id="kCovC">Coverage</div><div class="v" id="cCoverage">—</div></div>
+              <div class="row"><div class="k" id="kDefC">Defensibility</div><div class="v" id="cDef">—</div></div>
+              <div class="row"><div class="k" id="kExpoC">Institutional exposure</div><div class="v" id="cExpo">—</div></div>
               <div class="row"><div class="k">Owner / deadline</div><div class="v" id="cOwnerClock">—</div></div>
+
+              <!-- NEW: Executive cockpit rows -->
+              <div id="execCockpit" style="display:none;">
+                <div class="row"><div class="k">Risk vectors</div><div class="v" id="cVectors">—</div></div>
+                <div class="row"><div class="k">COMEX answer</div><div class="v" id="cComex">—</div></div>
+              </div>
+
               <div class="row"><div class="k">Hash</div><div class="v" id="cHash">—</div></div>
             </div>
 
-            <div class="footnote">
+            <div class="footnote" id="cockpitNote">
               Right panel is a “decision defense cockpit”: it summarizes reconstructibility at Moment T.
               It does not claim truth.
             </div>
@@ -970,6 +1024,28 @@
     // Deterministic engine
     // -------------------------
     const $ = (id)=>document.getElementById(id);
+
+    // NEW: view mode & terminology map
+    const viewMap = {
+      operational: {
+        label: "Operational",
+        hintHTML: "<b>Operational:</b> traceability + reconstructibility",
+        outTitle: "Output — Institutional reaction bundle",
+        expoLabel: "Institutional exposure",
+        covLabel: "Coverage",
+        defLabel: "Defensibility",
+        cockpitNote: "Right panel is a “decision defense cockpit”: it summarizes reconstructibility at Moment T. It does not claim truth."
+      },
+      executive: {
+        label: "Executive (COMEX)",
+        hintHTML: "<b>Executive:</b> risk vectors + go/no-go readiness",
+        outTitle: "Output — Executive defense bundle (COMEX)",
+        expoLabel: "Exposure",
+        covLabel: "Evidence coverage",
+        defLabel: "Decision integrity",
+        cockpitNote: "Executive view is a deterministic risk layer: it summarizes exposure and decision integrity. Accountability remains human."
+      }
+    };
 
     const ctxMap = {
       institutional_crisis: {
@@ -1004,6 +1080,9 @@
       { id:"sysEXT",  key:"EXT",  label:"External context", weight: 6 }
     ];
 
+    // NEW: state
+    let VIEW_MODE = "operational"; // 'operational' | 'executive'
+
     function todayISO(){
       const d = new Date();
       const yyyy = d.getFullYear();
@@ -1026,22 +1105,18 @@
     function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
     function computeCoverage(selected){
-      // coverage is weighted sum / total weights
       const total = sysDefs.reduce((a,s)=>a+s.weight,0);
       const have = sysDefs.filter(s=>selected.has(s.key)).reduce((a,s)=>a+s.weight,0);
       return Math.round((have/total)*100);
     }
 
     function computeDefensibility(coverage, missingCount, ctxKey, decisionKey){
-      // deterministic scoring: coverage drives base, missing drives penalty, context/decision adds fixed tweaks.
       let score = Math.round(coverage * 0.90);
       score -= missingCount * 6;
 
-      // context tweaks
       if(ctxKey === "labor_dispute") score -= 4;
       if(ctxKey === "institutional_crisis") score -= 2;
 
-      // decision type tweaks
       if(decisionKey === "security_incident") score -= 3;
       if(decisionKey === "compliance_training") score += 2;
 
@@ -1052,9 +1127,7 @@
     }
 
     function computeExposure(ctxKey, missingCount, hasLegal, hasSec){
-      // deterministic banding: base from context + modifiers
-      let band = ctxMap[ctxKey].baseExposure; // LOW/MEDIUM/HIGH baseline
-      // normalize to numeric for adjustments
+      let band = ctxMap[ctxKey].baseExposure;
       let x = band === "LOW" ? 1 : band === "MEDIUM" ? 2 : 3;
 
       if(missingCount >= 2) x += 1;
@@ -1080,7 +1153,6 @@
     }
 
     function escalationPath(owner, exposure, selected){
-      // deterministic escalation logic
       const addITSEC = exposure === "HIGH" || !selected.has("SEC");
       const addLegal = exposure !== "LOW" || !selected.has("LEGAL");
       const comex = exposure === "HIGH" ? "REQUIRED" : exposure === "MEDIUM" ? "OPTIONAL" : "NOT NEEDED";
@@ -1107,8 +1179,60 @@
       return arr.map(b=>b.toString(16).padStart(2,"0")).join("");
     }
 
+    // NEW: executive layer (risk vectors + COMEX answer + window)
+    function computeWindowMonths(ctxKey){
+      if(ctxKey === "regulatory_audit") return 24;
+      if(ctxKey === "labor_dispute") return 36;
+      return 12; // institutional crisis baseline
+    }
+
+    function computeRiskVectors(state){
+      // deterministic vectors: legal / operational / reputation / governance
+      // output is a compact string "LEGAL:HIGH · OPS:MEDIUM · REPUTATION:LOW · GOV:HIGH"
+      const vectors = { LEGAL:"LOW", OPS:"LOW", REPUTATION:"LOW", GOV:"LOW" };
+
+      // legal
+      if(state.context === "labor_dispute") vectors.LEGAL = "HIGH";
+      if(!state.selected.has("LEGAL")) vectors.LEGAL = "HIGH";
+      if(state.exposure === "HIGH") vectors.LEGAL = "HIGH";
+      if(state.def.label === "LOW" && vectors.LEGAL !== "HIGH") vectors.LEGAL = "MEDIUM";
+
+      // ops continuity
+      if(state.decisionType === "security_incident") vectors.OPS = "HIGH";
+      if(!state.selected.has("SEC") && vectors.OPS !== "HIGH") vectors.OPS = "MEDIUM";
+      if(!state.selected.has("OPS") && vectors.OPS === "LOW") vectors.OPS = "MEDIUM";
+      if(state.exposure === "HIGH") vectors.OPS = "HIGH";
+
+      // reputation/public
+      if(state.selected.has("EXT") && state.exposure !== "LOW") vectors.REPUTATION = "MEDIUM";
+      if(state.context === "institutional_crisis" && state.exposure === "HIGH") vectors.REPUTATION = "HIGH";
+
+      // governance integrity
+      if(state.def.label === "LOW") vectors.GOV = "HIGH";
+      else if(state.def.label === "MEDIUM") vectors.GOV = "MEDIUM";
+      if(state.missingKeys.length >= 2) vectors.GOV = "HIGH";
+
+      return vectors;
+    }
+
+    function comexAnswer(state, vectors){
+      // deterministic go / go-with-controls / stop
+      const highCount = Object.values(vectors).filter(v=>v==="HIGH").length;
+
+      if(state.def.score < 55 || state.exposure === "HIGH" || highCount >= 2){
+        return "STOP & ESCALATE (Legal + IT/Sec) — seal bundle, close blind spots";
+      }
+      if(state.def.score < 80 || state.missingKeys.length >= 1 || state.exposure === "MEDIUM"){
+        return "PROCEED WITH CONTROLS — add missing sources, seal cadence, brief COMEX";
+      }
+      return "PROCEED — maintain seal cadence & monitor drift";
+    }
+
+    function vectorsToString(v){
+      return `LEGAL:${v.LEGAL} · OPS:${v.OPS} · REPUTATION:${v.REPUTATION} · GOV:${v.GOV}`;
+    }
+
     function buildCorePayload(state){
-      // Sealed core: stable keys order via JSON.stringify on an ordered object
       return {
         rpo_version: "0.1",
         mode: "deterministic",
@@ -1128,6 +1252,15 @@
         escalation_path: state.escalation,
         lineage: state.lineage,
         quality_checks: state.quality,
+
+        // NEW: executive layer is sealed too (still deterministic)
+        executive_layer: {
+          view_mode: state.viewMode,
+          risk_vectors: state.vectors,
+          comex_answer: state.comex,
+          comex_window_months: state.windowMonths
+        },
+
         invariants: {
           "no_ai": true,
           "no_interpretation": true,
@@ -1137,22 +1270,36 @@
     }
 
     function buildReadablePreview(state, hash){
+      const vocab = viewMap[state.viewMode];
+
       const lines = [];
+      lines.push(`View: ${vocab.label}`);
       lines.push(`Decision: ${decisionLabels[state.decisionType]}`);
       lines.push(`Scope: ${state.scope}`);
       lines.push(`Authority: ${state.authority}`);
       lines.push(`Moment T: ${state.momentT}`);
       lines.push("");
+
       lines.push(`Declared sources: ${Array.from(state.selected).sort().join(", ")}`);
-      lines.push(`Coverage: ${state.coverage}% | Missing: ${state.missingKeys.length}`);
-      lines.push(`Defensibility: ${state.def.label} (${state.def.score}/100)`);
-      lines.push(`Institutional exposure: ${state.exposure}`);
+      lines.push(`${vocab.covLabel}: ${state.coverage}% | Missing: ${state.missingKeys.length}`);
+      lines.push(`${vocab.defLabel}: ${state.def.label} (${state.def.score}/100)`);
+      lines.push(`${vocab.expoLabel}: ${state.exposure}`);
       lines.push("");
+
+      if(state.viewMode === "executive"){
+        lines.push(`Executive layer:`);
+        lines.push(`- Risk vectors: ${vectorsToString(state.vectors)}`);
+        lines.push(`- COMEX answer: ${state.comex}`);
+        lines.push(`- Window: ${state.windowMonths} months`);
+        lines.push("");
+      }
+
       lines.push(`Decision record owner / clock:`);
       lines.push(`- Owner: ${state.owner}`);
       lines.push(`- SLA: ${state.slaHours}h`);
       lines.push(`- Deadline: ${state.deadline}`);
       lines.push("");
+
       lines.push(`Escalation path:`);
       lines.push(`- Owner set = ${state.escalation.owner_set}`);
       lines.push(`- Add IT/Sec = ${state.escalation.add_it_sec}`);
@@ -1160,6 +1307,7 @@
       lines.push(`- COMEX brief = ${state.escalation.comex_brief}`);
       lines.push(`- Next institutional action = ${state.next}`);
       lines.push("");
+
       lines.push(`Seal:`);
       lines.push(`- SHA-256 (sealed core): ${hash}`);
       lines.push(`- Note: the hash proves integrity over time, not "truth".`);
@@ -1176,7 +1324,7 @@
         ``,
         `Stability guarantees:`,
         `- Sealed core keys are stable`,
-        `- Context changes lexicon/weighting/visibility only`,
+        `- Context/view change lexicon/visibility only`,
         `- Coverage/defensibility/exposure are rule-based`,
         ``,
         `Seal:`,
@@ -1185,7 +1333,6 @@
     }
 
     function computeLineage(selected){
-      // deterministic placeholders
       const hasHRIS = selected.has("HRIS");
       return {
         system: hasHRIS ? "HRIS" : "—",
@@ -1199,7 +1346,6 @@
       const base = selected.size >= 4 ? "MEDIUM" : "LOW";
       const good = selected.size >= 5 ? "HIGH" : base;
 
-      // drift increases on audit/regulatory + missing EXT/HRIS
       const drift = (ctxKey==="regulatory_audit" && (!selected.has("HRIS") || !selected.has("EXT"))) ? "MEDIUM" : "LOW";
       const duplicates = selected.has("HRIS") ? "LOW" : "MEDIUM";
 
@@ -1209,12 +1355,6 @@
         definition_drift: drift,
         duplicates: duplicates
       };
-    }
-
-    function badgeForExposure(expo){
-      if(expo==="HIGH") return "bad";
-      if(expo==="MEDIUM") return "warn";
-      return "ok";
     }
 
     function badgeForDef(label){
@@ -1246,7 +1386,39 @@
       }
     }
 
+    // NEW: apply UI vocabulary
+    function applyViewVocabulary(){
+      const v = viewMap[VIEW_MODE];
+
+      $("viewOperational").classList.toggle("active", VIEW_MODE==="operational");
+      $("viewExecutive").classList.toggle("active", VIEW_MODE==="executive");
+
+      $("viewHint").innerHTML = v.hintHTML;
+      $("outTitle").textContent = v.outTitle;
+
+      $("chipExpoLabel").textContent = v.expoLabel;
+      $("kExpoC").textContent = v.expoLabel;
+      $("kExpo2").textContent = v.expoLabel;
+
+      $("kCoverage").textContent = v.covLabel;
+      $("kCovC").textContent = v.covLabel;
+
+      $("kDef").textContent = v.defLabel;
+      $("kDefC").textContent = v.defLabel;
+
+      $("cockpitNote").textContent = v.cockpitNote;
+
+      // Executive rows visibility
+      $("execRows").style.display = (VIEW_MODE==="executive") ? "block" : "none";
+      $("execCockpit").style.display = (VIEW_MODE==="executive") ? "block" : "none";
+      $("execSupport").style.display = (VIEW_MODE==="executive") ? "block" : "none";
+
+      $("cView").textContent = v.label;
+    }
+
     function syncChips(state, hash){
+      const vocab = viewMap[state.viewMode];
+
       $("chipContext").textContent = ctxMap[state.context].label;
       $("chipMoment").textContent = state.momentT;
       $("chipExpo").textContent = state.exposure;
@@ -1260,9 +1432,15 @@
       $("cOwnerClock").textContent = `${state.owner} · SLA ${state.slaHours}h · ${state.deadline}`;
       $("cHash").textContent = shortHash(hash);
 
-      $("outCoveragePill").textContent = `Coverage: ${state.coverage}%`;
+      // executive cockpit
+      if(state.viewMode==="executive"){
+        $("cVectors").textContent = vectorsToString(state.vectors);
+        $("cComex").textContent = state.comex;
+      }
+
+      $("outCoveragePill").textContent = `${vocab.covLabel}: ${state.coverage}%`;
       $("outMissingPill").textContent = `Missing sources: ${state.missingKeys.length}`;
-      $("outExposurePill").textContent = `Institutional exposure: ${state.exposure}`;
+      $("outExposurePill").textContent = `${vocab.expoLabel}: ${state.exposure}`;
 
       $("outCoverage").textContent = `${state.coverage}%`;
       $("outDef").innerHTML = `${state.def.label} (${state.def.score}/100)`;
@@ -1271,10 +1449,16 @@
       $("outHashFull").textContent = hash || "—";
       $("outOwnerClock").textContent = `${state.owner} · SLA ${state.slaHours}h · Deadline ${state.deadline}`;
 
-      // Escalation string
       const e = state.escalation;
       $("outEscalation").textContent = `Owner set: ${e.owner_set} · Add IT/Sec: ${e.add_it_sec} · Add Legal: ${e.add_legal} · COMEX brief: ${e.comex_brief}`;
       $("outNext").textContent = state.next;
+
+      // executive output rows
+      if(state.viewMode==="executive"){
+        $("outVectors").textContent = vectorsToString(state.vectors);
+        $("outComex").textContent = state.comex;
+        $("outWindow").textContent = `${state.windowMonths} months`;
+      }
 
       // Lineage & quality
       $("qSystem").textContent = state.lineage.system;
@@ -1293,11 +1477,10 @@
       $("sActions").textContent = state.next;
       $("sImprove").textContent = state.improve;
 
-      // Hero chips
-      $("chipContext").textContent = ctxMap[state.context].label;
-      $("chipMoment").textContent = state.momentT;
-      $("chipExpo").textContent = state.exposure;
-      $("chipHash").textContent = shortHash(hash);
+      if(state.viewMode==="executive"){
+        $("sVectors").textContent = vectorsToString(state.vectors);
+        $("sComex").textContent = state.comex;
+      }
 
       $("outMeta").textContent = `Seal is deterministic at Moment T · Hash is public verifiability`;
     }
@@ -1328,7 +1511,6 @@
       const slaHours = clamp(parseInt($("slaHours").value || "72",10), 1, 720);
       const deadline = $("deadline").value ? $("deadline").value.replace("T"," ") : isoToLocalDateTime(momentT, slaHours).replace("T"," ");
 
-      // missing keys (for bundle)
       const missingKeys = sysDefs.filter(s=>!selected.has(s.key)).map(s=>s.key);
       const coverage = computeCoverage(selected);
       const def = computeDefensibility(coverage, missingKeys.length, context, decisionType);
@@ -1341,30 +1523,42 @@
       const lineage = computeLineage(selected);
       const quality = computeQuality(selected, context);
 
-      const state = {
+      // NEW: executive layer compute (deterministic)
+      const windowMonths = computeWindowMonths(context);
+      const draftState = {
         context, decisionType, scope, authority, momentT,
         owner, slaHours, deadline,
         selected, missingKeys, coverage, def, exposure, escalation, next,
-        blockers, improve, lineage, quality
+        blockers, improve, lineage, quality,
+        viewMode: VIEW_MODE
+      };
+      const vectors = computeRiskVectors(draftState);
+      const comex = comexAnswer(draftState, vectors);
+
+      const state = {
+        ...draftState,
+        vectors,
+        comex,
+        windowMonths
       };
 
       const core = buildCorePayload(state);
       const coreStr = JSON.stringify(core);
       const hash = await sha256Hex(coreStr);
 
-      // Tabs content
       $("tab-readable").textContent = buildReadablePreview(state, hash);
       $("tab-json").textContent = JSON.stringify(core, null, 2);
       $("tab-invariants").textContent = buildInvariants(state, hash);
 
-      // Sync cockpit + chips + output
+      applyViewVocabulary();
       syncChips(state, hash);
 
-      // also set cockpit hash chip
       $("chipHash").textContent = shortHash(hash);
     }
 
     function resetAll(){
+      VIEW_MODE = "operational";
+
       $("context").value = "institutional_crisis";
       $("decisionType").value = "workforce_decision";
       $("scope").value = "";
@@ -1375,7 +1569,6 @@
       $("deadline").value = "";
       $("constraints").value = "";
 
-      // defaults
       $("sysHRIS").checked = true;
       $("sysLMS").checked = true;
       $("sysOPS").checked = true;
@@ -1384,7 +1577,7 @@
       $("sysEXT").checked = false;
 
       autoDeadline();
-      // clear output
+
       $("tab-readable").textContent = "";
       $("tab-json").textContent = "";
       $("tab-invariants").textContent = "";
@@ -1429,6 +1622,17 @@
       $("sBlockers").textContent = "—";
       $("sActions").textContent = "—";
       $("sImprove").textContent = "—";
+
+      // clear exec fields
+      $("cVectors").textContent = "—";
+      $("cComex").textContent = "—";
+      $("outVectors").textContent = "—";
+      $("outComex").textContent = "—";
+      $("outWindow").textContent = "—";
+      $("sVectors").textContent = "—";
+      $("sComex").textContent = "—";
+
+      applyViewVocabulary();
     }
 
     function loadExample(){
@@ -1457,7 +1661,10 @@
     // Tabs
     function setTab(name){
       for(const el of document.querySelectorAll(".tab")){
-        el.classList.toggle("active", el.dataset.tab === name);
+        // IMPORTANT: do not touch view tabs (they use data-view, not data-tab)
+        if(el.dataset.tab){
+          el.classList.toggle("active", el.dataset.tab === name);
+        }
       }
       $("tab-readable").style.display = name==="readable" ? "block":"none";
       $("tab-json").style.display = name==="json" ? "block":"none";
@@ -1480,12 +1687,26 @@
       $("cOwnerClock").textContent = `${owner} · SLA ${sla}h · ${deadline}`;
     }
 
+    // NEW: view toggle
+    function setViewMode(mode){
+      VIEW_MODE = mode;
+      applyViewVocabulary();
+      liveUpdateDraft();
+
+      // If output exists, regenerate to update readable preview & executive layer deterministically
+      // (still rule-based; user sees immediate effect)
+      if($("tab-json").textContent && $("tab-json").textContent.trim().length > 0){
+        generate();
+      }
+    }
+
     // Init
     document.addEventListener("DOMContentLoaded", ()=>{
       $("momentT").value = todayISO();
       autoDeadline();
       resetAll();
       liveUpdateDraft();
+      applyViewVocabulary();
 
       // Buttons
       $("btnGenerate").addEventListener("click", generate);
@@ -1499,10 +1720,16 @@
 
       // Tabs
       for(const el of document.querySelectorAll(".tab")){
-        el.addEventListener("click", ()=>setTab(el.dataset.tab));
+        if(el.dataset.tab){
+          el.addEventListener("click", ()=>setTab(el.dataset.tab));
+        }
       }
 
-      // Auto deadline recalculation when moment or SLA changes (unless user manually edits deadline)
+      // View mode tabs
+      $("viewOperational").addEventListener("click", ()=>setViewMode("operational"));
+      $("viewExecutive").addEventListener("click", ()=>setViewMode("executive"));
+
+      // Auto deadline recalculation when moment or SLA changes
       $("momentT").addEventListener("change", ()=>{
         $("deadline").value = isoToLocalDateTime($("momentT").value, parseInt($("slaHours").value||"72",10));
         liveUpdateDraft();
@@ -1518,7 +1745,7 @@
         $(id).addEventListener("change", liveUpdateDraft);
       });
 
-      // Optional: auto-generate on toggles (comment out if you want manual only)
+      // Optional: live update only
       ["decisionType","sysHRIS","sysLMS","sysOPS","sysSEC","sysLEGAL","sysEXT"].forEach(id=>{
         $(id).addEventListener("change", ()=>{ liveUpdateDraft(); });
       });
@@ -1526,5 +1753,6 @@
   </script>
 </body>
 </html>
+
 
 
