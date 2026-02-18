@@ -1,2358 +1,1383 @@
-<!-- A) docs/simulator.html -->
-<!DOCTYPE html>
-<html lang="en" data-page="simulator">
+<!doctype html>
+<html lang="fr" data-page="sandbox">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Simulator — Decision Defensibility | OpenProof RPO v0.1</title>
-  <meta name="description" content="Deterministic simulator. Three contexts. No AI. No interpretation." />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://openproof.net/simulator.html" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OpenProof — Simulator (Governance Cockpit)</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
+  <!-- Global styles -->
+  <link rel="stylesheet" href="./assets/site.css" />
 
   <style>
+    /* ---------------------------------------------------------
+      Page-specific layout (keeps global design system)
+    --------------------------------------------------------- */
     :root{
-      --bg-deep:#04040e;
-      --bg-mid:#0b0f14;
-      --gold-soft:#f1e6a3;
-      --gold:#d4af37;
-      --gold-deep:#8f7633;
-      --ivory:#f7f3e8;
-      --ink-soft:#b3a48b;
-
-      --radius:26px;
-      --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
-      --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
-      --line2:rgba(136,116,72,0.35);
-      --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
-
-      --ok: rgba(126, 255, 185, .92);
-      --warn: rgba(255, 208, 126, .92);
-      --bad: rgba(255, 126, 126, .92);
-
-      /* Layout tokens */
-      --wrap-max: 1720px;
-      --wrap-pad-x: 64px;
-      --hero-gap: 56px;
-      --grid-gap: 24px;
+      --panel-strong: rgba(255,255,255,.07);
+      --stroke-strong: rgba(212,175,55,.35);
+      --ink-soft: rgba(247,243,232,.82);
+      --ink-dim: rgba(247,243,232,.68);
+      --danger: rgba(255, 120, 120, 0.95);
+      --warn: rgba(255, 190, 90, 0.95);
+      --ok: rgba(145, 225, 190, 0.95);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
-    body{
-      min-height:100vh;
-      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-      color:var(--ivory);
+    .topBanner{
+      width: min(1200px, 100%);
+      margin: 16px auto 14px auto;
+      padding: 18px 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(212,175,55,.22);
       background:
-        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
-        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
-        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
-      overflow-x:hidden;
-    }
-    a{color:inherit}
-    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
-      outline:none; box-shadow: var(--focus); border-radius: 10px;
-    }
-    ::selection{background: rgba(212,175,55,.25);}
-    #bg-field{position:fixed; inset:0; width:100%; height:100%; z-index:-1;}
-
-    /* Top bar */
-    .top-bar{
-      position:fixed;
-      top:0; left:0; right:0;
-      height:68px;
-      padding:0 40px;
+        radial-gradient(900px 240px at 10% 0%, rgba(212,175,55,.18), transparent 60%),
+        radial-gradient(900px 240px at 85% 20%, rgba(241,230,163,.12), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
       display:flex;
       align-items:center;
       justify-content:space-between;
-      z-index:10;
-      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid rgba(212,175,55,0.22);
+      gap:14px;
     }
-    .top-left{display:flex; align-items:center; gap:14px; min-width:280px;}
-    .emblem{
-      width:34px;height:34px;border-radius:999px;
-      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
-      box-shadow:0 0 18px rgba(241,230,163,0.8);
-      flex:0 0 auto;
+    .topBanner h3{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      font-size: 14px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+    }
+    .topBanner p{
+      margin: 8px 0 0 0;
+      color: var(--ink-muted);
+      font-size: 14.5px;
+      line-height: 1.5;
+      max-width: 920px;
+    }
+    .navWrap{
+      width: 100%;
+      border-bottom: 1px solid rgba(212,175,55,.16);
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(10px);
+    }
+    .navBar{
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
     }
     .brand{
-      font-family:"Orbitron",sans-serif;
-      font-size:0.72rem;
-      letter-spacing:0.18em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      white-space:nowrap;
-    }
-    .brand span{color:var(--gold-soft)}
-    .top-nav{
-      display:flex; gap:22px; font-size:0.86rem; color:var(--ink-soft);
-      align-items:center; justify-content:center; flex:1 1 auto;
-    }
-    .top-nav a{color:inherit; text-decoration:none; position:relative; padding-bottom:3px; white-space:nowrap;}
-    .top-nav a::after{
-      content:""; position:absolute; left:0; bottom:0; width:0; height:1px;
-      background:linear-gradient(90deg,var(--gold-soft),var(--gold));
-      transition:width .2s ease;
-    }
-    .top-nav a:hover::after{width:100%}
-    .top-nav a[aria-current="page"]{color: var(--gold-soft);}
-    .top-nav a[aria-current="page"]::after{width:100%}
-    .top-cta{
-      padding:8px 18px;
-      border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      font-size:0.8rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      text-decoration:none;
-      white-space:nowrap;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    }
-    .top-cta:hover{filter:brightness(1.03)}
-    .top-cta:active{transform:translateY(1px)}
-
-    /* Wrap */
-    .wrap{
-      max-width:var(--wrap-max);
-      margin:0 auto;
-      padding:96px var(--wrap-pad-x) 72px;
-    }
-
-    /* Hero */
-    .hero{
-      padding-top:10px;
-      display:grid;
-      grid-template-columns: 1.7fr 1.1fr;
-      gap:var(--hero-gap);
-      align-items:start;
-    }
-    .eyebrow{
-      font-family:"Orbitron",sans-serif;
-      font-size:.72rem;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      margin-bottom:14px;
-    }
-    .eyebrow span{color:var(--gold-soft)}
-    .h1{
-      font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-      line-height:1.06;
-      font-size:clamp(2.05rem,4.0vw,3.1rem);
-      margin-bottom:12px;
-    }
-    .h1 .gold{display:block;color:var(--gold-soft)}
-    .lead{
-      margin-top:10px;
-      font-size:0.98rem;
-      color:rgba(198,186,150,.90);
-      line-height:1.7;
-      max-width: 82ch;
-      text-align: justify;
-    }
-    .context-bar{
-      margin-top:14px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-    .context-pill{
-      display:inline-flex; align-items:center;
-      padding:8px 12px; border-radius:999px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(0,0,0,.18);
-      color: rgba(241,230,163,.92);
-      font-family:"Orbitron",sans-serif;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.68rem;
-    }
-    .context-pill select{
-      margin-left:10px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,.25);
-      background: rgba(10,12,27,0.45);
-      color: var(--ivory);
-      padding:8px 10px;
-      font-size:0.86rem;
-      outline:none;
-      letter-spacing:0;
-      text-transform:none;
-      font-family:"Inter",system-ui,-apple-system,sans-serif;
-      min-width: 280px;
-    }
-    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:14px 0 16px 0; max-width:90ch;}
-    .chip{
-      display:inline-flex; align-items:center;
-      padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(212,175,55,.18);
-      background: rgba(0,0,0,.22);
-      font-size:12px;
-      color:rgba(241,230,163,.90);
-      white-space:nowrap;
-    }
-    .ctas{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      max-width: 640px;
-    }
-    .btn-primary, .btn-ghost{
-      min-height:52px; border-radius:999px; text-decoration:none;
-      display:flex; align-items:center; justify-content:center;
-      padding:12px 18px;
-      text-transform:uppercase; letter-spacing:.12em;
-      font-size:13px; width:100%;
-      cursor:pointer; user-select:none;
-      border:none;
-    }
-    .btn-primary{
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-    }
-    .btn-ghost{
-      border:1px solid rgba(212,175,55,0.35);
-      background: rgba(10,12,27,0.35);
-      color: var(--gold-soft);
-      backdrop-filter: blur(10px);
-    }
-    .btn-primary:hover{filter:brightness(1.03)}
-    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
-    .btn-primary:active,.btn-ghost:active{transform:translateY(1px)}
-    .micro{
-      margin-top: 12px;
-      font-size: .9rem;
-      color: rgba(179,164,139,.92);
-      line-height: 1.7;
-      max-width: 96ch;
-      text-align: justify;
-    }
-    .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
-
-    /* Cockpit panel */
-    .panel{
-      position:relative;
-      background:var(--panel);
-      border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,0.45);
-      padding:24px;
-      box-shadow:var(--shadow-soft);
-      overflow:hidden;
-      transform-style:preserve-3d;
-      will-change:transform;
-      min-height: 420px;
-    }
-    .panel::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
-        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
-        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
-      opacity:.95;
-      filter: blur(10px);
-      pointer-events:none;
-    }
-    .scanline{
-      position:absolute;
-      left:-30%; top:0;
-      width:160%; height:2px;
-      background: linear-gradient(90deg, transparent 0%, rgba(241,230,163,0.05) 20%, rgba(241,230,163,0.55) 50%, rgba(241,230,163,0.05) 80%, transparent 100%);
-      opacity:.55;
-      pointer-events:none;
-      animation: scanY 3.8s linear infinite;
-      mix-blend-mode: screen;
-    }
-    @keyframes scanY{ 0%{transform:translateY(-10px)} 100%{transform:translateY(460px)} }
-    .panel-inner{position:relative; z-index:2; transform: translateZ(12px);}
-    .panel-title{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      margin-bottom:10px;
-    }
-    .pill{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      font-size:.72rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      padding:6px 12px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,.55);
-      margin-bottom:12px;
-      color: rgba(241,230,163,.92);
-      background: rgba(10,12,27,0.22);
-      backdrop-filter: blur(10px);
-    }
-    .pill .dot{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(241,230,163,.95);
-      box-shadow: 0 0 14px rgba(241,230,163,.55);
-      animation: dotPulse 1.45s ease-in-out infinite;
-    }
-    @keyframes dotPulse{ 0%,100%{transform:scale(1); opacity:.85} 50%{transform:scale(1.35); opacity:1} }
-    .list{
-      border-top:1px solid rgba(212,175,55,.28);
-      margin-top:10px;
-      padding-top:12px;
-      font-size:.92rem;
-      color:var(--ink-soft);
-    }
-    .row{
-      display:grid;
-      grid-template-columns: 1fr 1.3fr;
-      align-items:flex-start;
-      gap:14px;
-      padding:9px 0;
-    }
-    .row .k{color: rgba(179,164,139,.92)}
-    .row .v{color: rgba(241,230,163,.88); text-align:right}
-    .row + .row{border-top:1px dashed var(--line2)}
-    .state{
-      margin-top:12px;
       display:flex;
       align-items:center;
-      justify-content:space-between;
       gap:12px;
-      padding-top:12px;
-      border-top: 1px solid rgba(212,175,55,.14);
-      font-size:.78rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: rgba(179,164,139,.92);
+      min-width: 240px;
     }
-    .state .sig{display:flex; align-items:center; gap:10px; white-space:nowrap;}
-    .state .sig i{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(244,186,120,.95);
-      box-shadow: 0 0 18px rgba(244,186,120,.38);
-      animation: warmBlink 2.2s ease-in-out infinite;
+    .brandDot{
+      width: 34px; height: 34px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(241,230,163,.95), rgba(212,175,55,.65) 45%, rgba(0,0,0,.35) 70%);
+      box-shadow: 0 18px 40px rgba(0,0,0,.38);
+      border: 1px solid rgba(212,175,55,.25);
     }
-    @keyframes warmBlink{ 0%,100%{opacity:.55} 50%{opacity:1} }
-    .state .meter{
-      position:relative;
-      flex:1 1 auto;
-      height:8px;border-radius:999px;
-      background: rgba(241,230,163,.10);
-      border: 1px solid rgba(212,175,55,.18);
-      overflow:hidden;
+    .brandText{
+      display:flex; flex-direction:column; gap:2px;
     }
-    .state .meter > span{
-      position:absolute; inset:0;
-      width:46%;
-      border-radius:999px;
-      background: linear-gradient(90deg, rgba(241,230,163,.18), rgba(212,175,55,.42), rgba(241,230,163,.18));
-      animation: meterMove 2.8s ease-in-out infinite;
+    .brandText .t1{
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(247,243,232,.75);
     }
-    @keyframes meterMove{ 0%,100%{transform:translateX(-10%)} 50%{transform:translateX(120%)} }
-    .hash{
-      margin-top:10px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: .78rem;
-      color: rgba(241,230,163,.78);
-      opacity:.95;
-      word-break: break-all;
-      border-top: 1px solid rgba(212,175,55,.14);
-      padding-top: 10px;
+    .brandText .t2{
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(247,243,232,.85);
     }
 
-    /* Section */
-    .section{margin-top: 34px; padding-top: 22px; border-top: 1px solid rgba(212,175,55,0.14);}
-    .section-title{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(179,164,139,.92);
-      margin-bottom:14px;
-    }
-
-    /* Main grid */
-    .sim-grid{
-      display:grid;
-      grid-template-columns: 1.20fr 1fr;
-      gap:var(--grid-gap);
-      align-items:start;
-    }
-    .card{
-      border: 1px solid rgba(212,175,55,.22);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      padding: 18px 18px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-    .card h3{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(179,164,139,.92);
-      margin-bottom:12px;
-      font-weight:600;
-    }
-    .form-grid{display:grid; grid-template-columns: 1fr 1fr; gap:12px;}
-    .field label{
-      display:block;
-      font-family:"Orbitron",sans-serif;
-      font-size:.70rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(179,164,139,.90);
-      margin-bottom:8px;
-    }
-    input, select, textarea{
-      width:100%;
-      border-radius:14px;
-      border:1px solid rgba(212,175,55,.20);
-      background: rgba(10,12,27,0.45);
-      color: var(--ivory);
-      padding:11px 12px;
-      font-size:0.95rem;
-      outline:none;
-    }
-    textarea{min-height: 92px; resize: vertical; line-height:1.55;}
-    input::placeholder, textarea::placeholder{color: rgba(179,164,139,.75);}
-
-    .hint{
-      margin-top:8px;
-      font-size:.86rem;
-      color: rgba(179,164,139,.92);
-      line-height:1.5;
-    }
-
-    .source-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px;}
-    .source{
-      display:flex; gap:10px; align-items:flex-start;
-      padding:12px; border-radius:16px;
-      border:1px solid rgba(212,175,55,.18);
-      background: rgba(10,12,27,0.28);
-    }
-    .source input{width:auto; margin-top:3px;}
-    .source strong{display:block; font-size:0.92rem; color: rgba(241,230,163,.92); font-weight:600; margin-bottom:4px;}
-    .source span{display:block; font-size:0.88rem; color: rgba(198,186,150,.86); line-height:1.45; text-align: justify;}
-    .mini-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;}
-    .mini{
-      border: 1px solid rgba(212,175,55,.18);
-      border-radius: 16px;
-      background: rgba(10,12,27,0.28);
-      padding: 12px;
-    }
-    .mini .k{
-      font-family:"Orbitron",sans-serif;
-      font-size:.70rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(179,164,139,.92);
-      margin-bottom:8px;
-    }
-    .mini .v{font-size:0.92rem; color: rgba(198,186,150,.86); line-height:1.55; text-align: justify;}
-
-    .actions{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap:10px;
-    }
-    .btn{
-      min-height:46px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,0.35);
-      background: rgba(10,12,27,0.35);
-      color: var(--gold-soft);
-      backdrop-filter: blur(10px);
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      font-size:12px;
-      cursor:pointer;
-    }
-    .btn:hover{border-color:rgba(212,175,55,0.55)}
-    .btn:active{transform:translateY(1px)}
-    .btn.hot{
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-    }
-
-    /* Right column: sticky stack */
-    .right-stack{
-      display:grid;
-      gap:14px;
-      position: sticky;
-      top: 86px;
-      align-self:start;
-    }
-    .kv{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px 14px;
-      font-size: 0.92rem;
-      color: rgba(198,186,150,.86);
-    }
-    .kv .k{color: rgba(179,164,139,.92)}
-    .kv .v{color: rgba(241,230,163,.90); text-align:right}
-    .tabs{display:flex; gap:8px; flex-wrap:wrap; margin: 10px 0 12px;}
-    .tab{
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,.30);
-      background: rgba(10,12,27,0.26);
-      color: rgba(241,230,163,.92);
-      font-family:"Orbitron",sans-serif;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.68rem;
-      cursor:pointer;
-    }
-    .tab[aria-selected="true"]{
-      border-color: rgba(241,230,163,.70);
-      background: rgba(10,12,27,0.42);
-      box-shadow: 0 0 0 3px rgba(241,230,163,.08);
-    }
-    pre{
-      border: 1px solid rgba(212,175,55,.18);
-      border-radius: 16px;
-      background: rgba(10,12,27,0.35);
-      padding: 14px;
-      font-size: 0.86rem;
-      color: rgba(241,230,163,.86);
-      overflow:auto;
-      max-height: 360px;
-      line-height:1.45;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    .note{margin-top:10px; font-size:0.88rem; color: rgba(179,164,139,.90); line-height:1.6; text-align: justify;}
-    .note strong{color: rgba(241,230,163,.95); font-weight:600;}
-
-    .badge{
-      display:inline-flex; align-items:center; gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,.20);
-      background: rgba(10,12,27,0.26);
-      font-size:12px;
-      color: rgba(241,230,163,.90);
-      white-space:nowrap;
-    }
-    .badge i{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(179,164,139,.9);
-      box-shadow: 0 0 12px rgba(0,0,0,.2);
-    }
-    .badge.ok i{background: var(--ok); box-shadow:0 0 14px rgba(126,255,185,.35);}
-    .badge.warn i{background: var(--warn); box-shadow:0 0 14px rgba(255,208,126,.35);}
-    .badge.bad i{background: var(--bad); box-shadow:0 0 14px rgba(255,126,126,.35);}
-
-    .subgrid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-
-    .lineage{
-      margin-top:10px;
-      border:1px solid rgba(212,175,55,.18);
-      border-radius:16px;
-      background: rgba(10,12,27,0.28);
-      padding:12px;
-    }
-    .lineage .lt{
-      font-family:"Orbitron",sans-serif;
-      font-size:.70rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(179,164,139,.92);
-      margin-bottom:10px;
-    }
-    .lin-row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px 14px;
-      font-size:.90rem;
-      color: rgba(198,186,150,.86);
-      padding:10px 0;
-    }
-    .lin-row + .lin-row{border-top:1px dashed var(--line2)}
-    .lin-row .k{color: rgba(179,164,139,.92)}
-    .lin-row .v{color: rgba(241,230,163,.90); text-align:right}
-
-    /* Pilot CTA block */
-    .pilot{
-      margin-top: 36px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(212,175,55,0.14);
-      display:grid;
-      grid-template-columns: 1.6fr 1fr;
+    .navLinks{
+      display:flex;
+      flex-wrap: wrap;
       gap: 16px;
       align-items:center;
+      justify-content:center;
+      font-size: 14px;
+      color: rgba(247,243,232,.78);
     }
-    .pilot h3{
-      font-family:"Orbitron",sans-serif;
-      font-size: 1.05rem;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color: rgba(241,230,163,.95);
-      margin-bottom:8px;
+    .navLinks a{
+      color: rgba(247,243,232,.78);
+      text-decoration:none;
+      padding-bottom: 6px;
+      border-bottom: 1px solid transparent;
     }
-    .pilot p{
-      color: rgba(198,186,150,.90);
-      line-height:1.7;
-      text-align: justify;
-      max-width: 90ch;
+    .navLinks a.active{
+      color: var(--gold-soft);
+      border-bottom-color: rgba(241,230,163,.65);
     }
-    .pilot a{
-      justify-self:end;
+    .navLinks a:hover{
+      color: var(--gold-soft);
+      border-bottom-color: rgba(241,230,163,.35);
+    }
+
+    .navCta{
+      display:flex; align-items:center; gap:10px;
+    }
+    .btnPill{
+      appearance:none;
+      border: 1px solid rgba(241,230,163,.32);
+      background: linear-gradient(180deg, rgba(241,230,163,.22), rgba(0,0,0,.18));
+      color: rgba(20,20,20,.92);
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor:pointer;
+      box-shadow: 0 16px 45px rgba(0,0,0,.34);
+    }
+    .btnPill:hover{ transform: translateY(-1px); }
+
+    /* Main layout */
+    main{
+      width: 100%;
+    }
+    .pageWrap{
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      padding: 18px 20px 26px 20px;
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 18px;
+    }
+    @media (max-width: 980px){
+      .pageWrap{ grid-template-columns: 1fr; }
+      .brand{ min-width: unset; }
+    }
+
+    .heroCard{
+      border-radius: 28px;
+      padding: 26px;
+      border: 1px solid rgba(212,175,55,.28);
+      background:
+        radial-gradient(800px 480px at 15% 20%, rgba(212,175,55,.10), transparent 60%),
+        radial-gradient(700px 480px at 90% 0%, rgba(241,230,163,.08), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: 0 20px 60px rgba(0,0,0,.42);
+      backdrop-filter: blur(10px);
+    }
+    .heroTitle{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      font-size: 28px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 10px 0;
+      color: rgba(247,243,232,.78);
+    }
+    .heroPill{
       display:inline-flex;
       align-items:center;
-      justify-content:center;
-      min-height:52px;
-      padding: 12px 18px;
-      border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      text-decoration:none;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      font-size:13px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      width: 100%;
-      max-width: 320px;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(241,230,163,.32);
+      background: rgba(0,0,0,.22);
+      color: rgba(241,230,163,.85);
+      font-weight: 700;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-size: 12px;
     }
-    .pilot a:hover{filter:brightness(1.03)}
-    .pilot a:active{transform:translateY(1px)}
+    .heroPill .dot{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(241,230,163,.9);
+      box-shadow: 0 0 20px rgba(241,230,163,.35);
+    }
+    .divider{
+      height:1px; width:100%;
+      margin: 18px 0 18px 0;
+      background: linear-gradient(90deg, transparent, rgba(241,230,163,.24), transparent);
+    }
 
-    footer{
-      margin-top: 28px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(212,175,55,0.14);
-      color: rgba(179,164,139,.85);
-      font-size: 0.88rem;
+    /* Cockpit list */
+    .list{
+      margin-top: 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 0;
+    }
+    .row{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 18px;
+      padding: 16px 0;
+      border-bottom: 1px dashed rgba(241,230,163,.18);
+    }
+    .row:last-child{ border-bottom: none; }
+    .k{
+      color: rgba(247,243,232,.55);
+      font-size: 22px;
+      letter-spacing: .02em;
+      min-width: 210px;
+    }
+    .v{
+      text-align:right;
+      color: rgba(241,230,163,.88);
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    @media (max-width: 680px){
+      .k{ font-size: 18px; min-width: 140px; }
+      .v{ font-size: 20px; }
+    }
+
+    /* Governance strip (PRÊT — VÉRIFIER) */
+    .govStrip{
+      margin-top: 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(241,230,163,.18);
+    }
+    .govLeft{
+      display:flex; align-items:center; gap: 10px;
+      color: rgba(247,243,232,.7);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .govLeft .bulb{
+      width: 14px; height:14px; border-radius: 50%;
+      background: rgba(241,230,163,.8);
+      box-shadow: 0 0 24px rgba(241,230,163,.25);
+      opacity: .65;
+    }
+    .govTrack{
+      flex: 1;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.18);
+      border: 1px solid rgba(241,230,163,.16);
+      overflow:hidden;
+    }
+    .govFill{
+      height: 100%;
+      width: 38%;
+      background: linear-gradient(90deg, rgba(241,230,163,.20), rgba(212,175,55,.32));
+    }
+    .govRight{
+      color: rgba(247,243,232,.62);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .hashLine{
+      margin-top: 14px;
+      display:flex;
+      gap: 10px;
+      color: rgba(247,243,232,.75);
+      font-size: 18px;
+      align-items:flex-start;
+      flex-wrap: wrap;
+    }
+    .hashLine b{
+      color: rgba(241,230,163,.90);
+      letter-spacing: .06em;
+    }
+    .hashText{
+      color: rgba(247,243,232,.82);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      word-break: break-all;
+      line-height: 1.35;
+      opacity: .95;
+    }
+
+    /* Right column cards */
+    .sideCard{
+      border-radius: 22px;
+      padding: 18px;
+      border: 1px solid rgba(212,175,55,.24);
+      background: rgba(255,255,255,.035);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      backdrop-filter: blur(9px);
+    }
+    .sideCard h4{
+      margin: 0 0 8px 0;
+      font-size: 13px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
+    }
+    .micro{
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.45;
+      color: rgba(247,243,232,.62);
+    }
+    .chipRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 12px;
+    }
+    .chip{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(241,230,163,.22);
+      background: rgba(0,0,0,.22);
+      color: rgba(241,230,163,.82);
+      font-size: 12px;
+      letter-spacing: .02em;
+      white-space: nowrap;
+    }
+
+    .twoCols{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    /* Simulator form card */
+    .formCard{
+      border-radius: 22px;
+      padding: 18px;
+      border: 1px solid rgba(212,175,55,.22);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
+    }
+    .formCard label{
+      display:block;
+      margin-top: 12px;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.72);
+    }
+    .inp, textarea{
+      width: 100%;
+      margin-top: 8px;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(241,230,163,.18);
+      background: rgba(0,0,0,.22);
+      color: rgba(247,243,232,.88);
+      outline: none;
+      font-size: 14px;
+      line-height: 1.35;
+    }
+    textarea{ min-height: 170px; resize: vertical; }
+
+    .actions{
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .btn2{
+      appearance:none;
+      border: 1px solid rgba(241,230,163,.22);
+      background: rgba(0,0,0,.22);
+      color: rgba(247,243,232,.86);
+      padding: 11px 12px;
+      border-radius: 16px;
+      font-weight: 700;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      transition: transform .06s ease, border-color .12s ease;
+    }
+    .btn2:hover{ transform: translateY(-1px); border-color: rgba(241,230,163,.42); }
+    .btn2.primary{
+      background: linear-gradient(180deg, rgba(212,175,55,.22), rgba(0,0,0,.20));
+      border-color: rgba(212,175,55,.45);
+    }
+
+    /* Output card */
+    .outCard{
+      border-radius: 22px;
+      padding: 18px;
+      border: 1px solid rgba(212,175,55,.22);
+      background: rgba(255,255,255,.03);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
+    }
+    .tabs{
+      display:flex; gap:10px; flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .tab{
+      padding: 9px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(241,230,163,.20);
+      background: rgba(0,0,0,.22);
+      color: rgba(247,243,232,.78);
+      font-weight: 700;
+      cursor:pointer;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .tab.active{
+      color: rgba(20,20,20,.92);
+      background: rgba(241,230,163,.82);
+      border-color: rgba(241,230,163,.65);
+    }
+
+    .pane{ display:none; margin-top: 14px; }
+    .pane.active{ display:block; }
+
+    pre{
+      margin: 0;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(241,230,163,.16);
+      background: rgba(0,0,0,.22);
+      color: rgba(247,243,232,.86);
+      overflow:auto;
+      max-height: 420px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12.8px;
+      line-height: 1.45;
+    }
+
+    details{
+      margin-top: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(241,230,163,.14);
+      background: rgba(0,0,0,.16);
+      padding: 12px;
+    }
+    details summary{
+      cursor:pointer;
+      font-weight: 800;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: rgba(241,230,163,.78);
+    }
+
+    .briefPill{
+      display:inline-flex; align-items:center; gap:8px;
+      border-radius: 999px;
+      padding: 8px 10px;
+      border: 1px solid rgba(241,230,163,.22);
+      background: rgba(0,0,0,.22);
+      color: rgba(241,230,163,.86);
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+    .briefDot{ width:10px; height:10px; border-radius:50%; background: rgba(241,230,163,.8); opacity:.8; }
+
+    .briefGrid{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .briefRow{
       display:flex;
       justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(241,230,163,.14);
     }
-    footer a{opacity:.9; text-decoration:none}
-    footer a:hover{opacity:1}
+    .briefRow:last-child{ border-bottom:none; }
+    .briefK{
+      color: rgba(247,243,232,.58);
+      font-size: 13px;
+      letter-spacing: .04em;
+      min-width: 180px;
+    }
+    .briefV{
+      text-align:right;
+      color: rgba(247,243,232,.84);
+      font-size: 13.8px;
+      line-height: 1.35;
+      max-width: 520px;
+    }
 
-    @media print{
-      .top-bar, #bg-field, .top-nav, .top-cta, .hero, footer, .pilot {display:none !important;}
-      body{background:#fff; color:#111}
-      .wrap{padding:24px}
-      .card, pre{border:1px solid #ddd; background:#f7f7f7; color:#111}
-      pre{max-height:none}
+    .bottomCta{
+      width: min(1200px, 100%);
+      margin: 18px auto 26px auto;
+      padding: 18px 20px;
+      border-radius: 22px;
+      border: 1px solid rgba(212,175,55,.22);
+      background:
+        radial-gradient(900px 240px at 10% 0%, rgba(212,175,55,.12), transparent 60%),
+        radial-gradient(900px 240px at 85% 20%, rgba(241,230,163,.10), transparent 60%),
+        rgba(255,255,255,.03);
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
     }
-    @media(max-width:1180px){
-      .hero{grid-template-columns:1fr; gap:22px}
-      .sim-grid{grid-template-columns:1fr;}
-      .wrap{padding:96px 28px 56px}
-      .actions{grid-template-columns:1fr}
-      .form-grid{grid-template-columns:1fr}
-      .mini-grid{grid-template-columns:1fr}
-      .source-grid{grid-template-columns:1fr}
-      .subgrid{grid-template-columns:1fr}
-      .right-stack{position:static;}
-      .pilot{grid-template-columns:1fr}
-      .pilot a{justify-self:start; max-width:none}
+    .bottomCta h3{
+      margin:0;
+      font-size: 14px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: var(--gold-soft);
     }
-    @media(max-width:960px){
-      .top-nav{display:none}
-      .top-bar{padding:0 16px}
-      .wrap{padding:96px 20px 56px}
-      .ctas{grid-template-columns:1fr}
-      .right-stack{position:static;}
-      .context-pill select{min-width: 240px;}
+    .bottomCta p{
+      margin: 8px 0 0 0;
+      color: var(--ink-muted);
+      font-size: 14.5px;
+      line-height: 1.5;
     }
-    @media (prefers-reduced-motion: reduce){
-      .scanline, .pill .dot, .state .sig i, .state .meter > span {animation:none}
-      .panel{transform:none !important}
-      #bg-field{display:none}
+
+    /* Simple badge for exposure */
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(241,230,163,.18);
+      background: rgba(0,0,0,.22);
+      font-size: 12px;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      font-weight: 900;
     }
+    .badge i{
+      width: 10px; height: 10px; border-radius: 50%;
+      display:inline-block;
+    }
+    .b-ok i{ background: var(--ok); }
+    .b-warn i{ background: var(--warn); }
+    .b-danger i{ background: var(--danger); }
   </style>
-  <script src="./assets/contexts.js"></script>
 </head>
 
 <body>
-  <canvas id="bg-field" aria-hidden="true"></canvas>
-
-  <header class="top-bar">
-    <div class="top-left">
-      <div class="emblem" aria-hidden="true"></div>
-      <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
-    </div>
-
-    <nav class="top-nav" aria-label="Primary navigation">
-      <a href="./index.html">Home</a>
-      <a href="./simulator.html" aria-current="page">Simulator</a>
-      <a href="./how-it-works.html">How it works</a>
-      <a href="./spec.html">Spec</a>
-      <a href="./tests.html">Tests</a>
-      <a href="./examples.html">Examples</a>
-      <a href="./contexts.html">Contexts</a>
-    </nav>
-
-    <a class="top-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
-  </header>
-
-  <main class="wrap" role="main">
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div>
-        <div class="eyebrow">Deterministic <span>simulator</span></div>
-
-        <h1 class="h1" id="hero-title">
-          Simulator.
-          <span class="gold">Three contexts. No AI. No interpretation.</span>
-        </h1>
-
-        <p class="lead" id="ctxDesc">
-          Governance context: decision defensibility under audit exposure. Focus on scope, lineage, definitions, and reconstructibility at Moment T.
-        </p>
-
-        <div class="context-bar" role="group" aria-label="Context controls">
-          <div class="context-pill" title="Choose the probatory framing (lexicon + weights + toggles + presets)">
-            Context
-            <select id="contextSelect" aria-label="Context">
-              <option value="governance">Governance</option>
-              <option value="legal">Legal Proceedings</option>
-              <option value="institutional">Institutional Crisis</option>
-            </select>
-          </div>
-          <div class="hint" id="ctxHint">
-            This changes lexicon, weighting, visibility rules, and narrative template — without changing the sealed RPO structure.
-          </div>
-        </div>
-
-        <div class="chips" aria-label="Core concepts" id="chipRow">
-          <span class="chip">Moment T</span>
-          <span class="chip">Declared systems</span>
-          <span class="chip">Lineage</span>
-          <span class="chip">Quality checks</span>
-          <span class="chip" id="chipExposure">Audit exposure</span>
-          <span class="chip">Public hash</span>
-        </div>
-
-        <div class="ctas" role="group" aria-label="Primary actions">
-          <button class="btn-primary" id="btnGenerateTop" type="button">Generate bundle</button>
-          <button class="btn-ghost" id="btnLoadTop" type="button">Load example</button>
-        </div>
-
-        <p class="micro" id="microText">
-          <strong>RPO =</strong> sealed JSON core + human-readable print view + public hash.
-          The hash proves integrity over time, not “truth”. Verification is public. Accountability remains human.
-        </p>
-      </div>
-
-      <!-- COCKPIT -->
-      <aside class="panel" id="cockpit" aria-label="Simulator cockpit">
-        <div class="scanline" aria-hidden="true"></div>
-        <div class="panel-inner">
-          <div class="panel-title" id="cpTitle">Simulator cockpit (live)</div>
-          <div class="pill" aria-label="Pillars">
-            <span class="dot" aria-hidden="true"></span>
-            Integrity • Readability • Verifiability
-          </div>
-
-          <div class="list" role="list">
-            <div class="row" role="listitem">
-              <span class="k" id="lblCpScope">Scope</span>
-              <span class="v" id="cpScope">—</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Moment T</span>
-              <span class="v" id="cpMoment">—</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k" id="lblCpCoverage">Coverage</span>
-              <span class="v" id="cpCoverage">—</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k" id="lblCpDef">Defensibility</span>
-              <span class="v" id="cpDef">—</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k" id="lblCpExposure">Audit exposure</span>
-              <span class="v" id="cpExposure">—</span>
-            </div>
-          </div>
-
-          <div class="state" aria-label="Live status">
-            <div class="sig"><i aria-hidden="true"></i><span id="stateText">CAPTURE</span></div>
-            <div class="meter" aria-hidden="true"><span></span></div>
-            <div class="sig"><span id="tickText">SYNC</span></div>
-          </div>
-
-          <div class="hash" aria-label="Public hash preview">
-            hash: <span id="hashText">—</span>
-          </div>
-        </div>
-      </aside>
-    </section>
-<!-- COMPARATIVE COCKPIT (Mode D) -->
-<section class="section" aria-labelledby="cmp-title">
-  <h2 class="section-title" id="cmp-title">Comparative Cockpit — baseline vs alternative vs stress</h2>
-
-  <div class="card" style="margin-top:14px">
-    <div class="form-grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
-      <div class="field">
-        <label for="cmpBase">Baseline context</label>
-        <select id="cmpBase">
-          <option value="governance">Governance</option>
-          <option value="legal">Legal Proceedings</option>
-          <option value="institutional">Institutional Crisis</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="cmpAlt">Alternative context</label>
-        <select id="cmpAlt">
-          <option value="legal">Legal Proceedings</option>
-          <option value="institutional">Institutional Crisis</option>
-          <option value="governance">Governance</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="cmpStress">Stress scenario (hypothetical)</label>
-        <select id="cmpStress">
-          <option value="none">None</option>
-          <option value="audit-triggered">Audit triggered</option>
-          <option value="litigation-triggered">Litigation triggered</option>
-          <option value="media-escalation">Media escalation</option>
-          <option value="internal-investigation">Internal investigation</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-grid" style="grid-template-columns: 1fr 2fr; gap: 16px; margin-top: 12px;">
-      <div class="field">
-        <label for="cmpStressLevel">Stress level</label>
-        <input id="cmpStressLevel" type="range" min="0" max="100" value="35" />
-        <div class="note" style="margin-top:8px">
-          Deterministic “what-if”: stress increases penalty on weak signals. Same input → same output.
+  <!-- NAV -->
+  <div class="navWrap">
+    <div class="navBar">
+      <div class="brand">
+        <div class="brandDot" aria-hidden="true"></div>
+        <div class="brandText">
+          <div class="t1">OPENPROOF.NET — RPO v0.1</div>
+          <div class="t2">Moteur probatoire & gouvernance</div>
         </div>
       </div>
 
-      <div class="actions" style="grid-template-columns: 1fr 1fr; align-items:end">
-        <button class="btn hot" id="btnCompare" type="button">Run comparison</button>
-        <button class="btn" id="btnCompareAuto" type="button">Auto (sync with Generate)</button>
+      <nav class="navLinks" aria-label="Primary">
+        <a href="./index.html" target="_blank" rel="noopener noreferrer">Maison</a>
+        <a class="active" href="./simulator.html" target="_blank" rel="noopener noreferrer">Simulateur</a>
+        <a href="./how.html" target="_blank" rel="noopener noreferrer">Comment ça marche</a>
+        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spéc.</a>
+        <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Exemples</a>
+        <a href="./contexts.html" target="_blank" rel="noopener noreferrer">Contextes</a>
+      </nav>
+
+      <div class="navCta">
+        <button class="btnPill" id="pilotTopBtn" type="button">POSTE DE PILOTAGE</button>
       </div>
     </div>
   </div>
 
-  <div class="sim-grid" style="margin-top: 18px;">
-    <!-- BASELINE -->
-    <div class="card">
-      <h3 id="cmpBaseTitle">Baseline — Governance</h3>
-      <div class="kv" style="margin-top:6px">
-        <div class="k">Coverage</div><div class="v" id="cmpBaseCov">—</div>
-        <div class="k">Defensibility</div><div class="v" id="cmpBaseDef">—</div>
-        <div class="k">Exposure</div><div class="v" id="cmpBaseExp">—</div>
-        <div class="k">Seal</div><div class="v" id="cmpBaseHash">—</div>
-      </div>
-      <pre id="cmpBaseSummary" style="margin-top:10px; white-space:pre-wrap">—</pre>
+  <!-- TOP CTA BANNER -->
+  <section class="topBanner" aria-label="Pilot banner">
+    <div>
+      <h3>PRÊT POUR LE COCKPIT DU PILOTE ?</h3>
+      <p>
+        Passez d’un simulateur déterministe à un véritable flux de travail ProofOps : connecteurs, extraits traçables, agrégats scellés et défense décisionnelle reproductible.
+        Le principe reste le même : intégrité, lisibilité, vérifiabilité — avec un poste de pilotage opérationnel.
+      </p>
     </div>
+    <button class="btnPill" id="pilotBannerBtn" type="button">POSTE DE PILOTAGE</button>
+  </section>
 
-    <!-- ALTERNATIVE -->
-    <div class="card">
-      <h3 id="cmpAltTitle">Alternative — Legal Proceedings</h3>
-      <div class="kv" style="margin-top:6px">
-        <div class="k">Coverage</div><div class="v" id="cmpAltCov">—</div>
-        <div class="k">Defensibility</div><div class="v" id="cmpAltDef">—</div>
-        <div class="k">Exposure</div><div class="v" id="cmpAltExp">—</div>
-        <div class="k">Seal</div><div class="v" id="cmpAltHash">—</div>
-      </div>
-      <pre id="cmpAltSummary" style="margin-top:10px; white-space:pre-wrap">—</pre>
-    </div>
+  <main>
+    <div class="pageWrap">
+      <!-- LEFT: Executive Cockpit + Simulator -->
+      <section class="heroCard" aria-label="Live cockpit">
+        <div class="heroTitle">SIMULATEUR DE COCKPIT (EN DIRECT)</div>
+        <div class="heroPill"><span class="dot" aria-hidden="true"></span> INTÉGRITÉ • LISIBILITÉ • VÉRIFIABILITÉ</div>
 
-    <!-- STRESS -->
-    <div class="card">
-      <h3 id="cmpStressTitle">Stress — hypothetical</h3>
-      <div class="kv" style="margin-top:6px">
-        <div class="k">Coverage</div><div class="v" id="cmpStressCov">—</div>
-        <div class="k">Defensibility</div><div class="v" id="cmpStressDef">—</div>
-        <div class="k">Exposure</div><div class="v" id="cmpStressExp">—</div>
-        <div class="k">Seal</div><div class="v" id="cmpStressHash">—</div>
-      </div>
-      <pre id="cmpStressSummary" style="margin-top:10px; white-space:pre-wrap">—</pre>
-    </div>
-  </div>
+        <div class="divider"></div>
 
-  <div class="card" style="margin-top:18px">
-    <h3>Delta & weakest link</h3>
-    <div class="kv" style="margin-top:8px">
-      <div class="k">Δ Defensibility</div><div class="v" id="cmpDeltaDef">—</div>
-      <div class="k">Δ Exposure</div><div class="v" id="cmpDeltaExp">—</div>
-      <div class="k">Weakest link</div><div class="v" id="cmpWeakest">—</div>
-      <div class="k">Pilot action</div><div class="v" id="cmpPilotAction">—</div>
-    </div>
-    <div class="note" style="margin-top:10px">
-      The structure stays identical (RPO JSON/PDF/hash). Only framing + weights + stress mapping change.
-    </div>
-  </div>
-</section>
-
-    <!-- SIMULATOR -->
-    <section class="section" aria-labelledby="sim-title">
-      <h2 class="section-title" id="sim-title">Simulator — deterministic bundle builder</h2>
-
-      <div class="sim-grid">
-        <!-- LEFT COLUMN -->
-        <div class="card" aria-label="Inputs">
-          <h3 id="hdrInput">Input — decision perimeter</h3>
-
-          <div class="form-grid">
-            <div class="field">
-              <label for="decisionType" id="lblDecisionType">Decision type</label>
-              <select id="decisionType">
-                <option value="Nomination / sensitive role">Nomination / sensitive role</option>
-                <option value="Promotion (multi-criteria)">Promotion (multi-criteria)</option>
-                <option value="Disciplinary / compliance action">Disciplinary / compliance action</option>
-                <option value="Compensation adjustment / internal equity">Compensation adjustment / internal equity</option>
-                <option value="Access to restricted perimeter">Access to restricted perimeter</option>
-              </select>
-            </div>
-
-            <div class="field">
-              <label for="momentT">Decision date (Moment T)</label>
-              <input id="momentT" type="date" />
-            </div>
-
-            <div class="field">
-              <label for="orgScope" id="lblOrgScope">Organization / scope</label>
-              <input id="orgScope" type="text" placeholder="Organization — scope (multi-sites, multi-entities)" />
-            </div>
-
-            <div class="field">
-              <label for="owner" id="lblOwner">Decision owner</label>
-              <input id="owner" type="text" placeholder="Authority / decision maker" />
-            </div>
+        <!-- Executive Cockpit (COMEX-visible) -->
+        <div class="list" role="list" aria-label="Cockpit metrics">
+          <div class="row" role="listitem">
+            <span class="k">Périmètre</span>
+            <span class="v" id="cpScope">—</span>
           </div>
-
-          <div class="field" style="margin-top:12px">
-            <label for="context" id="lblContextText">Decision context (1–3 paragraphs)</label>
-            <textarea id="context" placeholder="Explain why, constraints, audit/litigation window, and what must remain reconstructible."></textarea>
+          <div class="row" role="listitem">
+            <span class="k">Moment T</span>
+            <span class="v" id="cpMoment">—</span>
           </div>
-
-          <h3 style="margin-top:18px" id="hdrSources">Declared sources (what was actually available)</h3>
-          <div class="source-grid">
-            <label class="source">
-              <input type="checkbox" id="srcLms" checked />
-              <div>
-                <strong id="srcLmsTitle">LMS / training files</strong>
-                <span id="srcLmsDesc">Certifications, training attestations, documented evidence.</span>
-              </div>
-            </label>
-            <label class="source">
-              <input type="checkbox" id="srcHris" checked />
-              <div>
-                <strong id="srcHrisTitle">HRIS / career history</strong>
-                <span id="srcHrisDesc">Roles, tenure, mobility, grade changes, official trace.</span>
-              </div>
-            </label>
-            <label class="source">
-              <input type="checkbox" id="srcPerf" checked />
-              <div>
-                <strong id="srcPerfTitle">Performance reviews</strong>
-                <span id="srcPerfDesc">Objectives, annual reviews, formal evaluation trail.</span>
-              </div>
-            </label>
-            <label class="source">
-              <input type="checkbox" id="srcOps" checked />
-              <div>
-                <strong id="srcOpsTitle">Operational results</strong>
-                <span id="srcOpsDesc">Attested KPIs, certified deliverables, traceable metrics.</span>
-              </div>
-            </label>
-            <label class="source">
-              <input type="checkbox" id="src360" />
-              <div>
-                <strong id="src360Title">360 feedback</strong>
-                <span id="src360Desc">Only if documented and attributable (otherwise excluded).</span>
-              </div>
-            </label>
-            <label class="source">
-              <input type="checkbox" id="srcLegal" checked />
-              <div>
-                <strong id="srcLegalTitle">Legal / compliance</strong>
-                <span id="srcLegalDesc">Constraints, disputes, regulatory considerations, opposable items.</span>
-              </div>
-            </label>
+          <div class="row" role="listitem">
+            <span class="k">Complétude</span>
+            <span class="v" id="cpCoverage">—</span>
           </div>
-
-          <div class="mini-grid">
-            <div class="mini">
-              <div class="k" id="miniMissingK">Known missing data</div>
-              <div class="v" id="miniMissingV">
-                Comparable KPIs not attested for all parties; some evidence exists but is not attributable; definition drift across entities.
-              </div>
-            </div>
-            <div class="mini">
-              <div class="k" id="miniConstraintsK">Constraints (optional)</div>
-              <div class="v" id="miniConstraintsV">
-                Urgency, business continuity, social sensitivity, audit/litigation window. The decision must remain reconstructible.
-              </div>
-            </div>
+          <div class="row" role="listitem">
+            <span class="k">Défendabilité</span>
+            <span class="v" id="cpDef">—</span>
           </div>
-
-          <div class="actions" aria-label="Actions">
-            <button class="btn hot" id="btnGenerate" type="button">Generate</button>
-            <button class="btn" id="btnLoad" type="button">Load example</button>
-            <button class="btn" id="btnReset" type="button">Reset</button>
+          <div class="row" role="listitem">
+            <span class="k">Exposition aux litiges</span>
+            <span class="v" id="cpExposure">—</span>
           </div>
-
-          <div class="note" id="localOnlyNote">
-            <strong>Local-only:</strong> no data is sent. The bundle is generated in your browser. Deterministic rules only.
+          <div class="row" role="listitem">
+            <span class="k">Owner</span>
+            <span class="v" id="cpOwner">—</span>
+          </div>
+          <div class="row" role="listitem">
+            <span class="k">Mode de gouvernance</span>
+            <span class="v" id="cpGov">—</span>
           </div>
         </div>
 
-        <!-- RIGHT COLUMN -->
-        <div class="right-stack">
-          <div class="card" aria-label="Report">
-            <h3 id="hdrOutput">Output — decision defensibility report</h3>
-            <div class="kv" style="margin-top:4px">
-              <div class="k" id="lblOutCoverage">Coverage</div><div class="v" id="outCoverage">—</div>
-              <div class="k" id="lblOutMissing">Missing</div><div class="v" id="outMissing">—</div>
-              <div class="k" id="lblOutDef">Defensibility</div><div class="v" id="outDef">—</div>
-              <div class="k" id="lblOutExposure">Audit exposure</div><div class="v" id="outExposure">—</div>
-              <div class="k" id="lblOutSeal">Seal</div><div class="v" id="outSeal">—</div>
+        <!-- Governance readiness strip -->
+        <div class="govStrip" aria-label="Governance readiness">
+          <div class="govLeft"><span class="bulb" aria-hidden="true"></span> PRÊT</div>
+          <div class="govTrack" aria-hidden="true"><div class="govFill" id="govFill"></div></div>
+          <div class="govRight" id="govRightLabel">VÉRIFIER</div>
+        </div>
+
+        <div class="hashLine" aria-label="Hash">
+          <b>hachage :</b>
+          <div class="hashText" id="hashText">—</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Simulator input + output -->
+        <div class="twoCols">
+          <div class="formCard" aria-label="Inputs">
+            <h2 style="margin:0 0 6px 0; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-soft);">Inputs</h2>
+            <p class="micro">
+              Entrez un cas, générez un bundle probatoire scellé. Le moteur est déterministe : même entrée → même sortie.
+            </p>
+
+            <label for="case-title">Titre du cas</label>
+            <input class="inp" id="case-title" type="text" placeholder="Ex : Compromission interne — cellule X" />
+
+            <label for="issuer">Émetteur / Source</label>
+            <input class="inp" id="issuer" type="text" placeholder="Ex : HRIS + Audit interne" />
+
+            <label for="subject">Objet / Fait générateur</label>
+            <input class="inp" id="subject" type="text" placeholder="Ex : suspicion de compromission — vérification" />
+
+            <label for="narrative">Narratif (extrait)</label>
+            <textarea id="narrative" placeholder="Collez ici un extrait (mail, note, ticket, log, compte-rendu)."></textarea>
+
+            <div class="actions" aria-label="Actions">
+              <button class="btn2 primary" id="generate-btn" type="button">Générer</button>
+              <button class="btn2" id="reset-btn" type="button">Reset</button>
+              <button class="btn2" id="load-example-btn" type="button">Charger un exemple</button>
             </div>
+
+            <!-- Escalation control -->
+            <details>
+              <summary>Escalade (institutionnel)</summary>
+              <div style="margin-top:10px;">
+                <p class="micro">
+                  Auto utilise les signaux (défendabilité / exposition). Manuel force un niveau minimum (sans modifier le core scellé).
+                </p>
+                <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:10px;">
+                  <label style="display:flex; gap:10px; align-items:center; color:rgba(247,243,232,.78); font-size:13px;">
+                    <input id="govAuto" type="checkbox" checked />
+                    Auto
+                  </label>
+                  <span class="briefPill"><span class="briefDot" aria-hidden="true"></span><span id="govModeLabel">Operational</span></span>
+                </div>
+                <div style="margin-top:10px;">
+                  <input id="pressureLevel" type="range" min="0" max="2" step="1" value="0" disabled style="width:100%;" />
+                  <div style="display:flex; justify-content:space-between; font-size:12px; color:rgba(247,243,232,.70); margin-top:6px;">
+                    <span>Operational</span><span>Reinforced</span><span>Critical</span>
+                  </div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div class="outCard" aria-label="Outputs">
+            <h2 style="margin:0 0 6px 0; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-soft);">Outputs</h2>
+            <p class="micro">
+              Lecture COMEX en haut, transparence technique en bas. Le rapport probatoire final est reproductible.
+            </p>
 
             <div class="tabs" role="tablist" aria-label="Output tabs">
-              <button class="tab" role="tab" aria-selected="true" id="tabSummary">Preview</button>
-              <button class="tab" role="tab" aria-selected="false" id="tabJson">JSON</button>
-              <button class="tab" role="tab" aria-selected="false" id="tabPrint">PDF (print)</button>
+              <button class="tab active" data-tab="summary" type="button">Synthèse</button>
+              <button class="tab" data-tab="json" type="button">JSON scellé</button>
+              <button class="tab" data-tab="evidence" type="button">Preuve & invariants</button>
             </div>
 
-            <div id="paneSummary">
-              <pre id="summaryPre">Click “Generate”.</pre>
-              <div class="actions" style="grid-template-columns: 1fr 1fr 1fr; margin-top:12px">
-                <button class="btn" id="btnCopyHash" type="button">Copy hash</button>
-                <button class="btn" id="btnCopyJson" type="button">Copy JSON</button>
-                <button class="btn hot" id="btnDownload" type="button">Download JSON</button>
-              </div>
-              <div class="note" id="previewNote">
-                This artifact documents <strong>scope + declared systems + lineage hints + deterministic rules</strong>.
-                It does not “decide truth”. Humans remain accountable.
-              </div>
-            </div>
-
-            <div id="paneJson" style="display:none">
-              <pre id="jsonPre">{}</pre>
-            </div>
-
-            <div id="panePrint" style="display:none">
-              <pre id="printPre">
-Use your browser print (Cmd/Ctrl+P) to export a clean PDF.
-It’s a human-readable rendering of the same sealed core bundle.
-              </pre>
-              <div class="actions" style="grid-template-columns: 1fr; margin-top:12px">
-                <button class="btn hot" id="btnPrint" type="button">Print / Export PDF</button>
-              </div>
-            </div>
-
-            <div class="hash" style="margin-top:12px">
-              hash: <span id="hashOut">—</span>
-            </div>
-          </div>
-
-          <div class="card" aria-label="Connectors">
-            <h3 id="hdrConnectors">Connectors map (declared)</h3>
-            <div class="subgrid" id="connectorsGrid">
-              <span class="badge ok"><i></i> Workday (HRIS) — declared</span>
-              <span class="badge ok"><i></i> LMS — declared</span>
-              <span class="badge ok"><i></i> Perf / Talent — declared</span>
-              <span class="badge warn"><i></i> ATS — optional</span>
-              <span class="badge ok"><i></i> Compliance — declared</span>
-              <span class="badge warn"><i></i> Finance — optional</span>
-            </div>
-            <div class="note" style="margin-top:10px" id="connectorsNote">
-              In production, each connector exposes an <strong>extract id</strong>, a <strong>timestamp</strong> and traceable <strong>definitions</strong>.
-              In this simulator, those are deterministic lineage hints.
-            </div>
-          </div>
-
-          <div class="card" aria-label="Lineage and quality">
-            <h3 id="hdrLineage">Lineage & quality checks</h3>
-            <div class="lineage">
-              <div class="lt" id="ltSnapshot">Lineage snapshot</div>
-              <div class="lin-row">
-                <div class="k" id="kHrisSystem">HRIS system</div><div class="v" id="linHrisSys">—</div>
-                <div class="k" id="kExtractId">Extract id</div><div class="v" id="linHrisExt">—</div>
-                <div class="k" id="kSteward">Steward</div><div class="v" id="linSteward">—</div>
-                <div class="k" id="kAttributable">Attributable</div><div class="v" id="linAttr">—</div>
+            <!-- SUMMARY -->
+            <div class="pane active" id="pane-summary" role="tabpanel">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+                <div>
+                  <div style="font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-soft); font-weight:900;">
+                    Decision brief (activation de gouvernance)
+                  </div>
+                  <p class="micro" style="margin-top:6px;">
+                    Ce brief structure l’escalade et l’accountability. Il ne “décide pas le vrai”, il organise la réaction institutionnelle.
+                  </p>
+                </div>
+                <span class="briefPill"><span class="briefDot" aria-hidden="true"></span><span id="briefGov">—</span></span>
               </div>
 
-              <div class="lin-row">
-                <div class="k" id="kFreshness">Freshness</div><div class="v" id="qFresh">—</div>
-                <div class="k" id="kCompleteness">Completeness</div><div class="v" id="qComp">—</div>
-                <div class="k" id="kDrift">Definition drift</div><div class="v" id="qDrift">—</div>
-                <div class="k" id="kDup">Duplicates</div><div class="v" id="qDup">—</div>
+              <div class="briefGrid" aria-label="Decision brief rows">
+                <div class="briefRow">
+                  <span class="briefK">Owner group</span>
+                  <span class="briefV" id="briefOwner">—</span>
+                </div>
+                <div class="briefRow">
+                  <span class="briefK">Next institutional action</span>
+                  <span class="briefV" id="briefAction">—</span>
+                </div>
+                <div class="briefRow">
+                  <span class="briefK">Rationale</span>
+                  <span class="briefV" id="briefWhy">—</span>
+                </div>
               </div>
+
+              <details>
+                <summary>Synthèse narrative</summary>
+                <pre id="summaryPre">Cliquez “Générer”.</pre>
+              </details>
             </div>
 
-            <div class="note" id="lineageNote">
-              These checks are deterministic proxies. They surface <strong>exposure</strong> and <strong>reconstruction risk</strong>
-              without implying any “truth” judgment.
+            <!-- JSON -->
+            <div class="pane" id="pane-json" role="tabpanel">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+                <span class="briefPill"><span class="briefDot" aria-hidden="true"></span>bundle scellé</span>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                  <button class="btn2" id="copy-json-btn" type="button">Copier</button>
+                  <button class="btn2" id="download-json-btn" type="button">Télécharger</button>
+                </div>
+              </div>
+              <pre id="rpo-json">{}</pre>
             </div>
-          </div>
 
-          <div class="card" aria-label="Decision support">
-            <h3 id="hdrSupport">Decision support (deterministic)</h3>
-            <div class="kv">
-              <div class="k" id="kDsExposure">Audit exposure</div><div class="v" id="dsExposure">—</div>
-              <div class="k" id="kDsBlockers">Top blockers</div><div class="v" id="dsBlockers">—</div>
-              <div class="k" id="kDsActions">Next actions</div><div class="v" id="dsActions">—</div>
-              <div class="k" id="kDsImprove">What improves score</div><div class="v" id="dsImprove">—</div>
-            </div>
-            <div class="note" style="margin-top:10px" id="supportNote">
-              This is not a “decision engine”. It is a <strong>defensibility layer</strong>: it tells you what is missing to make a decision reconstructible.
+            <!-- EVIDENCE -->
+            <div class="pane" id="pane-evidence" role="tabpanel">
+              <div class="list" role="list" aria-label="Evidence metrics">
+                <div class="row" role="listitem">
+                  <span class="k" style="font-size:14px; min-width:160px;">Sentences</span>
+                  <span class="v" style="font-size:16px;" id="metric-sentences">—</span>
+                </div>
+                <div class="row" role="listitem">
+                  <span class="k" style="font-size:14px; min-width:160px;">Markers</span>
+                  <span class="v" style="font-size:16px;" id="metric-markers">—</span>
+                </div>
+                <div class="row" role="listitem">
+                  <span class="k" style="font-size:14px; min-width:160px;">Score</span>
+                  <span class="v" style="font-size:16px;" id="metric-score">—</span>
+                </div>
+                <div class="row" role="listitem">
+                  <span class="k" style="font-size:14px; min-width:160px;">Dates</span>
+                  <span class="v" style="font-size:16px;" id="metric-dates">—</span>
+                </div>
+                <div class="row" role="listitem">
+                  <span class="k" style="font-size:14px; min-width:160px;">Places</span>
+                  <span class="v" style="font-size:16px;" id="metric-places">—</span>
+                </div>
+                <div class="row" role="listitem">
+                  <span class="k" style="font-size:14px; min-width:160px;">Density</span>
+                  <span class="v" style="font-size:16px;" id="metric-density">—</span>
+                </div>
+                <div class="row" role="listitem">
+                  <span class="k" style="font-size:14px; min-width:160px;">Chrono</span>
+                  <span class="v" style="font-size:16px;" id="metric-chrono">—</span>
+                </div>
+              </div>
+
+              <details>
+                <summary>Anchors (dates / lieux / temporalité)</summary>
+                <pre id="anchorsPre">—</pre>
+              </details>
+
+              <details>
+                <summary>Invariants (core)</summary>
+                <pre id="corePre">—</pre>
+              </details>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Pilot CTA -->
-    <section class="pilot" aria-label="Pilot Cockpit CTA">
+      <!-- RIGHT: “Gadget” + Context + Comparative view -->
+      <aside class="sideCard" aria-label="Right panel">
+        <h4>Comparative cockpit (gadget utile)</h4>
+        <p class="micro">
+          Vitrine “mkt/technique” : montre que le même core produit des lectures différentes selon le contexte, sans perdre la traçabilité.
+        </p>
+
+        <div class="chipRow" aria-label="Context chips">
+          <span class="chip" id="context-name">Gouvernance</span>
+          <span class="chip" id="context-desc">Escalade institutionnelle</span>
+        </div>
+
+        <div style="margin-top:14px;">
+          <h4>Lecture instantanée</h4>
+          <div style="display:flex; flex-direction:column; gap:10px; margin-top:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+              <span class="micro">Exposure</span>
+              <span class="badge b-warn" id="badgeExposure"><i></i><span id="badgeExposureTxt">—</span></span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+              <span class="micro">Governance</span>
+              <span class="briefPill"><span class="briefDot" aria-hidden="true"></span><span id="sideGov">—</span></span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px;">
+              <span class="micro">Defensibility</span>
+              <span class="briefPill"><span class="briefDot" aria-hidden="true"></span><span id="sideDef">—</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h4>Stress test (aperçu)</h4>
+        <p class="micro">Simule la montée en pression : à quel moment le dossier devient institutionnel.</p>
+
+        <div style="margin-top:10px;">
+          <input id="stressSlider" type="range" min="0" max="100" step="5" value="0" style="width:100%;" />
+          <div style="display:flex; justify-content:space-between; font-size:12px; color:rgba(247,243,232,.70); margin-top:6px;">
+            <span>0</span><span>50</span><span>100</span>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <div class="briefRow" style="padding:10px 0;">
+            <span class="briefK" style="min-width:140px;">Break point</span>
+            <span class="briefV" id="breakPoint">—</span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h4>Raccourcis</h4>
+        <div class="actions" style="margin-top:10px;">
+          <button class="btn2" id="loadContextGov" type="button">Contexte gouvernance</button>
+          <button class="btn2" id="loadContextCyber" type="button">Contexte cyber</button>
+          <button class="btn2" id="loadContextJustice" type="button">Contexte justice</button>
+        </div>
+
+        <p class="micro" style="margin-top:12px;">
+          Note : la page reste un simulateur. Le poste de pilotage (pilot cockpit) orchestre connecteurs, workflows, permissions, journaux scellés.
+        </p>
+      </aside>
+    </div>
+
+    <!-- BOTTOM CTA -->
+    <section class="bottomCta" aria-label="Bottom CTA">
       <div>
-        <h3>Ready for the Pilot Cockpit?</h3>
+        <h3>PRÊT POUR LE COCKPIT DU PILOTE ?</h3>
         <p>
-          Move from a deterministic simulator to a real ProofOps workflow: connectors, traceable extracts, sealed bundles, and repeatable decision defense.
-          Same principle: integrity, readability, verifiability — with an operational cockpit.
+          Passez du démonstrateur à l’opérationnel : connecteurs, workflows, journal scellé, traçabilité multi-acteurs, et rapports probatoires exploitables.
         </p>
       </div>
-      <a href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
+      <button class="btnPill" id="pilotBottomBtn" type="button">POSTE DE PILOTAGE</button>
     </section>
-
-    <footer>
-      <div>© OpenProof — RPO v0.1. Created by Gersende Ryard de Parcey.</div>
-      <div>
-        <a href="./spec.html">Spec</a> ·
-        <a href="./simulator.html">Simulator</a> ·
-        <a href="./examples.html">Examples</a>
-      </div>
-    </footer>
   </main>
 
+  <!-- Global scripts -->
+  <script src="./assets/site.js"></script>
+  <script src="./assets/sandbox.js"></script>
+
   <script>
-    // ===============================
-    // Centralized contexts mapping
-    // ===============================
-    const CONTEXTS = {
-      governance: {
-        key: "governance",
-        name: "Governance",
-        description:
-          "Governance context: decision defensibility under audit exposure. Focus on scope, lineage, definitions, and reconstructibility at Moment T.",
-        ui: {
-          labels: {
-            exposure: "Audit exposure",
-            owner: "Authority / decision maker",
-            outputTitle: "Output — decision defensibility report",
-            inputTitle: "Input — decision perimeter",
-            previewTab: "Preview",
-            reportNote:
-              "This artifact documents scope + declared systems + lineage hints + deterministic rules. It does not “decide truth”. Humans remain accountable.",
-            supportTitle: "Decision support (deterministic)"
-          },
-          tooltips: {
-            context:
-              "Context changes lexicon, weights, visibility rules, and narrative template — without changing the sealed RPO structure."
-          },
-          chips: ["Moment T", "Declared systems", "Lineage", "Quality checks", "Audit exposure", "Public hash"]
-        },
-        weights: {
-          // Higher = more impact on risk penalty
-          timestamp_rigor: 1.10,
-          chain_of_custody: 1.00,
-          contradictions: 0.90,
-          uncertainty_logging: 1.00,
-          definition_drift: 1.15,
-          attribution: 1.00
-        },
-        toggles: {
-          show_connectors: true,
-          show_lineage: true,
-          show_support: true,
-          recommend_360: true
-        },
-        presets: {
-          placeholders: {
-            orgScope: "Organization — scope (multi-sites, multi-entities)",
-            owner: "Authority / decision maker",
-            context:
-              "Regulated environment. Audit exposure. Definition stability and reconstructibility are required.\nDecision may be challenged and must remain reconstructible over time (audit window)."
-          }
-        },
-        summary: {
-          template: (core, derived) => {
-            const yesSources = derived.yesSources || "—";
-            const bl = derived.blockers || "- —";
-            const na = derived.nextActions || "- —";
-            return `Decision: ${core.decision.type}
-Scope: ${core.decision.scope}
-Authority: ${core.decision.owner}
-Moment T: ${core.moment_t}
-Declared sources: ${yesSources}
-Coverage: ${derived.cov}% | Missing: ${derived.miss}
-Defensibility: ${derived.def.band} (${derived.def.score}/100)
-${derived.labels.exposure}: ${derived.exposure}
-
-Lineage (example):
-- HRIS: ${derived.hrisSys} | extract_id: ${derived.hrisExt}
-
-Quality checks:
-- Freshness: ${derived.q.freshness} | Completeness: ${derived.q.completeness}
-- Definition drift: ${derived.q.drift} | Duplicates: ${derived.q.duplicates}
-
-Top blockers:
-${bl}
-
-Next actions:
-${na}
-
-Seal:
-- Sealed core hash (SHA-256): ${derived.hash}
-
-Interpretation:
-- This bundle documents scope + declared systems + lineage hints + deterministic rules.
-- The hash proves integrity over time (not “truth”).
-- Humans remain accountable.`;
-          }
-        }
-      },
-
-      legal: {
-        key: "legal",
-        name: "Legal Proceedings",
-        description:
-          "Legal proceedings context: evidentiary defensibility under litigation exposure. Focus on chain-of-custody, attribution, contradictions, and reconstructibility for court-grade review.",
-        ui: {
-          labels: {
-            exposure: "Litigation exposure",
-            owner: "Authority / decision maker",
-            outputTitle: "Output — evidentiary defensibility report",
-            inputTitle: "Input — evidentiary perimeter",
-            previewTab: "Preview",
-            reportNote:
-              "This artifact documents perimeter + sources + lineage hints + deterministic proxies. It does not establish “truth”. It supports evidentiary defensibility and reconstruction.",
-            supportTitle: "Evidentiary support (deterministic)"
-          },
-          tooltips: {
-            context:
-              "Legal proceedings framing prioritizes chain-of-custody, attribution, contradictions, and timestamp rigor."
-          },
-          chips: ["Moment T", "Declared sources", "Chain-of-custody", "Attribution", "Contradictions", "Litigation exposure", "Public hash"]
-        },
-        weights: {
-          timestamp_rigor: 1.30,
-          chain_of_custody: 1.35,
-          contradictions: 1.25,
-          uncertainty_logging: 1.15,
-          definition_drift: 0.95,
-          attribution: 1.30
-        },
-        toggles: {
-          show_connectors: true,
-          show_lineage: true,
-          show_support: true,
-          recommend_360: false
-        },
-        presets: {
-          placeholders: {
-            orgScope: "Case perimeter — parties / entities / jurisdictions",
-            owner: "Authority / decision maker",
-            context:
-              "Active or expected litigation. Evidence must be attributable, timestamped, and reconstructible.\nFocus: chain-of-custody, contradictions, and court-grade defensibility."
-          }
-        },
-        summary: {
-          template: (core, derived) => {
-            const yesSources = derived.yesSources || "—";
-            const bl = derived.blockers || "- —";
-            const na = derived.nextActions || "- —";
-            return `Matter: ${core.decision.type}
-Perimeter: ${core.decision.scope}
-Authority: ${core.decision.owner}
-Moment T: ${core.moment_t}
-Declared sources: ${yesSources}
-Evidentiary completeness: ${derived.cov}% | Missing: ${derived.miss}
-Defensibility: ${derived.def.band} (${derived.def.score}/100)
-${derived.labels.exposure}: ${derived.exposure}
-
-Chain-of-custody (example):
-- HRIS: ${derived.hrisSys} | extract_id: ${derived.hrisExt}
-
-Deterministic checks:
-- Timestamp rigor: ${derived.q.freshness}
-- Completeness: ${derived.q.completeness}
-- Contradiction risk proxy: ${derived.q.drift}
-- Duplicate risk proxy: ${derived.q.duplicates}
-
-Top blockers:
-${bl}
-
-Next actions:
-${na}
-
-Seal:
-- Sealed core hash (SHA-256): ${derived.hash}
-
-Interpretation:
-- This bundle supports evidentiary defensibility and reconstruction.
-- Integrity is proven by the hash over time; “truth” remains a human/judicial determination.`;
-          }
-        }
-      },
-
-      institutional: {
-        key: "institutional",
-        name: "Institutional Crisis",
-        description:
-          "Institutional crisis context: reconstructibility under institutional exposure. Focus on uncertainty logging, contradictions, escalation risk, and narrative stabilization — while keeping the probatory chain intact.",
-        ui: {
-          labels: {
-            exposure: "Institutional exposure",
-            owner: "Authority / decision maker",
-            outputTitle: "Output — crisis defensibility report",
-            inputTitle: "Input — crisis perimeter",
-            previewTab: "Preview",
-            reportNote:
-              "This artifact documents perimeter + sources + lineage hints + deterministic proxies. It supports stabilization, reconstruction, and defensibility during crisis escalation.",
-            supportTitle: "Crisis support (deterministic)"
-          },
-          tooltips: {
-            context:
-              "Crisis framing prioritizes uncertainty logging, contradiction surfacing, escalation risk, and reconstructibility under pressure."
-          },
-          chips: ["Moment T", "Declared sources", "Uncertainty logging", "Contradictions", "Escalation risk", "Institutional exposure", "Public hash"]
-        },
-        weights: {
-          timestamp_rigor: 1.15,
-          chain_of_custody: 1.05,
-          contradictions: 1.35,
-          uncertainty_logging: 1.40,
-          definition_drift: 1.00,
-          attribution: 1.10
-        },
-        toggles: {
-          show_connectors: true,
-          show_lineage: true,
-          show_support: true,
-          recommend_360: true
-        },
-        presets: {
-          placeholders: {
-            orgScope: "Institution — perimeter (units, channels, stakeholders)",
-            owner: "Authority / decision maker",
-            context:
-              "Crisis situation. Information is fragmented, contested, and fast-moving.\nGoal: stabilize the narrative perimeter, surface uncertainty, and keep the chain reconstructible at Moment T."
-          }
-        },
-        summary: {
-          template: (core, derived) => {
-            const yesSources = derived.yesSources || "—";
-            const bl = derived.blockers || "- —";
-            const na = derived.nextActions || "- —";
-            return `Situation: ${core.decision.type}
-Perimeter: ${core.decision.scope}
-Authority: ${core.decision.owner}
-Moment T: ${core.moment_t}
-Declared sources: ${yesSources}
-Coverage: ${derived.cov}% | Missing: ${derived.miss}
-Defensibility: ${derived.def.band} (${derived.def.score}/100)
-${derived.labels.exposure}: ${derived.exposure}
-
-Stabilization cues:
-- Uncertainty logging proxy: ${derived.q.freshness}
-- Completeness: ${derived.q.completeness}
-- Contradictions proxy: ${derived.q.drift}
-- Duplicates proxy: ${derived.q.duplicates}
-
-Top blockers:
-${bl}
-
-Next actions:
-${na}
-
-Seal:
-- Sealed core hash (SHA-256): ${derived.hash}
-
-Interpretation:
-- This bundle supports crisis stabilization and reconstruction.
-- The hash proves integrity over time; interpretation and decisions remain human.`;
-          }
-        }
-      }
-    };
-
-    // ===============================
-    // Helpers
-    // ===============================
-    const $ = (id) => document.getElementById(id);
-
-    function getContextKeyFromQuery() {
-      const sp = new URLSearchParams(window.location.search);
-      const c = (sp.get("context") || "").toLowerCase().trim();
-      if (!c) return null;
-      if (c === "governance") return "governance";
-      if (c === "legal" || c === "legal-proceedings" || c === "proceedings") return "legal";
-      if (c === "institutional" || c === "institutional-crisis" || c === "crisis") return "institutional";
-      return null;
-    }
-
-    function setQueryContext(key) {
-      const url = new URL(window.location.href);
-      url.searchParams.set("context", key);
-      window.history.replaceState({}, "", url.toString());
-    }
-
-    function applyContext(key) {
-      const ctx = CONTEXTS[key] || CONTEXTS.governance;
-      window.__CTX_KEY = ctx.key;
-
-      // Description
-      $("ctxDesc").textContent = ctx.description;
-      $("ctxHint").textContent = ctx.ui.tooltips.context;
-
-      // Chips (including exposure chip)
-      const chipRow = $("chipRow");
-      chipRow.innerHTML = "";
-      ctx.ui.chips.forEach(txt => {
-        const s = document.createElement("span");
-        s.className = "chip";
-        s.textContent = txt;
-        chipRow.appendChild(s);
-      });
-
-      // Cockpit labels
-      $("lblCpExposure").textContent = ctx.ui.labels.exposure;
-      $("lblCpScope").textContent = (key === "legal" ? "Perimeter" : "Scope");
-      $("lblCpCoverage").textContent = (key === "legal" ? "Completeness" : "Coverage");
-      $("lblCpDef").textContent = "Defensibility";
-
-      // Input labels
-      $("hdrInput").textContent = ctx.ui.labels.inputTitle;
-      $("hdrOutput").textContent = ctx.ui.labels.outputTitle;
-      $("lblOwner").textContent = (key === "legal" ? "Authority / decision maker" : "Decision owner");
-      $("owner").placeholder = ctx.presets.placeholders.owner;
-
-      // Output labels
-      $("lblOutExposure").textContent = ctx.ui.labels.exposure;
-      $("kDsExposure").textContent = ctx.ui.labels.exposure;
-
-      // Connectors/help copy (small but relevant)
-      $("previewNote").innerHTML = ctx.ui.labels.reportNote.replace("scope + declared systems + lineage hints + deterministic rules", "<strong>scope + declared systems + lineage hints + deterministic rules</strong>");
-      $("supportNote").innerHTML =
-        (key === "legal")
-          ? 'This is not a “decision engine”. It is an <strong>evidentiary defensibility layer</strong>: it tells you what is missing to make a case reconstructible.'
-          : (key === "institutional")
-            ? 'This is not a “decision engine”. It is a <strong>stabilization layer</strong>: it tells you what is missing to keep a crisis perimeter reconstructible.'
-            : 'This is not a “decision engine”. It is a <strong>defensibility layer</strong>: it tells you what is missing to make a decision reconstructible.';
-
-      // Visibility toggles (soft: we keep components, we can mark some as recommended)
-      // Here: recommend/disable 360 by default for legal
-      if (key === "legal") {
-        $("src360").checked = false;
-      }
-
-      // Preset placeholders for scope/context
-      $("orgScope").placeholder = ctx.presets.placeholders.orgScope;
-      if (!($("context").value || "").trim()) $("context").placeholder = ctx.presets.placeholders.context;
-
-      // Update querystring
-      setQueryContext(ctx.key);
-
-      // Sync cockpit immediately
-      quickSync();
-    }
-
-    // ===============================
-    // Star field background (from sandbox)
-    // ===============================
-    (function () {
-      const canvas = document.getElementById("bg-field");
-      const ctx = canvas.getContext("2d", { alpha: true });
-      let width, height, particles = [];
-      const COUNT = 220;
-
-      function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        const ratio = window.devicePixelRatio || 1;
-        canvas.width = width * ratio;
-        canvas.height = height * ratio;
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-      }
-      function createParticle() {
-        return { x: (Math.random() * 2 - 1), y: (Math.random() * 2 - 1), z: Math.random() * 0.9 + 0.1, speed: Math.random() * 0.004 + 0.0015 };
-      }
-      function init() { particles = []; for (let i = 0; i < COUNT; i++) particles.push(createParticle()); }
-      function project(p) {
-        const f = 420;
-        const s = f / (f * p.z);
-        return { x: p.x * width * 0.5 * s + width / 2, y: p.y * height * 0.5 * s + height / 2 };
-      }
-      function loop() {
-        ctx.clearRect(0, 0, width, height);
-        for (const p of particles) {
-          p.z -= p.speed;
-          if (p.z < 0.08) { Object.assign(p, createParticle()); p.z = 1; }
-          const { x, y } = project(p);
-          const a = Math.min(1, (1.2 - p.z) * 1.1);
-          ctx.fillStyle = `rgba(241,230,163,${0.55 * a})`;
-          ctx.beginPath(); ctx.arc(x, y, 1.5, 0, Math.PI * 2); ctx.fill();
-        }
-        requestAnimationFrame(loop);
-      }
-      window.addEventListener("resize", resize);
-      resize(); init(); loop();
-    })();
-
-    // ===============================
-    // Cockpit 3D hover (from sandbox)
-    // ===============================
     (function(){
-      const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const card = document.getElementById("cockpit");
-      if (!card || prefersReduce) return;
-      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-      let raf = null;
-      function onMove(e){
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top) / r.height;
-        const rotY = clamp((x - 0.5) * 10, -6, 6);
-        const rotX = clamp((0.5 - y) * 10, -6, 6);
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
+      "use strict";
+
+      // ---------------------------------------
+      // Helpers
+      // ---------------------------------------
+      const $ = (id) => document.getElementById(id);
+
+      function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+      function nowISODateFr(){
+        const d = new Date();
+        const day = String(d.getDate()).padStart(2,"0");
+        const monthNames = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+        const m = monthNames[d.getMonth()];
+        const y = d.getFullYear();
+        return `${day} ${m} ${y}`;
+      }
+
+      async function sha256Hex(str){
+        const enc = new TextEncoder().encode(str);
+        const buf = await crypto.subtle.digest("SHA-256", enc);
+        const bytes = new Uint8Array(buf);
+        return Array.from(bytes).map(b => b.toString(16).padStart(2,"0")).join("");
+      }
+
+      function sentenceCount(text){
+        if(!text) return 0;
+        const parts = text.split(/(?<=[.!?…])\s+/).filter(s => s.trim().length > 0);
+        return Math.max(1, parts.length);
+      }
+
+      function extractDates(text){
+        if(!text) return [];
+        const out = new Set();
+        const r1 = /\b(\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4})\b/g;
+        const r2 = /\b(\d{4}\-\d{2}\-\d{2})\b/g;
+        let m;
+        while((m = r1.exec(text))) out.add(m[1]);
+        while((m = r2.exec(text))) out.add(m[1]);
+        // months FR
+        const r3 = /\b(\d{1,2}\s+(janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)\s+\d{4})\b/gi;
+        while((m = r3.exec(text))) out.add(m[1]);
+        return Array.from(out);
+      }
+
+      function extractPlaces(text){
+        if(!text) return [];
+        // Keep conservative: only a small dictionary to avoid hallucinating
+        const places = ["Paris","Toulouse","London","Londres","Sydney","Canberra","Bruxelles","Washington","Berlin","Genève","Geneva"];
+        const found = [];
+        for(const p of places){
+          const re = new RegExp(`\\b${p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+          if(re.test(text)) found.push(p);
+        }
+        return found;
+      }
+
+      function markerCount(text){
+        if(!text) return 0;
+        const hits = text.match(/\b(urgent|secret|confidentiel|audit|enquête|probe|leak|press|média|media|sanction|conflit|harcèlement|fraude|espion|corruption|compliance|procédure|procedure|tribunal|law|legal)\b/gi);
+        return hits ? hits.length : 0;
+      }
+
+      function densityScore(sentences, markers){
+        if(sentences <= 0) return 0;
+        return clamp(Math.round((markers / sentences) * 100), 0, 100);
+      }
+
+      function chronoHeuristic(dates){
+        if(!dates || dates.length <= 1) return "LOW";
+        return "MEDIUM";
+      }
+
+      function coverageFromInputs(title, issuer, subject, narrative){
+        const fields = [
+          !!(title && title.trim()),
+          !!(issuer && issuer.trim()),
+          !!(subject && subject.trim()),
+          !!(narrative && narrative.trim())
+        ];
+        const ratio = fields.filter(Boolean).length / fields.length;
+        return Math.round(ratio * 100);
+      }
+
+      function defensibilityBand(score){
+        // Returns { bandLabel, bandScore, band } like "MOYEN (60)"
+        // Score 0..100
+        const s = clamp(Math.round(score), 0, 100);
+        if(s >= 80) return { band: "HIGH", bandLabel: "ÉLEVÉ", bandScore: s };
+        if(s >= 55) return { band: "MEDIUM", bandLabel: "MOYEN", bandScore: s };
+        return { band: "LOW", bandLabel: "FAIBLE", bandScore: s };
+      }
+
+      function exposureFrom(defBand, density, markers){
+        // Conservative rules: weak defensibility or high density/markers => higher exposure
+        if(defBand === "LOW") return "HIGH";
+        if(defBand === "MEDIUM" && (density >= 55 || markers >= 6)) return "HIGH";
+        if(defBand === "MEDIUM") return "MEDIUM";
+        if(defBand === "HIGH" && (density >= 55 || markers >= 6)) return "MEDIUM";
+        return "LOW";
+      }
+
+      function govFromExposure(exposure){
+        if(exposure === "HIGH") return 2;
+        if(exposure === "MEDIUM") return 1;
+        return 0;
+      }
+      function govLabel(level){
+        return level === 2 ? "Critical" : level === 1 ? "Reinforced" : "Operational";
+      }
+      function govOwnerGroup(level){
+        if(level === 2) return "COMEX + Legal + HR + DSI";
+        if(level === 1) return "HR + Legal + DSI";
+        return "HR";
+      }
+      function govNextAction(level){
+        if(level === 2) return "Activer la gouvernance COMEX, sceller le rapport probatoire, préparer posture juridique & communication.";
+        if(level === 1) return "Déclencher gouvernance renforcée, collecter preuves supplémentaires, pré-brief COMEX.";
+        return "Documenter le périmètre, surveiller, corriger les sources manquantes.";
+      }
+      function govRationale(def, exposure, density){
+        if(exposure === "HIGH") return `Exposition institutionnelle élevée (exposure=${exposure}), défendabilité=${def}, densité=${density}.`;
+        if(exposure === "MEDIUM") return `Exposition modérée (exposure=${exposure}) nécessitant contrôle inter-fonctions.`;
+        return `Gouvernance routine : défendabilité=${def}, exposition=${exposure}.`;
+      }
+
+      function badgeForExposure(exposure){
+        const badge = $("badgeExposure");
+        const txt = $("badgeExposureTxt");
+        if(!badge || !txt) return;
+        badge.classList.remove("b-ok","b-warn","b-danger");
+        if(exposure === "HIGH"){ badge.classList.add("b-danger"); txt.textContent = "HIGH"; return; }
+        if(exposure === "MEDIUM"){ badge.classList.add("b-warn"); txt.textContent = "MEDIUM"; return; }
+        badge.classList.add("b-ok"); txt.textContent = "LOW";
+      }
+
+      function setGovStrip(level){
+        const fill = $("govFill");
+        const right = $("govRightLabel");
+        if(fill){
+          fill.style.width = level === 2 ? "88%" : level === 1 ? "62%" : "38%";
+        }
+        if(right){
+          right.textContent = level === 2 ? "ACTIVER" : level === 1 ? "RENFORCER" : "VÉRIFIER";
+        }
+      }
+
+      function setCockpit(scope, momentT, coverage, defLabel, defScore, exposure, owner, govLevel, hash){
+        $("cpScope").textContent = scope || "—";
+        $("cpMoment").textContent = momentT || "—";
+        $("cpCoverage").textContent = (coverage != null) ? `${coverage}%` : "—";
+        $("cpDef").textContent = defLabel ? `${defLabel} (${defScore})` : "—";
+        $("cpExposure").textContent = exposure ? (exposure === "HIGH" ? "ÉLEVÉ" : exposure === "MEDIUM" ? "MOYEN" : "FAIBLE") : "—";
+        $("cpOwner").textContent = owner || "—";
+        $("cpGov").textContent = govLabel(govLevel ?? 0);
+        $("govModeLabel").textContent = govLabel(govLevel ?? 0);
+        $("sideGov").textContent = govLabel(govLevel ?? 0);
+        $("hashText").textContent = hash || "—";
+        setGovStrip(govLevel ?? 0);
+        badgeForExposure(exposure || "LOW");
+      }
+
+      function setDecisionBrief(govLevel, owner, action, why){
+        $("briefGov").textContent = govLabel(govLevel ?? 0);
+        $("briefOwner").textContent = owner || "—";
+        $("briefAction").textContent = action || "—";
+        $("briefWhy").textContent = why || "—";
+      }
+
+      function setEvidenceMetrics(sentences, markers, score, datesCount, placesCount, density, chrono){
+        $("metric-sentences").textContent = String(sentences ?? "—");
+        $("metric-markers").textContent = String(markers ?? "—");
+        $("metric-score").textContent = String(score ?? "—");
+        $("metric-dates").textContent = String(datesCount ?? "—");
+        $("metric-places").textContent = String(placesCount ?? "—");
+        $("metric-density").textContent = `${density ?? "—"}%`;
+        $("metric-chrono").textContent = chrono ?? "—";
+      }
+
+      function setTabs(){
+        const tabs = Array.from(document.querySelectorAll(".tab"));
+        const panes = {
+          summary: $("pane-summary"),
+          json: $("pane-json"),
+          evidence: $("pane-evidence")
+        };
+        tabs.forEach(btn => {
+          btn.addEventListener("click", () => {
+            tabs.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            const key = btn.getAttribute("data-tab");
+            Object.values(panes).forEach(p => p.classList.remove("active"));
+            if(panes[key]) panes[key].classList.add("active");
+          });
         });
       }
-      function onLeave(){ card.style.transform = "none"; }
-      card.addEventListener("mousemove", onMove);
-      card.addEventListener("mouseleave", onLeave);
-    })();
 
-    // ===============================
-    // Deterministic engine (same logic, with central context mapping)
-    // ===============================
-    function stableStringify(obj){
-      const seen = new WeakSet();
-      const sorter = (v)=>{
-        if(v && typeof v === "object"){
-          if(seen.has(v)) return v;
-          seen.add(v);
-          if(Array.isArray(v)) return v.map(sorter);
-          const out = {};
-          Object.keys(v).sort().forEach(k => out[k]=sorter(v[k]));
-          return out;
-        }
-        return v;
-      };
-      return JSON.stringify(sorter(obj), null, 2);
-    }
-
-    async function sha256Hex(text){
-      const enc = new TextEncoder();
-      const data = enc.encode(text);
-      const digest = await crypto.subtle.digest("SHA-256", data);
-      const bytes = Array.from(new Uint8Array(digest));
-      return bytes.map(b => b.toString(16).padStart(2,"0")).join("");
-    }
-
-    function sources(){
-      return {
-        lms: $("srcLms").checked,
-        hris: $("srcHris").checked,
-        performance: $("srcPerf").checked,
-        ops: $("srcOps").checked,
-        feedback360: $("src360").checked,
-        legal: $("srcLegal").checked
-      };
-    }
-    function coveragePct(src){
-      const total = Object.keys(src).length;
-      const yes = Object.values(src).filter(Boolean).length;
-      return Math.round((yes/total)*100);
-    }
-    function missingCount(src){
-      return Object.values(src).filter(v => !v).length;
-    }
-
-    function defensibility(coverage, missing, quality){
-      let score = coverage;
-      score -= missing * 9;
-      score -= quality.riskPenalty;
-      score = Math.max(0, Math.min(100, Math.round(score)));
-      let band = "LOW";
-      if(score >= 78) band = "HIGH";
-      else if(score >= 58) band = "MEDIUM";
-      return { score, band };
-    }
-    function exposureFrom(defBand, quality){
-      if(defBand === "LOW") return "HIGH";
-      if(defBand === "MEDIUM" && quality.riskLevel !== "LOW") return "MEDIUM";
-      if(defBand === "HIGH" && quality.riskLevel === "HIGH") return "MEDIUM";
-      return "LOW";
-    }
-
-    function nowISODate(){
-      const d = new Date();
-      const pad = (n)=> String(n).padStart(2,"0");
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-    }
-    function nowISODateTime(){
-      return new Date().toISOString();
-    }
-
-    function setTab(which){
-      const map = { preview:["tabSummary","paneSummary"], json:["tabJson","paneJson"], print:["tabPrint","panePrint"] };
-      Object.entries(map).forEach(([k,[t,p]])=>{
-        $(t).setAttribute("aria-selected", k===which ? "true" : "false");
-        $(p).style.display = k===which ? "block" : "none";
-      });
-    }
-
-    const phases = [
-      { s:"CAPTURE", t:"SYNC" },
-      { s:"LINEAGE", t:"CHECK" },
-      { s:"SEAL", t:"HASH" },
-      { s:"READY", t:"VERIFY" }
-    ];
-    function setPhase(i){
-      const p = phases[i % phases.length];
-      $("stateText").textContent = p.s;
-      $("tickText").textContent = p.t;
-    }
-    setPhase(0);
-
-    function syncCockpit(coverage, def, exposure, scope, moment, hash){
-      $("cpScope").textContent = scope || "—";
-      $("cpMoment").textContent = moment || "—";
-      $("cpCoverage").textContent = (coverage!=null) ? `${coverage}%` : "—";
-      $("cpDef").textContent = def || "—";
-      $("cpExposure").textContent = exposure || "—";
-      $("hashText").textContent = hash || "—";
-    }
-
-    function buildLineage(src, scope){
-      const base = (scope || "scope").toLowerCase().replace(/[^a-z0-9]+/g,"-").slice(0,28) || "scope";
-      const ext = (tag)=> `${tag}-${base}-v01`;
-      const lineage = {
-        hris: src.hris ? {
-          system: "Workday",
-          artifact: "worker_history + job_profile + org",
-          extract_id: ext("hris"),
-          steward: "HRIS Data Owner",
-          attributable: true,
-          last_sync: "T-7d"
-        } : null,
-        lms: src.lms ? {
-          system: "LMS",
-          artifact: "training_records + certificates",
-          extract_id: ext("lms"),
-          steward: "L&D Ops",
-          attributable: true,
-          last_sync: "T-14d"
-        } : null,
-        performance: src.performance ? {
-          system: "Perf/Talent",
-          artifact: "annual_reviews + objectives",
-          extract_id: ext("perf"),
-          steward: "Talent COE",
-          attributable: true,
-          last_sync: "T-30d"
-        } : null,
-        ops: src.ops ? {
-          system: "Ops KPIs",
-          artifact: "attested_kpis + deliverables",
-          extract_id: ext("ops"),
-          steward: "Business Controller",
-          attributable: true,
-          last_sync: "T-14d"
-        } : null,
-        feedback360: src.feedback360 ? {
-          system: "360",
-          artifact: "documented_feedback (attributable only)",
-          extract_id: ext("360"),
-          steward: "HRBP",
-          attributable: false,
-          last_sync: "T-90d"
-        } : null,
-        legal: src.legal ? {
-          system: "Compliance",
-          artifact: "constraints + disputes + opposable items",
-          extract_id: ext("legal"),
-          steward: "Legal/Compliance",
-          attributable: true,
-          last_sync: "T-7d"
-        } : null
-      };
-      return lineage;
-    }
-
-    function qualityChecks(src, ctxText){
-      // SAME deterministic logic + contextual weighting applied only to riskPenalty aggregation
-      const ctxKey = window.__CTX_KEY || "governance";
-      const W = (CONTEXTS[ctxKey] || CONTEXTS.governance).weights;
-
-      const cov = coveragePct(src);
-      const scopeText = ($("orgScope").value || "").toLowerCase();
-      const multi = /(multi|entities|sites|countries|europe|global|group|jurisdiction|parties|stakeholders|institution)/.test(scopeText);
-
-      // Original proxies
-      const freshness = (src.performance || src.feedback360) ? "MEDIUM" : "LOW";
-      const completeness = cov >= 85 ? "HIGH" : (cov >= 65 ? "MEDIUM" : "LOW");
-      const drift = multi ? "MEDIUM" : "LOW";
-      const duplicates = (src.hris && !src.ops) ? "MEDIUM" : "LOW";
-      const ctxPenaltyBase = (ctxText || "").trim().length < 40 ? 8 : 0;
-
-      const riskLevel = (freshness==="MEDIUM" || drift==="MEDIUM" || duplicates==="MEDIUM" || completeness==="LOW") ? "MEDIUM" : "LOW";
-
-      // Weighted penalty (context framing, not a different engine)
-      const riskPenalty =
-        (freshness==="MEDIUM" ? 6 * W.timestamp_rigor : 0) +
-        (drift==="MEDIUM" ? 7 * W.definition_drift : 0) +
-        (duplicates==="MEDIUM" ? 6 * W.chain_of_custody : 0) +
-        (completeness==="LOW" ? 10 * W.attribution : 0) +
-        (ctxPenaltyBase * W.uncertainty_logging);
-
-      return {
-        freshness, completeness, drift, duplicates,
-        riskLevel,
-        riskPenalty: Math.round(riskPenalty)
-      };
-    }
-
-    function blockers(src, q){
-      const ctxKey = window.__CTX_KEY || "governance";
-      const isLegal = ctxKey === "legal";
-      const isCrisis = ctxKey === "institutional";
-
-      const b = [];
-      if(!src.legal) b.push(isLegal ? "No opposable constraints snapshot (Legal/Compliance missing)" : "No opposable constraints (Legal/Compliance missing)");
-      if(!src.hris) b.push(isLegal ? "No authoritative trace extract (HRIS missing)" : "No authoritative career trace (HRIS missing)");
-      if(!src.lms) b.push(isLegal ? "Training evidence missing (LMS)" : "Training evidence missing (LMS)");
-      if(src.feedback360 && isLegal) b.push("360 is contested unless attributable");
-      if(q.drift !== "LOW") b.push(isCrisis ? "Contradiction proxy elevated (multi-stakeholder perimeter)" : "Definition drift risk (multi-entity scope)");
-      if(q.completeness === "LOW") b.push(isLegal ? "Low evidentiary completeness (too few declared sources)" : "Low completeness (too few declared sources)");
-      return b.slice(0,3);
-    }
-
-    function nextActions(src, q){
-      const ctxKey = window.__CTX_KEY || "governance";
-      const isLegal = ctxKey === "legal";
-      const isCrisis = ctxKey === "institutional";
-
-      const a = [];
-      if(!src.legal) a.push(isLegal ? "Attach opposable legal snapshot (constraints, disputes)" : "Attach compliance constraints snapshot (opposable items)");
-      if(!src.hris) a.push("Add HRIS extract id + steward (authoritative trace)");
-      if(q.drift !== "LOW") a.push(isCrisis ? "Log uncertainties + contradictions explicitly at Moment T" : "Freeze indicator definitions (single dictionary) at Moment T");
-      if(q.duplicates !== "LOW") a.push(isLegal ? "Preserve chain-of-custody markers (extract ids, timestamps)" : "Run monthly reconciliation controls (HRIS ↔ OPS)");
-      if(($("context").value || "").trim().length < 40) a.push(isLegal ? "Write matter context (claims, timeline, constraints)" : isCrisis ? "Write crisis context (signals, stakeholders, constraints)" : "Write decision context (why, constraints, audit window)");
-      return a.slice(0,3);
-    }
-
-    function improveHint(src, q){
-      const ctxKey = window.__CTX_KEY || "governance";
-      const isLegal = ctxKey === "legal";
-      const isCrisis = ctxKey === "institutional";
-
-      const hints = [];
-      if(!src.legal) hints.push(isLegal ? "+ Opposable snapshot" : "+ Legal snapshot");
-      if(!src.hris) hints.push("+ HRIS extract");
-      if(!src.ops) hints.push("+ Attested KPIs");
-      if(q.drift !== "LOW") hints.push(isCrisis ? "+ Uncertainty log" : "+ Frozen definitions");
-      if(hints.length === 0) hints.push(isLegal ? "Strengthen attribution + chain-of-custody" : isCrisis ? "Stabilize uncertainty + contradictions" : "Stabilize freshness + evidence attribution");
-      return hints.join(" · ");
-    }
-
-    function buildCoreBundle(){
-      const ctxKey = window.__CTX_KEY || "governance";
-
-      const src = sources();
-      const momentT = $("momentT").value || nowISODate();
-      const scope = ($("orgScope").value || "").trim() || CONTEXTS[ctxKey].presets.placeholders.orgScope;
-      const owner = ($("owner").value || "").trim() || CONTEXTS[ctxKey].presets.placeholders.owner;
-      const dtype = $("decisionType").value;
-
-      const ctx = ($("context").value || "").trim() || CONTEXTS[ctxKey].presets.placeholders.context;
-
-      const lineage = buildLineage(src, scope);
-      const q = qualityChecks(src, ctx);
-      const cov = coveragePct(src);
-      const miss = missingCount(src);
-      const def = defensibility(cov, miss, q);
-      const exposure = exposureFrom(def.band, q);
-
-      const core = {
-        standard: "OpenProof RPO v0.1",
-        artifact_type: "DECISION_DEFENSIBILITY_BUNDLE",
-        context_frame: ctxKey, // NOTE: inside sealed core (changes hash, by design: it is framing, not AI)
-        moment_t: momentT,
-        decision: { type: dtype, scope, owner, context: ctx },
-        declared_sources: src,
-        lineage_hints: lineage,
-        deterministic_assessment: {
-          coverage_pct: cov,
-          missing_sources: miss,
-          defensibility_band: def.band,
-          defensibility_score: def.score,
-          exposure: exposure,
-          quality_checks: {
-            freshness: q.freshness,
-            completeness: q.completeness,
-            definition_drift: q.drift,
-            duplicates: q.duplicates,
-            risk_level: q.riskLevel
-          },
-          method: "Deterministic mapping from declared sources + weighted proxies (by context) → defensibility/exposure. No AI."
+      // ---------------------------------------
+      // Context presets (right gadget)
+      // ---------------------------------------
+      const CONTEXTS = {
+        governance: {
+          key: "Gouvernance",
+          description: "Escalade institutionnelle",
+          summary: { template: "Synthèse : {scope}. Niveau probatoire {def}. Exposition {exposure}. Mode {gov}." },
+          ui: { labels: { "case-title":"Titre du cas", "issuer":"Émetteur / Source", "subject":"Objet / Fait générateur", "narrative":"Narratif (extrait)" } }
         },
-        outputs: { json: "decision_bundle.json", pdf: "browser_print_to_pdf", seal: "sha256_core_hash" }
-      };
-
-      core.decision_support = {
-        top_blockers: blockers(src, q),
-        next_actions: nextActions(src, q),
-        what_improves_score: improveHint(src, q)
-      };
-
-      return { core, cov, miss, def, exposure, scope, momentT, lineage, q };
-    }
-
-    async function generate(){
-      setPhase(0);
-      const ctxKey = window.__CTX_KEY || "governance";
-      const ctx = CONTEXTS[ctxKey] || CONTEXTS.governance;
-
-      const { core, cov, miss, def, exposure, scope, momentT, lineage, q } = buildCoreBundle();
-
-      syncCockpit(null, null, null, scope, momentT, "—");
-      setPhase(1);
-      setPhase(2);
-
-      const coreJson = stableStringify(core);
-      const hash = await sha256Hex(coreJson);
-
-      const bundle = {
-        sealed_core: core,
-        meta: {
-          generated_at: nowISODateTime(),
-          sealed_core_hash_sha256: hash,
-          note: "Meta is not part of the sealed core hash."
+        cyber: {
+          key: "Cyber",
+          description: "Investigation & incident response",
+          summary: { template: "Incident : {scope}. Robustesse {def}. Exposition {exposure}. Action : {action}." },
+          ui: { labels: { "case-title":"Incident", "issuer":"Source (SIEM / SOC)", "subject":"Trigger", "narrative":"Extrait (log / mail / ticket)" } }
+        },
+        justice: {
+          key: "Justice",
+          description: "Dossier & articulation probatoire",
+          summary: { template: "Dossier : {scope}. Cohérence {def}. Exposition {exposure}. Rapport scellé prêt." },
+          ui: { labels: { "case-title":"Dossier", "issuer":"Partie / avocat", "subject":"Objet", "narrative":"Extrait (pièce / chronologie)" } }
         }
       };
-      const fullJson = stableStringify(bundle);
 
-      setPhase(3);
-
-      // Output KPIs (labels already contextual)
-      $("outCoverage").textContent = `${cov}%`;
-      $("outMissing").textContent = `${miss}`;
-      $("outDef").textContent = `${def.band} (${def.score}/100)`;
-      $("outExposure").textContent = exposure;
-      $("outSeal").textContent = "SHA-256 sealed (core)";
-      $("hashOut").textContent = hash;
-
-      // Cockpit sync
-      syncCockpit(cov, `${def.band} (${def.score})`, exposure, scope, momentT, hash);
-
-      // Lineage display
-      const h = lineage.hris || {system:"—", extract_id:"—", steward:"—", attributable:"—"};
-      $("linHrisSys").textContent = h.system || "—";
-      $("linHrisExt").textContent = h.extract_id || "—";
-      $("linSteward").textContent = h.steward || "—";
-      $("linAttr").textContent = (h.attributable === true) ? "YES" : (h.attributable === false ? "NO" : "—");
-
-      // Quality display
-      $("qFresh").textContent = q.freshness;
-      $("qComp").textContent = q.completeness;
-      $("qDrift").textContent = q.drift;
-      $("qDup").textContent = q.duplicates;
-
-      // Support display
-      $("dsExposure").textContent = exposure;
-      $("dsBlockers").textContent = core.decision_support.top_blockers.join(" | ") || "—";
-      $("dsActions").textContent = core.decision_support.next_actions.join(" | ") || "—";
-      $("dsImprove").textContent = core.decision_support.what_improves_score || "—";
-
-      // Contextual Summary template
-      const yesSources = Object.entries(core.declared_sources).filter(([_,v])=>v).map(([k])=>k).join(", ");
-      const bl = core.decision_support.top_blockers.map(x=>`- ${x}`).join("\n") || "- —";
-      const na = core.decision_support.next_actions.map(x=>`- ${x}`).join("\n") || "- —";
-      const derived = {
-        labels: ctx.ui.labels,
-        cov, miss, def, exposure, hash, q,
-        yesSources,
-        blockers: bl,
-        nextActions: na,
-        hrisSys: (lineage.hris && lineage.hris.system) ? lineage.hris.system : "—",
-        hrisExt: (lineage.hris && lineage.hris.extract_id) ? lineage.hris.extract_id : "—"
-      };
-
-      $("summaryPre").textContent = ctx.summary.template(core, derived);
-      $("jsonPre").textContent = fullJson;
-
-      window.__bundle_json = fullJson;
-      window.__bundle_hash = hash;
-    }
-
-    function loadExample(){
-      const ctxKey = window.__CTX_KEY || "governance";
-      const P = (CONTEXTS[ctxKey] || CONTEXTS.governance).presets.placeholders;
-
-      $("decisionType").value = "Nomination / sensitive role";
-      $("momentT").value = "2026-02-10";
-      $("orgScope").value = P.orgScope;
-      $("owner").value = "Global CHRO / Executive committee";
-      $("context").value = P.context;
-
-      $("srcLms").checked = true;
-      $("srcHris").checked = true;
-      $("srcPerf").checked = (ctxKey !== "institutional"); // in crisis, perf may be less central
-      $("srcOps").checked = true;
-      $("src360").checked = (ctxKey !== "legal"); // legal: default false
-      $("srcLegal").checked = true;
-
-      generate();
-    }
-
-    function resetAll(){
-      $("decisionType").value = "Nomination / sensitive role";
-      $("momentT").value = "";
-      $("orgScope").value = "";
-      $("owner").value = "";
-      $("context").value = "";
-
-      $("srcLms").checked = true;
-      $("srcHris").checked = true;
-      $("srcPerf").checked = true;
-      $("srcOps").checked = true;
-      $("src360").checked = false;
-      $("srcLegal").checked = true;
-
-      $("outCoverage").textContent = "—";
-      $("outMissing").textContent = "—";
-      $("outDef").textContent = "—";
-      $("outExposure").textContent = "—";
-      $("outSeal").textContent = "—";
-      $("hashOut").textContent = "—";
-      $("summaryPre").textContent = "Click “Generate”.";
-      $("jsonPre").textContent = "{}";
-
-      $("linHrisSys").textContent = "—";
-      $("linHrisExt").textContent = "—";
-      $("linSteward").textContent = "—";
-      $("linAttr").textContent = "—";
-
-      $("qFresh").textContent = "—";
-      $("qComp").textContent = "—";
-      $("qDrift").textContent = "—";
-      $("qDup").textContent = "—";
-
-      $("dsExposure").textContent = "—";
-      $("dsBlockers").textContent = "—";
-      $("dsActions").textContent = "—";
-      $("dsImprove").textContent = "—";
-
-      window.__bundle_json = null;
-      window.__bundle_hash = null;
-
-      setPhase(0);
-      syncCockpit(null, null, null, "—", "—", "—");
-    }
-
-    async function copy(text){
-      if(!text) return false;
-      try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch(e){
-        try{
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          ta.style.position = "fixed";
-          ta.style.opacity = "0";
-          document.body.appendChild(ta);
-          ta.focus(); ta.select();
-          const ok = document.execCommand("copy");
-          ta.remove();
-          return ok;
-        }catch(_){
-          return false;
+      function applyContext(ctx){
+        if(!ctx) return;
+        if(window.Sandbox && typeof window.Sandbox.setContext === "function"){
+          window.Sandbox.setContext(ctx);
         }
+        $("context-name").textContent = ctx.key || "—";
+        $("context-desc").textContent = ctx.description || "—";
       }
-    }
 
-    function downloadJson(){
-      if(!window.__bundle_json) return;
-      const blob = new Blob([window.__bundle_json], {type:"application/json"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "decision_bundle.json";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    }
+      // ---------------------------------------
+      // Core build (deterministic) + seal
+      // ---------------------------------------
+      let LAST = null;
 
-    function quickSync(){
-      const src = sources();
-      const cov = coveragePct(src);
-      const miss = missingCount(src);
+      async function buildAndRender(){
+        const title = $("case-title").value || "";
+        const issuer = $("issuer").value || "";
+        const subject = $("subject").value || "";
+        const narrative = $("narrative").value || "";
 
-      const scope = ($("orgScope").value || "").trim() || "—";
-      const momentT = $("momentT").value || "—";
-      const ctx = ($("context").value || "");
+        const scope = title.trim() ? title.trim() : "Périmètre de l'affaire — parties / entités / juridictions";
+        const momentT = nowISODateFr();
 
-      const q = qualityChecks(src, ctx);
-      const def = defensibility(cov, miss, q);
-      const exposure = exposureFrom(def.band, q);
+        const coverage = coverageFromInputs(title, issuer, subject, narrative);
 
-      syncCockpit(
-        cov,
-        `${def.band} (${def.score})`,
-        exposure,
-        scope,
-        momentT,
-        window.__bundle_hash ? window.__bundle_hash : "—"
-      );
+        const sentences = sentenceCount(narrative);
+        const markers = markerCount(narrative);
+        const density = densityScore(sentences, markers);
+        const dates = extractDates(narrative);
+        const places = extractPlaces(narrative);
+        const chrono = chronoHeuristic(dates);
 
-      // Also reflect exposure label in chip if needed (chips are rebuilt by applyContext)
-    }
-// ===============================
-// Comparative Stress Engine (Mode D)
-// Baseline vs Alternative vs Stress (hypothetical)
-// ===============================
+        // Score heuristic (deterministic)
+        // base on coverage + anchors + density (but penalize high density as risk)
+        const anchorScore = clamp((dates.length * 10) + (places.length * 8), 0, 40);
+        const densityPenalty = clamp(Math.round((density - 35) * 0.6), 0, 25);
+        const rawScore = clamp(coverage * 0.6 + anchorScore - densityPenalty + (chrono === "MEDIUM" ? 6 : 0), 0, 100);
 
-const STRESS_SCENARIOS = {
-  none: { label: "None", mult: {} },
-  "audit-triggered": {
-    label: "Audit triggered",
-    mult: { definition_drift: 1.25, timestamp_rigor: 1.15, chain_of_custody: 1.10 }
-  },
-  "litigation-triggered": {
-    label: "Litigation triggered",
-    mult: { chain_of_custody: 1.35, contradictions: 1.30, attribution: 1.25, timestamp_rigor: 1.20 }
-  },
-  "media-escalation": {
-    label: "Media escalation",
-    mult: { contradictions: 1.35, uncertainty_logging: 1.30, attribution: 1.15 }
-  },
-  "internal-investigation": {
-    label: "Internal investigation",
-    mult: { attribution: 1.25, chain_of_custody: 1.20, contradictions: 1.20, uncertainty_logging: 1.10 }
-  }
-};
+        const def = defensibilityBand(rawScore);
+        const exposure = exposureFrom(def.band, density, markers);
 
-function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+        // owner (simple demo)
+        const owner = "HR";
 
-function stressWeights(baseWeights, scenarioKey, stressLevelPct){
-  const s = STRESS_SCENARIOS[scenarioKey] || STRESS_SCENARIOS.none;
-  const level = clamp((stressLevelPct||0)/100, 0, 1);
-  const out = { ...baseWeights };
+        // governance level: auto vs manual floor
+        const autoLevel = govFromExposure(exposure);
+        const autoMode = $("govAuto").checked;
+        const manualLevel = Number($("pressureLevel").value || 0);
+        const govLevel = autoMode ? autoLevel : Math.max(autoLevel, manualLevel);
 
-  // Deterministic blend: weight := weight * (1 + level * (mult-1))
-  Object.entries(s.mult || {}).forEach(([k, m]) => {
-    const w = (out[k] ?? 1.0);
-    out[k] = w * (1 + level * (m - 1));
-  });
-  return out;
-}
+        // Compose core bundle (invariants)
+        const core = {
+          version: "RPO.v0.1",
+          scope,
+          moment_t: momentT,
+          decision: {
+            owner,
+            governance_mode: govLabel(govLevel)
+          },
+          metrics: {
+            coverage,
+            sentences,
+            markers,
+            density,
+            dates: dates.length,
+            places: places.length,
+            chrono
+          },
+          assessment: {
+            defensibility: { band: def.band, label: def.bandLabel, score: def.bandScore },
+            exposure
+          },
+          anchors: { dates, places }
+        };
 
-// Minimal penalty model (deterministic): converts qualitative proxies to numeric penalty
-function signalPenalty(qVal){
-  if(qVal === "LOW") return 0;
-  if(qVal === "MEDIUM") return 1;
-  if(qVal === "HIGH") return 2;
-  if(qVal === "CRITICAL") return 3;
-  return 1;
-}
+        // Sealed bundle (hash of stable string)
+        const stable = JSON.stringify(core);
+        const hash = await sha256Hex(stable);
 
-// Re-score using (cov, miss, q, weights) without changing sealed core structure
-function rescoreWithWeights(baseDerived, weights){
-  // Base score already exists, but we compute a "stress-adjusted" score delta deterministically
-  const q = baseDerived.q || {};
-  const w = weights || {};
+        const bundle = {
+          core,
+          seal: {
+            algo: "SHA-256",
+            hash,
+            created_at: new Date().toISOString()
+          },
+          notes: {
+            disclaimer: "Le moteur n’établit pas le vrai du faux. Il évalue cohérences, risques, et structure l’escalade de gouvernance."
+          }
+        };
 
-  const p =
-    (signalPenalty(q.freshness) * (w.timestamp_rigor ?? 1)) +
-    (signalPenalty(q.completeness) * (w.chain_of_custody ?? 1)) +
-    (signalPenalty(q.drift) * (w.definition_drift ?? 1)) +
-    (signalPenalty(q.duplicates) * (w.contradictions ?? 1));
+        // Render cockpit
+        setCockpit(scope, momentT, coverage, def.bandLabel, def.bandScore, exposure, owner, govLevel, hash);
 
-  // Convert penalty to score reduction (calibrated for readability, not “truth”)
-  const reduce = Math.round(p * 4); // 0..~60 typical
-  const score = clamp(baseDerived.def.score - reduce, 1, 100);
+        // Decision brief
+        const briefOwner = govOwnerGroup(govLevel);
+        const briefAction = govNextAction(govLevel);
+        const briefWhy = govRationale(def.bandLabel, exposure, density);
+        setDecisionBrief(govLevel, briefOwner, briefAction, briefWhy);
 
-  // Band mapping
-  const band = score >= 85 ? "VERY HIGH" :
-               score >= 70 ? "HIGH" :
-               score >= 55 ? "MEDIUM" :
-               score >= 40 ? "LOW" : "VERY LOW";
+        // Evidence metrics
+        setEvidenceMetrics(sentences, markers, def.bandScore, dates.length, places.length, density, chrono);
 
-  return { score, band, reduce };
-}
+        // Anchors / core
+        $("anchorsPre").textContent = JSON.stringify({ dates, places }, null, 2);
+        $("corePre").textContent = JSON.stringify(core, null, 2);
 
-// Build + hash bundle for a given context key (no UI side-effects)
-async function buildBundleForContext(ctxKeyOverride){
-  const saved = window.__CTX_KEY;
-  window.__CTX_KEY = ctxKeyOverride;
-  const ctx = CONTEXTS[ctxKeyOverride] || CONTEXTS.governance;
+        // Summary
+        const ctx = (window.__RPO_CONTEXT__ || CONTEXTS.governance);
+        const tpl = (ctx && ctx.summary && ctx.summary.template) ? ctx.summary.template : "Synthèse : {scope}.";
+        const summary = tpl
+          .replaceAll("{scope}", scope)
+          .replaceAll("{def}", `${def.bandLabel} (${def.bandScore})`)
+          .replaceAll("{exposure}", exposure)
+          .replaceAll("{gov}", govLabel(govLevel))
+          .replaceAll("{action}", briefAction);
 
-  const { core, cov, miss, def, exposure, scope, momentT, lineage, q } = buildCoreBundle();
-  const coreJson = stableStringify(core);
-  const hash = await sha256Hex(coreJson);
+        $("summaryPre").textContent = summary;
 
-  const yesSources = Object.entries(core.declared_sources).filter(([_,v])=>v).map(([k])=>k).join(", ");
-  const bl = core.decision_support.top_blockers.map(x=>`- ${x}`).join("\n") || "- —";
-  const na = core.decision_support.next_actions.map(x=>`- ${x}`).join("\n") || "- —";
+        // JSON
+        $("rpo-json").textContent = JSON.stringify(bundle, null, 2);
 
-  const derived = {
-    labels: ctx.ui.labels,
-    cov, miss, def, exposure, hash, q,
-    yesSources,
-    blockers: bl,
-    nextActions: na,
-    hrisSys: (lineage.hris && lineage.hris.system) ? lineage.hris.system : "—",
-    hrisExt: (lineage.hris && lineage.hris.extract_id) ? lineage.hris.extract_id : "—"
-  };
+        // Side “gadget”
+        $("sideDef").textContent = `${def.bandLabel} (${def.bandScore})`;
+        $("breakPoint").textContent = (exposure === "HIGH") ? "Déjà critique (risque institutionnel)" :
+          (exposure === "MEDIUM") ? "Bascule à surveiller (pré-activation)" :
+          "Stable (routine)";
 
-  // Restore
-  window.__CTX_KEY = saved;
+        LAST = { def, exposure, density, govLevel, hash, bundle };
+      }
 
-  return { ctxKey: ctxKeyOverride, ctx, core, derived, hash };
-}
+      function resetAll(){
+        $("case-title").value = "";
+        $("issuer").value = "";
+        $("subject").value = "";
+        $("narrative").value = "";
 
-function setCmpCard(prefix, ctxName, pack){
-  $(prefix+"Title").textContent = `${ctxName}`;
-  $(prefix+"Cov").textContent = `${pack.derived.cov}%`;
-  $(prefix+"Def").textContent = `${pack.derived.def.band} (${pack.derived.def.score}/100)`;
-  $(prefix+"Exp").textContent = `${pack.derived.exposure}`;
-  $(prefix+"Hash").textContent = `${pack.derived.hash}`;
-  $(prefix+"Summary").textContent = pack.ctx.summary.template(pack.core, pack.derived);
-}
+        $("summaryPre").textContent = "Cliquez “Générer”.";
+        $("rpo-json").textContent = "{}";
+        $("anchorsPre").textContent = "—";
+        $("corePre").textContent = "—";
 
-function weakestLink(basePack, otherPack, scenarioLabel){
-  // Compare by “effective” weights and visible weak signals
-  const bq = basePack.derived.q || {};
-  const oq = otherPack.derived.q || {};
+        setCockpit("—","—",null,null,null,"LOW","—",0,"—");
+        setDecisionBrief(0,"—","—","—");
+        setEvidenceMetrics("—","—","—","—","—","—","—");
+        $("sideDef").textContent = "—";
+        $("sideGov").textContent = "—";
+        $("breakPoint").textContent = "—";
 
-  const candidates = [
-    { key:"timestamp_rigor", label:"Timestamp rigor", a: bq.freshness, b: oq.freshness },
-    { key:"chain_of_custody", label:"Chain-of-custody", a: bq.completeness, b: oq.completeness },
-    { key:"definition_drift", label:"Definition drift", a: bq.drift, b: oq.drift },
-    { key:"contradictions", label:"Contradictions / duplicates proxy", a: bq.duplicates, b: oq.duplicates }
-  ];
+        LAST = null;
+      }
 
-  // Pick first non-LOW in other (simple + deterministic)
-  const pick = candidates.find(x => (x.b && x.b !== "LOW")) || candidates[0];
+      function loadExample(){
+        $("case-title").value = "Compromission interne — périmètre sensible";
+        $("issuer").value = "Audit interne + HRIS";
+        $("subject").value = "Suspicion de compromission — vérification";
+        $("narrative").value =
+`Le 10 février 2026, une anomalie est signalée : accès non attendu à un référentiel sensible.
+Un audit interne est déclenché. Plusieurs échanges mentionnent une extraction d’informations.
+Une vérification croisée des sources (tickets, emails, logs) est engagée.
+Un point est planifié à Paris. Mention “confidentiel” observée dans un fil.`;
+      }
 
-  const action =
-    pick.key === "chain_of_custody" ? "Lock chain-of-custody markers (extract id, timestamp, steward) — before escalation." :
-    pick.key === "timestamp_rigor" ? "Freeze Moment T snapshots and timestamp rigor — before escalation." :
-    pick.key === "definition_drift" ? "Freeze definitions (single dictionary) and record drift explicitly." :
-    "Surface contradictions + log uncertainty explicitly (Heidenlogger-style).";
+      // ---------------------------------------
+      // Events
+      // ---------------------------------------
+      function refreshGovernanceUIOnly(){
+        if(!LAST) return;
+        const autoMode = $("govAuto").checked;
+        $("pressureLevel").disabled = autoMode;
 
-  return {
-    weakest: `${scenarioLabel}: ${pick.label} becomes a leverage point (${pick.b}).`,
-    action
-  };
-}
+        // recompute gov from last exposure + manual floor
+        const autoLevel = govFromExposure(LAST.exposure);
+        const manualLevel = Number($("pressureLevel").value || 0);
+        const govLevel = autoMode ? autoLevel : Math.max(autoLevel, manualLevel);
 
-async function runComparison(opts = { auto:false }){
-  const baseKey = $("cmpBase").value || window.__CTX_KEY || "governance";
-  const altKey  = $("cmpAlt").value  || "legal";
-  const stressKey = $("cmpStress").value || "none";
-  const stressLevel = parseInt($("cmpStressLevel").value || "0", 10);
+        $("cpGov").textContent = govLabel(govLevel);
+        $("govModeLabel").textContent = govLabel(govLevel);
+        $("sideGov").textContent = govLabel(govLevel);
 
-  // Titles
-  $("cmpBaseTitle").textContent = `Baseline — ${CONTEXTS[baseKey].name}`;
-  $("cmpAltTitle").textContent  = `Alternative — ${CONTEXTS[altKey].name}`;
-  const stressLabel = (STRESS_SCENARIOS[stressKey]?.label || "Stress") + ` (${stressLevel}%)`;
-  $("cmpStressTitle").textContent = `Stress — ${stressLabel}`;
+        setGovStrip(govLevel);
 
-  // Build baseline + alternative
-  const basePack = await buildBundleForContext(baseKey);
-  const altPack  = await buildBundleForContext(altKey);
+        setDecisionBrief(
+          govLevel,
+          govOwnerGroup(govLevel),
+          govNextAction(govLevel),
+          govRationale(LAST.def.bandLabel, LAST.exposure, LAST.density)
+        );
+      }
 
-  // Stress run: baseline context + stress-adjusted scoring (deterministic hypothetical)
-  const stressPack = await buildBundleForContext(baseKey);
+      function bind(){
+        setTabs();
 
-  // Apply stress weights to derive a “what-if” score/band (without claiming truth)
-  const baseWeights = (CONTEXTS[baseKey].weights || {});
-  const sw = stressWeights(baseWeights, stressKey, stressLevel);
-  const rescored = rescoreWithWeights(stressPack.derived, sw);
+        $("generate-btn").addEventListener("click", buildAndRender);
+        $("reset-btn").addEventListener("click", resetAll);
+        $("load-example-btn").addEventListener("click", () => { loadExample(); });
 
-  // Override ONLY derived score/band/exposure for stress view (core stays the same framing baseline)
-  stressPack.derived = {
-    ...stressPack.derived,
-    def: { score: rescored.score, band: rescored.band },
-    exposure: exposureFrom(rescored.band, stressPack.derived.q)
-  };
+        $("govAuto").addEventListener("change", refreshGovernanceUIOnly);
+        $("pressureLevel").addEventListener("input", refreshGovernanceUIOnly);
 
-  // Render cards
-  setCmpCard("cmpBase", `Baseline — ${basePack.ctx.name}`, basePack);
-  setCmpCard("cmpAlt",  `Alternative — ${altPack.ctx.name}`, altPack);
-  setCmpCard("cmpStress", `Stress — ${stressLabel}`, stressPack);
+        $("stressSlider").addEventListener("input", () => {
+          // Cosmetic: if stress high, show warning break point, without changing sealed core
+          const v = Number($("stressSlider").value || 0);
+          if(!LAST){
+            $("breakPoint").textContent = v >= 70 ? "Zone critique (simulation)" : v >= 40 ? "Zone tension (simulation)" : "Zone routine (simulation)";
+            return;
+          }
+          $("breakPoint").textContent = v >= 70 ? "Bascule critique probable sous pression" : v >= 40 ? "Bascule renforcée probable sous pression" : "Stable sous pression modérée";
+        });
 
-  // Delta
-  const deltaScore = altPack.derived.def.score - basePack.derived.def.score;
-  const deltaStress = stressPack.derived.def.score - basePack.derived.def.score;
-  $("cmpDeltaDef").textContent = `Alt: ${deltaScore >= 0 ? "+" : ""}${deltaScore} | Stress: ${deltaStress >= 0 ? "+" : ""}${deltaStress}`;
-  $("cmpDeltaExp").textContent = `Alt: ${basePack.derived.exposure} → ${altPack.derived.exposure} | Stress: ${basePack.derived.exposure} → ${stressPack.derived.exposure}`;
+        // Context quick buttons
+        $("loadContextGov").addEventListener("click", () => applyContext(CONTEXTS.governance));
+        $("loadContextCyber").addEventListener("click", () => applyContext(CONTEXTS.cyber));
+        $("loadContextJustice").addEventListener("click", () => applyContext(CONTEXTS.justice));
 
-  // Weakest link (choose the “worst” between alt and stress)
-  const worst = (stressPack.derived.def.score < altPack.derived.def.score) ? stressPack : altPack;
-  const worstLabel = (worst === stressPack) ? `Stress (${stressLabel})` : `Alternative (${altPack.ctx.name})`;
-  const wl = weakestLink(basePack, worst, worstLabel);
+        // Copy & download
+        $("copy-json-btn").addEventListener("click", async () => {
+          try{
+            await navigator.clipboard.writeText($("rpo-json").textContent || "{}");
+          } catch(e){}
+        });
+        $("download-json-btn").addEventListener("click", () => {
+          const txt = $("rpo-json").textContent || "{}";
+          const blob = new Blob([txt], { type: "application/json;charset=utf-8" });
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(blob);
+          a.download = "rpo_bundle.json";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(a.href), 300);
+        });
 
-  $("cmpWeakest").textContent = wl.weakest;
-  $("cmpPilotAction").textContent = wl.action;
+        // Pilot CTA buttons (wire to your target)
+        const goPilot = () => {
+          // Replace with your pilot URL if you have it:
+          // window.open("./pilot.html", "_blank", "noopener,noreferrer");
+          window.open("./pilot.html", "_blank", "noopener,noreferrer");
+        };
+        $("pilotTopBtn").addEventListener("click", goPilot);
+        $("pilotBannerBtn").addEventListener("click", goPilot);
+        $("pilotBottomBtn").addEventListener("click", goPilot);
 
-  // Optional: keep baseline dropdown in sync with main context
-  if(opts.auto){
-    $("cmpBase").value = window.__CTX_KEY || "governance";
-  }
-}
+        // Defaults
+        applyContext(CONTEXTS.governance);
+        // Pre-fill cockpit baseline
+        setCockpit("Périmètre de l'affaire — parties / entités / juridictions", nowISODateFr(), 83, "MOYEN", 60, "MEDIUM", "HR", 1, "—");
+        setDecisionBrief(1, govOwnerGroup(1), govNextAction(1), "Démonstration : structure d’escalade à partir de signaux probatoires.");
+        setGovStrip(1);
+        $("pressureLevel").disabled = $("govAuto").checked;
+      }
 
-// Wire buttons
-$("btnCompare").addEventListener("click", () => runComparison({ auto:false }));
-$("btnCompareAuto").addEventListener("click", () => runComparison({ auto:true }));
-
-// Convenience: sync baseline with main Context dropdown on page
-// If you want: whenever main context changes, update cmpBase
-$("contextSelect").addEventListener("change", () => {
-  $("cmpBase").value = window.__CTX_KEY || "governance";
-});
-
-    // ===============================
-    // Wire events
-    // ===============================
-    $("tabSummary").addEventListener("click", ()=>setTab("preview"));
-    $("tabJson").addEventListener("click", ()=>setTab("json"));
-    $("tabPrint").addEventListener("click", ()=>setTab("print"));
-
-    $("btnGenerate").addEventListener("click", generate);
-    $("btnGenerateTop").addEventListener("click", generate);
-    $("btnLoad").addEventListener("click", loadExample);
-    $("btnLoadTop").addEventListener("click", loadExample);
-    $("btnReset").addEventListener("click", resetAll);
-
-    $("btnCopyHash").addEventListener("click", async ()=>{
-      const ok = await copy(window.__bundle_hash);
-      $("btnCopyHash").textContent = ok ? "Copied" : "Copy hash";
-      setTimeout(()=>$("btnCopyHash").textContent="Copy hash", 900);
-    });
-    $("btnCopyJson").addEventListener("click", async ()=>{
-      const ok = await copy(window.__bundle_json);
-      $("btnCopyJson").textContent = ok ? "Copied" : "Copy JSON";
-      setTimeout(()=>$("btnCopyJson").textContent="Copy JSON", 900);
-    });
-    $("btnDownload").addEventListener("click", downloadJson);
-    $("btnPrint").addEventListener("click", ()=>window.print());
-
-    ["decisionType","momentT","orgScope","owner","context","srcLms","srcHris","srcPerf","srcOps","src360","srcLegal"]
-      .forEach(id=>{
-        $(id).addEventListener("input", quickSync);
-        $(id).addEventListener("change", quickSync);
-      });
-
-    // Context dropdown
-$("contextSelect").addEventListener("change", (e)=>{
-  const key = e.target.value;
-
-  applyContext(key);
-
-  // keep comparative baseline aligned
-  const cmp = $("cmpBase");
-  if (cmp) cmp.value = key;
-
-  // Optional: refresh example narrative if user hasn't typed yet
-});
-
-
-    // Init
-    (function init(){
-      const qKey = getContextKeyFromQuery();
-      const startKey = qKey || "governance";
-      $("contextSelect").value = startKey;
-      applyContext(startKey);
-
-      resetAll();
-      setTab("preview");
-      loadExample();
+      if(document.readyState === "loading"){
+        document.addEventListener("DOMContentLoaded", bind, { once:true });
+      } else {
+        bind();
+      }
     })();
   </script>
-  <script>
-  (function () {
-    const params = new URLSearchParams(location.search);
-    const key = params.get("context") || "governance";
-    const ctx = (window.CONTEXTS && window.CONTEXTS[key]) ? window.CONTEXTS[key] : window.CONTEXTS.governance;ƒ
-
-    // 1) Set dropdown if it exists
-    const select = document.querySelector('[data-context-select]');
-    if (select) select.value = ctx.key;
-
-    // 2) Update description if placeholder exists
-    const desc = document.querySelector('[data-context-description]');
-    if (desc) desc.textContent = ctx.ui.description;
-
-    // 3) Update chips if placeholder exists
-    const chipsWrap = document.querySelector('[data-context-chips]');
-    if (chipsWrap && ctx.presets && Array.isArray(ctx.presets.chips)) {
-      chipsWrap.innerHTML = ctx.presets.chips.map(t => `<span class="chip">${t}</span>`).join("");
-    }
-
-    // 4) Update section titles if placeholders exist
-    const st = ctx.presets && ctx.presets.sectionTitles ? ctx.presets.sectionTitles : {};
-    const titleMap = [
-      ["input",  "[data-title-input]"],
-      ["cockpit","[data-title-cockpit]"],
-      ["preview","[data-title-preview]"],
-      ["report", "[data-title-report]"]
-    ];
-    titleMap.forEach(([k, sel]) => {
-      const el = document.querySelector(sel);
-      if (el && st[k]) el.textContent = st[k];
-    });
-
-    // 5) Pass context to sandbox engine if it exposes a hook (non-breaking)
-    // If sandbox.js defines window.Sandbox or similar, we call it softly.
-    if (window.Sandbox && typeof window.Sandbox.setContext === "function") {
-      window.Sandbox.setContext(ctx);
-    } else {
-      // Store for sandbox to read if it wants
-      window.__RPO_CONTEXT__ = ctx;
-    }
-  })();
-</script>
-<script src="assets/sandbox.js"></script>
 </body>
 </html>
+
 
 
 
