@@ -6,480 +6,530 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- SEO -->
-  <title>HR Decision Governance (RPO) — Auditable & Defensible Decisions | OpenProof RPO v0.1</title>
-  <meta name="description" content="OpenProof RPO v0.1 is an open standard for HR decision governance: source of truth, data lineage, business rules, and defensible decisions. Deterministic proof bundles: signed JSON + human-readable PDF + public hash. No AI. Humans remain accountable." />
+  <title>Decision Governance (RPO) — Auditable, Defensible, Deterministic | OpenProof RPO v0.1</title>
+  <meta name="description" content="OpenProof RPO v0.1 is an open standard for decision governance: source of truth, data lineage, business rules, and defensible decisions. Deterministic proof bundles: sealed JSON + human-readable preview + public hash. No AI. Humans remain accountable." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
 
   <!-- OpenGraph / Twitter -->
-  <meta property="og:title" content="HR Decision Governance (RPO) — Auditable & Defensible Decisions | OpenProof RPO v0.1" />
-  <meta property="og:description" content="Open standard for HR decision governance: signed JSON + human-readable PDF + public hash. Deterministic. Auditable. Defensible. No AI." />
+  <meta property="og:title" content="Decision Governance (RPO) — Auditable, Defensible, Deterministic | OpenProof RPO v0.1" />
+  <meta property="og:description" content="Open standard for decision governance: sealed JSON + human-readable preview + public hash. Deterministic. Auditable. Defensible. No AI." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rpo.openproof.net/" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="HR Decision Governance (RPO) — OpenProof RPO v0.1" />
-  <meta name="twitter:description" content="Defensible HR decisions via deterministic proof bundles (signed JSON + PDF + public hash). No AI. Humans remain accountable." />
-  <meta name="keywords" content="HR decision governance, HR data governance, decision traceability, data lineage, source of truth, business rules, audit readiness, defensible decisions, signed JSON, human-readable PDF, public hash, OpenProof, RPO" />
+  <meta name="twitter:title" content="OpenProof RPO v0.1 — Decision Governance" />
+  <meta name="twitter:description" content="Defensible decisions via deterministic proof bundles (sealed JSON + readable preview + public hash). No AI. Humans remain accountable." />
+  <meta name="keywords" content="decision governance, HR decision governance, data governance, decision traceability, data lineage, source of truth, business rules, audit readiness, defensible decisions, sealed JSON, human-readable preview, public hash, OpenProof, RPO" />
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet"/>
 
   <style>
     :root{
-      --bg-deep:#04040e;
-      --bg-mid:#0b0f14;
-      --gold-soft:#f1e6a3;
+      /* Match simulator tone */
+      --bg0:#04040e;
+      --bg1:#0b0f14;
+
+      --panel: rgba(255,255,255,.04);
+      --panel2: rgba(255,255,255,.03);
+
+      --stroke: rgba(212,175,55,.22);
+      --stroke2: rgba(212,175,55,.14);
+
       --gold:#d4af37;
-      --gold-deep:#8f7633;
-      --ivory:#f7f3e8;
-      --ink-soft:#b3a48b;
+      --gold2:#f1e6a3;
 
-      --radius:26px;
-      --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
+      --text:#e9eef7;
+      --muted:#a7b0c2;
+      --muted2:#8c95a8;
 
-      --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
-      --glass:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      --line:rgba(212,175,55,0.18);
-      --line2:rgba(136,116,72,0.35);
-      --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
+      --danger:#ff6b6b;
+      --ok:#7dffb3;
+      --warn:#ffd166;
+
+      --r: 22px;
+      --shadow: 0 20px 70px rgba(0,0,0,.55);
+      --shadow2: 0 12px 42px rgba(0,0,0,.45);
+
+      --max: 1760px;
+
+      --focus: 0 0 0 3px rgba(241,230,163,0.18), 0 0 0 1px rgba(212,175,55,0.30);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
     body{
-      min-height:100vh;
-      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-      color:var(--ivory);
+      margin:0;
       background:
-        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
-        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
-        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
+        radial-gradient(1200px 700px at 18% 8%, rgba(212,175,55,.12), transparent 60%),
+        radial-gradient(900px 600px at 82% 18%, rgba(241,230,163,.08), transparent 55%),
+        radial-gradient(900px 700px at 62% 86%, rgba(212,175,55,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      letter-spacing: .1px;
       overflow-x:hidden;
     }
-    a{color:inherit}
-    a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
-    ::selection{background: rgba(212,175,55,.25);}
 
-    /* Background field */
-    #bg-field{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:-1;
+    a{ color:inherit; text-decoration:none; }
+    a:focus-visible{ outline:none; box-shadow: var(--focus); border-radius: 12px; }
+    ::selection{ background: rgba(212,175,55,.22); }
+
+    .container{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 28px;
     }
 
-    /* Top bar / nav */
-    .top-bar{
-      position:fixed;
-      top:0; left:0; right:0;
-      height:68px;
-      padding:0 40px;
+    /* Top nav (identical style as simulator) */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(4,4,14,.86), rgba(4,4,14,.55));
+      border-bottom: 1px solid rgba(212,175,55,.12);
+    }
+    .nav{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      z-index:10;
-      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid rgba(212,175,55,0.22);
-    }
-    .top-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width: 300px;
-    }
-    .emblem{
-      width:34px;
-      height:34px;
-      border-radius:999px;
-      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
-      box-shadow:0 0 18px rgba(241,230,163,0.8);
-      flex:0 0 auto;
+      padding: 14px 0;
+      gap: 18px;
     }
     .brand{
-      font-family:"Orbitron",sans-serif;
-      font-size:0.72rem;
-      letter-spacing:0.18em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      white-space:nowrap;
-    }
-    .brand span{color:var(--gold-soft)}
-    .top-nav{
       display:flex;
-      gap:22px;
-      font-size:0.86rem;
-      color:var(--ink-soft);
       align-items:center;
+      gap:10px;
+      min-width: 240px;
+    }
+    .dot{
+      width:7px;height:7px;border-radius:10px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      box-shadow: 0 0 0 4px rgba(212,175,55,.10);
+      flex: 0 0 auto;
+    }
+    .brand-title{
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      letter-spacing:.9px;
+      font-size: 13px;
+      color: rgba(233,238,247,.92);
+    }
+    .brand-sub{
+      font-size: 11px;
+      color: rgba(167,176,194,.85);
+      margin-top: 2px;
+    }
+    .brand-stack{ display:flex; flex-direction:column; line-height:1.1; }
+
+    .navlinks{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
       justify-content:center;
-      flex:1 1 auto;
     }
-    .top-nav a{
-      color:inherit;
-      text-decoration:none;
-      position:relative;
-      padding-bottom:3px;
+    .navlinks a{
+      font-size: 12px;
+      color: rgba(233,238,247,.86);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(255,255,255,.02);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .navlinks a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,175,55,.25);
+      background: rgba(255,255,255,.035);
+    }
+    .navlinks a.active{
+      border-color: rgba(212,175,55,.32);
+      background: linear-gradient(180deg, rgba(212,175,55,.14), rgba(255,255,255,.02));
+      color: rgba(241,230,163,.96);
+    }
+
+    .cta{ display:flex; align-items:center; gap:10px; min-width: 240px; justify-content:flex-end; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(255,255,255,.02);
+      color: rgba(233,238,247,.92);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform .15s ease, filter .15s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
       white-space:nowrap;
     }
-    .top-nav a::after{
-      content:"";
-      position:absolute;
-      left:0; bottom:0;
-      width:0; height:1px;
-      background:linear-gradient(90deg,var(--gold-soft),var(--gold));
-      transition:width .2s ease;
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(212,175,55,.30); }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(212,175,55,.92), rgba(241,230,163,.92));
+      color: rgba(12,14,18,.92);
+      border-color: rgba(241,230,163,.45);
+      box-shadow: 0 12px 40px rgba(212,175,55,.14);
     }
-    .top-nav a:hover::after{width:100%}
-    .top-nav a[aria-current="page"]{color: var(--gold-soft);}
-    .top-nav a[aria-current="page"]::after{width:100%}
+    .btn.ghost{
+      background: rgba(255,255,255,.015);
+      border-color: rgba(212,175,55,.14);
+      color: rgba(233,238,247,.86);
+    }
+    .btn.small{ padding:8px 12px; font-size: 11px; }
 
-    .top-cta{
-      padding:8px 18px;
-      border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      font-size:0.8rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      text-decoration:none;
-      white-space:nowrap;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    /* Panels */
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(212,175,55,.16);
+      border-radius: var(--r);
+      box-shadow: var(--shadow2);
     }
-    .top-cta:hover{filter:brightness(1.03)}
-    .top-cta:active{transform:translateY(1px)}
-
-    /* Layout */
-    .wrap{
-      max-width: 1480px;
-      margin:0 auto;
-      padding:96px 56px 72px;
+    .panel.inset{
+      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018));
+      border: 1px solid rgba(212,175,55,.14);
     }
+    .panel .inner{ padding: 18px; }
 
     /* Hero */
-    .hero{
-      padding-top: 8px;
+    .hero{ margin: 18px 0 10px; }
+    .hero .panel{ box-shadow: var(--shadow); }
+    .heroGrid{
       display:grid;
-      grid-template-columns: 1.75fr 1.05fr;
-      gap:72px;
-      align-items:start;
-      min-height: calc(92vh - 68px);
+      grid-template-columns: 1.55fr .95fr;
+      gap: 22px;
+      align-items: start;
     }
-    .eyebrow{
-      font-family:"Orbitron",sans-serif;
-      font-size:.72rem;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      margin-bottom:14px;
+    .kicker{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: rgba(241,230,163,.85);
+      margin-bottom: 10px;
     }
-    .eyebrow span{color:var(--gold-soft)}
-    .h1{
-      font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-      line-height:1.06;
-      font-size:clamp(2.2rem,4.2vw,3.2rem);
-      margin-bottom:14px;
+    h1{
+      margin:0 0 10px;
+      font-family: Orbitron, Inter, sans-serif;
+      letter-spacing: .2px;
+      font-weight: 800;
+      line-height: 1.08;
+      font-size: clamp(30px, 3.6vw, 54px);
+      color: rgba(233,238,247,.96);
     }
-    .h1 .gold{display:block;color:var(--gold-soft)}
+    h1 .hl{
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
     .lead{
-      margin-top:10px;
-      font-size:1.00rem;
-      color:rgba(198,186,150,.90);
-      line-height:1.75;
-      max-width: 72ch;
-      text-align: justify;
+      margin: 0 0 14px;
+      color: rgba(167,176,194,.92);
+      max-width: 110ch;
+      font-size: 13.5px;
+      line-height: 1.62;
     }
+    .heroCallout{
+      margin-top: 10px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(167,176,194,.90);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .heroCallout b{ color: rgba(241,230,163,.92); }
 
     /* Chips */
     .chips{
       display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin:14px 0 18px 0;
-      max-width: 74ch;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      margin: 12px 0 10px;
     }
     .chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border-radius: 999px;
+      padding: 7px 10px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      font-size: 11px;
+      color: rgba(233,238,247,.86);
+      white-space:nowrap;
+    }
+    .chip b{ font-weight:800; color: rgba(241,230,163,.92); }
+    .chip .pill{
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.09);
+      color: rgba(241,230,163,.92);
+      font-size: 10px;
+      letter-spacing:.3px;
+      text-transform: uppercase;
+      white-space:nowrap;
+    }
+
+    .heroActions{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      margin-top: 12px;
+    }
+
+    .note{
+      margin-top: 10px;
+      color: rgba(167,176,194,.82);
+      font-size: 11.5px;
+      line-height: 1.5;
+    }
+    .note b{ color: rgba(241,230,163,.9); }
+
+    /* Right teaser panel */
+    .teaserHead{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-bottom: 10px;
+    }
+    .teaserTitle{
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      font-weight: 800;
+    }
+    .teaserSub{
+      margin-top: 6px;
+      font-size: 11.5px;
+      color: rgba(167,176,194,.84);
+      line-height: 1.5;
+      max-width: 58ch;
+    }
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size: 11px;
+      color: rgba(167,176,194,.88);
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space:nowrap;
+    }
+    .tag .dot2{
+      width:7px;height:7px;border-radius:10px;
+      background: rgba(241,230,163,.9);
+      box-shadow: 0 0 0 4px rgba(212,175,55,.10);
+    }
+
+    .kpiGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .kpi{
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.18);
+    }
+    .kpi .k{
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: rgba(167,176,194,.78);
+      margin-bottom: 6px;
+    }
+    .kpi .v{
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(233,238,247,.92);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing:.3px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.10);
+      color: rgba(241,230,163,.95);
+      flex: 0 0 auto;
+    }
+    .badge.ok{ border-color: rgba(125,255,179,.25); background: rgba(125,255,179,.10); color: rgba(180,255,220,.92); }
+    .badge.warn{ border-color: rgba(255,209,102,.25); background: rgba(255,209,102,.10); color: rgba(255,236,180,.92); }
+    .badge.bad{ border-color: rgba(255,107,107,.25); background: rgba(255,107,107,.10); color: rgba(255,200,200,.92); }
+
+    .hashbox{
+      margin-top: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      color: rgba(233,238,247,.86);
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.22);
+      overflow:hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .miniActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+
+    /* Section blocks */
+    .section{
+      margin: 16px 0 0;
+    }
+    .sectionTitleRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      margin: 0 0 10px;
+    }
+    .sectionTitleRow h2{
+      margin:0;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      font-weight: 800;
+    }
+    .sectionTitleRow .meta{
+      font-size: 11px;
+      color: rgba(167,176,194,.82);
+    }
+
+    .cards3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .card{
+      border: 1px solid rgba(212,175,55,.14);
+      border-radius: 18px;
+      background: rgba(255,255,255,.02);
+      box-shadow: var(--shadow2);
+      padding: 16px 16px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(800px 240px at 18% 0, rgba(241,230,163,.10), transparent 60%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .card > *{ position:relative; z-index:1; }
+    .card h3{
+      margin:0 0 8px;
+      font-size: 13px;
+      color: rgba(241,230,163,.92);
+      font-weight: 800;
+      letter-spacing:.1px;
+    }
+    .card p{
+      margin:0;
+      font-size: 12.5px;
+      color: rgba(167,176,194,.88);
+      line-height: 1.6;
+      max-width: 68ch;
+    }
+
+    /* Context chooser cards */
+    .ctxGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      align-items:stretch;
+    }
+    .ctxCard{
+      border: 1px solid rgba(212,175,55,.14);
+      border-radius: 18px;
+      background: rgba(255,255,255,.02);
+      box-shadow: var(--shadow2);
+      padding: 16px 16px;
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+    }
+    .ctxCard::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(800px 240px at 18% 0, rgba(241,230,163,.10), transparent 60%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .ctxCard > *{ position:relative; z-index:1; }
+
+    .ctxCard h3{
+      margin:0 0 8px;
+      font-size: 13px;
+      color: rgba(241,230,163,.92);
+      font-weight: 800;
+    }
+    .ctxCard p{
+      margin:0;
+      font-size: 12.5px;
+      color: rgba(167,176,194,.88);
+      line-height: 1.6;
+      flex: 1 1 auto;
+      max-width: 68ch;
+    }
+    .ctxMeta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top: 12px;
+      margin-bottom: 12px;
+    }
+    .miniChip{
       display:inline-flex;
       align-items:center;
       padding:6px 10px;
       border-radius:999px;
-      border:1px solid rgba(212,175,55,.18);
-      background: rgba(0,0,0,.22);
-      font-size:12px;
-      color:rgba(241,230,163,.90);
-      white-space:nowrap;
-    }
-
-    /* Primary CTAs */
-    .ctas{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      max-width: 600px;
-    }
-    .btn-primary,
-    .btn-ghost{
-      min-height:54px;
-      border-radius:999px;
-      text-decoration:none;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px 18px;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      font-size:13px;
-      width:100%;
-    }
-    .btn-primary{
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-    }
-    .btn-ghost{
-      border:1px solid rgba(212,175,55,0.35);
-      background: rgba(10,12,27,0.35);
-      color: var(--gold-soft);
-      backdrop-filter: blur(10px);
-    }
-    .btn-primary:hover{filter:brightness(1.03)}
-    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
-    .btn-primary:active,.btn-ghost:active{transform:translateY(1px)}
-
-    .micro{
-      margin-top: 12px;
-      font-size: .92rem;
-      color: rgba(179,164,139,.92);
-      line-height: 1.75;
-      max-width: 84ch;
-      text-align: justify;
-    }
-    .micro strong{color: rgba(241,230,163,.95); font-weight: 600;}
-
-    /* Right hero panel (glass) */
-    .panel{
-      position:relative;
-      background:var(--panel);
-      border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,0.45);
-      padding:24px;
-      box-shadow:var(--shadow-soft);
-      overflow:hidden;
-      transform-style:preserve-3d;
-      will-change:transform;
-      min-height: 380px;
-    }
-    .panel::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background:
-        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
-        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
-        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
-      opacity:.95;
-      filter: blur(10px);
-      pointer-events:none;
-    }
-    .scanline{
-      position:absolute;
-      left:-30%;
-      top:0;
-      width:160%;
-      height:2px;
-      background: linear-gradient(90deg, transparent 0%, rgba(241,230,163,0.05) 20%, rgba(241,230,163,0.55) 50%, rgba(241,230,163,0.05) 80%, transparent 100%);
-      opacity:.55;
-      pointer-events:none;
-      animation: scanY 3.8s linear infinite;
-      mix-blend-mode: screen;
-    }
-    @keyframes scanY{
-      0%{transform:translateY(-10px)}
-      100%{transform:translateY(420px)}
-    }
-    .panel-inner{position:relative; z-index:2; transform: translateZ(12px);}
-    .panel-title{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      margin-bottom:10px;
-    }
-    .pill{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      font-size:.72rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      padding:6px 12px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,.55);
-      margin-bottom:12px;
-      color: rgba(241,230,163,.92);
-      background: rgba(10,12,27,0.22);
-      backdrop-filter: blur(10px);
-    }
-    .pill .dot{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(241,230,163,.95);
-      box-shadow: 0 0 14px rgba(241,230,163,.55);
-      animation: dotPulse 1.45s ease-in-out infinite;
-    }
-    @keyframes dotPulse{0%,100%{transform:scale(1); opacity:.85}50%{transform:scale(1.35); opacity:1}}
-
-    .list{
-      border-top:1px solid rgba(212,175,55,.28);
-      margin-top:10px;
-      padding-top:12px;
-      font-size:.92rem;
-      color:var(--ink-soft);
-    }
-    .row{
-      display:grid;
-      grid-template-columns: 1fr 1.3fr;
-      align-items:flex-start;
-      gap:14px;
-      padding:9px 0;
-    }
-    .row .k{color: rgba(179,164,139,.92)}
-    .row .v{color: rgba(241,230,163,.88); text-align:right;}
-    .row + .row{border-top:1px dashed var(--line2)}
-
-    .state{
-      margin-top:12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding-top:12px;
-      border-top: 1px solid rgba(212,175,55,.14);
-      font-size:.78rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: rgba(179,164,139,.92);
-    }
-    .state .sig{display:flex; align-items:center; gap:10px; white-space:nowrap;}
-    .state .sig i{
-      width:10px;height:10px;border-radius:50%;
-      background: rgba(244,186,120,.95);
-      box-shadow: 0 0 18px rgba(244,186,120,.38);
-      animation: warmBlink 2.2s ease-in-out infinite;
-    }
-    @keyframes warmBlink{0%,100%{opacity:.55}50%{opacity:1}}
-    .state .meter{
-      position:relative;
-      flex:1 1 auto;
-      height:8px;
-      border-radius:999px;
-      background: rgba(241,230,163,.10);
-      border: 1px solid rgba(212,175,55,.18);
-      overflow:hidden;
-    }
-    .state .meter > span{
-      position:absolute; inset:0;
-      width:46%;
-      border-radius:999px;
-      background: linear-gradient(90deg, rgba(241,230,163,.18), rgba(212,175,55,.42), rgba(241,230,163,.18));
-      animation: meterMove 2.8s ease-in-out infinite;
-    }
-    @keyframes meterMove{0%,100%{transform:translateX(-10%)}50%{transform:translateX(120%)}}
-
-    .hash{
-      margin-top:10px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: .78rem;
-      color: rgba(241,230,163,.78);
-      opacity:.95;
-      word-break: break-all;
-      border-top: 1px solid rgba(212,175,55,.14);
-      padding-top: 10px;
-    }
-
-    /* Sections */
-    .section{
-      margin-top: 44px;
-      padding-top: 28px;
-      border-top: 1px solid rgba(212,175,55,0.14);
-    }
-    .section-title{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:rgba(179,164,139,.92);
-      margin-bottom:14px;
-    }
-
-    /* Context chooser */
-    .context-grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      align-items:stretch;
-    }
-    .context-card{
-      border: 1px solid rgba(212,175,55,.22);
-      border-radius: 18px;
-      background: var(--glass);
-      padding: 18px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      display:flex;
-      flex-direction:column;
-      min-height: 180px;
-      position:relative;
-      overflow:hidden;
-    }
-    .context-card::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(800px 240px at 15% 0, rgba(241,230,163,.10), transparent 60%);
-      pointer-events:none;
-      opacity:.9;
-    }
-    .context-card > *{position:relative; z-index:1}
-    .context-card h3{
-      font-size: 0.98rem;
-      color: rgba(241,230,163,.92);
-      margin-bottom: 8px;
-      font-weight: 600;
-    }
-    .context-card p{
-      font-size: 0.92rem;
-      color: rgba(198,186,150,.86);
-      line-height: 1.65;
-      text-align: justify;
-      flex:1 1 auto;
-      max-width: 60ch;
-    }
-    .context-meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top: 12px;
-      margin-bottom: 14px;
-    }
-    .mini-chip{
-      display:inline-flex;
-      align-items:center;
-      padding:5px 9px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,.18);
+      border:1px solid rgba(212,175,55,.14);
       background: rgba(0,0,0,.20);
-      font-size: 11.5px;
+      font-size: 11px;
       color: rgba(241,230,163,.88);
       white-space:nowrap;
     }
-    .open-btn{
+
+    .openBtn{
       display:inline-flex;
       align-items:center;
       justify-content:center;
@@ -490,476 +540,488 @@
       text-decoration:none;
       text-transform:uppercase;
       letter-spacing:.12em;
-      font-size:12.5px;
-      border:1px solid rgba(212,175,55,0.35);
-      background: rgba(10,12,27,0.30);
-      color: var(--gold-soft);
-      backdrop-filter: blur(10px);
-    }
-    .open-btn:hover{border-color:rgba(212,175,55,0.58)}
-    .open-btn:active{transform:translateY(1px)}
-
-    /* “Why” grid */
-    .grid-3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-    }
-    .card{
-      border: 1px solid rgba(212,175,55,.22);
-      border-radius: 18px;
-      background: var(--glass);
-      padding: 18px 18px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      min-height: 140px;
-    }
-    .card h3{
-      font-size: 0.95rem;
+      font-size:12px;
+      border:1px solid rgba(212,175,55,0.22);
+      background: rgba(255,255,255,.015);
       color: rgba(241,230,163,.92);
-      margin-bottom: 8px;
-      font-weight: 600;
+      backdrop-filter: blur(10px);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
     }
-    .card p{
-      font-size: 0.92rem;
-      color: rgba(198,186,150,.86);
-      line-height: 1.65;
-      text-align: justify;
+    .openBtn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,175,55,0.40);
+      background: rgba(255,255,255,.03);
     }
+    .openBtn:active{ transform: translateY(0); }
 
-    /* Big CTA panel */
-    .cta-panel{
-      margin-top: 18px;
-      border: 1px solid rgba(212,175,55,0.28);
-      border-radius: 22px;
-      background: var(--panel);
-      padding: 18px 18px;
-      backdrop-filter: blur(12px);
-      box-shadow: 0 18px 48px rgba(0,0,0,.45);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
+    /* Inside simulator strip (4 steps) */
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .step{
+      border-radius: 18px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.18);
+      padding: 14px 14px;
       position:relative;
       overflow:hidden;
     }
-    .cta-panel::before{
+    .step::before{
       content:"";
       position:absolute;
       inset:-2px;
-      background:
-        radial-gradient(900px 260px at 10% 0, rgba(241,230,163,.12), transparent 60%),
-        radial-gradient(900px 260px at 110% 90%, rgba(212,175,55,.10), transparent 60%);
-      pointer-events:none;
+      background: radial-gradient(600px 200px at 15% 0, rgba(241,230,163,.08), transparent 60%);
       opacity:.9;
+      pointer-events:none;
     }
-    .cta-panel > *{position:relative; z-index:1}
-    .cta-title{
-      font-family:"Orbitron",sans-serif;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.80rem;
-      color: rgba(179,164,139,.92);
-      margin-bottom:6px;
+    .step > *{ position:relative; z-index:1; }
+    .step .n{
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      margin-bottom: 8px;
+      font-weight: 800;
     }
-    .cta-text{
-      color: rgba(198,186,150,.90);
-      line-height: 1.65;
-      max-width: 84ch;
-      text-align: justify;
-      font-size: .95rem;
+    .step .t{
+      font-size: 12.5px;
+      color: rgba(233,238,247,.90);
+      font-weight: 800;
+      margin-bottom: 6px;
     }
-    .cta-btn{
-      min-height:52px;
-      border-radius:999px;
-      text-decoration:none;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:12px 18px;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      font-size:13px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      white-space:nowrap;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    .step .d{
+      font-size: 12px;
+      color: rgba(167,176,194,.86);
+      line-height: 1.55;
     }
-    .cta-btn:hover{filter:brightness(1.03)}
-    .cta-btn:active{transform:translateY(1px)}
 
-    /* Footer */
-    footer{
-      margin-top: 44px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(212,175,55,0.14);
-      color: rgba(179,164,139,.85);
-      font-size: 0.88rem;
+    /* CTA banner */
+    .ctaPanel{
+      margin-top: 14px;
       display:flex;
       justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
+      gap:16px;
+      align-items:center;
+      padding: 16px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(212,175,55,.16);
+      background: linear-gradient(90deg, rgba(255,255,255,.03), rgba(212,175,55,.05));
+      box-shadow: var(--shadow2);
     }
-    footer a{opacity:.9}
-    footer a:hover{opacity:1}
+    .ctaPanel .text{
+      color: rgba(167,176,194,.90);
+      font-size: 12.5px;
+      line-height: 1.55;
+      max-width: 115ch;
+    }
+    .ctaPanel .text b{ color: rgba(241,230,163,.92); }
+
+    /* Footer */
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: rgba(167,176,194,.72);
+      font-size: 11px;
+      padding: 18px 0 28px;
+      border-top: 1px solid rgba(212,175,55,.10);
+      margin-top: 18px;
+    }
+    .foot a{
+      color: rgba(167,176,194,.82);
+      border-bottom: 1px dotted rgba(212,175,55,.18);
+    }
+    .foot a:hover{
+      color: rgba(241,230,163,.92);
+      border-bottom-color: rgba(241,230,163,.35);
+    }
 
     /* Responsive */
-    @media(max-width:1100px){
-      .hero{grid-template-columns:1fr; gap:26px; min-height:auto}
-      .wrap{padding:96px 28px 56px}
-      .ctas{max-width: 760px}
-      .context-grid{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr}
-      .cta-panel{flex-direction:column; align-items:flex-start}
-      .cta-btn{width:100%}
+    @media (max-width: 1100px){
+      .heroGrid{ grid-template-columns: 1fr; }
+      .cards3{ grid-template-columns: 1fr; }
+      .ctxGrid{ grid-template-columns: 1fr; }
+      .steps{ grid-template-columns: 1fr; }
+      .brand{ min-width: 0; }
+      .cta{ min-width: 0; }
+      .ctaPanel{ flex-direction:column; align-items:stretch; }
+      .ctaPanel .btn{ width:100%; }
     }
-    @media(max-width:960px){
-      .top-nav{display:none}
-      .top-bar{padding:0 16px}
-      .wrap{padding:96px 20px 56px}
-      .row{grid-template-columns: 1fr; gap:6px}
-      .row .v{text-align:left}
-      .ctas{grid-template-columns:1fr}
+    @media (max-width: 960px){
+      .container{ padding: 0 18px; }
+      .navlinks{ display:none; }
     }
     @media (prefers-reduced-motion: reduce){
-      .scanline, .pill .dot, .state .sig i, .state .meter > span {animation:none}
-      .panel{transform:none !important}
-      #bg-field{display:none}
+      *{ scroll-behavior:auto !important; }
     }
   </style>
 </head>
 
 <body>
-  <canvas id="bg-field" aria-hidden="true"></canvas>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="nav">
+        <div class="brand">
+          <div class="dot" aria-hidden="true"></div>
+          <div class="brand-stack">
+            <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
+            <div class="brand-sub">Probative engine & governance</div>
+          </div>
+        </div>
 
-  <!-- NAV (keep identical across pages) -->
-  <header class="top-bar">
-    <div class="top-left">
-      <div class="emblem" aria-hidden="true"></div>
-      <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
+        <div class="navlinks" aria-label="Primary navigation">
+          <a class="active" href="./index.html">Home</a>
+          <a href="./simulator.html">Simulator</a>
+          <a href="./how-it-works.html">How it works</a>
+          <a href="./spec.html">Spec</a>
+          <a href="./tests.html">Tests</a>
+          <a href="./examples.html">Examples</a>
+          <a href="./contexts.html">Contexts</a>
+        </div>
+
+        <div class="cta">
+          <a class="btn ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read spec</a>
+          <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <nav class="top-nav" aria-label="Primary navigation">
-      <a href="./index.html" aria-current="page">Home</a>
-      <a href="./simulator.html">Simulator</a>
-      <a href="./how-it-works.html">How it works</a>
-      <a href="./spec.html">Spec</a>
-      <a href="./tests.html">Tests</a>
-      <a href="./examples.html">Examples</a>
-      <a href="./contexts.html">Contexts</a>
-    </nav>
-
-    <a class="top-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
-  </header>
-
-  <main class="wrap" role="main">
+  <main class="container">
     <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div>
-        <div class="eyebrow">Open standard for <span>HR decision governance</span></div>
+    <section class="hero">
+      <div class="panel">
+        <div class="inner">
+          <div class="heroGrid">
+            <!-- Left -->
+            <div>
+              <div class="kicker">Open standard for decision governance</div>
 
-        <h1 class="h1" id="hero-title">
-          HR decisions will be challenged.
-          <span class="gold">Make them auditable and defensible.</span>
-        </h1>
+              <h1>
+                Decisions will be challenged.
+                <span class="hl">Make them auditable & defensible.</span>
+              </h1>
 
-        <p class="lead">
-          OpenProof RPO v0.1 turns decision context into a deterministic proof bundle:
-          signed JSON, a human-readable PDF, and a public hash.
-          No AI. No interpretation. Same input → same output. Humans remain accountable.
-        </p>
+              <p class="lead">
+                OpenProof RPO v0.1 turns decision context into a deterministic proof bundle:
+                a sealed JSON core, a human-readable preview, and a public hash.
+                No AI. No interpretation. Same input → same output. Humans remain accountable.
+              </p>
 
-        <div class="chips" aria-label="Core concepts">
-          <span class="chip">Source of truth</span>
-          <span class="chip">Data lineage</span>
-          <span class="chip">Business rules</span>
-          <span class="chip">Audit-ready</span>
-          <span class="chip">Defensible decisions</span>
+              <div class="heroCallout">
+                In <b>60 seconds</b>, the Simulator shows what “defensible” actually means:
+                <b>coverage</b>, <b>defensibility score</b>, <b>exposure band</b>, and an <b>integrity hash</b>.
+              </div>
+
+              <div class="chips" aria-label="Core properties">
+                <span class="chip"><span class="pill">Property</span> <b>Deterministic</b></span>
+                <span class="chip"><span class="pill">Output</span> <b>Sealed bundle</b></span>
+                <span class="chip"><span class="pill">Audit</span> <b>Reconstructible</b></span>
+                <span class="chip"><span class="pill">AI</span> <b>None</b></span>
+              </div>
+
+              <div class="heroActions" role="group" aria-label="Primary actions">
+                <a class="btn primary" href="./simulator.html?context=institutional_crisis">Open the simulator</a>
+                <a class="btn ghost" href="./how-it-works.html">How it works</a>
+                <a class="btn ghost" href="./examples.html">View examples</a>
+              </div>
+
+              <div class="note">
+                <b>RPO</b> = sealed JSON core + human-readable preview + public hash.
+                The hash proves <b>integrity over time</b>, not “truth”. Verification is public. Accountability remains human.
+              </div>
+            </div>
+
+            <!-- Right: teaser (mini-simulator vibe) -->
+            <aside class="panel inset" aria-label="Simulator teaser">
+              <div class="inner">
+                <div class="teaserHead">
+                  <div>
+                    <div class="teaserTitle">Simulator teaser (30 seconds)</div>
+                    <div class="teaserSub">
+                      A deterministic “decision defense cockpit” — coverage, defensibility, exposure, and a sealed hash.
+                    </div>
+                  </div>
+                  <span class="tag"><span class="dot2"></span> Integrity · Readability · Verifiability</span>
+                </div>
+
+                <div class="kpiGrid" aria-label="Teaser KPIs">
+                  <div class="kpi">
+                    <div class="k">Coverage</div>
+                    <div class="v"><span id="kpiCoverage">—</span><span class="badge warn" id="badgeCoverage">LIVE</span></div>
+                  </div>
+                  <div class="kpi">
+                    <div class="k">Defensibility</div>
+                    <div class="v"><span id="kpiDef">—</span><span class="badge warn" id="badgeDef">—</span></div>
+                  </div>
+                  <div class="kpi">
+                    <div class="k">Exposure</div>
+                    <div class="v"><span id="kpiExpo">—</span><span class="badge warn" id="badgeExpo">—</span></div>
+                  </div>
+                  <div class="kpi">
+                    <div class="k">Mode</div>
+                    <div class="v"><span>Deterministic</span><span class="badge bad">No AI</span></div>
+                  </div>
+                </div>
+
+                <div class="hashbox" aria-label="Hash preview">
+                  hash: <span id="kpiHash">—</span>
+                </div>
+
+                <div class="miniActions">
+                  <a class="btn primary" href="./simulator.html?context=institutional_crisis">Run the simulator</a>
+                  <a class="btn ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
+                </div>
+
+                <div class="note" style="margin-top:10px;">
+                  This is not “AI scoring”. It’s a deterministic exposure & reconstructibility layer built for governance under pressure.
+                </div>
+              </div>
+            </aside>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="ctas" role="group" aria-label="Primary actions">
-          <a href="./simulator.html?context=governance" class="btn-primary">Open the simulator</a>
-          <a href="./spec.html" class="btn-ghost" target="_blank" rel="noopener noreferrer">Read the spec</a>
-        </div>
-
-        <p class="micro">
-          <strong>RPO =</strong> signed JSON + human-readable PDF + public hash.
-          The hash proves integrity, not “truth”. Verification is public. Responsibility is human.
-        </p>
+    <!-- INSIDE THE SIMULATOR -->
+    <section class="section" aria-labelledby="inside-title">
+      <div class="sectionTitleRow">
+        <h2 id="inside-title">What you’ll see inside the Simulator</h2>
+        <div class="meta">A ramp, not a lecture</div>
       </div>
 
-      <!-- Proof bundle preview -->
-      <aside class="panel" id="cockpit" aria-label="Proof bundle preview">
-        <div class="scanline" aria-hidden="true"></div>
-        <div class="panel-inner">
-          <div class="panel-title">Proof bundle preview (30 seconds)</div>
-          <div class="pill" aria-label="Attributes">
-            <span class="dot" aria-hidden="true"></span>
-            Integrity • Readability • Verifiability
-          </div>
-
-          <div class="list" role="list">
-            <div class="row" role="listitem">
-              <span class="k">Input</span>
-              <span class="v">Decision context + declared sources</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Output</span>
-              <span class="v">signed JSON + PDF + hash</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Perimeter</span>
-              <span class="v">rules + lineage + timestamps</span>
-            </div>
-            <div class="row" role="listitem">
-              <span class="k">Use</span>
-              <span class="v">audit, dispute, governance</span>
-            </div>
-          </div>
-
-          <div class="state" aria-label="Live status">
-            <div class="sig"><i aria-hidden="true"></i><span id="stateText">CAPTURE</span></div>
-            <div class="meter" aria-hidden="true"><span></span></div>
-            <div class="sig"><span id="tickText">SYNC</span></div>
-          </div>
-
-          <div class="hash" aria-label="Public hash preview">
-            hash: <span id="hashText">—</span>
-          </div>
+      <div class="steps" aria-label="Simulator steps">
+        <div class="step">
+          <div class="n">Step 01</div>
+          <div class="t">Declare sources</div>
+          <div class="d">HRIS, LMS/TMS, Ops attestations, IT/Security logs, Legal snapshot, external constraints.</div>
         </div>
-      </aside>
+        <div class="step">
+          <div class="n">Step 02</div>
+          <div class="t">Generate bundle</div>
+          <div class="d">Sealed JSON core + readable preview + public hash. Same input → same output, always.</div>
+        </div>
+        <div class="step">
+          <div class="n">Step 03</div>
+          <div class="t">Check lineage</div>
+          <div class="d">Extract IDs, stewardship, attributable traces, quality proxies, definition drift indicators.</div>
+        </div>
+        <div class="step">
+          <div class="n">Step 04</div>
+          <div class="t">Escalate properly</div>
+          <div class="d">Owner/clock, add Legal/IT/Sec, COMEX brief triggers, and the next actions to close blind spots.</div>
+        </div>
+      </div>
+
+      <div class="ctaPanel">
+        <div class="text">
+          If you only do one thing: open the Simulator and generate one bundle.
+          You’ll understand the standard in <b>one run</b>, not in ten pages.
+        </div>
+        <a class="btn primary" href="./simulator.html?context=institutional_crisis">Open the simulator</a>
+      </div>
     </section>
 
     <!-- CHOOSE YOUR CONTEXT -->
     <section class="section" aria-labelledby="ctx-title">
-      <h2 class="section-title" id="ctx-title">Choose your context</h2>
+      <div class="sectionTitleRow">
+        <h2 id="ctx-title">Choose your context</h2>
+        <div class="meta">Same sealed structure · different lexicon & weighting</div>
+      </div>
 
-      <div class="context-grid">
-        <article class="context-card">
-          <h3>Governance</h3>
+      <div class="ctxGrid">
+        <article class="ctxCard">
+          <h3>Regulatory audit window</h3>
           <p>
-            Decision defensibility for complex organizations: audit exposure, traceability,
-            source-of-truth stability, and explicit business rules across systems.
+            Audit readiness for complex organizations: definition stability, lineage discipline, and repeatable evidence production.
           </p>
-          <div class="context-meta" aria-label="Governance signals">
-            <span class="mini-chip">audit exposure</span>
-            <span class="mini-chip">data lineage</span>
-            <span class="mini-chip">decision owner</span>
-            <span class="mini-chip">quality checks</span>
+          <div class="ctxMeta" aria-label="Audit signals">
+            <span class="miniChip">data lineage</span>
+            <span class="miniChip">definition drift</span>
+            <span class="miniChip">quality checks</span>
+            <span class="miniChip">repeatability</span>
           </div>
-          <a class="open-btn" href="./simulator.html?context=governance">Open in Simulator</a>
+          <a class="openBtn" href="./simulator.html?context=regulatory_audit">Open in Simulator</a>
         </article>
 
-        <article class="context-card">
-          <h3>Legal Proceedings</h3>
+        <article class="ctxCard">
+          <h3>Labor / litigation readiness</h3>
           <p>
-            Litigation-ready framing: chain-of-custody rigor, timestamp discipline,
-            contradictions, and evidence packaging that survives adversarial reading.
+            Adversarial reading expected: opposability markers, chain-of-custody discipline, and defensible packaging that survives scrutiny.
           </p>
-          <div class="context-meta" aria-label="Proceedings signals">
-            <span class="mini-chip">litigation exposure</span>
-            <span class="mini-chip">chain-of-custody</span>
-            <span class="mini-chip">timestamp rigor</span>
-            <span class="mini-chip">contradictions</span>
+          <div class="ctxMeta" aria-label="Litigation signals">
+            <span class="miniChip">opposability</span>
+            <span class="miniChip">chain-of-custody</span>
+            <span class="miniChip">timestamp rigor</span>
+            <span class="miniChip">blind spots</span>
           </div>
-          <a class="open-btn" href="./simulator.html?context=legal">Open in Simulator</a>
+          <a class="openBtn" href="./simulator.html?context=labor_dispute">Open in Simulator</a>
         </article>
 
-        <article class="context-card">
-          <h3>Institutional Crisis</h3>
+        <article class="ctxCard">
+          <h3>Institutional crisis</h3>
           <p>
-            High-pressure environments: uncertainty logging, narrative stability,
-            escalation timelines, and “what was known when” reconstruction.
+            High-pressure environments: uncertainty logging, escalation timelines, and “what was known when” reconstruction.
           </p>
-          <div class="context-meta" aria-label="Crisis signals">
-            <span class="mini-chip">uncertainty logging</span>
-            <span class="mini-chip">escalation trail</span>
-            <span class="mini-chip">timeline integrity</span>
-            <span class="mini-chip">risk flags</span>
+          <div class="ctxMeta" aria-label="Crisis signals">
+            <span class="miniChip">uncertainty log</span>
+            <span class="miniChip">escalation trail</span>
+            <span class="miniChip">timeline integrity</span>
+            <span class="miniChip">risk flags</span>
           </div>
-          <a class="open-btn" href="./simulator.html?context=institutional">Open in Simulator</a>
+          <a class="openBtn" href="./simulator.html?context=institutional_crisis">Open in Simulator</a>
         </article>
       </div>
     </section>
 
     <!-- WHY DETERMINISTIC -->
     <section class="section" aria-labelledby="why-title">
-      <h2 class="section-title" id="why-title">Why deterministic (and why no AI)</h2>
+      <div class="sectionTitleRow">
+        <h2 id="why-title">Why deterministic (and why no AI)</h2>
+        <div class="meta">Governance property · not UX preference</div>
+      </div>
 
-      <div class="grid-3">
+      <div class="cards3">
         <div class="card">
           <h3>Same input → same output</h3>
           <p>
-            If the result changes with every run, you cannot defend it. Determinism is a governance property,
-            not a UX preference.
+            If the result changes with every run, you cannot defend it. Determinism makes the bundle auditable and reproducible.
           </p>
         </div>
         <div class="card">
           <h3>Integrity over persuasion</h3>
           <p>
-            The bundle is designed to be verifiable. The hash proves stability of content over time,
-            not “truth” as an opinion.
+            The public hash proves content stability over time. It does not claim “truth”; it proves what was sealed, when.
           </p>
         </div>
         <div class="card">
           <h3>Humans remain accountable</h3>
           <p>
-            The standard does not “decide”. It captures perimeter, sources, rules, and uncertainty—so
-            the decision remains explainable under pressure.
+            The standard does not decide. It captures perimeter, sources, rules, timestamps, and uncertainty — so decisions remain explainable.
           </p>
         </div>
+      </div>
+
+      <div class="ctaPanel" style="margin-top:14px;">
+        <div class="text">
+          Determinism is what lets Legal, IT/Sec, HR, and COMEX share the same object: a sealed bundle that can be verified independently.
+        </div>
+        <a class="btn ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read spec</a>
       </div>
     </section>
 
     <!-- GET STARTED -->
     <section class="section" aria-labelledby="start-title">
-      <h2 class="section-title" id="start-title">Get started</h2>
+      <div class="sectionTitleRow">
+        <h2 id="start-title">Get started</h2>
+        <div class="meta">One run · one bundle · one hash</div>
+      </div>
 
-      <div class="cta-panel">
-        <div>
-          <div class="cta-title">Go from concept to proof bundle</div>
-          <div class="cta-text">
-            Use the Simulator to generate a deterministic bundle and preview the report structure.
-            When ready, move to the Pilot Cockpit to evaluate integration scenarios and decision governance at scale.
-          </div>
+      <div class="ctaPanel">
+        <div class="text">
+          Use the Simulator to generate a deterministic bundle and preview the report structure.
+          When ready, move to the Pilot Cockpit to evaluate integration scenarios and decision governance at scale:
+          connectors, traceable extracts, sealed bundles, and repeatable decision defense.
         </div>
-        <a class="cta-btn" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
+        <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
       </div>
     </section>
 
-    <footer>
-      <div>© OpenProof — RPO v0.1.</div>
+    <div class="foot" aria-label="Footer">
+      <div>© OpenProof — RPO v0.1. Created by Gersende Ryard de Parcey.</div>
       <div>
         <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
-        <a href="./simulator.html?context=governance">Simulator</a> ·
+        <a href="./simulator.html?context=institutional_crisis">Simulator</a> ·
         <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
       </div>
-    </footer>
+    </div>
   </main>
 
   <script>
-    // Star field background
-    (function () {
-      const canvas = document.getElementById("bg-field");
-      const ctx = canvas.getContext("2d", { alpha: true });
-      let width, height, particles = [];
-      const COUNT = 220;
+    // -------------------------
+    // Home teaser: deterministic-ish demo tick (no gadgety random storm)
+    // Purpose: cue "instrument", not "marketing animation".
+    // -------------------------
+    (function(){
+      const elCov = document.getElementById("kpiCoverage");
+      const elDef = document.getElementById("kpiDef");
+      const elExpo = document.getElementById("kpiExpo");
+      const elHash = document.getElementById("kpiHash");
 
-      function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        const ratio = window.devicePixelRatio || 1;
-        canvas.width = width * ratio;
-        canvas.height = height * ratio;
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-      }
+      const bDef  = document.getElementById("badgeDef");
+      const bExpo = document.getElementById("badgeExpo");
 
-      function createParticle() {
-        return {
-          x: (Math.random() * 2 - 1),
-          y: (Math.random() * 2 - 1),
-          z: Math.random() * 0.9 + 0.1,
-          speed: Math.random() * 0.004 + 0.0015
-        };
-      }
+      function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
 
-      function init() {
-        particles = [];
-        for (let i = 0; i < COUNT; i++) particles.push(createParticle());
-      }
-
-      function project(p) {
-        const f = 420;
-        const s = f / (f * p.z);
-        return {
-          x: p.x * width * 0.5 * s + width / 2,
-          y: p.y * height * 0.5 * s + height / 2
-        };
-      }
-
-      function loop() {
-        ctx.clearRect(0, 0, width, height);
-        for (const p of particles) {
-          p.z -= p.speed;
-          if (p.z < 0.08) {
-            Object.assign(p, createParticle());
-            p.z = 1;
-          }
-          const { x, y } = project(p);
-          const a = Math.min(1, (1.2 - p.z) * 1.1);
-          ctx.fillStyle = `rgba(241,230,163,${0.55 * a})`;
-          ctx.beginPath();
-          ctx.arc(x, y, 1.5, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        requestAnimationFrame(loop);
-      }
-
-      window.addEventListener("resize", resize);
-      resize(); init(); loop();
-    })();
-
-    // Cockpit: state machine + hash ticking
-    (function () {
-      const stateText = document.getElementById("stateText");
-      const tickText = document.getElementById("tickText");
-      const hashText = document.getElementById("hashText");
-
-      function randomHex(len){
-        const chars = "abcdef0123456789";
-        let out = "";
-        for(let i=0;i<len;i++) out += chars[Math.floor(Math.random()*chars.length)];
-        return out;
-      }
-
-      const states = [
-        { s: "CAPTURE", t: "SYNC" },
-        { s: "BUNDLE",  t: "RULES" },
-        { s: "SEAL",    t: "HASH" },
-        { s: "VERIFY",  t: "OK" }
+      // Simple cycle: show a plausible run ramping from "draft" to "sealed"
+      const frames = [
+        { cov: 62, def: 48, expo: "HIGH",  hash: "—",  defTag:"LOW",  expoTag:"HIGH"  },
+        { cov: 74, def: 62, expo: "MEDIUM",hash: "—",  defTag:"MEDIUM",expoTag:"MEDIUM"},
+        { cov: 78, def: 64, expo: "MEDIUM",hash: "sealing…", defTag:"MEDIUM",expoTag:"MEDIUM"},
+        { cov: 78, def: 64, expo: "MEDIUM",hash: "", defTag:"MEDIUM",expoTag:"MEDIUM"},
       ];
 
+      function badgeClassForDef(tag){
+        return tag==="HIGH" ? "ok" : tag==="MEDIUM" ? "warn" : "bad";
+      }
+      function badgeClassForExpo(tag){
+        return tag==="LOW" ? "ok" : tag==="MEDIUM" ? "warn" : "bad";
+      }
+
+      async function sha256Hex(str){
+        const enc = new TextEncoder();
+        const buf = enc.encode(str);
+        const digest = await crypto.subtle.digest("SHA-256", buf);
+        const arr = Array.from(new Uint8Array(digest));
+        return arr.map(b=>b.toString(16).padStart(2,"0")).join("");
+      }
+
       let i = 0;
-      function tick(){
-        i = (i + 1) % states.length;
-        stateText.textContent = states[i].s;
-        tickText.textContent = states[i].t;
-        hashText.textContent = randomHex(64);
+
+      async function tick(){
+        const f = frames[i];
+        elCov.textContent = `${clamp(f.cov,0,100)}%`;
+        elDef.textContent = `${clamp(f.def,0,100)}/100`;
+        elExpo.textContent = f.expo;
+
+        bDef.textContent = f.defTag;
+        bDef.className = `badge ${badgeClassForDef(f.defTag)}`;
+
+        bExpo.textContent = f.expoTag;
+        bExpo.className = `badge ${badgeClassForExpo(f.expoTag)}`;
+
+        if(f.hash === "sealing…"){
+          elHash.textContent = "sealing…";
+        } else if(f.hash === "—"){
+          elHash.textContent = "—";
+        } else if(f.hash === ""){
+          // Deterministic demo seed (stable-ish): hash of a tiny fixed payload
+          const seed = JSON.stringify({
+            rpo_version: "0.1",
+            mode: "deterministic",
+            context: "institutional_crisis",
+            coverage_pct: 78,
+            defensibility_score: 64,
+            institutional_exposure: "MEDIUM"
+          });
+          const h = await sha256Hex(seed);
+          elHash.textContent = h;
+        }
+
+        i = (i + 1) % frames.length;
       }
 
       tick();
       setInterval(tick, 1400);
     })();
-
-    // Subtle 3D hover on cockpit
-    (function(){
-      const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const card = document.getElementById("cockpit");
-      if (!card || prefersReduce) return;
-
-      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-      let raf = null;
-
-      function onMove(e){
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top) / r.height;
-        const rotY = clamp((x - 0.5) * 10, -6, 6);
-        const rotX = clamp((0.5 - y) * 10, -6, 6);
-
-        if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(0)`;
-        });
-      }
-
-      function onLeave(){ card.style.transform = "none"; }
-
-      card.addEventListener("mousemove", onMove);
-      card.addEventListener("mouseleave", onLeave);
-    })();
   </script>
 </body>
 </html>
+
 
