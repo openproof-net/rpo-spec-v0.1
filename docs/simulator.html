@@ -31,6 +31,7 @@
       --shadow: 0 20px 70px rgba(0,0,0,.55);
       --shadow2: 0 10px 40px rgba(0,0,0,.45);
 
+      /* ✅ Reference width (keep this) */
       --max: 1760px;
     }
 
@@ -168,12 +169,8 @@
     .panel .inner{ padding: 18px; }
 
     /* Hero */
-    .hero{
-      margin: 18px 0 16px;
-    }
-    .hero .panel{
-      box-shadow: var(--shadow);
-    }
+    .hero{ margin: 18px 0 16px; }
+    .hero .panel{ box-shadow: var(--shadow); }
     .kicker{
       font-size: 11px;
       text-transform: uppercase;
@@ -287,9 +284,7 @@
       gap: 12px;
       margin-top: 8px;
     }
-    .field{
-      display:flex; flex-direction:column; gap:6px;
-    }
+    .field{ display:flex; flex-direction:column; gap:6px; }
     .field.full{ grid-column: 1 / -1; }
     label{
       font-size: 11px;
@@ -311,9 +306,7 @@
       resize: vertical;
       line-height: 1.5;
     }
-    input::placeholder, textarea::placeholder{
-      color: rgba(140,149,168,.75);
-    }
+    input::placeholder, textarea::placeholder{ color: rgba(140,149,168,.75); }
 
     .hint{
       font-size: 11px;
@@ -342,9 +335,7 @@
       width: 16px; height: 16px; margin-top: 2px;
       accent-color: var(--gold);
     }
-    .sys .t{
-      display:flex; flex-direction:column; gap:4px;
-    }
+    .sys .t{ display:flex; flex-direction:column; gap:4px; }
     .sys .name{
       font-size: 12px;
       font-weight: 700;
@@ -365,10 +356,7 @@
     }
 
     /* Cockpit */
-    .cockpit{
-      position: sticky;
-      top: 74px;
-    }
+    .cockpit{ position: sticky; top: 74px; }
     .cockpit .head{
       display:flex;
       justify-content:space-between;
@@ -393,12 +381,7 @@
       box-shadow: 0 0 0 4px rgba(212,175,55,.10);
     }
 
-    .kv{
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
-      margin-top: 8px;
-    }
+    .kv{ display:flex; flex-direction:column; gap: 10px; margin-top: 8px; }
     .row{
       display:flex;
       justify-content:space-between;
@@ -449,9 +432,7 @@
     }
 
     /* Output area */
-    .output{
-      margin-top: 14px;
-    }
+    .output{ margin-top: 14px; }
     .topline{
       display:flex;
       justify-content:flex-end;
@@ -470,21 +451,22 @@
     }
     .pill2 b{ color: rgba(241,230,163,.92); }
 
+    /* ✅ V3: output grid (2 columns), airy & readable */
     .tableish{
-      display:flex;
-      flex-direction:column;
-      gap: 8px;
-      margin-top: 8px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+      align-items: start;
     }
     .trow{
       display:flex;
-      justify-content:space-between;
-      gap:12px;
-      padding: 10px 10px;
+      flex-direction:column;
+      gap:6px;
+      padding: 12px 12px;
       border-radius: 12px;
       border: 1px solid rgba(212,175,55,.10);
       background: rgba(0,0,0,.18);
-      align-items:center;
     }
     .trow .k{
       font-size: 11px;
@@ -496,22 +478,49 @@
       font-size: 12px;
       font-weight: 700;
       color: rgba(233,238,247,.90);
-      text-align:right;
-      max-width: 70%;
-      overflow:hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      line-height: 1.45;
+      text-align:left;
+      max-width: none;
+      overflow: visible;
+      text-overflow: initial;
+      white-space: normal;
+      word-break: break-word;
     }
+
+    /* Full-width blocks inside grid */
+    .span-2{ grid-column: 1 / -1; }
+
     .hashbox{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       font-size: 11px;
       color: rgba(233,238,247,.86);
-      padding: 10px 10px;
+      padding: 12px 12px;
       border-radius: 12px;
       border: 1px solid rgba(212,175,55,.12);
       background: rgba(0,0,0,.22);
       overflow:auto;
       white-space: nowrap;
+    }
+
+    /* ✅ V3: structured escalation inside output */
+    .escalation-grid{
+      display:grid;
+      grid-template-columns: 220px 1fr;
+      gap:8px 16px;
+      padding: 2px 0 0;
+    }
+    .escalation-grid .ek{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(167,176,194,.75);
+    }
+    .escalation-grid .ev{
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(233,238,247,.90);
+      line-height: 1.4;
+      word-break: break-word;
     }
 
     /* Tabs + readable preview */
@@ -548,8 +557,6 @@
       color: rgba(233,238,247,.88);
       max-width: 96ch;
     }
-    .monoBlock .dim{ color: rgba(167,176,194,.78); }
-    .monoBlock .hi{ color: rgba(241,230,163,.95); }
 
     /* Lower panels */
     .stack{
@@ -628,6 +635,11 @@
       .form{ grid-template-columns: 1fr; }
       .systems{ grid-template-columns: 1fr; }
       .monoBlock{ max-width: none; }
+
+      /* Output grid collapses cleanly */
+      .tableish{ grid-template-columns: 1fr; }
+      .span-2{ grid-column: auto; }
+      .escalation-grid{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -674,7 +686,7 @@
             Context changes lexicon, weighting, visibility rules, and narrative template — without changing the sealed structure.
           </p>
 
-          <!-- NEW: view mode switch -->
+          <!-- view mode switch -->
           <div class="switchRow">
             <div class="left">
               <span class="miniLabel">View mode</span>
@@ -863,30 +875,72 @@
               <span class="pill2"><b id="outExposurePill">Institutional exposure: —</b></span>
             </div>
 
+            <!-- ✅ V3: grid output -->
             <div class="tableish">
-              <div class="trow"><div class="k" id="kCoverage">Coverage</div><div class="v" id="outCoverage">—</div></div>
-              <div class="trow"><div class="k" id="kDef">Defensibility</div><div class="v" id="outDef">—</div></div>
-              <div class="trow"><div class="k">Seal</div><div class="v" id="outSeal">—</div></div>
+              <div class="trow">
+                <div class="k" id="kCoverage">Coverage</div>
+                <div class="v" id="outCoverage">—</div>
+              </div>
+
+              <div class="trow">
+                <div class="k" id="kDef">Defensibility</div>
+                <div class="v" id="outDef">—</div>
+              </div>
+
+              <div class="trow">
+                <div class="k">Seal</div>
+                <div class="v" id="outSeal">—</div>
+              </div>
 
               <div class="trow">
                 <div class="k">Public hash (sealed core)</div>
                 <div class="v" id="outHashShort">—</div>
               </div>
-              <div class="hashbox" id="outHashFull">—</div>
 
-              <div class="trow">
+              <div class="trow span-2">
+                <div class="k">Public hash — full</div>
+                <div class="hashbox" id="outHashFull">—</div>
+              </div>
+
+              <div class="trow span-2">
                 <div class="k">Decision record owner / clock</div>
                 <div class="v" id="outOwnerClock">—</div>
               </div>
 
-              <div class="trow"><div class="k">Escalation path (institutional)</div><div class="v" id="outEscalation">—</div></div>
-              <div class="trow"><div class="k">Next institutional action</div><div class="v" id="outNext">—</div></div>
+              <!-- ✅ V3: structured escalation -->
+              <div class="trow span-2">
+                <div class="k">Escalation governance</div>
+                <div class="v">
+                  <div class="escalation-grid" aria-label="Escalation governance grid">
+                    <div class="ek">Owner</div><div class="ev" id="escOwner">—</div>
+                    <div class="ek">Add IT / Security</div><div class="ev" id="escIT">—</div>
+                    <div class="ek">Add Legal</div><div class="ev" id="escLegal">—</div>
+                    <div class="ek">COMEX Brief</div><div class="ev" id="escComex">—</div>
+                  </div>
+                </div>
+              </div>
 
-              <!-- NEW: Executive layer rows (shown only in executive view) -->
-              <div id="execRows" style="display:none;">
-                <div class="trow"><div class="k">Executive risk vectors</div><div class="v" id="outVectors">—</div></div>
-                <div class="trow"><div class="k">COMEX answer</div><div class="v" id="outComex">—</div></div>
-                <div class="trow"><div class="k">Audit / litigation window</div><div class="v" id="outWindow">—</div></div>
+              <div class="trow span-2">
+                <div class="k">Next institutional action</div>
+                <div class="v" id="outNext">—</div>
+              </div>
+
+              <!-- Executive layer rows (shown only in executive view) -->
+              <div id="execRows" class="span-2" style="display:none;">
+                <div class="tableish" style="grid-template-columns: 1fr 1fr; margin-top:0;">
+                  <div class="trow">
+                    <div class="k">Executive risk vectors</div>
+                    <div class="v" id="outVectors">—</div>
+                  </div>
+                  <div class="trow">
+                    <div class="k">COMEX answer</div>
+                    <div class="v" id="outComex">—</div>
+                  </div>
+                  <div class="trow span-2">
+                    <div class="k">Audit / litigation window</div>
+                    <div class="v" id="outWindow">—</div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -915,7 +969,7 @@
                 <div class="meta">Deterministic proxies</div>
               </div>
 
-              <div class="tableish">
+              <div class="tableish" style="grid-template-columns: 1fr 1fr;">
                 <div class="trow"><div class="k">HRIS system</div><div class="v" id="qSystem">—</div></div>
                 <div class="trow"><div class="k">Extract ID</div><div class="v" id="qExtract">—</div></div>
                 <div class="trow"><div class="k">Steward</div><div class="v" id="qSteward">—</div></div>
@@ -940,16 +994,17 @@
                 <div class="meta" id="supportMeta">—</div>
               </div>
 
-              <div class="tableish">
+              <div class="tableish" style="grid-template-columns: 1fr 1fr;">
                 <div class="trow"><div class="k" id="kExpo2">Institutional exposure</div><div class="v" id="sExpo">—</div></div>
                 <div class="trow"><div class="k">Top blockers</div><div class="v" id="sBlockers">—</div></div>
-                <div class="trow"><div class="k">Next actions</div><div class="v" id="sActions">—</div></div>
-                <div class="trow"><div class="k">What improves score</div><div class="v" id="sImprove">—</div></div>
+                <div class="trow span-2"><div class="k">Next actions</div><div class="v" id="sActions">—</div></div>
+                <div class="trow span-2"><div class="k">What improves score</div><div class="v" id="sImprove">—</div></div>
 
-                <!-- NEW: Executive quick summary (shown only in executive view) -->
-                <div id="execSupport" style="display:none;">
-                  <div class="trow"><div class="k">Risk vectors</div><div class="v" id="sVectors">—</div></div>
-                  <div class="trow"><div class="k">COMEX answer</div><div class="v" id="sComex">—</div></div>
+                <div id="execSupport" class="span-2" style="display:none;">
+                  <div class="tableish" style="grid-template-columns: 1fr 1fr; margin-top:0;">
+                    <div class="trow"><div class="k">Risk vectors</div><div class="v" id="sVectors">—</div></div>
+                    <div class="trow"><div class="k">COMEX answer</div><div class="v" id="sComex">—</div></div>
+                  </div>
                 </div>
               </div>
 
@@ -1000,7 +1055,6 @@
               <div class="row"><div class="k" id="kExpoC">Institutional exposure</div><div class="v" id="cExpo">—</div></div>
               <div class="row"><div class="k">Owner / deadline</div><div class="v" id="cOwnerClock">—</div></div>
 
-              <!-- NEW: Executive cockpit rows -->
               <div id="execCockpit" style="display:none;">
                 <div class="row"><div class="k">Risk vectors</div><div class="v" id="cVectors">—</div></div>
                 <div class="row"><div class="k">COMEX answer</div><div class="v" id="cComex">—</div></div>
@@ -1025,7 +1079,7 @@
     // -------------------------
     const $ = (id)=>document.getElementById(id);
 
-    // NEW: view mode & terminology map
+    // view mode & terminology map
     const viewMap = {
       operational: {
         label: "Operational",
@@ -1080,7 +1134,6 @@
       { id:"sysEXT",  key:"EXT",  label:"External context", weight: 6 }
     ];
 
-    // NEW: state
     let VIEW_MODE = "operational"; // 'operational' | 'executive'
 
     function todayISO(){
@@ -1179,35 +1232,28 @@
       return arr.map(b=>b.toString(16).padStart(2,"0")).join("");
     }
 
-    // NEW: executive layer (risk vectors + COMEX answer + window)
     function computeWindowMonths(ctxKey){
       if(ctxKey === "regulatory_audit") return 24;
       if(ctxKey === "labor_dispute") return 36;
-      return 12; // institutional crisis baseline
+      return 12;
     }
 
     function computeRiskVectors(state){
-      // deterministic vectors: legal / operational / reputation / governance
-      // output is a compact string "LEGAL:HIGH · OPS:MEDIUM · REPUTATION:LOW · GOV:HIGH"
       const vectors = { LEGAL:"LOW", OPS:"LOW", REPUTATION:"LOW", GOV:"LOW" };
 
-      // legal
       if(state.context === "labor_dispute") vectors.LEGAL = "HIGH";
       if(!state.selected.has("LEGAL")) vectors.LEGAL = "HIGH";
       if(state.exposure === "HIGH") vectors.LEGAL = "HIGH";
       if(state.def.label === "LOW" && vectors.LEGAL !== "HIGH") vectors.LEGAL = "MEDIUM";
 
-      // ops continuity
       if(state.decisionType === "security_incident") vectors.OPS = "HIGH";
       if(!state.selected.has("SEC") && vectors.OPS !== "HIGH") vectors.OPS = "MEDIUM";
       if(!state.selected.has("OPS") && vectors.OPS === "LOW") vectors.OPS = "MEDIUM";
       if(state.exposure === "HIGH") vectors.OPS = "HIGH";
 
-      // reputation/public
       if(state.selected.has("EXT") && state.exposure !== "LOW") vectors.REPUTATION = "MEDIUM";
       if(state.context === "institutional_crisis" && state.exposure === "HIGH") vectors.REPUTATION = "HIGH";
 
-      // governance integrity
       if(state.def.label === "LOW") vectors.GOV = "HIGH";
       else if(state.def.label === "MEDIUM") vectors.GOV = "MEDIUM";
       if(state.missingKeys.length >= 2) vectors.GOV = "HIGH";
@@ -1216,7 +1262,6 @@
     }
 
     function comexAnswer(state, vectors){
-      // deterministic go / go-with-controls / stop
       const highCount = Object.values(vectors).filter(v=>v==="HIGH").length;
 
       if(state.def.score < 55 || state.exposure === "HIGH" || highCount >= 2){
@@ -1252,15 +1297,12 @@
         escalation_path: state.escalation,
         lineage: state.lineage,
         quality_checks: state.quality,
-
-        // NEW: executive layer is sealed too (still deterministic)
         executive_layer: {
           view_mode: state.viewMode,
           risk_vectors: state.vectors,
           comex_answer: state.comex,
           comex_window_months: state.windowMonths
         },
-
         invariants: {
           "no_ai": true,
           "no_interpretation": true,
@@ -1279,7 +1321,6 @@
       lines.push(`Authority: ${state.authority}`);
       lines.push(`Moment T: ${state.momentT}`);
       lines.push("");
-
       lines.push(`Declared sources: ${Array.from(state.selected).sort().join(", ")}`);
       lines.push(`${vocab.covLabel}: ${state.coverage}% | Missing: ${state.missingKeys.length}`);
       lines.push(`${vocab.defLabel}: ${state.def.label} (${state.def.score}/100)`);
@@ -1386,7 +1427,6 @@
       }
     }
 
-    // NEW: apply UI vocabulary
     function applyViewVocabulary(){
       const v = viewMap[VIEW_MODE];
 
@@ -1408,7 +1448,6 @@
 
       $("cockpitNote").textContent = v.cockpitNote;
 
-      // Executive rows visibility
       $("execRows").style.display = (VIEW_MODE==="executive") ? "block" : "none";
       $("execCockpit").style.display = (VIEW_MODE==="executive") ? "block" : "none";
       $("execSupport").style.display = (VIEW_MODE==="executive") ? "block" : "none";
@@ -1432,7 +1471,6 @@
       $("cOwnerClock").textContent = `${state.owner} · SLA ${state.slaHours}h · ${state.deadline}`;
       $("cHash").textContent = shortHash(hash);
 
-      // executive cockpit
       if(state.viewMode==="executive"){
         $("cVectors").textContent = vectorsToString(state.vectors);
         $("cComex").textContent = state.comex;
@@ -1449,18 +1487,21 @@
       $("outHashFull").textContent = hash || "—";
       $("outOwnerClock").textContent = `${state.owner} · SLA ${state.slaHours}h · Deadline ${state.deadline}`;
 
+      /* ✅ V3 escalation structured (no long sentence) */
       const e = state.escalation;
-      $("outEscalation").textContent = `Owner set: ${e.owner_set} · Add IT/Sec: ${e.add_it_sec} · Add Legal: ${e.add_legal} · COMEX brief: ${e.comex_brief}`;
+      $("escOwner").textContent = e.owner_set;
+      $("escIT").textContent = e.add_it_sec;
+      $("escLegal").textContent = e.add_legal;
+      $("escComex").textContent = e.comex_brief;
+
       $("outNext").textContent = state.next;
 
-      // executive output rows
       if(state.viewMode==="executive"){
         $("outVectors").textContent = vectorsToString(state.vectors);
         $("outComex").textContent = state.comex;
         $("outWindow").textContent = `${state.windowMonths} months`;
       }
 
-      // Lineage & quality
       $("qSystem").textContent = state.lineage.system;
       $("qExtract").textContent = state.lineage.extract_id;
       $("qSteward").textContent = state.lineage.steward;
@@ -1470,7 +1511,6 @@
       $("qDrift").textContent = state.quality.definition_drift;
       $("qDup").textContent = state.quality.duplicates;
 
-      // Support
       $("supportMeta").textContent = ctxMap[state.context].nudge;
       $("sExpo").textContent = state.exposure;
       $("sBlockers").textContent = state.blockers.join(" · ");
@@ -1523,7 +1563,6 @@
       const lineage = computeLineage(selected);
       const quality = computeQuality(selected, context);
 
-      // NEW: executive layer compute (deterministic)
       const windowMonths = computeWindowMonths(context);
       const draftState = {
         context, decisionType, scope, authority, momentT,
@@ -1535,12 +1574,7 @@
       const vectors = computeRiskVectors(draftState);
       const comex = comexAnswer(draftState, vectors);
 
-      const state = {
-        ...draftState,
-        vectors,
-        comex,
-        windowMonths
-      };
+      const state = { ...draftState, vectors, comex, windowMonths };
 
       const core = buildCorePayload(state);
       const coreStr = JSON.stringify(core);
@@ -1552,7 +1586,6 @@
 
       applyViewVocabulary();
       syncChips(state, hash);
-
       $("chipHash").textContent = shortHash(hash);
     }
 
@@ -1605,7 +1638,12 @@
       $("outHashShort").textContent = "—";
       $("outHashFull").textContent = "—";
       $("outOwnerClock").textContent = "—";
-      $("outEscalation").textContent = "—";
+
+      $("escOwner").textContent = "—";
+      $("escIT").textContent = "—";
+      $("escLegal").textContent = "—";
+      $("escComex").textContent = "—";
+
       $("outNext").textContent = "—";
 
       $("qSystem").textContent = "—";
@@ -1623,7 +1661,6 @@
       $("sActions").textContent = "—";
       $("sImprove").textContent = "—";
 
-      // clear exec fields
       $("cVectors").textContent = "—";
       $("cComex").textContent = "—";
       $("outVectors").textContent = "—";
@@ -1651,17 +1688,15 @@
       $("sysHRIS").checked = true;
       $("sysLMS").checked = true;
       $("sysOPS").checked = true;
-      $("sysSEC").checked = false;   // provoke blocker
+      $("sysSEC").checked = false;
       $("sysLEGAL").checked = true;
       $("sysEXT").checked = true;
 
       generate();
     }
 
-    // Tabs
     function setTab(name){
       for(const el of document.querySelectorAll(".tab")){
-        // IMPORTANT: do not touch view tabs (they use data-view, not data-tab)
         if(el.dataset.tab){
           el.classList.toggle("active", el.dataset.tab === name);
         }
@@ -1671,7 +1706,6 @@
       $("tab-invariants").style.display = name==="invariants" ? "block":"none";
     }
 
-    // Live updates (cockpit basic)
     function liveUpdateDraft(){
       const scope = ($("scope").value || "").trim() || "—";
       const momentT = $("momentT").value || "—";
@@ -1687,20 +1721,16 @@
       $("cOwnerClock").textContent = `${owner} · SLA ${sla}h · ${deadline}`;
     }
 
-    // NEW: view toggle
     function setViewMode(mode){
       VIEW_MODE = mode;
       applyViewVocabulary();
       liveUpdateDraft();
 
-      // If output exists, regenerate to update readable preview & executive layer deterministically
-      // (still rule-based; user sees immediate effect)
       if($("tab-json").textContent && $("tab-json").textContent.trim().length > 0){
         generate();
       }
     }
 
-    // Init
     document.addEventListener("DOMContentLoaded", ()=>{
       $("momentT").value = todayISO();
       autoDeadline();
@@ -1708,7 +1738,6 @@
       liveUpdateDraft();
       applyViewVocabulary();
 
-      // Buttons
       $("btnGenerate").addEventListener("click", generate);
       $("btnGenerateTop").addEventListener("click", generate);
 
@@ -1718,18 +1747,15 @@
       $("btnLoadExample").addEventListener("click", loadExample);
       $("btnLoadExampleTop").addEventListener("click", loadExample);
 
-      // Tabs
       for(const el of document.querySelectorAll(".tab")){
         if(el.dataset.tab){
           el.addEventListener("click", ()=>setTab(el.dataset.tab));
         }
       }
 
-      // View mode tabs
       $("viewOperational").addEventListener("click", ()=>setViewMode("operational"));
       $("viewExecutive").addEventListener("click", ()=>setViewMode("executive"));
 
-      // Auto deadline recalculation when moment or SLA changes
       $("momentT").addEventListener("change", ()=>{
         $("deadline").value = isoToLocalDateTime($("momentT").value, parseInt($("slaHours").value||"72",10));
         liveUpdateDraft();
@@ -1739,13 +1765,11 @@
         liveUpdateDraft();
       });
 
-      // Live draft updates
       ["context","scope","authority","owner","deadline"].forEach(id=>{
         $(id).addEventListener("input", liveUpdateDraft);
         $(id).addEventListener("change", liveUpdateDraft);
       });
 
-      // Optional: live update only
       ["decisionType","sysHRIS","sysLMS","sysOPS","sysSEC","sysLEGAL","sysEXT"].forEach(id=>{
         $(id).addEventListener("change", ()=>{ liveUpdateDraft(); });
       });
