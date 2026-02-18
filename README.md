@@ -295,7 +295,7 @@ The Sandbox lets you transform any narrative into:
 - heuristic markers,
 - a deterministic SHA-256 hash.
 
-🔗 https://rpo.openproof.net/sandbox.html
+🔗 https://rpo.openproof.net/simulator.html
 
 ___
 
