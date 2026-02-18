@@ -1,69 +1,136 @@
+<!-- docs/how-it-works.html (FULL REPLACEMENT) -->
 <!DOCTYPE html>
 <html lang="en" data-page="how-it-works">
 <head>
+  <!-- Identity / SEO (person-forward) -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OpenProof — How RPO works | Decision-proof, reconstructable evidence</title>
+  <meta name="author" content="Gersende Ryard de Parcey" />
+  <meta name="keywords" content="Gersende Ryard de Parcey, OpenProof, RPO, decision governance, HR decision governance, auditability, defensible decisions, proof bundle, sealed JSON, signed JSON, human-readable PDF, public hash, chain of custody, data lineage, deterministic pipeline" />
 
-  <meta name="description" content="How RPO works: a deterministic pipeline that turns a narrative into a proof bundle (signed JSON + human-readable PDF + public hash). Built for decision traceability in regulated environments." />
+  <title>Gersende Ryard de Parcey — How RPO works (OpenProof RPO v0.1)</title>
+  <meta name="description" content="Gersende Ryard de Parcey explains how OpenProof RPO v0.1 works: a deterministic pipeline that turns decision context into a proof bundle (sealed JSON + human-readable preview/PDF + public hash). No AI. Verifiable integrity, reconstructable decisions." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/how-it-works.html" />
 
-  <!-- Open Graph -->
+  <!-- OpenGraph / Twitter -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="OpenProof — How RPO works" />
-  <meta property="og:description" content="RPO makes decisions reconstructable: signed JSON + PDF + public hash. Deterministic. Auditable. Enforceable." />
+  <meta property="og:title" content="Gersende Ryard de Parcey — How RPO works (OpenProof RPO v0.1)" />
+  <meta property="og:description" content="Deterministic proof bundles for auditable, defensible decisions: sealed JSON + human-readable preview/PDF + public hash. No AI. By Gersende Ryard de Parcey." />
+  <meta property="og:url" content="https://rpo.openproof.net/how-it-works.html" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Gersende Ryard de Parcey — How RPO works" />
+  <meta name="twitter:description" content="RPO v0.1: deterministic decision-proof bundles (sealed JSON + readable preview/PDF + public hash). No AI. By Gersende Ryard de Parcey." />
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+
+  <!-- Structured data (person-forward, consistent with your home) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Person",
+        "@id":"https://rpo.openproof.net/#gersende-ryard-de-parcey",
+        "name":"Gersende Ryard de Parcey",
+        "url":"https://rpo.openproof.net/",
+        "jobTitle":"Decision Governance Architect",
+        "description":"Architect of decision governance and probative infrastructure. Creator/editor of OpenProof RPO v0.1.",
+        "knowsAbout":[
+          "Decision governance",
+          "HR data governance",
+          "Audit readiness",
+          "Defensible decisions",
+          "Proof bundles",
+          "Data lineage",
+          "Business rules",
+          "Chain of custody",
+          "Cryptographic hashing"
+        ],
+        "sameAs":[
+          "https://www.linkedin.com/in/gryard/"
+        ]
+      },
+      {
+        "@type":"Organization",
+        "@id":"https://rpo.openproof.net/#openproof",
+        "name":"OpenProof",
+        "url":"https://rpo.openproof.net/",
+        "logo":{
+          "@type":"ImageObject",
+          "url":"https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+        }
+      },
+      {
+        "@type":"WebSite",
+        "@id":"https://rpo.openproof.net/#website",
+        "url":"https://rpo.openproof.net/",
+        "name":"OpenProof — RPO v0.1",
+        "publisher":{"@id":"https://rpo.openproof.net/#openproof"}
+      },
+      {
+        "@type":"WebPage",
+        "@id":"https://rpo.openproof.net/how-it-works.html#webpage",
+        "url":"https://rpo.openproof.net/how-it-works.html",
+        "name":"How RPO works (OpenProof RPO v0.1)",
+        "isPartOf":{"@id":"https://rpo.openproof.net/#website"},
+        "about":{"@id":"https://rpo.openproof.net/#openproof"},
+        "author":{"@id":"https://rpo.openproof.net/#gersende-ryard-de-parcey"},
+        "creator":{"@id":"https://rpo.openproof.net/#gersende-ryard-de-parcey"},
+        "publisher":{"@id":"https://rpo.openproof.net/#openproof"}
+      }
+    ]
+  }
+  </script>
 
   <style>
     :root{
-      --bg-deep:#04040e;
-      --bg-mid:#0b0f14;
+      /* Dark forensic charter (matches your new home) */
+      --bg0:#04040e;
+      --bg1:#0b0f14;
 
-      --gold-soft:#f1e6a3;
       --gold:#d4af37;
-      --gold-deep:#8f7633;
+      --gold2:#f1e6a3;
 
-      --ivory:#f7f3e8;
-      --ink-soft:#b3a48b;
-      --ink-dim: rgba(179,164,139,.82);
+      --text:#e9eef7;
+      --muted:#a7b0c2;
+      --muted2:#8c95a8;
 
-      --radius:26px;
-      --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
+      --stroke: rgba(212,175,55,.22);
+      --stroke2: rgba(212,175,55,.14);
 
-      --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
-      --panel2:linear-gradient(145deg, rgba(12,14,30,0.88), rgba(6,8,20,0.92));
-      --line:rgba(212,175,55,0.22);
-      --line2:rgba(136,116,72,0.35);
+      --panelA: rgba(255,255,255,.04);
+      --panelB: rgba(255,255,255,.03);
 
-      --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
+      --r:22px;
+      --shadow: 0 20px 70px rgba(0,0,0,.55);
+      --shadow2: 0 12px 42px rgba(0,0,0,.45);
 
-      --max: 1380px;
-      --pad: 40px;
+      --max: 1760px;
+      --focus: 0 0 0 3px rgba(241,230,163,0.18), 0 0 0 1px rgba(212,175,55,0.30);
     }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%}
+    *{ box-sizing:border-box; margin:0; padding:0; }
+    html,body{ height:100%; }
     body{
-      min-height:100vh;
-      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-      color:var(--ivory);
       background:
-        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
-        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
-        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
+        radial-gradient(1200px 700px at 18% 8%, rgba(212,175,55,.12), transparent 60%),
+        radial-gradient(900px 600px at 82% 18%, rgba(241,230,163,.08), transparent 55%),
+        radial-gradient(900px 700px at 62% 86%, rgba(212,175,55,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      letter-spacing:.1px;
       overflow-x:hidden;
     }
+    a{ color:inherit; text-decoration:none; }
+    a:focus-visible{ outline:none; box-shadow: var(--focus); border-radius: 12px; }
+    ::selection{ background: rgba(212,175,55,.22); }
 
-    a{color:inherit}
-    a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
-    ::selection{background: rgba(212,175,55,.25);}
-
-    /* BACKGROUND FIELD */
+    /* Background field */
     #bg-field{
       position:fixed;
       inset:0;
@@ -72,740 +139,831 @@
       z-index:-1;
     }
 
-    /* TOP BAR */
-    .top-bar{
-      position:fixed;
-      top:0; left:0; right:0;
-      height:68px;
-      padding:0 var(--pad);
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      z-index:10;
-      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid var(--line);
-    }
-
-    .top-left{
-      display:flex;
-      align-items:center;
-      gap:14px;
-      min-width: 280px;
-    }
-
-    .emblem{
-      width:34px;
-      height:34px;
-      border-radius:999px;
-      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
-      box-shadow:0 0 18px rgba(241,230,163,0.8);
-      flex: 0 0 auto;
-    }
-
-    .brand{
-      font-family:"Orbitron",sans-serif;
-      font-size:0.72rem;
-      letter-spacing:0.18em;
-      text-transform:uppercase;
-      color:var(--ink-soft);
-      white-space:nowrap;
-    }
-    .brand span{color:var(--gold-soft)}
-
-    .top-nav{
-      display:flex;
-      gap:22px;
-      font-size:0.86rem;
-      color:var(--ink-soft);
-      align-items:center;
-      justify-content:center;
-      flex: 1 1 auto;
-    }
-    .top-nav a{
-      color:inherit;
-      text-decoration:none;
-      position:relative;
-      padding-bottom:3px;
-      white-space:nowrap;
-    }
-    .top-nav a::after{
-      content:"";
+    /* Skip link */
+    .skip{
       position:absolute;
-      left:0; bottom:0;
-      width:0; height:1px;
-      background:linear-gradient(90deg,var(--gold-soft),var(--gold));
-      transition:width .2s ease;
+      left:-9999px;
+      top:auto;
+      width:1px; height:1px;
+      overflow:hidden;
     }
-    .top-nav a:hover::after{width:100%}
-    .top-nav a[aria-current="page"]{color: var(--gold-soft);}
-    .top-nav a[aria-current="page"]::after{width:100%}
-
-    .top-cta{
-      padding:8px 18px;
-      border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      font-size:0.8rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      text-decoration:none;
-      white-space:nowrap;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    }
-    .top-cta:hover{filter:brightness(1.03)}
-    .top-cta:active{transform:translateY(1px)}
-
-    /* LAYOUT */
-    main{
-      padding: 96px var(--pad) 84px;
+    .skip:focus{
+      left:16px; top:14px;
+      width:auto; height:auto;
+      padding:10px 14px;
+      background: rgba(0,0,0,.55);
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      z-index:1000;
     }
 
     .container{
       max-width: var(--max);
       margin: 0 auto;
-      width: 100%;
+      padding: 0 28px;
     }
 
-    /* HERO */
-    .hero{
-      padding-top: 18px;
-      padding-bottom: 22px;
-    }
-
-    .kicker{
-      font-family:"Orbitron",sans-serif;
-      font-size:.75rem;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color: var(--ink-soft);
-      margin-bottom: 12px;
-    }
-    .kicker strong{color: var(--gold-soft); font-weight: 600;}
-
-    .hero-title{
-      font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-      line-height:1.04;
-      font-size:clamp(2.2rem,4.6vw,3.35rem);
-    }
-    .hero-title .accent{color: var(--gold-soft); display:block; margin-top:6px;}
-    .hero-sub{
-      margin-top: 14px;
-      max-width: 980px;
-      color: var(--ink-soft);
-      font-size: 1.02rem;
-      line-height: 1.8;
-    }
-    .hero-sub em{color: rgba(241,230,163,.92); font-style: normal;}
-
-    .hero-ctas{
-      margin-top: 18px;
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      align-items:center;
-    }
-    .btn-primary{
-      padding:12px 26px;
-      border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      font-size:.8rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      text-decoration:none;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    }
-    .btn-primary:hover{filter:brightness(1.03)}
-    .btn-primary:active{transform:translateY(1px)}
-    .btn-ghost{
-      padding:12px 18px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,0.35);
-      background: rgba(10,12,27,0.35);
-      color: var(--gold-soft);
-      font-size:.8rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      text-decoration:none;
+    /* Topbar (same pattern as home) */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:50;
       backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(4,4,14,.86), rgba(4,4,14,.55));
+      border-bottom: 1px solid rgba(212,175,55,.12);
     }
-    .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
-    .btn-ghost:active{transform:translateY(1px)}
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap: 18px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 240px;
+    }
+    .dot{
+      width:7px;height:7px;border-radius:10px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      box-shadow: 0 0 0 4px rgba(212,175,55,.10);
+      flex: 0 0 auto;
+    }
+    .brand-title{
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      letter-spacing:.9px;
+      font-size: 13px;
+      color: rgba(233,238,247,.92);
+    }
+    .brand-sub{
+      font-size: 11px;
+      color: rgba(167,176,194,.85);
+      margin-top: 2px;
+    }
+    .brand-stack{ display:flex; flex-direction:column; line-height:1.1; }
 
-    .note{
-      margin-top: 12px;
-      color: rgba(198,186,150,.88);
-      line-height:1.55;
-      max-width: 980px;
-      font-size: .95rem;
+    .navlinks{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
+      justify-content:center;
+    }
+    .navlinks a{
+      font-size: 12px;
+      color: rgba(233,238,247,.86);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(255,255,255,.02);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      white-space:nowrap;
+    }
+    .navlinks a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,175,55,.25);
+      background: rgba(255,255,255,.035);
+    }
+    .navlinks a.active{
+      border-color: rgba(212,175,55,.32);
+      background: linear-gradient(180deg, rgba(212,175,55,.14), rgba(255,255,255,.02));
+      color: rgba(241,230,163,.96);
     }
 
-    /* PANEL */
+    .cta{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 240px;
+      justify-content:flex-end;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(255,255,255,.02);
+      color: rgba(233,238,247,.92);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(212,175,55,.30); }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(212,175,55,.92), rgba(241,230,163,.92));
+      color: rgba(12,14,18,.92);
+      border-color: rgba(241,230,163,.45);
+      box-shadow: 0 12px 40px rgba(212,175,55,.14);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.015);
+      border-color: rgba(212,175,55,.14);
+      color: rgba(233,238,247,.86);
+    }
+
+    /* Panels */
     .panel{
+      border-radius: var(--r);
+      border: 1px solid rgba(212,175,55,.16);
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow: var(--shadow2);
       position:relative;
-      background:var(--panel);
-      border-radius:var(--radius);
-      border:1px solid rgba(212,175,55,0.45);
-      box-shadow:var(--shadow-soft);
       overflow:hidden;
     }
-    .panel.padded{ padding: 26px; }
+    .panel.hero{ box-shadow: var(--shadow); }
+    .panel .inner{ padding: 18px; }
 
-    /* subtle energy field */
-    .panel::before{
+    .panel.energy::before{
       content:"";
-      position:absolute;
-      inset:-2px;
+      position:absolute; inset:-2px;
       background:
-        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
-        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
-        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
+        radial-gradient(900px 260px at 12% 0, rgba(241,230,163,.10), transparent 62%),
+        radial-gradient(900px 260px at 110% 90%, rgba(212,175,55,.08), transparent 62%);
       opacity:.95;
-      filter: blur(10px);
       pointer-events:none;
-      animation: fieldShift 10s ease-in-out infinite;
+      filter: blur(8px);
     }
-    .panel::after{
-      content:"";
-      position:absolute;
-      left:-30%;
-      top:-40%;
-      width:160%;
-      height:160%;
-      background: linear-gradient(90deg, transparent 0%, rgba(241,230,163,0.10) 35%, rgba(241,230,163,0.22) 50%, rgba(241,230,163,0.10) 65%, transparent 100%);
-      transform: rotate(12deg) translateY(-15%);
-      opacity:.55;
-      pointer-events:none;
-      animation: scanSweep 5.8s linear infinite;
-      mix-blend-mode: screen;
+    .panel.energy > *{ position:relative; z-index:1; }
+
+    /* Headings */
+    .kicker{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: rgba(241,230,163,.85);
+      margin-bottom: 10px;
+      font-family: Orbitron, Inter, sans-serif;
     }
-    @keyframes fieldShift{
-      0%,100%{transform: translateY(0px)}
-      50%{transform: translateY(10px)}
+    h1{
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 800;
+      line-height: 1.08;
+      font-size: clamp(30px, 3.6vw, 54px);
+      color: rgba(233,238,247,.96);
+      margin-bottom: 10px;
     }
-    @keyframes scanSweep{
-      0%{transform: rotate(12deg) translateX(-35%) translateY(-15%); opacity:.35}
-      20%{opacity:.65}
-      100%{transform: rotate(12deg) translateX(35%) translateY(-15%); opacity:.35}
+    h1 .hl{
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead{
+      color: rgba(167,176,194,.92);
+      font-size: 13.5px;
+      line-height: 1.62;
+      max-width: 120ch;
+    }
+    .micro{
+      margin-top: 10px;
+      color: rgba(167,176,194,.82);
+      font-size: 11.5px;
+      line-height: 1.55;
+    }
+    .micro b{ color: rgba(241,230,163,.92); }
+
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.25fr .95fr;
+      gap: 14px;
+      align-items:start;
     }
 
-    .panel-inner{ position:relative; z-index:1; }
+    /* Callout box */
+    .callout{
+      margin-top: 12px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(0,0,0,.18);
+      color: rgba(167,176,194,.90);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .callout b{ color: rgba(241,230,163,.92); }
 
-    .panel-head{
+    /* Chips */
+    .chips{
       display:flex;
-      gap: 16px;
-      align-items:flex-start;
-      justify-content:space-between;
-      border-bottom: 1px solid rgba(212,175,55,.18);
-      padding-bottom: 14px;
-      margin-bottom: 14px;
-    }
-
-    .panel-title{
-      font-family:"Orbitron",sans-serif;
-      font-size: .95rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: var(--ink-soft);
-    }
-
-    .pill{
-      display:inline-flex;
       gap:10px;
+      flex-wrap: wrap;
       align-items:center;
-      font-size:.72rem;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      padding:6px 12px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,.55);
+      margin-top: 12px;
+    }
+    .chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border-radius: 999px;
+      padding: 7px 10px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      font-size: 11px;
+      color: rgba(233,238,247,.86);
+      white-space:nowrap;
+    }
+    .chip .pill{
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.09);
       color: rgba(241,230,163,.92);
-      background: rgba(10,12,27,0.22);
-      backdrop-filter: blur(10px);
+      font-size: 10px;
+      letter-spacing:.3px;
+      text-transform: uppercase;
+      white-space:nowrap;
+    }
+
+    /* Right hero: “instrument preview” */
+    .instrument{
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: var(--shadow2);
+      position:relative;
+      overflow:hidden;
+    }
+    .instrument::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(800px 240px at 18% 0, rgba(241,230,163,.10), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
+    }
+    .instrument > *{ position:relative; z-index:1; }
+    .instTitle{
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 12px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .instSub{
+      font-size: 11.5px;
+      color: rgba(167,176,194,.84);
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .kpiGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .kpi{
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.18);
+    }
+    .kpi .k{
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: rgba(167,176,194,.78);
+      margin-bottom: 6px;
+    }
+    .kpi .v{
+      font-size: 13px;
+      font-weight: 800;
+      color: rgba(233,238,247,.92);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing:.3px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.10);
+      color: rgba(241,230,163,.95);
+      flex: 0 0 auto;
+    }
+    .badge.ok{ border-color: rgba(125,255,179,.25); background: rgba(125,255,179,.10); color: rgba(180,255,220,.92); }
+    .badge.warn{ border-color: rgba(255,209,102,.25); background: rgba(255,209,102,.10); color: rgba(255,236,180,.92); }
+    .badge.bad{ border-color: rgba(255,107,107,.25); background: rgba(255,107,107,.10); color: rgba(255,200,200,.92); }
+
+    .hashbox{
+      margin-top: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 11px;
+      color: rgba(233,238,247,.86);
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.22);
+      overflow:hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
     }
-    .pill .dot{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(241,230,163,.95);
-      box-shadow: 0 0 14px rgba(241,230,163,.55);
-      animation: dotPulse 1.45s ease-in-out infinite;
+
+    /* Sections */
+    main{ padding: 18px 0 28px; }
+    .section{ margin-top: 14px; }
+    .sectionTitleRow{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      margin: 0 0 10px;
     }
-    @keyframes dotPulse{
-      0%,100%{transform:scale(1); opacity:.85}
-      50%{transform:scale(1.35); opacity:1}
+    .sectionTitleRow h2{
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      font-weight: 800;
+      margin:0;
+    }
+    .sectionTitleRow .meta{
+      font-size: 11px;
+      color: rgba(167,176,194,.82);
     }
 
-    /* SECTIONS GRID */
-    .stack{ display:grid; gap: 18px; margin-top: 22px; }
-    .grid-2{ display:grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
-    .grid-3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-    .grid-4{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-
-    /* PIPELINE */
-    .pipeline{
-      padding: 22px;
-    }
-
+    /* Steps (4) */
     .steps{
       display:grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 14px;
-      margin-top: 12px;
+      gap: 10px;
+      margin-top: 10px;
     }
-
     .step{
-      background: var(--panel2);
-      border: 1px solid rgba(212,175,55,.22);
       border-radius: 18px;
-      padding: 16px;
-      min-height: 140px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.18);
+      padding: 14px 14px;
+      position:relative;
+      overflow:hidden;
+      min-height: 150px;
     }
-
-    .step-top{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 12px;
-      margin-bottom: 10px;
+    .step::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(600px 200px at 15% 0, rgba(241,230,163,.08), transparent 60%);
+      opacity:.9;
+      pointer-events:none;
     }
+    .step > *{ position:relative; z-index:1; }
+    .step .n{
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 11px;
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      margin-bottom: 8px;
+      font-weight: 800;
+    }
+    .step .t{
+      font-size: 12.5px;
+      color: rgba(233,238,247,.90);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .step .d{
+      font-size: 12px;
+      color: rgba(167,176,194,.86);
+      line-height: 1.55;
+    }
+    .step .d b{ color: rgba(241,230,163,.92); }
 
-    .badge{
-      width: 32px; height: 32px;
-      border-radius: 12px;
-      border: 1px solid rgba(241,230,163,.45);
+    /* Cards grid */
+    .cards3{
       display:grid;
-      place-items:center;
-      font-family:"Orbitron",sans-serif;
-      color: rgba(241,230,163,.92);
-      background: rgba(10,12,27,.25);
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
-
-    .step-name{
-      font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-      font-size:.78rem;
-      color: rgba(241,230,163,.9);
-    }
-
-    .step-text{
-      color: var(--ink-soft);
-      line-height: 1.75;
-      font-size: .95rem;
-    }
-    .step-text strong{ color: rgba(241,230,163,.95); font-weight: 600; }
-
-    .pipeline-foot{
-      margin-top: 14px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(212,175,55,.18);
-      color: rgba(198,186,150,.9);
-      line-height: 1.7;
-    }
-
-    .kbd{
-      display:inline-block;
-      padding: 3px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,.28);
-      background: rgba(10,12,27,.25);
-      color: rgba(241,230,163,.9);
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: .86rem;
-      letter-spacing: .02em;
-      margin-left: 6px;
-    }
-
-    /* BULLETS */
-    ul{
-      margin-left: 18px;
-      line-height: 1.85;
-      color: var(--ink-soft);
-      font-size: .98rem;
-    }
-    li{ margin: 6px 0; }
-    li strong{ color: rgba(241,230,163,.95); font-weight: 600; }
-
-    /* QUOTE BOX */
-    .quote{
-      margin-top: 14px;
-      border: 1px dashed rgba(212,175,55,.38);
+    .card{
+      border: 1px solid rgba(212,175,55,.14);
       border-radius: 18px;
-      padding: 14px 16px;
-      background: rgba(10,12,27,.20);
+      background: rgba(255,255,255,.02);
+      box-shadow: var(--shadow2);
+      padding: 16px 16px;
+      position:relative;
+      overflow:hidden;
+      min-height: 150px;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(800px 240px at 18% 0, rgba(241,230,163,.10), transparent 60%);
+      pointer-events:none;
+      opacity:.9;
+    }
+    .card > *{ position:relative; z-index:1; }
+    .card h3{
+      margin:0 0 8px;
+      font-size: 13px;
       color: rgba(241,230,163,.92);
+      font-weight: 800;
+      letter-spacing:.1px;
+    }
+    .card p{
+      margin:0;
+      font-size: 12.5px;
+      color: rgba(167,176,194,.88);
       line-height: 1.6;
-      font-size: 1rem;
+      max-width: 70ch;
     }
 
-    /* VALUE CARDS */
-    .value-card{
-      background: var(--panel2);
-      border: 1px solid rgba(212,175,55,.22);
-      border-radius: 20px;
-      padding: 18px;
-      min-height: 220px;
-    }
-    .value-card h3{
-      font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.10em;
-      font-size: .92rem;
-      color: rgba(241,230,163,.92);
-      margin-bottom: 10px;
-    }
-    .value-card p{
-      color: var(--ink-soft);
-      line-height: 1.85;
-      font-size: 1.02rem;
-    }
-    .value-card p strong{ color: rgba(241,230,163,.95); font-weight: 600; }
-
-    /* HASH PANEL */
+    /* Code block */
     pre{
       margin-top: 10px;
-      background: rgba(10,12,27,.35);
-      border: 1px solid rgba(212,175,55,.22);
+      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(212,175,55,.12);
       border-radius: 18px;
-      padding: 16px;
+      padding: 14px;
       overflow:auto;
-      color: rgba(241,230,163,.88);
-      font-size: .92rem;
+      color: rgba(233,238,247,.90);
+      font-size: 12px;
       line-height: 1.6;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
     }
+    pre b{ color: rgba(241,230,163,.92); font-weight: 800; }
 
-    /* CTA STRIP */
-    .cta-strip{
+    /* Quote */
+    .quote{
+      margin-top: 12px;
+      border: 1px dashed rgba(212,175,55,.28);
+      border-radius: 18px;
+      padding: 14px 14px;
+      background: rgba(0,0,0,.18);
+      color: rgba(241,230,163,.92);
+      line-height: 1.6;
+      font-size: 12.5px;
+    }
+
+    /* CTA banner */
+    .ctaPanel{
+      margin-top: 14px;
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:center;
+      padding: 16px 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(212,175,55,.16);
+      background: linear-gradient(90deg, rgba(255,255,255,.03), rgba(212,175,55,.05));
+      box-shadow: var(--shadow2);
+    }
+    .ctaPanel .text{
+      color: rgba(167,176,194,.90);
+      font-size: 12.5px;
+      line-height: 1.55;
+      max-width: 120ch;
+    }
+    .ctaPanel .text b{ color: rgba(241,230,163,.92); }
+
+    /* FAQ */
+    details{
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.18);
+      border-radius: 18px;
+      padding: 12px 14px;
+    }
+    details + details{ margin-top: 10px; }
+    summary{
+      cursor:pointer;
+      list-style:none;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap: 14px;
-      flex-wrap:wrap;
+      gap:12px;
+      font-weight: 800;
+      color: rgba(233,238,247,.92);
+      font-size: 12.5px;
+    }
+    summary::-webkit-details-marker{ display:none; }
+    summary .q{
+      display:flex; align-items:center; gap:10px;
+    }
+    summary .chipQ{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.10);
+      color: rgba(241,230,163,.95);
+      font-size: 11px;
+      letter-spacing:.2px;
+      font-family: Orbitron, Inter, sans-serif;
+    }
+    details p{
+      margin-top: 10px;
+      color: rgba(167,176,194,.88);
+      font-size: 12.5px;
+      line-height: 1.65;
+      max-width: 120ch;
+    }
+    details p b{ color: rgba(241,230,163,.92); }
+
+    /* Footer */
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: rgba(167,176,194,.72);
+      font-size: 11px;
+      padding: 18px 0 28px;
+      border-top: 1px solid rgba(212,175,55,.10);
+      margin-top: 18px;
+    }
+    .foot a{
+      color: rgba(167,176,194,.82);
+      border-bottom: 1px dotted rgba(212,175,55,.18);
+    }
+    .foot a:hover{
+      color: rgba(241,230,163,.92);
+      border-bottom-color: rgba(241,230,163,.35);
     }
 
-    .cta-strip p{
-      color: rgba(198,186,150,.9);
-      line-height: 1.7;
-      max-width: 920px;
-    }
-
-    /* RESPONSIVE */
-    @media(max-width:1120px){
-      .grid-2{ grid-template-columns: 1fr; }
+    /* Responsive */
+    @media (max-width: 1100px){
+      .heroGrid{ grid-template-columns: 1fr; }
       .steps{ grid-template-columns: 1fr 1fr; }
-      .grid-3{ grid-template-columns: 1fr; }
+      .cards3{ grid-template-columns: 1fr; }
+      .ctaPanel{ flex-direction:column; align-items:stretch; }
+      .ctaPanel .btn{ width:100%; }
+      .brand{ min-width: 0; }
+      .cta{ min-width: 0; }
     }
-    @media(max-width:960px){
-      .top-nav{display:none}
-      :root{ --pad: 16px; }
-      main{ padding-left: var(--pad); padding-right: var(--pad); }
+    @media (max-width: 960px){
+      .container{ padding: 0 18px; }
+      .navlinks{ display:none; }
       .steps{ grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce){
-      .panel::before,.panel::after,.pill .dot{animation:none}
-    }
-
-    .sr-only{
-      position:absolute;
-      width:1px; height:1px;
-      padding:0; margin:-1px;
-      overflow:hidden; clip:rect(0,0,0,0);
-      white-space:nowrap; border:0;
+      #bg-field{ display:none; }
     }
   </style>
-  <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://rpo.openproof.net/#gersende-ryard-de-parcey",
-      "name": "Gersende Ryard de Parcey",
-      "url": "https://rpo.openproof.net/",
-      "sameAs": [
-        "https://www.linkedin.com/in/gryard/"
-      ],
-      "jobTitle": "OpenProof specification editor",
-      "knowsAbout": [
-        "data governance",
-        "auditability",
-        "traceability",
-        "evidence integrity",
-        "cryptographic hashing",
-        "HR data & analytics",
-        "decision accountability"
-      ]
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://rpo.openproof.net/#openproof",
-      "name": "OpenProof",
-      "url": "https://rpo.openproof.net/",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-      }
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://rpo.openproof.net/how-it-works.html#webpage",
-      "url": "https://rpo.openproof.net/how-it-works.html",
-      "name": "OpenProof — How RPO works",
-      "isPartOf": { "@id": "https://rpo.openproof.net/#website" },
-      "about": { "@id": "https://rpo.openproof.net/#openproof" },
-      "author": { "@id": "https://rpo.openproof.net/#gersende-ryard-de-parcey" },
-      "creator": { "@id": "https://rpo.openproof.net/#gersende-ryard-de-parcey" },
-      "publisher": { "@id": "https://rpo.openproof.net/#openproof" }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://rpo.openproof.net/#website",
-      "url": "https://rpo.openproof.net/",
-      "name": "OpenProof — RPO v0.1",
-      "publisher": { "@id": "https://rpo.openproof.net/#openproof" }
-    }
-  ]
-}
-</script>
-
 </head>
 
 <body>
+  <a class="skip" href="#content">Skip to content</a>
+
   <canvas id="bg-field" aria-hidden="true"></canvas>
 
-  <!-- B) docs/_nav.html (snippet to copy/paste on all pages) -->
-<header class="top-bar">
-  <div class="top-left">
-    <div class="emblem" aria-hidden="true"></div>
-    <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="nav">
+        <div class="brand">
+          <div class="dot" aria-hidden="true"></div>
+          <div class="brand-stack">
+            <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
+            <div class="brand-sub">Probative engine & decision governance</div>
+          </div>
+        </div>
+
+        <div class="navlinks" aria-label="Primary navigation">
+          <a href="./index.html">Home</a>
+          <a href="./simulator.html">Simulator</a>
+          <a class="active" href="./how-it-works.html" aria-current="page">How it works</a>
+          <a href="./spec.html">Spec</a>
+          <a href="./tests.html">Tests</a>
+          <a href="./examples.html">Examples</a>
+          <a href="./contexts.html">Contexts</a>
+        </div>
+
+        <div class="cta">
+          <a class="btn ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read spec</a>
+          <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <nav class="top-nav" aria-label="Primary navigation">
-    <a href="./index.html">Home</a>
-    <a href="./simulator.html">Simulator</a>
-    <a href="./how-it-works.html">How it works</a>
-    <a href="./spec.html">Spec</a>
-    <a href="./tests.html">Tests</a>
-    <a href="./examples.html">Examples</a>
-    <a href="./contexts.html">Contexts</a>
-  </nav>
+  <main id="content" class="container" role="main">
+    <!-- HERO -->
+    <section class="section">
+      <div class="panel hero energy">
+        <div class="inner">
+          <div class="heroGrid">
+            <!-- Left -->
+            <div>
+              <div class="kicker">Mechanism, not opinion</div>
 
-  <a class="top-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
-</header>
-
-
-  <main>
-    <div class="container">
-      <!-- HERO -->
-      <section class="hero" aria-labelledby="title">
-        <div class="kicker">Mechanism, not opinion. <strong>Same input → same output.</strong></div>
-
-        <h1 class="hero-title" id="title">
-          How RPO works,
-          <span class="accent">in plain, enforceable steps.</span>
-        </h1>
-
-        <p class="hero-sub">
-          RPO v0.1 is a minimal proof bundle format.
-          It turns a narrative into a deterministic artifact that can be audited later,
-          <em>without rewriting history</em>.
-          It does not decide truth. It makes integrity measurable and transformations explainable.
-        </p>
-
-        <div class="hero-ctas">
-          <a href="./simulator.html" class="btn-primary" target="_blank" rel="noopener noreferrer">Try the live demo</a>
-          <a href="./spec.html" class="btn-ghost" target="_blank" rel="noopener noreferrer">Read the spec</a>
-          <a href="./examples.html" class="btn-ghost" target="_blank" rel="noopener noreferrer">Browse examples</a>
-        </div>
-
-        <p class="note">
-          No AI. No inference. No hidden ranking.
-          RPO makes integrity verifiable. Humans remain accountable.
-        </p>
-      </section>
-
-      <!-- PIPELINE FULL WIDTH -->
-      <section class="panel pipeline" aria-label="Deterministic pipeline">
-        <div class="panel-inner">
-          <div class="panel-head">
-            <div class="panel-title">1) The pipeline (deterministic)</div>
-            <div class="pill" aria-label="Attributes">
-              <span class="dot" aria-hidden="true"></span>
-              Integrity • Readability • Verifiability
-            </div>
-          </div>
-
-          <div class="steps" role="list">
-            <div class="step" role="listitem">
-              <div class="step-top">
-                <div class="badge">1</div>
-                <div class="step-name">Input</div>
-              </div>
-              <div class="step-text">
-                A short narrative (1–3 paragraphs). Optionally: evidence references and a PDF path.
-                The point is not volume. The point is <strong>clarity</strong>.
-              </div>
-            </div>
-
-            <div class="step" role="listitem">
-              <div class="step-top">
-                <div class="badge">2</div>
-                <div class="step-name">Structure</div>
-              </div>
-              <div class="step-text">
-                The narrative is mapped into a minimal JSON bundle with canonical fields
-                (issuer, subject, created_at, narrative block, evidence list).
-                Nothing “smart”. Just <strong>enforceable structure</strong>.
-              </div>
-            </div>
-
-            <div class="step" role="listitem">
-              <div class="step-top">
-                <div class="badge">3</div>
-                <div class="step-name">Integrity anchor</div>
-              </div>
-              <div class="step-text">
-                A <strong>SHA-256</strong> public hash is computed from a deterministic payload.
-                If anything changes, the hash changes.
-                That’s the whole point: <strong>tampering becomes detectable</strong>.
-              </div>
-            </div>
-
-            <div class="step" role="listitem">
-              <div class="step-top">
-                <div class="badge">4</div>
-                <div class="step-name">Validate</div>
-              </div>
-              <div class="step-text">
-                Any independent implementation can recompute the hash and verify required fields.
-                Match = integrity confirmed. Mismatch = alteration detectable.
-                <strong>Trust without central authority.</strong>
-              </div>
-            </div>
-          </div>
-
-          <div class="pipeline-foot">
-            The artifact is usable by humans (readable) and machines (verifiable).
-            Your org keeps accountability; you gain defensible reconstructability.
-            Minimal contract:
-            <span class="kbd">JSON + PDF + public_hash</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- WHY DATA MATTERS (CEO PAIN) -->
-      <section class="stack">
-        <div class="grid-2">
-          <section class="panel padded" aria-label="What leaders live every day">
-            <div class="panel-inner">
-              <div class="panel-head">
-                <div class="panel-title">2) What leaders live every day</div>
-              </div>
-
-              <ul>
-                <li>People data in HRIS, approvals in email, rationales in meetings, exceptions in someone’s head.</li>
-                <li>Six months later, the chain is unreproducible — and the narrative starts rewriting itself.</li>
-                <li>When questioned, the org can show documents, but cannot show <strong>decision traceability</strong>.</li>
-                <li>The risk is not “bad intent”. The risk is <strong>non-reconstructability</strong>.</li>
-              </ul>
-
-              <div class="quote">
-                You’re not challenged for what you decided.<br />
-                You’re challenged for what you cannot reconstruct — and therefore cannot defend.
-              </div>
-            </div>
-          </section>
-
-          <section class="panel padded" aria-label="Why data governance becomes mandatory">
-            <div class="panel-inner">
-              <div class="panel-head">
-                <div class="panel-title">3) The missing layer: reconstructable data</div>
-              </div>
-
-              <p style="color: var(--ink-soft); line-height: 1.85; font-size: 1rem;">
-                Most organizations don’t lack data. They lack <strong>reconstructable data</strong>:
-                data that stays aligned across systems, versions, owners, and time.
+              <p class="lead" style="margin-bottom:10px;">
+                By Gersende Ryard de Parcey — decision governance & probative infrastructure.
               </p>
 
-              <ul>
-                <li>If HRIS fields, approvals, and exceptions are not governed, <strong>the chain breaks</strong>.</li>
-                <li>Dashboards won’t save you in litigation — they don’t explain <strong>how</strong> data changed.</li>
-                <li>RPO is the “proof format”, but it presupposes a minimum of <strong>data integrity</strong>.</li>
-              </ul>
+              <h1>
+                How RPO works,
+                <span class="hl">in enforceable steps.</span>
+              </h1>
 
-              <div class="quote">
-                This is why large groups recruit HR Data / Governance roles:
-                not to “have more data”, but to make decisions <strong>defendable</strong>.
+              <p class="lead">
+                RPO v0.1 is a minimal proof bundle format. It turns decision context into a deterministic artifact:
+                a sealed JSON core, a human-readable preview/PDF, and a public hash.
+                The objective is not persuasion; it’s reconstructability under pressure.
+              </p>
+
+              <div class="callout">
+                The uncomfortable truth: organizations are rarely challenged for what they decided,
+                they’re challenged for what they <b>cannot reconstruct</b>.
+                RPO exists to make that reconstruction <b>verifiable</b>, not rhetorical.
               </div>
+
+              <div class="chips" aria-label="Core properties">
+                <span class="chip"><span class="pill">Property</span> Deterministic</span>
+                <span class="chip"><span class="pill">Output</span> Sealed bundle</span>
+                <span class="chip"><span class="pill">Hash</span> Public integrity anchor</span>
+                <span class="chip"><span class="pill">AI</span> None</span>
+              </div>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-top:12px;">
+                <a class="btn primary" href="./simulator.html?context=institutional_crisis">Open the simulator</a>
+                <a class="btn ghost" href="./examples.html">Browse examples</a>
+                <a class="btn ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Spec (v0.1)</a>
+              </div>
+
+              <p class="micro">
+                <b>RPO =</b> sealed JSON core + human-readable preview/PDF + public hash.
+                The hash proves <b>integrity over time</b>, not “truth”. Accountability remains human.
+              </p>
             </div>
-          </section>
+
+            <!-- Right: instrument preview -->
+            <aside class="instrument" aria-label="Instrument preview">
+              <div class="instTitle">Instrument preview (30 seconds)</div>
+              <div class="instSub">
+                What the Simulator makes concrete: coverage, defensibility, exposure band, and a sealed integrity anchor.
+              </div>
+
+              <div class="kpiGrid" aria-label="Preview KPIs">
+                <div class="kpi">
+                  <div class="k">Coverage</div>
+                  <div class="v"><span id="kpiCoverage">—</span><span class="badge warn" id="badgeCoverage">LIVE</span></div>
+                </div>
+                <div class="kpi">
+                  <div class="k">Defensibility</div>
+                  <div class="v"><span id="kpiDef">—</span><span class="badge warn" id="badgeDef">—</span></div>
+                </div>
+                <div class="kpi">
+                  <div class="k">Exposure</div>
+                  <div class="v"><span id="kpiExpo">—</span><span class="badge warn" id="badgeExpo">—</span></div>
+                </div>
+                <div class="kpi">
+                  <div class="k">Mode</div>
+                  <div class="v"><span>Deterministic</span><span class="badge bad">No AI</span></div>
+                </div>
+              </div>
+
+              <div class="hashbox" aria-label="Hash preview">
+                hash: <span id="kpiHash">—</span>
+              </div>
+
+              <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+                <a class="btn primary" href="./simulator.html?context=institutional_crisis">Run the simulator</a>
+                <a class="btn ghost" href="./how-it-works.html#hash">What is hashed?</a>
+              </div>
+
+              <p class="micro" style="margin-top:10px;">
+                This is not “AI scoring”. It’s a deterministic reconstructability layer built for governance.
+              </p>
+            </aside>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <!-- WHAT YOU WIN (BIG, NOT TINY) -->
-        <section class="panel padded" aria-label="What you win concretely">
-          <div class="panel-inner">
-            <div class="panel-head">
-              <div class="panel-title">4) What you win (concretely)</div>
-            </div>
+    <!-- PIPELINE -->
+    <section class="section" aria-labelledby="pipe-title">
+      <div class="sectionTitleRow">
+        <h2 id="pipe-title">The deterministic pipeline</h2>
+        <div class="meta">Same input → same output</div>
+      </div>
 
-            <div class="grid-3" style="margin-top: 12px;">
-              <div class="value-card">
-                <h3>Legal / Audit</h3>
-                <p>
-                  An artifact that preserves <strong>what existed at the time</strong>,
-                  with detectable tampering.
-                  This is how you answer: “Show me the chain.”
-                </p>
-              </div>
-
-              <div class="value-card">
-                <h3>Governance</h3>
-                <p>
-                  Traceability without “trust me”.
-                  Decisions become <strong>re-evaluable</strong> without being rewritten.
-                  Same input → same output.
-                </p>
-              </div>
-
-              <div class="value-card">
-                <h3>Operations</h3>
-                <p>
-                  A repeatable format that survives tool changes, reorganizations, and handovers.
-                  The proof object remains stable when org charts don’t.
-                </p>
+      <div class="panel energy">
+        <div class="inner">
+          <div class="steps" role="list">
+            <div class="step" role="listitem">
+              <div class="n">Step 01</div>
+              <div class="t">Declare context</div>
+              <div class="d">
+                A short narrative and declared sources. Not volume; <b>clarity</b>.
+                Your perimeter becomes explicit instead of implicit.
               </div>
             </div>
-
-            <div class="pipeline-foot" style="margin-top: 16px;">
-              Translation for executives: you reduce decision liability by making the decision chain
-              reconstructable — not by collecting more documents.
+            <div class="step" role="listitem">
+              <div class="n">Step 02</div>
+              <div class="t">Canonicalize</div>
+              <div class="d">
+                Map content into a minimal schema: issuer, subject, timestamps, narrative block, evidence list.
+                No hidden interpretation, just <b>enforceable structure</b>.
+              </div>
+            </div>
+            <div class="step" role="listitem">
+              <div class="n">Step 03</div>
+              <div class="t">Seal</div>
+              <div class="d">
+                Compute a public <b>SHA-256</b> integrity anchor over a deterministic payload.
+                If anything changes, the hash changes. Tampering becomes detectable.
+              </div>
+            </div>
+            <div class="step" role="listitem">
+              <div class="n">Step 04</div>
+              <div class="t">Verify</div>
+              <div class="d">
+                Any independent tool can recompute the hash and validate required fields.
+                Match = integrity confirmed. Mismatch = alteration detectable.
+              </div>
             </div>
           </div>
-        </section>
 
-        <!-- THE ANCHOR (FULL WIDTH) -->
-        <section class="panel padded" aria-label="What exactly is hashed">
-          <div class="panel-inner">
-            <div class="panel-head">
-              <div class="panel-title">5) The anchor (what exactly is hashed?)</div>
-              <div class="pill" aria-label="Deterministic payload">
-                <span class="dot" aria-hidden="true"></span>
-                Deterministic payload → SHA-256
-              </div>
+          <div class="ctaPanel" style="margin-top:14px;">
+            <div class="text">
+              The “win” is not a prettier report. The win is a shared object:
+              a sealed bundle that Legal, HR, IT/Sec and executives can verify independently.
             </div>
+            <a class="btn primary" href="./simulator.html?context=institutional_crisis">Open the simulator</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <p style="color: var(--ink-soft); line-height: 1.85; font-size: 1rem;">
-              RPO v0.1 computes a public hash over a deterministic concatenation of core fields.
-              If any core field changes, the hash changes. That’s how integrity becomes verifiable.
-            </p>
+    <!-- WHY THIS EXISTS -->
+    <section class="section" aria-labelledby="why-title">
+      <div class="sectionTitleRow">
+        <h2 id="why-title">Why this exists</h2>
+        <div class="meta">Because memory is not a system</div>
+      </div>
 
-            <pre><code>payload =
+      <div class="cards3">
+        <div class="card">
+          <h3>Reconstructability beats narrative</h3>
+          <p>
+            When a decision is contested later, the question is rarely “what was your intent?”
+            It’s “show me what existed, when, and who owned it.”
+          </p>
+          <div class="quote">
+            You don’t lose because you were wrong.<br/>
+            You lose because your chain is non-reproducible.
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Documents are not traceability</h3>
+          <p>
+            A folder of PDFs is not an audit trail. Dashboards are not a chain of custody.
+            RPO is a minimal contract that makes transformations and scope explicit.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Determinism is the governance property</h3>
+          <p>
+            If the output changes with each run, you can’t defend it.
+            Determinism makes the bundle reproducible, comparable, and independently verifiable.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT IS HASHED -->
+    <section class="section" id="hash" aria-labelledby="hash-title">
+      <div class="sectionTitleRow">
+        <h2 id="hash-title">What is hashed (and what is not)</h2>
+        <div class="meta">Integrity anchor, not “truth engine”</div>
+      </div>
+
+      <div class="panel energy">
+        <div class="inner">
+          <p class="lead">
+            RPO v0.1 computes a public hash over a deterministic concatenation of core fields.
+            If any core field changes, the hash changes. That’s integrity: <b>alterations become detectable</b>.
+          </p>
+
+          <pre><code>// Deterministic payload (illustrative)
+payload =
   "rpo_version=" + rpo_version +
   "|bundle_id=" + bundle_id +
   "|created_at=" + created_at +
@@ -816,45 +974,151 @@
 
 public_hash = sha256(payload)</code></pre>
 
-            <div class="pipeline-foot">
-              Important: hashing does not “prove truth”.
-              It proves whether the record was altered.
+          <div class="cards3" style="margin-top:14px;">
+            <div class="card">
+              <h3>Hashed</h3>
+              <p>
+                The core perimeter: identity, timestamps, narrative block, and canonical fields.
+                That’s what gives you a stable integrity anchor.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Not hashed</h3>
+              <p>
+                “Truth” as opinion. RPO does not judge reality.
+                It exposes what was sealed, with what scope, at what time.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Why it matters</h3>
+              <p>
+                A public hash lets third parties verify integrity without accessing sensitive content.
+                Verification is independent; accountability stays human.
+              </p>
             </div>
           </div>
-        </section>
 
-        <!-- CTA STRIP -->
-        <section class="panel padded" aria-label="Try it now">
-          <div class="panel-inner cta-strip">
-            <p>
-              Paste a real internal decision note (sanitized), generate a minimal RPO bundle,
-              and observe how integrity becomes verifiable instead of simply “trusted”.
-              Deterministic by design: no AI, no opinion, no magic.
-            </p>
-            <div style="display:flex; gap:12px; flex-wrap:wrap;">
-              <a href="./simulator.html" class="btn-primary" target="_blank" rel="noopener noreferrer">Try the live demo</a>
-              <a href="./spec.html" class="btn-ghost" target="_blank" rel="noopener noreferrer">Read the spec</a>
-            </div>
+          <div class="quote">
+            Hashing doesn’t make you right.<br/>
+            It makes alteration detectable — which is exactly what governance needs.
           </div>
-        </section>
-      </section>
-    </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" aria-labelledby="faq-title">
+      <div class="sectionTitleRow">
+        <h2 id="faq-title">FAQ (the hard questions)</h2>
+        <div class="meta">No euphemisms</div>
+      </div>
+
+      <div style="display:grid; gap:10px;">
+        <details>
+          <summary>
+            <span class="q"><span class="chipQ">Q1</span> “Is this blockchain?”</span>
+            <span class="badge warn">NO</span>
+          </summary>
+          <p>
+            No. RPO uses a cryptographic hash as an integrity anchor. It does not require a chain, network, or token.
+            Keep it boring. Boring scales.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            <span class="q"><span class="chipQ">Q2</span> “Is this an AI that decides truth?”</span>
+            <span class="badge bad">NO AI</span>
+          </summary>
+          <p>
+            No AI in the standard. RPO does not decide. It captures perimeter, sources, timestamps, and an integrity anchor
+            so the decision remains explainable under scrutiny.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            <span class="q"><span class="chipQ">Q3</span> “What does this change for executives?”</span>
+            <span class="badge ok">LIABILITY</span>
+          </summary>
+          <p>
+            It reduces decision liability by making decision chains reconstructable.
+            Not by collecting “more documents”, but by producing a verifiable object that survives time and reorgs.
+          </p>
+        </details>
+
+        <details>
+          <summary>
+            <span class="q"><span class="chipQ">Q4</span> “Where does the Simulator fit?”</span>
+            <span class="badge warn">RAMP</span>
+          </summary>
+          <p>
+            The Simulator is the shortest path to understanding. One run, one bundle, one hash.
+            It demonstrates the mechanism without requiring integration.
+          </p>
+        </details>
+      </div>
+
+      <div class="ctaPanel" style="margin-top:14px;">
+        <div class="text">
+          If you only do one thing: run the Simulator once and generate one bundle.
+          You’ll understand RPO in <b>one run</b>, not in ten pages.
+        </div>
+        <a class="btn primary" href="./simulator.html?context=institutional_crisis">Run the simulator</a>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="section" aria-label="Get started">
+      <div class="panel energy">
+        <div class="inner">
+          <div class="sectionTitleRow" style="margin-bottom:10px;">
+            <h2>Get started</h2>
+            <div class="meta">One run · one bundle · one hash</div>
+          </div>
+
+          <div class="ctaPanel" style="margin-top:0;">
+            <div class="text">
+              Use the Simulator to generate a deterministic bundle and preview the report structure.
+              When ready, move to the Pilot Cockpit to evaluate integration scenarios and decision governance at scale.
+            </div>
+            <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
+          </div>
+
+          <p class="micro" style="margin-top:10px;">
+            Created by <b>Gersende Ryard de Parcey</b>. OpenProof RPO v0.1 is an open, verifiable format for decision-proof bundles.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="foot" aria-label="Footer">
+      <div>© OpenProof — RPO v0.1. Created by Gersende Ryard de Parcey.</div>
+      <div>
+        <a href="./index.html">Home</a> ·
+        <a href="./simulator.html?context=institutional_crisis">Simulator</a> ·
+        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
+        <a href="./examples.html">Examples</a>
+      </div>
+    </footer>
   </main>
 
   <script>
-    // Background star field (light + elegant)
+    // ---------------------------------------------
+    // Background star field (elegant, non-gadget)
+    // ---------------------------------------------
     (function () {
       const canvas = document.getElementById("bg-field");
+      if (!canvas) return;
       const ctx = canvas.getContext("2d", { alpha: true });
 
       let width, height, particles = [];
-      const COUNT = 220;
+      const COUNT = 210;
 
       function resize() {
         width = window.innerWidth;
         height = window.innerHeight;
         const ratio = window.devicePixelRatio || 1;
-
         canvas.width = width * ratio;
         canvas.height = height * ratio;
         ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
@@ -865,7 +1129,7 @@ public_hash = sha256(payload)</code></pre>
           x: (Math.random() * 2 - 1),
           y: (Math.random() * 2 - 1),
           z: Math.random() * 0.9 + 0.1,
-          speed: Math.random() * 0.004 + 0.0015
+          speed: Math.random() * 0.0038 + 0.0013
         };
       }
 
@@ -875,7 +1139,7 @@ public_hash = sha256(payload)</code></pre>
       }
 
       function project(p) {
-        const f = 400;
+        const f = 420;
         const s = f / (f * p.z);
         return {
           x: p.x * width * 0.5 * s + width / 2,
@@ -892,13 +1156,11 @@ public_hash = sha256(payload)</code></pre>
             Object.assign(p, createParticle());
             p.z = 1;
           }
-
           const { x, y } = project(p);
           const a = Math.min(1, (1.2 - p.z) * 1.1);
-
-          ctx.fillStyle = `rgba(241,230,163,${0.6 * a})`;
+          ctx.fillStyle = `rgba(241,230,163,${0.52 * a})`;
           ctx.beginPath();
-          ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+          ctx.arc(x, y, 1.5, 0, Math.PI * 2);
           ctx.fill();
         }
 
@@ -908,8 +1170,84 @@ public_hash = sha256(payload)</code></pre>
       window.addEventListener("resize", resize);
       resize(); init(); loop();
     })();
+
+    // ---------------------------------------------
+    // Deterministic-ish hero KPIs (stable payload hash)
+    // ---------------------------------------------
+    (function(){
+      const elCov = document.getElementById("kpiCoverage");
+      const elDef = document.getElementById("kpiDef");
+      const elExpo = document.getElementById("kpiExpo");
+      const elHash = document.getElementById("kpiHash");
+
+      const bDef  = document.getElementById("badgeDef");
+      const bExpo = document.getElementById("badgeExpo");
+
+      if(!elCov || !elDef || !elExpo || !elHash || !bDef || !bExpo) return;
+
+      function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
+
+      const frames = [
+        { cov: 62, def: 48, expo: "HIGH",   defTag:"LOW",    expoTag:"HIGH",   hashState:"—" },
+        { cov: 74, def: 62, expo: "MEDIUM", defTag:"MEDIUM", expoTag:"MEDIUM", hashState:"—" },
+        { cov: 78, def: 64, expo: "MEDIUM", defTag:"MEDIUM", expoTag:"MEDIUM", hashState:"sealing" },
+        { cov: 78, def: 64, expo: "MEDIUM", defTag:"MEDIUM", expoTag:"MEDIUM", hashState:"final" }
+      ];
+
+      function badgeClassForDef(tag){
+        return tag==="HIGH" ? "ok" : tag==="MEDIUM" ? "warn" : "bad";
+      }
+      function badgeClassForExpo(tag){
+        return tag==="LOW" ? "ok" : tag==="MEDIUM" ? "warn" : "bad";
+      }
+
+      async function sha256Hex(str){
+        const enc = new TextEncoder();
+        const buf = enc.encode(str);
+        const digest = await crypto.subtle.digest("SHA-256", buf);
+        const arr = Array.from(new Uint8Array(digest));
+        return arr.map(b=>b.toString(16).padStart(2,"0")).join("");
+      }
+
+      let i = 0;
+
+      async function tick(){
+        const f = frames[i];
+        elCov.textContent = `${clamp(f.cov,0,100)}%`;
+        elDef.textContent = `${clamp(f.def,0,100)}/100`;
+        elExpo.textContent = f.expo;
+
+        bDef.textContent = f.defTag;
+        bDef.className = `badge ${badgeClassForDef(f.defTag)}`;
+
+        bExpo.textContent = f.expoTag;
+        bExpo.className = `badge ${badgeClassForExpo(f.expoTag)}`;
+
+        if(f.hashState === "—"){
+          elHash.textContent = "—";
+        } else if(f.hashState === "sealing"){
+          elHash.textContent = "sealing…";
+        } else {
+          const seed = JSON.stringify({
+            rpo_version: "0.1",
+            mode: "deterministic",
+            context: "institutional_crisis",
+            coverage_pct: 78,
+            defensibility_score: 64,
+            institutional_exposure: "MEDIUM"
+          });
+          elHash.textContent = await sha256Hex(seed);
+        }
+
+        i = (i + 1) % frames.length;
+      }
+
+      tick();
+      setInterval(tick, 1400);
+    })();
   </script>
 </body>
 </html>
+
 
 
