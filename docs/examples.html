@@ -3,58 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>OpenProof — Examples | Defensible RPO proof bundles (JSON + PDF + public hash)</title>
+  <title>OpenProof — Examples | RPO bundles (JSON + PDF + public hash) for decision traceability</title>
 
   <!-- Identity / authorship -->
   <meta name="author" content="Gersende Ryard de Parcey" />
   <meta name="creator" content="Gersende Ryard de Parcey, OpenProof specification editor" />
 
   <!-- SEO -->
-  <meta name="description" content="Examples of OpenProof RPO bundles: defensible decision artifacts combining canonical JSON, human-readable PDF, and a public SHA-256 hash. Demonstrates reconstructability and detectable tampering." />
+  <meta name="description" content="Examples of OpenProof RPO bundles: canonical JSON, human-readable PDF, and a public SHA-256 hash. Demonstrates decision reconstructability and detectable tampering across HR, governance, compliance, operations, and security." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/examples.html" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="OpenProof — Examples" />
-  <meta property="og:description" content="Real RPO artifacts: canonical JSON + human-readable PDF + public hash. Defensible determinism. Reconstructability. Detectable tampering." />
+  <meta property="og:description" content="Inspect real RPO artifacts: canonical JSON + PDF + public SHA-256 hash. Deterministic. Auditable. Verifiable." />
   <meta property="og:url" content="https://rpo.openproof.net/examples.html" />
-  <meta
-    property="og:image"
-    content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-  />
+  <meta property="og:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
 
   <!-- Favicon -->
-  <link
-    rel="icon"
-    type="image/png"
-    href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-  />
+  <link rel="icon" type="image/png" href="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@500;600;800&display=swap" rel="stylesheet" />
 
-  <!-- Structured data (SEO “hidden but legitimate”) -->
+  <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@graph":[
       {
-        "@type":"WebSite",
-        "name":"OpenProof — RPO v0.1",
+        "@type":"Person",
+        "@id":"https://rpo.openproof.net/#gersende-ryard-de-parcey",
+        "name":"Gersende Ryard de Parcey",
         "url":"https://rpo.openproof.net/",
-        "inLanguage":"en",
-        "publisher":{
-          "@type":"Organization",
-          "name":"OpenProof Consortium"
+        "sameAs":["https://www.linkedin.com/in/gryard/"],
+        "jobTitle":"OpenProof specification editor"
+      },
+      {
+        "@type":"Organization",
+        "@id":"https://rpo.openproof.net/#openproof",
+        "name":"OpenProof",
+        "url":"https://rpo.openproof.net/",
+        "logo":{
+          "@type":"ImageObject",
+          "url":"https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
         }
       },
       {
+        "@type":"WebSite",
+        "@id":"https://rpo.openproof.net/#website",
+        "url":"https://rpo.openproof.net/",
+        "name":"OpenProof — RPO v0.1",
+        "publisher":{"@id":"https://rpo.openproof.net/#openproof"},
+        "inLanguage":"en"
+      },
+      {
         "@type":"WebPage",
-        "name":"OpenProof — Examples",
+        "@id":"https://rpo.openproof.net/examples.html#webpage",
         "url":"https://rpo.openproof.net/examples.html",
+        "name":"OpenProof — Examples",
         "isPartOf":{"@id":"https://rpo.openproof.net/#website"},
         "about":[
           {"@type":"Thing","name":"Rapport Probatoire Ouvert (RPO)"},
@@ -62,19 +72,10 @@
           {"@type":"Thing","name":"Reconstructability"},
           {"@type":"Thing","name":"SHA-256 integrity hashing"}
         ],
-        "author":{"@id":"https://rpo.openproof.net/#gersende"},
-        "creator":{"@id":"https://rpo.openproof.net/#gersende"},
+        "author":{"@id":"https://rpo.openproof.net/#gersende-ryard-de-parcey"},
+        "creator":{"@id":"https://rpo.openproof.net/#gersende-ryard-de-parcey"},
+        "publisher":{"@id":"https://rpo.openproof.net/#openproof"},
         "inLanguage":"en"
-      },
-      {
-        "@type":"Person",
-        "@id":"https://rpo.openproof.net/#gersende",
-        "name":"Gersende Ryard de Parcey",
-        "jobTitle":"OpenProof specification editor",
-        "url":"https://www.linkedin.com/in/gryard/",
-        "sameAs":[
-          "https://www.linkedin.com/in/gryard/"
-        ]
       }
     ]
   }
@@ -94,12 +95,16 @@
 
       --radius:26px;
       --shadow-soft:0 26px 70px rgba(0,0,0,0.55);
+
       --panel:linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
       --panel-soft:linear-gradient(145deg, rgba(10,12,27,0.70), rgba(5,7,18,0.80));
-      --line:rgba(212,175,55,0.22);
-      --line2:rgba(136,116,72,0.35);
+      --panel2:linear-gradient(145deg, rgba(12,14,30,0.88), rgba(6,8,20,0.92));
 
+      --line:rgba(212,175,55,0.22);
       --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
+
+      --max: 1320px;
+      --pad: 40px;
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
@@ -119,7 +124,6 @@
     a:focus-visible{outline:none; box-shadow: var(--focus); border-radius: 10px;}
     ::selection{background: rgba(212,175,55,.25);}
 
-    /* BACKGROUND FIELD */
     #bg-field{
       position:fixed;
       inset:0;
@@ -133,14 +137,14 @@
       position:fixed;
       top:0; left:0; right:0;
       height:68px;
-      padding:0 40px;
+      padding:0 var(--pad);
       display:flex;
       align-items:center;
       justify-content:space-between;
       z-index:10;
       background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
       backdrop-filter:blur(18px);
-      border-bottom:1px solid rgba(212,175,55,0.22);
+      border-bottom:1px solid var(--line);
     }
     .top-left{
       display:flex;
@@ -212,17 +216,21 @@
 
     /* LAYOUT */
     main{
-      padding:104px 40px 72px;
-      max-width:1280px;
+      padding:104px var(--pad) 72px;
+    }
+    .container{
+      max-width: var(--max);
       margin:0 auto;
+      width:100%;
     }
 
+    /* HERO */
     .hero{
       display:grid;
-      grid-template-columns: 1.35fr 0.95fr;
-      gap:40px;
+      grid-template-columns: 1.30fr 0.95fr;
+      gap:28px;
       align-items:start;
-      margin-bottom:26px;
+      margin-bottom:18px;
     }
     .kicker{
       font-family:"Orbitron",sans-serif;
@@ -246,7 +254,7 @@
       font-size:1rem;
       line-height:1.75;
       color:var(--ink-soft);
-      max-width: 780px;
+      max-width: 820px;
       margin-bottom:18px;
     }
     .one-line{
@@ -257,7 +265,6 @@
       font-size:0.92rem;
       color:rgba(212,175,55,.92);
     }
-
     .hero-ctas{
       display:flex;
       gap:14px;
@@ -283,7 +290,6 @@
     }
     .btn-primary:hover{filter:brightness(1.03)}
     .btn-primary:active{transform:translateY(1px)}
-
     .btn-ghost{
       padding:12px 18px;
       border-radius:999px;
@@ -302,13 +308,12 @@
     }
     .btn-ghost:hover{border-color:rgba(212,175,55,0.55)}
     .btn-ghost:active{transform:translateY(1px)}
-
     .note{
       margin-top:12px;
       font-size:.92rem;
       color:rgba(198,186,150,.88);
       line-height:1.55;
-      max-width: 860px;
+      max-width: 920px;
     }
 
     /* PANEL */
@@ -328,7 +333,7 @@
       background:
         radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.10), transparent 55%),
         radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.08), transparent 55%),
-        linear-gradient(120deg, rgba(241,230,163,0.05), transparent 45%, rgba(241,230,163,0.05));
+        linear-gradient(120deg, rgba(241,230,163,0.06), transparent 45%, rgba(241,230,163,0.06));
       opacity:.95;
       filter: blur(10px);
       pointer-events:none;
@@ -520,6 +525,7 @@
       align-items:center;
       justify-content:center;
       gap:8px;
+      cursor:pointer;
     }
     .mini:hover{border-color:rgba(212,175,55,0.55)}
     .mini:active{transform:translateY(1px)}
@@ -565,6 +571,19 @@
       justify-content:flex-start;
     }
 
+    .about{
+      margin-top: 16px;
+      color: rgba(198,186,150,.86);
+      font-size: .92rem;
+      line-height: 1.7;
+    }
+    .about a{
+      color: rgba(241,230,163,.92);
+      text-decoration:none;
+      border-bottom: 1px solid rgba(241,230,163,.25);
+    }
+    .about a:hover{ border-bottom-color: rgba(241,230,163,.6); }
+
     /* Responsive */
     @media(max-width:1060px){
       .hero{grid-template-columns:1fr; gap:18px}
@@ -573,17 +592,12 @@
       .card-right{border-left:none; padding-left:0; border-top:1px solid rgba(212,175,55,0.18); padding-top:14px}
     }
     @media(max-width:960px){
+      :root{ --pad: 16px; }
       .top-nav{display:none}
-      .top-bar{padding:0 16px}
-      main{padding:104px 20px 56px}
+      main{padding:104px var(--pad) 56px}
       .meta{grid-template-columns:1fr}
       .meta .v{text-align:left}
     }
-    @media (prefers-reduced-motion: reduce){
-      .top-nav a::after{transition:none}
-    }
-
-    /* Utility */
     .sr-only{
       position:absolute;
       width:1px; height:1px;
@@ -597,360 +611,372 @@
 <body>
   <canvas id="bg-field" aria-hidden="true"></canvas>
 
-  <!-- “Hidden” SEO micro-content (legitimate, not spammy) -->
   <div class="sr-only" aria-hidden="true">
-    OpenProof RPO v0.1 examples demonstrate defensible determinism for decision traceability.
-    Edited by Gersende Ryard de Parcey (OpenProof specification editor). Human-readable PDF + canonical JSON + SHA-256 public hash.
+    OpenProof RPO v0.1 examples: canonical JSON, human-readable PDF, public SHA-256 hash.
+    Edited by Gersende Ryard de Parcey. Purpose: decision traceability, reconstructability, detectable tampering.
   </div>
 
-  <!-- B) docs/_nav.html (snippet to copy/paste on all pages) -->
-<header class="top-bar">
-  <div class="top-left">
-    <div class="emblem" aria-hidden="true"></div>
-    <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
-  </div>
+  <!-- NAV (copy/paste on all pages) -->
+  <header class="top-bar">
+    <div class="top-left">
+      <div class="emblem" aria-hidden="true"></div>
+      <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
+    </div>
 
-  <nav class="top-nav" aria-label="Primary navigation">
-    <a href="./index.html">Home</a>
-    <a href="./simulator.html">Simulator</a>
-    <a href="./how-it-works.html">How it works</a>
-    <a href="./spec.html">Spec</a>
-    <a href="./tests.html">Tests</a>
-    <a href="./examples.html">Examples</a>
-    <a href="./contexts.html">Contexts</a>
-  </nav>
+    <nav class="top-nav" aria-label="Primary navigation">
+      <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a>
+      <a href="./simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a>
+      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
+      <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+      <a href="./examples.html" aria-current="page">Examples</a>
+      <a href="./contexts.html" target="_blank" rel="noopener noreferrer">Contexts</a>
+    </nav>
 
-  <a class="top-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
-</header>
-
+    <a class="top-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
+  </header>
 
   <main role="main">
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="page-title">
-      <div>
-        <div class="kicker">Real artifacts, not opinions <span>same input → same output</span></div>
+    <div class="container">
 
-        <h1 id="page-title">
-          Examples — what a <span class="gold">defensible decision</span><br />
-          actually looks like.
-        </h1>
+      <!-- HERO -->
+      <section class="hero" aria-labelledby="page-title">
+        <div>
+          <div class="kicker">Real artifacts, not opinions <span>same input → same output</span></div>
 
-        <p class="sub">
-          This page shows finished <strong>RPO artifacts</strong>: a canonical JSON structure, a human-readable PDF,
-          and a public <strong>SHA-256</strong> hash. These examples do not “prove truth”.
-          They preserve <strong>what existed at the time</strong> — so decisions remain reconstructable and tampering becomes detectable.
-        </p>
+          <h1 id="page-title">
+            Examples — what a <span class="gold">defensible decision</span><br />
+            actually looks like.
+          </h1>
 
-        <div class="one-line">
-          You are not challenged for what you decided. You are challenged for what you cannot reconstruct.
+          <p class="sub">
+            This page shows finished RPO artifacts: a canonical JSON structure, a human-readable PDF,
+            and a public <strong>SHA-256</strong> hash.
+            These examples do not “prove truth”.
+            They preserve <strong>what existed at the time</strong> — so decisions remain reconstructable and tampering becomes detectable.
+          </p>
+
+          <div class="one-line">
+            You are not challenged for what you decided. You are challenged for what you cannot reconstruct.
+          </div>
+
+          <div class="hero-ctas">
+            <a class="btn-primary" href="./simulator.html" target="_blank" rel="noopener noreferrer">Open the sandbox</a>
+            <a class="btn-ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read the spec</a>
+          </div>
+
+          <p class="note">
+            No AI. No hidden ranking. No silent rewrite. If the narrative changes, the hash changes — that’s the boundary.
+          </p>
         </div>
 
-        <div class="hero-ctas">
-          <a class="btn-primary" href="./simulator.html" target="_blank" rel="noopener noreferrer">Open a real RPO bundle</a>
-          <a class="btn-ghost" href="./simulator.html" target="_blank" rel="noopener noreferrer">Try the same input in the sandbox</a>
-        </div>
+        <aside class="panel" aria-label="How to read examples">
+          <h2>How to read these examples</h2>
+          <div class="pill" aria-label="Attributes">
+            <span class="dot" aria-hidden="true"></span>
+            Integrity • Readability • Verifiability
+          </div>
+          <div class="scope">
+            Each example is a <strong>decision artifact</strong>: it does not judge outcomes — it preserves the chain.
+            You can open the PDF, inspect the JSON, and copy the public hash.
+            <br /><br />
+            If a future narrative tries to rewrite history, the artifact exposes the delta.
+          </div>
 
-        <p class="note">
-          No AI. No hidden ranking. No silent rewrite. If the narrative changes, the hash changes — that’s the boundary.
-        </p>
-      </div>
+          <div class="about">
+            Edited by Gersende Ryard de Parcey,
+            <a href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">linkedin.com/in/gryard</a>
+          </div>
+        </aside>
+      </section>
 
-      <aside class="panel" aria-label="How to read examples">
-        <h2>How to read these examples</h2>
-        <div class="pill" aria-label="Attributes">
-          <span class="dot" aria-hidden="true"></span>
-          Integrity • Readability • Verifiability
+      <!-- WHAT YOU ARE LOOKING AT -->
+      <section class="bar" aria-label="What you are looking at">
+        <div class="bar-grid">
+          <div>
+            <h3>What this page is</h3>
+            <p>
+              A gallery of <strong>finished RPO bundles</strong> you can open and inspect.
+              Not a demo of an app — a demo of a <strong>trust boundary</strong>.
+            </p>
+          </div>
+          <div>
+            <h3>What each example contains</h3>
+            <p>
+              Canonical JSON, human-readable PDF, SHA-256 public hash.
+              <strong>Nothing proprietary</strong>. Nothing hidden.
+            </p>
+          </div>
+          <div>
+            <h3>What it demonstrates</h3>
+            <p>
+              <strong>Reconstructability</strong>. If the story changes later, the integrity anchor reveals it.
+            </p>
+          </div>
         </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <!-- GALLERY -->
+      <div class="section-title">Example gallery</div>
+      <section class="cards" aria-label="RPO examples">
+
+        <!-- TEMPLATE NOTE:
+             Replace href paths and replace data-copyhash values by real SHA-256 hex.
+             Until then, placeholders are intentional. -->
+
+        <!-- 1 -->
+        <article class="card" aria-label="Promotion decision example">
+          <div class="card-inner">
+            <div>
+              <div class="tag"><i aria-hidden="true"></i> HR</div>
+              <h4>Promotion decision — <span>March 2024</span></h4>
+              <p class="ctx">
+                A promotion is challenged months later: “show the rationale and the chain”.
+                This RPO preserves what existed at the time and prevents silent narrative drift.
+              </p>
+              <ul class="bullets">
+                <li><strong>What existed</strong>: approvals, criteria, meeting rationale, exceptions.</li>
+                <li><strong>What is canonical</strong>: stable fields + evidence pointers.</li>
+                <li><strong>What becomes detectable</strong>: retroactive edits or omissions.</li>
+              </ul>
+            </div>
+
+            <div class="card-right">
+              <div class="meta">
+                <div class="k">Bundle</div><div class="v">rpo-example-hr-promo-2024-03</div>
+                <div class="k">Integrity</div><div class="v">SHA-256</div>
+              </div>
+
+              <div class="actions">
+                <a class="mini" href="./examples/rpo-example-hr-promo-2024-03.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                <a class="mini" href="./examples/rpo-example-hr-promo-2024-03.json" target="_blank" rel="noopener noreferrer">View JSON</a>
+                <button class="mini" type="button" data-copyhash="PLACEHOLDER_SHA256_HEX">Copy public_hash</button>
+              </div>
+
+              <div class="hashline">
+                Public hash: <code>PLACEHOLDER_SHA256_HEX</code><br />
+                This does not prove truth. It proves integrity and reconstructability.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2 -->
+        <article class="card" aria-label="Termination decision example">
+          <div class="card-inner">
+            <div>
+              <div class="tag"><i aria-hidden="true"></i> Governance</div>
+              <h4>Termination decision — <span>September 2023</span></h4>
+              <p class="ctx">
+                A termination becomes a liability when the organization cannot reconstruct the decision chain.
+                This example shows how RPO preserves the decision state “as it was”.
+              </p>
+              <ul class="bullets">
+                <li><strong>What existed</strong>: reasons, approvals, timeline anchors.</li>
+                <li><strong>What is protected</strong>: integrity of narrative + evidence references.</li>
+                <li><strong>What becomes detectable</strong>: retroactive edits and narrative drift.</li>
+              </ul>
+            </div>
+
+            <div class="card-right">
+              <div class="meta">
+                <div class="k">Bundle</div><div class="v">rpo-example-governance-termination-2023-09</div>
+                <div class="k">Integrity</div><div class="v">SHA-256</div>
+              </div>
+
+              <div class="actions">
+                <a class="mini" href="./examples/rpo-example-governance-termination-2023-09.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                <a class="mini" href="./examples/rpo-example-governance-termination-2023-09.json" target="_blank" rel="noopener noreferrer">View JSON</a>
+                <button class="mini" type="button" data-copyhash="PLACEHOLDER_SHA256_HEX">Copy public_hash</button>
+              </div>
+
+              <div class="hashline">
+                Public hash: <code>PLACEHOLDER_SHA256_HEX</code><br />
+                Decision becomes defendable because the chain is reconstructable.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3 -->
+        <article class="card" aria-label="Internal investigation summary example">
+          <div class="card-inner">
+            <div>
+              <div class="tag"><i aria-hidden="true"></i> Compliance</div>
+              <h4>Internal investigation summary — <span>Q2 2024</span></h4>
+              <p class="ctx">
+                Investigations collapse when the timeline is unclear or “rewritten”.
+                This RPO locks the initial narrative state so later interpretations stay comparable.
+              </p>
+              <ul class="bullets">
+                <li><strong>What existed</strong>: allegations, dates/places anchors, evidence pointers.</li>
+                <li><strong>What is canonical</strong>: stable issuer/subject/created_at fields.</li>
+                <li><strong>What remains auditable</strong>: revisions as explicit deltas.</li>
+              </ul>
+            </div>
+
+            <div class="card-right">
+              <div class="meta">
+                <div class="k">Bundle</div><div class="v">rpo-example-compliance-investigation-q2-2024</div>
+                <div class="k">Integrity</div><div class="v">SHA-256</div>
+              </div>
+
+              <div class="actions">
+                <a class="mini" href="./examples/rpo-example-compliance-investigation-q2-2024.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                <a class="mini" href="./examples/rpo-example-compliance-investigation-q2-2024.json" target="_blank" rel="noopener noreferrer">View JSON</a>
+                <button class="mini" type="button" data-copyhash="PLACEHOLDER_SHA256_HEX">Copy public_hash</button>
+              </div>
+
+              <div class="hashline">
+                Public hash: <code>PLACEHOLDER_SHA256_HEX</code><br />
+                RPO makes later reinterpretation possible without rewriting history.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4 -->
+        <article class="card" aria-label="Procurement exception example">
+          <div class="card-inner">
+            <div>
+              <div class="tag"><i aria-hidden="true"></i> Operations</div>
+              <h4>Single-source procurement exception — <span>April 2024</span></h4>
+              <p class="ctx">
+                Exceptions are where governance breaks first. This artifact shows how a “non-standard” decision
+                stays defensible when the chain remains reconstructable.
+              </p>
+              <ul class="bullets">
+                <li><strong>What existed</strong>: exception reason, approvals, constraints.</li>
+                <li><strong>What is stable</strong>: canonical payload and integrity anchor.</li>
+                <li><strong>What becomes accountable</strong>: who signed what, and when.</li>
+              </ul>
+            </div>
+
+            <div class="card-right">
+              <div class="meta">
+                <div class="k">Bundle</div><div class="v">rpo-example-ops-procurement-exception-2024-04</div>
+                <div class="k">Integrity</div><div class="v">SHA-256</div>
+              </div>
+
+              <div class="actions">
+                <a class="mini" href="./examples/rpo-example-ops-procurement-exception-2024-04.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                <a class="mini" href="./examples/rpo-example-ops-procurement-exception-2024-04.json" target="_blank" rel="noopener noreferrer">View JSON</a>
+                <button class="mini" type="button" data-copyhash="PLACEHOLDER_SHA256_HEX">Copy public_hash</button>
+              </div>
+
+              <div class="hashline">
+                Public hash: <code>PLACEHOLDER_SHA256_HEX</code><br />
+                Same structure. Different decision. Same accountability format.
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5 -->
+        <article class="card" aria-label="Board memo example">
+          <div class="card-inner">
+            <div>
+              <div class="tag"><i aria-hidden="true"></i> Board</div>
+              <h4>Board memo — <span>Strategic pivot</span></h4>
+              <p class="ctx">
+                When strategy is later questioned, you need the original state: assumptions, inputs, and sign-offs.
+                This example shows how RPO preserves “what was known when”.
+              </p>
+              <ul class="bullets">
+                <li><strong>What existed</strong>: assumptions, constraints, risk notes.</li>
+                <li><strong>What is readable</strong>: PDF for humans, JSON for verification.</li>
+                <li><strong>What stays comparable</strong>: revisions as explicit deltas.</li>
+              </ul>
+            </div>
+
+            <div class="card-right">
+              <div class="meta">
+                <div class="k">Bundle</div><div class="v">rpo-example-board-memo-strategic-pivot</div>
+                <div class="k">Integrity</div><div class="v">SHA-256</div>
+              </div>
+
+              <div class="actions">
+                <a class="mini" href="./examples/rpo-example-board-memo-strategic-pivot.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                <a class="mini" href="./examples/rpo-example-board-memo-strategic-pivot.json" target="_blank" rel="noopener noreferrer">View JSON</a>
+                <button class="mini" type="button" data-copyhash="PLACEHOLDER_SHA256_HEX">Copy public_hash</button>
+              </div>
+
+              <div class="hashline">
+                Public hash: <code>PLACEHOLDER_SHA256_HEX</code><br />
+                The artifact answers one question: “Show me the chain.”
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 6 -->
+        <article class="card" aria-label="Security incident report example">
+          <div class="card-inner">
+            <div>
+              <div class="tag"><i aria-hidden="true"></i> Security</div>
+              <h4>Security incident report — <span>Initial assessment</span></h4>
+              <p class="ctx">
+                Incident response is all about timing. This example locks the first assessment state,
+                so later reports can’t quietly overwrite what was initially stated.
+              </p>
+              <ul class="bullets">
+                <li><strong>What existed</strong>: first timeline, impact statement, evidence pointers.</li>
+                <li><strong>What is stable</strong>: canonical payload + integrity anchor.</li>
+                <li><strong>What is enforced</strong>: no silent rewrite of the initial report.</li>
+              </ul>
+            </div>
+
+            <div class="card-right">
+              <div class="meta">
+                <div class="k">Bundle</div><div class="v">rpo-example-security-incident-initial</div>
+                <div class="k">Integrity</div><div class="v">SHA-256</div>
+              </div>
+
+              <div class="actions">
+                <a class="mini" href="./examples/rpo-example-security-incident-initial.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
+                <a class="mini" href="./examples/rpo-example-security-incident-initial.json" target="_blank" rel="noopener noreferrer">View JSON</a>
+                <button class="mini" type="button" data-copyhash="PLACEHOLDER_SHA256_HEX">Copy public_hash</button>
+              </div>
+
+              <div class="hashline">
+                Public hash: <code>PLACEHOLDER_SHA256_HEX</code><br />
+                Integrity is measurable. Transformations become explainable.
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </section>
+
+      <!-- COMPARE -->
+      <div class="divider"></div>
+      <div class="section-title">Compare them</div>
+      <section class="panel" aria-label="Compare examples">
+        <h2>Same structure, different decisions</h2>
         <div class="scope">
-          Each example is a <strong>decision artifact</strong>: it does not judge outcomes — it preserves the chain.
-          You can open the PDF, inspect the JSON, and copy the public hash.
-          <br /><br />
-          If a future narrative tries to rewrite history, the artifact exposes the delta.
+          All examples share the <strong>same canonical fields</strong> and the same integrity boundary.
+          Different domains, same accountability format. That is the point: you can enforce it across tools,
+          reorganizations, and handovers — without losing reconstructability.
         </div>
-      </aside>
-    </section>
+      </section>
 
-    <!-- WHAT YOU ARE LOOKING AT -->
-    <section class="bar" aria-label="What you are looking at">
-      <div class="bar-grid">
-        <div>
-          <h3>What this page is</h3>
-          <p>
-            A gallery of <strong>finished RPO bundles</strong> you can open and inspect.
-            Not a demo of an app — a demo of a <strong>trust boundary</strong>.
-          </p>
+      <!-- CLOSE / CTA -->
+      <section class="footer-callout" aria-label="Closing call to action">
+        <p>
+          These examples are static. <strong>Your decisions are not.</strong><br />
+          Try a real internal decision narrative in the sandbox and observe how an “accountability bundle” becomes reproducible.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn-primary" href="./simulator.html" target="_blank" rel="noopener noreferrer">Try your own decision</a>
+          <a class="btn-ghost" href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+          <a class="btn-ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read the RPO spec</a>
         </div>
-        <div>
-          <h3>What each example contains</h3>
-          <p>
-            Canonical JSON, human-readable PDF, SHA-256 public hash.
-            <strong>Nothing proprietary</strong>. Nothing hidden.
-          </p>
-        </div>
-        <div>
-          <h3>What it proves</h3>
-          <p>
-            <strong>Reconstructability</strong>. If the story changes later, the integrity anchor reveals it.
-          </p>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <div class="divider"></div>
-
-    <!-- GALLERY -->
-    <div class="section-title">Example gallery</div>
-    <section class="cards" aria-label="RPO examples">
-
-      <!-- 1 -->
-      <article class="card" aria-label="Promotion decision example">
-        <div class="card-inner">
-          <div>
-            <div class="tag"><i aria-hidden="true"></i> HR</div>
-            <h4>Promotion decision — <span>March 2024</span></h4>
-            <p class="ctx">
-              An internal promotion is challenged six months later: “show the rationale and the chain”.
-              This RPO preserves what existed at the time and prevents silent narrative drift.
-            </p>
-            <ul class="bullets">
-              <li><strong>What existed</strong>: approvals, criteria, meeting rationale, exceptions.</li>
-              <li><strong>What is structured</strong>: canonical fields, evidence list, narrative block.</li>
-              <li><strong>What cannot be rewritten</strong>: the initial state without hash mismatch.</li>
-            </ul>
-          </div>
-
-          <div class="card-right">
-            <div class="meta">
-              <div class="k">Bundle</div><div class="v">rpo-example-hr-promo-2024-03</div>
-              <div class="k">Integrity</div><div class="v">SHA-256</div>
-            </div>
-
-            <div class="actions">
-              <!-- Replace these href with your real paths -->
-              <a class="mini" href="./examples/rpo-example-hr-promo-2024-03.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
-              <a class="mini" href="./examples/rpo-example-hr-promo-2024-03.json" target="_blank" rel="noopener noreferrer">View JSON</a>
-              <button class="mini" type="button" data-copyhash="e.g.-sha256-hex-here">Copy public_hash</button>
-            </div>
-
-            <div class="hashline">
-              Public hash (placeholder): <code>e.g.-sha256-hex-here</code><br />
-              This does not prove truth. It proves integrity and reconstructability.
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 2 -->
-      <article class="card" aria-label="Termination decision example">
-        <div class="card-inner">
-          <div>
-            <div class="tag"><i aria-hidden="true"></i> Governance</div>
-            <h4>Termination decision — <span>September 2023</span></h4>
-            <p class="ctx">
-              A termination becomes a liability when the organization cannot reconstruct the decision chain.
-              This example shows how RPO preserves the decision state “as it was”.
-            </p>
-            <ul class="bullets">
-              <li><strong>What existed</strong>: documented reasons, approvals, timelines.</li>
-              <li><strong>What is protected</strong>: integrity of the narrative and evidence references.</li>
-              <li><strong>What becomes detectable</strong>: tampering, omissions, retroactive edits.</li>
-            </ul>
-          </div>
-
-          <div class="card-right">
-            <div class="meta">
-              <div class="k">Bundle</div><div class="v">rpo-example-governance-termination-2023-09</div>
-              <div class="k">Integrity</div><div class="v">SHA-256</div>
-            </div>
-
-            <div class="actions">
-              <a class="mini" href="./examples/rpo-example-governance-termination-2023-09.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
-              <a class="mini" href="./examples/rpo-example-governance-termination-2023-09.json" target="_blank" rel="noopener noreferrer">View JSON</a>
-              <button class="mini" type="button" data-copyhash="e.g.-sha256-hex-here">Copy public_hash</button>
-            </div>
-
-            <div class="hashline">
-              Public hash (placeholder): <code>e.g.-sha256-hex-here</code><br />
-              Decision becomes defendable because the chain is reconstructable.
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 3 -->
-      <article class="card" aria-label="Internal investigation summary example">
-        <div class="card-inner">
-          <div>
-            <div class="tag"><i aria-hidden="true"></i> Compliance</div>
-            <h4>Internal investigation summary — <span>Q2 2024</span></h4>
-            <p class="ctx">
-              Investigations fail in court or audit when the timeline is unclear or “rewritten”.
-              This RPO locks the initial narrative state so later interpretations stay comparable.
-            </p>
-            <ul class="bullets">
-              <li><strong>What existed</strong>: allegations, dates/places anchors, evidence pointers.</li>
-              <li><strong>What is canonical</strong>: stable fields for issuer, subject, created_at.</li>
-              <li><strong>What remains auditable</strong>: transformations and revisions as deltas.</li>
-            </ul>
-          </div>
-
-          <div class="card-right">
-            <div class="meta">
-              <div class="k">Bundle</div><div class="v">rpo-example-compliance-investigation-q2-2024</div>
-              <div class="k">Integrity</div><div class="v">SHA-256</div>
-            </div>
-
-            <div class="actions">
-              <a class="mini" href="./examples/rpo-example-compliance-investigation-q2-2024.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
-              <a class="mini" href="./examples/rpo-example-compliance-investigation-q2-2024.json" target="_blank" rel="noopener noreferrer">View JSON</a>
-              <button class="mini" type="button" data-copyhash="e.g.-sha256-hex-here">Copy public_hash</button>
-            </div>
-
-            <div class="hashline">
-              Public hash (placeholder): <code>e.g.-sha256-hex-here</code><br />
-              RPO makes later reinterpretation possible without rewriting history.
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 4 -->
-      <article class="card" aria-label="Procurement exception example">
-        <div class="card-inner">
-          <div>
-            <div class="tag"><i aria-hidden="true"></i> Operations</div>
-            <h4>Single-source procurement exception — <span>April 2024</span></h4>
-            <p class="ctx">
-              Exceptions are where governance breaks first. This artifact shows how a “non-standard” decision
-              stays defensible when the chain remains reconstructable.
-            </p>
-            <ul class="bullets">
-              <li><strong>What existed</strong>: exception reason, approvals, constraints.</li>
-              <li><strong>What is stable</strong>: the canonical payload and integrity anchor.</li>
-              <li><strong>What becomes accountable</strong>: who signed what, and when.</li>
-            </ul>
-          </div>
-
-          <div class="card-right">
-            <div class="meta">
-              <div class="k">Bundle</div><div class="v">rpo-example-ops-procurement-exception-2024-04</div>
-              <div class="k">Integrity</div><div class="v">SHA-256</div>
-            </div>
-
-            <div class="actions">
-              <a class="mini" href="./examples/rpo-example-ops-procurement-exception-2024-04.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
-              <a class="mini" href="./examples/rpo-example-ops-procurement-exception-2024-04.json" target="_blank" rel="noopener noreferrer">View JSON</a>
-              <button class="mini" type="button" data-copyhash="e.g.-sha256-hex-here">Copy public_hash</button>
-            </div>
-
-            <div class="hashline">
-              Public hash (placeholder): <code>e.g.-sha256-hex-here</code><br />
-              Same structure. Different decision. Same accountability format.
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 5 -->
-      <article class="card" aria-label="Board memo example">
-        <div class="card-inner">
-          <div>
-            <div class="tag"><i aria-hidden="true"></i> Board</div>
-            <h4>Board memo — <span>Strategic pivot</span></h4>
-            <p class="ctx">
-              When strategy is later questioned, you need the original state: assumptions, inputs, and sign-offs.
-              This example shows how RPO preserves “what was known when”.
-            </p>
-            <ul class="bullets">
-              <li><strong>What existed</strong>: assumptions, constraints, risk notes.</li>
-              <li><strong>What is readable</strong>: PDF for humans, JSON for verification.</li>
-              <li><strong>What stays comparable</strong>: revisions as explicit deltas.</li>
-            </ul>
-          </div>
-
-          <div class="card-right">
-            <div class="meta">
-              <div class="k">Bundle</div><div class="v">rpo-example-board-memo-strategic-pivot</div>
-              <div class="k">Integrity</div><div class="v">SHA-256</div>
-            </div>
-
-            <div class="actions">
-              <a class="mini" href="./examples/rpo-example-board-memo-strategic-pivot.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
-              <a class="mini" href="./examples/rpo-example-board-memo-strategic-pivot.json" target="_blank" rel="noopener noreferrer">View JSON</a>
-              <button class="mini" type="button" data-copyhash="e.g.-sha256-hex-here">Copy public_hash</button>
-            </div>
-
-            <div class="hashline">
-              Public hash (placeholder): <code>e.g.-sha256-hex-here</code><br />
-              The artifact answers one question: “Show me the chain.”
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- 6 -->
-      <article class="card" aria-label="Security incident report example">
-        <div class="card-inner">
-          <div>
-            <div class="tag"><i aria-hidden="true"></i> Security</div>
-            <h4>Security incident report — <span>Initial assessment</span></h4>
-            <p class="ctx">
-              Incident response is all about timing. This example locks the first assessment state,
-              so later reports can’t quietly overwrite what was initially stated.
-            </p>
-            <ul class="bullets">
-              <li><strong>What existed</strong>: first timeline, impact statement, evidence pointers.</li>
-              <li><strong>What is stable</strong>: canonical payload + integrity anchor.</li>
-              <li><strong>What is enforced</strong>: no silent rewrite of the initial report.</li>
-            </ul>
-          </div>
-
-          <div class="card-right">
-            <div class="meta">
-              <div class="k">Bundle</div><div class="v">rpo-example-security-incident-initial</div>
-              <div class="k">Integrity</div><div class="v">SHA-256</div>
-            </div>
-
-            <div class="actions">
-              <a class="mini" href="./examples/rpo-example-security-incident-initial.pdf" target="_blank" rel="noopener noreferrer">View PDF</a>
-              <a class="mini" href="./examples/rpo-example-security-incident-initial.json" target="_blank" rel="noopener noreferrer">View JSON</a>
-              <button class="mini" type="button" data-copyhash="e.g.-sha256-hex-here">Copy public_hash</button>
-            </div>
-
-            <div class="hashline">
-              Public hash (placeholder): <code>e.g.-sha256-hex-here</code><br />
-              Integrity is measurable. Transformations become explainable.
-            </div>
-          </div>
-        </div>
-      </article>
-
-    </section>
-
-    <!-- COMPARE -->
-    <div class="divider"></div>
-    <div class="section-title">Compare them</div>
-    <section class="panel" aria-label="Compare examples">
-      <h2>Same structure, different decisions</h2>
-      <div class="scope">
-        All examples share the <strong>same canonical fields</strong> and the same integrity boundary.
-        Different domains, same accountability format. That is the point: you can enforce it across tools,
-        reorganizations, and handovers — without losing reconstructability.
-      </div>
-    </section>
-
-    <!-- CLOSE / CTA -->
-    <section class="footer-callout" aria-label="Closing call to action">
-      <p>
-        These examples are static. <strong>Your decisions are not.</strong><br />
-        Try a real internal decision narrative in the sandbox and observe how an “accountability bundle” becomes reproducible.
-      </p>
-
-      <div class="cta-row">
-        <a class="btn-primary" href="./simulator.html" target="_blank" rel="noopener noreferrer">Try your own decision</a>
-        <a class="btn-ghost" href="./spec.html" target="_blank" rel="noopener noreferrer">Read the RPO spec</a>
-      </div>
-    </section>
+    </div>
   </main>
 
   <script>
@@ -1035,7 +1061,7 @@
       btns.forEach(btn => {
         btn.addEventListener("click", async () => {
           const h = btn.getAttribute("data-copyhash") || "";
-          if (!h) return flash(btn, "NO HASH");
+          if (!h || h === "PLACEHOLDER_SHA256_HEX") return flash(btn, "SET HASH");
           try{
             await navigator.clipboard.writeText(h);
             flash(btn, "COPIED");
@@ -1048,6 +1074,3 @@
   </script>
 </body>
 </html>
-
-
-
