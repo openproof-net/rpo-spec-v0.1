@@ -1,904 +1,883 @@
-<!-- docs/contexts.html -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-page="contexts">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>OpenProof — RPO v0.1 | Contexts</title>
 
-  <title>OpenProof RPO v0.1 — Contexts (Defense Industrial)</title>
-  <meta name="description" content="Context is not UX. It is risk architecture. Governance, Legal, Crisis — same sealed core, different exposure models." />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://rpo.openproof.net/contexts.html" />
+  <!-- SEO -->
+  <meta name="description" content="OpenProof RPO v0.1 contexts: deterministic profiles that change lexicon, weighting, and visibility rules without altering the sealed proof structure. No AI.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://rpo.openproof.net/contexts.html">
 
-  <!-- Fonts: Orbitron + Inter -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Orbitron:wght@400;600;700;800&display=swap" rel="stylesheet" />
-
-  <style>
-    :root{
-      --bg0:#04040E;
-      --bg1:#0b0f14;
-      --gold:#d4af37;
-      --gold2:#f1e6a3;
-      --gold3:#8f7633;
-      --ivory:#f7f3e8;
-      --ink: rgba(198,186,150,.92);
-      --muted: rgba(179,164,139,.92);
-
-      --panel: linear-gradient(145deg, rgba(10,12,27,0.97), rgba(5,7,18,0.98));
-      --stroke: rgba(212,175,55,0.28);
-      --stroke2: rgba(212,175,55,0.18);
-      --dash: rgba(136,116,72,0.35);
-
-      --radius: 22px;
-      --shadow: 0 26px 70px rgba(0,0,0,0.55);
-      --focus: 0 0 0 3px rgba(241,230,163,0.22), 0 0 0 1px rgba(212,175,55,0.35);
-
-      --wrap-max: 1720px;
-      --wrap-pad: 64px;
-      --grid-gap: 24px;
-    }
-
-    *{box-sizing:border-box; margin:0; padding:0}
-    html,body{height:100%}
-    body{
-      min-height:100vh;
-      font-family:"Inter",system-ui,-apple-system,BlinkMacSystemFont,sans-serif;
-      color: var(--ivory);
-      background:
-        radial-gradient(circle at 10% -10%, rgba(241,230,163,0.25), transparent 55%),
-        radial-gradient(circle at 90% 110%, rgba(241,230,163,0.18), transparent 55%),
-        linear-gradient(180deg, #050712, #020208 60%, #050712 100%);
-      overflow-x:hidden;
-    }
-
-    a{color:inherit}
-    a:focus-visible, button:focus-visible{
-      outline:none; box-shadow: var(--focus); border-radius: 10px;
-    }
-    ::selection{background: rgba(212,175,55,.25);}
-
-    #bg-field{position:fixed; inset:0; width:100%; height:100%; z-index:-1;}
-
-    /* Top bar (aligned with simulator) */
-    .top-bar{
-      position:fixed;
-      top:0; left:0; right:0;
-      height:68px;
-      padding:0 40px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      z-index:10;
-      background:linear-gradient(to bottom, rgba(4,4,14,0.96), rgba(4,4,14,0.88), transparent);
-      backdrop-filter:blur(18px);
-      border-bottom:1px solid rgba(212,175,55,0.22);
-    }
-    .top-left{display:flex; align-items:center; gap:14px; min-width:280px;}
-    .emblem{
-      width:34px;height:34px;border-radius:999px;
-      background:radial-gradient(circle at 30% 0, #f1e6a3, #d4af37 60%, #8f7633 100%);
-      box-shadow:0 0 18px rgba(241,230,163,0.8);
-      flex:0 0 auto;
-    }
-    .brand{
-      font-family:"Orbitron",sans-serif;
-      font-size:0.72rem;
-      letter-spacing:0.18em;
-      text-transform:uppercase;
-      color:var(--muted);
-      white-space:nowrap;
-    }
-    .brand span{color:var(--gold2)}
-
-    .top-nav{
-      display:flex; gap:22px; font-size:0.86rem; color:var(--muted);
-      align-items:center; justify-content:center; flex:1 1 auto;
-    }
-    .top-nav a{
-      color:inherit; text-decoration:none; position:relative; padding-bottom:3px; white-space:nowrap;
-    }
-    .top-nav a::after{
-      content:""; position:absolute; left:0; bottom:0; width:0; height:1px;
-      background:linear-gradient(90deg,var(--gold2),var(--gold));
-      transition:width .2s ease;
-    }
-    .top-nav a:hover::after{width:100%}
-    .top-nav a[aria-current="page"]{color: var(--gold2);}
-    .top-nav a[aria-current="page"]::after{width:100%}
-
-    .top-cta{
-      padding:8px 18px;
-      border-radius:999px;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      font-size:0.8rem;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      text-decoration:none;
-      white-space:nowrap;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-    }
-    .top-cta:hover{filter:brightness(1.03)}
-    .top-cta:active{transform:translateY(1px)}
-
-    /* Wrap */
-    .wrap{
-      max-width: var(--wrap-max);
-      margin: 0 auto;
-      padding: 96px var(--wrap-pad) 72px;
-    }
-
-    /* Hero */
-    .hero{
-      padding-top: 10px;
-      display:grid;
-      grid-template-columns: 1.35fr 1fr;
-      gap: 40px;
-      align-items:start;
-    }
-    .eyebrow{
-      font-family:"Orbitron",sans-serif;
-      font-size:.72rem;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:var(--muted);
-      margin-bottom:14px;
-    }
-    .eyebrow span{color:var(--gold2)}
-    h1{
-      font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-      line-height:1.06;
-      font-size:clamp(2.05rem,4.0vw,3.1rem);
-      margin-bottom:12px;
-    }
-    h1 .gold{display:block; color: var(--gold2)}
-    .lead{
-      margin-top:10px;
-      font-size:0.98rem;
-      color: rgba(198,186,150,.90);
-      line-height:1.75;
-      max-width: 90ch;
-      text-align: justify;
-    }
-
-    .hero-actions{
-      margin-top: 18px;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 10px;
-    }
-    .pill{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px; border-radius:999px;
-      border:1px solid rgba(212,175,55,.22);
-      background: rgba(0,0,0,.18);
-      color: rgba(241,230,163,.92);
-      font-family:"Orbitron",sans-serif;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.68rem;
-    }
-    .pill i{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(241,230,163,.95);
-      box-shadow: 0 0 14px rgba(241,230,163,.55);
-    }
-
-    /* Panels / Cards */
-    .panel{
-      background: var(--panel);
-      border-radius: var(--radius);
-      border: 1px solid rgba(212,175,55,0.45);
-      padding: 22px;
-      box-shadow: var(--shadow);
-      position:relative;
-      overflow:hidden;
-    }
-    .panel::before{
-      content:"";
-      position:absolute; inset:-2px;
-      background:
-        radial-gradient(1400px 520px at 20% 0%, rgba(241,230,163,0.12), transparent 55%),
-        radial-gradient(900px 420px at 110% 70%, rgba(212,175,55,0.10), transparent 55%),
-        linear-gradient(120deg, rgba(241,230,163,0.08), transparent 40%, rgba(241,230,163,0.06));
-      opacity:.95;
-      filter: blur(10px);
-      pointer-events:none;
-    }
-    .panel > *{position:relative; z-index:1}
-
-    .panel-title{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(179,164,139,.92);
-      margin-bottom: 12px;
-    }
-
-    .callout{
-      border: 1px solid rgba(212,175,55,.22);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      padding: 18px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-    }
-    .callout h3{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(179,164,139,.92);
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-    .callout p{
-      color: rgba(198,186,150,.90);
-      line-height: 1.75;
-      text-align: justify;
-    }
-
-    /* Section */
-    .section{
-      margin-top: 34px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(212,175,55,0.14);
-    }
-    .section-title{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(179,164,139,.92);
-      margin-bottom: 14px;
-    }
-
-    /* Grid blocks */
-    .grid-2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--grid-gap);
-      align-items:start;
-    }
-    .grid-3{
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: var(--grid-gap);
-      align-items:stretch;
-    }
-
-    /* Table */
-    .table{
-      border: 1px solid var(--stroke2);
-      border-radius: 18px;
-      overflow:hidden;
-      background: rgba(10,12,27,0.25);
-    }
-    .trow{
-      display:grid;
-      grid-template-columns: 1fr 1.1fr 1fr;
-      gap: 14px;
-      padding: 12px 16px;
-      align-items:start;
-      color: rgba(198,186,150,.90);
-      line-height: 1.55;
-    }
-    .trow + .trow{border-top:1px dashed var(--dash)}
-    .thead{
-      background: rgba(10,12,27,0.45);
-      border-bottom:1px solid rgba(212,175,55,0.16);
-      font-family:"Orbitron",sans-serif;
-      text-transform:uppercase;
-      letter-spacing:.14em;
-      font-size:.68rem;
-      color: rgba(241,230,163,.86);
-    }
-    .k{color: rgba(179,164,139,.92)}
-    .v{color: rgba(241,230,163,.88)}
-    .small{font-size:.92rem}
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      font-size: .86rem;
-      color: rgba(241,230,163,.86);
-    }
-
-    /* Context cards */
-    .ctx-card{
-      border: 1px solid rgba(212,175,55,.22);
-      border-radius: 18px;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
-      padding: 18px 18px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-    }
-    .ctx-card::after{
-      content:"";
-      position:absolute; left:-40%; top:-30%;
-      width: 90%; height: 120%;
-      background: radial-gradient(circle at 30% 30%, rgba(241,230,163,0.10), transparent 60%);
-      transform: rotate(8deg);
-      opacity:.9;
-      pointer-events:none;
-    }
-    .ctx-card > *{position:relative; z-index:1}
-    .ctx-tag{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:6px 10px; border-radius:999px;
-      border:1px solid rgba(241,230,163,.35);
-      background: rgba(10,12,27,0.28);
-      font-family:"Orbitron",sans-serif;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.68rem;
-      color: rgba(241,230,163,.92);
-      margin-bottom: 10px;
-    }
-    .ctx-tag i{
-      width:8px;height:8px;border-radius:50%;
-      background: rgba(244,186,120,.95);
-      box-shadow: 0 0 14px rgba(244,186,120,.35);
-    }
-    .ctx-card h3{
-      font-family:"Orbitron",sans-serif;
-      font-size: 1.05rem;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color: rgba(241,230,163,.95);
-      margin-bottom: 8px;
-    }
-    .ctx-card p{
-      color: rgba(198,186,150,.90);
-      line-height: 1.75;
-      text-align: justify;
-    }
-    .bullets{
-      margin-top: 10px;
-      border-top: 1px dashed var(--dash);
-      padding-top: 10px;
-      display:grid;
-      gap: 8px;
-      color: rgba(198,186,150,.90);
-    }
-    .bullets li{margin-left: 18px}
-
-    /* Diagram */
-    .diagram{
-      border: 1px solid rgba(212,175,55,.18);
-      border-radius: 18px;
-      background: rgba(10,12,27,0.28);
-      padding: 16px;
-    }
-    .diagram h4{
-      font-family:"Orbitron",sans-serif;
-      font-size:.78rem;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color: rgba(179,164,139,.92);
-      margin-bottom: 10px;
-    }
-    pre{
-      margin-top: 10px;
-      border: 1px solid rgba(212,175,55,.18);
-      border-radius: 16px;
-      background: rgba(10,12,27,0.35);
-      padding: 14px;
-      font-size: 0.86rem;
-      color: rgba(241,230,163,.86);
-      overflow:auto;
-      line-height:1.45;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      white-space: pre;
-    }
-
-    /* Final strike section */
-    .strike{
-      display:grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: var(--grid-gap);
-      align-items:start;
-    }
-    .strike h3{
-      font-family:"Orbitron",sans-serif;
-      font-size:1.1rem;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      color: rgba(241,230,163,.95);
-      margin-bottom: 10px;
-    }
-    .strike p{
-      color: rgba(198,186,150,.90);
-      line-height: 1.75;
-      text-align: justify;
-    }
-    .btn-primary{
-      min-height:52px; border-radius:999px; text-decoration:none;
-      display:flex; align-items:center; justify-content:center;
-      padding:12px 18px;
-      text-transform:uppercase; letter-spacing:.12em;
-      font-size:13px; width:100%;
-      border:1px solid rgba(244,186,120,0.9);
-      background:radial-gradient(circle at 20% 0, #ffdfb0, #f48b45);
-      color:#2a1204;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
-      cursor:pointer;
-    }
-    .btn-primary:hover{filter:brightness(1.03)}
-    .btn-primary:active{transform:translateY(1px)}
-
-    footer{
-      margin-top: 28px;
-      padding-top: 18px;
-      border-top: 1px solid rgba(212,175,55,0.14);
-      color: rgba(179,164,139,.85);
-      font-size: 0.88rem;
-      display:flex;
-      justify-content:space-between;
-      gap:14px;
-      flex-wrap:wrap;
-    }
-    footer a{opacity:.9; text-decoration:none}
-    footer a:hover{opacity:1}
-
-    @media(max-width:1180px){
-      .hero{grid-template-columns:1fr; gap:22px}
-      .grid-2{grid-template-columns:1fr}
-      .grid-3{grid-template-columns:1fr}
-      .strike{grid-template-columns:1fr}
-      .wrap{padding:96px 28px 56px}
-    }
-    @media(max-width:960px){
-      .top-nav{display:none}
-      .top-bar{padding:0 16px}
-      .wrap{padding:96px 20px 56px}
-    }
-    @media (prefers-reduced-motion: reduce){
-      #bg-field{display:none}
-    }
-  </style>
-  
   <!-- OpenGraph -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="OpenProof RPO v0.1 — CEO Brief | Contextual Decision Traceability">
-<meta property="og:description" content="Context is not UX. It is risk architecture. Deterministic proof bundles for governance, litigation, and institutional resilience.">
-<meta property="og:url" content="https://rpo.openproof.net/contexts.html">
-<meta property="og:site_name" content="OpenProof">
-<meta property="og:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png">
-<meta property="og:locale" content="en_US">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OpenProof">
+  <meta property="og:title" content="OpenProof — RPO v0.1 | Contexts">
+  <meta property="og:description" content="Contexts change lexicon, weighting, and visibility rules — without changing the sealed structure. Deterministic. No AI.">
+  <meta property="og:url" content="https://rpo.openproof.net/contexts.html">
+  <meta property="og:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png">
+  <meta property="og:locale" content="en_US">
 
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OpenProof — Contexts (RPO v0.1)">
+  <meta name="twitter:description" content="Deterministic contexts: lexicon + weighting + visibility rules. Sealed structure stays invariant. No AI.">
+  <meta name="twitter:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png">
 
-<!-- Twitter -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="OpenProof — Contextual Risk Architecture">
-<meta name="twitter:description" content="Deterministic, audit-ready, board-level decision traceability.">
-<meta name="twitter:image" content="https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Person",
-      "@id": "https://maisonryardeparcey.com/#gersende",
-      "name": "Gersende Ryard de Parcey",
-      "url": "https://maisonryardeparcey.com",
-      "sameAs": [
-        "https://www.linkedin.com/in/gryard/"
-      ],
-      "jobTitle": "Founder & Decision Governance Architect",
-      "worksFor": {
+  <!-- Structured data (Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://maisonryardeparcey.com/#gersende",
+        "name": "Gersende Ryard de Parcey",
+        "url": "https://maisonryardeparcey.com",
+        "sameAs": ["https://www.linkedin.com/in/gryard/"],
+        "jobTitle": "Founder",
+        "worksFor": {
+          "@type": "Organization",
+          "@id": "https://rpo.openproof.net/#openproof",
+          "name": "OpenProof",
+          "url": "https://rpo.openproof.net/"
+        }
+      },
+      {
         "@type": "Organization",
         "@id": "https://rpo.openproof.net/#openproof",
         "name": "OpenProof",
-        "url": "https://rpo.openproof.net/"
+        "url": "https://rpo.openproof.net/",
+        "logo": "https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://rpo.openproof.net/#website",
+        "name": "OpenProof RPO",
+        "url": "https://rpo.openproof.net/",
+        "publisher": { "@id": "https://rpo.openproof.net/#openproof" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://rpo.openproof.net/contexts.html#webpage",
+        "name": "OpenProof — RPO v0.1 | Contexts",
+        "url": "https://rpo.openproof.net/contexts.html",
+        "isPartOf": { "@id": "https://rpo.openproof.net/#website" },
+        "about": { "@id": "https://rpo.openproof.net/#openproof" },
+        "author": { "@id": "https://maisonryardeparcey.com/#gersende" },
+        "mainEntityOfPage": "https://rpo.openproof.net/contexts.html"
       }
-    },
-    {
-      "@type": "Organization",
-      "@id": "https://rpo.openproof.net/#openproof",
-      "name": "OpenProof",
-      "url": "https://rpo.openproof.net/",
-      "logo": "https://uploads.strikinglycdn.com/files/5b108f2f-0feb-4789-a4dd-d1d21cd5eec6/Capture%20d%E2%80%99e%CC%81cran%202025-11-01%20a%CC%80%2016.30.35.png"
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://rpo.openproof.net/#website",
-      "name": "OpenProof",
-      "url": "https://rpo.openproof.net/",
-      "publisher": {
-        "@id": "https://rpo.openproof.net/#openproof"
-      }
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://rpo.openproof.net/contexts.html#webpage",
-      "name": "OpenProof RPO v0.1 — Contexts",
-      "url": "https://rpo.openproof.net/contexts.html",
-      "isPartOf": {
-        "@id": "https://rpo.openproof.net/#website"
-      },
-      "about": {
-        "@id": "https://rpo.openproof.net/#openproof"
-      },
-      "author": {
-        "@id": "https://maisonryardeparcey.com/#gersende"
-      },
-      "mainEntityOfPage": "https://rpo.openproof.net/contexts.html"
+    ]
+  }
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg0:#04040e;
+      --bg1:#0b0f14;
+      --panel: rgba(255,255,255,.04);
+      --panel2: rgba(255,255,255,.03);
+      --stroke: rgba(212,175,55,.22);
+      --stroke2: rgba(212,175,55,.14);
+      --gold:#d4af37;
+      --gold2:#f1e6a3;
+      --text:#e9eef7;
+      --muted:#a7b0c2;
+      --muted2:#8c95a8;
+      --danger:#ff6b6b;
+      --ok:#7dffb3;
+      --warn:#ffd166;
+
+      --r:18px;
+      --shadow: 0 20px 70px rgba(0,0,0,.55);
+      --shadow2: 0 10px 40px rgba(0,0,0,.45);
+
+      --max: 1760px;
     }
-  ]
-}
-</script>
 
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(212,175,55,.10), transparent 60%),
+        radial-gradient(900px 600px at 80% 20%, rgba(241,230,163,.08), transparent 55%),
+        radial-gradient(900px 700px at 60% 85%, rgba(212,175,55,.08), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      letter-spacing:.1px;
+    }
 
+    a{ color:inherit; text-decoration:none; }
+    .container{ max-width: var(--max); margin:0 auto; padding: 0 28px; }
 
+    /* Top nav */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(4,4,14,.86), rgba(4,4,14,.55));
+      border-bottom: 1px solid rgba(212,175,55,.12);
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap: 18px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 240px;
+    }
+    .dot{
+      width:7px;height:7px;border-radius:10px;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      box-shadow: 0 0 0 4px rgba(212,175,55,.10);
+      flex: 0 0 auto;
+    }
+    .brand-title{
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      letter-spacing:.9px;
+      font-size: 13px;
+      color: rgba(233,238,247,.92);
+    }
+    .brand-sub{
+      font-size: 11px;
+      color: rgba(167,176,194,.85);
+      margin-top: 2px;
+    }
+    .brand-stack{ display:flex; flex-direction:column; line-height:1.1; }
+
+    .navlinks{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      flex-wrap: wrap;
+      justify-content:center;
+    }
+    .navlinks a{
+      font-size: 12px;
+      color: rgba(233,238,247,.86);
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(255,255,255,.02);
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+    .navlinks a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,175,55,.25);
+      background: rgba(255,255,255,.035);
+    }
+    .navlinks a.active{
+      border-color: rgba(212,175,55,.32);
+      background: linear-gradient(180deg, rgba(212,175,55,.14), rgba(255,255,255,.02));
+      color: rgba(241,230,163,.96);
+    }
+
+    .cta{ display:flex; align-items:center; gap:10px; min-width: 240px; justify-content:flex-end; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(255,255,255,.02);
+      color: rgba(233,238,247,.92);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing:.2px;
+      cursor:pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(212,175,55,.30); }
+    .btn.primary{
+      background: linear-gradient(90deg, rgba(212,175,55,.92), rgba(241,230,163,.92));
+      color: rgba(12,14,18,.92);
+      border-color: rgba(241,230,163,.45);
+      box-shadow: 0 12px 40px rgba(212,175,55,.14);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.015);
+      border-color: rgba(212,175,55,.14);
+      color: rgba(233,238,247,.86);
+    }
+    .btn.small{ padding:8px 12px; font-size: 11px; }
+
+    /* Panels */
+    .panel{
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border: 1px solid rgba(212,175,55,.16);
+      border-radius: var(--r);
+      box-shadow: var(--shadow2);
+    }
+    .panel.inset{
+      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018));
+      border: 1px solid rgba(212,175,55,.14);
+    }
+    .panel .inner{ padding: 18px; }
+
+    /* Hero */
+    .hero{ margin: 18px 0 16px; }
+    .hero .panel{ box-shadow: var(--shadow); }
+    .kicker{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: rgba(241,230,163,.85);
+      margin-bottom: 8px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-family: Orbitron, Inter, sans-serif;
+      letter-spacing: .2px;
+      font-weight: 700;
+      line-height: 1.1;
+      font-size: clamp(28px, 3.2vw, 46px);
+      color: rgba(233,238,247,.96);
+    }
+    h1 .hl{
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .lead{
+      margin: 0 0 14px;
+      color: rgba(167,176,194,.92);
+      max-width: 110ch;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .chips{
+      display:flex;
+      gap:10px;
+      flex-wrap: wrap;
+      align-items:center;
+      margin: 12px 0 6px;
+    }
+    .chip{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      border-radius: 999px;
+      padding: 7px 10px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      font-size: 11px;
+      color: rgba(233,238,247,.86);
+    }
+    .chip b{ font-weight:700; color: rgba(241,230,163,.92); }
+    .chip .pill{
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.09);
+      color: rgba(241,230,163,.92);
+      font-size: 10px;
+      letter-spacing:.3px;
+      text-transform: uppercase;
+    }
+
+    .note{
+      margin-top: 10px;
+      color: rgba(167,176,194,.82);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .note b{ color: rgba(241,230,163,.9); }
+
+    /* Layout */
+    .grid{
+      display:grid;
+      grid-template-columns: 1.35fr .90fr;
+      gap: 22px;
+      align-items:start;
+      margin: 16px 0 24px;
+    }
+
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      margin: 0 0 10px;
+    }
+    .section-title h2{
+      margin:0;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      font-weight: 700;
+    }
+    .section-title .meta{
+      font-size: 11px;
+      color: rgba(167,176,194,.82);
+    }
+
+    /* Cards */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .card{
+      border-radius: 16px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: linear-gradient(180deg, rgba(0,0,0,.22), rgba(255,255,255,.02));
+      padding: 14px 14px;
+      min-height: 160px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      cursor:pointer;
+    }
+    .card:hover{
+      transform: translateY(-1px);
+      border-color: rgba(212,175,55,.26);
+      background: linear-gradient(180deg, rgba(0,0,0,.24), rgba(255,255,255,.03));
+    }
+    .card.active{
+      border-color: rgba(212,175,55,.32);
+      box-shadow: 0 18px 60px rgba(0,0,0,.40);
+    }
+    .card .t{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+    }
+    .card .name{
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing:.6px;
+      color: rgba(241,230,163,.92);
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing:.3px;
+      border: 1px solid rgba(212,175,55,.18);
+      background: rgba(212,175,55,.10);
+      color: rgba(241,230,163,.95);
+      flex:0 0 auto;
+    }
+    .badge.ok{ border-color: rgba(125,255,179,.25); background: rgba(125,255,179,.10); color: rgba(180,255,220,.92); }
+    .badge.warn{ border-color: rgba(255,209,102,.25); background: rgba(255,209,102,.10); color: rgba(255,236,180,.92); }
+    .badge.bad{ border-color: rgba(255,107,107,.25); background: rgba(255,107,107,.10); color: rgba(255,200,200,.92); }
+
+    .card .desc{
+      font-size: 12px;
+      color: rgba(233,238,247,.86);
+      line-height: 1.5;
+    }
+    .card .small{
+      font-size: 11px;
+      color: rgba(167,176,194,.82);
+      line-height: 1.45;
+    }
+
+    /* Table-ish blocks */
+    .tableish{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+      align-items: start;
+    }
+    .trow{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,.10);
+      background: rgba(0,0,0,.18);
+      min-height: 56px;
+    }
+    .trow .k{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: rgba(167,176,194,.78);
+    }
+    .trow .v{
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(233,238,247,.90);
+      line-height: 1.45;
+      word-break: break-word;
+    }
+    .span-2{ grid-column: 1 / -1; }
+
+    .mono{
+      margin-top: 10px;
+      padding: 14px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.12);
+      background: rgba(0,0,0,.24);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 12.5px;
+      line-height: 1.75;
+      color: rgba(233,238,247,.88);
+      max-width: 110ch;
+      overflow:auto;
+    }
+
+    /* Sticky right */
+    .side{ position: sticky; top: 74px; }
+    .side .mini{
+      font-size: 11px; color: rgba(167,176,194,.82); line-height: 1.45;
+    }
+    .side .callouts{
+      display:flex; flex-direction:column; gap: 10px; margin-top: 10px;
+    }
+    .pill2{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      font-size: 11px;
+      color: rgba(167,176,194,.88);
+    }
+    .pill2 b{ color: rgba(241,230,163,.92); }
+
+    /* Footer */
+    .foot{
+      display:flex;
+      justify-content:space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: rgba(167,176,194,.72);
+      font-size: 11px;
+      padding: 18px 0 28px;
+      border-top: 1px solid rgba(212,175,55,.10);
+      margin-top: 18px;
+    }
+    .foot a{
+      color: rgba(167,176,194,.82);
+      border-bottom: 1px dotted rgba(212,175,55,.18);
+    }
+    .foot a:hover{
+      color: rgba(241,230,163,.92);
+      border-bottom-color: rgba(241,230,163,.35);
+    }
+
+    @media (max-width: 1100px){
+      .grid{ grid-template-columns: 1fr; }
+      .brand{ min-width: 0; }
+      .cta{ min-width: 0; }
+      .cards{ grid-template-columns: 1fr; }
+      .tableish{ grid-template-columns: 1fr; }
+      .span-2{ grid-column: auto; }
+      .side{ position: relative; top:auto; }
+      .mono{ max-width: none; }
+    }
+  </style>
 </head>
 
 <body>
-  <canvas id="bg-field" aria-hidden="true"></canvas>
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="container">
+      <div class="nav">
+        <div class="brand">
+          <div class="dot" aria-hidden="true"></div>
+          <div class="brand-stack">
+            <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
+            <div class="brand-sub">Probative engine & governance</div>
+          </div>
+        </div>
 
-  <header class="top-bar">
-    <div class="top-left">
-      <div class="emblem" aria-hidden="true"></div>
-      <div class="brand">OPENPROOF<span>.NET — RPO v0.1</span></div>
+        <div class="navlinks" aria-label="Primary navigation">
+          <a href="https://rpo.openproof.net/index.html" target="_blank" rel="noopener noreferrer">Home</a>
+          <a href="https://rpo.openproof.net/simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a>
+          <a href="https://rpo.openproof.net/how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+          <a href="https://rpo.openproof.net/spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
+          <a href="https://rpo.openproof.net/tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+          <a href="https://rpo.openproof.net/examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+          <a class="active" href="https://rpo.openproof.net/contexts.html" target="_blank" rel="noopener noreferrer">Contexts</a>
+        </div>
+
+        <div class="cta">
+          <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <nav class="top-nav" aria-label="Primary navigation">
-      <!-- Per your rule: open navigation in a new tab (anchors only stay same tab; none here). -->
-      <a href="./index.html" target="_blank" rel="noopener noreferrer">Home</a>
-      <a href="./simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a>
-      <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
-      <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
-      <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
-      <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
-      <a href="./contexts.html" aria-current="page" target="_blank" rel="noopener noreferrer">Contexts</a>
-    </nav>
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="panel">
+        <div class="inner">
+          <div class="kicker">Deterministic contexts</div>
+          <h1>Contexts. <span class="hl">Same sealed structure.</span> Different institutional lens.</h1>
+          <p class="lead">
+            A context is a deterministic profile that changes <b>lexicon</b>, <b>weighting</b>, and <b>visibility rules</b>.
+            The sealed structure stays invariant: same keys, same hashing, same verification — no “AI opinion”, no interpretation.
+          </p>
 
-    <a class="top-cta" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot Cockpit</a>
-  </header>
+          <div class="chips">
+            <span class="chip"><span class="pill">Invariant</span> <b>Sealed structure</b></span>
+            <span class="chip"><span class="pill">Variable</span> <b>Vocabulary</b></span>
+            <span class="chip"><span class="pill">Variable</span> <b>Weighting</b></span>
+            <span class="chip"><span class="pill">Variable</span> <b>Visibility</b></span>
+            <span class="chip"><span class="pill">No</span> <b>AI</b></span>
+          </div>
 
-  <main class="wrap" role="main">
+          <div class="note">
+            <b>RPO</b> = sealed JSON core + human-readable preview + public hash. The hash proves <b>integrity</b>, not “truth”.
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <!-- HERO -->
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="grid">
+      <!-- Left -->
       <div>
-        <div class="eyebrow">Defense industrial <span>risk framing</span></div>
+        <div class="panel inset">
+          <div class="inner">
+            <div class="section-title">
+              <h2>Pick a context</h2>
+              <div class="meta">3 profiles · deterministic presets</div>
+            </div>
 
-        <h1 id="hero-title">
-          Contexts.
-          <span class="gold">Context is not UX. It is risk architecture.</span>
-        </h1>
+            <div class="cards" id="cards">
+              <div class="card active" data-ctx="institutional_crisis" role="button" aria-label="Select Institutional crisis">
+                <div class="t">
+                  <div class="name">Institutional crisis</div>
+                  <span class="badge warn">MEDIUM</span>
+                </div>
+                <div class="desc">Escalation readiness, stakeholder mapping, uncertainty logging, reconstruction under pressure.</div>
+                <div class="small">Best when the institution needs a stable reaction path at Moment T.</div>
+              </div>
 
-        <p class="lead">
-          A decision does not change. Its exposure does.
-          In regulated defense industry groups, the same executive decision can be audit-exposed, litigated, or escalated institutionally.
-          Context framing determines which weakness becomes fatal — while the sealed RPO core remains invariant.
-        </p>
+              <div class="card" data-ctx="labor_dispute" role="button" aria-label="Select Labor / litigation readiness">
+                <div class="t">
+                  <div class="name">Labor / litigation readiness</div>
+                  <span class="badge bad">HIGH</span>
+                </div>
+                <div class="desc">Opposability framing, chain-of-custody mindset, defensible HR narrative without “AI judgment”.</div>
+                <div class="small">Best when proceedings are plausible or already initiated.</div>
+              </div>
 
-        <div class="hero-actions" aria-label="Hero key points">
-          <span class="pill"><i aria-hidden="true"></i> Same sealed core</span>
-          <span class="pill"><i aria-hidden="true"></i> Different exposure model</span>
-          <span class="pill"><i aria-hidden="true"></i> Moment T reconstructibility</span>
-          <span class="pill"><i aria-hidden="true"></i> Human accountability</span>
+              <div class="card" data-ctx="regulatory_audit" role="button" aria-label="Select Regulatory audit window">
+                <div class="t">
+                  <div class="name">Regulatory audit window</div>
+                  <span class="badge warn">MEDIUM</span>
+                </div>
+                <div class="desc">Definition drift control, lineage discipline, repeatable evidence production over 12–36 months.</div>
+                <div class="small">Best when compliance is a cadence, not a one-off crisis.</div>
+              </div>
+            </div>
+
+            <div class="section-title" style="margin-top:14px;">
+              <h2>What changes vs what never changes</h2>
+              <div class="meta">clean separation</div>
+            </div>
+
+            <div class="tableish">
+              <div class="trow">
+                <div class="k">Never changes</div>
+                <div class="v">Sealed JSON keys · hash function · verification logic · invariant flags</div>
+              </div>
+              <div class="trow">
+                <div class="k">Changes with context</div>
+                <div class="v">Labels · exposure vocabulary · weighting bands · what is shown in the readable preview</div>
+              </div>
+
+              <div class="trow span-2">
+                <div class="k">Deterministic contract</div>
+                <div class="v">Same input → same output. Context only selects a profile. No probabilistic “model behavior”.</div>
+              </div>
+            </div>
+
+            <div class="section-title" style="margin-top:14px;">
+              <h2>Selected context profile</h2>
+              <div class="meta" id="ctxMeta">—</div>
+            </div>
+
+            <div class="tableish">
+              <div class="trow">
+                <div class="k">Context</div>
+                <div class="v" id="ctxName">Institutional crisis</div>
+              </div>
+              <div class="trow">
+                <div class="k">Default exposure band</div>
+                <div class="v" id="ctxExposure">MEDIUM</div>
+              </div>
+              <div class="trow span-2">
+                <div class="k">Primary intent</div>
+                <div class="v" id="ctxIntent">Escalation readiness, stakeholder mapping, uncertainty logging, reconstruction under pressure.</div>
+              </div>
+
+              <div class="trow">
+                <div class="k">Lexicon shift</div>
+                <div class="v" id="ctxLexicon">Institutional reaction · stakeholder exposure · crisis perimeter</div>
+              </div>
+              <div class="trow">
+                <div class="k">Visibility rules</div>
+                <div class="v" id="ctxVisibility">Operational view shows escalation grid + lineage + full hash</div>
+              </div>
+
+              <div class="trow span-2">
+                <div class="k">Weighting bias</div>
+                <div class="v" id="ctxWeighting">Security logs + legal snapshot weighted higher during crisis framing</div>
+              </div>
+            </div>
+
+            <div class="section-title" style="margin-top:14px;">
+              <h2>Machine-readable profile</h2>
+              <div class="meta">copy/paste into configs later</div>
+            </div>
+
+            <div class="mono" id="profileJson" aria-label="Context profile JSON"></div>
+
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
+              <button class="btn ghost small" id="btnCopy">Copy JSON</button>
+              <button class="btn ghost small" id="btnDownload">Download JSON</button>
+              <a class="btn small" href="https://rpo.openproof.net/simulator.html" target="_blank" rel="noopener noreferrer">Open Simulator</a>
+            </div>
+
+            <div class="note">
+              If you later implement real configs: store these as <b>profiles</b> and keep pipeline folders unchanged. Context must not fork the sealed structure.
+            </div>
+          </div>
         </div>
       </div>
 
-      <aside class="panel" aria-label="Executive thesis panel">
-        <div class="panel-title">Executive thesis</div>
+      <!-- Right -->
+      <aside class="side">
+        <div class="panel">
+          <div class="inner">
+            <div class="section-title" style="margin:0;">
+              <h2>Context sanity check</h2>
+              <div class="meta">quick audit</div>
+            </div>
 
-        <div class="callout">
-          <h3>RPO does not decide</h3>
-          <p>
-            This is not an HR tool. This is not an AI decision engine.
-            It is an infrastructure of contextual decision traceability: it enforces perimeter declaration,
-            lineage discipline, and reconstructibility thresholds so decisions remain defensible under pressure.
-          </p>
-        </div>
+            <div class="callouts">
+              <span class="pill2"><b>Rule 1:</b> sealed keys stay invariant</span>
+              <span class="pill2"><b>Rule 2:</b> context only shifts language + weighting</span>
+              <span class="pill2"><b>Rule 3:</b> hash means integrity, not truth</span>
+            </div>
 
-        <div style="height:12px"></div>
+            <div class="mini" style="margin-top:12px;">
+              A context is not “branding”. It is an institutional lens that makes the same bundle readable for different audiences
+              (ops, legal, audit, executive) without changing what is sealed.
+            </div>
 
-        <div class="callout">
-          <h3>Board-level reality</h3>
-          <p>
-            If challenged, the only question that matters is simple:
-            can the organization reconstruct precisely what existed at Moment T — across entities, systems and definitions —
-            without improvisation, without interpretation drift, and without “missing pieces” becoming a liability.
-          </p>
+            <div class="panel inset" style="margin-top:14px;">
+              <div class="inner">
+                <div class="section-title" style="margin:0 0 8px;">
+                  <h2>Why this matters</h2>
+                  <div class="meta">power is in wording</div>
+                </div>
+                <div class="mini">
+                  Institutions do not collapse because data is missing. They collapse because decisions become
+                  <b>non-reconstructible</b>. Contexts prevent the classic failure: “same facts, wrong frame, wrong escalation”.
+                </div>
+              </div>
+            </div>
+
+            <div class="panel inset" style="margin-top:14px;">
+              <div class="inner">
+                <div class="section-title" style="margin:0 0 8px;">
+                  <h2>Next step</h2>
+                  <div class="meta">operationalization</div>
+                </div>
+                <div class="mini">
+                  Use the simulator to show how context changes the readable layer while the hash stays stable for the sealed core.
+                </div>
+                <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+                  <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
+                  <a class="btn ghost" href="https://rpo.openproof.net/spec.html" target="_blank" rel="noopener noreferrer">Read Spec</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </aside>
     </section>
 
-    <!-- WHY THREE CONTEXTS -->
-    <section class="section" aria-labelledby="why-title">
-      <h2 class="section-title" id="why-title">Why three contexts exist</h2>
-
-      <div class="grid-2">
-        <div class="callout">
-          <h3>Because defense governance is multi-layered</h3>
-          <p>
-            A nomination to a sensitive role can simultaneously trigger internal audit review, adversarial litigation,
-            and institutional escalation. Each exposure layer has a different failure mode, different priority evidence,
-            and different reconstructibility thresholds. Context is not decoration. It is the map of executive risk.
-          </p>
-        </div>
-
-        <div class="table" role="table" aria-label="Context failure modes">
-          <div class="trow thead" role="row">
-            <div role="columnheader">Context</div>
-            <div role="columnheader">Failure mode</div>
-            <div role="columnheader">Executive risk</div>
-          </div>
-          <div class="trow" role="row">
-            <div class="v" role="cell">Governance</div>
-            <div role="cell">Audit collapse</div>
-            <div role="cell">Structural credibility erosion</div>
-          </div>
-          <div class="trow" role="row">
-            <div class="v" role="cell">Legal Proceedings</div>
-            <div role="cell">Attribution breakdown</div>
-            <div role="cell">Judicial vulnerability</div>
-          </div>
-          <div class="trow" role="row">
-            <div class="v" role="cell">Institutional Crisis</div>
-            <div role="cell">Narrative destabilization</div>
-            <div role="cell">Political / reputational shock</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- THE THREE CONTEXTS -->
-    <section class="section" aria-labelledby="ctx-title">
-      <h2 class="section-title" id="ctx-title">The three contexts</h2>
-
-      <div class="grid-3">
-
-        <!-- Governance -->
-        <article class="ctx-card" aria-label="Governance context">
-          <div class="ctx-tag"><i aria-hidden="true"></i> Governance Context</div>
-          <h3>Audit survivability</h3>
-          <p class="small">
-            Executive question: <span class="v">Can this decision survive reconstruction two years from now under regulatory review?</span>
-          </p>
-          <ul class="bullets" aria-label="Governance focus bullets">
-            <li>Definition stability across entities</li>
-            <li>Declared systems perimeter</li>
-            <li>Lineage continuity and ownership</li>
-            <li>Moment T freeze, audit window reconstructibility</li>
-          </ul>
-          <p style="margin-top:10px" class="small">
-            Governance exposure is slow, but it compounds. Definition drift today becomes audit weakness tomorrow.
-          </p>
-        </article>
-
-        <!-- Legal -->
-        <article class="ctx-card" aria-label="Legal proceedings context">
-          <div class="ctx-tag"><i aria-hidden="true"></i> Legal Proceedings</div>
-          <h3>Litigation survivability</h3>
-          <p class="small">
-            Executive question: <span class="v">Can this decision survive adversarial reconstruction?</span>
-          </p>
-          <ul class="bullets" aria-label="Legal focus bullets">
-            <li>Chain-of-custody markers (extract ids, timestamps)</li>
-            <li>Attributable evidence only</li>
-            <li>Contradiction surfacing and perimeter integrity</li>
-            <li>Opposable documentation snapshot</li>
-          </ul>
-          <p style="margin-top:10px" class="small">
-            In litigation, absence of attribution destroys defensibility.
-            A narrative without traceable extraction is not evidence — it is interpretation.
-          </p>
-        </article>
-
-        <!-- Crisis -->
-        <article class="ctx-card" aria-label="Institutional crisis context">
-          <div class="ctx-tag"><i aria-hidden="true"></i> Institutional Crisis</div>
-          <h3>Escalation survivability</h3>
-          <p class="small">
-            Executive question: <span class="v">Can this decision survive systemic escalation?</span>
-          </p>
-          <ul class="bullets" aria-label="Crisis focus bullets">
-            <li>Uncertainty logging (what is known vs unknown)</li>
-            <li>Contradiction mapping under pressure</li>
-            <li>Stakeholder perimeter stabilization</li>
-            <li>Reconstructibility during fast-moving escalation</li>
-          </ul>
-          <p style="margin-top:10px" class="small">
-            Speed without reconstructibility creates systemic fragility.
-            In crisis, narrative vacuum is filled by speculation. RPO preserves structural trace.
-          </p>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- WHAT NEVER CHANGES -->
-    <section class="section" aria-labelledby="invariants-title">
-      <h2 class="section-title" id="invariants-title">What never changes</h2>
-
-      <div class="grid-2">
-        <div class="callout">
-          <h3>Framing changes exposure — not integrity</h3>
-          <p>
-            Context framing changes lexicon, weighting, and narrative template. It does not change the integrity mechanism.
-            The sealed JSON core remains the same type of artifact: deterministic, reconstructible, hash-verifiable.
-          </p>
-          <div style="height:10px"></div>
-          <div class="mono">
-            Integrity is invariant. Exposure is contextual.
-          </div>
-        </div>
-
-        <div class="callout">
-          <h3>Invariant elements</h3>
-          <p>
-            The context changes what is prioritized. It does not change what is sealed.
-            The result is not “truth”. It is reconstructibility under pressure, with human accountability.
-          </p>
-          <div style="height:10px"></div>
-          <div class="table" aria-label="Invariant list">
-            <div class="trow thead"><div>Invariant</div><div>Why it matters</div><div>Executive outcome</div></div>
-            <div class="trow"><div class="v">Sealed JSON core</div><div>Single source of bundle truth</div><div>Reconstructible evidence base</div></div>
-            <div class="trow"><div class="v">Public hash</div><div>Integrity over time</div><div>Non-repudiation of changes</div></div>
-            <div class="trow"><div class="v">Deterministic engine</div><div>No opaque inference</div><div>Audit-ready explainability</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DEFENSE INDUSTRIAL RELEVANCE -->
-    <section class="section" aria-labelledby="relevance-title">
-      <h2 class="section-title" id="relevance-title">Executive relevance for industrial defense groups</h2>
-
-      <div class="grid-2">
-        <div class="callout">
-          <h3>Not HR. Exposure engineering.</h3>
-          <p>
-            This layer sits between decision, data perimeter, and exposure surface.
-            It enforces perimeter declaration and lineage discipline across multi-entity landscapes, where
-            inconsistent definitions, partial sources, or non-attributable artifacts become executive liabilities.
-          </p>
-          <div style="height:10px"></div>
-          <p>
-            In regulated defense environments, reconstructibility is not a “nice-to-have”.
-            It is structural resilience.
-          </p>
-        </div>
-
-        <div class="diagram" aria-label="Decision diagram">
-          <h4>The industrial logic</h4>
-          <pre aria-label="ASCII diagram">
-               Decision
-                   │
-         ┌─────────┼─────────┐
-    Governance     Legal     Crisis
-         │            │          │
-     Audit Risk   Litigation   Escalation
-         │            │          │
-      Sealed RPO Core (unchanged)
-          </pre>
-          <div class="small" style="color: rgba(198,186,150,.90); line-height:1.7; text-align:justify;">
-            The core remains sealed. The exposure model adapts.
-            That is contextual traceability.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BOARD-LEVEL STRIKE -->
-    <section class="section" aria-labelledby="board-title">
-      <h2 class="section-title" id="board-title">Why this matters at board level</h2>
-
-      <div class="strike">
-        <div class="panel" aria-label="Board strike content">
-          <div class="panel-title">Board-ready statement</div>
-          <h3>Executive accountability is personal.</h3>
-          <p>
-            Boards do not get burned by “bad intent”. They get burned by <span class="v">unreconstructible decisions</span>.
-            In defense industry governance, responsibility flows upward, and gaps in lineage become gaps in accountability.
-          </p>
-          <div style="height:10px"></div>
-          <p>
-            When an investigation, audit, or escalation happens, the organization must answer without improvisation:
-          </p>
-          <div style="height:10px"></div>
-          <div class="callout" style="margin-top:10px">
-            <h3>One question</h3>
-            <p>
-              If challenged, can we reconstruct — precisely — what existed at Moment T, which systems were available,
-              which definitions were used, what was missing, and who owned the lineage?
-            </p>
-          </div>
-          <div style="height:10px"></div>
-          <p>
-            RPO is designed for that moment. Not for comfort. For exposure.
-          </p>
-        </div>
-
-        <div class="callout" aria-label="Board implications">
-          <h3>Board implications</h3>
-          <p>
-            This is a governance control surface:
-            it reduces personal exposure by making reconstructibility measurable, repeatable, and verifiable — without pretending to “decide truth”.
-          </p>
-          <div style="height:12px"></div>
-          <div class="table" aria-label="Board controls">
-            <div class="trow thead"><div>Control</div><div>Failure it prevents</div><div>Outcome</div></div>
-            <div class="trow"><div class="v">Moment T freeze</div><div>After-the-fact rewrite</div><div>Non-repudiation</div></div>
-            <div class="trow"><div class="v">Declared perimeter</div><div>Scope ambiguity</div><div>Clear responsibility</div></div>
-            <div class="trow"><div class="v">Lineage ownership</div><div>Orphan evidence</div><div>Accountable chain</div></div>
-          </div>
-
-          <div style="height:14px"></div>
-          <a class="btn-primary" href="./simulator.html" target="_blank" rel="noopener noreferrer">Open simulator</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
+    <div class="foot" aria-label="Footer">
       <div>© OpenProof — RPO v0.1. Created by Gersende Ryard de Parcey.</div>
       <div>
-        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
-        <a href="./simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a> ·
-        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+        <a href="https://rpo.openproof.net/spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
+        <a href="https://rpo.openproof.net/simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a> ·
+        <a href="https://rpo.openproof.net/examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
       </div>
-    </footer>
-
+    </div>
   </main>
 
   <script>
-    // Star field background (same spirit as simulator)
-    (function () {
-      const canvas = document.getElementById("bg-field");
-      const ctx = canvas.getContext("2d", { alpha: true });
-      let width, height, particles = [];
-      const COUNT = 220;
+    const ctxProfiles = {
+      institutional_crisis: {
+        key: "institutional_crisis",
+        name: "Institutional crisis",
+        base_exposure: "MEDIUM",
+        intent: "Escalation readiness, stakeholder mapping, uncertainty logging, reconstruction under pressure.",
+        lexicon_shift: ["institutional reaction", "stakeholder exposure", "crisis perimeter", "moment T"],
+        visibility_rules: [
+          "Operational view shows escalation governance + lineage + full hash",
+          "Executive view may hide dense blocks (full hash, escalation grid) to reduce noise"
+        ],
+        weighting_bias: [
+          { signal: "SEC", weight_hint: "HIGH (crisis framing / attribution)" },
+          { signal: "LEGAL", weight_hint: "HIGH (opposability / chain-of-custody)" },
+          { signal: "HRIS", weight_hint: "MEDIUM (identity/contracts/org)" }
+        ]
+      },
+      labor_dispute: {
+        key: "labor_dispute",
+        name: "Labor / litigation readiness",
+        base_exposure: "HIGH",
+        intent: "Opposability framing, chain-of-custody mindset, defensible HR narrative without AI judgment.",
+        lexicon_shift: ["litigation exposure", "opposability", "chain-of-custody", "defensible narrative"],
+        visibility_rules: [
+          "Readable preview emphasizes opposability markers and missing sources",
+          "Escalation defaults to Legal when exposure or defensibility bands require it"
+        ],
+        weighting_bias: [
+          { signal: "LEGAL", weight_hint: "VERY HIGH (opposability / proceedings)" },
+          { signal: "HRIS", weight_hint: "HIGH (contracts/org/identity)" },
+          { signal: "LMS", weight_hint: "MEDIUM (training evidence if relevant)" }
+        ]
+      },
+      regulatory_audit: {
+        key: "regulatory_audit",
+        name: "Regulatory audit window",
+        base_exposure: "MEDIUM",
+        intent: "Definition drift control, lineage discipline, repeatable evidence production over time.",
+        lexicon_shift: ["audit window", "definition drift", "lineage", "repeatable checks"],
+        visibility_rules: [
+          "Readable preview highlights lineage + definition stability",
+          "Quality checks are promoted (freshness, completeness, drift, duplicates)"
+        ],
+        weighting_bias: [
+          { signal: "HRIS", weight_hint: "HIGH (single source of truth)" },
+          { signal: "LMS", weight_hint: "HIGH (mandatory compliance evidence)" },
+          { signal: "EXT", weight_hint: "MEDIUM (constraints only)" }
+        ]
+      }
+    };
 
-      function resize() {
-        width = window.innerWidth;
-        height = window.innerHeight;
-        const ratio = window.devicePixelRatio || 1;
-        canvas.width = width * ratio;
-        canvas.height = height * ratio;
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    const $ = (id) => document.getElementById(id);
+
+    function badgeForExposure(band){
+      if(band === "HIGH") return "bad";
+      if(band === "MEDIUM") return "warn";
+      return "ok";
+    }
+
+    function renderProfile(key){
+      const p = ctxProfiles[key];
+      $("ctxName").textContent = p.name;
+      $("ctxExposure").textContent = p.base_exposure;
+      $("ctxIntent").textContent = p.intent;
+      $("ctxLexicon").textContent = p.lexicon_shift.join(" · ");
+      $("ctxVisibility").textContent = p.visibility_rules[0];
+      $("ctxWeighting").textContent = p.weighting_bias.map(x => `${x.signal}:${x.weight_hint}`).join(" · ");
+      $("ctxMeta").textContent = `Profile key: ${p.key}`;
+
+      // update card badges visually by rebuilding minimal (no DOM churn)
+      for (const c of document.querySelectorAll(".card")){
+        const isActive = c.dataset.ctx === key;
+        c.classList.toggle("active", isActive);
       }
-      function createParticle() {
-        return { x: (Math.random() * 2 - 1), y: (Math.random() * 2 - 1), z: Math.random() * 0.9 + 0.1, speed: Math.random() * 0.004 + 0.0015 };
-      }
-      function init() { particles = []; for (let i = 0; i < COUNT; i++) particles.push(createParticle()); }
-      function project(p) {
-        const f = 420;
-        const s = f / (f * p.z);
-        return { x: p.x * width * 0.5 * s + width / 2, y: p.y * height * 0.5 * s + height / 2 };
-      }
-      function loop() {
-        ctx.clearRect(0, 0, width, height);
-        for (const p of particles) {
-          p.z -= p.speed;
-          if (p.z < 0.08) { Object.assign(p, createParticle()); p.z = 1; }
-          const { x, y } = project(p);
-          const a = Math.min(1, (1.2 - p.z) * 1.1);
-          ctx.fillStyle = `rgba(241,230,163,${0.55 * a})`;
-          ctx.beginPath(); ctx.arc(x, y, 1.5, 0, Math.PI * 2); ctx.fill();
+
+      // JSON block
+      const machineProfile = {
+        profile: p.key,
+        rpo_version: "0.1",
+        deterministic: true,
+        base_exposure: p.base_exposure,
+        lexicon_shift: p.lexicon_shift,
+        visibility_rules: p.visibility_rules,
+        weighting_bias: p.weighting_bias,
+        invariants: {
+          sealed_structure_invariant: true,
+          hash_means_integrity_not_truth: true,
+          no_ai: true
         }
-        requestAnimationFrame(loop);
+      };
+      $("profileJson").textContent = JSON.stringify(machineProfile, null, 2);
+
+      // update exposure badge inside the active card only (cosmetic)
+      for (const c of document.querySelectorAll(".card")){
+        const b = c.querySelector(".badge");
+        if(!b) continue;
+        const ctx = ctxProfiles[c.dataset.ctx];
+        b.classList.remove("ok","warn","bad");
+        b.classList.add(badgeForExposure(ctx.base_exposure));
+        b.textContent = ctx.base_exposure;
+      }
+    }
+
+    function copyJson(){
+      const txt = $("profileJson").textContent;
+      navigator.clipboard.writeText(txt).then(()=>{
+        const btn = $("btnCopy");
+        const old = btn.textContent;
+        btn.textContent = "Copied";
+        setTimeout(()=>btn.textContent = old, 900);
+      });
+    }
+
+    function downloadJson(){
+      const txt = $("profileJson").textContent;
+      const blob = new Blob([txt], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "openproof-rpo-context-profile.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.addEventListener("DOMContentLoaded", ()=>{
+      // click cards
+      for (const c of document.querySelectorAll(".card")){
+        c.addEventListener("click", ()=>renderProfile(c.dataset.ctx));
+        c.addEventListener("keydown", (e)=>{
+          if(e.key === "Enter" || e.key === " "){
+            e.preventDefault();
+            renderProfile(c.dataset.ctx);
+          }
+        });
+        c.tabIndex = 0;
       }
 
-      const prefersReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (!prefersReduce) {
-        window.addEventListener("resize", resize);
-        resize(); init(); loop();
-      } else {
-        canvas.style.display = "none";
-      }
-    })();
+      $("btnCopy").addEventListener("click", copyJson);
+      $("btnDownload").addEventListener("click", downloadJson);
+
+      // default
+      renderProfile("institutional_crisis");
+    });
   </script>
 </body>
 </html>
