@@ -487,9 +487,6 @@
       color: rgba(167,176,194,.78);
       margin-top: 6px;
     }
-    .kpiCard.danger .kvv{ color: rgba(255,200,200,.95); }
-    .kpiCard.warn .kvv{ color: rgba(255,236,180,.95); }
-    .kpiCard.ok .kvv{ color: rgba(180,255,220,.95); }
 
     /* ✅ V3: output grid (2 columns), airy & readable */
     .tableish{
@@ -781,6 +778,162 @@
       .summaryGrid{ grid-template-columns: 1fr; }
       .summaryRight{ justify-content:flex-start; }
     }
+
+    /* =========================================================
+       COLOR HIERARCHY PATCH — Human scanning (V5)
+       Goal: make the “important” instantly legible without noise
+       ========================================================= */
+
+    /* Extra semantic colors (subtle, cockpit-like) */
+    :root{
+      --ok2: rgba(125,255,179,.22);
+      --warn2: rgba(255,209,102,.22);
+      --bad2: rgba(255,107,107,.22);
+
+      --okStroke: rgba(125,255,179,.35);
+      --warnStroke: rgba(255,209,102,.35);
+      --badStroke: rgba(255,107,107,.35);
+
+      --okGlow: 0 0 0 4px rgba(125,255,179,.10), 0 18px 45px rgba(125,255,179,.06);
+      --warnGlow: 0 0 0 4px rgba(255,209,102,.10), 0 18px 45px rgba(255,209,102,.06);
+      --badGlow: 0 0 0 4px rgba(255,107,107,.10), 0 18px 45px rgba(255,107,107,.06);
+    }
+
+    /* Generic band mapping via data-band */
+    [data-band="HIGH"]{
+      --bandStroke: var(--okStroke);
+      --bandBg: var(--ok2);
+      --bandGlow: var(--okGlow);
+      --bandText: rgba(180,255,220,.95);
+    }
+    [data-band="MEDIUM"]{
+      --bandStroke: var(--warnStroke);
+      --bandBg: var(--warn2);
+      --bandGlow: var(--warnGlow);
+      --bandText: rgba(255,236,180,.95);
+    }
+    [data-band="LOW"]{
+      --bandStroke: var(--badStroke);
+      --bandBg: var(--bad2);
+      --bandGlow: var(--badGlow);
+      --bandText: rgba(255,200,200,.95);
+    }
+
+    /* Inverted bands (Exposure: HIGH is bad) */
+    [data-band-invert="true"][data-band="HIGH"]{
+      --bandStroke: var(--badStroke);
+      --bandBg: var(--bad2);
+      --bandGlow: var(--badGlow);
+      --bandText: rgba(255,200,200,.95);
+    }
+    [data-band-invert="true"][data-band="MEDIUM"]{
+      --bandStroke: var(--warnStroke);
+      --bandBg: var(--warn2);
+      --bandGlow: var(--warnGlow);
+      --bandText: rgba(255,236,180,.95);
+    }
+    [data-band-invert="true"][data-band="LOW"]{
+      --bandStroke: var(--okStroke);
+      --bandBg: var(--ok2);
+      --bandGlow: var(--okGlow);
+      --bandText: rgba(180,255,220,.95);
+    }
+
+    /* KPI cards: make the number + border speak */
+    .kpiCard[data-band]{
+      border-color: var(--bandStroke) !important;
+      background:
+        radial-gradient(700px 120px at 10% 0%, var(--bandBg), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.22), rgba(255,255,255,.02));
+    }
+    .kpiCard[data-band] .kvv{
+      color: var(--bandText) !important;
+      text-shadow: 0 0 22px rgba(0,0,0,.35);
+    }
+
+    /* Pills: make them status-aware */
+    .pill2[data-band]{
+      border-color: var(--bandStroke) !important;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.14)),
+        radial-gradient(420px 80px at 15% 10%, var(--bandBg), transparent 60%);
+    }
+    .pill2[data-band] b{ color: var(--bandText) !important; }
+
+    /* Chips: same logic, very subtle */
+    .chip[data-band]{
+      border-color: var(--bandStroke) !important;
+      background:
+        radial-gradient(420px 80px at 20% 20%, var(--bandBg), transparent 60%),
+        rgba(255,255,255,.02);
+    }
+    .chip[data-band] b{ color: var(--bandText) !important; }
+
+    /* Sticky mini KPIs (optional but guiding) */
+    .miniKpi[data-band]{
+      border-color: var(--bandStroke) !important;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(0,0,0,.14)),
+        radial-gradient(420px 80px at 15% 10%, var(--bandBg), transparent 60%);
+    }
+    .miniKpi[data-band] b{ color: var(--bandText) !important; }
+
+    /* Cockpit rows: add a left “status rail” on key rows */
+    .row.isKey{
+      position: relative;
+      overflow: hidden;
+    }
+    .row.isKey::before{
+      content:"";
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width: 4px;
+      background: rgba(212,175,55,.18);
+      border-radius: 12px 0 0 12px;
+    }
+    .row.isKey[data-band]::before{
+      background: var(--bandStroke);
+    }
+
+    /* Output “decision” rows: a bit more assertive */
+    .trow.isKey{
+      border-color: rgba(212,175,55,.18);
+      background:
+        radial-gradient(700px 120px at 12% 10%, rgba(212,175,55,.10), transparent 55%),
+        rgba(0,0,0,.18);
+    }
+    .trow.isKey[data-band]{
+      border-color: var(--bandStroke) !important;
+      background:
+        radial-gradient(700px 120px at 12% 10%, var(--bandBg), transparent 55%),
+        rgba(0,0,0,.18);
+      box-shadow: var(--bandGlow);
+    }
+    .trow.isKey[data-band] .v{ color: var(--bandText) !important; }
+
+    /* NEXT action: always pop (it’s the point) */
+    #rowNext{
+      border-color: rgba(241,230,163,.22);
+      background:
+        radial-gradient(900px 120px at 12% 0%, rgba(241,230,163,.10), transparent 60%),
+        rgba(0,0,0,.18);
+    }
+    #rowNext .v{
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: rgba(241,230,163,.92);
+    }
+
+    /* Sticky summary: make it “live” when sealed */
+    #stickySummary.sealed{
+      border-color: rgba(241,230,163,.28);
+      box-shadow: 0 22px 60px rgba(0,0,0,.45), 0 0 0 4px rgba(212,175,55,.08);
+    }
+
+    /* Badge readability tweak (small but helps) */
+    .badge{
+      box-shadow: 0 8px 22px rgba(0,0,0,.25);
+    }
   </style>
 </head>
 
@@ -1032,7 +1185,7 @@
               </div>
             </div>
 
-            <!-- ✅ NEW: KPI hierarchy strip -->
+            <!-- KPI hierarchy strip -->
             <div class="kpiRow" aria-label="Executive summary KPIs">
               <div class="kpiCard" id="kpiCoverageCard">
                 <div class="kk" id="kpiCovLabel">Coverage</div>
@@ -1057,7 +1210,7 @@
               <span class="pill2"><b id="outExposurePill">Institutional exposure: —</b></span>
             </div>
 
-            <!-- ✅ V3: grid output -->
+            <!-- Output grid -->
             <div class="tableish">
               <div class="trow" id="rowCoverage">
                 <div class="k" id="kCoverage">Coverage</div>
@@ -1089,7 +1242,6 @@
                 <div class="v" id="outOwnerClock">—</div>
               </div>
 
-              <!-- ✅ V3: structured escalation -->
               <div class="trow span-2" id="rowEscalation">
                 <div class="k">Escalation governance</div>
                 <div class="v">
@@ -1107,7 +1259,7 @@
                 <div class="v" id="outNext">—</div>
               </div>
 
-              <!-- Executive layer rows (shown only in executive view) -->
+              <!-- Executive layer rows -->
               <div id="execRows" class="span-2" style="display:none;">
                 <div class="tableish" style="grid-template-columns: 1fr 1fr; margin-top:0;">
                   <div class="trow">
@@ -1620,6 +1772,27 @@
 
     function shortHash(h){ return h ? (h.slice(0,10) + "…") : "—"; }
 
+    /* -------------------------
+       ✅ Band helpers (V5)
+       ------------------------- */
+    function bandFromCoverage(pct){
+      if(pct >= 80) return "HIGH";
+      if(pct >= 55) return "MEDIUM";
+      return "LOW";
+    }
+
+    function setBand(el, band, invert=false){
+      if(!el) return;
+      el.dataset.band = band || "";
+      if(invert) el.dataset.bandInvert = "true";
+      else el.dataset.bandInvert = "false";
+    }
+
+    function setKeyRow(el, on=true){
+      if(!el) return;
+      el.classList.toggle("isKey", !!on);
+    }
+
     function readSelected(){
       const set = new Set();
       for(const s of sysDefs){
@@ -1696,13 +1869,6 @@
       setExecutiveDensity();
     }
 
-    function setKpiCardClass(el, band){
-      el.classList.remove("ok","warn","danger");
-      if(band==="HIGH") el.classList.add("ok");
-      else if(band==="MEDIUM") el.classList.add("warn");
-      else el.classList.add("danger");
-    }
-
     function showSummary(on){
       $("stickySummary").style.display = on ? "block" : "none";
     }
@@ -1724,14 +1890,47 @@
       $("chipExpo").textContent = state.exposure;
       $("chipHash").textContent = shortHash(hash);
 
-      // KPI strip
+      // KPI strip + semantic bands
       $("kpiCoverage").textContent = `${state.coverage}%`;
       $("kpiDef").textContent = `${state.def.score}`;
       $("kpiExpo").textContent = `${state.exposure}`;
 
-      setKpiCardClass($("kpiCoverageCard"), state.coverage >= 80 ? "HIGH" : state.coverage >= 55 ? "MEDIUM" : "LOW");
-      setKpiCardClass($("kpiDefCard"), state.def.label);
-      setKpiCardClass($("kpiExpoCard"), state.exposure === "LOW" ? "HIGH" : state.exposure === "MEDIUM" ? "MEDIUM" : "LOW");
+      const covBand = bandFromCoverage(state.coverage);
+      const defBand = state.def.label;       // HIGH / MEDIUM / LOW
+      const expoBand = state.exposure;       // HIGH / MEDIUM / LOW (but inverted meaning)
+
+      setBand($("kpiCoverageCard"), covBand, false);
+      setBand($("kpiDefCard"), defBand, false);
+      setBand($("kpiExpoCard"), expoBand, true); // Exposure: HIGH = bad
+
+      // Chips highlight (only the ones that matter)
+      setBand($("chipExpo").closest(".chip"), expoBand, true);
+
+      // Topline pills highlight
+      setBand($("outCoveragePill").closest(".pill2"), covBand, false);
+      setBand($("outExposurePill").closest(".pill2"), expoBand, true);
+
+      // Missing sources band (0=good, 1=warn, >=2=bad)
+      const missBand = (state.missingKeys.length === 0) ? "HIGH" : (state.missingKeys.length === 1 ? "MEDIUM" : "LOW");
+      setBand($("outMissingPill").closest(".pill2"), missBand, false);
+
+      // Key output rows (the ones humans scan)
+      setKeyRow($("rowCoverage"), true);
+      setKeyRow($("rowDef"), true);
+      setKeyRow($("rowNext"), true);
+
+      setBand($("rowCoverage"), covBand, false);
+      setBand($("rowDef"), defBand, false);
+      setBand($("rowNext"), expoBand, true); // NEXT urgency follows exposure
+
+      // Cockpit key rows
+      setKeyRow($("cCoverage")?.closest(".row"), true);
+      setKeyRow($("cDef")?.closest(".row"), true);
+      setKeyRow($("cExpo")?.closest(".row"), true);
+
+      setBand($("cCoverage")?.closest(".row"), covBand, false);
+      setBand($("cDef")?.closest(".row"), defBand, false);
+      setBand($("cExpo")?.closest(".row"), expoBand, true);
 
       $("cScope").textContent = state.scope || "—";
       $("cMoment").textContent = state.momentT || "—";
@@ -1796,6 +1995,8 @@
       // Sticky summary sync
       showSummary(true);
       $("sumSeal").textContent = hash ? "SEALED CORE" : "DRAFT";
+      $("stickySummary").classList.toggle("sealed", !!hash); // ✅ SEALED must be visible
+
       $("sumCovLabel").textContent = $("kpiCovLabel").textContent;
       $("sumDefLabel").textContent = $("kpiDefLabel").textContent;
       $("sumExpoLabel").textContent = $("kpiExpoLabel").textContent;
@@ -1805,6 +2006,11 @@
       $("sumExpo").textContent = `${state.exposure}`;
       $("sumNext").textContent = state.next;
       $("sumHash").textContent = `Hash: ${shortHash(hash)}`;
+
+      // Sticky mini KPI banding (guiding, subtle)
+      setBand($("sumCov")?.closest(".miniKpi"), covBand, false);
+      setBand($("sumDef")?.closest(".miniKpi"), defBand, false);
+      setBand($("sumExpo")?.closest(".miniKpi"), expoBand, true);
     }
 
     function improveHint(selected){
@@ -1877,6 +2083,7 @@
       VIEW_MODE = "operational";
       LAST_HASH_FULL = "";
       showSummary(false);
+      $("stickySummary").classList.remove("sealed");
 
       $("context").value = "institutional_crisis";
       $("decisionType").value = "workforce_decision";
@@ -1906,6 +2113,12 @@
       $("chipMoment").textContent = $("momentT").value;
       $("chipExpo").textContent = "—";
       $("chipHash").textContent = "—";
+
+      // clear bands from key UI (optional cleanup)
+      ["kpiCoverageCard","kpiDefCard","kpiExpoCard","stickySummary"].forEach(id=>{
+        const el = $(id);
+        if(el){ delete el.dataset.band; delete el.dataset.bandInvert; }
+      });
 
       $("kpiCoverage").textContent = "—";
       $("kpiDef").textContent = "—";
