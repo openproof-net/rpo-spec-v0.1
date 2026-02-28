@@ -1,4 +1,4 @@
-<!-- docs/index.html (FULL REPLACEMENT — Home aligned to Simulator cockpit charter) -->
+<!-- docs/index.html (FULL REPLACEMENT — Home aligned with Simulator “cockpit / forensic console”) -->
 <!DOCTYPE html>
 <html lang="en" data-page="home">
 <head>
@@ -6,15 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Primary SEO -->
-  <title>OPENPROOF.NET — RPO v0.1 | console entry</title>
-  <meta name="description" content="RPO v0.1: deterministic proof bundles (sealed JSON core + human-readable preview + public hash) for audit-ready, defensible governance. No AI. Human accountability." />
+  <title>OPENPROOF.NET — RPO v0.1 | Console home</title>
+  <meta name="description" content="RPO v0.1: deterministic evidential bundles (sealed JSON + human-readable preview + public hash) for auditable, adversarial-ready decision governance. No AI. Human accountability." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
   <meta name="author" content="Gersende Ryard de Parcey" />
 
   <!-- OpenGraph / Twitter -->
-  <meta property="og:title" content="OPENPROOF.NET — RPO v0.1 | console entry" />
-  <meta property="og:description" content="Deterministic bundles: sealed JSON + human-readable preview + public hash. No AI. Human accountability." />
+  <meta property="og:title" content="OPENPROOF.NET — RPO v0.1 | Console home" />
+  <meta property="og:description" content="Deterministic bundles: sealed JSON + readable preview + public hash. No AI. Human accountability." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rpo.openproof.net/" />
   <meta name="twitter:card" content="summary" />
@@ -27,47 +27,41 @@
   <style>
     /* =========================================================
        OPENPROOF — RPO v0.1
-       HOME = Console entry (match Simulator sophistication)
-       Rule: ORANGE = cockpit only
+       HOME = CONSOLE ENTRY (aligned with Simulator cockpit)
+       Rule: ORANGE = cockpit only, GOLD = everything else
        ========================================================= */
 
     :root{
       --bg0:#04040E;
-      --bg1:#0B0F14;
+      --bg1:#0b0f14;
+      --ink:#c2cdd5;
+      --ink2:rgba(210,220,228,.86);
+      --white:#f7f7f7;
 
-      --ink:#C2CDD5;
-      --ink2:rgba(210,220,228,.88);
-      --muted:rgba(194,205,213,.70);
-      --white:#F7F7F7;
+      --gold:#f1e6a3;
+      --gold2:#d4af37;
+      --gold3:#8f7633;
 
-      --gold:#F1E6A3;
-      --gold2:#D4AF37;
-      --gold3:#8F7633;
+      --cta:#f35a2a; /* ORANGE: cockpit only */
 
-      --cta:#F35A2A; /* cockpit only */
+      --green:#36d991;
+      --red:#ff5b63;
+      --amber:#f4c96b;
 
-      --green:#36D991;
-      --red:#FF5B63;
-      --amber:#F4C96B;
-
-      --r0:30px;
-      --r1:26px;
-      --r2:18px;
+      --r0:28px;
+      --r1:22px;
+      --r2:16px;
 
       --b1:rgba(241,230,163,.26);
       --b2:rgba(241,230,163,.14);
 
-      --glass:rgba(10,14,22,.64);
-      --glass2:rgba(8,10,16,.56);
+      --glass:rgba(10,14,22,.62);
+      --glass2:rgba(8,10,16,.54);
 
-      --shadow:0 34px 90px rgba(0,0,0,.72);
-      --shadow2:0 16px 44px rgba(0,0,0,.42);
-      --shadowInset:inset 0 0 0 1px rgba(0,0,0,.28);
+      --shadow:0 32px 90px rgba(0,0,0,.70);
+      --shadow2:0 16px 42px rgba(0,0,0,.42);
 
       --max:1760px;
-
-      --noise-opacity:.08;
-      --scan-opacity:.06;
     }
 
     *{ box-sizing:border-box; }
@@ -78,36 +72,27 @@
       font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       overflow-x:hidden;
 
+      /* simulator-like atmosphere: deep + gold haze + subtle scan */
       background:
-        radial-gradient(1100px 560px at 22% 10%, rgba(241,230,163,.14), transparent 64%),
-        radial-gradient(980px 560px at 84% 16%, rgba(54,217,145,.09), transparent 64%),
-        radial-gradient(720px 460px at 56% 115%, rgba(0,0,0,.92), transparent 66%),
+        radial-gradient(1200px 640px at 18% 10%, rgba(241,230,163,.18), transparent 62%),
+        radial-gradient(920px 540px at 82% 18%, rgba(212,175,55,.12), transparent 62%),
+        radial-gradient(760px 520px at 55% 115%, rgba(0,0,0,.92), transparent 65%),
         linear-gradient(180deg, var(--bg0) 0%, #020308 100%);
-    }
 
-    /* Micro texture + scanlines (Simulator-like) */
-    body::before{
-      content:"";
-      position:fixed; inset:0;
-      pointer-events:none;
-      background:
+      background-image:
         repeating-linear-gradient(
           180deg,
-          rgba(255,255,255,var(--scan-opacity)) 0px,
-          rgba(255,255,255,var(--scan-opacity)) 1px,
+          rgba(255,255,255,.010) 0px,
+          rgba(255,255,255,.010) 1px,
           transparent 2px,
-          transparent 6px
-        );
-      mix-blend-mode:overlay;
-      opacity:.55;
-    }
-    body::after{
-      content:"";
-      position:fixed; inset:0;
-      pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
-      opacity:var(--noise-opacity);
-      mix-blend-mode:overlay;
+          transparent 7px
+        ),
+        radial-gradient(1200px 640px at 18% 10%, rgba(241,230,163,.18), transparent 62%),
+        radial-gradient(920px 540px at 82% 18%, rgba(212,175,55,.12), transparent 62%),
+        radial-gradient(760px 520px at 55% 115%, rgba(0,0,0,.92), transparent 65%),
+        linear-gradient(180deg, var(--bg0) 0%, #020308 100%);
+
+      background-blend-mode: overlay, normal, normal, normal, normal;
     }
 
     a{ color:inherit; text-decoration:none; }
@@ -119,28 +104,46 @@
       padding: 0 22px;
     }
 
-    /* Gold fillet */
+    /* ---- micro texture (subtle noise, no external assets) ---- */
+    .noise{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.065;
+      mix-blend-mode:overlay;
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,.08), transparent 40%),
+        radial-gradient(circle at 70% 30%, rgba(241,230,163,.07), transparent 42%),
+        radial-gradient(circle at 40% 80%, rgba(255,255,255,.06), transparent 45%);
+      filter: blur(18px);
+      z-index:0;
+    }
+
+    /* gold fillet */
     .fillet{
       height:1px;
       background: linear-gradient(90deg,
         transparent 0%,
-        rgba(241,230,163,.45) 14%,
+        rgba(241,230,163,.55) 15%,
         rgba(212,175,55,.78) 50%,
-        rgba(241,230,163,.45) 86%,
+        rgba(241,230,163,.55) 85%,
         transparent 100%
       );
-      opacity:.6;
+      opacity:.55;
+      position:relative;
+      z-index:5;
     }
 
-    /* ---------- Topbar / Nav (must be lowercase) ---------- */
+    /* ============== Topbar (nav pills in lowercase) ============== */
     .topbar{
       position:sticky;
       top:0;
-      z-index:50;
+      z-index:60;
       backdrop-filter: blur(12px);
-      background: linear-gradient(180deg, rgba(4,4,14,.88), rgba(4,4,14,.58));
+      background: linear-gradient(180deg, rgba(4,4,14,.86), rgba(4,4,14,.52));
       border-bottom: 1px solid rgba(241,230,163,.10);
     }
+
     .nav{
       display:flex;
       align-items:center;
@@ -153,28 +156,29 @@
       display:flex;
       align-items:center;
       gap:10px;
-      min-width: 320px;
+      min-width: 300px;
     }
     .dot{
       width:8px;height:8px;border-radius:999px;
-      background: radial-gradient(circle at 30% 30%, rgba(241,230,163,.95), rgba(212,175,55,.85));
-      box-shadow:0 0 18px rgba(241,230,163,.28);
+      background: var(--gold2);
+      box-shadow:0 0 18px rgba(241,230,163,.35);
       flex:0 0 auto;
     }
-    .brand-stack{ display:flex; flex-direction:column; line-height:1.12; }
+    .brand-stack{ display:flex; flex-direction:column; line-height:1.1; }
     .brand-title{
       font-family:"Orbitron", system-ui, sans-serif;
       letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.74rem;
-      color: rgba(241,230,163,.88);
+      font-size:.72rem;
+      color: rgba(241,230,163,.86);
       white-space:nowrap;
+      text-transform:uppercase;
     }
     .brand-sub{
       font-size:.72rem;
       color: rgba(194,205,213,.70);
       margin-top: 3px;
       white-space:nowrap;
+      text-transform:lowercase;
     }
 
     .navlinks{
@@ -185,60 +189,51 @@
       justify-content:center;
     }
 
-    /* IMPORTANT: nav in lowercase */
+    /* IMPORTANT: nav in lowercase, simulator-like */
     .navlinks a{
       display:inline-flex;
       padding: 7px 12px;
       border-radius:999px;
-
       border:1px solid rgba(241,230,163,.14);
-      background:
-        radial-gradient(circle at 20% 0, rgba(241,230,163,.09), transparent 60%),
-        rgba(10,14,22,.42);
-
+      background: rgba(10,14,22,.42);
       font-family:"Montserrat", system-ui, sans-serif;
-      letter-spacing:.02em;
-      text-transform:none;           /* lowercase stays lowercase */
-      font-size:.82rem;
-      color: rgba(240,244,248,.82);
-
-      box-shadow: var(--shadowInset);
+      font-weight:500;
+      font-size:.86rem;
+      letter-spacing:.01em;
+      color: rgba(210,220,228,.88);
+      text-transform:lowercase;
       transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
       white-space:nowrap;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
     }
     .navlinks a:hover{
       transform: translateY(-1px);
       border-color: rgba(241,230,163,.24);
-      background:
-        radial-gradient(circle at 20% 0, rgba(241,230,163,.12), transparent 60%),
-        rgba(10,14,22,.52);
-      box-shadow: 0 14px 34px rgba(0,0,0,.36), var(--shadowInset);
+      background: rgba(10,14,22,.56);
+      box-shadow: 0 10px 26px rgba(0,0,0,.35), inset 0 0 0 1px rgba(0,0,0,.25);
     }
     .navlinks a.active{
-      border-color: rgba(241,230,163,.44);
-      color: rgba(241,230,163,.92);
+      border-color: rgba(241,230,163,.42);
       background:
-        radial-gradient(circle at 18% 0, rgba(241,230,163,.16), transparent 60%),
-        rgba(10,14,22,.58);
-      box-shadow: 0 0 0 1px rgba(241,230,163,.08), 0 18px 44px rgba(0,0,0,.42);
+        radial-gradient(circle at 15% 0, rgba(241,230,163,.12), rgba(10,14,22,.54));
+      color:#fff;
+      box-shadow: 0 0 0 1px rgba(241,230,163,.10), 0 16px 34px rgba(0,0,0,.35);
     }
 
     .cta{
       display:flex;
       gap:10px;
-      min-width: 320px;
+      min-width: 300px;
       justify-content:flex-end;
       flex-wrap:wrap;
     }
 
-    /* ---------- Buttons (Simulator grade) ---------- */
+    /* Buttons */
     .btn{
       position:relative;
       border-radius:999px;
       border:1px solid rgba(241,230,163,.18);
-      background:
-        radial-gradient(circle at 20% 0, rgba(241,230,163,.10), transparent 58%),
-        rgba(10,14,22,.50);
+      background: rgba(10,14,22,.52);
       color: rgba(241,230,163,.92);
       padding: 11px 16px;
       cursor:pointer;
@@ -246,7 +241,7 @@
       letter-spacing:.14em;
       text-transform:uppercase;
       font-size:.76rem;
-      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease, filter .22s ease;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, filter .25s ease;
       overflow:hidden;
       display:inline-flex;
       align-items:center;
@@ -254,41 +249,39 @@
       gap:10px;
       user-select:none;
       white-space:nowrap;
-      box-shadow: var(--shadowInset);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
     }
     .btn:hover{
       transform: translateY(-1px);
-      box-shadow: 0 18px 48px rgba(0,0,0,.48), var(--shadowInset);
+      box-shadow: 0 18px 42px rgba(0,0,0,.45);
       border-color: rgba(241,230,163,.28);
-      filter:saturate(1.05);
+      filter: brightness(1.02);
     }
     .btn--small{ padding: 9px 13px; font-size:.70rem; }
 
     .btn--gold{
       border: 1px solid rgba(241,230,163,.22);
-      background:
-        radial-gradient(circle at 20% 0, rgba(241,230,163,.14), transparent 60%),
-        linear-gradient(180deg, rgba(10,14,22,.62), rgba(10,14,22,.44));
-      color: rgba(241,230,163,.94);
+      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.12), rgba(10,14,22,.56));
+      color: rgba(241,230,163,.92);
     }
 
     /* ORANGE = cockpit only */
     .btn--orange{
       border:none;
-      background: linear-gradient(180deg, rgba(243,90,42,1), rgba(217,70,28,1));
+      background: var(--cta);
       color:#fff;
-      box-shadow: 0 0 18px rgba(241,230,163,.16), 0 18px 52px rgba(0,0,0,.52);
+      box-shadow: 0 0 18px rgba(241,230,163,.16), 0 18px 46px rgba(0,0,0,.46);
     }
     .btn--orange:hover{
-      box-shadow: 0 0 26px rgba(241,230,163,.20), 0 22px 70px rgba(0,0,0,.60);
+      box-shadow: 0 0 24px rgba(241,230,163,.20), 0 22px 64px rgba(0,0,0,.58);
     }
 
     .sheen{
-      position:absolute; inset:-2px;
-      background: linear-gradient(120deg, rgba(255,255,255,.38), rgba(255,255,255,.10), transparent 58%);
+      position:absolute; inset:-1px;
+      background: linear-gradient(120deg, rgba(255,255,255,.40), rgba(255,255,255,.10), transparent 58%);
       transform: translateX(-140%);
-      opacity:.55;
-      transition: transform .78s ease;
+      opacity:.65;
+      transition: transform .75s ease;
       pointer-events:none;
     }
     .btn:hover .sheen{ transform: translateX(140%); }
@@ -298,144 +291,98 @@
       box-shadow: 0 0 0 3px rgba(241,230,163,.10), 0 0 0 1px rgba(241,230,163,.22);
     }
 
-    /* ---------- Panels (double stroke, cockpit depth) ---------- */
+    /* ============== Panels (double-stroke, cockpit glass) ============== */
     .panel{
       border-radius: var(--r0);
       background:
-        radial-gradient(circle at 14% 0, rgba(241,230,163,.10), transparent 56%),
-        radial-gradient(circle at 86% 82%, rgba(54,217,145,.08), transparent 56%),
-        linear-gradient(180deg, rgba(10,14,22,.72), rgba(8,10,16,.54));
+        radial-gradient(circle at 15% 0, rgba(241,230,163,.10), transparent 55%),
+        radial-gradient(circle at 85% 85%, rgba(54,217,145,.06), transparent 55%),
+        rgba(10,14,22,.64);
       border: 1px solid rgba(241,230,163,.22);
       box-shadow: var(--shadow2);
       overflow:hidden;
       position:relative;
+      z-index:10;
     }
     .panel::before{
       content:"";
       position:absolute; inset:10px;
       border-radius: calc(var(--r0) - 10px);
-      border: 1px solid rgba(241,230,163,.10);
+      border:1px solid rgba(241,230,163,.10);
       pointer-events:none;
-      opacity:.9;
     }
     .panel::after{
       content:"";
       position:absolute; inset:-2px;
       border-radius: inherit;
+      border:1px solid rgba(241,230,163,.06);
       pointer-events:none;
-      background:
-        radial-gradient(900px 280px at 20% 0, rgba(241,230,163,.16), transparent 60%),
-        radial-gradient(680px 260px at 86% 28%, rgba(54,217,145,.10), transparent 62%);
-      opacity:.55;
-      mix-blend-mode:screen;
+      filter: blur(.2px);
     }
+
     .panel--hero{ box-shadow: var(--shadow); }
 
     .inset{
-      border-radius: var(--r1);
+      border-radius: var(--r0);
       border: 1px solid rgba(241,230,163,.16);
-      background:
-        radial-gradient(circle at 18% 0, rgba(241,230,163,.08), transparent 62%),
-        rgba(10,14,22,.52);
+      background: rgba(10,14,22,.52);
       box-shadow: var(--shadow2);
       position:relative;
       overflow:hidden;
     }
     .inset::before{
       content:"";
-      position:absolute; inset:0;
+      position:absolute; inset:10px;
+      border-radius: calc(var(--r0) - 10px);
+      border:1px solid rgba(241,230,163,.10);
       pointer-events:none;
-      background: linear-gradient(180deg, rgba(255,255,255,.04), transparent 28%);
-      opacity:.65;
     }
+
     .pad{ padding: 18px; }
 
-    /* ---------- Typo hierarchy (instrument) ---------- */
-    .kicker{
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      font-size:.72rem;
-      color: rgba(241,230,163,.82);
-      margin-bottom: 10px;
-    }
-    .micro{
-      font-size:.86rem;
-      color: rgba(194,205,213,.74);
-      line-height:1.55;
-    }
-    h1{
-      margin: 0 0 12px;
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.02em;
-      text-transform:uppercase;
-      line-height:1.04;
-      font-size: clamp(2.1rem, 3.9vw, 3.55rem);
-      color: var(--white);
-      text-shadow: 0 14px 44px rgba(0,0,0,.62);
-    }
-    .hl{
-      color: var(--gold2);
-      text-shadow: 0 0 26px rgba(241,230,163,.16);
-    }
-    .lead{
-      margin:0 0 14px;
-      color: var(--ink2);
-      line-height:1.65;
-      font-size: 1.02rem;
-      max-width: 92ch;
-    }
-
-    /* ---------- Hero layout ---------- */
-    .hero{ padding: 18px 0 12px; }
-
-    /* “Console entry” line (like simulator banner) */
-    .consoleEntry{
+    /* console strip */
+    .strip{
       display:flex;
-      align-items:center;
       justify-content:space-between;
+      align-items:center;
       gap:12px;
       padding: 10px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(241,230,163,.14);
-      background:
-        radial-gradient(circle at 18% 0, rgba(241,230,163,.10), transparent 60%),
-        rgba(10,14,22,.42);
-      box-shadow: var(--shadowInset);
+      border:1px solid rgba(241,230,163,.14);
+      background: rgba(8,10,16,.48);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
       margin-bottom: 14px;
     }
-    .consoleEntry .left{
+    .strip .left{
       display:flex; align-items:center; gap:10px; flex-wrap:wrap;
-      color: rgba(240,244,248,.80);
-      font-size:.90rem;
+      font-size:.86rem;
+      color: rgba(210,220,228,.84);
     }
-    .consoleEntry .label{
+    .strip .label{
       font-family:"Orbitron", system-ui, sans-serif;
       letter-spacing:.14em;
       text-transform:uppercase;
-      font-size:.66rem;
+      font-size:.70rem;
       color: rgba(241,230,163,.78);
     }
-    .consoleEntry .right{
+    .strip .right{
       display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
     }
 
-    .chips{
-      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
-    }
+    /* chips */
     .chip{
       display:inline-flex; align-items:center; gap:8px;
-      padding: 7px 10px;
+      padding: 7px 11px;
       border-radius:999px;
       border:1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.40);
+      background: rgba(10,14,22,.42);
       font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.10em;
+      letter-spacing:.12em;
       text-transform:uppercase;
-      font-size:.64rem;
+      font-size:.66rem;
       color: rgba(241,230,163,.72);
-      box-shadow: var(--shadowInset);
       white-space:nowrap;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
     }
     .chip i{
       width:7px;height:7px;border-radius:999px; display:inline-block;
@@ -443,11 +390,42 @@
       box-shadow: 0 0 14px rgba(241,230,163,.22);
     }
 
-    .heroGrid{
-      display:grid;
-      grid-template-columns: 1.25fr .95fr;
-      gap: 16px;
-      align-items: start;
+    /* Typo */
+    .kicker{
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-size:.72rem;
+      color: rgba(241,230,163,.78);
+      margin-bottom: 10px;
+    }
+    .micro{
+      font-size:.90rem;
+      color: rgba(194,205,213,.72);
+      line-height:1.6;
+    }
+
+    /* hero headline: Orbitron, simulator-like, but not over-sized */
+    h1{
+      margin: 0 0 12px;
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      line-height:1.02;
+      font-size: clamp(1.85rem, 2.45vw, 2.55rem);
+      color: var(--white);
+      text-shadow: 0 18px 44px rgba(0,0,0,.62);
+    }
+    .hl{
+      color: var(--gold2);
+      text-shadow: 0 0 22px rgba(241,230,163,.16);
+    }
+    .lead{
+      margin:0 0 14px;
+      color: var(--ink2);
+      line-height:1.7;
+      font-size: 1.02rem;
+      max-width: 92ch;
     }
 
     .pills{ display:flex; gap:10px; flex-wrap:wrap; margin: 14px 0 10px; }
@@ -460,7 +438,7 @@
       color: rgba(241,230,163,.84);
       font-size:.88rem;
       white-space:nowrap;
-      box-shadow: var(--shadowInset);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
     }
     .pill-dot{
       width:7px; height:7px; border-radius:999px;
@@ -470,36 +448,32 @@
 
     .heroActions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
 
-    /* ---------- Teaser (right) ---------- */
-    .teaserHead{
+    /* Hero layout */
+    .hero{ padding: 18px 0 12px; position:relative; z-index:10; }
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.25fr .95fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* ============== Simulator Preview (more instrument) ============== */
+    .previewHead{
       display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
       margin-bottom: 10px;
     }
-    .teaserTitle{
+    .previewTitle{
       font-family:"Orbitron", system-ui, sans-serif;
       letter-spacing:.16em;
       text-transform:uppercase;
       font-size:.74rem;
-      color: rgba(241,230,163,.88);
+      color: rgba(241,230,163,.86);
     }
-    .tag{
-      display:inline-flex; align-items:center; gap:8px;
-      padding: 7px 10px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.42);
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      font-size:.66rem;
-      color: rgba(241,230,163,.74);
-      white-space:nowrap;
-      box-shadow: var(--shadowInset);
-    }
-    .tag i{
-      width:7px;height:7px;border-radius:999px; display:inline-block;
-      background: rgba(241,230,163,.85);
-      box-shadow: 0 0 14px rgba(241,230,163,.22);
+    .previewNote{
+      margin-top:6px;
+      color: rgba(194,205,213,.72);
+      font-size:.92rem;
+      line-height:1.55;
     }
 
     .kpiGrid{
@@ -511,20 +485,20 @@
     .kpi{
       border-radius: var(--r2);
       border: 1px solid rgba(241,230,163,.14);
-      background:
-        radial-gradient(circle at 18% 0, rgba(241,230,163,.08), transparent 62%),
-        rgba(8,10,16,.52);
+      background: rgba(8,10,16,.52);
       padding: 12px;
-      box-shadow: 0 18px 42px rgba(0,0,0,.36), var(--shadowInset);
+      box-shadow: var(--shadow2);
       position:relative;
       overflow:hidden;
     }
-    .kpi::after{
+    .kpi::before{
       content:"";
-      position:absolute; inset:0;
+      position:absolute; inset:-40px -80px auto auto;
+      width:260px; height:180px;
+      background: radial-gradient(circle at 20% 30%, rgba(241,230,163,.14), transparent 60%);
+      filter: blur(10px);
+      opacity:.55;
       pointer-events:none;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), transparent 30%);
-      opacity:.6;
     }
     .kpi .k{
       font-family:"Orbitron", system-ui, sans-serif;
@@ -540,12 +514,10 @@
       letter-spacing:.10em;
       text-transform:uppercase;
       color: rgba(241,230,163,.92);
-      font-size:.86rem;
+      font-size:.88rem;
       white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      position:relative;
-      z-index:1;
     }
 
     .badge{
@@ -558,37 +530,34 @@
       flex:0 0 auto;
       font-family:"Orbitron", system-ui, sans-serif;
       text-transform:uppercase;
-      position:relative;
-      z-index:1;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
     }
     .badge--stable{
       background: radial-gradient(circle at 0 0, rgba(54,217,145,.34), rgba(6,16,12,.90));
       border-color: rgba(54,217,145,.46);
-      color:#EAFFF4;
+      color:#eafff4;
     }
     .badge--threshold{
       background: radial-gradient(circle at 0 0, rgba(244,201,107,.44), rgba(22,16,6,.90));
       border-color: rgba(244,201,107,.50);
-      color:#FFF3CC;
+      color:#fff3cc;
     }
     .badge--fragile{
       background: radial-gradient(circle at 0 0, rgba(255,91,99,.35), rgba(20,10,12,.88));
       border-color: rgba(255,91,99,.35);
-      color:#FFECEE;
+      color:#ffecee;
     }
     .badge--sealed{
       background: radial-gradient(circle at 0 0, rgba(241,230,163,.52), rgba(20,14,6,.92));
       border-color: rgba(241,230,163,.52);
-      color:#FFF6D8;
+      color:#fff6d8;
     }
 
     .hashbox{
       margin-top: 12px;
       border-radius: var(--r2);
       border: 1px solid rgba(241,230,163,.14);
-      background:
-        radial-gradient(circle at 18% 0, rgba(241,230,163,.06), transparent 65%),
-        rgba(4,5,10,.58);
+      background: rgba(4,5,10,.58);
       padding: 12px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size:.84rem;
@@ -596,14 +565,14 @@
       overflow:hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      box-shadow: 0 18px 44px rgba(0,0,0,.38), var(--shadowInset);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
     }
 
-    /* ---------- Sections ---------- */
-    .section{ padding: 12px 0 0; }
+    /* Sections */
+    .section{ padding: 12px 0 0; position:relative; z-index:10; }
     .sectionHead{
       display:flex; justify-content:space-between; align-items:flex-end; gap:14px;
-      margin: 12px 0 10px;
+      margin: 10px 0 10px;
     }
     .sectionHead h2{
       margin:0;
@@ -611,9 +580,9 @@
       letter-spacing:.16em;
       text-transform:uppercase;
       font-size:.80rem;
-      color: rgba(241,230,163,.88);
+      color: rgba(241,230,163,.86);
     }
-    .meta{ font-size:.86rem; color: rgba(194,205,213,.68); }
+    .meta{ font-size:.84rem; color: rgba(194,205,213,.70); }
 
     .grid3{
       display:grid;
@@ -623,39 +592,34 @@
     .card{
       border-radius: var(--r1);
       border: 1px solid rgba(241,230,163,.14);
-      background:
-        radial-gradient(circle at 18% 0, rgba(241,230,163,.08), transparent 60%),
-        rgba(8,10,16,.50);
+      background: rgba(8,10,16,.50);
       padding: 14px;
-      box-shadow: 0 18px 46px rgba(0,0,0,.40), var(--shadowInset);
+      box-shadow: var(--shadow2);
       position:relative;
       overflow:hidden;
     }
-    .card::after{
+    .card::before{
       content:"";
-      position:absolute; inset:0;
+      position:absolute; inset:-2px;
+      border-radius: inherit;
+      border:1px solid rgba(241,230,163,.06);
       pointer-events:none;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), transparent 34%);
-      opacity:.55;
     }
     .card h3{
       margin:0 0 8px;
       font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.06em;
+      letter-spacing:.10em;
       text-transform:uppercase;
-      font-size:.88rem;
+      font-size:.78rem;
       color: rgba(241,230,163,.92);
-      position:relative;
-      z-index:1;
+      font-weight:700;
     }
     .card p{
       margin:0;
-      color: var(--ink2);
+      color: rgba(210,220,228,.84);
       line-height:1.6;
       font-size: .98rem;
       max-width: 84ch;
-      position:relative;
-      z-index:1;
     }
 
     /* CTA band */
@@ -663,33 +627,33 @@
       margin-top: 12px;
       border-radius: var(--r1);
       border: 1px solid rgba(241,230,163,.14);
-      background:
-        radial-gradient(circle at 14% 0, rgba(241,230,163,.08), transparent 58%),
-        rgba(10,14,22,.46);
+      background: rgba(10,14,22,.46);
       padding: 14px;
       display:flex;
       justify-content:space-between;
       align-items:center;
       gap: 12px;
       flex-wrap:wrap;
-      box-shadow: 0 18px 46px rgba(0,0,0,.40), var(--shadowInset);
+      box-shadow: var(--shadow2);
       position:relative;
       overflow:hidden;
     }
-    .ctaBand::after{
+    .ctaBand::before{
       content:"";
-      position:absolute; inset:0;
+      position:absolute; inset:-60px -120px auto auto;
+      width:420px; height:260px;
+      background: radial-gradient(circle at 20% 30%, rgba(241,230,163,.16), transparent 60%);
+      filter: blur(14px);
+      opacity:.55;
       pointer-events:none;
-      background: linear-gradient(180deg, rgba(255,255,255,.05), transparent 34%);
-      opacity:.5;
     }
     .ctaBand .text{
-      color: var(--ink2);
+      color: rgba(210,220,228,.86);
       line-height:1.55;
       max-width: 110ch;
       font-size: .98rem;
       position:relative;
-      z-index:1;
+      z-index:2;
     }
 
     /* Footer */
@@ -703,6 +667,8 @@
       justify-content:space-between;
       gap: 12px;
       flex-wrap:wrap;
+      position:relative;
+      z-index:10;
     }
     .foot a{
       color: rgba(194,205,213,.78);
@@ -713,13 +679,28 @@
       border-bottom-color: rgba(241,230,163,.35);
     }
 
-    /* Subtle motion (cockpit breathing) */
-    @keyframes breathe {
-      0%,100% { transform: translateY(0); filter:saturate(1); }
-      50% { transform: translateY(-1px); filter:saturate(1.03); }
+    /* Ambient “future” sweep (subtle) */
+    .sweep{
+      position:absolute;
+      inset:-220px -160px auto -160px;
+      height:520px;
+      pointer-events:none;
+      background:
+        radial-gradient(closest-side at 30% 40%, rgba(241,230,163,.12), transparent 65%),
+        radial-gradient(closest-side at 70% 45%, rgba(212,175,55,.10), transparent 68%),
+        linear-gradient(90deg, transparent 0%, rgba(255,255,255,.06) 45%, transparent 70%);
+      filter: blur(18px);
+      opacity:.55;
+      transform: translateY(0);
+      animation: drift 7.5s ease-in-out infinite;
+      z-index:3;
     }
-    .panel--hero{ animation: breathe 6.2s ease-in-out infinite; }
+    @keyframes drift{
+      0%,100%{ transform: translateY(0); opacity:.52; }
+      50%{ transform: translateY(18px); opacity:.62; }
+    }
 
+    /* Responsive */
     @media (max-width: 1100px){
       .heroGrid{ grid-template-columns: 1fr; }
       .grid3{ grid-template-columns: 1fr; }
@@ -735,12 +716,13 @@
       *{ scroll-behavior:auto !important; }
       .btn{ transition:none !important; }
       .sheen{ display:none !important; }
-      .panel--hero{ animation:none !important; }
+      .sweep{ animation:none !important; }
     }
   </style>
 </head>
 
 <body>
+  <div class="noise" aria-hidden="true"></div>
   <div class="fillet" aria-hidden="true"></div>
 
   <!-- Topbar -->
@@ -751,7 +733,7 @@
           <span class="dot" aria-hidden="true"></span>
           <div class="brand-stack">
             <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
-            <div class="brand-sub">probative engine &amp; governance</div>
+            <div class="brand-sub">probative engine & governance</div>
           </div>
         </div>
 
@@ -782,43 +764,44 @@
   </header>
 
   <main class="container" role="main">
-    <!-- HERO / CONSOLE -->
+    <!-- HERO / CONSOLE ENTRY -->
     <section class="hero" aria-label="Console entry">
-
-      <!-- “console entry” strip (matches simulator vibe) -->
-      <div class="consoleEntry" aria-label="Console entry strip">
-        <div class="left">
-          <span class="label">console entry — rpo v0.1</span>
-          <span>same input → same sealed bundle → same hash. any modification becomes detectable.</span>
-        </div>
-        <div class="right chips" aria-label="Pillars">
-          <span class="chip"><i aria-hidden="true"></i>integrity</span>
-          <span class="chip"><i aria-hidden="true"></i>readability</span>
-          <span class="chip"><i aria-hidden="true"></i>verifiability</span>
-          <span class="chip"><i aria-hidden="true"></i>no ai</span>
-        </div>
-      </div>
+      <div class="sweep" aria-hidden="true"></div>
 
       <div class="panel panel--hero">
         <div class="pad">
+
+          <!-- console strip -->
+          <div class="strip" role="note" aria-label="Console entry strip">
+            <div class="left">
+              <span class="label">console entry — rpo v0.1</span>
+              <span>same input → same sealed bundle → same hash. any modification becomes detectable.</span>
+            </div>
+            <div class="right" aria-label="Pillars">
+              <span class="chip"><i aria-hidden="true"></i>integrity</span>
+              <span class="chip"><i aria-hidden="true"></i>readability</span>
+              <span class="chip"><i aria-hidden="true"></i>verifiability</span>
+              <span class="chip"><i aria-hidden="true"></i>no ai</span>
+            </div>
+          </div>
+
           <div class="heroGrid">
             <!-- LEFT -->
             <div>
               <div class="kicker">open standard for decision governance under scrutiny</div>
 
               <p class="micro" style="margin:0 0 10px;">
-                By Gersende Ryard de Parcey, decision governance &amp; evidential infrastructure.
+                By Gersende Ryard de Parcey, decision governance & evidential infrastructure.
               </p>
 
               <h1>
-                decisions will be contested.<br/>
-                <span class="hl">protect what you can defend.</span>
+                Decisions will be contested.<br/>
+                <span class="hl">Protect what you can defend.</span>
               </h1>
 
               <p class="lead">
                 RPO v0.1 produces a deterministic package: sealed JSON core, human-readable preview, public hash.
-                No AI, no interpretation: same input → same output. Always.
-                Accountability remains human.
+                No AI, no interpretation: same input → same output. Always. Accountability remains human.
               </p>
 
               <div class="pills" aria-label="Properties">
@@ -844,24 +827,25 @@
               </div>
 
               <p class="micro" style="margin-top:12px;">
-                RPO proves integrity over time. It does not “decide truth”. Verification can be public; the decision remains human.
+                RPO proves integrity over time. It does not “decide truth”.
+                Verification can be public; the decision remains human.
               </p>
             </div>
 
-            <!-- RIGHT: Simulator preview (teaser) -->
+            <!-- RIGHT: SIMULATOR PREVIEW -->
             <aside class="inset" aria-label="Simulator preview">
               <div class="pad">
-                <div class="teaserHead">
+                <div class="previewHead">
                   <div>
-                    <div class="teaserTitle">simulator preview</div>
-                    <div class="micro" style="margin-top:6px;">
+                    <div class="previewTitle">simulator preview</div>
+                    <div class="previewNote">
                       A pressure test for governance coverage, defensibility, exposure, sealed hashing.
                     </div>
                   </div>
-                  <span class="tag" aria-label="Pillars"><i aria-hidden="true"></i>integrity · readability · verifiability</span>
+                  <span class="chip" aria-label="Pillars"><i aria-hidden="true"></i>integrity · readability · verifiability</span>
                 </div>
 
-                <div class="kpiGrid" aria-label="KPIs teaser">
+                <div class="kpiGrid" aria-label="KPIs preview">
                   <div class="kpi">
                     <div class="k">coverage</div>
                     <div class="v"><span id="kpiCoverage">—</span><span class="badge badge--threshold" id="badgeCoverage">live</span></div>
@@ -905,7 +889,7 @@
       </div>
     </section>
 
-    <!-- ONE RUN -->
+    <!-- RAMP -->
     <section class="section" aria-labelledby="inside-title">
       <div class="sectionHead">
         <h2 id="inside-title">one run. one bundle. one hash.</h2>
@@ -930,7 +914,7 @@
       <div class="ctaBand" role="region" aria-label="CTA simulator">
         <div class="text">
           If you do one thing: open the simulator and generate one deterministic bundle.
-          You will understand the standard in <span class="hl">one run</span>.
+          You’ll understand the standard <span class="hl">in one run</span>.
         </div>
         <a class="btn btn--gold" href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">
           <span class="sheen" aria-hidden="true"></span>
@@ -948,8 +932,8 @@
 
       <div class="ctaBand" role="region" aria-label="CTA cockpit">
         <div class="text">
-          Use the simulator to validate structure and blind spots. When you’re ready to discuss integration, owners, thresholds,
-          and governance at scale, move to the cockpit.
+          Use the simulator to validate structure and blind spots.
+          When you’re ready to discuss integration, owners, thresholds, and governance at scale, move to the cockpit.
         </div>
         <a class="btn btn--orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
           <span class="sheen" aria-hidden="true"></span>
@@ -971,7 +955,7 @@
 
   <script>
     // -------------------------------------------------------
-    // Home teaser: subtle cockpit cue (deterministic → sealed)
+    // Home Preview: instrument cue (deterministic cadence)
     // -------------------------------------------------------
     (function(){
       const elCov  = document.getElementById("kpiCoverage");
@@ -997,8 +981,8 @@
       }
 
       const frames = [
-        { cov: 62, def: 48, expo: "HIGH",   covB:"badge--threshold", defB:"badge--fragile",   expoB:"badge--fragile",   hash:"—" },
-        { cov: 74, def: 62, expo: "MEDIUM", covB:"badge--threshold", defB:"badge--threshold", expoB:"badge--threshold", hash:"—" },
+        { cov: 18, def: 41, expo: "HIGH",   covB:"badge--threshold", defB:"badge--fragile",   expoB:"badge--fragile",   hash:"—" },
+        { cov: 54, def: 58, expo: "MEDIUM", covB:"badge--threshold", defB:"badge--threshold", expoB:"badge--threshold", hash:"—" },
         { cov: 78, def: 64, expo: "MEDIUM", covB:"badge--sealed",    defB:"badge--threshold", expoB:"badge--threshold", hash:"sealing…" },
         { cov: 78, def: 64, expo: "MEDIUM", covB:"badge--sealed",    defB:"badge--threshold", expoB:"badge--threshold", hash:"hash" }
       ];
