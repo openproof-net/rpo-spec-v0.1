@@ -1,49 +1,41 @@
-<!-- docs/index.html (FULL REPLACEMENT — Console Home aligned with Simulator charter) -->
+<!-- docs/index.html (FULL REPLACEMENT — Home Console + Console Gate aligned to Simulator) -->
 <!DOCTYPE html>
 <html lang="en" data-page="home">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Primary SEO -->
   <title>OPENPROOF.NET — RPO v0.1 | Home Console</title>
   <meta name="description" content="RPO v0.1 produces deterministic evidence bundles: sealed JSON core + human-readable view + public hash. No AI. Human responsibility." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
   <meta name="author" content="Gersende Ryard de Parcey" />
 
-  <!-- OpenGraph / Twitter -->
   <meta property="og:title" content="OPENPROOF.NET — RPO v0.1 | Home Console" />
   <meta property="og:description" content="Deterministic bundles: sealed JSON + human-readable view + public hash. No AI. Human responsibility." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rpo.openproof.net/" />
   <meta name="twitter:card" content="summary" />
 
-  <!-- Fonts (Simulator pairing) -->
+  <!-- Fonts: ALIGN WITH SIMULATOR (Orbitron + Inter) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    /* =========================================================
-       OPENPROOF — RPO v0.1
-       HOME = CONSOLE ENTRY (aligned with Simulator charter)
-       CTA RULE: ORANGE = cockpit only, GOLD = everything else
-       ========================================================= */
-
     :root{
       --bg0:#04040E;
       --bg1:#0b0f14;
 
       --ink:#c2cdd5;
-      --ink2:rgba(210,220,228,.86);
+      --ink2:rgba(210,220,228,.88);
       --white:#f7f7f7;
 
       --gold:#f1e6a3;
       --gold2:#d4af37;
       --gold3:#8f7633;
 
-      --cta:#f35a2a; /* ORANGE : cockpit only */
+      --cta:#f35a2a; /* ORANGE: cockpit only */
 
       --green:#36d991;
       --red:#ff5b63;
@@ -52,18 +44,11 @@
       --r1:26px;
       --r2:18px;
 
-      --b1:rgba(241,230,163,.24);
-      --b2:rgba(241,230,163,.14);
-
       --shadow:0 28px 70px rgba(0,0,0,.72);
       --shadow2:0 14px 35px rgba(0,0,0,.35);
 
       --glass:rgba(10,14,22,.62);
-
       --max:1760px;
-
-      --scanA: rgba(255,255,255,.010);
-      --scanB: rgba(255,255,255,.000);
     }
 
     *{ box-sizing:border-box; }
@@ -71,25 +56,27 @@
     body{
       margin:0;
       color:var(--ink);
-      font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family:"Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       overflow-x:hidden;
 
       background:
-        radial-gradient(1100px 520px at 22% 10%, rgba(241,230,163,.16), transparent 62%),
-        radial-gradient(920px 520px at 84% 18%, rgba(54,217,145,.10), transparent 62%),
-        radial-gradient(740px 420px at 54% 110%, rgba(0,0,0,.92), transparent 65%),
+        radial-gradient(1200px 580px at 18% 8%, rgba(241,230,163,.18), transparent 62%),
+        radial-gradient(980px 560px at 86% 18%, rgba(54,217,145,.11), transparent 62%),
+        radial-gradient(880px 520px at 55% 112%, rgba(0,0,0,.92), transparent 65%),
         linear-gradient(180deg, var(--bg0) 0%, #020308 100%);
+
+      /* scanlines + overlay */
       background-image:
         repeating-linear-gradient(
           180deg,
-          var(--scanA) 0px,
-          var(--scanA) 1px,
-          var(--scanB) 2px,
-          var(--scanB) 6px
+          rgba(255,255,255,.012) 0px,
+          rgba(255,255,255,.012) 1px,
+          transparent 2px,
+          transparent 6px
         ),
-        radial-gradient(1100px 520px at 22% 10%, rgba(241,230,163,.16), transparent 62%),
-        radial-gradient(920px 520px at 84% 18%, rgba(54,217,145,.10), transparent 62%),
-        radial-gradient(740px 420px at 54% 110%, rgba(0,0,0,.92), transparent 65%),
+        radial-gradient(1200px 580px at 18% 8%, rgba(241,230,163,.18), transparent 62%),
+        radial-gradient(980px 560px at 86% 18%, rgba(54,217,145,.11), transparent 62%),
+        radial-gradient(880px 520px at 55% 112%, rgba(0,0,0,.92), transparent 65%),
         linear-gradient(180deg, var(--bg0) 0%, #020308 100%);
       background-blend-mode: overlay, normal, normal, normal, normal;
     }
@@ -103,48 +90,58 @@
       padding: 0 22px;
     }
 
-    /* gold fillet */
+    /* Ambient grid (big difference vs “boring”) */
+    .gridOverlay{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.22;
+      background:
+        linear-gradient(rgba(241,230,163,.06) 1px, transparent 1px) 0 0/52px 52px,
+        linear-gradient(90deg, rgba(241,230,163,.05) 1px, transparent 1px) 0 0/52px 52px;
+      mask-image: radial-gradient(1200px 640px at 50% 12%, rgba(0,0,0,1), transparent 70%);
+      mix-blend-mode: screen;
+    }
+
+    /* Floating particles */
+    .dust{
+      position:fixed; inset:0;
+      pointer-events:none;
+      opacity:.10;
+      mix-blend-mode: screen;
+      background:
+        radial-gradient(2px 2px at 10% 22%, rgba(241,230,163,.45), transparent 60%),
+        radial-gradient(2px 2px at 28% 70%, rgba(241,230,163,.35), transparent 60%),
+        radial-gradient(2px 2px at 56% 18%, rgba(54,217,145,.25), transparent 60%),
+        radial-gradient(2px 2px at 72% 54%, rgba(241,230,163,.28), transparent 60%),
+        radial-gradient(2px 2px at 88% 30%, rgba(241,230,163,.22), transparent 60%);
+      animation: dustFloat 8s ease-in-out infinite;
+      filter: blur(.2px);
+    }
+    @keyframes dustFloat{
+      0%{ transform: translate3d(0,0,0); }
+      50%{ transform: translate3d(0,-8px,0); }
+      100%{ transform: translate3d(0,0,0); }
+    }
+
+    /* fil d’or */
     .fillet{
       height:1px;
       background: linear-gradient(90deg,
         transparent 0%,
         rgba(241,230,163,.55) 15%,
-        rgba(212,175,55,.75) 50%,
+        rgba(212,175,55,.78) 50%,
         rgba(241,230,163,.55) 85%,
         transparent 100%
       );
       opacity:.55;
     }
 
-    /* subtle floating “console dust” */
-    .dust{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      opacity:.10;
-      mix-blend-mode: screen;
-      background:
-        radial-gradient(2px 2px at 15% 22%, rgba(241,230,163,.40), transparent 60%),
-        radial-gradient(2px 2px at 32% 70%, rgba(241,230,163,.35), transparent 60%),
-        radial-gradient(2px 2px at 58% 18%, rgba(54,217,145,.25), transparent 60%),
-        radial-gradient(2px 2px at 74% 54%, rgba(241,230,163,.28), transparent 60%),
-        radial-gradient(2px 2px at 88% 30%, rgba(241,230,163,.22), transparent 60%);
-      filter: blur(.2px);
-      animation: dustFloat 8s ease-in-out infinite;
-    }
-    @keyframes dustFloat{
-      0%{ transform: translate3d(0,0,0); }
-      50%{ transform: translate3d(0,-6px,0); }
-      100%{ transform: translate3d(0,0,0); }
-    }
-
     /* Topbar */
     .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
+      position:sticky; top:0; z-index:60;
       backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(4,4,14,.86), rgba(4,4,14,.55));
+      background: linear-gradient(180deg, rgba(4,4,14,.88), rgba(4,4,14,.58));
       border-bottom: 1px solid rgba(241,230,163,.10);
     }
     .nav{
@@ -156,15 +153,13 @@
     }
 
     .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      display:flex; align-items:center; gap:10px;
       min-width: 300px;
     }
     .dot{
       width:8px;height:8px;border-radius:999px;
       background: var(--gold2);
-      box-shadow:0 0 16px rgba(241,230,163,.35);
+      box-shadow:0 0 18px rgba(241,230,163,.35);
       flex:0 0 auto;
     }
     .brand-stack{ display:flex; flex-direction:column; line-height:1.1; }
@@ -177,17 +172,15 @@
       white-space:nowrap;
     }
     .brand-sub{
-      font-size:.72rem;
+      font-size:.74rem;
       color: rgba(194,205,213,.70);
       margin-top: 3px;
       white-space:nowrap;
     }
 
     .navlinks{
-      display:flex;
-      gap: 8px;
-      align-items:center;
-      flex-wrap:wrap;
+      display:flex; gap:8px;
+      align-items:center; flex-wrap:wrap;
       justify-content:center;
     }
     .navlinks a{
@@ -212,7 +205,7 @@
     .navlinks a.active{
       border-color: rgba(241,230,163,.42);
       color:#fff;
-      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.16), rgba(10,14,22,.52));
+      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.18), rgba(10,14,22,.52));
     }
 
     .cta{
@@ -228,7 +221,7 @@
       position:relative;
       border-radius:999px;
       border:1px solid rgba(241,230,163,.18);
-      background: rgba(10,14,22,.52);
+      background: rgba(10,14,22,.54);
       color: rgba(241,230,163,.92);
       padding: 11px 16px;
       cursor:pointer;
@@ -236,7 +229,7 @@
       letter-spacing:.14em;
       text-transform:uppercase;
       font-size:.76rem;
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
       overflow:hidden;
       display:inline-flex;
       align-items:center;
@@ -254,11 +247,10 @@
 
     .btn--gold{
       border: 1px solid rgba(241,230,163,.22);
-      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.12), rgba(10,14,22,.52));
+      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.14), rgba(10,14,22,.52));
       color: rgba(241,230,163,.92);
     }
 
-    /* ORANGE = cockpit only */
     .btn--orange{
       border:none;
       background: var(--cta);
@@ -271,7 +263,7 @@
 
     .sheen{
       position:absolute; inset:0;
-      background: linear-gradient(120deg, rgba(255,255,255,.42), rgba(255,255,255,.12), transparent 58%);
+      background: linear-gradient(120deg, rgba(255,255,255,.44), rgba(255,255,255,.12), transparent 58%);
       transform: translateX(-140%);
       opacity:.65;
       transition: transform .75s ease;
@@ -284,18 +276,110 @@
       box-shadow: 0 0 0 3px rgba(241,230,163,.10), 0 0 0 1px rgba(241,230,163,.22);
     }
 
+    /* Console Gate (this is the missing sophistication you want) */
+    .gateWrap{ padding: 14px 0 6px; }
+    .gate{
+      border-radius: 22px;
+      border: 1px solid rgba(241,230,163,.18);
+      background:
+        radial-gradient(900px 360px at 18% 10%, rgba(241,230,163,.16), transparent 60%),
+        radial-gradient(760px 360px at 88% 35%, rgba(54,217,145,.10), transparent 62%),
+        rgba(10,14,22,.56);
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+      position:relative;
+    }
+    .gate::before{
+      content:"";
+      position:absolute; inset:-2px;
+      border-radius: inherit;
+      border:1px solid rgba(241,230,163,.08);
+      pointer-events:none;
+    }
+    .gateTop{
+      padding: 14px 16px 10px;
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .gateTitle{
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:.72rem;
+      color: rgba(241,230,163,.85);
+    }
+    .gateSub{
+      margin-top:6px;
+      font-size:.92rem;
+      color: rgba(210,220,228,.86);
+      line-height:1.5;
+      max-width: 110ch;
+    }
+    .gateChips{
+      display:flex; gap:8px; flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .chip{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 7px 11px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,.14);
+      background: rgba(10,14,22,.48);
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:.66rem;
+      color: rgba(241,230,163,.74);
+      white-space:nowrap;
+    }
+    .chipDot{
+      width:7px;height:7px;border-radius:999px;
+      background: rgba(241,230,163,.88);
+      box-shadow:0 0 14px rgba(241,230,163,.24);
+    }
+    .scanbar{
+      height: 8px;
+      background: linear-gradient(90deg, transparent 0%, rgba(241,230,163,.22) 20%, rgba(212,175,55,.42) 50%, rgba(241,230,163,.22) 80%, transparent 100%);
+      opacity:.75;
+      position:relative;
+      overflow:hidden;
+      border-top: 1px solid rgba(241,230,163,.10);
+    }
+    .scanbar::after{
+      content:"";
+      position:absolute;
+      top:-30px;
+      left:-40%;
+      width:38%;
+      height:70px;
+      background: radial-gradient(circle at 50% 50%, rgba(241,230,163,.35), transparent 65%);
+      filter: blur(10px);
+      animation: scanSweep 3.2s ease-in-out infinite;
+      opacity:.85;
+    }
+    @keyframes scanSweep{
+      0%{ transform: translateX(0); opacity:.55; }
+      50%{ transform: translateX(220%); opacity:1; }
+      100%{ transform: translateX(440%); opacity:.55; }
+    }
+
     /* Panels */
     .panel{
       border-radius: var(--r1);
       background:
-        radial-gradient(circle at 15% 0, rgba(241,230,163,.10), transparent 55%),
-        radial-gradient(circle at 85% 85%, rgba(54,217,145,.08), transparent 55%),
-        rgba(10,14,22,.66);
+        radial-gradient(circle at 15% 0, rgba(241,230,163,.11), transparent 55%),
+        radial-gradient(circle at 85% 85%, rgba(54,217,145,.09), transparent 55%),
+        rgba(10,14,22,.68);
       border: 1px solid rgba(241,230,163,.22);
       box-shadow: var(--shadow2);
       overflow:hidden;
       position:relative;
     }
+    .panel--hero{ box-shadow: var(--shadow); }
     .panel::before{
       content:"";
       position:absolute; inset:-2px;
@@ -303,38 +387,13 @@
       border:1px solid rgba(241,230,163,.08);
       pointer-events:none;
     }
-    .panel--hero{ box-shadow: var(--shadow); }
-
+    .inset{
+      border-radius: var(--r1);
+      border: 1px solid rgba(241,230,163,.14);
+      background: rgba(10,14,22,.54);
+      box-shadow: var(--shadow2);
+    }
     .pad{ padding: 18px; }
-
-    /* Console “status rail” (this is the difference vs boring) */
-    .rail{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      padding: 12px 14px;
-      border-top: 1px solid rgba(241,230,163,.10);
-      border-bottom: 1px solid rgba(241,230,163,.10);
-      background: rgba(4,5,10,.42);
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      font-size:.68rem;
-      color: rgba(241,230,163,.78);
-    }
-    .rail .sep{ opacity:.30; }
-    .pulse{
-      width:7px;height:7px;border-radius:999px;
-      background: rgba(54,217,145,.85);
-      box-shadow: 0 0 14px rgba(54,217,145,.30);
-      animation: pulse 1.6s ease-in-out infinite;
-    }
-    @keyframes pulse{
-      0%{ transform: scale(1); opacity:.75; }
-      50%{ transform: scale(1.35); opacity:1; }
-      100%{ transform: scale(1); opacity:.75; }
-    }
 
     /* Typo */
     .kicker{
@@ -346,8 +405,8 @@
       margin-bottom: 10px;
     }
     .micro{
-      font-size:.84rem;
-      color: rgba(194,205,213,.70);
+      font-size:.86rem;
+      color: rgba(194,205,213,.72);
       line-height:1.55;
     }
     h1{
@@ -358,35 +417,34 @@
       line-height:1.05;
       font-size: clamp(2.05rem, 3.6vw, 3.35rem);
       color: var(--white);
-      text-shadow: 0 12px 34px rgba(0,0,0,.58);
+      text-shadow: 0 14px 34px rgba(0,0,0,.62);
     }
-    .hl{ color: var(--gold2); text-shadow: 0 0 22px rgba(241,230,163,.16); }
+    .hl{ color: var(--gold2); text-shadow: 0 0 26px rgba(241,230,163,.18); }
     .lead{
       margin:0 0 14px;
       color: var(--ink2);
       line-height:1.65;
-      font-size: 1.02rem;
+      font-size: 1.04rem;
       max-width: 92ch;
     }
 
     /* Hero layout */
-    .hero{ padding: 18px 0 12px; }
+    .hero{ padding: 10px 0 12px; }
     .heroGrid{
       display:grid;
       grid-template-columns: 1.25fr .95fr;
       gap: 16px;
       align-items: start;
     }
-
     .pills{ display:flex; gap:10px; flex-wrap:wrap; margin: 14px 0 10px; }
     .pill{
       display:inline-flex; align-items:center; gap:10px;
       padding: 8px 12px;
       border-radius:999px;
       border:1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.42);
+      background: rgba(10,14,22,.44);
       color: rgba(241,230,163,.84);
-      font-size:.86rem;
+      font-size:.90rem;
       white-space:nowrap;
     }
     .pill-dot{
@@ -394,16 +452,9 @@
       background: rgba(241,230,163,.86);
       box-shadow:0 0 12px rgba(241,230,163,.25);
     }
-
     .heroActions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
 
-    /* Right console preview */
-    .inset{
-      border-radius: var(--r1);
-      border: 1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.52);
-      box-shadow: var(--shadow2);
-    }
+    /* Teaser (right) */
     .teaserHead{
       display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
       margin-bottom: 10px;
@@ -420,7 +471,7 @@
       padding: 7px 10px;
       border-radius:999px;
       border:1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.42);
+      background: rgba(10,14,22,.44);
       font-family:"Orbitron", system-ui, sans-serif;
       letter-spacing:.12em;
       text-transform:uppercase;
@@ -443,7 +494,7 @@
     .kpi{
       border-radius: var(--r2);
       border: 1px solid rgba(241,230,163,.14);
-      background: rgba(8,10,16,.54);
+      background: rgba(8,10,16,.56);
       padding: 12px;
       box-shadow: var(--shadow2);
     }
@@ -478,11 +529,6 @@
       font-family:"Orbitron", system-ui, sans-serif;
       text-transform:uppercase;
     }
-    .badge--stable{
-      background: radial-gradient(circle at 0 0, rgba(54,217,145,.34), rgba(6,16,12,.90));
-      border-color: rgba(54,217,145,.46);
-      color:#eafff4;
-    }
     .badge--threshold{
       background: radial-gradient(circle at 0 0, rgba(244,201,107,.44), rgba(22,16,6,.90));
       border-color: rgba(244,201,107,.50);
@@ -503,7 +549,7 @@
       margin-top: 12px;
       border-radius: var(--r2);
       border: 1px solid rgba(241,230,163,.14);
-      background: rgba(4,5,10,.58);
+      background: rgba(4,5,10,.60);
       padding: 12px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size:.84rem;
@@ -538,7 +584,7 @@
     .card{
       border-radius: var(--r2);
       border: 1px solid rgba(241,230,163,.14);
-      background: rgba(8,10,16,.52);
+      background: rgba(8,10,16,.54);
       padding: 14px;
       box-shadow: var(--shadow2);
       position:relative;
@@ -546,18 +592,17 @@
     }
     .card::before{
       content:"";
-      position:absolute;
-      inset:0;
-      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.08), transparent 55%);
+      position:absolute; inset:0;
+      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.10), transparent 55%);
       opacity:.75;
       pointer-events:none;
     }
     .card h3{
       position:relative;
       margin:0 0 8px;
-      font-size: 1.00rem;
+      font-size: 1.02rem;
       color: rgba(241,230,163,.92);
-      font-weight: 700;
+      font-weight: 600;
     }
     .card p{
       position:relative;
@@ -568,48 +613,11 @@
       max-width: 84ch;
     }
 
-    /* “One-run” mini pipeline */
-    .pipe{
-      margin-top: 10px;
-      border-radius: var(--r2);
-      border: 1px solid rgba(241,230,163,.14);
-      background: rgba(8,10,16,.46);
-      padding: 12px;
-      box-shadow: var(--shadow2);
-    }
-    .pipeRow{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 8px;
-      align-items:center;
-    }
-    .step{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding: 8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.42);
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      font-size:.70rem;
-      color: rgba(241,230,163,.80);
-      white-space:nowrap;
-    }
-    .arrow{
-      opacity:.35;
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.18em;
-    }
-
-    /* CTA band */
     .ctaBand{
       margin-top: 12px;
       border-radius: var(--r2);
       border: 1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.46);
+      background: rgba(10,14,22,.48);
       padding: 14px;
       display:flex;
       justify-content:space-between;
@@ -625,7 +633,6 @@
       font-size: .98rem;
     }
 
-    /* Footer */
     .foot{
       margin-top: 18px;
       padding: 18px 0 28px;
@@ -646,29 +653,29 @@
       border-bottom-color: rgba(241,230,163,.35);
     }
 
-    /* Responsive */
     @media (max-width: 1100px){
       .heroGrid{ grid-template-columns: 1fr; }
       .grid3{ grid-template-columns: 1fr; }
       .ctaBand{ align-items:stretch; }
-      .brand{ min-width: 0; }
-      .cta{ min-width: 0; justify-content:flex-start; }
     }
     @media (max-width: 960px){
       .navlinks{ display:none; }
+      .brand{ min-width: 0; }
+      .cta{ min-width: 0; justify-content:flex-start; }
       .container{ padding: 0 18px; }
     }
     @media (prefers-reduced-motion: reduce){
       *{ scroll-behavior:auto !important; }
       .btn{ transition:none !important; }
       .sheen{ display:none !important; }
-      .dust{ display:none !important; }
-      .pulse{ animation:none !important; }
+      .dust, .gridOverlay{ display:none !important; }
+      .scanbar::after{ animation:none !important; }
     }
   </style>
 </head>
 
 <body>
+  <div class="gridOverlay" aria-hidden="true"></div>
   <div class="dust" aria-hidden="true"></div>
   <div class="fillet" aria-hidden="true"></div>
 
@@ -695,12 +702,10 @@
         </nav>
 
         <div class="cta" aria-label="Actions">
-          <!-- GOLD: internal -->
           <a class="btn btn--gold btn--small" href="./spec.html" target="_blank" rel="noopener noreferrer">
             <span class="sheen" aria-hidden="true"></span>
             Read spec
           </a>
-          <!-- ORANGE: cockpit only -->
           <a class="btn btn--orange btn--small" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
             <span class="sheen" aria-hidden="true"></span>
             Cockpit
@@ -710,23 +715,29 @@
     </div>
   </header>
 
-  <!-- status rail (makes it feel like a console, not a brochure) -->
-  <div class="rail" role="region" aria-label="Console status rail">
-    <span class="pulse" aria-hidden="true"></span>
-    <span>RPO v0.1</span>
-    <span class="sep">·</span>
-    <span>Deterministic</span>
-    <span class="sep">·</span>
-    <span>No AI</span>
-    <span class="sep">·</span>
-    <span>Sealed Bundle</span>
-    <span class="sep">·</span>
-    <span>Public Hash</span>
-    <span class="sep">·</span>
-    <span>Human Accountability</span>
-  </div>
-
   <main class="container" role="main">
+    <!-- CONSOLE GATE -->
+    <section class="gateWrap" aria-label="Console gate">
+      <div class="gate">
+        <div class="gateTop">
+          <div>
+            <div class="gateTitle">Console Entry · RPO v0.1</div>
+            <div class="gateSub">
+              Same input → same sealed bundle → same hash. Any modification becomes detectable.
+              This is how governance survives scrutiny.
+            </div>
+          </div>
+          <div class="gateChips" aria-label="Gate chips">
+            <span class="chip"><span class="chipDot"></span>Integrity</span>
+            <span class="chip"><span class="chipDot"></span>Readability</span>
+            <span class="chip"><span class="chipDot"></span>Verifiability</span>
+            <span class="chip"><span class="chipDot"></span>No AI</span>
+          </div>
+        </div>
+        <div class="scanbar" aria-hidden="true"></div>
+      </div>
+    </section>
+
     <!-- HERO / CONSOLE -->
     <section class="hero" aria-label="Home console">
       <div class="panel panel--hero">
@@ -748,7 +759,6 @@
               <p class="lead">
                 RPO v0.1 produces a deterministic package: sealed JSON core, human-readable view, public hash.
                 No AI, no interpretation: same input → same output. Always.
-                Accountability stays human.
               </p>
 
               <div class="pills" aria-label="Properties">
@@ -759,12 +769,10 @@
               </div>
 
               <div class="heroActions" role="group" aria-label="Hero actions">
-                <!-- GOLD: simulator -->
                 <a class="btn btn--gold" href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">
                   <span class="sheen" aria-hidden="true"></span>
                   Open simulator
                 </a>
-                <!-- GOLD: internal -->
                 <a class="btn btn--gold" href="./how-it-works.html" target="_blank" rel="noopener noreferrer">
                   <span class="sheen" aria-hidden="true"></span>
                   How it works
@@ -775,21 +783,9 @@
                 </a>
               </div>
 
-              <!-- Mini pipeline (console feel) -->
-              <div class="pipe" aria-label="One-run pipeline">
-                <div class="micro" style="margin:0 0 10px;">
-                  One run. One bundle. One hash.
-                </div>
-                <div class="pipeRow">
-                  <span class="step">Declare sources</span><span class="arrow">→</span>
-                  <span class="step">Seal JSON</span><span class="arrow">→</span>
-                  <span class="step">Render view</span><span class="arrow">→</span>
-                  <span class="step">Publish hash</span>
-                </div>
-              </div>
-
               <p class="micro" style="margin-top:12px;">
-                RPO proves integrity over time. It does not “decide truth”. Verification can be public. Decisions remain human.
+                RPO proves integrity over time. It does not “decide truth”.
+                Verification can be public. Decisions remain human.
               </p>
             </div>
 
@@ -841,7 +837,7 @@
                 </div>
 
                 <p class="micro" style="margin-top:10px;">
-                  This is not a “score by AI”. It’s a deterministic layer for reconstructibility and governance under pressure.
+                  This is not an “AI score”. It’s a deterministic layer for reconstructibility and governance under pressure.
                 </p>
               </div>
             </aside>
@@ -850,25 +846,25 @@
       </div>
     </section>
 
-    <!-- WHAT IT IS (short, sharp) -->
-    <section class="section" aria-labelledby="what-title">
+    <!-- RAMP -->
+    <section class="section" aria-labelledby="inside-title">
       <div class="sectionHead">
-        <h2 id="what-title">What RPO v0.1 is</h2>
-        <div class="meta">Short. Concrete. Defensible.</div>
+        <h2 id="inside-title">One run. One bundle. One hash.</h2>
+        <div class="meta">A ramp, not a lecture</div>
       </div>
 
-      <div class="grid3" aria-label="Definition cards">
+      <div class="grid3" aria-label="Steps">
         <article class="card">
-          <h3>1 — A sealed JSON core</h3>
-          <p>Structured facts, inputs, metadata, owners. No narrative polish. If it’s not declared, it’s not defensible.</p>
+          <h3>Step 1 — Declare sources</h3>
+          <p>HRIS, logs, attestations, policies, constraints. No narrative polish. Just perimeter.</p>
         </article>
         <article class="card">
-          <h3>2 — A human-readable view</h3>
-          <p>A clear rendering that can be reviewed, challenged, signed, and archived. Governance needs readability.</p>
+          <h3>Step 2 — Generate the bundle</h3>
+          <p>Sealed JSON, readable view, public hash. Same input → same output. Always.</p>
         </article>
         <article class="card">
-          <h3>3 — A public hash</h3>
-          <p>Integrity over time. Any modification becomes detectable. That’s how reputations survive scrutiny.</p>
+          <h3>Step 3 — Close blind spots</h3>
+          <p>Name what’s missing, assign an owner, set the clock. Stabilize before escalation.</p>
         </article>
       </div>
 
@@ -884,7 +880,7 @@
       </div>
     </section>
 
-    <!-- PILOT / COCKPIT -->
+    <!-- Cockpit -->
     <section class="section" aria-labelledby="start-title">
       <div class="sectionHead">
         <h2 id="start-title">Next step</h2>
@@ -893,7 +889,7 @@
 
       <div class="ctaBand" role="region" aria-label="CTA cockpit">
         <div class="text">
-          Use the simulator to validate your structure and blind spots.
+          Use the simulator to validate structure and blind spots.
           When you’re ready to discuss integration, owners, thresholds, and governance at scale, move to the cockpit.
         </div>
         <a class="btn btn--orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
@@ -903,7 +899,6 @@
       </div>
     </section>
 
-    <!-- Footer -->
     <footer class="foot" aria-label="Footer">
       <div>© OpenProof — RPO v0.1. Built by Gersende Ryard de Parcey.</div>
       <div>
@@ -916,7 +911,7 @@
 
   <script>
     // -------------------------------------------------------
-    // Home teaser : small “instrument cue” (calm, not flashy)
+    // Home teaser : calm “instrument cue”
     // -------------------------------------------------------
     (function(){
       const elCov  = document.getElementById("kpiCoverage");
@@ -941,7 +936,6 @@
         return arr.map(b=>b.toString(16).padStart(2,"0")).join("");
       }
 
-      // A gentle escalation that ends in “sealed”
       const frames = [
         { cov: 62, def: 48, expo: "HIGH",   covB:"badge--threshold", defB:"badge--fragile",   expoB:"badge--fragile",   hash:"—" },
         { cov: 74, def: 62, expo: "MEDIUM", covB:"badge--threshold", defB:"badge--threshold", expoB:"badge--threshold", hash:"—" },
