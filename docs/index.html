@@ -1,25 +1,25 @@
-<!-- docs/index.html (FULL REPLACEMENT — Console d’accueil / charte Simulateur) -->
+<!-- docs/index.html (FULL REPLACEMENT — Console Home aligned with Simulator charter) -->
 <!DOCTYPE html>
-<html lang="fr" data-page="home">
+<html lang="en" data-page="home">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <!-- Primary SEO -->
-  <title>OPENPROOF.NET — RPO v0.1 | Console d’accueil</title>
-  <meta name="description" content="RPO v0.1 : bundles probatoires déterministes (JSON scellé + aperçu lisible + hash public) pour une gouvernance auditable et opposable. Pas d’IA. Responsabilité humaine." />
+  <title>OPENPROOF.NET — RPO v0.1 | Home Console</title>
+  <meta name="description" content="RPO v0.1 produces deterministic evidence bundles: sealed JSON core + human-readable view + public hash. No AI. Human responsibility." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://rpo.openproof.net/" />
   <meta name="author" content="Gersende Ryard de Parcey" />
 
   <!-- OpenGraph / Twitter -->
-  <meta property="og:title" content="OPENPROOF.NET — RPO v0.1 | Console d’accueil" />
-  <meta property="og:description" content="Bundles déterministes : JSON scellé + aperçu lisible + hash public. Pas d’IA. Responsabilité humaine." />
+  <meta property="og:title" content="OPENPROOF.NET — RPO v0.1 | Home Console" />
+  <meta property="og:description" content="Deterministic bundles: sealed JSON + human-readable view + public hash. No AI. Human responsibility." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://rpo.openproof.net/" />
   <meta name="twitter:card" content="summary" />
 
-  <!-- Fonts (Simulateur pairing) -->
+  <!-- Fonts (Simulator pairing) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
@@ -27,8 +27,8 @@
   <style>
     /* =========================================================
        OPENPROOF — RPO v0.1
-       HOME = CONSOLE D’ACCUEIL (charte Simulateur)
-       Règle CTA : ORANGE = cockpit uniquement, JAUNE/OR = reste
+       HOME = CONSOLE ENTRY (aligned with Simulator charter)
+       CTA RULE: ORANGE = cockpit only, GOLD = everything else
        ========================================================= */
 
     :root{
@@ -43,7 +43,7 @@
       --gold2:#d4af37;
       --gold3:#8f7633;
 
-      --cta:#f35a2a; /* ORANGE : cockpit seulement */
+      --cta:#f35a2a; /* ORANGE : cockpit only */
 
       --green:#36d991;
       --red:#ff5b63;
@@ -61,6 +61,9 @@
       --glass:rgba(10,14,22,.62);
 
       --max:1760px;
+
+      --scanA: rgba(255,255,255,.010);
+      --scanB: rgba(255,255,255,.000);
     }
 
     *{ box-sizing:border-box; }
@@ -76,15 +79,13 @@
         radial-gradient(920px 520px at 84% 18%, rgba(54,217,145,.10), transparent 62%),
         radial-gradient(740px 420px at 54% 110%, rgba(0,0,0,.92), transparent 65%),
         linear-gradient(180deg, var(--bg0) 0%, #020308 100%);
-
-      /* scanlines subtiles */
       background-image:
         repeating-linear-gradient(
           180deg,
-          rgba(255,255,255,.010) 0px,
-          rgba(255,255,255,.010) 1px,
-          transparent 2px,
-          transparent 6px
+          var(--scanA) 0px,
+          var(--scanA) 1px,
+          var(--scanB) 2px,
+          var(--scanB) 6px
         ),
         radial-gradient(1100px 520px at 22% 10%, rgba(241,230,163,.16), transparent 62%),
         radial-gradient(920px 520px at 84% 18%, rgba(54,217,145,.10), transparent 62%),
@@ -102,7 +103,7 @@
       padding: 0 22px;
     }
 
-    /* fil d’or */
+    /* gold fillet */
     .fillet{
       height:1px;
       background: linear-gradient(90deg,
@@ -113,6 +114,28 @@
         transparent 100%
       );
       opacity:.55;
+    }
+
+    /* subtle floating “console dust” */
+    .dust{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.10;
+      mix-blend-mode: screen;
+      background:
+        radial-gradient(2px 2px at 15% 22%, rgba(241,230,163,.40), transparent 60%),
+        radial-gradient(2px 2px at 32% 70%, rgba(241,230,163,.35), transparent 60%),
+        radial-gradient(2px 2px at 58% 18%, rgba(54,217,145,.25), transparent 60%),
+        radial-gradient(2px 2px at 74% 54%, rgba(241,230,163,.28), transparent 60%),
+        radial-gradient(2px 2px at 88% 30%, rgba(241,230,163,.22), transparent 60%);
+      filter: blur(.2px);
+      animation: dustFloat 8s ease-in-out infinite;
+    }
+    @keyframes dustFloat{
+      0%{ transform: translate3d(0,0,0); }
+      50%{ transform: translate3d(0,-6px,0); }
+      100%{ transform: translate3d(0,0,0); }
     }
 
     /* Topbar */
@@ -136,7 +159,7 @@
       display:flex;
       align-items:center;
       gap:10px;
-      min-width: 280px;
+      min-width: 300px;
     }
     .dot{
       width:8px;height:8px;border-radius:999px;
@@ -195,7 +218,7 @@
     .cta{
       display:flex;
       gap:10px;
-      min-width: 280px;
+      min-width: 300px;
       justify-content:flex-end;
       flex-wrap:wrap;
     }
@@ -235,7 +258,7 @@
       color: rgba(241,230,163,.92);
     }
 
-    /* ORANGE = cockpit seulement */
+    /* ORANGE = cockpit only */
     .btn--orange{
       border:none;
       background: var(--cta);
@@ -261,7 +284,7 @@
       box-shadow: 0 0 0 3px rgba(241,230,163,.10), 0 0 0 1px rgba(241,230,163,.22);
     }
 
-    /* Panels (console glass) */
+    /* Panels */
     .panel{
       border-radius: var(--r1);
       background:
@@ -281,13 +304,37 @@
       pointer-events:none;
     }
     .panel--hero{ box-shadow: var(--shadow); }
-    .inset{
-      border-radius: var(--r1);
-      border: 1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.52);
-      box-shadow: var(--shadow2);
-    }
+
     .pad{ padding: 18px; }
+
+    /* Console “status rail” (this is the difference vs boring) */
+    .rail{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      padding: 12px 14px;
+      border-top: 1px solid rgba(241,230,163,.10);
+      border-bottom: 1px solid rgba(241,230,163,.10);
+      background: rgba(4,5,10,.42);
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-size:.68rem;
+      color: rgba(241,230,163,.78);
+    }
+    .rail .sep{ opacity:.30; }
+    .pulse{
+      width:7px;height:7px;border-radius:999px;
+      background: rgba(54,217,145,.85);
+      box-shadow: 0 0 14px rgba(54,217,145,.30);
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse{
+      0%{ transform: scale(1); opacity:.75; }
+      50%{ transform: scale(1.35); opacity:1; }
+      100%{ transform: scale(1); opacity:.75; }
+    }
 
     /* Typo */
     .kicker{
@@ -309,7 +356,7 @@
       letter-spacing:.02em;
       text-transform:uppercase;
       line-height:1.05;
-      font-size: clamp(2.0rem, 3.6vw, 3.3rem);
+      font-size: clamp(2.05rem, 3.6vw, 3.35rem);
       color: var(--white);
       text-shadow: 0 12px 34px rgba(0,0,0,.58);
     }
@@ -318,7 +365,7 @@
       margin:0 0 14px;
       color: var(--ink2);
       line-height:1.65;
-      font-size: 1.00rem;
+      font-size: 1.02rem;
       max-width: 92ch;
     }
 
@@ -330,6 +377,7 @@
       gap: 16px;
       align-items: start;
     }
+
     .pills{ display:flex; gap:10px; flex-wrap:wrap; margin: 14px 0 10px; }
     .pill{
       display:inline-flex; align-items:center; gap:10px;
@@ -349,7 +397,13 @@
 
     .heroActions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 14px; }
 
-    /* Teaser (right) */
+    /* Right console preview */
+    .inset{
+      border-radius: var(--r1);
+      border: 1px solid rgba(241,230,163,.14);
+      background: rgba(10,14,22,.52);
+      box-shadow: var(--shadow2);
+    }
     .teaserHead{
       display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
       margin-bottom: 10px;
@@ -490,18 +544,64 @@
       position:relative;
       overflow:hidden;
     }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.08), transparent 55%);
+      opacity:.75;
+      pointer-events:none;
+    }
     .card h3{
+      position:relative;
       margin:0 0 8px;
       font-size: 1.00rem;
       color: rgba(241,230,163,.92);
       font-weight: 700;
     }
     .card p{
+      position:relative;
       margin:0;
       color: var(--ink2);
       line-height:1.6;
       font-size: .98rem;
       max-width: 84ch;
+    }
+
+    /* “One-run” mini pipeline */
+    .pipe{
+      margin-top: 10px;
+      border-radius: var(--r2);
+      border: 1px solid rgba(241,230,163,.14);
+      background: rgba(8,10,16,.46);
+      padding: 12px;
+      box-shadow: var(--shadow2);
+    }
+    .pipeRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap: 8px;
+      align-items:center;
+    }
+    .step{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,.14);
+      background: rgba(10,14,22,.42);
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:.70rem;
+      color: rgba(241,230,163,.80);
+      white-space:nowrap;
+    }
+    .arrow{
+      opacity:.35;
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.18em;
     }
 
     /* CTA band */
@@ -551,22 +651,25 @@
       .heroGrid{ grid-template-columns: 1fr; }
       .grid3{ grid-template-columns: 1fr; }
       .ctaBand{ align-items:stretch; }
+      .brand{ min-width: 0; }
+      .cta{ min-width: 0; justify-content:flex-start; }
     }
     @media (max-width: 960px){
       .navlinks{ display:none; }
-      .brand{ min-width: 0; }
-      .cta{ min-width: 0; justify-content:flex-start; }
       .container{ padding: 0 18px; }
     }
     @media (prefers-reduced-motion: reduce){
       *{ scroll-behavior:auto !important; }
       .btn{ transition:none !important; }
       .sheen{ display:none !important; }
+      .dust{ display:none !important; }
+      .pulse{ animation:none !important; }
     }
   </style>
 </head>
 
 <body>
+  <div class="dust" aria-hidden="true"></div>
   <div class="fillet" aria-hidden="true"></div>
 
   <!-- Topbar -->
@@ -577,144 +680,168 @@
           <span class="dot" aria-hidden="true"></span>
           <div class="brand-stack">
             <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
-            <div class="brand-sub">Moteur probatoire et gouvernance</div>
+            <div class="brand-sub">Deterministic evidential infrastructure</div>
           </div>
         </div>
 
         <nav class="navlinks" aria-label="Navigation">
-          <a class="active" href="./index.html" target="_blank" rel="noopener noreferrer" aria-current="page">Maison</a>
-          <a href="./simulator.html" target="_blank" rel="noopener noreferrer">Simulateur</a>
-          <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">Comment ça marche</a>
-          <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spéc.</a>
+          <a class="active" href="./index.html" target="_blank" rel="noopener noreferrer" aria-current="page">Home</a>
+          <a href="./simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a>
+          <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+          <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
           <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
-          <a href="./examples.html" target="_blank" rel="noopener noreferrer">Exemples</a>
-          <a href="./contexts.html" target="_blank" rel="noopener noreferrer">Contextes</a>
+          <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+          <a href="./contexts.html" target="_blank" rel="noopener noreferrer">Contexts</a>
         </nav>
 
         <div class="cta" aria-label="Actions">
-          <!-- JAUNE/OR : interne -->
+          <!-- GOLD: internal -->
           <a class="btn btn--gold btn--small" href="./spec.html" target="_blank" rel="noopener noreferrer">
             <span class="sheen" aria-hidden="true"></span>
-            Lire les spécifications
+            Read spec
           </a>
-          <!-- ORANGE : cockpit uniquement -->
+          <!-- ORANGE: cockpit only -->
           <a class="btn btn--orange btn--small" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
             <span class="sheen" aria-hidden="true"></span>
-            Poste de pilotage
+            Cockpit
           </a>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- status rail (makes it feel like a console, not a brochure) -->
+  <div class="rail" role="region" aria-label="Console status rail">
+    <span class="pulse" aria-hidden="true"></span>
+    <span>RPO v0.1</span>
+    <span class="sep">·</span>
+    <span>Deterministic</span>
+    <span class="sep">·</span>
+    <span>No AI</span>
+    <span class="sep">·</span>
+    <span>Sealed Bundle</span>
+    <span class="sep">·</span>
+    <span>Public Hash</span>
+    <span class="sep">·</span>
+    <span>Human Accountability</span>
+  </div>
+
   <main class="container" role="main">
     <!-- HERO / CONSOLE -->
-    <section class="hero" aria-label="Console d’accueil">
+    <section class="hero" aria-label="Home console">
       <div class="panel panel--hero">
         <div class="pad">
           <div class="heroGrid">
             <!-- LEFT -->
             <div>
-              <div class="kicker">Norme ouverte pour la gouvernance des décisions</div>
+              <div class="kicker">Open standard for decision governance under scrutiny</div>
 
               <p class="micro" style="margin:0 0 10px;">
-                Par Gersende Ryard de Parcey, gouvernance décisionnelle et infrastructure probatoire.
+                By Gersende Ryard de Parcey, decision governance and evidential infrastructure.
               </p>
 
               <h1>
-                Les décisions seront contestées.<br/>
-                <span class="hl">Protégez ce que vous pouvez défendre.</span>
+                Decisions will be contested.<br/>
+                <span class="hl">Protect what you can defend.</span>
               </h1>
 
               <p class="lead">
-                RPO v0.1 produit un paquet déterministe : noyau JSON scellé, aperçu lisible par l’humain, hash public.
-                Aucune IA, aucune interprétation : même entrée, même sortie.
-                La responsabilité humaine demeure.
+                RPO v0.1 produces a deterministic package: sealed JSON core, human-readable view, public hash.
+                No AI, no interpretation: same input → same output. Always.
+                Accountability stays human.
               </p>
 
-              <div class="pills" aria-label="Propriétés">
-                <span class="pill"><span class="pill-dot"></span>Déterministe</span>
-                <span class="pill"><span class="pill-dot"></span>Prêt pour l’audit</span>
-                <span class="pill"><span class="pill-dot"></span>Scellé + vérifiable</span>
-                <span class="pill"><span class="pill-dot"></span>Pas d’IA</span>
+              <div class="pills" aria-label="Properties">
+                <span class="pill"><span class="pill-dot"></span>Deterministic</span>
+                <span class="pill"><span class="pill-dot"></span>Audit-ready</span>
+                <span class="pill"><span class="pill-dot"></span>Sealed + verifiable</span>
+                <span class="pill"><span class="pill-dot"></span>No AI</span>
               </div>
 
-              <div class="heroActions" role="group" aria-label="Actions hero">
-                <!-- JAUNE/OR : simulateur -->
-                <a class="btn btn--gold" href="./simulator.html?context=crise_institutionnelle" target="_blank" rel="noopener noreferrer">
+              <div class="heroActions" role="group" aria-label="Hero actions">
+                <!-- GOLD: simulator -->
+                <a class="btn btn--gold" href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">
                   <span class="sheen" aria-hidden="true"></span>
-                  Ouvrez le simulateur
+                  Open simulator
                 </a>
-                <!-- JAUNE/OR : interne -->
+                <!-- GOLD: internal -->
                 <a class="btn btn--gold" href="./how-it-works.html" target="_blank" rel="noopener noreferrer">
                   <span class="sheen" aria-hidden="true"></span>
-                  Comment ça marche
+                  How it works
                 </a>
                 <a class="btn btn--gold" href="./examples.html" target="_blank" rel="noopener noreferrer">
                   <span class="sheen" aria-hidden="true"></span>
-                  Voir des exemples
+                  See examples
                 </a>
               </div>
 
+              <!-- Mini pipeline (console feel) -->
+              <div class="pipe" aria-label="One-run pipeline">
+                <div class="micro" style="margin:0 0 10px;">
+                  One run. One bundle. One hash.
+                </div>
+                <div class="pipeRow">
+                  <span class="step">Declare sources</span><span class="arrow">→</span>
+                  <span class="step">Seal JSON</span><span class="arrow">→</span>
+                  <span class="step">Render view</span><span class="arrow">→</span>
+                  <span class="step">Publish hash</span>
+                </div>
+              </div>
+
               <p class="micro" style="margin-top:12px;">
-                RPO = JSON scellé + aperçu lisible + hash public.
-                Le hash prouve l’intégrité dans le temps, pas la « vérité ».
-                La vérification est publique, la décision reste humaine.
+                RPO proves integrity over time. It does not “decide truth”. Verification can be public. Decisions remain human.
               </p>
             </div>
 
-            <!-- RIGHT: POSTE DE PILOTAGE SIMULÉ (teaser) -->
-            <aside class="inset" aria-label="Poste de pilotage simulé">
+            <!-- RIGHT: SIMULATOR TEASER -->
+            <aside class="inset" aria-label="Simulator teaser">
               <div class="pad">
                 <div class="teaserHead">
                   <div>
-                    <div class="teaserTitle">Bande-annonce du simulateur</div>
+                    <div class="teaserTitle">Simulator preview</div>
                     <div class="micro" style="margin-top:6px;">
-                      Cockpit de défense décisionnelle : couverture, défendabilité, exposition, hachage scellé.
+                      A pressure test for governance: coverage, defensibility, exposure, sealed hashing.
                     </div>
                   </div>
-                  <span class="tag" aria-label="Piliers"><i aria-hidden="true"></i>Intégrité · Lisibilité · Vérifiabilité</span>
+                  <span class="tag" aria-label="Pillars"><i aria-hidden="true"></i>Integrity · Readability · Verifiability</span>
                 </div>
 
-                <div class="kpiGrid" aria-label="KPIs teaser">
+                <div class="kpiGrid" aria-label="Preview KPIs">
                   <div class="kpi">
-                    <div class="k">Couverture</div>
+                    <div class="k">Coverage</div>
                     <div class="v"><span id="kpiCoverage">—</span><span class="badge badge--threshold" id="badgeCoverage">LIVE</span></div>
                   </div>
                   <div class="kpi">
-                    <div class="k">Défendabilité</div>
+                    <div class="k">Defensibility</div>
                     <div class="v"><span id="kpiDef">—</span><span class="badge badge--threshold" id="badgeDef">—</span></div>
                   </div>
                   <div class="kpi">
-                    <div class="k">Exposition</div>
+                    <div class="k">Exposure</div>
                     <div class="v"><span id="kpiExpo">—</span><span class="badge badge--threshold" id="badgeExpo">—</span></div>
                   </div>
                   <div class="kpi">
                     <div class="k">Mode</div>
-                    <div class="v"><span>Déterministe</span><span class="badge badge--fragile">Pas d’IA</span></div>
+                    <div class="v"><span>Deterministic</span><span class="badge badge--fragile">No AI</span></div>
                   </div>
                 </div>
 
-                <div class="hashbox" aria-label="Aperçu hash">
+                <div class="hashbox" aria-label="Hash preview">
                   hash : <span id="kpiHash">—</span>
                 </div>
 
                 <div class="heroActions" style="margin-top:12px;">
-                  <!-- JAUNE/OR : simulateur -->
-                  <a class="btn btn--gold btn--small" href="./simulator.html?context=crise_institutionnelle" target="_blank" rel="noopener noreferrer">
+                  <a class="btn btn--gold btn--small" href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">
                     <span class="sheen" aria-hidden="true"></span>
-                    Courir
+                    Run
                   </a>
-                  <!-- JAUNE/OR : spec -->
                   <a class="btn btn--gold btn--small" href="./spec.html" target="_blank" rel="noopener noreferrer">
                     <span class="sheen" aria-hidden="true"></span>
-                    Spéc.
+                    Spec
                   </a>
                 </div>
 
                 <p class="micro" style="margin-top:10px;">
-                  Ceci n’est pas une « notation IA ». C’est une couche déterministe d’exposition et de reconstructibilité
-                  conçue pour gouverner sous pression.
+                  This is not a “score by AI”. It’s a deterministic layer for reconstructibility and governance under pressure.
                 </p>
               </div>
             </aside>
@@ -723,75 +850,73 @@
       </div>
     </section>
 
-    <!-- RAMPE / 1 RUN -->
-    <section class="section" aria-labelledby="inside-title">
+    <!-- WHAT IT IS (short, sharp) -->
+    <section class="section" aria-labelledby="what-title">
       <div class="sectionHead">
-        <h2 id="inside-title">Une seule exécution. Un seul paquet. Un seul hachage.</h2>
-        <div class="meta">Une rampe, pas une conférence</div>
+        <h2 id="what-title">What RPO v0.1 is</h2>
+        <div class="meta">Short. Concrete. Defensible.</div>
       </div>
 
-      <div class="grid3" aria-label="Étapes">
+      <div class="grid3" aria-label="Definition cards">
         <article class="card">
-          <h3>Étape 1 — Déclarer les sources</h3>
-          <p>SIRH, journaux, attestations, politiques, contraintes externes. Aucun vernis, aucun récit. Juste le périmètre.</p>
+          <h3>1 — A sealed JSON core</h3>
+          <p>Structured facts, inputs, metadata, owners. No narrative polish. If it’s not declared, it’s not defensible.</p>
         </article>
         <article class="card">
-          <h3>Étape 2 — Générer le bundle</h3>
-          <p>JSON scellé, aperçu lisible, hash public. Même entrée → même sortie. Toujours.</p>
+          <h3>2 — A human-readable view</h3>
+          <p>A clear rendering that can be reviewed, challenged, signed, and archived. Governance needs readability.</p>
         </article>
         <article class="card">
-          <h3>Étape 3 — Combler les angles morts</h3>
-          <p>Identifier les manques, nommer un owner, poser l’horloge. Stabiliser avant toute escalade.</p>
+          <h3>3 — A public hash</h3>
+          <p>Integrity over time. Any modification becomes detectable. That’s how reputations survive scrutiny.</p>
         </article>
       </div>
 
-      <div class="ctaBand" role="region" aria-label="CTA simulateur">
+      <div class="ctaBand" role="region" aria-label="CTA simulator">
         <div class="text">
-          Si tu ne fais qu’une seule chose : ouvre le simulateur et génère un seul paquet.
-          Tu comprendras la norme en <span class="hl">une seule exécution</span>.
+          If you do one thing: open the simulator and generate one deterministic bundle.
+          You will understand the standard in <span class="hl">one run</span>.
         </div>
-        <!-- JAUNE/OR : simulateur -->
-        <a class="btn btn--gold" href="./simulator.html?context=crise_institutionnelle" target="_blank" rel="noopener noreferrer">
+        <a class="btn btn--gold" href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">
           <span class="sheen" aria-hidden="true"></span>
-          Ouvrez le simulateur
+          Open simulator
         </a>
       </div>
     </section>
 
-    <!-- GET STARTED / COCKPIT -->
+    <!-- PILOT / COCKPIT -->
     <section class="section" aria-labelledby="start-title">
       <div class="sectionHead">
-        <h2 id="start-title">Commencer</h2>
-        <div class="meta">Pilote prêt</div>
+        <h2 id="start-title">Next step</h2>
+        <div class="meta">From sandbox to governance</div>
       </div>
 
       <div class="ctaBand" role="region" aria-label="CTA cockpit">
         <div class="text">
-          Utilise le simulateur pour produire un bundle déterministe et prévisualiser la structure.
-          Quand tu es prêt, passe au poste de pilotage pour évaluer des scénarios d’intégration et la gouvernance à l’échelle.
+          Use the simulator to validate your structure and blind spots.
+          When you’re ready to discuss integration, owners, thresholds, and governance at scale, move to the cockpit.
         </div>
-        <!-- ORANGE : cockpit uniquement -->
         <a class="btn btn--orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
           <span class="sheen" aria-hidden="true"></span>
-          Poste de pilotage
+          Cockpit
         </a>
       </div>
     </section>
 
     <!-- Footer -->
     <footer class="foot" aria-label="Footer">
-      <div>© OpenProof — RPO v0.1. Créé par Gersende Ryard de Parcey.</div>
+      <div>© OpenProof — RPO v0.1. Built by Gersende Ryard de Parcey.</div>
       <div>
-        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spéc.</a> ·
-        <a href="./simulator.html?context=crise_institutionnelle" target="_blank" rel="noopener noreferrer">Simulateur</a> ·
-        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Exemples</a>
+        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
+        <a href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">Simulator</a> ·
+        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
       </div>
     </footer>
   </main>
 
   <script>
     // -------------------------------------------------------
-    // Teaser Home : “poste de pilotage simulé” (instrument cue)
+    // Home teaser : small “instrument cue” (calm, not flashy)
     // -------------------------------------------------------
     (function(){
       const elCov  = document.getElementById("kpiCoverage");
@@ -816,11 +941,11 @@
         return arr.map(b=>b.toString(16).padStart(2,"0")).join("");
       }
 
-      // Cadence sobre : pas de tempête, juste une montée en scellage
+      // A gentle escalation that ends in “sealed”
       const frames = [
         { cov: 62, def: 48, expo: "HIGH",   covB:"badge--threshold", defB:"badge--fragile",   expoB:"badge--fragile",   hash:"—" },
         { cov: 74, def: 62, expo: "MEDIUM", covB:"badge--threshold", defB:"badge--threshold", expoB:"badge--threshold", hash:"—" },
-        { cov: 78, def: 64, expo: "MEDIUM", covB:"badge--sealed",    defB:"badge--threshold", expoB:"badge--threshold", hash:"scellage…" },
+        { cov: 78, def: 64, expo: "MEDIUM", covB:"badge--sealed",    defB:"badge--threshold", expoB:"badge--threshold", hash:"sealing…" },
         { cov: 78, def: 64, expo: "MEDIUM", covB:"badge--sealed",    defB:"badge--threshold", expoB:"badge--threshold", hash:"hash" }
       ];
 
@@ -833,22 +958,22 @@
         elDef.textContent  = f.def + "/100";
         elExpo.textContent = f.expo;
 
-        setBadge(bCov,  f.covB,  f.covB === "badge--sealed" ? "SCELLÉ" : "LIVE");
+        setBadge(bCov,  f.covB,  f.covB === "badge--sealed" ? "SEALED" : "LIVE");
         setBadge(bDef,  f.defB,  f.defB === "badge--fragile" ? "LOW" : "MEDIUM");
         setBadge(bExpo, f.expoB, f.expo);
 
-        if(f.hash === "scellage…"){
-          elHash.textContent = "scellage…";
+        if(f.hash === "sealing…"){
+          elHash.textContent = "sealing…";
         } else if(f.hash === "—"){
           elHash.textContent = "—";
         } else {
           const seed = JSON.stringify({
             rpo_version: "0.1",
-            mode: "deterministe",
-            context: "crise_institutionnelle",
-            couverture_pct: 78,
-            defendabilite_score: 64,
-            exposition: "MEDIUM"
+            mode: "deterministic",
+            context: "institutional_crisis",
+            coverage_pct: 78,
+            defensibility_score: 64,
+            exposure: "MEDIUM"
           });
           elHash.textContent = await sha256Hex(seed);
         }
