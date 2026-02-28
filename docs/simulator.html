@@ -669,6 +669,97 @@
       letter-spacing:.2px;
     }
 
+    /* =========================================
+       READABILITY PATCH (V4) — Sticky summary
+       ========================================= */
+
+    /* Better focus (keyboard) */
+    :focus-visible{
+      outline: 2px solid rgba(241,230,163,.55);
+      outline-offset: 3px;
+      border-radius: 12px;
+    }
+
+    /* Slightly larger reading comfort */
+    .trow .v{ font-size: 13px; line-height: 1.55; }
+    .hint, .meta, .pill2, label{ font-size: 11.5px; }
+
+    /* Sticky executive summary inside Output */
+    .stickySummary{
+      position: sticky;
+      top: 74px; /* below topbar */
+      z-index: 20;
+      margin: 10px 0 12px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(212,175,55,.16);
+      background: linear-gradient(180deg, rgba(0,0,0,.42), rgba(255,255,255,.02));
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+    }
+
+    .summaryGrid{
+      display:grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 10px 14px;
+      align-items:center;
+    }
+
+    .summaryLeft{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap: wrap;
+    }
+
+    .summaryRight{
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+      align-items:center;
+      flex-wrap: wrap;
+    }
+
+    .miniKpi{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      font-size: 11px;
+      color: rgba(167,176,194,.88);
+    }
+
+    .miniKpi b{
+      font-family: Orbitron, Inter, sans-serif;
+      font-weight: 700;
+      color: rgba(241,230,163,.95);
+      letter-spacing:.2px;
+    }
+
+    .summaryAction{
+      max-width: 85ch;
+      font-size: 11.5px;
+      color: rgba(233,238,247,.86);
+      opacity: .95;
+    }
+
+    .summaryAction .label{
+      color: rgba(167,176,194,.85);
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      font-size: 10.5px;
+      margin-right: 8px;
+    }
+
+    .badge.sealed{
+      border-color: rgba(241,230,163,.35);
+      background: rgba(241,230,163,.10);
+      color: rgba(241,230,163,.96);
+    }
+
     /* Responsive */
     @media (max-width: 1100px){
       .grid{ grid-template-columns: 1fr; }
@@ -685,6 +776,10 @@
       .tableish{ grid-template-columns: 1fr; }
       .span-2{ grid-column: auto; }
       .escalation-grid{ grid-template-columns: 1fr; }
+
+      .stickySummary{ top: 66px; }
+      .summaryGrid{ grid-template-columns: 1fr; }
+      .summaryRight{ justify-content:flex-start; }
     }
   </style>
 </head>
@@ -914,6 +1009,29 @@
               <div class="meta" id="outMeta">—</div>
             </div>
 
+            <!-- Sticky executive summary (readability) -->
+            <div class="stickySummary" id="stickySummary" aria-label="Sticky executive summary" style="display:none;">
+              <div class="summaryGrid">
+                <div>
+                  <div class="summaryLeft">
+                    <span class="badge sealed" id="sumSeal">DRAFT</span>
+                    <span class="miniKpi"><span id="sumCovLabel">Coverage</span>: <b id="sumCov">—</b></span>
+                    <span class="miniKpi"><span id="sumDefLabel">Defensibility</span>: <b id="sumDef">—</b></span>
+                    <span class="miniKpi"><span id="sumExpoLabel">Exposure</span>: <b id="sumExpo">—</b></span>
+                  </div>
+                  <div class="summaryAction" style="margin-top:8px;">
+                    <span class="label">Next</span><span id="sumNext">—</span>
+                  </div>
+                </div>
+
+                <div class="summaryRight">
+                  <span class="pill2"><b id="sumHash">Hash: —</b></span>
+                  <button class="btn small ghost" id="btnCopyHash">Copy hash</button>
+                  <button class="btn small ghost" id="btnJumpTabs">Jump to preview</button>
+                </div>
+              </div>
+            </div>
+
             <!-- ✅ NEW: KPI hierarchy strip -->
             <div class="kpiRow" aria-label="Executive summary KPIs">
               <div class="kpiCard" id="kpiCoverageCard">
@@ -1026,15 +1144,20 @@
           </div>
         </div>
 
-        <!-- Lineage & Quality -->
+        <!-- Lineage & Quality (collapsible) -->
         <div class="stack">
-          <div class="panel inset" id="lineagePanel">
-            <div class="inner">
-              <div class="section-title">
+
+          <details class="panel inset" id="lineagePanel" open>
+            <summary class="inner" style="cursor:pointer; list-style:none;">
+              <div class="section-title" style="margin:0;">
                 <h2>Lineage & quality checks</h2>
                 <div class="meta">Deterministic proxies</div>
               </div>
-
+              <div class="hint" style="margin-top:6px;">
+                Expand to view lineage markers and quality proxies (no AI, no interpretation).
+              </div>
+            </summary>
+            <div class="inner" style="padding-top:0;">
               <div class="tableish" style="grid-template-columns: 1fr 1fr;">
                 <div class="trow"><div class="k">HRIS system</div><div class="v" id="qSystem">—</div></div>
                 <div class="trow"><div class="k">Extract ID</div><div class="v" id="qExtract">—</div></div>
@@ -1050,16 +1173,21 @@
                 These checks are deterministic proxies. They surface exposure and reconstruction risk without implying any “truth” judgment.
               </div>
             </div>
-          </div>
+          </details>
 
-          <!-- Decision support -->
-          <div class="panel inset" id="supportPanel">
-            <div class="inner">
-              <div class="section-title">
+          <!-- Decision support (collapsible) -->
+          <details class="panel inset" id="supportPanel" open>
+            <summary class="inner" style="cursor:pointer; list-style:none;">
+              <div class="section-title" style="margin:0;">
                 <h2>Decision support (deterministic)</h2>
                 <div class="meta" id="supportMeta">—</div>
               </div>
+              <div class="hint" style="margin-top:6px;" id="supportHint">
+                This is not a “decision engine”. It is a defensibility layer: it tells you what is missing to make a decision reconstructible.
+              </div>
+            </summary>
 
+            <div class="inner" style="padding-top:0;">
               <div class="tableish" style="grid-template-columns: 1fr 1fr;">
                 <div class="trow"><div class="k" id="kExpo2">Institutional exposure</div><div class="v" id="sExpo">—</div></div>
                 <div class="trow"><div class="k">Top blockers</div><div class="v" id="sBlockers">—</div></div>
@@ -1073,12 +1201,8 @@
                   </div>
                 </div>
               </div>
-
-              <div class="hint" id="supportHint">
-                This is not a “decision engine”. It is a defensibility layer: it tells you what is missing to make a decision reconstructible.
-              </div>
             </div>
-          </div>
+          </details>
 
           <!-- Footer CTA -->
           <div class="ctaPanel">
@@ -1201,6 +1325,7 @@
     ];
 
     let VIEW_MODE = "operational"; // 'operational' | 'executive'
+    let LAST_HASH_FULL = "";        // for copy hash button
 
     function todayISO(){
       const d = new Date();
@@ -1517,13 +1642,24 @@
     }
 
     function setExecutiveDensity(){
-      // Executive = less dense: hide hash full + escalation grid + lineage panel (optional)
       const isExec = (VIEW_MODE === "executive");
+
+      // Executive = less dense
       $("rowHashFull").style.display = isExec ? "none" : "flex";
       $("rowEscalation").style.display = isExec ? "none" : "flex";
 
-      // keep support panel visible (it’s useful), but hide lineage panel in executive to reduce noise
-      $("lineagePanel").style.display = isExec ? "none" : "block";
+      // hide collapsibles by default in exec
+      if(isExec){
+        $("lineagePanel").open = false;
+        $("supportPanel").open = false;
+      }else{
+        $("lineagePanel").open = true;
+        $("supportPanel").open = true;
+      }
+
+      // reduce redundancy: topline only in executive view (optional)
+      const tl = document.querySelector(".topline");
+      if(tl) tl.style.display = isExec ? "flex" : "none";
     }
 
     function applyViewVocabulary(){
@@ -1565,6 +1701,19 @@
       if(band==="HIGH") el.classList.add("ok");
       else if(band==="MEDIUM") el.classList.add("warn");
       else el.classList.add("danger");
+    }
+
+    function showSummary(on){
+      $("stickySummary").style.display = on ? "block" : "none";
+    }
+
+    async function copyToClipboard(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        return true;
+      }catch(e){
+        return false;
+      }
     }
 
     function syncChips(state, hash){
@@ -1643,6 +1792,19 @@
       }
 
       $("outMeta").textContent = `Seal is deterministic at Moment T · Hash is public verifiability`;
+
+      // Sticky summary sync
+      showSummary(true);
+      $("sumSeal").textContent = hash ? "SEALED CORE" : "DRAFT";
+      $("sumCovLabel").textContent = $("kpiCovLabel").textContent;
+      $("sumDefLabel").textContent = $("kpiDefLabel").textContent;
+      $("sumExpoLabel").textContent = $("kpiExpoLabel").textContent;
+
+      $("sumCov").textContent = `${state.coverage}%`;
+      $("sumDef").textContent = `${state.def.label} (${state.def.score})`;
+      $("sumExpo").textContent = `${state.exposure}`;
+      $("sumNext").textContent = state.next;
+      $("sumHash").textContent = `Hash: ${shortHash(hash)}`;
     }
 
     function improveHint(selected){
@@ -1699,6 +1861,7 @@
       const core = buildCorePayload(state);
       const coreStr = JSON.stringify(core);
       const hash = await sha256Hex(coreStr);
+      LAST_HASH_FULL = hash;
 
       $("tab-readable").textContent = buildReadablePreview(state, hash);
       $("tab-power").textContent = buildPowerTab(state, hash);
@@ -1712,6 +1875,8 @@
 
     function resetAll(){
       VIEW_MODE = "operational";
+      LAST_HASH_FULL = "";
+      showSummary(false);
 
       $("context").value = "institutional_crisis";
       $("decisionType").value = "workforce_decision";
@@ -1795,6 +1960,13 @@
       $("sVectors").textContent = "—";
       $("sComex").textContent = "—";
 
+      $("sumSeal").textContent = "DRAFT";
+      $("sumCov").textContent = "—";
+      $("sumDef").textContent = "—";
+      $("sumExpo").textContent = "—";
+      $("sumNext").textContent = "—";
+      $("sumHash").textContent = "Hash: —";
+
       applyViewVocabulary();
     }
 
@@ -1853,6 +2025,7 @@
       applyViewVocabulary();
       liveUpdateDraft();
 
+      // regenerate if we already have output
       if($("tab-json").textContent && $("tab-json").textContent.trim().length > 0){
         generate();
       }
@@ -1900,11 +2073,19 @@
       ["decisionType","sysHRIS","sysLMS","sysOPS","sysSEC","sysLEGAL","sysEXT"].forEach(id=>{
         $(id).addEventListener("change", ()=>{ liveUpdateDraft(); });
       });
+
+      $("btnCopyHash").addEventListener("click", async ()=>{
+        const full = LAST_HASH_FULL || $("outHashFull").textContent || "";
+        if(!full || full==="—") return;
+        const ok = await copyToClipboard(full);
+        $("btnCopyHash").textContent = ok ? "Copied" : "Copy failed";
+        setTimeout(()=>{ $("btnCopyHash").textContent = "Copy hash"; }, 900);
+      });
+
+      $("btnJumpTabs").addEventListener("click", ()=>{
+        document.querySelector(".tabs[role='tablist']")?.scrollIntoView({behavior:"smooth", block:"start"});
+      });
     });
   </script>
 </body>
 </html>
-
-
-
-
