@@ -1,24 +1,66 @@
+<!-- docs/index.html (FULL REPLACEMENT — Landing / PDG-proof, LINKS COHERENT) -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-page="home">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TRUTHX — Evidential Infrastructure</title>
+
+  <!-- Primary SEO -->
+  <title>Gersende Ryard de Parcey — Decision Governance (RPO) | OpenProof RPO v0.1</title>
+  <meta name="description" content="OpenProof RPO v0.1: deterministic proof bundles (sealed JSON + human-readable preview + public hash) for auditable, defensible decisions. No AI. Humans remain accountable. Created by Gersende Ryard de Parcey." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://rpo.openproof.net/" />
+  <meta name="author" content="Gersende Ryard de Parcey" />
+  <meta name="keywords" content="Gersende Ryard de Parcey, OpenProof, RPO, decision governance, proof bundle, sealed JSON, public hash, audit-ready, defensible decisions" />
+
+  <!-- OpenGraph / Twitter -->
+  <meta property="og:title" content="Gersende Ryard de Parcey — Decision Governance (RPO) | OpenProof RPO v0.1" />
+  <meta property="og:description" content="Deterministic proof bundles: sealed JSON + readable preview + public hash. No AI. Humans remain accountable." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rpo.openproof.net/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="OpenProof RPO v0.1" />
+  <meta name="twitter:description" content="Deterministic proof bundles for auditable, defensible decisions. Sealed JSON + readable preview + public hash. No AI." />
+  <meta name="google-site-verification" content="Qgjpi9bZ4XxHbZ7QTLJprdfAvQC5Isqr1jSL9AfvZtk" />
+
+  <!-- Structured data (Person) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Gersende Ryard de Parcey",
+    "url": "https://rpo.openproof.net/",
+    "jobTitle": "Decision Governance Architect",
+    "description": "Architect of decision governance and probative infrastructure. Creator of OpenProof RPO v0.1.",
+    "knowsAbout": [
+      "Decision governance",
+      "Audit readiness",
+      "Defensible decisions",
+      "Deterministic proof bundles",
+      "Chain of custody",
+      "Data lineage"
+    ],
+    "sameAs": ["https://www.linkedin.com/in/gryard/"]
+  }
+  </script>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <meta name="description" content="TRUTHX turns fragments into an adversarial-ready evidential bundle: proof coherence (%), sufficient level of proof (%), sealed PDF + trace log + hash." />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
+    /* =========================================================
+       OPENPROOF RPO v0.1 — HOME (Landing / PDG-proof)
+       SAME LINKS, lighter density, same charter
+       ========================================================= */
+
     :root{
       --tx-bg0:#04040E;
       --tx-bg1:#0b0f14;
 
       --tx-ink:#c2cdd5;
-      --tx-ink2:rgba(210,220,228,.80);
+      --tx-ink2:rgba(210,220,228,.86);
       --tx-white:#f7f7f7;
 
       --tx-gold:#f1e6a3;
@@ -38,39 +80,47 @@
       --tx-border2:rgba(241,230,163,.14);
 
       --tx-shadow:0 28px 70px rgba(0,0,0,.72);
+      --tx-shadow2:0 14px 35px rgba(0,0,0,.35);
       --tx-glass:rgba(10,14,22,.62);
+
+      --max:1760px;
     }
 
     *{ box-sizing:border-box; }
-    html, body{ height:100%; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      background: linear-gradient(180deg, var(--tx-bg0) 0%, #020308 100%);
-      color: var(--tx-ink);
-      font-family: "Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-    }
+      color:var(--tx-ink);
+      font-family:"Montserrat", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      overflow-x:hidden;
 
-    /* Subtle scanlines */
-    .tx-scan{
       background-image:
         repeating-linear-gradient(
           180deg,
-          rgba(255,255,255,.012) 0px,
-          rgba(255,255,255,.012) 1px,
+          rgba(255,255,255,.010) 0px,
+          rgba(255,255,255,.010) 1px,
           transparent 2px,
           transparent 6px
-        );
-      background-blend-mode: overlay;
+        ),
+        radial-gradient(1100px 520px at 22% 10%, rgba(241,230,163,.16), transparent 62%),
+        radial-gradient(920px 520px at 84% 20%, rgba(54,217,145,.10), transparent 62%),
+        radial-gradient(740px 420px at 54% 110%, rgba(0,0,0,.92), transparent 65%),
+        linear-gradient(180deg, #04040E 0%, #020308 100%);
+      background-blend-mode: overlay, normal, normal, normal, normal;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    ::selection{ background: rgba(241,230,163,.18); }
+
+    .container{
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 22px;
     }
 
     /* Top gold fillet */
-    .tx-fillet{
-      position:relative;
-    }
-    .tx-fillet::before{
-      content:"";
-      position:absolute; left:0; right:0; top:0;
-      height: 1px;
+    .fillet{
+      height:1px;
       background: linear-gradient(90deg,
         transparent 0%,
         rgba(241,230,163,.55) 15%,
@@ -79,515 +129,732 @@
         transparent 100%
       );
       opacity:.55;
-      z-index:4;
-      pointer-events:none;
     }
 
-    .tx-bg{
-      position:fixed; inset:0; z-index:-2; pointer-events:none;
-      background:
-        radial-gradient(1100px 520px at 22% 10%, rgba(241,230,163,.16), transparent 62%),
-        radial-gradient(920px 520px at 84% 55%, rgba(54,217,145,.14), transparent 62%),
-        radial-gradient(740px 420px at 54% 110%, rgba(0,0,0,.92), transparent 65%),
-        linear-gradient(180deg, #04040E 0%, #020308 100%);
-      filter:saturate(1.06) contrast(1.02);
+    /* Topbar */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(4,4,14,.86), rgba(4,4,14,.55));
+      border-bottom: 1px solid rgba(241,230,163,.10);
     }
-    .tx-noise{
-      position:fixed; inset:-40%; z-index:-1; pointer-events:none;
-      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
-      opacity:.06;
-      transform: rotate(8deg);
-    }
-
-    .wrap{
-      max-width: 1240px;
-      margin:0 auto;
-      padding: 26px 22px 56px;
-    }
-
-    /* Nav */
     .nav{
-      display:flex; justify-content:space-between; align-items:center;
-      padding: 14px 0 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 14px 0;
     }
+
     .brand{
-      display:flex; align-items:center; gap:10px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      min-width: 240px;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: var(--tx-gold2);
+      box-shadow:0 0 16px rgba(241,230,163,.35);
+      flex:0 0 auto;
+    }
+    .brand-stack{ display:flex; flex-direction:column; line-height:1.1; }
+    .brand-title{
       font-family:"Orbitron", system-ui, sans-serif;
       letter-spacing:.16em;
       text-transform:uppercase;
+      font-size:.74rem;
       color: rgba(241,230,163,.86);
-      font-size:.82rem;
+      white-space:nowrap;
     }
-    .dot{ width:8px; height:8px; border-radius:999px; display:inline-block; }
-    .dot.gold{ background: var(--tx-gold2); box-shadow:0 0 16px rgba(241,230,163,.45); }
+    .brand-sub{
+      font-size:.72rem;
+      color: rgba(194,205,213,.70);
+      margin-top: 3px;
+      white-space:nowrap;
+    }
 
-    .nav-actions{ display:flex; gap:10px; align-items:center; }
+    .navlinks{
+      display:flex;
+      gap: 8px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:center;
+    }
+    .navlinks a{
+      display:inline-flex;
+      padding: 7px 11px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,.14);
+      background: rgba(10,14,22,.40);
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:.70rem;
+      color: rgba(241,230,163,.74);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      white-space:nowrap;
+    }
+    .navlinks a:hover{
+      transform: translateY(-1px);
+      border-color: rgba(241,230,163,.24);
+      background: rgba(10,14,22,.52);
+    }
+    .navlinks a.active{
+      border-color: rgba(241,230,163,.42);
+      color:#fff;
+      background: radial-gradient(circle at 15% 0, rgba(241,230,163,.16), rgba(10,14,22,.52));
+    }
 
-    .btn{
+    .cta{
+      display:flex;
+      gap:10px;
+      min-width: 240px;
+      justify-content:flex-end;
+      flex-wrap:wrap;
+    }
+
+    /* Buttons */
+    .tx-btn{
       position:relative;
       border-radius:999px;
       border:1px solid rgba(241,230,163,.18);
       background: rgba(10,14,22,.52);
       color: rgba(241,230,163,.92);
-      padding: 12px 16px;
+      padding: 11px 16px;
       cursor:pointer;
       font-family:"Orbitron", system-ui, sans-serif;
       letter-spacing:.14em;
       text-transform:uppercase;
-      font-size:.78rem;
+      font-size:.76rem;
       transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
       overflow:hidden;
-      text-decoration:none;
       display:inline-flex;
       align-items:center;
       justify-content:center;
       gap:10px;
+      user-select:none;
       white-space:nowrap;
     }
-    .btn:hover{
+    .tx-btn:hover{
       transform: translateY(-1px);
       box-shadow: 0 18px 38px rgba(0,0,0,.45);
       border-color: rgba(241,230,163,.28);
     }
-    .btn.primary{
+    .tx-btn--primary{
       border:none;
       background: var(--tx-cta);
       color:#fff;
-      box-shadow: 0 0 16px rgba(241,230,163,.22), 0 18px 45px rgba(0,0,0,.45);
+      box-shadow: 0 0 16px rgba(241,230,163,.18), 0 18px 45px rgba(0,0,0,.45);
     }
-    .sheen{
+    .tx-btn--primary:hover{
+      box-shadow: 0 0 22px rgba(241,230,163,.22), 0 22px 60px rgba(0,0,0,.55);
+    }
+    .tx-btn--small{ padding: 9px 13px; font-size:.70rem; }
+
+    .tx-btn-sheen{
       position:absolute; inset:0;
       background: linear-gradient(120deg, rgba(255,255,255,.42), rgba(255,255,255,.12), transparent 58%);
       transform: translateX(-140%);
-      opacity:.7;
+      opacity:.65;
       transition: transform .75s ease;
       pointer-events:none;
     }
-    .btn:hover .sheen{ transform: translateX(140%); }
+    .tx-btn:hover .tx-btn-sheen{ transform: translateX(140%); }
 
-    /* Hero */
-    .hero{
-      margin-top: 10px;
+    .tx-btn:focus-visible, .navlinks a:focus-visible{
+      outline:none;
+      box-shadow: 0 0 0 3px rgba(241,230,163,.10), 0 0 0 1px rgba(241,230,163,.22);
+    }
+
+    /* Panels */
+    .tx-panel{
       border-radius: var(--tx-radius);
-      border: 1px solid rgba(241,230,163,.18);
       background:
-        radial-gradient(circle at 15% 0, rgba(241,230,163,.11), transparent 55%),
-        radial-gradient(circle at 85% 85%, rgba(54,217,145,.09), transparent 55%),
-        rgba(10,14,22,.62);
-      box-shadow: var(--tx-shadow);
+        radial-gradient(circle at 15% 0, rgba(241,230,163,.10), transparent 55%),
+        radial-gradient(circle at 85% 85%, rgba(54,217,145,.08), transparent 55%),
+        rgba(10,14,22,.66);
+      border: 1px solid rgba(241,230,163,.22);
+      box-shadow: var(--tx-shadow2);
       overflow:hidden;
       position:relative;
     }
-    .hero::before{
+    .tx-panel::before{
       content:"";
       position:absolute; inset:-2px;
       border-radius: inherit;
-      border:1px solid rgba(241,230,163,.10);
+      border:1px solid rgba(241,230,163,.08);
       pointer-events:none;
     }
-    .hero-inner{
-      padding: 34px 30px 28px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
-      align-items:center;
+    .tx-panel--hero{ box-shadow: var(--tx-shadow); }
+    .tx-panel--inset{
+      border-radius: var(--tx-radius);
+      border: 1px solid rgba(241,230,163,.14);
+      background: rgba(10,14,22,.52);
+      box-shadow: var(--tx-shadow2);
     }
+    .pad{ padding: 18px; }
 
-    .topline{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      margin-bottom: 12px;
-    }
-    .chip{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(241,230,163,.12);
-      background: radial-gradient(circle at 18% 0, rgba(241,230,163,.10), rgba(8,10,16,.70));
-      font-family: "Orbitron", system-ui, sans-serif;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      font-size:.70rem;
-      color: rgba(241,230,163,.78);
-      white-space:nowrap;
-    }
-    .chip.live{
-      border-color: rgba(54,217,145,.28);
-      background: radial-gradient(circle at 18% 0, rgba(54,217,145,.14), rgba(8,10,16,.70));
-      color: rgba(230,255,246,.84);
-    }
-    .dot.green{ background: var(--tx-green); box-shadow:0 0 16px rgba(54,217,145,.45); }
-
-    h1{
-      margin:0 0 12px;
+    /* Typo */
+    .kicker{
       font-family:"Orbitron", system-ui, sans-serif;
-      text-transform: uppercase;
-      letter-spacing:.04em;
-      line-height:1.02;
-      font-size: clamp(2.0rem, 3.4vw, 3.0rem);
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      font-size:.72rem;
+      color: rgba(241,230,163,.78);
+      margin-bottom: 10px;
+    }
+    h1{
+      margin: 0 0 10px;
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      line-height:1.06;
+      font-size: clamp(2.0rem, 3.4vw, 3.2rem);
       color: var(--tx-white);
       text-shadow: 0 12px 34px rgba(0,0,0,.58);
     }
-    .gold{ color: var(--tx-gold2); text-shadow: 0 0 22px rgba(241,230,163,.18); }
-
-    .sub{
-      margin:0 0 18px;
+    .hl{ color: var(--tx-gold2); text-shadow: 0 0 22px rgba(241,230,163,.16); }
+    .lead{
+      margin:0 0 12px;
       color: var(--tx-ink2);
       line-height:1.65;
-      max-width: 62ch;
+      font-size: 1.00rem;
+      max-width: 86ch;
+    }
+    .micro{
+      font-size:.84rem;
+      color: rgba(194,205,213,.70);
+      line-height:1.55;
     }
 
-    .hero-cta{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-      margin-top: 10px;
-    }
-    .hint{
-      font-size:.82rem;
-      color: rgba(194,205,213,.64);
-    }
-
-    /* Proof tiles */
-    .tiles{
+    /* Hero layout */
+    .hero{ padding: 18px 0 10px; }
+    .heroGrid{
       display:grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
+      grid-template-columns: 1.18fr .98fr;
+      gap: 16px;
+      align-items: start;
     }
-    .tile{
-      border-radius: var(--tx-radius2);
-      border: 1px solid rgba(241,230,163,.14);
-      background: rgba(8,10,16,.56);
-      padding: 12px 12px;
-      box-shadow: 0 14px 35px rgba(0,0,0,.35);
-      position:relative;
-      overflow:hidden;
-    }
-    .tile::after{
-      content:"";
-      position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(255,255,255,.06), transparent 35%, transparent 65%, rgba(255,255,255,.04));
-      opacity:.50;
-      pointer-events:none;
-    }
-    .tile-top{
-      display:flex; align-items:baseline; justify-content:space-between; gap:10px;
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.68rem;
+    .heroActions{ display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px; }
+
+    .pills{ display:flex; gap:10px; flex-wrap:wrap; margin: 12px 0 4px; }
+    .tx-pill{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,.14);
+      background: rgba(10,14,22,.42);
       color: rgba(241,230,163,.84);
-      margin-bottom: 8px;
-      position:relative;
+      font-size:.86rem;
+    }
+    .tx-pill-dot{
+      width:7px; height:7px; border-radius:999px;
+      background: rgba(241,230,163,.86);
+      box-shadow:0 0 12px rgba(241,230,163,.25);
+    }
+
+    /* Teaser (right) */
+    .teaserHead{
+      display:flex; justify-content:space-between; align-items:flex-start; gap:10px;
+      margin-bottom: 10px;
+    }
+    .teaserTitle{
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-size:.74rem;
+      color: rgba(241,230,163,.86);
+    }
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(241,230,163,.14);
+      background: rgba(10,14,22,.42);
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      font-size:.66rem;
+      color: rgba(241,230,163,.72);
+      white-space:nowrap;
+    }
+    .tag i{
+      width:7px;height:7px;border-radius:999px; display:inline-block;
+      background: rgba(241,230,163,.85);
+      box-shadow: 0 0 14px rgba(241,230,163,.22);
+    }
+
+    .kpiGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
     }
     .kpi{
-      display:flex; align-items:baseline; gap:8px;
-      position:relative;
+      border-radius: var(--tx-radius2);
+      border: 1px solid rgba(241,230,163,.14);
+      background: rgba(8,10,16,.54);
+      padding: 12px;
+      box-shadow: var(--tx-shadow2);
     }
-    .num{
+    .kpi .k{
       font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.08em;
-      font-size: 1.22rem;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-size:.66rem;
+      color: rgba(194,205,213,.62);
+      margin-bottom: 8px;
+    }
+    .kpi .v{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.10em;
+      text-transform:uppercase;
       color: rgba(241,230,163,.92);
+      font-size:.86rem;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
     }
-    .suffix{
-      color: rgba(241,230,163,.68);
-      font-size:.90rem;
-    }
+
     .badge{
       padding: 4px 9px;
       border-radius:999px;
       border: 1px solid rgba(255,255,255,.14);
-      font-size:.62rem;
+      font-size:.64rem;
       letter-spacing:.14em;
       user-select:none;
-      position:relative;
+      flex:0 0 auto;
+      font-family:"Orbitron", system-ui, sans-serif;
+      text-transform:uppercase;
     }
-    .b-stable{
+    .badge--stable{
       background: radial-gradient(circle at 0 0, rgba(54,217,145,.34), rgba(6,16,12,.90));
       border-color: rgba(54,217,145,.46);
       color:#eafff4;
     }
-    .b-threshold{
+    .badge--threshold{
       background: radial-gradient(circle at 0 0, rgba(244,201,107,.44), rgba(22,16,6,.90));
       border-color: rgba(244,201,107,.50);
       color:#fff3cc;
     }
-    .b-sealed{
+    .badge--fragile{
+      background: radial-gradient(circle at 0 0, rgba(255,91,99,.35), rgba(20,10,12,.88));
+      border-color: rgba(255,91,99,.35);
+      color:#ffecee;
+    }
+    .badge--sealed{
       background: radial-gradient(circle at 0 0, rgba(241,230,163,.52), rgba(20,14,6,.92));
       border-color: rgba(241,230,163,.52);
       color:#fff6d8;
     }
-    .tile-sub{
-      position:relative;
-      margin:0;
-      color: rgba(194,205,213,.70);
-      font-size:.90rem;
-      line-height:1.55;
-    }
-    .mono{
+
+    .hashbox{
+      margin-top: 12px;
+      border-radius: var(--tx-radius2);
+      border: 1px solid rgba(241,230,163,.14);
+      background: rgba(4,5,10,.58);
+      padding: 12px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      letter-spacing:.02em;
-      color: rgba(240,244,248,.82);
-      font-size:.86rem;
-      word-break: break-all;
+      font-size:.84rem;
+      color: rgba(240,244,248,.86);
+      overflow:hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.25);
     }
 
-    /* Sections */
-    .section{
-      margin-top: 18px;
+    /* Sections (landing = fewer, tighter) */
+    .section{ padding: 10px 0 0; }
+    .sectionHead{
+      display:flex; justify-content:space-between; align-items:flex-end; gap:14px;
+      margin: 10px 0 10px;
+    }
+    .sectionHead h2{
+      margin:0;
+      font-family:"Orbitron", system-ui, sans-serif;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      font-size:.80rem;
+      color: rgba(241,230,163,.86);
+    }
+    .meta{ font-size:.84rem; color: rgba(194,205,213,.70); }
+
+    .grid3{
       display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
-    .card{
-      border-radius: var(--tx-radius);
+    .tx-card{
+      border-radius: var(--tx-radius2);
       border: 1px solid rgba(241,230,163,.14);
-      background: rgba(10,14,22,.42);
-      padding: 16px 16px;
-      box-shadow: 0 18px 45px rgba(0,0,0,.38);
+      background: rgba(8,10,16,.52);
+      padding: 14px;
+      box-shadow: var(--tx-shadow2);
       position:relative;
       overflow:hidden;
     }
-    .card h3{
+    .tx-card h3{
       margin:0 0 8px;
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      font-size:.76rem;
-      color: rgba(241,230,163,.86);
+      font-size: 1.00rem;
+      color: rgba(241,230,163,.92);
+      font-weight: 700;
     }
-    .card p{
+    .tx-card p{
       margin:0;
-      color: rgba(194,205,213,.76);
+      color: var(--tx-ink2);
       line-height:1.6;
-      font-size:.92rem;
+      font-size: .98rem;
+      max-width: 80ch;
     }
-    .steps{
-      margin-top: 14px;
-      display:grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-    }
-    .step{
-      border-radius: var(--tx-radius);
+
+    /* CTA band */
+    .ctaBand{
+      margin-top: 12px;
+      border-radius: var(--tx-radius2);
       border: 1px solid rgba(241,230,163,.14);
-      background: rgba(8,10,16,.48);
-      padding: 14px 14px;
+      background: rgba(10,14,22,.46);
+      padding: 14px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 12px;
+      flex-wrap:wrap;
+      box-shadow: var(--tx-shadow2);
     }
-    .step-top{
-      display:flex; justify-content:space-between; gap:10px; align-items:center;
-      margin-bottom: 6px;
-    }
-    .step-id{
-      font-family:"Orbitron", system-ui, sans-serif;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      font-size:.66rem;
-      color: rgba(241,230,163,.70);
+    .ctaBand .text{
+      color: var(--tx-ink2);
+      line-height:1.55;
+      max-width: 110ch;
+      font-size: .98rem;
     }
 
     /* Footer */
-    footer{
+    .foot{
       margin-top: 18px;
-      padding: 18px 2px 0;
+      padding: 18px 0 28px;
       border-top: 1px solid rgba(241,230,163,.10);
-      color: rgba(194,205,213,.55);
-      font-size:.86rem;
+      color: rgba(194,205,213,.70);
+      font-size: .86rem;
       display:flex;
       justify-content:space-between;
-      gap:14px;
+      gap: 12px;
       flex-wrap:wrap;
+    }
+    .foot a{
+      color: rgba(194,205,213,.78);
+      border-bottom: 1px dotted rgba(241,230,163,.20);
+    }
+    .foot a:hover{
+      color: rgba(241,230,163,.92);
+      border-bottom-color: rgba(241,230,163,.35);
     }
 
     /* Responsive */
-    @media (max-width: 980px){
-      .hero-inner{ grid-template-columns: 1fr; }
-      .section, .steps{ grid-template-columns: 1fr; }
-      .wrap{ padding: 18px 18px 46px; }
+    @media (max-width: 1100px){
+      .heroGrid{ grid-template-columns: 1fr; }
+      .grid3{ grid-template-columns: 1fr; }
+      .ctaBand{ align-items:stretch; }
     }
-
+    @media (max-width: 960px){
+      .navlinks{ display:none; }
+      .brand{ min-width: 0; }
+      .cta{ min-width: 0; justify-content:flex-start; }
+      .container{ padding: 0 18px; }
+    }
     @media (prefers-reduced-motion: reduce){
-      .btn{ transition:none !important; }
-      .sheen{ transition:none !important; }
+      *{ scroll-behavior:auto !important; }
+      .tx-btn{ transition:none !important; }
+      .tx-btn-sheen{ display:none !important; }
     }
   </style>
 </head>
 
-<body class="tx-scan">
-  <div class="tx-bg" aria-hidden="true"></div>
-  <div class="tx-noise" aria-hidden="true"></div>
+<body>
+  <div class="fillet" aria-hidden="true"></div>
 
-  <div class="wrap tx-fillet">
+  <!-- Topbar -->
+  <header class="topbar" role="banner">
+    <div class="container">
+      <div class="nav">
+        <div class="brand" aria-label="OpenProof brand">
+          <span class="dot" aria-hidden="true"></span>
+          <div class="brand-stack">
+            <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
+            <div class="brand-sub">Probative engine & governance</div>
+          </div>
+        </div>
 
-    <header class="nav" aria-label="Top navigation">
-      <div class="brand">
-        <span class="dot gold"></span>
-        <span>TRUTHX</span>
+        <!-- ✅ LINKS KEPT IDENTICAL -->
+        <nav class="navlinks" aria-label="Primary navigation">
+          <a class="active" href="./index.html" target="_blank" rel="noopener noreferrer" aria-current="page">Home</a>
+          <a href="./simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a>
+          <a href="./how-it-works.html" target="_blank" rel="noopener noreferrer">How it works</a>
+          <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a>
+          <a href="./tests.html" target="_blank" rel="noopener noreferrer">Tests</a>
+          <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+          <a href="./contexts.html" target="_blank" rel="noopener noreferrer">Contexts</a>
+        </nav>
+
+        <div class="cta" aria-label="Primary actions">
+          <a class="tx-btn tx-btn--small" href="./spec.html" target="_blank" rel="noopener noreferrer">
+            <span class="tx-btn-sheen" aria-hidden="true"></span>
+            Read spec
+          </a>
+          <a class="tx-btn tx-btn--primary tx-btn--small" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
+            <span class="tx-btn-sheen" aria-hidden="true"></span>
+            Pilot cockpit
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" role="main">
+    <!-- HERO (shorter / landing) -->
+    <section class="hero" aria-label="OpenProof home hero">
+      <div class="tx-panel tx-panel--hero">
+        <div class="pad">
+          <div class="heroGrid">
+            <!-- Left -->
+            <div>
+              <div class="kicker">Open standard for decision governance</div>
+
+              <p class="micro" style="margin:0 0 10px;">
+                By Gersende Ryard de Parcey — decision governance & probative infrastructure.
+              </p>
+
+              <h1>
+                Decisions will be challenged.<br/>
+                <span class="hl">Seal what you can defend.</span>
+              </h1>
+
+              <!-- ✅ Reduced density: 1 paragraph only -->
+              <p class="lead">
+                RPO v0.1 generates a deterministic proof bundle: sealed JSON core, human-readable preview, public hash.
+                No AI. Same input → same output. Humans remain accountable.
+              </p>
+
+              <div class="pills" aria-label="Core properties">
+                <span class="tx-pill"><span class="tx-pill-dot"></span>Deterministic</span>
+                <span class="tx-pill"><span class="tx-pill-dot"></span>Audit-ready</span>
+                <span class="tx-pill"><span class="tx-pill-dot"></span>Sealed + verifiable</span>
+                <span class="tx-pill"><span class="tx-pill-dot"></span>No AI</span>
+              </div>
+
+              <div class="heroActions" role="group" aria-label="Hero actions">
+                <a class="tx-btn tx-btn--primary" href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">
+                  <span class="tx-btn-sheen" aria-hidden="true"></span>
+                  Open the simulator
+                </a>
+                <a class="tx-btn" href="./how-it-works.html" target="_blank" rel="noopener noreferrer">
+                  <span class="tx-btn-sheen" aria-hidden="true"></span>
+                  How it works
+                </a>
+                <a class="tx-btn" href="./examples.html" target="_blank" rel="noopener noreferrer">
+                  <span class="tx-btn-sheen" aria-hidden="true"></span>
+                  View examples
+                </a>
+              </div>
+
+              <!-- ✅ Micro: keep only the one-liner -->
+              <p class="micro" style="margin-top:12px;">
+                RPO = sealed JSON + human-readable preview + public hash. Hash proves integrity over time, not “truth”.
+              </p>
+            </div>
+
+            <!-- Right: teaser -->
+            <aside class="tx-panel--inset" aria-label="Simulator teaser">
+              <div class="pad">
+                <div class="teaserHead">
+                  <div>
+                    <div class="teaserTitle">Simulator teaser</div>
+                    <div class="micro" style="margin-top:6px;">
+                      Deterministic decision-defense cockpit: coverage, defensibility, exposure, sealed hash.
+                    </div>
+                  </div>
+                  <span class="tag" aria-label="Pillars"><i aria-hidden="true"></i>Integrity · Readability · Verifiability</span>
+                </div>
+
+                <div class="kpiGrid" aria-label="Teaser KPIs">
+                  <div class="kpi">
+                    <div class="k">Coverage</div>
+                    <div class="v"><span id="kpiCoverage">—</span><span class="badge badge--threshold" id="badgeCoverage">LIVE</span></div>
+                  </div>
+                  <div class="kpi">
+                    <div class="k">Defensibility</div>
+                    <div class="v"><span id="kpiDef">—</span><span class="badge badge--threshold" id="badgeDef">—</span></div>
+                  </div>
+                  <div class="kpi">
+                    <div class="k">Exposure</div>
+                    <div class="v"><span id="kpiExpo">—</span><span class="badge badge--threshold" id="badgeExpo">—</span></div>
+                  </div>
+                  <div class="kpi">
+                    <div class="k">Mode</div>
+                    <div class="v"><span>Deterministic</span><span class="badge badge--fragile">No AI</span></div>
+                  </div>
+                </div>
+
+                <div class="hashbox" aria-label="Hash preview">
+                  hash: <span id="kpiHash">—</span>
+                </div>
+
+                <div class="heroActions" style="margin-top:12px;">
+                  <a class="tx-btn tx-btn--primary tx-btn--small" href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">
+                    <span class="tx-btn-sheen" aria-hidden="true"></span>
+                    Run
+                  </a>
+                  <a class="tx-btn tx-btn--small" href="./spec.html" target="_blank" rel="noopener noreferrer">
+                    <span class="tx-btn-sheen" aria-hidden="true"></span>
+                    Spec
+                  </a>
+                </div>
+
+                <p class="micro" style="margin-top:10px;">
+                  Not AI scoring. Deterministic exposure & reconstructibility for governance under pressure.
+                </p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ONE RAMP SECTION (kept, simplified) -->
+    <section class="section" aria-labelledby="inside-title">
+      <div class="sectionHead">
+        <h2 id="inside-title">One run. One bundle. One hash.</h2>
+        <div class="meta">A ramp, not a lecture</div>
       </div>
 
-      <div class="nav-actions">
-        <a class="btn" href="#how" aria-label="How it works">HOW IT WORKS</a>
-        <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
-          <span class="sheen" aria-hidden="true"></span>
-          REQUEST PILOT ACCESS
+      <div class="grid3" aria-label="Simulator steps">
+        <article class="tx-card">
+          <h3>Step 01 — Declare sources</h3>
+          <p>Select what exists: HRIS, logs, attestations, policies, external constraints. No interpretation layer.</p>
+        </article>
+        <article class="tx-card">
+          <h3>Step 02 — Generate bundle</h3>
+          <p>Sealed JSON core + readable preview + public hash. Same input → same output, always.</p>
+        </article>
+        <article class="tx-card">
+          <h3>Step 03 — Close blind spots</h3>
+          <p>See what’s missing, assign owners, and stabilize defensibility before escalation.</p>
+        </article>
+      </div>
+
+      <div class="ctaBand" role="region" aria-label="Simulator CTA">
+        <div class="text">
+          If you only do one thing: open the Simulator and generate one bundle.
+          You’ll understand the standard in <span class="hl">one run</span>.
+        </div>
+        <a class="tx-btn tx-btn--primary" href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">
+          <span class="tx-btn-sheen" aria-hidden="true"></span>
+          Open the simulator
         </a>
       </div>
-    </header>
+    </section>
 
-    <main>
-      <!-- HERO -->
-      <section class="hero" aria-label="Hero">
-        <div class="hero-inner">
-          <div>
-            <div class="topline">
-              <span class="chip"><span class="dot gold"></span><span>evidential ai</span></span>
-              <span class="chip live"><span class="dot green"></span><span>proof bundle • sealed</span></span>
-            </div>
+    <!-- GET STARTED (kept, short) -->
+    <section class="section" aria-labelledby="start-title">
+      <div class="sectionHead">
+        <h2 id="start-title">Get started</h2>
+        <div class="meta">Pilot when ready</div>
+      </div>
 
-            <h1><span class="gold">SEAL PROOF</span> BEFORE THE STORY SPREADS.</h1>
-
-            <p class="sub">
-              You already have the data. What you don’t have is a way to turn fragments, contradictions and silences
-              into an adversarial-ready bundle: structured, scored, sealed.
-            </p>
-
-            <div class="hero-cta">
-              <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
-                <span class="sheen" aria-hidden="true"></span>
-                ENTER PILOT PROGRAM
-              </a>
-              <a class="btn" href="#proof">SEE THE PROOF SIGNALS</a>
-              <div class="hint">Same input → same sealed bundle → same hash.</div>
-            </div>
-          </div>
-
-          <!-- Proof tiles -->
-          <div class="tiles" id="proof" aria-label="Proof signals">
-            <div class="tile">
-              <div class="tile-top">
-                <span>Proof coherence</span>
-                <span class="kpi"><span class="num" id="cohNum">64</span><span class="suffix">%</span> <span class="badge b-threshold" id="cohBadge">THRESHOLD</span></span>
-              </div>
-              <p class="tile-sub">Measures structural consistency across sources (not “truth”).</p>
-            </div>
-
-            <div class="tile">
-              <div class="tile-top">
-                <span>Sufficient level of proof</span>
-                <span class="kpi"><span class="num" id="slpNum">71</span><span class="suffix">%</span> <span class="badge b-threshold" id="slpBadge">THRESHOLD</span></span>
-              </div>
-              <p class="tile-sub">Shows if the bundle is defensible under scrutiny (court, audit, board).</p>
-            </div>
-
-            <div class="tile">
-              <div class="tile-top">
-                <span>Seal hash</span>
-                <span class="kpi"><span class="badge b-sealed">SEALED</span></span>
-              </div>
-              <p class="tile-sub mono" id="hashLine">sha256:9f3e…c18a</p>
-            </div>
-          </div>
+      <div class="ctaBand" role="region" aria-label="Get started CTA">
+        <div class="text">
+          Use the Simulator to generate a deterministic bundle and preview the structure.
+          When ready, move to the Pilot Cockpit to evaluate integration scenarios at scale.
         </div>
-      </section>
+        <a class="tx-btn tx-btn--primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">
+          <span class="tx-btn-sheen" aria-hidden="true"></span>
+          Pilot cockpit
+        </a>
+      </div>
+    </section>
 
-      <!-- USE CASES -->
-      <section class="section" aria-label="Use cases">
-        <div class="card">
-          <h3>LEGAL</h3>
-          <p>Turn contested narratives into a structured bundle, with trace log + seal.</p>
-        </div>
-        <div class="card">
-          <h3>HR</h3>
-          <p>Make sensitive decisions defensible: evidence, thresholds, governance hygiene.</p>
-        </div>
-        <div class="card">
-          <h3>SECURITY</h3>
-          <p>When incident timelines drift, lock the reconstruction before reputations burn.</p>
-        </div>
-      </section>
-
-      <!-- HOW IT WORKS -->
-      <section class="steps" id="how" aria-label="How it works">
-        <div class="step">
-          <div class="step-top">
-            <span class="step-id">01 • INTAKE</span>
-            <span class="badge b-threshold">FRAGMENTS</span>
-          </div>
-          <p style="margin:0;color:rgba(194,205,213,.76);line-height:1.6;font-size:.92rem;">
-            Logs, PDFs, emails, chats. No “analysis of people”. We structure evidence.
-          </p>
-        </div>
-
-        <div class="step">
-          <div class="step-top">
-            <span class="step-id">02 • SCORE</span>
-            <span class="badge b-stable">EXPLAINABLE</span>
-          </div>
-          <p style="margin:0;color:rgba(194,205,213,.76);line-height:1.6;font-size:.92rem;">
-            Proof coherence (%) and sufficient level of proof (%) guide decision defensibility.
-          </p>
-        </div>
-
-        <div class="step">
-          <div class="step-top">
-            <span class="step-id">03 • SEAL</span>
-            <span class="badge b-sealed">HASHED</span>
-          </div>
-          <p style="margin:0;color:rgba(194,205,213,.76);line-height:1.6;font-size:.92rem;">
-            Same input → same bundle → same hash. Any modification becomes detectable.
-          </p>
-        </div>
-      </section>
-
-      <footer aria-label="Footer">
-        <span>TRUTHX — Evidential infrastructure for high-exposure decisions.</span>
-        <a class="btn" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">REQUEST ACCESS</a>
-      </footer>
-    </main>
-  </div>
+    <!-- Footer (links coherent) -->
+    <footer class="foot" aria-label="Footer">
+      <div>© OpenProof — RPO v0.1. Created by Gersende Ryard de Parcey.</div>
+      <div>
+        <a href="./spec.html" target="_blank" rel="noopener noreferrer">Spec</a> ·
+        <a href="./simulator.html?context=institutional_crisis" target="_blank" rel="noopener noreferrer">Simulator</a> ·
+        <a href="./examples.html" target="_blank" rel="noopener noreferrer">Examples</a>
+      </div>
+    </footer>
+  </main>
 
   <script>
+    // -------------------------------------------------------
+    // Home teaser: deterministic-ish instrument cue (kept)
+    // -------------------------------------------------------
     (function(){
-      const $ = (s) => document.querySelector(s);
-      const cohNum = $("#cohNum");
-      const slpNum = $("#slpNum");
-      const cohBadge = $("#cohBadge");
-      const slpBadge = $("#slpBadge");
-      const hashLine = $("#hashLine");
+      const elCov  = document.getElementById("kpiCoverage");
+      const elDef  = document.getElementById("kpiDef");
+      const elExpo = document.getElementById("kpiExpo");
+      const elHash = document.getElementById("kpiHash");
 
-      function clamp(v,a,b){ return Math.max(a, Math.min(b,v)); }
+      const bCov  = document.getElementById("badgeCoverage");
+      const bDef  = document.getElementById("badgeDef");
+      const bExpo = document.getElementById("badgeExpo");
 
-      // Gentle motion: subtle “alive” without simulator complexity
-      function fakeHash(){
-        const chars = "abcdef0123456789";
-        let s = "";
-        for(let i=0;i<16;i++) s += chars[Math.floor(Math.random()*chars.length)];
-        return "sha256:" + s.slice(0,4) + "…" + s.slice(-4);
+      function setBadge(el, kind, text){
+        el.textContent = text;
+        el.className = "badge " + kind;
       }
 
-      let t = 0;
-      function tick(){
-        t++;
-        // Small oscillation to show "live" without screaming
-        const coh = Math.round( clamp(64 + Math.sin(t/18)*2.2, 58, 78) );
-        const slp = Math.round( clamp(71 + Math.sin(t/22)*2.0, 60, 82) );
+      async function sha256Hex(str){
+        const enc = new TextEncoder();
+        const buf = enc.encode(str);
+        const digest = await crypto.subtle.digest("SHA-256", buf);
+        const arr = Array.from(new Uint8Array(digest));
+        return arr.map(b=>b.toString(16).padStart(2,"0")).join("");
+      }
 
-        cohNum.textContent = String(coh);
-        slpNum.textContent = String(slp);
+      const frames = [
+        { cov: 62, def: 48, expo: "HIGH",   covB:"badge--threshold", defB:"badge--fragile",  expoB:"badge--fragile",  hash:"—" },
+        { cov: 74, def: 62, expo: "MEDIUM", covB:"badge--threshold", defB:"badge--threshold",expoB:"badge--threshold",hash:"—" },
+        { cov: 78, def: 64, expo: "MEDIUM", covB:"badge--sealed",    defB:"badge--threshold",expoB:"badge--threshold",hash:"sealing…" },
+        { cov: 78, def: 64, expo: "MEDIUM", covB:"badge--sealed",    defB:"badge--threshold",expoB:"badge--threshold",hash:"hash" }
+      ];
 
-        cohBadge.textContent = (coh >= 70) ? "STABLE" : "THRESHOLD";
-        cohBadge.className = "badge " + ((coh >= 70) ? "b-stable" : "b-threshold");
+      let i = 0;
 
-        slpBadge.textContent = (slp >= 75) ? "SUFFICIENT" : "THRESHOLD";
-        slpBadge.className = "badge " + ((slp >= 75) ? "b-stable" : "b-threshold");
+      async function tick(){
+        const f = frames[i];
 
-        if(t % 24 === 0){
-          hashLine.textContent = fakeHash();
+        elCov.textContent  = f.cov + "%";
+        elDef.textContent  = f.def + "/100";
+        elExpo.textContent = f.expo;
+
+        setBadge(bCov,  f.covB,  f.covB === "badge--sealed" ? "SEALED" : "LIVE");
+        setBadge(bDef,  f.defB,  f.defB === "badge--fragile" ? "LOW" : "MEDIUM");
+        setBadge(bExpo, f.expoB, f.expo);
+
+        if(f.hash === "sealing…"){
+          elHash.textContent = "sealing…";
+        } else if(f.hash === "—"){
+          elHash.textContent = "—";
+        } else {
+          const seed = JSON.stringify({
+            rpo_version: "0.1",
+            mode: "deterministic",
+            context: "institutional_crisis",
+            coverage_pct: 78,
+            defensibility_score: 64,
+            exposure: "MEDIUM"
+          });
+          elHash.textContent = await sha256Hex(seed);
         }
 
-        requestAnimationFrame(()=>setTimeout(tick, 240));
+        i = (i + 1) % frames.length;
       }
 
-      hashLine.textContent = fakeHash();
       tick();
+      setInterval(tick, 1500);
     })();
   </script>
 </body>
