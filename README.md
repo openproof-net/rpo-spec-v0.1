@@ -26,6 +26,10 @@ It illustrates the OpenProof specification in practice.
 Try it here:
 https://rpo.openproof.net/simulator.html
 
+## Simulator preview
+
+![OpenProof Simulator](docs/simulator-preview.png)
+
 ___
 
 *A civil code for digital evidence in an age ruled by narratives.*
