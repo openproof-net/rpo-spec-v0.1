@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: OpenProof — Registered Probative Object (RPO) Specification
+message: If you use OpenProof or the RPO specification in academic work, please cite it using the metadata below.
+type: software
+authors:
+  - family-names: Ryard de Parcey
+    given-names: Gersende
+    orcid: https://orcid.org/0009-0008-8779-1701
+repository-code: https://github.com/openproof-net/rpo-spec-v0.1
+url: https://rpo.openproof.net
+abstract: OpenProof defines the Registered Probative Object (RPO), a deterministic evidential bundle designed to make institutional decisions defensible under scrutiny.
+license: MIT
