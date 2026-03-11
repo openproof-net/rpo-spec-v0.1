@@ -42,6 +42,9 @@ Why OpenProof exists
 Architecture  
 → docs/architecture.md
 
+Specification  
+→ spec/
+
 ___
 
 *A civil code for digital evidence in an age ruled by narratives.*
