@@ -1,12 +1,11 @@
-# OpenProof — RPO Specification
+# 🔵 OpenProof — RPO Specification
+
+Integrity · Readability · Verifiability
 
 ![Version](https://img.shields.io/badge/RPO-v0.1-gold)
 ![Status](https://img.shields.io/badge/specification-stable-blue)
 
-# 🔵 OpenProof — RPO Specification v0.1
-
-Integrity · Readability · Verifiability
-
+OpenProof introduces the **Registered Probative Object (RPO)**, a deterministic evidential bundle designed to make institutional decisions defensible under scrutiny.
 ___
 
 ## Interactive demonstration
