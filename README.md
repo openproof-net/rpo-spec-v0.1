@@ -1,5 +1,7 @@
-![Version](https://img.shields.io/badge/RPO-v0.1-blue)
-![Status](https://img.shields.io/badge/specification-stable-gold)
+# OpenProof — RPO Specification
+
+![Version](https://img.shields.io/badge/RPO-v0.1-gold)
+![Status](https://img.shields.io/badge/specification-stable-blue)
 
 # 🔵 OpenProof — RPO Specification v0.1
 
