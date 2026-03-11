@@ -122,3 +122,22 @@ https://rpo.openproof.net/simulator.html
 OpenProof does not replace human judgement.
 
 It preserves the structure of reasoning so that decisions remain accountable over time.
+
+---
+
+## From narrative decisions to probative decisions
+
+Traditional governance relies on narrative reconstruction of decisions.
+
+Evidence → Reports → Decisions → Disputes
+
+In this model, the reasoning behind the decision is rarely preserved.
+
+OpenProof introduces a different model.
+
+Evidence → TruthX Engine → RPO → OpenProof → Verifiable Decision
+
+Instead of reconstructing reasoning after the fact, the reasoning structure is preserved as a verifiable artefact.
+
+This enables a shift from narrative accountability to probative accountability.
+
