@@ -34,6 +34,16 @@ https://rpo.openproof.net/simulator.html
 
 ___
 
+## Documentation
+
+Why OpenProof exists  
+→ docs/why_openproof.md
+
+Architecture  
+→ docs/architecture.md
+
+___
+
 *A civil code for digital evidence in an age ruled by narratives.*
 
 OpenProof defines a public, deterministic and testable format for structuring digital evidence.
