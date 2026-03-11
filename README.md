@@ -7,6 +7,27 @@ Integrity · Readability · Verifiability
 
 ___
 
+## Interactive demonstration
+
+This repository also includes a deterministic simulator illustrating
+how a Registered Probative Object (RPO) structures institutional
+reaction bundles.
+
+It demonstrates:
+
+• sealed JSON core
+• human-readable preview
+• public integrity hash
+• institutional exposure & defensibility indicators
+
+The simulator does not implement a decision system.
+It illustrates the OpenProof specification in practice.
+
+Try it here:
+https://rpo.openproof.net/simulator.html
+
+___
+
 *A civil code for digital evidence in an age ruled by narratives.*
 
 OpenProof defines a public, deterministic and testable format for structuring digital evidence.
