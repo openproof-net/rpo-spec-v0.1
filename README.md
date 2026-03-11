@@ -23,7 +23,8 @@ It demonstrates:
 The simulator does not implement a decision system.
 It illustrates the OpenProof specification in practice.
 
-Try it here:
+👉 **Try the interactive simulator**
+
 https://rpo.openproof.net/simulator.html
 
 ## Simulator preview
