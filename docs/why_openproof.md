@@ -129,15 +129,31 @@ It preserves the structure of reasoning so that decisions remain accountable ove
 
 Traditional governance relies on narrative reconstruction of decisions.
 
-Evidence → Reports → Decisions → Disputes
+Evidence
+   ↓
+Reports
+   ↓
+Decisions
+   ↓
+Disputes
 
 In this model, the reasoning behind the decision is rarely preserved.
 
 OpenProof introduces a different model.
 
-Evidence → TruthX Engine → RPO → OpenProof → Verifiable Decision
+Evidence
+   ↓
+TruthX Engine
+   ↓
+RPO
+   ↓
+OpenProof
+   ↓
+Verifiable Decision
 
 Instead of reconstructing reasoning after the fact, the reasoning structure is preserved as a verifiable artefact.
 
 This enables a shift from narrative accountability to probative accountability.
+
+This shift enables institutions to preserve the structure of reasoning, not only the outcome of decisions.
 
