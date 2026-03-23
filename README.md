@@ -395,4 +395,4 @@ ___
 
 ## 10. 🛡 Maintainer
 
-This specification is maintained by Gersende Ryard de Parcey.
+This specification is maintained by Gersende de Parcey.
