@@ -39,6 +39,9 @@
     :root{
       --bg0:#04040e;
       --bg1:#0b0f14;
+      --bg2:#0f1522;
+      --indigo:#5c6cff;
+      --indigoSoft:#8f9dff;
 
       --panel: rgba(255,255,255,.04);
       --panel2: rgba(255,255,255,.03);
@@ -48,23 +51,27 @@
 
       --gold:#d4af37;
       --gold2:#f1e6a3;
+      --goldGlow: rgba(212,175,55,.16);
 
       --green:#36d991;
       --green2:#9fe3c1;
-      --greenGlow: rgba(54,217,145,.22);
+      --greenGlow: rgba(54,217,145,.18);
+
+      --amber:#ffd166;
+      --amber2:#ffb84d;
+      --amberGlow: rgba(255,209,102,.16);
+
+      --danger:#ff6b6b;
+      --dangerGlow: rgba(255,107,107,.12);
 
       --text:#e9eef7;
       --muted:#a7b0c2;
       --muted2:#8c95a8;
-
-      --danger:#ff6b6b;
-      --ok:#7dffb3;
-      --warn:#ffd166;
+      --whiteGlow: rgba(233,238,247,.06);
 
       --r:18px;
       --shadow: 0 20px 70px rgba(0,0,0,.55);
       --shadow2: 0 10px 40px rgba(0,0,0,.45);
-
       --max: 1760px;
     }
 
@@ -74,11 +81,12 @@
     body{
       margin:0;
       background:
-        radial-gradient(1200px 700px at 20% 10%, rgba(212,175,55,.10), transparent 60%),
-        radial-gradient(900px 600px at 80% 20%, rgba(241,230,163,.07), transparent 55%),
-        radial-gradient(700px 420px at 78% 14%, rgba(54,217,145,.08), transparent 52%),
-        radial-gradient(900px 700px at 60% 85%, rgba(212,175,55,.08), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
+        radial-gradient(1200px 720px at 18% 8%, rgba(212,175,55,.09), transparent 60%),
+        radial-gradient(880px 560px at 84% 14%, rgba(92,108,255,.10), transparent 56%),
+        radial-gradient(720px 420px at 78% 14%, rgba(54,217,145,.07), transparent 52%),
+        radial-gradient(900px 700px at 60% 85%, rgba(212,175,55,.06), transparent 60%),
+        radial-gradient(760px 420px at 24% 72%, rgba(255,209,102,.05), transparent 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1) 46%, #0a1119 100%);
       color:var(--text);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       letter-spacing:.1px;
@@ -97,7 +105,9 @@
       top:0;
       z-index:50;
       backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(4,4,14,.88), rgba(4,4,14,.58));
+      background:
+        radial-gradient(900px 180px at 80% 0%, rgba(92,108,255,.05), transparent 50%),
+        linear-gradient(180deg, rgba(4,4,14,.9), rgba(4,4,14,.62));
       border-bottom: 1px solid rgba(212,175,55,.12);
     }
 
@@ -171,6 +181,7 @@
       border-color: rgba(212,175,55,.34);
       background:
         radial-gradient(circle at 18% 20%, rgba(54,217,145,.08), transparent 42%),
+        radial-gradient(circle at 82% 0%, rgba(92,108,255,.06), transparent 40%),
         linear-gradient(180deg, rgba(212,175,55,.14), rgba(255,255,255,.02));
       color: rgba(241,230,163,.98);
       box-shadow: 0 0 0 1px rgba(54,217,145,.05), 0 0 18px rgba(54,217,145,.06);
@@ -224,8 +235,7 @@
     }
 
     .btn.green{
-      background:
-        linear-gradient(90deg, rgba(54,217,145,.95), rgba(159,227,193,.96));
+      background: linear-gradient(90deg, rgba(54,217,145,.95), rgba(159,227,193,.96));
       color:#07120d;
       border-color: rgba(159,227,193,.48);
       box-shadow: 0 14px 42px rgba(54,217,145,.18);
@@ -236,7 +246,9 @@
     }
 
     .panel{
-      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      background:
+        radial-gradient(800px 280px at 84% 0%, rgba(92,108,255,.05), transparent 45%),
+        linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
       border: 1px solid rgba(212,175,55,.16);
       border-radius: var(--r);
       box-shadow: var(--shadow2);
@@ -250,14 +262,65 @@
       inset:0;
       background:
         radial-gradient(900px 280px at 12% 0%, rgba(212,175,55,.08), transparent 55%),
-        radial-gradient(650px 220px at 82% 12%, rgba(54,217,145,.06), transparent 52%),
-        radial-gradient(600px 240px at 88% 20%, rgba(241,230,163,.04), transparent 60%);
+        radial-gradient(650px 220px at 82% 12%, rgba(54,217,145,.05), transparent 52%),
+        radial-gradient(540px 240px at 90% 22%, rgba(92,108,255,.05), transparent 56%);
+      pointer-events:none;
+    }
+
+    .panel::after{
+      content:"";
+      position:absolute;
+      inset:auto 0 0 0;
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent);
       pointer-events:none;
     }
 
     .panel.inset{
-      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018));
+      background:
+        radial-gradient(720px 240px at 92% 2%, rgba(92,108,255,.045), transparent 44%),
+        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018));
       border: 1px solid rgba(212,175,55,.14);
+    }
+
+    .panel.gold{
+      border-color: rgba(212,175,55,.18);
+    }
+
+    .panel.green{
+      border-color: rgba(54,217,145,.22);
+      box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(54,217,145,.03);
+    }
+
+    .panel.green::before{
+      background:
+        radial-gradient(820px 280px at 12% 0%, rgba(54,217,145,.10), transparent 52%),
+        radial-gradient(560px 220px at 88% 12%, rgba(92,108,255,.05), transparent 50%);
+    }
+
+    .panel.warn{
+      border-color: rgba(255,209,102,.22);
+      box-shadow: 0 10px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(255,209,102,.03);
+    }
+
+    .panel.warn::before{
+      background:
+        radial-gradient(820px 280px at 10% 0%, rgba(255,209,102,.08), transparent 54%),
+        radial-gradient(540px 240px at 88% 12%, rgba(255,107,107,.06), transparent 50%),
+        radial-gradient(560px 220px at 82% 12%, rgba(92,108,255,.045), transparent 54%);
+    }
+
+    .panel.deep{
+      border-color: rgba(143,157,255,.16);
+      background:
+        radial-gradient(760px 260px at 82% 0%, rgba(92,108,255,.08), transparent 44%),
+        linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.016));
+    }
+
+    .panel.deep::before{
+      background:
+        radial-gradient(760px 260px at 14% 0%, rgba(92,108,255,.08), transparent 52%),
+        radial-gradient(560px 220px at 88% 12%, rgba(212,175,55,.04), transparent 52%);
     }
 
     .panel .inner{
@@ -333,6 +396,11 @@
       font-weight: 700;
     }
 
+    .lead .warn{
+      color: #ffe09a;
+      font-weight: 700;
+    }
+
     .chips{
       display:flex;
       gap:10px;
@@ -377,14 +445,25 @@
       box-shadow: 0 0 0 1px rgba(54,217,145,.03);
     }
 
-    .chip.green b{
-      color: var(--green2);
-    }
-
+    .chip.green b{ color: var(--green2); }
     .chip.green .pill{
       border-color: rgba(54,217,145,.34);
       background: rgba(54,217,145,.10);
       color: rgba(200,255,226,.96);
+    }
+
+    .chip.deep{
+      border-color: rgba(143,157,255,.20);
+      background:
+        radial-gradient(circle at 16% 18%, rgba(92,108,255,.10), transparent 42%),
+        rgba(255,255,255,.018);
+    }
+
+    .chip.deep b{ color: rgba(220,225,255,.94); }
+    .chip.deep .pill{
+      border-color: rgba(143,157,255,.28);
+      background: rgba(92,108,255,.10);
+      color: rgba(220,225,255,.94);
     }
 
     .hero-actions{
@@ -441,6 +520,10 @@
       color: rgba(233,238,247,.92);
       text-align:right;
       line-height: 1.45;
+    }
+
+    .glance-row.problem .v{
+      color: #ffe09a;
     }
 
     .glance-badge{
@@ -533,6 +616,19 @@
       font-size: 14px;
       line-height: 1.6;
       color: rgba(167,176,194,.9);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subcard::before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:2px;
+      background: linear-gradient(180deg, rgba(212,175,55,.45), transparent);
+      opacity:.85;
     }
 
     .subcard b{
@@ -547,8 +643,43 @@
       box-shadow: 0 0 0 1px rgba(54,217,145,.03);
     }
 
+    .subcard.green::before{
+      background: linear-gradient(180deg, rgba(54,217,145,.50), transparent);
+    }
+
     .subcard.green b{
       color: var(--green2);
+    }
+
+    .subcard.warn{
+      border-color: rgba(255,209,102,.24);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,209,102,.08), transparent 54%),
+        rgba(255,255,255,.016);
+      box-shadow: 0 0 0 1px rgba(255,209,102,.025);
+    }
+
+    .subcard.warn::before{
+      background: linear-gradient(180deg, rgba(255,209,102,.58), rgba(255,107,107,.22), transparent);
+    }
+
+    .subcard.warn b{
+      color: #ffe09a;
+    }
+
+    .subcard.deep{
+      border-color: rgba(143,157,255,.18);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(92,108,255,.09), transparent 54%),
+        rgba(255,255,255,.014);
+    }
+
+    .subcard.deep::before{
+      background: linear-gradient(180deg, rgba(143,157,255,.55), transparent);
+    }
+
+    .subcard.deep b{
+      color: rgba(223,228,255,.94);
     }
 
     .right-stack{
@@ -574,6 +705,16 @@
       border-radius: 12px;
       border: 1px solid rgba(212,175,55,.10);
       background: rgba(0,0,0,.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .row::before{
+      content:"";
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width:2px;
+      background: linear-gradient(180deg, rgba(212,175,55,.45), transparent);
     }
 
     .row .k{
@@ -601,8 +742,32 @@
       box-shadow: 0 0 0 1px rgba(54,217,145,.03);
     }
 
+    .row.key::before{
+      background: linear-gradient(180deg, rgba(54,217,145,.55), transparent);
+    }
+
     .row.key .v{
       color: rgba(200,255,226,.96);
+    }
+
+    .row.gold{
+      border-color: rgba(212,175,55,.18);
+    }
+
+    .row.warn{
+      border-color: rgba(255,209,102,.22);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(255,209,102,.08), transparent 52%),
+        rgba(0,0,0,.18);
+      box-shadow: 0 0 0 1px rgba(255,209,102,.025);
+    }
+
+    .row.warn::before{
+      background: linear-gradient(180deg, rgba(255,209,102,.55), rgba(255,107,107,.25), transparent);
+    }
+
+    .row.warn .v{
+      color: #ffe09a;
     }
 
     .stack{
@@ -622,7 +787,10 @@
       border: 1px solid rgba(212,175,55,.16);
       background:
         radial-gradient(circle at 12% 10%, rgba(54,217,145,.07), transparent 42%),
+        radial-gradient(circle at 78% 0%, rgba(255,209,102,.06), transparent 34%),
+        radial-gradient(circle at 88% 0%, rgba(92,108,255,.06), transparent 34%),
         linear-gradient(90deg, rgba(255,255,255,.03), rgba(212,175,55,.05));
+      box-shadow: var(--shadow2);
     }
 
     .ctaPanel .text{
@@ -656,6 +824,16 @@
       border-radius: 12px;
       border: 1px solid rgba(212,175,55,.10);
       background: rgba(0,0,0,.18);
+      position: relative;
+      overflow:hidden;
+    }
+
+    .linkrow::before{
+      content:"";
+      position:absolute;
+      left:0; top:0; bottom:0;
+      width:2px;
+      background: linear-gradient(180deg, rgba(212,175,55,.45), transparent);
     }
 
     .linkrow .label{
@@ -672,12 +850,20 @@
       line-height: 1.45;
     }
 
+    .linkrow.gold{
+      border-color: rgba(212,175,55,.16);
+    }
+
     .linkrow.green{
       border-color: rgba(54,217,145,.24);
       background:
         radial-gradient(circle at 10% 0%, rgba(54,217,145,.08), transparent 48%),
         rgba(0,0,0,.18);
       box-shadow: 0 0 0 1px rgba(54,217,145,.03);
+    }
+
+    .linkrow.green::before{
+      background: linear-gradient(180deg, rgba(54,217,145,.55), transparent);
     }
 
     .linkrow.green a{
@@ -790,7 +976,7 @@
 
   <main class="container">
     <section class="hero">
-      <div class="panel">
+      <div class="panel gold">
         <div class="inner hero-grid">
           <div>
             <div class="kicker">Founder entry point</div>
@@ -805,7 +991,7 @@
             </p>
 
             <p class="lead">
-              Her work focuses on legal, HR, cyber, compliance and governance environments where decisions may later be challenged, audited, exposed or contested.
+              Her work focuses on legal, HR, cyber, compliance and governance environments where decisions may later be <span class="warn">challenged, audited, exposed or contested</span>.
               <strong class="green">The point is not volume of information. The point is whether the structure still holds under pressure.</strong>
             </p>
 
@@ -813,7 +999,7 @@
               <span class="chip"><span class="pill">Founder</span> <b>Gersende de Parcey</b></span>
               <span class="chip"><span class="pill">Infrastructure</span> <b>OpenProof</b></span>
               <span class="chip green"><span class="pill">Engine</span> <b>TRUTHX</b></span>
-              <span class="chip green"><span class="pill">Focus</span> <b>Decision integrity</b></span>
+              <span class="chip deep"><span class="pill">Focus</span> <b>Decision integrity</b></span>
             </div>
 
             <div class="hero-actions">
@@ -849,10 +1035,10 @@
 
               <div class="glance-row">
                 <div class="k">Primary field</div>
-                <div class="v">Decision integrity and evidential infrastructure</div>
+                <div class="v" style="color:rgba(200,255,226,.95);">Decision integrity and evidential infrastructure</div>
               </div>
 
-              <div class="glance-row">
+              <div class="glance-row problem">
                 <div class="k">Core problem</div>
                 <div class="v">Fragmented evidence weakens exposed decisions</div>
               </div>
@@ -869,7 +1055,7 @@
 
     <section class="grid">
       <div>
-        <div class="panel inset">
+        <div class="panel inset deep">
           <div class="inner">
             <div class="section-title">
               <h2>What she builds</h2>
@@ -887,7 +1073,7 @@
                 Structured evidence, traceable lineage, explicit blind spots, sealed bundles and readable decision support.
               </div>
 
-              <div class="subcard">
+              <div class="subcard deep">
                 <b>Typical environments</b><br>
                 Legal, HR, cyber, compliance, governance, regulated organizations and exposed institutions.
               </div>
@@ -900,7 +1086,7 @@
           </div>
         </div>
 
-        <div class="panel inset" style="margin-top:18px;">
+        <div class="panel inset warn" style="margin-top:18px;">
           <div class="inner">
             <div class="section-title">
               <h2>Why decision integrity matters</h2>
@@ -908,13 +1094,13 @@
             </div>
 
             <div class="subcards two" style="margin-top:0;">
-              <div class="subcard">
+              <div class="subcard warn">
                 <b>What usually fails</b><br>
                 Exposed decisions rarely fail because there is no information.
                 They fail because evidence is fragmented, ownership is unclear, definitions drift and narrative pressure outruns traceability.
               </div>
 
-              <div class="subcard green">
+              <div class="subcard warn">
                 <b>What that creates</b><br>
                 Legal vulnerability, governance fragility, reputational damage, institutional escalation and weak executive defensibility.
               </div>
@@ -929,7 +1115,7 @@
           </div>
         </div>
 
-        <div class="panel inset" style="margin-top:18px;">
+        <div class="panel inset gold" style="margin-top:18px;">
           <div class="inner">
             <div class="section-title">
               <h2>OpenProof — Probative infrastructure</h2>
@@ -942,7 +1128,7 @@
                 OpenProof is the probative infrastructure: the public logic that defines how evidence becomes structured, sealed, readable and verifiable.
               </div>
 
-              <div class="subcard green">
+              <div class="subcard deep">
                 <b>What it does</b><br>
                 It provides the framework for integrity, reconstructibility, public verifiability and deterministic bundle production.
               </div>
@@ -954,7 +1140,7 @@
           </div>
         </div>
 
-        <div class="panel inset" style="margin-top:18px;">
+        <div class="panel inset green" style="margin-top:18px;">
           <div class="inner">
             <div class="section-title">
               <h2>TRUTHX — Evidential engine</h2>
@@ -1006,12 +1192,12 @@
                 <div class="v">Decision integrity and evidential infrastructure</div>
               </div>
 
-              <div class="row">
+              <div class="row warn">
                 <div class="k">Core problem</div>
                 <div class="v">Fragmented evidence weakens exposed decisions</div>
               </div>
 
-              <div class="row">
+              <div class="row gold">
                 <div class="k">Infrastructure</div>
                 <div class="v">OpenProof</div>
               </div>
@@ -1021,7 +1207,7 @@
                 <div class="v">TRUTHX</div>
               </div>
 
-              <div class="row">
+              <div class="row key">
                 <div class="k">Primary CTA</div>
                 <div class="v">Pilot cockpit</div>
               </div>
@@ -1045,7 +1231,7 @@
         <a class="btn green" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot access</a>
       </div>
 
-      <div class="panel inset">
+      <div class="panel inset deep">
         <div class="inner">
           <div class="section-title">
             <h2>Positioning</h2>
@@ -1063,12 +1249,12 @@
               Transforming weak, fragmented or conflicting material into structured decision support.
             </div>
 
-            <div class="subcard">
+            <div class="subcard deep">
               <b>AI-assisted reasoning</b><br>
               Using machine support to structure, not to replace, human accountability.
             </div>
 
-            <div class="subcard green">
+            <div class="subcard warn">
               <b>High-risk environments</b><br>
               Legal, HR, cyber, compliance, institutional crisis and governance-heavy environments.
             </div>
@@ -1089,12 +1275,12 @@
               <a href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">linkedin.com/in/gryard</a>
             </div>
 
-            <div class="linkrow">
+            <div class="linkrow gold">
               <div class="label">OpenProof</div>
               <a href="https://www.openproof.net/" target="_blank" rel="noopener noreferrer">openproof.net</a>
             </div>
 
-            <div class="linkrow">
+            <div class="linkrow green">
               <div class="label">TRUTHX</div>
               <a href="https://www.truthx.co/" target="_blank" rel="noopener noreferrer">truthx.co</a>
             </div>
