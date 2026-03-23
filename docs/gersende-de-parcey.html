@@ -1,23 +1,18 @@
 <!doctype html>
-<html lang="en" data-page="gersende">
+<html lang="en" data-page="founder">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>Gersende de Parcey — Decision Integrity, Evidential AI & Governance | OpenProof</title>
-  <meta name="description" content="Gersende de Parcey is the founder of OpenProof and creator of TRUTHX, building evidential AI and decision-governance systems for legal, HR, cyber and high-stakes organizational environments."/>
+  <title>Gersende de Parcey — Founder of OpenProof and TRUTHX</title>
+  <meta name="description" content="Gersende de Parcey is the founder of OpenProof and the creator of TRUTHX, a decision integrity and evidential infrastructure for high-stakes legal, HR, cyber and governance environments.">
   <meta name="robots" content="index, follow, max-image-preview:large"/>
   <link rel="canonical" href="https://rpo.openproof.net/gersende-de-parcey.html"/>
 
   <meta property="og:type" content="website"/>
-  <meta property="og:title" content="Gersende de Parcey — Decision Integrity, Evidential AI & Governance"/>
-  <meta property="og:description" content="Founder of OpenProof and creator of TRUTHX. Evidential AI, decision integrity and governance for high-stakes environments."/>
+  <meta property="og:title" content="Gersende de Parcey — Founder of OpenProof and TRUTHX"/>
+  <meta property="og:description" content="Founder page inside the OpenProof ecosystem: person, infrastructure, product."/>
   <meta property="og:url" content="https://rpo.openproof.net/gersende-de-parcey.html"/>
-  <meta property="og:site_name" content="OpenProof"/>
-
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Gersende de Parcey — Decision Integrity, Evidential AI & Governance"/>
-  <meta name="twitter:description" content="Founder of OpenProof and creator of TRUTHX. Evidential AI, decision integrity and governance for high-stakes environments."/>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,26 +23,12 @@
     "@context":"https://schema.org",
     "@type":"Person",
     "name":"Gersende de Parcey",
-    "alternateName":"Gersende Ryard de Parcey",
     "url":"https://rpo.openproof.net/gersende-de-parcey.html",
-    "jobTitle":"Founder of OpenProof and creator of TRUTHX",
+    "jobTitle":"Founder of OpenProof and Creator of TRUTHX",
     "sameAs":["https://www.linkedin.com/in/gryard/"],
     "worksFor":{
       "@type":"Organization",
       "name":"OpenProof"
-    }
-  }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"OpenProof",
-    "url":"https://www.openproof.net",
-    "founder":{
-      "@type":"Person",
-      "name":"Gersende de Parcey"
     }
   }
   </script>
@@ -65,9 +46,9 @@
       --text:#e9eef7;
       --muted:#a7b0c2;
       --muted2:#8c95a8;
+      --danger:#ff6b6b;
       --ok:#7dffb3;
       --warn:#ffd166;
-
       --r:18px;
       --shadow: 0 20px 70px rgba(0,0,0,.55);
       --shadow2: 0 10px 40px rgba(0,0,0,.45);
@@ -89,7 +70,6 @@
     }
 
     a{ color:inherit; text-decoration:none; }
-
     .container{
       max-width: var(--max);
       margin: 0 auto;
@@ -115,7 +95,7 @@
       display:flex;
       align-items:center;
       gap:10px;
-      min-width:240px;
+      min-width: 240px;
     }
     .dot{
       width:7px;height:7px;border-radius:10px;
@@ -139,9 +119,9 @@
 
     .navlinks{
       display:flex;
-      gap:10px;
+      gap: 10px;
       align-items:center;
-      flex-wrap:wrap;
+      flex-wrap: wrap;
       justify-content:center;
     }
     .navlinks a{
@@ -164,23 +144,17 @@
       color: rgba(241,230,163,.96);
     }
 
-    .cta{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:240px;
-      justify-content:flex-end;
-    }
+    .cta{ display:flex; align-items:center; gap:10px; min-width: 240px; justify-content:flex-end; }
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
       gap:8px;
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(212,175,55,.18);
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(212,175,55,.18);
       background: rgba(255,255,255,.02);
       color: rgba(233,238,247,.92);
-      font-size:12px;
-      font-weight:600;
+      font-size: 12px;
+      font-weight: 600;
       letter-spacing:.2px;
       cursor:pointer;
       transition: transform .15s ease, filter .15s ease, border-color .15s ease, background .15s ease;
@@ -205,11 +179,14 @@
       border-radius: var(--r);
       box-shadow: var(--shadow2);
     }
-    .panel .inner{ padding: 22px; }
+    .panel.inset{
+      background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018));
+      border: 1px solid rgba(212,175,55,.14);
+    }
+    .panel .inner{ padding: 18px; }
 
     .hero{ margin: 18px 0 16px; }
     .hero .panel{ box-shadow: var(--shadow); }
-
     .kicker{
       font-size: 11px;
       text-transform: uppercase;
@@ -218,13 +195,13 @@
       margin-bottom: 8px;
     }
     h1{
-      margin:0 0 12px;
+      margin:0 0 10px;
       font-family: Orbitron, Inter, sans-serif;
+      letter-spacing: .2px;
       font-weight: 700;
-      line-height: 1.08;
-      font-size: clamp(28px, 3.2vw, 48px);
+      line-height: 1.1;
+      font-size: clamp(28px, 3.2vw, 46px);
       color: rgba(233,238,247,.96);
-      max-width: 16ch;
     }
     h1 .hl{
       background: linear-gradient(90deg, var(--gold), var(--gold2));
@@ -233,11 +210,40 @@
       color:transparent;
     }
     .lead{
-      margin: 0;
+      margin: 0 0 14px;
       color: rgba(167,176,194,.92);
-      max-width: 92ch;
-      font-size: 15px;
-      line-height: 1.7;
+      max-width: 110ch;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.65fr .70fr;
+      gap: 22px;
+      align-items:start;
+      margin: 16px 0 24px;
+    }
+
+    .section-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:14px;
+      margin: 0 0 10px;
+    }
+    .section-title h2{
+      margin:0;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size: 13px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: rgba(241,230,163,.88);
+      font-weight: 700;
+    }
+    .section-title .meta{
+      font-size: 11px;
+      color: rgba(167,176,194,.82);
     }
 
     .chips{
@@ -245,7 +251,7 @@
       gap:10px;
       flex-wrap: wrap;
       align-items:center;
-      margin: 16px 0 0;
+      margin: 12px 0 12px;
     }
     .chip{
       display:inline-flex;
@@ -275,157 +281,105 @@
       gap:10px;
       flex-wrap: wrap;
       align-items:center;
-      margin-top: 16px;
+      margin-top: 10px;
     }
+    .note{
+      margin-top: 10px;
+      color: rgba(167,176,194,.82);
+      font-size: 11px;
+      line-height: 1.45;
+    }
+    .note b{ color: rgba(241,230,163,.9); }
 
-    .grid{
+    .tableish{
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 22px;
-      align-items:start;
-      margin: 16px 0 24px;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+      align-items: start;
     }
+    .trow{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,.10);
+      background: rgba(0,0,0,.18);
+      min-height: 56px;
+    }
+    .trow .k{
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      color: rgba(167,176,194,.78);
+    }
+    .trow .v{
+      font-size: 13px;
+      font-weight: 700;
+      color: rgba(233,238,247,.90);
+      line-height: 1.55;
+      text-align:left;
+      white-space: normal;
+      word-break: break-word;
+    }
+    .span-2{ grid-column: 1 / -1; }
 
-    .section-title{
+    .row{
       display:flex;
       justify-content:space-between;
-      align-items:flex-end;
-      gap:14px;
-      margin: 0 0 10px;
+      gap: 12px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(212,175,55,.10);
+      background: rgba(0,0,0,.18);
     }
-    .section-title h2{
-      margin:0;
-      font-family: Orbitron, Inter, sans-serif;
-      font-size: 13px;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      color: rgba(241,230,163,.88);
-      font-weight: 700;
-    }
-    .section-title .meta{
+    .row .k{
       font-size: 11px;
-      color: rgba(167,176,194,.82);
+      letter-spacing: 1.1px;
+      text-transform: uppercase;
+      color: rgba(167,176,194,.78);
+    }
+    .row .v{
+      font-size: 12px;
+      font-weight: 700;
+      color: rgba(233,238,247,.90);
+      text-align:right;
+      max-width: 68%;
     }
 
-    .copy{
-      display:grid;
-      gap:16px;
-    }
-    .copy p{
-      margin:0;
-      color: rgba(167,176,194,.92);
-      line-height: 1.75;
-      font-size: 14px;
-    }
-    .copy strong{
-      color: rgba(233,238,247,.96);
-      font-weight: 600;
-    }
-
-    .bullet-list{
-      display:grid;
+    .cockpit{ position: sticky; top: 74px; }
+    .cockpit .head{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
       gap:10px;
-      margin-top: 6px;
+      margin-bottom: 10px;
     }
-    .bullet{
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(212,175,55,.12);
-      background: rgba(255,255,255,.018);
-      color: rgba(167,176,194,.90);
-      line-height: 1.6;
-      font-size: 14px;
+    .cockpit .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size: 11px;
+      color: rgba(167,176,194,.88);
+      border: 1px solid rgba(212,175,55,.14);
+      background: rgba(255,255,255,.02);
+      padding: 6px 10px;
+      border-radius: 999px;
     }
-    .bullet b{ color: rgba(241,230,163,.95); }
+    .cockpit .tag .dot2{
+      width:7px;height:7px;border-radius:10px;
+      background: rgba(241,230,163,.9);
+      box-shadow: 0 0 0 4px rgba(212,175,55,.10);
+    }
+
+    .kv{ display:flex; flex-direction:column; gap: 10px; margin-top: 8px; }
 
     .stack{
       display:flex;
       flex-direction:column;
-      gap:14px;
-    }
-
-    .mini-card{
-      padding: 16px;
-      border-radius: 16px;
-      border: 1px solid rgba(212,175,55,.14);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
-    }
-    .mini-card h3{
-      margin:0 0 8px;
-      font-family: Orbitron, Inter, sans-serif;
-      font-size: 12px;
-      letter-spacing: 1.1px;
-      text-transform: uppercase;
-      color: rgba(241,230,163,.88);
-      font-weight: 700;
-    }
-    .mini-card p{
-      margin:0;
-      color: rgba(167,176,194,.90);
-      line-height:1.65;
-      font-size: 13px;
-    }
-
-    .kpi{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .kpi-card{
-      padding: 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(212,175,55,.14);
-      background: rgba(255,255,255,.018);
-    }
-    .kpi-card .kk{
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.1px;
-      color: rgba(167,176,194,.80);
-      margin-bottom: 8px;
-    }
-    .kpi-card .vv{
-      font-family: Orbitron, Inter, sans-serif;
-      font-size: 20px;
-      color: rgba(241,230,163,.96);
-      line-height: 1;
-    }
-    .kpi-card .sub{
-      margin-top: 8px;
-      font-size: 11px;
-      color: rgba(167,176,194,.78);
-      line-height: 1.45;
-    }
-
-    .link-list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .link-item{
-      display:flex;
-      justify-content:space-between;
-      gap:12px;
-      align-items:center;
-      padding: 12px 14px;
-      border-radius: 14px;
-      border: 1px solid rgba(212,175,55,.12);
-      background: rgba(255,255,255,.018);
-    }
-    .link-item .left{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
-    .link-item .name{
-      font-size: 13px;
-      font-weight: 700;
-      color: rgba(241,230,163,.94);
-    }
-    .link-item .desc{
-      font-size: 12px;
-      color: rgba(167,176,194,.86);
-      line-height: 1.5;
+      gap: 14px;
+      margin: 18px 0 28px;
     }
 
     .ctaPanel{
@@ -433,17 +387,16 @@
       justify-content:space-between;
       gap:16px;
       align-items:center;
-      padding: 18px;
+      padding: 16px 16px;
       border-radius: 16px;
       border: 1px solid rgba(212,175,55,.16);
       background: linear-gradient(90deg, rgba(255,255,255,.03), rgba(212,175,55,.05));
-      margin-top: 18px;
     }
     .ctaPanel .text{
       color: rgba(167,176,194,.88);
-      font-size: 13px;
-      line-height: 1.6;
-      max-width: 92ch;
+      font-size: 12px;
+      line-height: 1.5;
+      max-width: 115ch;
     }
     .ctaPanel .text b{ color: rgba(241,230,163,.9); }
 
@@ -469,16 +422,11 @@
 
     @media (max-width: 1100px){
       .grid{ grid-template-columns: 1fr; }
+      .cockpit{ position: relative; top:auto; }
       .brand{ min-width: 0; }
       .cta{ min-width: 0; }
-    }
-
-    @media (max-width: 760px){
-      .container{ padding: 0 14px; }
-      .nav{ flex-direction:column; align-items:flex-start; }
-      .navlinks{ justify-content:flex-start; }
-      .cta{ justify-content:flex-start; }
-      .kpi{ grid-template-columns: 1fr; }
+      .tableish{ grid-template-columns: 1fr; }
+      .span-2{ grid-column: auto; }
       .ctaPanel{ flex-direction:column; align-items:flex-start; }
     }
   </style>
@@ -508,7 +456,7 @@
         </div>
 
         <div class="cta">
-          <a class="btn ghost" href="https://www.openproof.net" target="_blank" rel="noopener noreferrer">OpenProof</a>
+          <a class="btn ghost" href="https://www.openproof.net/" target="_blank" rel="noopener noreferrer">OpenProof</a>
           <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
         </div>
       </div>
@@ -519,112 +467,13 @@
     <section class="hero">
       <div class="panel">
         <div class="inner">
-          <div class="kicker">Founder profile · decision integrity · evidential ai</div>
-          <h1>Gersende de Parcey builds <span class="hl">defensible decisions</span>.</h1>
+          <div class="kicker">Founder entry point</div>
+          <h1>Gersende de Parcey. <span class="hl">Decision integrity.</span> Evidential infrastructure.</h1>
           <p class="lead">
-            Gersende de Parcey is the founder of OpenProof and creator of TRUTHX. Her work focuses on
-            <strong>decision integrity</strong>, <strong>evidential AI</strong> and <strong>high-stakes governance</strong>:
-            transforming fragmented information into structured, traceable and defensible outputs for legal, HR, cyber and institutional environments.
+            Gersende de Parcey is the founder of OpenProof and the creator of TRUTHX, a decision integrity and evidential infrastructure designed to help organizations structure fragmented information, stabilize traceability, and defend high-stakes decisions.
           </p>
-
-          <div class="chips">
-            <span class="chip"><span class="pill">Founder</span> <b>Gersende de Parcey</b></span>
-            <span class="chip"><span class="pill">Infrastructure</span> <b>OpenProof</b></span>
-            <span class="chip"><span class="pill">Product</span> <b>TRUTHX</b></span>
-            <span class="chip"><span class="pill">Focus</span> <b>Decision integrity</b></span>
-            <span class="chip"><span class="pill">Output</span> <b>Sealed evidential bundles</b></span>
-          </div>
-
-          <div class="hero-actions">
-            <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot access</a>
-            <a class="btn ghost" href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">LinkedIn profile</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="grid">
-      <div class="stack">
-        <div class="panel">
-          <div class="inner">
-            <div class="section-title">
-              <h2>What she builds</h2>
-              <div class="meta">Structured systems for contested environments</div>
-            </div>
-
-            <div class="copy">
-              <p>
-                Gersende de Parcey designs systems that make decisions <strong>reconstructible</strong>,
-                <strong>traceable</strong> and <strong>defensible</strong>. Her work sits at the intersection of governance,
-                evidence structuring and AI-assisted reasoning, with a strong focus on environments where decisions may later be challenged.
-              </p>
-
-              <p>
-                This includes the structuring of fragmented evidence, the measurement of proof coherence,
-                the stabilization of contradictory records, and the production of sealed bundles that preserve
-                integrity over time. The goal is not to replace human judgment. The goal is to ensure that
-                a decision can still be defended when pressure rises.
-              </p>
-            </div>
-
-            <div class="bullet-list">
-              <div class="bullet"><b>Decision integrity:</b> making sure critical decisions remain explainable and defensible under scrutiny.</div>
-              <div class="bullet"><b>Evidential AI:</b> using structured computational logic to stabilize fragmented records and reduce narrative distortion.</div>
-              <div class="bullet"><b>Governance under pressure:</b> legal, HR, security and institutional environments where traceability is not optional.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="inner">
-            <div class="section-title">
-              <h2>Why this matters</h2>
-              <div class="meta">High-stakes organizational environments</div>
-            </div>
-
-            <div class="copy">
-              <p>
-                Most critical failures do not begin with a total lack of information. They begin with
-                <strong>fragments</strong>, <strong>contradictions</strong>, <strong>weak traceability</strong> and
-                <strong>narrative pressure</strong>. When records are incomplete or unstable, the organization becomes exposed:
-                legally, operationally and reputationally.
-              </p>
-
-              <p>
-                Gersende de Parcey’s work addresses that gap. It creates a structured path from raw material
-                to defensible output, so that institutions can act before the story outruns the evidence.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="inner">
-            <div class="section-title">
-              <h2>Core fields</h2>
-              <div class="meta">Where her work operates</div>
-            </div>
-
-            <div class="bullet-list">
-              <div class="bullet"><b>Legal and litigation readiness:</b> securing opposability, chain-of-custody logic and evidential consistency.</div>
-              <div class="bullet"><b>HR and workforce governance:</b> structuring records for contested workforce decisions and organizational accountability.</div>
-              <div class="bullet"><b>Security and crisis environments:</b> reconstructing events under pressure with clear traces and explicit gaps.</div>
-              <div class="bullet"><b>Institutional governance:</b> translating complex decision systems into stable, reviewable and auditable outputs.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <aside class="stack">
-        <div class="panel">
-          <div class="inner">
-            <div class="section-title">
-              <h2>At a glance</h2>
-                          <div class="meta">Founder signal</div>
-          </div>
-
           <p class="lead">
-            Gersende de Parcey is the founder of OpenProof and the creator of TRUTHX, a decision and evidential infrastructure designed to help organizations structure fragmented information, stabilize traceability, and defend high-stakes decisions.
+            Her work focuses on legal, HR, cyber, compliance and governance environments where decisions may later be challenged, audited, exposed or contested.
           </p>
 
           <div class="chips">
@@ -641,8 +490,8 @@
           </div>
 
           <div class="note">
-            This page is the founder entry point inside the OpenProof ecosystem. It is designed to make the public narrative clear:
-            <b>person</b> → <b>infrastructure</b> → <b>product</b>.
+            <b>Purpose of this page:</b> create a clear founder entry point inside the OpenProof ecosystem:
+            person → infrastructure → product.
           </div>
         </div>
       </div>
@@ -654,42 +503,42 @@
           <div class="inner">
             <div class="section-title">
               <h2>What she builds</h2>
-              <div class="meta">Decision integrity systems</div>
+              <div class="meta">Founder signal</div>
             </div>
 
             <div class="tableish">
-              <div class="trow isKey">
+              <div class="trow">
                 <div class="k">Core mission</div>
                 <div class="v">
-                  Design systems that make critical decisions more reconstructible, more readable, and more defensible under scrutiny.
+                  Design systems that make critical decisions more reconstructible, readable and defensible under pressure.
                 </div>
               </div>
 
               <div class="trow">
                 <div class="k">Operational output</div>
                 <div class="v">
-                  Structured evidence, traceable lineage, explicit blind spots, sealed bundles, and readable decision support.
+                  Structured evidence, traceable lineage, explicit blind spots, sealed bundles and readable decision support.
                 </div>
               </div>
 
               <div class="trow">
                 <div class="k">Typical environments</div>
                 <div class="v">
-                  Legal, HR, cyber, compliance, governance, regulated organizations, exposed institutions.
+                  Legal, HR, cyber, compliance, governance, regulated organizations and exposed institutions.
                 </div>
               </div>
 
               <div class="trow">
-                <div class="k">Working principle</div>
+                <div class="k">Method</div>
                 <div class="v">
-                  Same input, same structure, same bundle logic. No narrative improvisation when exposure rises.
+                  Stabilize the structure first: same input, same rules, same bundle logic, same accountability principle.
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="panel inset output">
+        <div class="panel inset" style="margin-top:14px;">
           <div class="inner">
             <div class="section-title">
               <h2>Why decision integrity matters</h2>
@@ -700,27 +549,23 @@
               <div class="trow">
                 <div class="k">What usually fails</div>
                 <div class="v">
-                  Most exposed decisions do not fail because there is no information. They fail because evidence is fragmented, ownership is unclear, definitions drift, and narrative pressure outruns traceability.
+                  Exposed decisions rarely fail because there is no information. They fail because evidence is fragmented, ownership is unclear, definitions drift and narrative pressure outruns traceability.
                 </div>
               </div>
 
               <div class="trow">
                 <div class="k">What that creates</div>
                 <div class="v">
-                  Legal vulnerability, governance fragility, reputational damage, institutional escalation, and weak executive defensibility.
+                  Legal vulnerability, governance fragility, reputational damage, institutional escalation and weak executive defensibility.
                 </div>
               </div>
 
-              <div class="trow span-2 isKey" id="rowNext">
+              <div class="trow span-2">
                 <div class="k">Strategic thesis</div>
                 <div class="v">
                   Before an organization can defend a decision, it must first defend the structure of the information on which that decision was made.
                 </div>
               </div>
-            </div>
-
-            <div class="hint" style="margin-top:10px;">
-              The point is not to “automate truth”. The point is to make institutional reasoning traceable before it is contested.
             </div>
           </div>
         </div>
@@ -737,21 +582,21 @@
                 <div class="trow">
                   <div class="k">What it is</div>
                   <div class="v">
-                    OpenProof is the probative infrastructure: the public logic that defines how evidence becomes structured, sealed, readable, and verifiable.
+                    OpenProof is the probative infrastructure: the public logic that defines how evidence becomes structured, sealed, readable and verifiable.
                   </div>
                 </div>
 
                 <div class="trow">
                   <div class="k">What it does</div>
                   <div class="v">
-                    It provides the framework for integrity, reconstructibility, public verifiability, and deterministic bundle production.
+                    It provides the framework for integrity, reconstructibility, public verifiability and deterministic bundle production.
                   </div>
                 </div>
 
                 <div class="trow span-2">
                   <div class="k">Explore</div>
                   <div class="v">
-                    <a href="https://www.openproof.net/" target="_blank" rel="noopener noreferrer">Visit OpenProof</a>
+                    <a href="https://www.openproof.net/" target="_blank" rel="noopener noreferrer">Explore OpenProof</a>
                   </div>
                 </div>
               </div>
@@ -776,14 +621,14 @@
                 <div class="trow">
                   <div class="k">What it produces</div>
                   <div class="v">
-                    Coherence scoring, sufficient level of proof indicators, traceable bundle logic, and sealed outputs designed for human accountability.
+                    Coherence scoring, sufficient level of proof indicators, traceable bundle logic and sealed outputs designed for human accountability.
                   </div>
                 </div>
 
                 <div class="trow span-2">
                   <div class="k">Discover</div>
                   <div class="v">
-                    <a href="https://www.truthx.co/" target="_blank" rel="noopener noreferrer">Visit TRUTHX</a>
+                    <a href="https://www.truthx.co/" target="_blank" rel="noopener noreferrer">Discover TRUTHX</a>
                   </div>
                 </div>
               </div>
@@ -792,8 +637,8 @@
 
           <div class="ctaPanel">
             <div class="text">
-              TRUTHX is currently deployed through a controlled pilot for selected organizations facing exposed decisions, fragmented evidence, or elevated institutional scrutiny.
-              The objective is simple: <b>stabilize the bundle before the narrative spreads.</b>
+              TRUTHX is currently deployed through a controlled pilot for selected organizations facing exposed decisions, fragmented evidence or elevated institutional scrutiny.
+              <b>Objective:</b> stabilize the bundle before the narrative spreads.
             </div>
             <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot access</a>
           </div>
@@ -812,7 +657,7 @@
             </div>
 
             <div class="kv">
-              <div class="row isKey">
+              <div class="row">
                 <div class="k">Public name</div>
                 <div class="v">Gersende de Parcey</div>
               </div>
@@ -832,24 +677,24 @@
                 <div class="v">Fragmented evidence weakens exposed decisions</div>
               </div>
 
-              <div class="row isKey">
+              <div class="row">
                 <div class="k">Infrastructure</div>
                 <div class="v">OpenProof</div>
               </div>
 
-              <div class="row isKey">
+              <div class="row">
                 <div class="k">Operational engine</div>
                 <div class="v">TRUTHX</div>
               </div>
 
               <div class="row">
                 <div class="k">Primary CTA</div>
-                <div class="v">Pilot access</div>
+                <div class="v">Pilot cockpit</div>
               </div>
             </div>
 
-            <div class="footnote">
-              This founder page is not a portfolio. It is a controlled entry point designed to connect a public identity to a probative infrastructure and an operational product.
+            <div class="note" style="margin-top:12px;">
+              This founder page is not a generic bio page. It is a controlled public entry point linking a person, an infrastructure and an operational product.
             </div>
           </div>
         </div>
@@ -867,30 +712,22 @@
           <div class="tableish">
             <div class="trow">
               <div class="k">Decision governance</div>
-              <div class="v">
-                Making institutional reasoning explicit, accountable, and resilient under scrutiny.
-              </div>
+              <div class="v">Making institutional reasoning explicit, accountable and resilient under scrutiny.</div>
             </div>
 
             <div class="trow">
               <div class="k">Evidential structuring</div>
-              <div class="v">
-                Transforming weak, fragmented or conflicting material into structured decision support.
-              </div>
+              <div class="v">Transforming weak, fragmented or conflicting material into structured decision support.</div>
             </div>
 
             <div class="trow">
               <div class="k">AI-assisted reasoning</div>
-              <div class="v">
-                Using machine support to structure, not to replace, human accountability.
-              </div>
+              <div class="v">Using machine support to structure, not to replace, human accountability.</div>
             </div>
 
             <div class="trow">
               <div class="k">High-risk environments</div>
-              <div class="v">
-                Legal, HR, cyber, compliance, institutional crisis, and governance-heavy environments.
-              </div>
+              <div class="v">Legal, HR, cyber, compliance, institutional crisis and governance-heavy environments.</div>
             </div>
           </div>
         </div>
@@ -906,30 +743,19 @@
           <div class="tableish">
             <div class="trow">
               <div class="k">LinkedIn</div>
-              <div class="v">
-                <a href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">linkedin.com/in/gryard</a>
-              </div>
+              <div class="v"><a href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">linkedin.com/in/gryard</a></div>
             </div>
-
             <div class="trow">
               <div class="k">OpenProof</div>
-              <div class="v">
-                <a href="https://www.openproof.net/" target="_blank" rel="noopener noreferrer">openproof.net</a>
-              </div>
+              <div class="v"><a href="https://www.openproof.net/" target="_blank" rel="noopener noreferrer">openproof.net</a></div>
             </div>
-
             <div class="trow">
               <div class="k">TRUTHX</div>
-              <div class="v">
-                <a href="https://www.truthx.co/" target="_blank" rel="noopener noreferrer">truthx.co</a>
-              </div>
+              <div class="v"><a href="https://www.truthx.co/" target="_blank" rel="noopener noreferrer">truthx.co</a></div>
             </div>
-
             <div class="trow">
               <div class="k">Pilot intake</div>
-              <div class="v">
-                <a href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">truthx.co/truthx-pilote-form</a>
-              </div>
+              <div class="v"><a href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">truthx.co/truthx-pilote-form</a></div>
             </div>
           </div>
         </div>
@@ -939,9 +765,9 @@
     <div class="foot" aria-label="Footer">
       <div>© OpenProof — Founder page. Built for narrative clarity and search visibility.</div>
       <div>
-        <a href="https://rpo.openproof.net/index.html" target="_blank" rel="noopener noreferrer">Home</a> ·
-        <a href="https://rpo.openproof.net/simulator.html" target="_blank" rel="noopener noreferrer">Simulator</a> ·
-        <a href="https://rpo.openproof.net/gersende-de-parcey.html" target="_blank" rel="noopener noreferrer">Founder</a>
+        <a href="https://rpo.openproof.net/index.html">Home</a> ·
+        <a href="https://rpo.openproof.net/simulator.html">Simulator</a> ·
+        <a href="https://rpo.openproof.net/gersende-de-parcey.html">Founder</a>
       </div>
     </div>
   </main>
