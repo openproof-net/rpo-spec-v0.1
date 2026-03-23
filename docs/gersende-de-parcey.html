@@ -52,6 +52,11 @@
       --greenSoft:rgba(56,224,162,.14);
       --greenLine:rgba(56,224,162,.26);
 
+      --orange:#F35A2A;
+      --orange2:#ff8a57;
+      --orangeSoft:rgba(243,90,42,.18);
+      --orangeLine:rgba(243,90,42,.28);
+
       --amber:#ffd166;
       --amber2:#ffb84d;
       --amberSoft:rgba(255,209,102,.15);
@@ -254,6 +259,18 @@
 
     .btn.green:hover{
       box-shadow:0 18px 44px rgba(56,224,162,.20);
+    }
+
+    .btn.orange{
+      color:#fff7f2;
+      border-color:rgba(255,138,87,.34);
+      background:linear-gradient(90deg, rgba(243,90,42,.98), rgba(255,138,87,.96));
+      box-shadow:0 14px 36px rgba(243,90,42,.18);
+    }
+
+    .btn.orange:hover{
+      box-shadow:0 18px 44px rgba(243,90,42,.24);
+      border-color:rgba(255,138,87,.42);
     }
 
     .surface{
@@ -773,6 +790,21 @@
       border-color:rgba(212,175,55,.16);
     }
 
+    .row.orange{
+      border-color:rgba(243,90,42,.26);
+      background:
+        radial-gradient(480px 120px at 0% 0%, rgba(243,90,42,.10), transparent 48%),
+        linear-gradient(180deg, rgba(255,255,255,.014), rgba(255,255,255,.006));
+    }
+
+    .row.orange::before{
+      background:linear-gradient(180deg, rgba(243,90,42,.78), transparent);
+    }
+
+    .row.orange .v{
+      color:#ffd8cb;
+    }
+
     .stack{
       display:flex;
       flex-direction:column;
@@ -886,6 +918,21 @@
       color:rgba(200,255,226,.98);
     }
 
+    .linkrow.orange{
+      border-color:rgba(243,90,42,.24);
+      background:
+        radial-gradient(520px 140px at 0% 0%, rgba(243,90,42,.09), transparent 50%),
+        linear-gradient(180deg, rgba(255,255,255,.016), rgba(255,255,255,.008));
+    }
+
+    .linkrow.orange::before{
+      background:linear-gradient(180deg, rgba(243,90,42,.78), transparent);
+    }
+
+    .linkrow.orange a{
+      color:#ffd8cb;
+    }
+
     .foot{
       display:flex;
       justify-content:space-between;
@@ -971,7 +1018,6 @@
       }
     }
   </style>
-  <meta name="google-site-verification" content="Qgjpi9bZ4XxHbZ7QTLJprdfAvQC5Isqr1jSL9AfvZtk" />
 </head>
 
 <body>
@@ -999,7 +1045,7 @@
 
         <div class="cta">
           <a class="btn ghost" href="https://www.openproof.net/" target="_blank" rel="noopener noreferrer">OpenProof</a>
-          <a class="btn primary" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
+          <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Pilot cockpit</a>
         </div>
       </div>
     </div>
@@ -1034,7 +1080,7 @@
             </div>
 
             <div class="hero-actions">
-              <a class="btn green" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Access pilot</a>
+              <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Access pilot</a>
               <a class="btn ghost" href="https://www.truthx.co/" target="_blank" rel="noopener noreferrer">Discover TRUTHX</a>
               <a class="btn ghost" href="https://www.openproof.net/" target="_blank" rel="noopener noreferrer">OpenProof</a>
             </div>
@@ -1076,7 +1122,7 @@
             </div>
 
             <div class="hero-actions" style="margin-top:18px;">
-              <a class="btn green" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot access</a>
+              <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot access</a>
               <a class="btn ghost" href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             </div>
           </div>
@@ -1238,7 +1284,7 @@
                 <div class="v">TRUTHX</div>
               </div>
 
-              <div class="row key">
+              <div class="row orange">
                 <div class="k">Primary CTA</div>
                 <div class="v">Pilot cockpit</div>
               </div>
@@ -1259,7 +1305,7 @@
           TRUTHX is currently deployed through a controlled pilot for selected organizations facing exposed decisions, fragmented evidence or elevated institutional scrutiny.
           <span class="green">Objective:</span> stabilize the bundle before the narrative spreads.
         </div>
-        <a class="btn green" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot access</a>
+        <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot access</a>
       </div>
 
       <div class="surface deep">
@@ -1316,7 +1362,7 @@
               <a href="https://www.truthx.co/" target="_blank" rel="noopener noreferrer">truthx.co</a>
             </div>
 
-            <div class="linkrow green">
+            <div class="linkrow orange">
               <div class="label">Pilot intake</div>
               <a href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">truthx.co/truthx-pilote-form</a>
             </div>
