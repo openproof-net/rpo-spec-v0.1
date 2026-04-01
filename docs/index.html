@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-page="home-choice">
+<html lang="en" data-page="home">
 <head>
   <link rel="icon" type="image/png" href="https://rpo.openproof.net/docs/images/openproof-cover.png">
 
@@ -13,11 +13,12 @@
 
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>OpenProof — Choose Your Reading of Instability</title>
+  <title>OpenProof — Decision Integrity Under Pressure</title>
+  <meta name="description" content="OpenProof is the probative infrastructure that makes high-stakes decisions traceable, reconstructible, and defensible under pressure.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -28,30 +29,29 @@
       --text:#e9eef7;
       --muted:#a7b0c2;
       --muted2:#8c95a8;
-      --danger:#ff6b6b;
-      --ok:#52f2c8;
-      --ok2:#7dffb3;
-      --orange:#ff7a45;
+      --orange:#f35a2a;
       --orange2:#ffbe78;
-      --r:24px;
-      --shadow: 0 20px 70px rgba(0,0,0,.55);
-      --shadow2: 0 10px 40px rgba(0,0,0,.45);
-      --max: 1560px;
+      --green:#52f2c8;
+      --green2:#9ff7d5;
+      --danger:#ff6b6b;
+      --r:26px;
+      --shadow: 0 22px 70px rgba(0,0,0,.55);
+      --shadow2: 0 10px 40px rgba(0,0,0,.42);
+      --max: 1460px;
     }
 
     *{ box-sizing:border-box; }
     html,body{ height:100%; }
-
     body{
       margin:0;
-      background:
-        radial-gradient(1200px 700px at 18% 10%, rgba(212,175,55,.10), transparent 60%),
-        radial-gradient(900px 600px at 82% 18%, rgba(82,242,200,.08), transparent 58%),
-        radial-gradient(1000px 700px at 60% 85%, rgba(212,175,55,.06), transparent 60%),
-        linear-gradient(180deg, var(--bg0), var(--bg1));
       color:var(--text);
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       letter-spacing:.1px;
+      background:
+        radial-gradient(1200px 720px at 18% 10%, rgba(212,175,55,.11), transparent 60%),
+        radial-gradient(900px 620px at 82% 18%, rgba(82,242,200,.07), transparent 58%),
+        radial-gradient(1000px 720px at 50% 88%, rgba(243,90,42,.06), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
     }
 
     a{ color:inherit; text-decoration:none; }
@@ -62,32 +62,20 @@
       padding: 0 28px;
     }
 
-    .topbar{
-      position: sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(4,4,14,.88), rgba(4,4,14,.58));
-      border-bottom: 1px solid rgba(212,175,55,.12);
-    }
-
-    .topbar-inner{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:16px;
-      padding: 14px 0;
+    .top{
+      padding: 22px 0 8px;
     }
 
     .brand{
       display:flex;
       align-items:center;
       gap:10px;
-      min-width: 240px;
     }
 
     .dot{
-      width:7px;height:7px;border-radius:10px;
+      width:7px;
+      height:7px;
+      border-radius:50%;
       background: linear-gradient(90deg, var(--gold), var(--gold2));
       box-shadow: 0 0 0 4px rgba(212,175,55,.10);
       flex:0 0 auto;
@@ -101,105 +89,55 @@
 
     .brand-title{
       font-family: Orbitron, Inter, sans-serif;
+      font-size:13px;
       font-weight:700;
       letter-spacing:.9px;
-      font-size:13px;
-      color: rgba(233,238,247,.92);
+      color: rgba(233,238,247,.93);
     }
 
     .brand-sub{
+      margin-top:2px;
       font-size:11px;
-      color: rgba(167,176,194,.85);
-      margin-top: 2px;
-    }
-
-    .top-actions{
-      display:flex;
-      gap:10px;
-      align-items:center;
-      flex-wrap:wrap;
-    }
-
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-      padding: 11px 16px;
-      border-radius: 999px;
-      border: 1px solid rgba(212,175,55,.18);
-      background: rgba(255,255,255,.02);
-      color: rgba(233,238,247,.92);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing:.2px;
-      cursor:pointer;
-      transition: transform .15s ease, border-color .15s ease, background .15s ease;
-      user-select:none;
-    }
-
-    .btn:hover{
-      transform: translateY(-1px);
-      border-color: rgba(212,175,55,.30);
-    }
-
-    .btn.gold{
-      background: linear-gradient(90deg, rgba(212,175,55,.94), rgba(241,230,163,.92));
-      color: rgba(12,14,18,.94);
-      border-color: rgba(241,230,163,.45);
-      box-shadow: 0 12px 40px rgba(212,175,55,.14);
-    }
-
-    .btn.orange{
-      background: linear-gradient(90deg, rgba(255,122,69,.96), rgba(255,190,120,.92));
-      color: rgba(12,14,18,.94);
-      border-color: rgba(255,190,120,.45);
-      box-shadow: 0 12px 40px rgba(255,122,69,.18);
-    }
-
-    .btn.ghost{
-      background: rgba(255,255,255,.015);
-      border-color: rgba(212,175,55,.14);
-      color: rgba(233,238,247,.86);
+      color: rgba(167,176,194,.82);
     }
 
     .hero{
-      padding: 28px 0 22px;
+      padding: 18px 0 8px;
     }
 
     .hero-panel{
       position:relative;
       overflow:hidden;
-      border-radius: 28px;
-      border: 1px solid rgba(212,175,55,.16);
+      border-radius: 30px;
+      border:1px solid rgba(212,175,55,.15);
       background:
-        radial-gradient(1100px 220px at 12% 0%, rgba(212,175,55,.08), transparent 58%),
-        radial-gradient(900px 260px at 92% 8%, rgba(82,242,200,.08), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+        radial-gradient(1000px 240px at 10% 0%, rgba(212,175,55,.09), transparent 60%),
+        radial-gradient(900px 260px at 100% 8%, rgba(82,242,200,.07), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.02));
       box-shadow: var(--shadow);
     }
 
     .hero-inner{
-      padding: 26px 26px 24px;
+      padding: 34px 30px 30px;
     }
 
     .kicker{
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 1.8px;
-      color: rgba(241,230,163,.85);
-      margin-bottom: 10px;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:1.8px;
+      color: rgba(241,230,163,.86);
+      margin-bottom:12px;
     }
 
     h1{
-      margin:0 0 16px;
+      margin:0 0 18px;
       font-family: Orbitron, Inter, sans-serif;
-      letter-spacing: .2px;
-      font-weight:700;
+      font-size: clamp(42px, 6vw, 86px);
       line-height: 1.02;
-      font-size: clamp(38px, 5.6vw, 86px);
+      font-weight:700;
+      letter-spacing:.2px;
+      max-width: 11.5ch;
       color: rgba(233,238,247,.98);
-      max-width: 12ch;
     }
 
     h1 .gold{
@@ -209,70 +147,99 @@
       color:transparent;
     }
 
-    h1 .green{
-      background: linear-gradient(90deg, #55f0c7, #9ff7d5);
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-    }
-
-    .hero-copy{
-      max-width: 82ch;
+    .lead{
+      max-width: 84ch;
+      margin:0 0 14px;
       color: rgba(167,176,194,.92);
-      font-size: 15px;
-      line-height: 1.72;
+      font-size:16px;
+      line-height:1.72;
       text-align: justify;
-      margin:0 0 16px;
     }
 
-    .hero-copy strong{
+    .lead strong{
       color: rgba(241,230,163,.94);
       font-weight:700;
     }
 
-    .chips{
+    .hero-actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      align-items:center;
+      margin-top: 22px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding: 13px 18px;
+      border-radius:999px;
+      border:1px solid rgba(212,175,55,.18);
+      background: rgba(255,255,255,.02);
+      color: rgba(233,238,247,.92);
+      font-size:13px;
+      font-weight:700;
+      letter-spacing:.2px;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+    }
+
+    .btn:hover{
+      transform: translateY(-1px);
+    }
+
+    .btn.gold{
+      background: linear-gradient(90deg, rgba(212,175,55,.96), rgba(241,230,163,.92));
+      color: rgba(12,14,18,.95);
+      border-color: rgba(241,230,163,.45);
+      box-shadow: 0 12px 40px rgba(212,175,55,.14);
+    }
+
+    .btn.orange{
+      background: linear-gradient(90deg, rgba(243,90,42,.96), rgba(255,190,120,.92));
+      color: rgba(12,14,18,.95);
+      border-color: rgba(255,190,120,.45);
+      box-shadow: 0 12px 40px rgba(243,90,42,.18);
+    }
+
+    .btn.ghost{
+      background: rgba(255,255,255,.015);
+      border-color: rgba(212,175,55,.14);
+      color: rgba(233,238,247,.86);
+    }
+
+    .legend{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      align-items:center;
-      margin: 10px 0 18px;
+      margin-top:16px;
     }
 
     .chip{
       display:inline-flex;
-      gap:8px;
       align-items:center;
+      gap:8px;
       border-radius:999px;
       padding:8px 11px;
-      border:1px solid rgba(212,175,55,.14);
+      border:1px solid rgba(212,175,55,.12);
       background: rgba(255,255,255,.02);
       font-size:11px;
-      color: rgba(233,238,247,.86);
+      color: rgba(233,238,247,.85);
     }
 
-    .chip b{ color: rgba(241,230,163,.94); }
-
-    .hero-note{
-      margin-top: 14px;
-      color: rgba(167,176,194,.80);
-      font-size: 11px;
-      line-height: 1.55;
-      max-width: 90ch;
-      text-align: justify;
-    }
-
-    .hero-note b{ color: rgba(241,230,163,.92); }
+    .chip b{ color: rgba(241,230,163,.93); }
 
     .section{
-      margin: 18px 0 0;
+      margin-top: 22px;
     }
 
     .section-title{
       display:flex;
       justify-content:space-between;
       align-items:flex-end;
-      gap:14px;
-      margin: 0 0 12px;
+      gap:12px;
+      margin:0 0 12px;
     }
 
     .section-title h2{
@@ -287,17 +254,55 @@
 
     .section-title .meta{
       font-size:11px;
-      color: rgba(167,176,194,.82);
+      color: rgba(167,176,194,.78);
     }
 
-    .modes{
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:18px;
+    }
+
+    .card{
+      border-radius:24px;
+      border:1px solid rgba(212,175,55,.13);
+      background:
+        radial-gradient(800px 180px at 12% 0%, rgba(212,175,55,.07), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: var(--shadow2);
+    }
+
+    .card .inner{
+      padding:22px;
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      font-family: Orbitron, Inter, sans-serif;
+      font-size:22px;
+      line-height:1.15;
+      color: rgba(233,238,247,.97);
+    }
+
+    .card p{
+      margin:0;
+      color: rgba(167,176,194,.9);
+      font-size:14px;
+      line-height:1.68;
+      text-align: justify;
+    }
+
+    .card p strong{
+      color: rgba(241,230,163,.94);
+    }
+
+    .entry-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:18px;
-      align-items:stretch;
     }
 
-    .mode-card{
+    .entry-card{
       border-radius:26px;
       border:1px solid rgba(212,175,55,.14);
       background:
@@ -307,27 +312,27 @@
       overflow:hidden;
     }
 
-    .mode-card .inner{
-      padding:22px;
+    .entry-card .inner{
+      padding:24px;
       display:flex;
       flex-direction:column;
       gap:14px;
       min-height:100%;
     }
 
-    .mode-top{
+    .entry-top{
       display:flex;
       justify-content:space-between;
       gap:12px;
       align-items:flex-start;
     }
 
-    .mode-badge{
+    .badge{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding: 6px 10px;
-      border-radius: 999px;
+      padding:6px 10px;
+      border-radius:999px;
       border:1px solid rgba(212,175,55,.14);
       background: rgba(255,255,255,.02);
       font-size:11px;
@@ -347,136 +352,107 @@
       border:1px solid rgba(212,175,55,.18);
     }
 
-    .status.crisis{
+    .status.red{
       border-color: rgba(255,107,107,.28);
       background: rgba(255,107,107,.10);
-      color: rgba(255,210,210,.95);
+      color: rgba(255,214,214,.95);
     }
 
-    .status.signal{
+    .status.green{
       border-color: rgba(82,242,200,.22);
       background: rgba(82,242,200,.08);
-      color: rgba(174,255,228,.95);
+      color: rgba(180,255,228,.95);
     }
 
-    .mode-card h3{
+    .entry-card h3{
       margin:0;
       font-family: Orbitron, Inter, sans-serif;
-      font-size:26px;
+      font-size:28px;
       line-height:1.12;
       color: rgba(233,238,247,.98);
     }
 
-    .mode-card p{
+    .entry-card p{
       margin:0;
-      color: rgba(167,176,194,.9);
-      font-size:14px;
-      line-height:1.65;
-      text-align: justify;
-    }
-
-    .mode-card p b{
-      color: rgba(241,230,163,.94);
-    }
-
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      margin-top: 2px;
-    }
-
-    .list-item{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      padding: 10px 12px;
-      border-radius:14px;
-      border:1px solid rgba(212,175,55,.10);
-      background: rgba(0,0,0,.18);
-    }
-
-    .list-item .dot-sm{
-      width:7px;height:7px;border-radius:50%;
-      background: linear-gradient(90deg, var(--gold), var(--gold2));
-      margin-top:6px;
-      flex:0 0 auto;
-    }
-
-    .list-item .txt{
-      font-size:12px;
-      color: rgba(233,238,247,.90);
-      line-height:1.5;
-      text-align: justify;
-    }
-
-    .kv-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    .kv-box{
-      border-radius:14px;
-      border:1px solid rgba(212,175,55,.10);
-      background: rgba(0,0,0,.18);
-      padding:12px;
-    }
-
-    .kv-box .k{
-      font-size:11px;
-      text-transform:uppercase;
-      letter-spacing:1px;
-      color: rgba(167,176,194,.78);
-      margin-bottom:6px;
-    }
-
-    .kv-box .v{
-      font-size:12px;
-      font-weight:700;
-      line-height:1.5;
-      color: rgba(233,238,247,.92);
-      text-align: justify;
-    }
-
-    .bridge{
-      margin-top: 18px;
-    }
-
-    .bridge-panel{
-      border-radius:26px;
-      border:1px solid rgba(212,175,55,.14);
-      background:
-        radial-gradient(900px 180px at 12% 0%, rgba(212,175,55,.08), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-    }
-
-    .bridge-inner{
-      padding: 22px;
-    }
-
-    .bridge-grid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:18px;
-      align-items:start;
-    }
-
-    .bridge-copy p{
-      margin:0 0 14px;
       color: rgba(167,176,194,.9);
       font-size:14px;
       line-height:1.68;
       text-align: justify;
     }
 
-    .bridge-copy p b{
+    .mini-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    .mini-item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid rgba(212,175,55,.10);
+      background: rgba(0,0,0,.18);
+    }
+
+    .mini-dot{
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      margin-top:6px;
+      flex:0 0 auto;
+    }
+
+    .mini-text{
+      font-size:12px;
+      color: rgba(233,238,247,.9);
+      line-height:1.5;
+      text-align: justify;
+    }
+
+    .entry-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:auto;
+      padding-top:4px;
+    }
+
+    .proof-panel{
+      border-radius:26px;
+      border:1px solid rgba(212,175,55,.14);
+      background:
+        radial-gradient(900px 180px at 10% 0%, rgba(212,175,55,.08), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow: var(--shadow2);
+    }
+
+    .proof-inner{
+      padding:24px;
+    }
+
+    .proof-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .proof-copy p{
+      margin:0 0 12px;
+      color: rgba(167,176,194,.9);
+      font-size:14px;
+      line-height:1.68;
+      text-align: justify;
+    }
+
+    .proof-copy p strong{
       color: rgba(241,230,163,.94);
     }
 
-    .bridge-points{
+    .proof-points{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:10px;
@@ -490,11 +466,11 @@
     }
 
     .point .k{
+      margin-bottom:6px;
       font-size:11px;
       text-transform:uppercase;
       letter-spacing:1px;
-      color: rgba(167,176,194,.78);
-      margin-bottom:6px;
+      color: rgba(167,176,194,.76);
     }
 
     .point .v{
@@ -505,27 +481,29 @@
       text-align: justify;
     }
 
-    .ctaPanel{
+    .final-cta{
       display:flex;
       justify-content:space-between;
       gap:16px;
       align-items:center;
-      padding:16px 16px;
+      padding:16px;
       border-radius:16px;
       border:1px solid rgba(212,175,55,.16);
       background: linear-gradient(90deg, rgba(255,255,255,.03), rgba(212,175,55,.05));
-      margin-top: 18px;
+      margin-top:18px;
     }
 
-    .ctaPanel .text{
+    .final-cta .text{
       color: rgba(167,176,194,.88);
       font-size:13px;
       line-height:1.65;
-      max-width: 105ch;
+      max-width: 96ch;
       text-align: justify;
     }
 
-    .ctaPanel .text b{ color: rgba(241,230,163,.92); }
+    .final-cta .text strong{
+      color: rgba(241,230,163,.92);
+    }
 
     .foot{
       display:flex;
@@ -534,9 +512,9 @@
       flex-wrap:wrap;
       color: rgba(167,176,194,.72);
       font-size:11px;
-      padding:18px 0 28px;
+      padding:22px 0 30px;
       border-top:1px solid rgba(212,175,55,.10);
-      margin-top:24px;
+      margin-top:26px;
     }
 
     .foot a{
@@ -550,74 +528,60 @@
     }
 
     @media (max-width: 1180px){
-      .modes{ grid-template-columns: 1fr; }
-      .bridge-grid{ grid-template-columns: 1fr; }
-      .bridge-points{ grid-template-columns: 1fr; }
-      .kv-grid{ grid-template-columns: 1fr; }
-      .brand{ min-width:0; }
-      .top-actions{ min-width:0; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .entry-grid{ grid-template-columns: 1fr; }
+      .proof-grid{ grid-template-columns: 1fr; }
+      .proof-points{ grid-template-columns: 1fr; }
       h1{ max-width:none; }
+      .final-cta{ flex-direction:column; align-items:flex-start; }
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
+  <header class="top">
     <div class="container">
-      <div class="topbar-inner">
-        <div class="brand">
-          <div class="dot" aria-hidden="true"></div>
-          <div class="brand-stack">
-            <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
-            <div class="brand-sub">Probative engine & governance</div>
-          </div>
-        </div>
-
-        <div class="top-actions">
-          <a class="btn ghost" href="https://openproof.net" target="_blank" rel="noopener noreferrer">OpenProof</a>
-          <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot</a>
+      <div class="brand">
+        <div class="dot" aria-hidden="true"></div>
+        <div class="brand-stack">
+          <div class="brand-title">OPENPROOF.NET — RPO v0.1</div>
+          <div class="brand-sub">Probative infrastructure for decision integrity</div>
         </div>
       </div>
     </div>
-  </div>
+  </header>
 
   <main class="container">
     <section class="hero">
       <div class="hero-panel">
         <div class="hero-inner">
-          <div class="kicker">Open standard for decision governance under scrutiny</div>
+          <div class="kicker">Decision integrity under pressure</div>
 
           <h1>
-            Decisions fail
+            Decisions become liabilities
             when they cannot be
             <span class="gold">reconstructed.</span>
-            OpenProof gives you
-            <span class="green">two ways to act.</span>
           </h1>
 
-          <p class="hero-copy">
-            OpenProof is the <strong>probative infrastructure</strong> designed to make high-stakes decisions
-            <strong>traceable, reconstructible, readable, and verifiable over time</strong>.
-            It does not decide for institutions. It structures what still holds when evidence is fragmented,
-            pressure rises, and accountability becomes real.
+          <p class="lead">
+            OpenProof is the <strong>probative infrastructure</strong> built for high-stakes environments where decisions may later face
+            <strong>audit, litigation, governance scrutiny, institutional challenge, or executive exposure</strong>.
           </p>
 
-          <p class="hero-copy">
-            Choose the reading you need:
-            <strong>defend an exposed decision</strong>, or
-            <strong>detect structural instability before it becomes visible</strong>.
+          <p class="lead">
+            It does not replace judgment. It makes decisions <strong>traceable, reconstructible, readable, and verifiable over time</strong>,
+            so institutions can still understand what happened, what held, and what may fail under pressure.
           </p>
 
-          <div class="chips">
-            <span class="chip"><b>OpenProof</b>: probative infrastructure</span>
-            <span class="chip"><b>TruthX Engine</b>: deterministic structuring engine</span>
-            <span class="chip"><b>RPO</b>: registered probative object</span>
-            <span class="chip"><b>Method</b>: no AI decisioning · no interpretation claims</span>
+          <div class="hero-actions">
+            <a class="btn gold" href="/simulator.html">Open simulator</a>
+            <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request pilot</a>
           </div>
 
-          <div class="hero-note">
-            <b>Gold buttons open a simulator mode.</b>
-            <b>Orange buttons request a pilot.</b>
+          <div class="legend">
+            <span class="chip"><b>Gold</b>: explore the simulator</span>
+            <span class="chip"><b>Orange</b>: request a pilot</span>
+            <span class="chip"><b>Core output</b>: RPO = registered probative object</span>
           </div>
         </div>
       </div>
@@ -625,116 +589,146 @@
 
     <section class="section">
       <div class="section-title">
-        <h2>Choose your reading</h2>
-        <div class="meta">Same infrastructure · different institutional use</div>
+        <h2>What OpenProof changes</h2>
+        <div class="meta">Not another dashboard</div>
       </div>
 
-      <div class="modes">
-        <article class="mode-card">
+      <div class="grid-3">
+        <article class="card">
           <div class="inner">
-            <div class="mode-top">
-              <span class="mode-badge">Mode 01</span>
-              <span class="status crisis">High urgency</span>
+            <h3>From opaque decisions to readable structure</h3>
+            <p>
+              When chronology, rationale, proof fragments, and accountability drift apart, decisions become difficult to defend.
+              OpenProof restores a <strong>readable evidential structure</strong>.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="inner">
+            <h3>From institutional memory loss to verifiable continuity</h3>
+            <p>
+              A decision often fails months later because nobody can reconstruct the original state.
+              OpenProof preserves <strong>integrity over time</strong> through sealed outputs and public verification logic.
+            </p>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="inner">
+            <h3>From exposed judgment to defensible accountability</h3>
+            <p>
+              The issue is not only whether a decision was “good”.
+              The issue is whether the institution can still show <strong>how it was formed, what supported it, and where fragility remained</strong>.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-title">
+        <h2>Choose your entry point</h2>
+        <div class="meta">Two business readings · one proof discipline</div>
+      </div>
+
+      <div class="entry-grid">
+        <article class="entry-card">
+          <div class="inner">
+            <div class="entry-top">
+              <span class="badge">Entry 01</span>
+              <span class="status red">High urgency</span>
             </div>
 
             <h3>Crisis Mode</h3>
+
             <p>
-              Built for decisions already under pressure: audit, litigation, executive scrutiny, legal exposure.
-              Its purpose is simple: determine whether a decision can still be <b>reconstructed and defended</b>.
+              For decisions already under pressure: contested HR actions, compliance failures, legal exposure,
+              executive challenge, audit review, governance incidents.
             </p>
 
-            <div class="list">
-              <div class="list-item">
-                <span class="dot-sm"></span>
-                <div class="txt">Coverage · defensibility · institutional exposure · escalation path</div>
+            <div class="mini-list">
+              <div class="mini-item">
+                <span class="mini-dot"></span>
+                <div class="mini-text">Question: <strong>Can this decision still be reconstructed and defended?</strong></div>
               </div>
-              <div class="list-item">
-                <span class="dot-sm"></span>
-                <div class="txt">Use cases: contested HR decisions, compliance failures, governance incidents</div>
+              <div class="mini-item">
+                <span class="mini-dot"></span>
+                <div class="mini-text">Use when scrutiny is already real, near, or inevitable.</div>
               </div>
-            </div>
-
-            <div class="kv-grid">
-              <div class="kv-box">
-                <div class="k">Question answered</div>
-                <div class="v">Can this decision withstand scrutiny?</div>
-              </div>
-              <div class="kv-box">
-                <div class="k">Primary promise</div>
-                <div class="v">Protect what can still be defended.</div>
+              <div class="mini-item">
+                <span class="mini-dot"></span>
+                <div class="mini-text">Primary value: reduce liability by restoring evidential readability fast.</div>
               </div>
             </div>
 
-            <div class="hero-actions">
+            <div class="entry-actions">
               <a class="btn gold" href="/simulator-crisis.html">Open Crisis Mode</a>
+              <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request crisis pilot</a>
             </div>
           </div>
         </article>
 
-        <article class="mode-card">
+        <article class="entry-card">
           <div class="inner">
-            <div class="mode-top">
-              <span class="mode-badge">Mode 02</span>
-              <span class="status signal">Prevention layer</span>
+            <div class="entry-top">
+              <span class="badge">Entry 02</span>
+              <span class="status green">Prevention layer</span>
             </div>
 
             <h3>Signal Mode</h3>
+
             <p>
-              Built for organizations that still function on the surface while becoming unreadable underneath.
-              Its purpose is to detect where structural coherence is degrading <b>before visible crisis</b>.
+              For organizations that still function on the surface while becoming unstable underneath:
+              leadership drift, unreadable decision chains, structural friction, interpretive incoherence.
             </p>
 
-            <div class="list">
-              <div class="list-item">
-                <span class="dot-sm"></span>
-                <div class="txt">Interpretive coherence · ESI · structural exposure · stabilization path</div>
+            <div class="mini-list">
+              <div class="mini-item">
+                <span class="mini-dot"></span>
+                <div class="mini-text">Question: <strong>Where is the organization becoming unreadable before failure becomes visible?</strong></div>
               </div>
-              <div class="list-item">
-                <span class="dot-sm"></span>
-                <div class="txt">Use cases: turnover friction, leadership drift, unstable decision chains</div>
+              <div class="mini-item">
+                <span class="mini-dot"></span>
+                <div class="mini-text">Use when prevention matters more than post-crisis reconstruction.</div>
               </div>
-            </div>
-
-            <div class="kv-grid">
-              <div class="kv-box">
-                <div class="k">Question answered</div>
-                <div class="v">Where is the organization becoming unreadable?</div>
-              </div>
-              <div class="kv-box">
-                <div class="k">Primary promise</div>
-                <div class="v">Restore readability before instability hardens.</div>
+              <div class="mini-item">
+                <span class="mini-dot"></span>
+                <div class="mini-text">Primary value: detect structural degradation before it hardens into crisis.</div>
               </div>
             </div>
 
-            <div class="hero-actions">
+            <div class="entry-actions">
               <a class="btn gold" href="/simulator-signal.html">Open Signal Mode</a>
+              <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request signal pilot</a>
             </div>
           </div>
         </article>
       </div>
     </section>
 
-    <section class="bridge">
-      <div class="bridge-panel">
-        <div class="bridge-inner">
+    <section class="section">
+      <div class="proof-panel">
+        <div class="proof-inner">
           <div class="section-title">
             <h2>What remains invariant</h2>
-            <div class="meta">The deterministic discipline</div>
+            <div class="meta">The proof discipline does not change</div>
           </div>
 
-          <div class="bridge-grid">
-            <div class="bridge-copy">
+          <div class="proof-grid">
+            <div class="proof-copy">
               <p>
-                OpenProof does not become something else when the context changes. The underlying discipline remains constant:
-                <b>same deterministic rules, same sealed structure, same public verification logic</b>.
+                OpenProof does not change ontology depending on the context.
+                The same infrastructure remains in place:
+                <strong>deterministic structuring, sealed outputs, readable preview, public hash, and human accountability</strong>.
               </p>
               <p>
-                What changes is the institutional reading: one mode is built to <b>defend a decision already exposed</b>,
-                the other to <b>detect structural degradation before exposure becomes visible</b>.
+                What changes is the institutional use case:
+                <strong>defense under scrutiny</strong> or <strong>prevention before visible breakdown</strong>.
               </p>
             </div>
 
-            <div class="bridge-points">
+            <div class="proof-points">
               <div class="point">
                 <div class="k">Invariant 01</div>
                 <div class="v">No AI decisioning</div>
@@ -749,29 +743,33 @@
               </div>
               <div class="point">
                 <div class="k">Invariant 04</div>
-                <div class="v">Human accountability remains central</div>
+                <div class="v">RPO as registered probative object</div>
               </div>
             </div>
           </div>
 
-          <div class="ctaPanel">
+          <div class="final-cta">
             <div class="text">
-              OpenProof is not a dashboard. It is a new layer of decision accountability:
-              <b>integrity, readability, verifiability, and institutional memory under pressure</b>.
+              OpenProof is not a monitoring tool. It is a new layer of <strong>decision accountability</strong>:
+              one that makes instability readable before it becomes denial, exposure, or institutional damage.
             </div>
-            <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request a Decision Audit</a>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn gold" href="/simulator.html">Explore simulator</a>
+              <a class="btn orange" href="https://www.truthx.co/truthx-pilote-form" target="_blank" rel="noopener noreferrer">Request a decision audit</a>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <div class="foot">
+    <footer class="foot">
       <div>© OpenProof — RPO v0.1. Created by Gersende de Parcey.</div>
       <div>
+        <a href="/simulator.html">Simulator</a> ·
         <a href="/simulator-crisis.html">Crisis Mode</a> ·
         <a href="/simulator-signal.html">Signal Mode</a>
       </div>
-    </div>
+    </footer>
   </main>
 </body>
 </html>
