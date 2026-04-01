@@ -706,6 +706,34 @@
       .cta{ min-width:0; }
       h1{ max-width:none; }
     }
+    /* effet de détachement réel */
+.atglance{
+  transform: perspective(1400px) rotateX(6deg) rotateY(-4deg);
+}
+
+/* hover = vraie interaction */
+.atglance:hover{
+  transform: perspective(1400px) rotateX(0deg) rotateY(0deg) translateY(-6px) scale(1.01);
+}
+
+/* glow dynamique */
+.atglance{
+  box-shadow:
+    0 40px 100px rgba(0,0,0,.55),
+    0 20px 40px rgba(0,0,0,.35),
+    0 0 0 1px rgba(82,242,200,.06);
+}
+
+/* halo arrière (CRUCIAL pour perception) */
+.atglance::after{
+  content:"";
+  position:absolute;
+  inset:-20%;
+  z-index:0;
+  background: radial-gradient(circle at 70% 30%, rgba(82,242,200,.18), transparent 60%);
+  filter: blur(40px);
+  opacity:.6;
+}
   </style>
 </head>
 
