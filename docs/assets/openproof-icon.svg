@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="OpenProof">
+  <defs>
+    <radialGradient id="bg" cx="42%" cy="35%" r="70%"><stop offset="0" stop-color="#fffdf7"/><stop offset="1" stop-color="#eee4d1"/></radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fff1b4"/><stop offset=".38" stop-color="#b98528"/><stop offset=".7" stop-color="#f3d98a"/><stop offset="1" stop-color="#7c5215"/></linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#5d3d0e" flood-opacity=".32"/></filter>
+  </defs>
+  <rect width="512" height="512" rx="96" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="205" fill="none" stroke="url(#gold)" stroke-width="18" filter="url(#shadow)"/>
+  <g fill="none" stroke="url(#gold)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" filter="url(#shadow)">
+    <path d="M256 104 182 179q74 51 148 0z"/>
+    <path d="M256 104v304"/>
+    <circle cx="256" cy="292" r="72"/>
+    <path d="M184 292h144M256 220v144"/>
+  </g>
+</svg>
