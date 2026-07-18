@@ -10,7 +10,7 @@
 <meta property="og:title" content="Why is this AI programme failing? | TruthX × OpenProof">
 <meta property="og:description" content="Explore facts, competing narratives, governance gaps and decision options in a fictional AI transformation case.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://rpo.openproof.net/demo-ai-governance.html">
+<meta property="og:url" content="https://rpo.openproof.net/demo-ai-governance.html"><link rel="stylesheet" href="/assets/openproof-v2.css">
 <style>
 :root{--bg:#050711;--panel:#0c111c;--panel2:#111827;--ink:#e8edf2;--muted:#9aa8b7;--gold:#d4af37;--gold2:#f1e6a3;--green:#38d996;--amber:#f3c969;--red:#ff6b72;--line:rgba(241,230,163,.18);--orange:#f35a2a}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(900px 500px at 20% 0,rgba(212,175,55,.12),transparent 60%),linear-gradient(180deg,#050711,#02040a);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.55}
@@ -22,7 +22,7 @@ a{color:inherit}.shell{max-width:1180px;margin:auto;padding:28px 22px 80px}.top{
 <body>
 <div class="shell">
 <header class="top"><div class="brand">OPENPROOF × TRUTHX</div><a class="back" href="/">← OpenProof Lab</a></header>
-<section class="hero">
+<section class="hero cosmos"><canvas class="stars" aria-hidden="true"></canvas>
 <div><span class="eyebrow">Educational case · AI governance</span><h1>Why is this AI programme <span style="color:var(--gold)">failing?</span></h1><p>A fictional executive committee must decide whether to continue, stop or redesign an AI programme. TruthX does not start with the answer. It reconstructs the reality on which a robust decision can be made.</p></div>
 <aside class="notice"><strong>Demonstration only.</strong><br>This fictional, non-confidential case illustrates the TruthX method. It is not an automated decision, professional advice or a claim that software can establish truth.</aside>
 </section>
@@ -119,5 +119,5 @@ document.getElementById('generate').onclick=async()=>{const core={rpo_version:'0
 document.getElementById('download').onclick=()=>{if(!bundle)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(bundle,null,2)],{type:'application/json'}));a.download='rpo-demo-ai-governance-001.json';a.click();URL.revokeObjectURL(a.href)};
 show(0);
 </script>
-</body>
+<script src="/assets/openproof-v2.js"></script></body>
 </html>
