@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Programme Reality Reconstruction | OpenProof Educational Demo</title>
+<meta name="description" content="A fictional, non-confidential educational demonstration showing how TruthX reconstructs an AI programme before a decision is made, then produces a verifiable OpenProof RPO.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://rpo.openproof.net/demo-ai-governance.html">
+<meta property="og:title" content="Why is this AI programme failing? | TruthX × OpenProof">
+<meta property="og:description" content="Explore facts, competing narratives, governance gaps and decision options in a fictional AI transformation case.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rpo.openproof.net/demo-ai-governance.html">
+<style>
+:root{--bg:#050711;--panel:#0c111c;--panel2:#111827;--ink:#e8edf2;--muted:#9aa8b7;--gold:#d4af37;--gold2:#f1e6a3;--green:#38d996;--amber:#f3c969;--red:#ff6b72;--line:rgba(241,230,163,.18);--orange:#f35a2a}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(900px 500px at 20% 0,rgba(212,175,55,.12),transparent 60%),linear-gradient(180deg,#050711,#02040a);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.55}
+a{color:inherit}.shell{max-width:1180px;margin:auto;padding:28px 22px 80px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px}.brand{font-weight:800;letter-spacing:.14em;color:var(--gold2)}.back{color:var(--muted);text-decoration:none}.hero{padding:68px 0 38px;display:grid;grid-template-columns:1.25fr .75fr;gap:28px}.eyebrow,.tag{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--gold2);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase}.hero h1{font-size:clamp(2.25rem,6vw,4.8rem);line-height:1.02;margin:18px 0;letter-spacing:-.045em}.hero p{font-size:1.12rem;color:#c6d0d9;max-width:720px}.notice{align-self:end;background:rgba(12,17,28,.85);border:1px solid var(--line);border-radius:20px;padding:22px}.notice strong{color:var(--amber)}.progress{position:sticky;top:0;z-index:4;background:rgba(5,7,17,.9);backdrop-filter:blur(14px);border-block:1px solid var(--line);margin:0 -22px 34px;padding:12px 22px}.steps{max-width:1180px;margin:auto;display:flex;gap:8px;overflow:auto}.stepbtn{white-space:nowrap;border:1px solid rgba(255,255,255,.1);color:var(--muted);background:#0b1019;border-radius:999px;padding:9px 13px;cursor:pointer}.stepbtn.active{color:#101217;background:var(--gold2);border-color:var(--gold2)}
+.stage{display:none}.stage.active{display:block;animation:fade .25s ease}@keyframes fade{from{opacity:.3;transform:translateY(5px)}to{opacity:1;transform:none}}.sectionhead{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:22px}.sectionhead h2{font-size:clamp(1.65rem,3vw,2.5rem);margin:0}.sectionhead p{margin:0;color:var(--muted);max-width:520px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}.card{background:linear-gradient(180deg,rgba(17,24,39,.92),rgba(8,13,22,.92));border:1px solid var(--line);border-radius:18px;padding:20px}.card h3{margin:0 0 10px}.card p{color:#bdc8d2}.fact{display:flex;gap:12px}.fact b{color:var(--gold2)}.status{font-size:.73rem;padding:4px 8px;border-radius:999px;background:rgba(56,217,150,.12);color:var(--green);border:1px solid rgba(56,217,150,.25)}.status.open{background:rgba(243,201,105,.1);color:var(--amber);border-color:rgba(243,201,105,.25)}.evidence{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08);font-size:.88rem;color:var(--muted)}.story{cursor:pointer;transition:.2s}.story.selected{border-color:var(--gold);box-shadow:0 0 0 1px rgba(212,175,55,.3)}.story ul{padding-left:18px;color:var(--muted)}.matrix{width:100%;border-collapse:collapse;background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden}.matrix th,.matrix td{text-align:left;padding:14px;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}.matrix th{color:var(--gold2);font-size:.82rem;text-transform:uppercase;letter-spacing:.06em}.signal{height:9px;width:100%;background:#222b39;border-radius:20px;overflow:hidden;margin-top:8px}.signal i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--green));border-radius:20px}.callout{margin-top:22px;border-left:3px solid var(--gold);background:rgba(212,175,55,.07);padding:18px 20px;border-radius:0 14px 14px 0}.callout strong{color:var(--gold2)}.options .card{position:relative}.options .recommended{border-color:var(--green)}.badge{position:absolute;right:14px;top:14px;color:var(--green);font-size:.75rem}.controls{display:flex;justify-content:space-between;gap:12px;margin-top:32px}.btn{border:1px solid var(--line);border-radius:999px;padding:12px 18px;background:#0c111c;color:var(--gold2);cursor:pointer;text-decoration:none}.btn.primary{background:var(--orange);border-color:var(--orange);color:white}.rpo{white-space:pre-wrap;overflow:auto;background:#02050a;border:1px solid var(--line);border-radius:14px;padding:18px;color:#b7f5d8;max-height:420px}.small{font-size:.86rem;color:var(--muted)}footer{margin-top:64px;border-top:1px solid var(--line);padding-top:22px;color:var(--muted)}
+@media(max-width:800px){.hero,.grid,.grid3{grid-template-columns:1fr}.hero{padding-top:42px}.sectionhead{align-items:start;flex-direction:column}.matrix{display:block;overflow:auto}.controls{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top"><div class="brand">OPENPROOF × TRUTHX</div><a class="back" href="/">← OpenProof Lab</a></header>
+<section class="hero">
+<div><span class="eyebrow">Educational case · AI governance</span><h1>Why is this AI programme <span style="color:var(--gold)">failing?</span></h1><p>A fictional executive committee must decide whether to continue, stop or redesign an AI programme. TruthX does not start with the answer. It reconstructs the reality on which a robust decision can be made.</p></div>
+<aside class="notice"><strong>Demonstration only.</strong><br>This fictional, non-confidential case illustrates the TruthX method. It is not an automated decision, professional advice or a claim that software can establish truth.</aside>
+</section>
+</div>
+<nav class="progress" aria-label="Demonstration steps"><div class="steps" id="steps"></div></nav>
+<main class="shell" style="padding-top:0">
+<section class="stage active" data-title="1 · Decision">
+<div class="sectionhead"><h2>The displayed question</h2><p>What the committee asks is not always the question the evidence can answer.</p></div>
+<div class="grid">
+<article class="card"><span class="tag">Displayed</span><h3>Should we continue investing in the AI programme?</h3><p>The board sees a €2.4m programme, six pilots and weak adoption. It wants a go/stop recommendation within ten days.</p></article>
+<article class="card"><span class="tag">Reframed</span><h3>What is actually preventing operational value?</h3><p>Technology, data, process ownership, incentives, governance and decision rights must be separated before judging the programme.</p></article>
+</div>
+<div class="callout"><strong>TruthX principle:</strong> never accept the initial narrative as the analytical perimeter.</div>
+</section>
+
+<section class="stage" data-title="2 · Facts">
+<div class="sectionhead"><h2>Observable facts</h2><p>Facts are localized, sourced and separated from interpretation.</p></div>
+<div class="grid grid3">
+<article class="card fact"><div><b>F01</b><h3>Six pilots delivered</h3><p>Only one is used weekly by more than 20% of its target population.</p><div class="evidence">Source: programme dashboard · month 11</div></div><span class="status">sourced</span></article>
+<article class="card fact"><div><b>F02</b><h3>No named process owner</h3><p>The sponsor owns the budget, but no executive owns the redesigned workflow.</p><div class="evidence">Source: governance charter · v3</div></div><span class="status">sourced</span></article>
+<article class="card fact"><div><b>F03</b><h3>Data quality varies</h3><p>Three business units use incompatible customer and product definitions.</p><div class="evidence">Source: data assessment · Q2</div></div><span class="status">sourced</span></article>
+<article class="card fact"><div><b>F04</b><h3>Model quality is acceptable</h3><p>Offline tests meet the threshold agreed by the technical steering group.</p><div class="evidence">Source: model evaluation · release 0.8</div></div><span class="status">sourced</span></article>
+<article class="card fact"><div><b>F05</b><h3>Incentives are unchanged</h3><p>Teams are measured on the legacy process the programme is meant to replace.</p><div class="evidence">Source: performance policy · current year</div></div><span class="status">sourced</span></article>
+<article class="card fact"><div><b>F06</b><h3>Actual cost is unresolved</h3><p>Internal change effort and data remediation are not included in the headline budget.</p><div class="evidence">Missing: consolidated cost baseline</div></div><span class="status open">open</span></article>
+</div>
+</section>
+
+<section class="stage" data-title="3 · Narratives">
+<div class="sectionhead"><h2>Competing narratives</h2><p>Click a narrative to inspect its evidential coverage. No narrative is accepted because it is dominant.</p></div>
+<div class="grid" id="stories">
+<article class="card story" data-score="2/6 facts"><h3>A · “The technology failed”</h3><ul><li>Supported: adoption is weak.</li><li>Contradicted: technical threshold was met.</li><li>Missing: production failure analysis.</li></ul></article>
+<article class="card story" data-score="2/6 facts"><h3>B · “The employees resisted”</h3><ul><li>Supported: usage is low.</li><li>Contradicted: incentives favour the legacy process.</li><li>Missing: segmented user research.</li></ul></article>
+<article class="card story" data-score="5/6 facts"><h3>C · “The operating model was never redesigned”</h3><ul><li>Supported: no process owner, fragmented data, unchanged incentives.</li><li>Compatible: acceptable model quality.</li><li>Open: full economic baseline.</li></ul></article>
+<article class="card story" data-score="3/6 facts"><h3>D · “The use cases were poorly selected”</h3><ul><li>Supported: five pilots have weak recurring use.</li><li>Open: selection criteria and alternative portfolio.</li><li>Does not alone explain governance gaps.</li></ul></article>
+</div>
+<div class="callout" id="storyResult"><strong>Select a narrative.</strong> The interface will show coverage, contradiction and missing evidence—not a probability of truth.</div>
+</section>
+
+<section class="stage" data-title="4 · System">
+<div class="sectionhead"><h2>System and governance map</h2><p>Formal responsibility and operational control do not currently coincide.</p></div>
+<table class="matrix">
+<thead><tr><th>Actor</th><th>Formal role</th><th>Actual control</th><th>Interest / constraint</th></tr></thead>
+<tbody>
+<tr><td>Executive sponsor</td><td>Owns budget and board reporting</td><td>Can continue or stop funding</td><td>Needs visible delivery this year</td></tr>
+<tr><td>Business units</td><td>Expected adopters</td><td>Control local workflows and data definitions</td><td>Measured on legacy performance</td></tr>
+<tr><td>Technology team</td><td>Builds models and platform</td><td>Controls releases, not business adoption</td><td>Optimizes technical quality</td></tr>
+<tr><td>Data office</td><td>Defines standards</td><td>Cannot compel business-unit remediation</td><td>Limited capacity and mandate</td></tr>
+<tr><td>Consulting partner</td><td>Delivery support</td><td>Shapes roadmap and reporting</td><td>Contract rewards pilot completion</td></tr>
+</tbody></table>
+<div class="callout"><strong>Structural finding:</strong> budget ownership, process ownership, data authority and adoption incentives are distributed across actors who are not governed by one decision chain.</div>
+</section>
+
+<section class="stage" data-title="5 · Hypotheses">
+<div class="sectionhead"><h2>Causal hypotheses</h2><p>Indicators describe evidential coverage. They are not “truth scores”.</p></div>
+<div class="grid">
+<article class="card"><h3>H1 · Model performance is inadequate</h3><p>One supporting fact · one contradicting fact · two missing tests.</p><div class="signal"><i style="width:31%"></i></div><div class="small">Coverage: limited · contradiction open</div></article>
+<article class="card"><h3>H2 · User resistance is primary</h3><p>One supporting observation · one incentive contradiction · user research missing.</p><div class="signal"><i style="width:38%"></i></div><div class="small">Coverage: limited · causal direction unresolved</div></article>
+<article class="card"><h3>H3 · Governance and operating model are misaligned</h3><p>Four compatible facts · no direct contradiction · economic baseline incomplete.</p><div class="signal"><i style="width:79%"></i></div><div class="small">Coverage: strongest current explanation · reservation remains</div></article>
+<article class="card"><h3>H4 · Portfolio selection is poor</h3><p>Two compatible facts · selection documentation missing · partial explanation.</p><div class="signal"><i style="width:52%"></i></div><div class="small">Coverage: plausible contributor · not sufficient alone</div></article>
+</div>
+<div class="callout"><strong>Current model:</strong> the programme is being managed as a technology portfolio while value depends on business-process ownership, shared data and aligned incentives.</div>
+</section>
+
+<section class="stage" data-title="6 · Options">
+<div class="sectionhead"><h2>Decision options</h2><p>TruthX makes the decision space explicit. The human decision-maker remains accountable.</p></div>
+<div class="grid options">
+<article class="card"><h3>A · Continue unchanged</h3><p>Fastest politically, but preserves the structural causes of weak adoption.</p><div class="evidence">Exposure: high · reversibility: medium</div></article>
+<article class="card"><h3>B · Stop the programme</h3><p>Stops expenditure, but may discard viable capabilities without testing the operating-model hypothesis.</p><div class="evidence">Exposure: medium · information loss: high</div></article>
+<article class="card recommended"><span class="badge">ROBUST NEXT STEP</span><h3>C · Reframe and stage-gate</h3><p>Pause new pilots; appoint one process owner; harmonize one critical dataset; align incentives; retest one use case for 90 days.</p><div class="evidence">Exposure: controlled · learning value: high · reversible</div></article>
+<article class="card"><h3>D · Do nothing for 90 days</h3><p>A valid counterfactual that reveals ongoing cost, political drift and opportunity loss.</p><div class="evidence">Exposure: rising · reversibility: declining</div></article>
+</div>
+</section>
+
+<section class="stage" data-title="7 · RPO">
+<div class="sectionhead"><h2>Trace the reconstruction</h2><p>The educational bundle records sources, open contradictions, hypotheses, reservations and the decision frame.</p></div>
+<div class="grid">
+<div class="card"><h3>What OpenProof verifies</h3><p>Structural conformity, deterministic serialization and whether the bundle changed after its public hash was calculated.</p><p class="small">OpenProof does not certify that a narrative is true or that the recommended option is legally or commercially correct.</p><button class="btn primary" id="generate">Generate educational RPO</button> <button class="btn" id="download" disabled>Download JSON</button></div>
+<pre class="rpo" id="rpo">Select “Generate educational RPO”.</pre>
+</div>
+</section>
+
+<div class="controls"><button class="btn" id="prev">← Previous</button><button class="btn primary" id="next">Next →</button></div>
+<footer><strong style="color:var(--gold2)">OpenProof is the probative infrastructure.</strong> TruthX Engine is the deterministic structuring engine powering it. RPO is the registered probative object it produces.</footer>
+</main>
+<script>
+const stages=[...document.querySelectorAll('.stage')],steps=document.getElementById('steps');let current=0,bundle=null;
+stages.forEach((s,i)=>{const b=document.createElement('button');b.className='stepbtn'+(i===0?' active':'');b.textContent=s.dataset.title;b.onclick=()=>show(i);steps.appendChild(b)});
+function show(i){current=Math.max(0,Math.min(stages.length-1,i));stages.forEach((s,n)=>s.classList.toggle('active',n===current));[...steps.children].forEach((b,n)=>b.classList.toggle('active',n===current));document.getElementById('prev').disabled=current===0;document.getElementById('next').textContent=current===stages.length-1?'Return to start ↺':'Next →';window.scrollTo({top:document.querySelector('.progress').offsetTop,behavior:'smooth'})}
+document.getElementById('prev').onclick=()=>show(current-1);document.getElementById('next').onclick=()=>show(current===stages.length-1?0:current+1);
+document.querySelectorAll('.story').forEach(el=>el.onclick=()=>{document.querySelectorAll('.story').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');document.getElementById('storyResult').innerHTML='<strong>Evidential coverage: '+el.dataset.score+'.</strong> This is a traceable coverage statement, not a probability of truth.'});
+function canonical(v){if(Array.isArray(v))return '['+v.map(canonical).join(',')+']';if(v&&typeof v==='object')return '{'+Object.keys(v).sort().map(k=>JSON.stringify(k)+':'+canonical(v[k])).join(',')+'}';return JSON.stringify(v)}
+async function sha256(text){const data=new TextEncoder().encode(text),hash=await crypto.subtle.digest('SHA-256',data);return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('')}
+document.getElementById('generate').onclick=async()=>{const core={rpo_version:'0.1-educational',bundle_id:'rpo-demo-ai-governance-001',case_type:'fictional_non_confidential',question:{displayed:'Should we continue investing in the AI programme?',reframed:'What is actually preventing operational value?'},facts:['F01 six pilots, weak recurring adoption','F02 no named process owner','F03 incompatible data definitions','F04 model threshold met','F05 legacy incentives unchanged','F06 consolidated cost baseline missing'],open_uncertainties:['full economic baseline','segmented user research','production failure analysis'],hypotheses:[{id:'H1',label:'model performance inadequate',status:'limited and contradicted'},{id:'H2',label:'user resistance primary',status:'limited'},{id:'H3',label:'governance and operating model misaligned',status:'strongest current explanation with reservation'},{id:'H4',label:'portfolio selection poor',status:'plausible contributor'}],decision_frame:{human_accountable:true,robust_next_step:'reframe and stage-gate for 90 days'},disclaimer:'Educational demonstration. Not an automated decision or claim of truth.'};const public_hash=await sha256(canonical(core));bundle={...core,registry:{algorithm:'SHA-256',public_hash}};document.getElementById('rpo').textContent=JSON.stringify(bundle,null,2);document.getElementById('download').disabled=false};
+document.getElementById('download').onclick=()=>{if(!bundle)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(bundle,null,2)],{type:'application/json'}));a.download='rpo-demo-ai-governance-001.json';a.click();URL.revokeObjectURL(a.href)};
+show(0);
+</script>
+</body>
+</html>
