@@ -1,25 +1,476 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TRUTHX Live Case | Reconstruct who really governs</title>
 <meta name="description" content="A deterministic, interactive TRUTHX simulation: reconstruct economic dependencies, effective power, causal hypotheses and a traceable decision record.">
-<link rel="canonical" href="https://rpo.openproof.net/simulator.html"><link rel="stylesheet" href="/assets/openproof-v2.css">
+<link rel="canonical" href="https://rpo.openproof.net/simulator.html">
+<link rel="stylesheet" href="/assets/openproof-v2.css">
 <style>
 :root{--cyan:#65d8ff;--violet:#786dff;--red:#ff633a}.nav{position:sticky}.hero{padding:64px 0 38px}.heroGrid{display:grid;grid-template-columns:1.18fr .82fr;gap:42px;align-items:end}.hero h1{font-size:clamp(2.8rem,6vw,6.2rem);line-height:.94;letter-spacing:-.06em;margin:18px 0}.hero h1 span{color:var(--gold)}.heroAside{border:1px solid var(--line);border-radius:20px;padding:22px;background:rgba(7,11,18,.8)}.heroAside b{color:var(--pale)}.heroAside p{color:var(--soft)}.heroAside ol{padding-left:20px;color:var(--muted);line-height:1.7}.lab{width:min(1600px,calc(100% - 28px));margin:18px auto 60px;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:rgba(5,8,14,.93);box-shadow:0 40px 110px rgba(0,0,0,.6)}.labTop{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 20px;border-bottom:1px solid var(--line)}.labTop b{color:var(--pale);letter-spacing:.08em}.live{color:var(--green);font-size:.75rem}.stagebar{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--line)}.stagebar button{border:0;border-right:1px solid var(--line);padding:14px;background:#080c14;color:var(--muted);text-align:left;cursor:pointer}.stagebar button b{display:block}.stagebar button.active{color:var(--pale);background:linear-gradient(180deg,rgba(212,175,55,.13),transparent);box-shadow:inset 0 -3px var(--gold)}.stagebar button.done b:after{content:' ✓';color:var(--green)}.view{display:none}.view.active{display:block}.intro{display:grid;grid-template-columns:1fr 1fr;min-height:590px}.story{padding:34px;border-right:1px solid var(--line)}.story h2,.sectionTitle{font-size:clamp(1.8rem,3vw,3rem);line-height:1.06;margin:10px 0 17px}.story p{color:var(--soft);max-width:67ch}.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:25px 0}.fact{border:1px solid var(--line);border-radius:14px;padding:13px;background:rgba(255,255,255,.018)}.fact small{display:block;color:var(--muted)}.fact b{display:block;color:var(--pale);font-size:1.35rem;margin:4px 0}.fact span{font-size:.72rem;color:var(--soft)}.opening{padding:34px;background:radial-gradient(circle at 55% 40%,rgba(212,175,55,.09),transparent 34%)}.opening h3{color:var(--pale);font-size:1.3rem}.quote{border-left:3px solid var(--red);padding:16px 18px;background:rgba(255,99,58,.05);border-radius:0 14px 14px 0;color:var(--soft);font-size:1.05rem}.question{margin-top:20px;border:1px solid rgba(56,224,162,.23);padding:18px;border-radius:15px;background:rgba(56,224,162,.035)}.question small{color:var(--green);letter-spacing:.1em;font-weight:800}.question b{display:block;color:var(--pale);font-size:1.1rem;margin-top:7px}.start{display:flex;gap:10px;margin-top:25px;flex-wrap:wrap}.primary{border:0;border-radius:10px;padding:14px 20px;background:linear-gradient(135deg,#ff6b2b,#e44818);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 13px 32px rgba(243,90,42,.28)}.secondary{border:1px solid var(--line);border-radius:10px;padding:13px 18px;background:#0a0e16;color:var(--soft);font-weight:750;cursor:pointer}.work{display:grid;grid-template-columns:330px minmax(520px,1fr) 380px;min-height:720px}.side{padding:19px;border-right:1px solid var(--line)}.side.right{border-right:0;border-left:1px solid var(--line)}.eyebrow{font-size:.72rem;color:var(--gold2);font-weight:900;letter-spacing:.12em;text-transform:uppercase}.evidence{display:block;width:100%;margin-top:10px;padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#080c14;color:var(--soft);text-align:left;cursor:pointer}.evidence i{display:inline-block;width:9px;height:9px;border-radius:50%;background:#3d4655;margin-right:8px}.evidence b{display:block;color:var(--ink);margin:3px 0}.evidence small{color:var(--muted)}.evidence.on{border-color:rgba(56,224,162,.34);background:rgba(56,224,162,.04)}.evidence.on i{background:var(--green);box-shadow:0 0 12px rgba(56,224,162,.5)}.evidence.missing{border-style:dashed}.evidence.missing.on i{background:var(--amber)}.center{position:relative;padding:18px;overflow:hidden;background:radial-gradient(circle at 50% 43%,rgba(212,175,55,.08),transparent 31%)}.map{position:relative;height:520px;border:1px solid rgba(255,255,255,.05);border-radius:18px;overflow:hidden}.map canvas{position:absolute;inset:0}.map svg{position:absolute;inset:0;width:100%;height:100%}.link{stroke:rgba(110,126,150,.2);stroke-width:2;stroke-dasharray:7 7;fill:none;transition:.4s}.map.reveal .link{stroke:rgba(56,224,162,.7);filter:drop-shadow(0 0 4px rgba(56,224,162,.25))}.map.reveal .link.risk{stroke:rgba(255,99,58,.72)}.node{position:absolute;width:165px;padding:12px;border:1px solid var(--line);border-radius:13px;background:rgba(7,11,18,.96);z-index:2}.node b{display:block;color:var(--ink)}.node span{font-size:.73rem;color:var(--muted)}.node em{display:block;font-size:.7rem;color:var(--green);font-style:normal;margin-top:6px}.alpha{left:50%;top:47%;transform:translate(-50%,-50%);border-color:rgba(212,175,55,.5)}.beta{right:5%;top:10%;border-color:rgba(120,109,255,.42)}.gamma{right:7%;bottom:8%;border-color:rgba(212,175,55,.38)}.founder{left:5%;top:11%;border-color:rgba(255,99,58,.42)}.ceo{left:7%;bottom:8%;border-color:rgba(56,224,162,.38)}.telemetry{display:grid;grid-template-columns:repeat(4,1fr);margin-top:12px;border:1px solid var(--line);border-radius:13px;overflow:hidden}.telemetry div{padding:12px;border-right:1px solid var(--line)}.telemetry small{display:block;color:var(--muted);font-size:.64rem}.telemetry b{color:var(--pale)}.hyp{padding:12px;border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-top:10px}.hyp.best{border-color:var(--gold);background:rgba(212,175,55,.05)}.hyp header{display:flex;justify-content:space-between;gap:8px}.hyp header b{color:var(--ink);font-size:.82rem}.hyp output{color:var(--pale);font-weight:900}.hyp p{font-size:.75rem;color:var(--muted)}.bar{height:5px;border-radius:99px;background:#252d39;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--green));transition:.5s}.decision{margin-top:16px;padding:14px;border:1px solid rgba(255,99,58,.3);border-radius:13px}.decision.after{border-color:rgba(56,224,162,.34)}.decision small{color:var(--muted)}.decision b{display:block;color:var(--pale);margin-top:5px}.timeline{padding:30px}.event{display:grid;grid-template-columns:95px 1fr 210px;gap:20px;padding:17px;border-bottom:1px solid var(--line)}.event time{color:var(--gold);font-weight:900}.event b{color:var(--ink)}.event p{color:var(--muted);margin:5px 0}.event strong{color:var(--green);font-size:.76rem}.power{padding:30px}.matrix{width:100%;border-collapse:collapse;margin-top:20px}.matrix th,.matrix td{padding:13px;border-bottom:1px solid var(--line);text-align:left}.matrix th{color:var(--gold2);font-size:.7rem;text-transform:uppercase}.matrix td{color:var(--soft)}.yes{color:var(--green)!important}.no{color:var(--red)!important}.partial{color:var(--amber)!important}.result{padding:34px}.resultGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.resultCard{border:1px solid var(--line);border-radius:17px;padding:20px;background:rgba(255,255,255,.02)}.resultCard h3{color:var(--pale)}.resultCard p,.resultCard li{color:var(--soft)}.rpo{padding:34px}.rpoGrid{display:grid;grid-template-columns:.9fr 1.1fr;gap:20px}.code{padding:18px;border:1px solid var(--line);border-radius:15px;background:#05080d;color:#aebbd0;font:12px/1.55 ui-monospace,monospace;white-space:pre-wrap;max-height:480px;overflow:auto}.hash{word-break:break-all;color:var(--green);font:12px/1.5 ui-monospace,monospace}.actions{display:flex;gap:10px;flex-wrap:wrap}.footerNote{padding:15px 20px;border-top:1px solid var(--line);color:var(--muted);font-size:.72rem}.navBtns{display:flex;justify-content:space-between;padding:15px 20px;border-top:1px solid var(--line)}@media(max-width:1120px){.work{grid-template-columns:1fr}.side,.side.right{border:0;border-bottom:1px solid var(--line)}.heroGrid,.intro,.rpoGrid,.resultGrid{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}}@media(max-width:720px){.stagebar{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}.event{grid-template-columns:70px 1fr}.event strong{grid-column:2}.matrix{display:block;overflow:auto}.node{width:130px}.map{height:650px}.telemetry{grid-template-columns:1fr 1fr}}
-</style></head>
+.humanPreview{display:none;margin-top:22px;padding:22px;border:1px solid rgba(56,224,162,.28);border-radius:17px;background:rgba(56,224,162,.035)}.humanPreview.show{display:block}.humanPreview h3{color:var(--pale);margin:5px 0 15px}.previewGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.previewGrid div{padding:13px;border:1px solid rgba(255,255,255,.08);border-radius:12px;background:#080c14}.previewGrid small{display:block;color:var(--muted);font-size:.65rem}.previewGrid b{display:block;color:var(--ink);margin-top:5px}.verification{margin-top:14px;padding:12px;border-left:3px solid var(--green);color:var(--soft);background:rgba(255,255,255,.018)}@media(max-width:800px){.previewGrid{grid-template-columns:1fr}}
+</style>
+</head>
 <body>
-<nav class="nav"><div class="wrap navin"><a class="brand" href="/">OPENPROOF</a><button class="menu" aria-expanded="false">Menu</button><div class="links"><a href="/">Home</a><a aria-current="page" href="/simulator.html">Live Simulator</a><a href="/simulator-signal.html">Signal Detection</a><a href="/simulator-crisis.html">Crisis Reconstruction</a><a href="/cockpit-technical.html">Technical Cockpit</a><a href="/spec.html">RPO</a></div></div></nav>
-<header class="hero cosmos"><canvas class="stars" aria-hidden="true"></canvas><div class="wrap heroGrid"><div><span class="kicker">TRUTHX MVP · LIVE FICTIONAL CASE</span><h1>Who governs<br><span>when the chart lies?</span></h1><p class="lead">Walk into a company that still operates—but no longer knows where authority, information, money and responsibility actually sit. Reconstruct the real system before the visible executive becomes the convenient explanation.</p></div><aside class="heroAside"><b>This is not a slideshow.</b><p>Your choices change evidence coverage, causal models, decision readiness and the RPO record.</p><ol><li>Inspect a credible fictional case</li><li>Activate and challenge evidence</li><li>Compare title with effective power</li><li>Generate a verifiable decision object</li></ol></aside></div></header>
-<main class="lab"><div class="labTop"><b>CASE AURORA-6 · GOVERNANCE UNDER STRUCTURAL PRESSURE</b><span class="live">● LOCAL ENGINE · NO DATA UPLOADED</span></div><div class="stagebar" id="stagebar"><button class="active" data-stage="0"><b>1 · Situation</b>Enter the company</button><button data-stage="1"><b>2 · Evidence</b>Reveal the system</button><button data-stage="2"><b>3 · Chronology</b>Test causality</button><button data-stage="3"><b>4 · Power</b>Compare authority</button><button data-stage="4"><b>5 · Decision + RPO</b>Make it traceable</button></div>
-<section class="view active" data-view="0"><div class="intro"><article class="story"><span class="eyebrow">The apparent story</span><h2>A new CEO arrives.<br>Six months later, the system breaks.</h2><p>Alpha Industrie manufactures specialist equipment. The founder appoints an experienced external CEO to “professionalise the group”. She receives the title, the teams and the targets—but not every lever required to govern.</p><div class="facts"><div class="fact"><small>Revenue</small><b>€2.50m</b><span>Alpha Industrie</span></div><div class="fact"><small>Inherited debt</small><b>€1.45m</b><span>before appointment</span></div><div class="fact"><small>Group charges</small><b>€516k</b><span>20.6% of revenue</span></div><div class="fact"><small>Effective powers</small><b>2 / 7</b><span>verified at M0</span></div></div><p>The legal chart is simple. The operating reality is not.</p></article><aside class="opening"><span class="eyebrow">The decision trap</span><h3>At month six, the board asks:</h3><div class="quote">“Did the new CEO cause the crisis—and should she be removed immediately?”</div><div class="question"><small>TRUTHX REFRAMES THE QUESTION</small><b>What could the CEO actually know, control, decide, block or correct—and which fragilities predated her mandate?</b></div><div class="start"><button class="primary" data-next>RECONSTRUCT THE REAL SYSTEM →</button><button class="secondary" id="resetCase">RESET FICTIONAL CASE</button></div></aside></div></section>
-<section class="view" data-view="1"><div class="work"><aside class="side"><span class="eyebrow">Evidence register</span><h2>What can be verified?</h2><p class="muted">Toggle evidence. The models recalculate; uncertainty is preserved.</p><button class="evidence on" data-e="finance"><i></i><b>E01 · Financial history</b><small>Debt and margin deterioration begin 12 months before M0.</small></button><button class="evidence on" data-e="charges"><i></i><b>E02 · Intercompany charges</b><small>€420k services + €96k property rent annually.</small></button><button class="evidence on" data-e="bank"><i></i><b>E03 · Bank mandates</b><small>Founder retains sole validation above €25k.</small></button><button class="evidence on" data-e="systems"><i></i><b>E04 · System access</b><small>Beta Services administers finance and infrastructure.</small></button><button class="evidence on" data-e="lease"><i></i><b>E05 · Asset ownership</b><small>Gamma Patrimoine owns the plant and machinery.</small></button><button class="evidence on" data-e="timeline"><i></i><b>E06 · Dated chronology</b><small>Restructuring discussions predate the CEO appointment.</small></button><button class="evidence missing on" data-e="handover"><i></i><b>M01 · Missing handover record</b><small>No signed perimeter of delegated authority.</small></button></aside><section class="center"><div class="map reveal" id="systemMap"><canvas class="stars" aria-hidden="true"></canvas><svg viewBox="0 0 900 520" preserveAspectRatio="none"><path class="link risk" d="M170 120 C310 200 350 220 450 260"/><path class="link" d="M735 110 C620 185 550 220 450 260"/><path class="link" d="M735 435 C610 365 550 310 450 270"/><path class="link risk" d="M170 435 C300 360 360 310 450 270"/></svg><div class="node alpha"><b>Alpha Industrie</b><span>Revenue + employees</span><em>Carries operating risk</em></div><div class="node beta"><b>Beta Services</b><span>Finance + systems</span><em>Controls information</em></div><div class="node gamma"><b>Gamma Patrimoine</b><span>Plant + machinery</span><em>Controls continuity</em></div><div class="node founder"><b>The Founder</b><span>Bank + key clients</span><em>Retains blocking levers</em></div><div class="node ceo"><b>The New CEO</b><span>Title + teams</span><em>Constrained control</em></div></div><div class="telemetry"><div><small>SOURCE COVERAGE</small><b id="coverage">86%</b></div><div><small>OPEN RESERVATIONS</small><b id="reservations">1</b></div><div><small>DEPENDENCIES</small><b id="dependencies">4</b></div><div><small>DECISION STATE</small><b id="state">REVIEWABLE</b></div></div></section><aside class="side right"><span class="eyebrow">Competing models</span><h2>What explains the whole record?</h2><div class="hyp" id="h1"><header><b>H1 · CEO caused the crisis</b><output>28%</output></header><p>Title and temporal proximity support the narrative; chronology and control contradict it.</p><div class="bar"><i style="width:28%"></i></div></div><div class="hyp" id="h2"><header><b>H2 · Pre-existing systemic fragility</b><output>79%</output></header><p>Inherited debt, group charges and earlier restructuring explain the pressure.</p><div class="bar"><i style="width:79%"></i></div></div><div class="hyp best" id="h3"><header><b>H3 · Apparent mandate, constrained control</b><output>88%</output></header><p>Best current fit across access, assets, banking, chronology and missing delegation.</p><div class="bar"><i style="width:88%"></i></div></div><div class="decision"><small>VISIBLE DECISION</small><b>Remove the person whose title makes responsibility appear simple.</b></div><div class="decision after"><small>RECONSTRUCTED DECISION</small><b>Stabilise the system and verify authority before attributing responsibility.</b></div></aside></div></section>
-<section class="view" data-view="2"><div class="timeline"><span class="eyebrow">Causal chronology</span><h2 class="sectionTitle">Succession is not causation.</h2><div class="event"><time>M-12</time><div><b>Financial fragility is already measurable</b><p>Debt reaches €1.45m; margins no longer absorb the group architecture.</p></div><strong>PRE-EXISTING CAUSE</strong></div><div class="event"><time>M-6</time><div><b>Restructuring is discussed</b><p>The founder and advisers consider changes before recruiting the new CEO.</p></div><strong>KNOWLEDGE PREDATES MANDATE</strong></div><div class="event"><time>M0</time><div><b>The CEO receives a title, not the full control stack</b><p>Teams are delegated; banking, infrastructure, property and key relationships remain distributed.</p></div><strong>AUTHORITY GAP</strong></div><div class="event"><time>M+2</time><div><b>€184k becomes payable within 30 days</b><p>The information reaches the CEO after commitments are validated elsewhere.</p></div><strong>INFORMATION LATENCY</strong></div><div class="event"><time>M+4</time><div><b>A recovery plan cannot be executed autonomously</b><p>Property, cash approval and systems remain outside the operational mandate.</p></div><strong>DEPENDENCY ACTIVATES</strong></div><div class="event"><time>M+6</time><div><b>The crisis is attributed to the most visible role</b><p>The narrative starts at M0. The causal mechanism starts at M-12.</p></div><strong>NARRATIVE DRIFT</strong></div></div></section>
-<section class="view" data-view="3"><div class="power"><span class="eyebrow">Effective power test</span><h2 class="sectionTitle">A title is only one field in the control system.</h2><table class="matrix"><thead><tr><th>Control lever</th><th>Legal appearance</th><th>Effective holder</th><th>CEO at M0</th><th>Decision consequence</th></tr></thead><tbody><tr><td>Teams and daily operations</td><td>CEO</td><td>CEO</td><td class="yes">YES</td><td>Can organise work</td></tr><tr><td>Bank payments above €25k</td><td>CEO / group</td><td>Founder</td><td class="no">NO</td><td>Cannot autonomously stabilise cash</td></tr><tr><td>Financial information system</td><td>Alpha Industrie</td><td>Beta Services</td><td class="partial">PARTIAL</td><td>Information arrives late</td></tr><tr><td>Plant and machinery</td><td>Group assets</td><td>Gamma Patrimoine</td><td class="no">NO</td><td>Continuity depends on another entity</td></tr><tr><td>Top five customer relationships</td><td>Company goodwill</td><td>Founder</td><td class="partial">PARTIAL</td><td>Commercial leverage remains personal</td></tr><tr><td>Group service charges</td><td>Existing agreements</td><td>Beta / founder</td><td class="no">NO</td><td>Cannot resize 20.6% revenue burden</td></tr><tr><td>Strategic restructuring</td><td>CEO mandate</td><td>Founder / board</td><td class="partial">PARTIAL</td><td>Can recommend, not fully execute</td></tr></tbody></table><div class="question"><small>POWER FINDING</small><b>The CEO controls operations, but not the complete economic and informational perimeter required to govern the crisis.</b></div></div></section>
-<section class="view" data-view="4"><div class="result"><span class="eyebrow">Decision reconstruction</span><h2 class="sectionTitle">The engine does not decide guilt.<br>It changes what can responsibly be decided.</h2><div class="resultGrid"><article class="resultCard"><h3>Before TRUTHX</h3><p><b>Decision:</b> remove the CEO and attribute the breakdown to management failure.</p><ul><li>Based on formal title</li><li>Starts chronology at appointment</li><li>Treats companies as autonomous</li><li>Conflates visibility with control</li></ul></article><article class="resultCard"><h3>After TRUTHX</h3><p><b>Decision:</b> impose a 30-day stabilisation and authority verification protocol before attribution.</p><ul><li>Secure banking and systems access</li><li>Map group charges and asset dependencies</li><li>Recover the missing delegation record</li><li>Preserve competing causal models</li></ul></article></div></div><div class="rpo"><div class="rpoGrid"><article><span class="eyebrow">OpenProof output</span><h2>Generate the decision record.</h2><p class="lead">The RPO records the evidence perimeter, selected sources, competing hypotheses, reservations and human decision frame. Its hash proves that the object has not changed—not that its narrative is true.</p><div class="actions"><button class="primary" id="generateRpo">GENERATE RPO + SHA-256</button><button class="secondary" id="downloadRpo" disabled>DOWNLOAD JSON</button><a class="secondary" href="/cockpit-technical.html">OPEN TECHNICAL COCKPIT</a></div><p class="hash" id="hash">No object generated yet.</p></article><pre class="code" id="rpoJson">{
+<nav class="nav">
+<div class="wrap navin">
+<a class="brand" href="/">OPENPROOF</a>
+<button class="menu" aria-expanded="false">Menu</button>
+<div class="links">
+<a href="/">Home</a>
+<a aria-current="page" href="/simulator.html">Live Simulator</a>
+<a href="/simulator-signal.html">Signal Detection</a>
+<a href="/simulator-crisis.html">Crisis Reconstruction</a>
+<a href="/cockpit-technical.html">Technical Cockpit</a>
+<a href="/spec.html">RPO</a>
+</div>
+</div>
+</nav>
+<header class="hero cosmos">
+<canvas class="stars" aria-hidden="true">
+</canvas>
+<div class="wrap heroGrid">
+<div>
+<span class="kicker">TRUTHX MVP · LIVE FICTIONAL CASE</span>
+<h1>Who governs<br>
+<span>when the chart lies?</span>
+</h1>
+<p class="lead">Walk into a company that still operates—but no longer knows where authority, information, money and responsibility actually sit. Reconstruct the real system before the visible executive becomes the convenient explanation.</p>
+</div>
+<aside class="heroAside">
+<b>This is not a slideshow.</b>
+<p>Your choices change evidence coverage, causal models, decision readiness and the RPO record.</p>
+<ol>
+<li>Inspect a credible fictional case</li>
+<li>Activate and challenge evidence</li>
+<li>Compare title with effective power</li>
+<li>Generate a verifiable decision object</li>
+</ol>
+</aside>
+</div>
+</header>
+<main class="lab">
+<div class="labTop">
+<b>CASE AURORA-6 · GOVERNANCE UNDER STRUCTURAL PRESSURE</b>
+<span class="live">● LOCAL ENGINE · NO DATA UPLOADED</span>
+</div>
+<div class="stagebar" id="stagebar">
+<button class="active" data-stage="0">
+<b>1 · Situation</b>Enter the company</button>
+<button data-stage="1">
+<b>2 · Evidence</b>Reveal the system</button>
+<button data-stage="2">
+<b>3 · Chronology</b>Test causality</button>
+<button data-stage="3">
+<b>4 · Power</b>Compare authority</button>
+<button data-stage="4">
+<b>5 · Decision + RPO</b>Make it traceable</button>
+</div>
+<section class="view active" data-view="0">
+<div class="intro">
+<article class="story">
+<span class="eyebrow">The apparent story</span>
+<h2>A new CEO arrives.<br>Six months later, the system breaks.</h2>
+<p>Alpha Industrie manufactures specialist equipment. The founder appoints an experienced external CEO to “professionalise the group”. She receives the title, the teams and the targets—but not every lever required to govern.</p>
+<div class="facts">
+<div class="fact">
+<small>Revenue</small>
+<b>€2.50m</b>
+<span>Alpha Industrie</span>
+</div>
+<div class="fact">
+<small>Inherited debt</small>
+<b>€1.45m</b>
+<span>before appointment</span>
+</div>
+<div class="fact">
+<small>Group charges</small>
+<b>€516k</b>
+<span>20.6% of revenue</span>
+</div>
+<div class="fact">
+<small>Effective powers</small>
+<b>2 / 7</b>
+<span>verified at M0</span>
+</div>
+</div>
+<p>The legal chart is simple. The operating reality is not.</p>
+</article>
+<aside class="opening">
+<span class="eyebrow">The decision trap</span>
+<h3>At month six, the board asks:</h3>
+<div class="quote">“Did the new CEO cause the crisis—and should she be removed immediately?”</div>
+<div class="question">
+<small>TRUTHX REFRAMES THE QUESTION</small>
+<b>What could the CEO actually know, control, decide, block or correct—and which fragilities predated her mandate?</b>
+</div>
+<div class="start">
+<button class="primary" data-next>RECONSTRUCT THE REAL SYSTEM →</button>
+<button class="secondary" id="resetCase">RESET FICTIONAL CASE</button>
+</div>
+</aside>
+</div>
+</section>
+<section class="view" data-view="1">
+<div class="work">
+<aside class="side">
+<span class="eyebrow">Evidence register</span>
+<h2>What can be verified?</h2>
+<p class="muted">Toggle evidence. The models recalculate; uncertainty is preserved.</p>
+<button class="evidence on" data-e="finance">
+<i>
+</i>
+<b>E01 · Financial history</b>
+<small>Debt and margin deterioration begin 12 months before M0.</small>
+</button>
+<button class="evidence on" data-e="charges">
+<i>
+</i>
+<b>E02 · Intercompany charges</b>
+<small>€420k services + €96k property rent annually.</small>
+</button>
+<button class="evidence on" data-e="bank">
+<i>
+</i>
+<b>E03 · Bank mandates</b>
+<small>Founder retains sole validation above €25k.</small>
+</button>
+<button class="evidence on" data-e="systems">
+<i>
+</i>
+<b>E04 · System access</b>
+<small>Beta Services administers finance and infrastructure.</small>
+</button>
+<button class="evidence on" data-e="lease">
+<i>
+</i>
+<b>E05 · Asset ownership</b>
+<small>Gamma Patrimoine owns the plant and machinery.</small>
+</button>
+<button class="evidence on" data-e="timeline">
+<i>
+</i>
+<b>E06 · Dated chronology</b>
+<small>Restructuring discussions predate the CEO appointment.</small>
+</button>
+<button class="evidence missing on" data-e="handover">
+<i>
+</i>
+<b>M01 · Missing handover record</b>
+<small>No signed perimeter of delegated authority.</small>
+</button>
+</aside>
+<section class="center">
+<div class="map reveal" id="systemMap">
+<canvas class="stars" aria-hidden="true">
+</canvas>
+<svg viewBox="0 0 900 520" preserveAspectRatio="none">
+<path class="link risk" d="M170 120 C310 200 350 220 450 260"/>
+<path class="link" d="M735 110 C620 185 550 220 450 260"/>
+<path class="link" d="M735 435 C610 365 550 310 450 270"/>
+<path class="link risk" d="M170 435 C300 360 360 310 450 270"/>
+</svg>
+<div class="node alpha">
+<b>Alpha Industrie</b>
+<span>Revenue + employees</span>
+<em>Carries operating risk</em>
+</div>
+<div class="node beta">
+<b>Beta Services</b>
+<span>Finance + systems</span>
+<em>Controls information</em>
+</div>
+<div class="node gamma">
+<b>Gamma Patrimoine</b>
+<span>Plant + machinery</span>
+<em>Controls continuity</em>
+</div>
+<div class="node founder">
+<b>The Founder</b>
+<span>Bank + key clients</span>
+<em>Retains blocking levers</em>
+</div>
+<div class="node ceo">
+<b>The New CEO</b>
+<span>Title + teams</span>
+<em>Constrained control</em>
+</div>
+</div>
+<div class="telemetry">
+<div>
+<small>SOURCE COVERAGE</small>
+<b id="coverage">86%</b>
+</div>
+<div>
+<small>OPEN RESERVATIONS</small>
+<b id="reservations">1</b>
+</div>
+<div>
+<small>DEPENDENCIES</small>
+<b id="dependencies">4</b>
+</div>
+<div>
+<small>DECISION STATE</small>
+<b id="state">REVIEWABLE</b>
+</div>
+</div>
+</section>
+<aside class="side right">
+<span class="eyebrow">Competing models</span>
+<h2>What explains the whole record?</h2>
+<div class="hyp" id="h1">
+<header>
+<b>H1 · CEO caused the crisis</b>
+<output>28%</output>
+</header>
+<p>Title and temporal proximity support the narrative; chronology and control contradict it.</p>
+<div class="bar">
+<i style="width:28%">
+</i>
+</div>
+</div>
+<div class="hyp" id="h2">
+<header>
+<b>H2 · Pre-existing systemic fragility</b>
+<output>79%</output>
+</header>
+<p>Inherited debt, group charges and earlier restructuring explain the pressure.</p>
+<div class="bar">
+<i style="width:79%">
+</i>
+</div>
+</div>
+<div class="hyp best" id="h3">
+<header>
+<b>H3 · Apparent mandate, constrained control</b>
+<output>88%</output>
+</header>
+<p>Best current fit across access, assets, banking, chronology and missing delegation.</p>
+<div class="bar">
+<i style="width:88%">
+</i>
+</div>
+</div>
+<div class="decision">
+<small>VISIBLE DECISION</small>
+<b>Remove the person whose title makes responsibility appear simple.</b>
+</div>
+<div class="decision after">
+<small>RECONSTRUCTED DECISION</small>
+<b>Stabilise the system and verify authority before attributing responsibility.</b>
+</div>
+</aside>
+</div>
+</section>
+<section class="view" data-view="2">
+<div class="timeline">
+<span class="eyebrow">Causal chronology</span>
+<h2 class="sectionTitle">Succession is not causation.</h2>
+<div class="event">
+<time>M-12</time>
+<div>
+<b>Financial fragility is already measurable</b>
+<p>Debt reaches €1.45m; margins no longer absorb the group architecture.</p>
+</div>
+<strong>PRE-EXISTING CAUSE</strong>
+</div>
+<div class="event">
+<time>M-6</time>
+<div>
+<b>Restructuring is discussed</b>
+<p>The founder and advisers consider changes before recruiting the new CEO.</p>
+</div>
+<strong>KNOWLEDGE PREDATES MANDATE</strong>
+</div>
+<div class="event">
+<time>M0</time>
+<div>
+<b>The CEO receives a title, not the full control stack</b>
+<p>Teams are delegated; banking, infrastructure, property and key relationships remain distributed.</p>
+</div>
+<strong>AUTHORITY GAP</strong>
+</div>
+<div class="event">
+<time>M+2</time>
+<div>
+<b>€184k becomes payable within 30 days</b>
+<p>The information reaches the CEO after commitments are validated elsewhere.</p>
+</div>
+<strong>INFORMATION LATENCY</strong>
+</div>
+<div class="event">
+<time>M+4</time>
+<div>
+<b>A recovery plan cannot be executed autonomously</b>
+<p>Property, cash approval and systems remain outside the operational mandate.</p>
+</div>
+<strong>DEPENDENCY ACTIVATES</strong>
+</div>
+<div class="event">
+<time>M+6</time>
+<div>
+<b>The crisis is attributed to the most visible role</b>
+<p>The narrative starts at M0. The causal mechanism starts at M-12.</p>
+</div>
+<strong>NARRATIVE DRIFT</strong>
+</div>
+</div>
+</section>
+<section class="view" data-view="3">
+<div class="power">
+<span class="eyebrow">Effective power test</span>
+<h2 class="sectionTitle">A title is only one field in the control system.</h2>
+<table class="matrix">
+<thead>
+<tr>
+<th>Control lever</th>
+<th>Legal appearance</th>
+<th>Effective holder</th>
+<th>CEO at M0</th>
+<th>Decision consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Teams and daily operations</td>
+<td>CEO</td>
+<td>CEO</td>
+<td class="yes">YES</td>
+<td>Can organise work</td>
+</tr>
+<tr>
+<td>Bank payments above €25k</td>
+<td>CEO / group</td>
+<td>Founder</td>
+<td class="no">NO</td>
+<td>Cannot autonomously stabilise cash</td>
+</tr>
+<tr>
+<td>Financial information system</td>
+<td>Alpha Industrie</td>
+<td>Beta Services</td>
+<td class="partial">PARTIAL</td>
+<td>Information arrives late</td>
+</tr>
+<tr>
+<td>Plant and machinery</td>
+<td>Group assets</td>
+<td>Gamma Patrimoine</td>
+<td class="no">NO</td>
+<td>Continuity depends on another entity</td>
+</tr>
+<tr>
+<td>Top five customer relationships</td>
+<td>Company goodwill</td>
+<td>Founder</td>
+<td class="partial">PARTIAL</td>
+<td>Commercial leverage remains personal</td>
+</tr>
+<tr>
+<td>Group service charges</td>
+<td>Existing agreements</td>
+<td>Beta / founder</td>
+<td class="no">NO</td>
+<td>Cannot resize 20.6% revenue burden</td>
+</tr>
+<tr>
+<td>Strategic restructuring</td>
+<td>CEO mandate</td>
+<td>Founder / board</td>
+<td class="partial">PARTIAL</td>
+<td>Can recommend, not fully execute</td>
+</tr>
+</tbody>
+</table>
+<div class="question">
+<small>POWER FINDING</small>
+<b>The CEO controls operations, but not the complete economic and informational perimeter required to govern the crisis.</b>
+</div>
+</div>
+</section>
+<section class="view" data-view="4">
+<div class="result">
+<span class="eyebrow">Decision reconstruction</span>
+<h2 class="sectionTitle">The engine does not decide guilt.<br>It changes what can responsibly be decided.</h2>
+<div class="resultGrid">
+<article class="resultCard">
+<h3>Before TRUTHX</h3>
+<p>
+<b>Decision:</b> remove the CEO and attribute the breakdown to management failure.</p>
+<ul>
+<li>Based on formal title</li>
+<li>Starts chronology at appointment</li>
+<li>Treats companies as autonomous</li>
+<li>Conflates visibility with control</li>
+</ul>
+</article>
+<article class="resultCard">
+<h3>After TRUTHX</h3>
+<p>
+<b>Decision:</b> impose a 30-day stabilisation and authority verification protocol before attribution.</p>
+<ul>
+<li>Secure banking and systems access</li>
+<li>Map group charges and asset dependencies</li>
+<li>Recover the missing delegation record</li>
+<li>Preserve competing causal models</li>
+</ul>
+</article>
+</div>
+</div>
+<div class="rpo">
+<div class="rpoGrid">
+<article>
+<span class="eyebrow">OpenProof output</span>
+<h2>Generate the decision record.</h2>
+<p class="lead">The RPO records the evidence perimeter, selected sources, competing hypotheses, reservations and human decision frame. Its hash proves that the object has not changed—not that its narrative is true.</p>
+<div class="actions">
+<button class="primary" id="generateRpo">GENERATE RPO + SHA-256</button>
+<button class="secondary" id="downloadRpo" disabled>DOWNLOAD JSON</button>
+<a class="secondary" href="/cockpit-technical.html">OPEN TECHNICAL COCKPIT</a>
+</div>
+<p class="hash" id="hash">No object generated yet.</p>
+</article>
+<pre class="code" id="rpoJson">{
   "status": "waiting_for_human_generation"
-}</pre></div></div></section>
-<div class="navBtns"><button class="secondary" id="prev">← PREVIOUS</button><button class="primary" id="next">CONTINUE →</button></div><div class="footerNote"><b>Demonstration boundary:</b> CASE AURORA-6 is fictional. The engine is deterministic and runs locally. It distinguishes evidence, hypotheses and reservations; it does not establish truth, intent, liability or professional advice.</div></main>
-<script src="/assets/openproof-v2.js"></script><script>
+}</pre>
+</div>
+<section class="humanPreview" id="humanPreview" aria-live="polite">
+<span class="eyebrow">Human-readable RPO preview</span>
+<h3>What has just been registered?</h3>
+<div class="previewGrid">
+<div><small>QUESTION</small><b>What could the CEO actually know, control, decide, block or correct?</b></div>
+<div><small>BEST CURRENT MODEL</small><b id="previewModel">Waiting for generation</b></div>
+<div><small>SOURCE COVERAGE</small><b id="previewCoverage">—</b></div>
+<div><small>HUMAN DECISION FRAME</small><b>Stabilise the system and verify authority before attribution.</b></div>
+<div><small>OPEN RESERVATIONS</small><b id="previewReservations">—</b></div>
+<div><small>TRUTH STATUS</small><b>Not adjudicated · professional review required</b></div>
+</div>
+<div class="verification"><b>What OpenProof can verify:</b> this exact registered core produces the displayed SHA-256 hash. Any later alteration will produce a different hash.</div>
+</section>
+</div>
+</section>
+<div class="navBtns">
+<button class="secondary" id="prev">← PREVIOUS</button>
+<button class="primary" id="next">CONTINUE →</button>
+</div>
+<div class="footerNote">
+<b>Demonstration boundary:</b> CASE AURORA-6 is fictional. The engine is deterministic and runs locally. It distinguishes evidence, hypotheses and reservations; it does not establish truth, intent, liability or professional advice.</div>
+</main>
+<script src="/assets/openproof-v2.js">
+</script>
+<script>
 (()=>{'use strict';const views=[...document.querySelectorAll('.view')],tabs=[...document.querySelectorAll('[data-stage]')],prev=document.querySelector('#prev'),next=document.querySelector('#next');let at=0,rpo=null;const evidence=[...document.querySelectorAll('.evidence')];const weights={finance:[-8,18,8],charges:[-6,16,10],bank:[-10,4,18],systems:[-8,3,16],lease:[-5,12,10],timeline:[-12,18,12],handover:[-3,2,14]};function clamp(n){return Math.max(8,Math.min(96,n))}function recalc(){let scores=[80,8,10],on=0;for(const e of evidence){if(e.classList.contains('on')){on++;const w=weights[e.dataset.e];scores=scores.map((v,i)=>v+w[i])}}scores=scores.map(clamp);['h1','h2','h3'].forEach((id,i)=>{const h=document.getElementById(id);h.querySelector('output').textContent=scores[i]+'%';h.querySelector('.bar i').style.width=scores[i]+'%';h.classList.toggle('best',scores[i]===Math.max(...scores))});document.querySelector('#coverage').textContent=Math.round(on/evidence.length*100)+'%';document.querySelector('#reservations').textContent=(evidence.length-on+1);document.querySelector('#dependencies').textContent=Math.max(0,on-2);document.querySelector('#state').textContent=on>=5?'REVIEWABLE':'NOT READY';document.querySelector('#systemMap').classList.toggle('reveal',on>=3);return scores}function show(n){at=Math.max(0,Math.min(views.length-1,n));views.forEach((v,i)=>v.classList.toggle('active',i===at));tabs.forEach((t,i)=>{t.classList.toggle('active',i===at);t.classList.toggle('done',i<at)});prev.disabled=at===0;next.textContent=at===views.length-1?'RETURN TO CASE ↺':'CONTINUE →';document.querySelector('.lab').scrollIntoView({behavior:'smooth',block:'start'})}tabs.forEach((t,i)=>t.onclick=()=>show(i));document.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>show(1));prev.onclick=()=>show(at-1);next.onclick=()=>show(at===views.length-1?0:at+1);evidence.forEach(e=>e.onclick=()=>{e.classList.toggle('on');recalc()});document.querySelector('#resetCase').onclick=()=>{evidence.forEach(e=>e.classList.add('on'));recalc();show(0)};async function digest(text){const bytes=new TextEncoder().encode(text),hash=await crypto.subtle.digest('SHA-256',bytes);return [...new Uint8Array(hash)].map(b=>b.toString(16).padStart(2,'0')).join('')}document.querySelector('#generateRpo').onclick=async()=>{const scores=recalc(),selected=evidence.filter(e=>e.classList.contains('on')).map(e=>e.dataset.e);rpo={rpo_version:'0.1-educational',object_type:'decision_reconstruction',case_id:'AURORA-6-FICTIONAL',generated_at:new Date().toISOString(),question:'What could the CEO actually know, control, decide, block or correct?',evidence_perimeter:selected,source_coverage:Math.round(selected.length/evidence.length*100),hypotheses:[{id:'H1',label:'CEO caused the crisis',coverage:scores[0]},{id:'H2',label:'Pre-existing systemic fragility',coverage:scores[1]},{id:'H3',label:'Apparent mandate, constrained control',coverage:scores[2]}],reservations:['Intent is not inferred','Formal and effective authority remain distinct','Missing evidence remains explicit','Human professional review required'],decision_frame:{before:'Attribute crisis to visible CEO',after:'Stabilise system and verify authority before attribution',human_accountability:true},truth_adjudicated:false};const canonical=JSON.stringify(rpo);rpo.sha256=await digest(canonical);document.querySelector('#rpoJson').textContent=JSON.stringify(rpo,null,2);document.querySelector('#hash').textContent='SHA-256 · '+rpo.sha256;document.querySelector('#downloadRpo').disabled=false};document.querySelector('#downloadRpo').onclick=()=>{if(!rpo)return;const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(rpo,null,2)],{type:'application/json'}));a.download='truthx-aurora-6-rpo.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),500)};recalc();show(0)})();
-</script></body></html>
+</script>
+<script>
+document.querySelector('#generateRpo').addEventListener('click',()=>setTimeout(()=>{
+  const models=[...document.querySelectorAll('.hyp')].map(h=>({label:h.querySelector('header b').textContent,coverage:parseInt(h.querySelector('output').textContent)})).sort((a,b)=>b.coverage-a.coverage);
+  const active=document.querySelectorAll('.evidence.on').length,total=document.querySelectorAll('.evidence').length;
+  document.querySelector('#previewModel').textContent=models[0].label+' · '+models[0].coverage+'% coverage';
+  document.querySelector('#previewCoverage').textContent=Math.round(active/total*100)+'% · '+active+' of '+total+' items active';
+  document.querySelector('#previewReservations').textContent=(total-active+1)+' explicitly preserved';
+  document.querySelector('#humanPreview').classList.add('show');
+},80));
+</script>
+</body>
+</html>
