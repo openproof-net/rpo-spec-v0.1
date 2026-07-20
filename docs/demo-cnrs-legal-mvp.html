@@ -1,137 +1,154 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OpenProof — CNRS Legal Evidence MVP</title>
-  <meta name="description" content="A synthetic, deterministic demonstration of the CNRS reference pipeline mapped to an OpenProof RPO.">
+  <title>OpenProof Legal Evidence Lab — RPO v0.1</title>
+  <meta name="description" content="Interface publique de démonstration pour structurer un dossier synthétique en RPO OpenProof v0.1.">
   <style>
-    :root{--bg:#050710;--panel:#111827;--panel2:#f8f3e7;--ink:#342916;--gold:#d7b64b;--muted:#a9b1c1;--line:#2b3447;--red:#d77b6f;--green:#86c89a}
-    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#162034 0,#050710 48%);color:#f5f4ef;font:15px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
-    a{color:#f1dc92}.wrap{max-width:1180px;margin:auto;padding:26px 20px 58px}.nav{display:flex;justify-content:space-between;gap:20px;align-items:center;border-bottom:1px solid var(--line);padding-bottom:18px}.brand{color:#f1dc92;letter-spacing:.16em;text-transform:uppercase;font-size:12px}.tag{color:var(--muted);font-size:12px}.hero{padding:48px 0 28px;max-width:800px}.eyebrow{color:#f1dc92;letter-spacing:.2em;text-transform:uppercase;font-size:11px}.hero h1{font-size:clamp(32px,5vw,58px);line-height:1.06;margin:12px 0}.hero p{color:var(--muted);max-width:680px}.boundary{border:1px solid rgba(215,182,75,.35);border-radius:14px;padding:14px 16px;color:#d9deea;background:rgba(10,14,25,.7);font-size:13px}
-    .grid{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.35fr);gap:18px}.card{background:linear-gradient(145deg,var(--panel2),#fffaf2);color:var(--ink);border-radius:18px;padding:22px;box-shadow:0 18px 45px #0006}.card.dark{background:linear-gradient(145deg,#111827,#0b1020);color:#f4f4f1;border:1px solid var(--line);box-shadow:none}.card h2{font-size:14px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 7px}.hint{color:#887b64;font-size:12px;margin:0 0 16px}.dark .hint{color:var(--muted)}label{display:block;color:#887b64;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:13px 0 5px}.dark label{color:#aeb6c6}textarea,select{width:100%;border:1px solid #c7b991;border-radius:10px;padding:11px;font:inherit;background:#fffdf8;color:var(--ink)}textarea{min-height:190px;resize:vertical}.buttonrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}button{border:0;border-radius:999px;padding:10px 15px;font:inherit;font-size:13px;cursor:pointer}.primary{background:var(--gold);color:#211803;font-weight:650}.secondary{background:transparent;color:#f1dc92;border:1px solid #746334}.light{background:#efe1bd;color:#493715;border:1px solid #bda66a}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:0 0 16px}.metric{border:1px solid var(--line);border-radius:12px;padding:12px}.metric small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em}.metric strong{display:block;font-size:25px;color:#f1dc92;margin-top:4px}.result{display:grid;grid-template-columns:1fr 1fr;gap:12px}.resultbox{border:1px solid var(--line);border-radius:12px;padding:14px}.resultbox h3{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:#f1dc92;margin:0 0 9px}.resultbox ul{margin:0;padding-left:18px;color:#d6dbe5}.status{display:inline-block;border-radius:999px;padding:3px 9px;font-size:11px;text-transform:uppercase;letter-spacing:.08em;background:#183323;color:var(--green)}.status.warn{background:#3a2b21;color:#f2c58b}.json{margin:16px 0 0;max-height:320px;overflow:auto;white-space:pre-wrap;word-break:break-word;background:#050812;border:1px solid var(--line);border-radius:12px;padding:14px;color:#dfe6f4;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace}.hash{font:11px ui-monospace,monospace;color:#bcc6d8;word-break:break-all}.footer{margin-top:22px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:18px}.hidden{display:none}@media(max-width:850px){.grid,.result{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.nav{align-items:flex-start;flex-direction:column}}
+    :root{--bg:#070910;--panel:#111827;--panel-2:#0d1320;--paper:#fffaf0;--ink:#2f2719;--gold:#e0bd5b;--gold-2:#f4df9a;--muted:#aab4c7;--line:#293449;--good:#91d2a4;--warn:#f2c38d;--bad:#ef9a8f;--blue:#90b8ed}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% 0,#1b2a44 0,#070910 42%);color:#f7f6f0;font:15px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    a{color:var(--gold-2)}button,input,select,textarea{font:inherit}.shell{max-width:1280px;margin:auto;padding:22px 20px 55px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:17px}.brand{color:var(--gold-2);font-size:12px;letter-spacing:.16em;text-transform:uppercase}.version{color:var(--muted);font-size:12px}.hero{max-width:940px;padding:52px 0 28px}.eyebrow{color:var(--gold-2);font-size:11px;letter-spacing:.2em;text-transform:uppercase}.hero h1{font-size:clamp(34px,6vw,64px);line-height:1.04;letter-spacing:-.035em;margin:12px 0}.hero p{color:var(--muted);font-size:17px;max-width:820px}.notice{border:1px solid #80692d;background:rgba(34,29,16,.72);border-radius:14px;padding:14px 16px;color:#e8dfc6;font-size:13px}.notice strong{color:var(--gold-2)}
+    .workspace{display:grid;grid-template-columns:minmax(290px,.84fr) minmax(0,1.5fr);gap:18px;align-items:start}.card{border-radius:18px;padding:21px;background:linear-gradient(145deg,var(--paper),#fffdf8);color:var(--ink);box-shadow:0 18px 50px #0007}.card.dark{background:linear-gradient(145deg,#111827,#0b101b);color:#f5f4ef;border:1px solid var(--line);box-shadow:none}.card h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 6px}.card h3{font-size:12px;letter-spacing:.1em;text-transform:uppercase}.hint{color:#887b64;font-size:12px;margin:0 0 16px}.dark .hint{color:var(--muted)}label{display:block;color:#887b64;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin:14px 0 5px}.dark label{color:var(--muted)}select,textarea{width:100%;border:1px solid #cbbb93;border-radius:10px;padding:10px 11px;background:#fffdf8;color:var(--ink)}textarea{min-height:125px;resize:vertical}.buttonrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}button{border:0;border-radius:999px;padding:10px 15px;cursor:pointer;font-size:13px;transition:transform .15s,opacity .15s}button:hover:not(:disabled){transform:translateY(-1px)}button:disabled{cursor:not-allowed;opacity:.45}.primary{background:var(--gold);color:#251d08;font-weight:700}.light{background:#efe1bd;color:#493715;border:1px solid #bda66a}.secondary{background:transparent;color:var(--gold-2);border:1px solid #756432}.danger{background:transparent;color:#e5a69f;border:1px solid #71453f}
+    .dropzone{display:block;border:1px dashed #bda66a;border-radius:13px;padding:16px;text-align:center;background:#fffdf8;color:#655638;cursor:pointer}.dropzone:hover{background:#fff7df}.dropzone input{position:absolute;width:1px;height:1px;opacity:0}.dropzone strong{display:block;color:#493715}.dropzone small{display:block;margin-top:5px;font-size:11px;color:#887b64}.source-list{display:grid;gap:7px;margin-top:12px}.source{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid #ddcfad;border-radius:10px;padding:9px 10px;background:#fffdf8}.source-info{min-width:0}.source-name{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}.source-meta{display:block;color:#887b64;font-size:11px}.remove{border-radius:50%;padding:2px 8px;color:#8e5148;background:#f8e7e2}.privacy{border-top:1px solid #e4d9bd;margin-top:17px;padding-top:13px;color:#887b64;font-size:11px}.privacy strong{color:#5b4c31}.limits{margin-top:10px;padding:10px 12px;border-radius:10px;background:#f5edda;color:#776545;font-size:11px}
+    .runbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}.runbar small{color:var(--muted)}.pipeline{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}.step{border:1px solid var(--line);border-radius:12px;padding:11px;min-height:86px;background:#0b111e}.step-index{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11px}.dot{width:9px;height:9px;border-radius:50%;background:#4c576b;box-shadow:0 0 0 3px #4c576b22}.step h3{margin:8px 0 2px;color:#f6f3ea}.step p{margin:0;color:var(--muted);font-size:11px}.step.running{border-color:#9f853c}.step.running .dot{background:var(--gold);box-shadow:0 0 0 4px #e0bd5b33}.step.done{border-color:#467356}.step.done .dot{background:var(--good);box-shadow:0 0 0 3px #91d2a433}.step.error{border-color:#8d4c46}.step.error .dot{background:var(--bad)}
+    .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:16px}.metric{border:1px solid var(--line);border-radius:12px;padding:11px}.metric small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.08em}.metric strong{display:block;color:var(--gold-2);font-size:23px;margin-top:3px}.result{display:grid;grid-template-columns:1fr 1fr;gap:11px}.resultbox{border:1px solid var(--line);border-radius:12px;padding:13px;min-height:128px}.resultbox h3{color:var(--gold-2);margin:0 0 8px}.resultbox ul{margin:0;padding-left:18px;color:#d9deea;font-size:13px}.resultbox li+li{margin-top:4px}.status{display:inline-block;border-radius:999px;padding:3px 9px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;background:#173923;color:var(--good)}.status.warn{background:#3d2c1d;color:var(--warn)}.status.blue{background:#1b2d48;color:var(--blue)}.rpo-copy{color:#d9deea;font-size:12px}.json{margin:15px 0 0;max-height:280px;overflow:auto;white-space:pre-wrap;word-break:break-word;background:#050812;border:1px solid var(--line);border-radius:12px;padding:13px;color:#dfe6f4;font:12px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace}.hash{font:11px ui-monospace,monospace;color:#bcc6d8;word-break:break-all}.footer{margin-top:21px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);padding-top:17px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    @media(max-width:930px){.workspace{grid-template-columns:1fr}.pipeline{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.shell{padding:15px 13px 40px}.topbar{align-items:flex-start;flex-direction:column}.hero{padding-top:34px}.metrics,.result{grid-template-columns:1fr 1fr}.pipeline{grid-template-columns:1fr}.resultbox{min-height:auto}}
   </style>
 </head>
 <body>
-  <main class="wrap">
-    <nav class="nav"><div class="brand">OpenProof · RPO v0.1</div><div class="tag">CNRS reference pipeline · public MVP</div></nav>
-    <section class="hero">
-      <div class="eyebrow">Synthetic evidence reconstruction</div>
-      <h1>From a case fragment to a verifiable evidence object.</h1>
-      <p>This browser-only demonstration shows the public boundary of the CNRS student pipeline: evidence perimeter, signals, reservations and a schema-shaped OpenProof RPO.</p>
-      <div class="boundary"><strong>Boundary:</strong> fictional data only. No text is uploaded. This interface does not establish truth, intent, liability, admissibility or legal advice.</div>
-    </section>
+  <main class="shell">
+    <nav class="topbar"><div class="brand">OpenProof · Legal Evidence Lab</div><div class="version">Prototype public · RPO v0.1</div></nav>
+    <header class="hero">
+      <div class="eyebrow">Public evidence workspace</div>
+      <h1>Structure a dossier.<br>Keep the uncertainty visible.</h1>
+      <p>Une interface de référence pour passer d’un petit dossier documentaire à un objet probatoire OpenProof : sources, chronologie, signaux, réserves et intégrité.</p>
+      <div class="notice"><strong>Cadre public :</strong> cette version fonctionne localement dans votre navigateur avec des données synthétiques ou des fichiers texte. Elle ne tranche pas un litige, n’établit pas la vérité et ne fournit pas de conseil juridique. Les fichiers ne sont pas envoyés à un serveur dans cette démonstration.</div>
+    </header>
 
-    <section class="grid">
+    <section class="workspace" aria-label="OpenProof Legal Evidence Lab">
       <article class="card">
-        <h2>1 · Synthetic case</h2>
-        <p class="hint">Choose a fixture or edit the text. The public MVP uses deterministic browser rules; the private research pipeline can later supply normalized agent output.</p>
-        <label for="scenario">Fixture</label>
+        <h2>1 · Dossier d’entrée</h2>
+        <p class="hint">Chargez plusieurs fichiers texte ou utilisez un dossier synthétique. L’analyse publique est déterministe et sert de façade testable avant le branchement du moteur TruthX.</p>
+        <label for="scenario">Dossier de démonstration</label>
         <select id="scenario">
-          <option value="pressure">Repeated digital pressure</option>
-          <option value="workplace">Workplace exclusion pattern</option>
-          <option value="neutral">Neutral disagreement</option>
+          <option value="pressure">Pressions numériques répétées</option>
+          <option value="workplace">Exclusion professionnelle</option>
+          <option value="neutral">Désaccord ordinaire</option>
         </select>
-        <label for="narrative">Narrative</label>
-        <textarea id="narrative"></textarea>
-        <div class="buttonrow"><button class="primary" id="analyze">Run public analysis</button><button class="light" id="reset">Reset fixture</button></div>
+        <div class="buttonrow"><button class="light" id="loadSample">Charger le dossier synthétique</button></div>
+        <label for="files">Documents du dossier</label>
+        <label class="dropzone" for="files"><input id="files" type="file" multiple accept=".txt,.md,.json,.csv,text/plain,application/json,text/csv"><strong>Déposer ou sélectionner plusieurs fichiers</strong><small>Texte, Markdown, JSON ou CSV · traitement local dans le navigateur</small></label>
+        <div class="source-list" id="sourceList"><div class="source"><div class="source-info"><span class="source-name">Aucun document chargé</span><span class="source-meta">Utilisez le dossier synthétique pour commencer.</span></div></div></div>
+        <label for="narrative">Note de contexte facultative</label>
+        <textarea id="narrative" placeholder="Ajoutez ici un contexte synthétique ou une hypothèse à examiner…"></textarea>
+        <div class="buttonrow"><button class="primary" id="analyze">Lancer l’analyse publique</button><button class="danger" id="clear">Vider</button></div>
+        <div class="limits"><strong>Limite volontaire :</strong> les PDF sont acceptés dans le produit complet, mais leur extraction nécessitera le futur backend sécurisé. Cette démo ne prétend pas les avoir analysés.</div>
+        <div class="privacy"><strong>Confidentialité de la démo.</strong> Aucun fichier ne quitte ce navigateur. N’utilisez pas de données personnelles, médicales ou de pièces réelles ici.</div>
       </article>
 
       <article class="card dark">
-        <h2>2 · Structured result</h2>
-        <p class="hint">The scores are signals for exploration, not findings. They are kept separate from the RPO core.</p>
+        <div class="runbar"><div><h2>2 · Trace d’exécution</h2><p class="hint">Chaque étape produit des éléments inspectables. Les interprétations restent séparées du RPO.</p></div><span class="status warn" id="runStatus">En attente</span></div>
+        <div class="pipeline" id="pipeline" aria-live="polite">
+          <div class="step" data-step="ingest"><div class="step-index"><span class="dot"></span>01 · INGESTION</div><h3>Sources</h3><p>Lire et hacher les documents.</p></div>
+          <div class="step" data-step="map"><div class="step-index"><span class="dot"></span>02 · CARTOGRAPHIE</div><h3>Preuves</h3><p>Définir le périmètre documentaire.</p></div>
+          <div class="step" data-step="timeline"><div class="step-index"><span class="dot"></span>03 · CHRONOLOGIE</div><h3>Événements</h3><p>Extraire les ancrages temporels.</p></div>
+          <div class="step" data-step="signals"><div class="step-index"><span class="dot"></span>04 · SIGNAUX</div><h3>Lecture exploratoire</h3><p>Repérer des motifs linguistiques.</p></div>
+          <div class="step" data-step="uncertainty"><div class="step-index"><span class="dot"></span>05 · INCERTITUDE</div><h3>Réserves</h3><p>Rendre les manques visibles.</p></div>
+          <div class="step" data-step="rpo"><div class="step-index"><span class="dot"></span>06 · RPO</div><h3>Objet structuré</h3><p>Composer et hacher le noyau v0.1.</p></div>
+        </div>
         <div class="metrics">
-          <div class="metric"><small>Source items</small><strong id="mSources">—</strong></div>
-          <div class="metric"><small>Signals</small><strong id="mSignals">—</strong></div>
-          <div class="metric"><small>Coverage</small><strong id="mCoverage">—</strong></div>
-          <div class="metric"><small>State</small><strong id="mState">—</strong></div>
+          <div class="metric"><small>Documents</small><strong id="mSources">—</strong></div>
+          <div class="metric"><small>Signaux</small><strong id="mSignals">—</strong></div>
+          <div class="metric"><small>Ancrages</small><strong id="mDates">—</strong></div>
+          <div class="metric"><small>État</small><strong id="mState">—</strong></div>
         </div>
         <div class="result">
-          <section class="resultbox"><h3>Signals detected</h3><ul id="signals"><li>Run the analysis to inspect the synthetic case.</li></ul></section>
-          <section class="resultbox"><h3>Reservations</h3><ul id="reservations"><li>Human review remains required.</li></ul></section>
-          <section class="resultbox"><h3>Timeline anchors</h3><ul id="timeline"><li>Not analysed.</li></ul></section>
-          <section class="resultbox"><h3>RPO status</h3><p><span class="status warn" id="rpoStatus">Waiting</span></p><p id="rpoStatusText">No public RPO has been generated.</p></section>
+          <section class="resultbox"><h3>Signaux détectés</h3><ul id="signals"><li>Lancez l’analyse pour examiner le dossier.</li></ul></section>
+          <section class="resultbox"><h3>Réserves</h3><ul id="reservations"><li>La revue humaine reste nécessaire.</li></ul></section>
+          <section class="resultbox"><h3>Chronologie</h3><ul id="timeline"><li>Pas encore analysée.</li></ul></section>
+          <section class="resultbox"><h3>Statut RPO</h3><p><span class="status warn" id="rpoStatus">En attente</span></p><p class="rpo-copy" id="rpoStatusText">Aucun objet public n’a encore été généré.</p></section>
         </div>
         <pre class="json" id="rpoJson">{
   "status": "waiting_for_public_analysis"
 }</pre>
-        <p class="hash" id="hash">SHA-256: —</p>
-        <div class="buttonrow"><button class="secondary" id="download" disabled>Download RPO JSON</button></div>
+        <p class="hash" id="hash">SHA-256 public : —</p>
+        <div class="buttonrow"><button class="secondary" id="downloadRpo" disabled>Télécharger le RPO JSON</button><button class="secondary" id="downloadLedger" disabled>Télécharger le journal</button></div>
       </article>
     </section>
-    <p class="footer">Research lineage: sanitized public boundary inspired by the 2025–2026 GREYC/CNRS student project. OpenProof is the probative infrastructure; the RPO records structure and integrity, not adjudicated truth.</p>
+    <p class="footer">Lignée de recherche : projet étudiant GREYC/CNRS 2025–2026, frontière publique assainie. OpenProof structure la preuve et son intégrité ; il ne rend pas une décision judiciaire. <a href="../profiles/cnrs-legal-mvp.md">Voir le profil public</a>.</p>
   </main>
   <script>
     (() => {
       "use strict";
       const fixtures = {
-        pressure: "2026-01-12 — Person B writes: You must answer now. You are worthless. If you leave, I will share private material.\n2026-01-13 — Person A does not respond.\n2026-01-15 — A witness records that Person A appears distressed.\nThe complete message history and independent date verification are missing.",
-        workplace: "2026-02-03 — Person A is removed from a recurring meeting without explanation.\n2026-02-07 — Person B says the exclusion was an administrative error.\n2026-02-10 — Person A receives a message that their access will be reviewed if they continue asking questions.\nNo access logs or meeting records are attached.",
-        neutral: "2026-03-01 — Person A disagrees with Person B about a project deadline.\n2026-03-02 — Person B explains the dependency and proposes a revised date.\n2026-03-04 — Both parties confirm the revised plan.\nNo threat, coercion or repeated pressure is visible in this synthetic fixture."
+        pressure: [
+          {name:"messages-2026-01.txt",text:"2026-01-12 — Personne B écrit : Tu dois répondre maintenant. Tu es inutile. Si tu pars, je partagerai un contenu privé.\n2026-01-13 — Personne A ne répond pas.\n2026-01-15 — Un témoin note que Personne A semble en détresse."},
+          {name:"reserve-2026-01.txt",text:"L’historique complet des messages et une vérification indépendante des dates ne sont pas joints."}
+        ],
+        workplace: [
+          {name:"reunion-2026-02.txt",text:"2026-02-03 — Personne A est retirée d’une réunion récurrente sans explication.\n2026-02-07 — Personne B indique que l’exclusion était une erreur administrative."},
+          {name:"acces-2026-02.txt",text:"2026-02-10 — Personne A reçoit un message indiquant que son accès sera réexaminé si elle continue à poser des questions. Aucun journal d’accès n’est joint."}
+        ],
+        neutral: [
+          {name:"echange-2026-03.txt",text:"2026-03-01 — Personne A n’est pas d’accord avec Personne B sur un délai de projet.\n2026-03-02 — Personne B explique la dépendance et propose une nouvelle date.\n2026-03-04 — Les deux parties confirment le nouveau calendrier."}
+        ]
       };
-      const $ = (id) => document.getElementById(id);
-      const scenario = $("scenario"), narrative = $("narrative");
-      let latest = null;
-      function sha256(text) { return crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)).then(bytes => [...new Uint8Array(bytes)].map(b => b.toString(16).padStart(2,"0")).join("")); }
-      function canonical(bundle) {
-        const r = bundle.registry;
-        return [
-          `rpo_version=${bundle.rpo_version}`, `type=${bundle.type}`, `bundle_id=${bundle.bundle_id}`,
-          `created_at=${bundle.created_at}`, `issuer=${bundle.issuer.name}`, `subject=${bundle.subject.name}`,
-          `summary=${bundle.narrative.summary}`, `pdf_hash=${bundle.narrative.pdf_hash}`,
-          `registry_id=${r.registry_id}`, `entry_id=${r.entry_id}`
-        ].join("|");
+      const stepOrder = ["ingest","map","timeline","signals","uncertainty","rpo"];
+      const $ = id => document.getElementById(id);
+      const scenario = $("scenario"), fileInput = $("files"), sourceList = $("sourceList"), narrative = $("narrative");
+      let sources = [], latestRpo = null, latestLedger = null;
+      const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
+      const escapeHtml = value => String(value).replace(/[&<>\"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'\"':"&quot;"}[c]));
+      async function sha256(text) { const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)); return [...new Uint8Array(bytes)].map(b => b.toString(16).padStart(2,"0")).join(""); }
+      function canonicalRpo(rpo) { const copy = JSON.parse(JSON.stringify(rpo)); copy.registry.public_hash = ""; return JSON.stringify(copy); }
+      function setStep(name, state) { const el = document.querySelector(`[data-step="${name}"]`); if (el) el.className = `step ${state}`; }
+      function resetSteps() { stepOrder.forEach(name => setStep(name, "")); }
+      function renderSources() {
+        if (!sources.length) { sourceList.innerHTML = `<div class="source"><div class="source-info"><span class="source-name">Aucun document chargé</span><span class="source-meta">Utilisez le dossier synthétique pour commencer.</span></div></div>`; return; }
+        sourceList.innerHTML = sources.map((source, index) => `<div class="source"><div class="source-info"><span class="source-name">${escapeHtml(source.name)}</span><span class="source-meta">${source.bytes} octets · source locale · ${source.kind}</span></div><button class="remove" data-remove="${index}" aria-label="Retirer ${escapeHtml(source.name)}">×</button></div>`).join("");
+        sourceList.querySelectorAll("[data-remove]").forEach(button => button.addEventListener("click", () => { sources.splice(Number(button.dataset.remove), 1); renderSources(); }));
       }
-      function list(items, target) { $(target).innerHTML = items.map(x => `<li>${x}</li>`).join(""); }
-      function loadFixture() { narrative.value = fixtures[scenario.value]; }
-      function score(text, words) { return Math.min(96, words.reduce((n,w) => n + (text.toLowerCase().split(w).length - 1) * 14, 0)); }
-      async function analyze() {
-        const text = narrative.value.trim();
-        if (!text) return;
-        const lower = text.toLowerCase();
-        const dates = [...text.matchAll(/\b20\d{2}-\d{2}-\d{2}\b/g)].map(x => x[0]);
+      function loadSample() { sources = fixtures[scenario.value].map(item => ({...item,kind:"fixture synthétique",bytes:new TextEncoder().encode(item.text).length})); narrative.value = "Dossier de démonstration OpenProof — données fictives uniquement."; renderSources(); resetSteps(); $("runStatus").textContent = "Prêt"; $("runStatus").className = "status blue"; }
+      function clearAll() { sources = []; narrative.value = ""; fileInput.value = ""; latestRpo = null; latestLedger = null; renderSources(); resetSteps(); $("runStatus").textContent = "En attente"; $("runStatus").className = "status warn"; $("rpoJson").textContent = '{\n  "status": "waiting_for_public_analysis"\n}'; $("hash").textContent = "SHA-256 public : —"; $("downloadRpo").disabled = true; $("downloadLedger").disabled = true; }
+      function parseDates(text) { const found = [...text.matchAll(/\b(20\d{2}-\d{2}-\d{2}|\d{2}\/\d{2}\/20\d{2})\b/g)].map(match => match[1]); return [...new Set(found)]; }
+      function addUnique(list, value) { if (!list.includes(value)) list.push(value); }
+      function listInto(target, items, fallback) { $(target).innerHTML = (items.length ? items : [fallback]).map(value => `<li>${escapeHtml(value)}</li>`).join(""); }
+      function download(filename, payload) { const blob = new Blob([payload], {type:"application/json"}); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = filename; link.click(); setTimeout(() => URL.revokeObjectURL(link.href), 300); }
+      async function analyse() {
+        if (!sources.length && narrative.value.trim()) sources = [{name:"context-note.txt",text:narrative.value.trim(),kind:"note locale",bytes:new TextEncoder().encode(narrative.value.trim()).length}];
+        if (!sources.length) { alert("Ajoutez au moins un document ou chargez le dossier synthétique."); return; }
+        $("analyze").disabled = true; $("runStatus").textContent = "En cours"; $("runStatus").className = "status blue"; resetSteps();
+        const texts = sources.map(source => source.text).join("\n");
+        const dates = parseDates(texts);
+        const lower = texts.toLowerCase();
         const signals = [];
-        if (/must answer|answer now|immediately|respond/.test(lower)) signals.push("repeated pressure");
-        if (/worthless|stupid|good for nothing/.test(lower)) signals.push("insulting language");
-        if (/share private|private material|disclose/.test(lower)) signals.push("threat of disclosure");
-        if (/removed|excluded|access will be reviewed/.test(lower)) signals.push("institutional exclusion or pressure");
-        if (/no threat|revised plan|confirm the revised/.test(lower)) signals.push("counter-signal: ordinary disagreement");
-        const missing = [];
-        if (dates.length < 2) missing.push("independent date verification");
-        if (!/witness|record|log|history|attached/.test(lower)) missing.push("corroborating source");
-        if (/complete message history|no access logs|missing/.test(lower)) missing.push("complete source set");
-        const coverage = Math.max(25, Math.min(100, Math.round((dates.length / 4) * 60 + (signals.length ? 40 : 10))));
-        const state = signals.length && !signals.includes("counter-signal: ordinary disagreement") ? "REVIEWABLE" : "EXPLORATORY";
-        const evidence = [
-          {id:"e-001",type:"narrative_input",description:"Synthetic narrative entered by the demonstrator."},
-          {id:"e-002",type:"timeline_extract",description:`${dates.length} explicit date anchor(s) extracted from the synthetic narrative.`},
-          {id:"e-003",type:"signal_summary",description:`${signals.length} public signal(s) detected by deterministic reference rules.`}
-        ];
+        if (/dois répondre|répondre maintenant|answer now|immediately|tout de suite/.test(lower)) addUnique(signals,"pression temporelle");
+        if (/inutile|worthless|stupid|idiot|insulte/.test(lower)) addUnique(signals,"langage dépréciatif");
+        if (/partagerai|contenu privé|share private|divulguer|disclose/.test(lower)) addUnique(signals,"menace de divulgation");
+        if (/retirée|exclusion|exclu|accès sera|access will/.test(lower)) addUnique(signals,"pression ou exclusion institutionnelle");
+        if (/nouveau calendrier|confirment|révisé|revised plan|désaccord ordinaire/.test(lower)) addUnique(signals,"contre-signal : désaccord ordinaire");
+        const reservations = [];
+        if (dates.length < 2) addUnique(reservations,"peu d’ancrages temporels explicites");
+        if (!/témoin|witness|journal|log|historique|history|joint|attach/.test(lower)) addUnique(reservations,"source corroborante non identifiée");
+        if (/aucun|pas joint|manque|missing|complet/.test(lower)) addUnique(reservations,"jeu documentaire potentiellement incomplet");
+        for (const name of stepOrder) { setStep(name,"running"); await pause(180); setStep(name,"done"); }
+        const sourceEntries = [];
+        for (let i = 0; i < sources.length; i += 1) { const source = sources[i]; const hash = await sha256(source.text); sourceEntries.push({id:`e-${String(i + 1).padStart(3,"0")}`,type:"document",description:`Source locale ${source.name} importée pour la démonstration.`,hash}); }
         const bundleId = crypto.randomUUID();
         const created = new Date().toISOString();
-        const bundle = {rpo_version:"0.1",type:"evidence_bundle",bundle_id:bundleId,created_at:created,jurisdiction:"demo",language:"en",issuer:{name:"OpenProof public reference implementation",id:"openproof-public-demo",role:"probative infrastructure"},subject:{name:"CNRS legal evidence synthetic case",id:`synthetic-${scenario.value}`,role:"demo subject"},evidence:[],narrative:{summary:"Synthetic evidence bundle generated from a public demonstration input. Interpretive signals remain in the interface layer.",pdf_hash:"not-generated-in-public-demo",timeline_ref:`timeline:synthetic-${scenario.value}`},registry:{registry_id:"openproof-public-demo",entry_id:bundleId,public_hash:""}};
-        for (const item of evidence) { item.hash = await sha256(item.description); bundle.evidence.push(item); }
-        bundle.registry.public_hash = await sha256(canonical(bundle));
-        latest = bundle;
-        $("mSources").textContent = evidence.length;
-        $("mSignals").textContent = signals.length;
-        $("mCoverage").textContent = `${coverage}%`;
-        $("mState").textContent = state;
-        list(signals.length ? signals : ["No elevated signal detected in this fixture."], "signals");
-        list(missing.length ? missing : ["No missing item detected by the public rules."], "reservations");
-        list(dates.length ? dates : ["No explicit date anchor detected."], "timeline");
-        $("rpoStatus").textContent = "VALID CORE";
-        $("rpoStatus").className = "status";
-        $("rpoStatusText").textContent = "The displayed core is shaped for RPO v0.1 and carries a deterministic SHA-256 integrity hash.";
-        $("rpoJson").textContent = JSON.stringify(bundle, null, 2);
-        $("hash").textContent = `SHA-256: ${bundle.registry.public_hash}`;
-        $("download").disabled = false;
+        const sourceSetHash = await sha256(sources.map(source => `${source.name}\n${source.text}`).join("\n---\n"));
+        const rpo = {rpo_version:"0.1",type:"evidence_bundle",bundle_id:bundleId,created_at:created,issuer:{name:"OpenProof Legal Evidence Lab",id:"openproof-legal-evidence-lab",role:"probative infrastructure"},subject:{name:"Synthetic evidence review",id:`synthetic-${scenario.value}-${bundleId.slice(0,8)}`,role:"demo subject"},evidence:sourceEntries,narrative:{summary:"Synthetic or locally entered source set structured by the public reference interface. Signals and reservations remain outside the RPO core.",pdf_hash:`sha256:${sourceSetHash}`,timeline_ref:`timeline:local-${bundleId}`},registry:{registry_id:"openproof-public-demo",entry_id:bundleId,public_hash:""}};
+        rpo.registry.public_hash = await sha256(canonicalRpo(rpo));
+        latestRpo = rpo;
+        latestLedger = {format:"openproof-analysis-ledger-draft",version:"0.1",generated_at:created,boundary:"browser-local-demo",rpo_bundle_id:bundleId,sources:sources.map((source,index) => ({id:sourceEntries[index].id,name:source.name,kind:source.kind,bytes:source.bytes,sha256:sourceEntries[index].hash})),timeline:dates,signals,reservations,interpretation:{status:signals.length && !signals.includes("contre-signal : désaccord ordinaire") ? "reviewable" : "exploratory",note:"These are deterministic exploration signals, not legal findings or adjudicated truth."}};
+        $("mSources").textContent = sources.length; $("mSignals").textContent = signals.length; $("mDates").textContent = dates.length; $("mState").textContent = latestLedger.interpretation.status.toUpperCase();
+        listInto("signals",signals,"Aucun signal renforcé détecté par les règles publiques."); listInto("reservations",reservations,"Aucune réserve détectée par les règles publiques."); listInto("timeline",dates,"Aucun ancrage temporel explicite détecté.");
+        $("runStatus").textContent = "Terminé"; $("runStatus").className = "status"; $("rpoStatus").textContent = "CORE PRÊT"; $("rpoStatus").className = "status"; $("rpoStatusText").textContent = "Le noyau affiché respecte la forme RPO v0.1 ; les signaux et réserves restent dans le journal d’analyse."; $("rpoJson").textContent = JSON.stringify(rpo,null,2); $("hash").textContent = `SHA-256 public : ${rpo.registry.public_hash}`; $("downloadRpo").disabled = false; $("downloadLedger").disabled = false; $("analyze").disabled = false;
       }
-      $("analyze").addEventListener("click", analyze);
-      $("download").addEventListener("click", () => { if (!latest) return; const blob = new Blob([JSON.stringify(latest,null,2)],{type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="openproof-cnrs-legal-mvp-rpo.json"; a.click(); setTimeout(()=>URL.revokeObjectURL(a.href),300); });
-      scenario.addEventListener("change", loadFixture);
-      $("reset").addEventListener("click", loadFixture);
-      loadFixture();
+      fileInput.addEventListener("change", async event => { const selected = [...event.target.files]; const imported = []; for (const file of selected) { const text = await file.text(); imported.push({name:file.name,text,kind:"fichier local",bytes:file.size}); } sources = sources.filter(source => source.kind !== "fichier local").concat(imported); renderSources(); });
+      scenario.addEventListener("change", loadSample); $("loadSample").addEventListener("click", loadSample); $("clear").addEventListener("click", clearAll); $("analyze").addEventListener("click", analyse); $("downloadRpo").addEventListener("click", () => latestRpo && download("openproof-legal-evidence-lab-rpo.json",JSON.stringify(latestRpo,null,2))); $("downloadLedger").addEventListener("click", () => latestLedger && download("openproof-legal-evidence-lab-analysis-ledger.json",JSON.stringify(latestLedger,null,2)));
+      loadSample();
     })();
   </script>
 </body>
