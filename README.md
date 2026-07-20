@@ -77,7 +77,7 @@ ___
 ## 👤 Who is this for?
 
 - Developers → see “Minimal JSON Structure” + “Hashing Algorithm”
-- Researchers → see “Scientific Pilot (CNRS × TruthX)”
+- Researchers → see “Scientific Pilot”
 - Legal teams → see “Validity & Immutability Guarantees”
 - Institutions → see “Verifiability & immutability guarantees”
 - Everyone → try the Sandbox in 10 seconds
@@ -136,7 +136,7 @@ ___
 4. [✅ Validating an RPO Bundle](#4--validating-an-rpo-bundle)
 5. [🧩 Generating a New RPO Bundle](#5--generating-a-new-rpo-bundle)
 6. [🎯 Try the Engine — RPO Sandbox](#6--try-the-engine--rpo-sandbox)
-7. [🔬 Scientific Pilot (CNRS × TruthX)](#7--scientific-pilot-cnrs--truthx)
+7. [🔬 Scientific Pilot](#7--scientific-pilot-cnrs--truthx)
 8. [🤝 Contributing](#8--contributing)
 9. [📫 Contact](#9--contact)
 10. [🛡 Maintainer](#10--maintainer)
@@ -357,7 +357,7 @@ both from employees and from regulators.
 
 ___
 
-## 7. 🔬 Scientific Pilot (CNRS × TruthX)
+## 7. 🔬 Scientific Pilot
 
 The open standard does not include interpretive or psycho-forensic analysis.
 
@@ -402,7 +402,7 @@ ___
 
 ## OpenProof Legal Evidence Lab — public MVP
 
-The repository now includes a browser-based public reference interface for the CNRS/GREYC research lineage:
+The repository now includes a browser-based public reference interface for a research-collaboration lineage:
 
 👉 **[Open the Legal Evidence Lab](docs/demo-cnrs-legal-mvp.html)**
 
