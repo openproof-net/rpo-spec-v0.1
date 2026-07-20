@@ -1,0 +1,38 @@
+{
+  "case_id": "synthetic-case-001",
+  "case_title": "Repeated digital pressure — synthetic example",
+  "language": "en",
+  "jurisdiction": "demo",
+  "case_summary": "A synthetic message sequence contains repeated insults, pressure to respond immediately, and a threat to disclose private material. The available material is incomplete and requires human review.",
+  "actors": [
+    {"id": "actor-a", "label": "Person A", "role": "reporting party"},
+    {"id": "actor-b", "label": "Person B", "role": "other party"}
+  ],
+  "evidence": [
+    {"id": "e-001", "type": "message_exchange", "description": "Synthetic message exchange with repeated insults and pressure."},
+    {"id": "e-002", "type": "witness_statement", "description": "Synthetic witness statement describing the recipient's reported distress."}
+  ],
+  "timeline": [
+    {"date": "2026-01-12", "event": "First synthetic message exchange."},
+    {"date": "2026-01-15", "event": "Witness records reported distress."}
+  ],
+  "signals": {
+    "violence_score": 62,
+    "threat_score": 71,
+    "manipulation_score": 58,
+    "risk_level": "high",
+    "items": [
+      {"label": "repeated pressure", "source_refs": ["e-001"]},
+      {"label": "threat of disclosure", "source_refs": ["e-001"]}
+    ]
+  },
+  "uncertainty": {
+    "status": "review_required",
+    "missing_items": ["complete message history", "independent date verification"],
+    "human_review_required": true
+  },
+  "quality": {
+    "grounding_score": 82,
+    "consistency_status": "pass_with_reservations"
+  }
+}
