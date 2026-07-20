@@ -6,10 +6,11 @@ It demonstrates how a synthetic case can be transformed into a structured, audit
 
 ## Public mode
 
-- Runs in the browser with synthetic data only.
-- Uses deterministic signal extraction and hashing.
+- Runs in the browser with synthetic data or local text/Markdown/JSON/CSV files.
+- Shows a six-step public trace: ingestion, evidence mapping, chronology, signals, uncertainty and RPO composition.
 - Does not upload text to a server.
-- Produces an RPO v0.1-compliant core bundle.
+- Produces an RPO v0.1 core bundle plus a separate analysis ledger.
+- Deliberately leaves PDF extraction, OCR and the live multi-agent backend to the secured deployment layer.
 - Keeps interpretive signals in the interface layer rather than silently adding them to the RPO core.
 
 ## Research lineage
