@@ -412,3 +412,6 @@ It lets visitors load synthetic or local text documents, inspect a visible evide
 ### OpenProof Legal Evidence Lab — stable public route
 
 The browser reference interface is also available through the stable route [docs/legal/](docs/legal/index.html), intended to sit behind the future hostname legal.openproof.net. The repository includes a 25-report synthetic calibration manifest ([scores.json](examples/cnrs-legal-mvp/benchmark/scores.json)); its final human scores are calibration references, not legal findings or ground truth. The raw report archive is not published by default.
+
+
+The deployable backend boundary is documented in [backend/](backend/) and remains disabled until hosted with TLS, authentication, isolated workers, retention controls and a private TruthX adapter.
