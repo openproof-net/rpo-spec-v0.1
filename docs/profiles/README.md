@@ -13,12 +13,16 @@ Profiles do not modify the structure of the RPO.
 They configure how components are emphasized 
 depending on institutional context.
 
+The CNRS Legal Evidence MVP demonstrates a synthetic, deterministic reference boundary:
+[open the public demo](../demo-cnrs-legal-mvp.html).
+
 ---
 
 ## Available Profiles
 
 - Governance
-- Legal Proceedings (coming)
+- Legal Proceedings
+- CNRS Legal Evidence MVP
 - Institutional Crisis (coming)
 
 ---
