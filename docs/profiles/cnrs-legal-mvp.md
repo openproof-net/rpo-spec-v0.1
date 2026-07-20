@@ -1,6 +1,6 @@
-# CNRS Legal Evidence MVP
+# OpenProof Legal Evidence Lab
 
-This profile is the public reference boundary for the CNRS student pipeline integrated with OpenProof RPO v0.1.
+This profile defines the public reference boundary for a research prototype integrated with OpenProof RPO v0.1.
 
 It demonstrates how a synthetic case can be transformed into a structured, auditable evidence bundle. The profile does not establish facts, legal liability, admissibility, intent, or a judicial outcome.
 
@@ -15,9 +15,9 @@ It demonstrates how a synthetic case can be transformed into a structured, audit
 
 ## Research lineage
 
-The profile is inspired by the 2025-2026 project developed by Lucy Martin and Clément Correia-Peltier under the GREYC/CNRS academic context. The student implementation uses a local Ollama/LangGraph pipeline with OCR, actor extraction, chronology checks, lexical analysis, uncertainty checks, pattern mapping, consistency validation and report generation.
+The interface is derived from a 2025–2026 academic research prototype. The private research implementation uses a local multi-agent pipeline with document extraction, actor and chronology analysis, lexical signals, uncertainty checks, consistency validation and report generation.
 
-The public MVP uses a sanitized reference adapter. It does not publish the original evidence folder or any personal case material.
+The public MVP uses a sanitized reference adapter. It does not publish original evidence folders, personal case material or private runtime code.
 
 ## Boundary
 
