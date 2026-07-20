@@ -13,7 +13,7 @@ Profiles do not modify the structure of the RPO.
 They configure how components are emphasized 
 depending on institutional context.
 
-The CNRS Legal Evidence MVP demonstrates a synthetic, deterministic reference boundary:
+The OpenProof Legal Evidence Lab demonstrates a synthetic, deterministic public reference boundary:
 [open the public demo](../demo-cnrs-legal-mvp.html).
 
 ---
@@ -22,7 +22,7 @@ The CNRS Legal Evidence MVP demonstrates a synthetic, deterministic reference bo
 
 - Governance
 - Legal Proceedings
-- CNRS Legal Evidence MVP
+- OpenProof Legal Evidence Lab
 - Institutional Crisis (coming)
 
 ---
