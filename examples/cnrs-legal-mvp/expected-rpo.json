@@ -1,0 +1,42 @@
+{
+  "rpo_version": "0.1",
+  "type": "evidence_bundle",
+  "bundle_id": "7b2a1d51-3d7d-4a5f-8b9c-1f2e3d4c5b6a",
+  "created_at": "2026-07-20T00:00:00Z",
+  "jurisdiction": "demo",
+  "language": "en",
+  "issuer": {
+    "name": "OpenProof public reference implementation",
+    "id": "openproof-public-demo",
+    "role": "probative infrastructure"
+  },
+  "subject": {
+    "name": "Repeated digital pressure — synthetic example",
+    "id": "synthetic-case-001",
+    "role": "demo subject"
+  },
+  "evidence": [
+    {
+      "id": "e-001",
+      "type": "message_exchange",
+      "description": "Synthetic message exchange with repeated insults and pressure.",
+      "hash": "0a63ffb6faf107e66ed2a92ec8dbf31073db60e9f314e9dcbdafcc481349d15d"
+    },
+    {
+      "id": "e-002",
+      "type": "witness_statement",
+      "description": "Synthetic witness statement describing the recipient's reported distress.",
+      "hash": "5ae350fa70b931ad94a6ca82bb1e8bceb2173cc9280b072e0de8b62ac8cd3cc9"
+    }
+  ],
+  "narrative": {
+    "summary": "A synthetic message sequence contains repeated insults, pressure to respond immediately, and a threat to disclose private material. The available material is incomplete and requires human review.",
+    "pdf_hash": "not-generated-in-public-demo",
+    "timeline_ref": "timeline:synthetic-case-001"
+  },
+  "registry": {
+    "registry_id": "openproof-public-demo",
+    "entry_id": "7b2a1d51-3d7d-4a5f-8b9c-1f2e3d4c5b6a",
+    "public_hash": "70c0ccecb95918cc496aed3475140b3de63836ce19fcecbfe6800120bd45cfba"
+  }
+}
