@@ -1,0 +1,46 @@
+{
+  "format": "openproof-human-benchmark",
+  "version": "0.1",
+  "description": "Synthetic research benchmark: final human scores for 25 generated case reports.",
+  "scope": "Calibration of fidelity, structure, probative discipline, interpretive drift and uncertainty visibility.",
+  "scores_out_of_20": {
+    "rapport_n1": 12,
+    "rapport_n2": 13,
+    "rapport_n3": 11,
+    "rapport_n4": 12,
+    "rapport_n5": 11,
+    "rapport_n6": 12,
+    "rapport_n7": 13,
+    "rapport_n8": 11,
+    "rapport_n9": 12,
+    "rapport_n10": 11,
+    "rapport_n11": 12,
+    "rapport_n12": 13,
+    "rapport_n13": 11,
+    "rapport_n14": 12,
+    "rapport_n15": 11,
+    "rapport_n16": 10,
+    "rapport_n17": 12,
+    "rapport_n18": 13,
+    "rapport_n19": 12,
+    "rapport_n20": 13,
+    "rapport_n21": 11,
+    "rapport_n22": 12,
+    "rapport_n23": 11,
+    "rapport_n24": 12,
+    "rapport_n25": 13
+  },
+  "mean": 11.84,
+  "human_review_notes": {
+    "detailed_reports": ["rapport_n1", "rapport_n2", "rapport_n3", "rapport_n4", "rapport_n5"],
+    "provenance_note": "The 25 scores are the final score list transmitted for benchmark calibration. The detailed review of reports n1–n5 is preserved as a separate earlier qualitative review and is not replaced by this list.",
+    "recurring_issues": [
+      "overinterpretation in Theory of Mind",
+      "probative language stronger than source support",
+      "insufficient separation between facts, statements, perceptions and hypotheses",
+      "uncertainty not visible enough",
+      "occasional actor-structuring errors"
+    ],
+    "benchmark_boundary": "Scores are calibration references, not legal findings or ground truth."
+  }
+}

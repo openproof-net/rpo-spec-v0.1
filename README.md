@@ -407,3 +407,8 @@ The repository now includes a browser-based public reference interface for a res
 👉 **[Open the Legal Evidence Lab](docs/demo-cnrs-legal-mvp.html)**
 
 It lets visitors load synthetic or local text documents, inspect a visible evidence-processing trace, review signals and reservations, and export a schema-shaped RPO v0.1 JSON bundle with a SHA-256 integrity hash. The browser demo does not upload files, adjudicate truth, or provide legal advice. The full multi-agent runtime and real PDF ingestion remain deployment concerns outside this static public boundary.
+
+
+### OpenProof Legal Evidence Lab — stable public route
+
+The browser reference interface is also available through the stable route [docs/legal/](docs/legal/index.html), intended to sit behind the future hostname legal.openproof.net. The repository includes a 25-report synthetic calibration manifest ([scores.json](examples/cnrs-legal-mvp/benchmark/scores.json)); its final human scores are calibration references, not legal findings or ground truth. The raw report archive is not published by default.
