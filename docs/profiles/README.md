@@ -13,12 +13,16 @@ Profiles do not modify the structure of the RPO.
 They configure how components are emphasized 
 depending on institutional context.
 
+The OpenProof Legal Evidence Lab demonstrates a synthetic, deterministic public reference boundary:
+[open the public demo](../demo-cnrs-legal-mvp.html).
+
 ---
 
 ## Available Profiles
 
 - Governance
-- Legal Proceedings (coming)
+- Legal Proceedings
+- OpenProof Legal Evidence Lab
 - Institutional Crisis (coming)
 
 ---
