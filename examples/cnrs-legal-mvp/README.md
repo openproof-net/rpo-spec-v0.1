@@ -1,6 +1,6 @@
-# CNRS Legal Evidence MVP — Synthetic fixture
+# OpenProof Legal Evidence Lab — Synthetic fixture
 
-This directory contains a synthetic fixture shaped like the output of the student CNRS pipeline.
+This directory contains a synthetic fixture shaped like the output of a research pipeline.
 
 - `student-output.json` represents normalized agent outputs.
 - `expected-rpo.json` is the corresponding OpenProof RPO v0.1 core.
