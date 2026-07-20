@@ -396,3 +396,14 @@ ___
 ## 10. 🛡 Maintainer
 
 This specification is maintained by Gersende de Parcey.
+
+
+___
+
+## OpenProof Legal Evidence Lab — public MVP
+
+The repository now includes a browser-based public reference interface for the CNRS/GREYC research lineage:
+
+👉 **[Open the Legal Evidence Lab](docs/demo-cnrs-legal-mvp.html)**
+
+It lets visitors load synthetic or local text documents, inspect a visible evidence-processing trace, review signals and reservations, and export a schema-shaped RPO v0.1 JSON bundle with a SHA-256 integrity hash. The browser demo does not upload files, adjudicate truth, or provide legal advice. The full multi-agent runtime and real PDF ingestion remain deployment concerns outside this static public boundary.
