@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /legal/
+Disallow: /demo-cnrs-legal-mvp.html
 
 Sitemap: https://rpo.openproof.net/sitemap.xml
