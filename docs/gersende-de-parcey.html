@@ -13,7 +13,7 @@
   <meta property="og:title" content="Gersende de Parcey — Fondatrice d’OpenProof">
   <meta property="og:description" content="L’origine intellectuelle d’OpenProof : rendre les décisions critiques reconstructibles, traçables et défendables.">
   <meta property="og:url" content="https://rpo.openproof.net/gersende-de-parcey.html">
-  <meta property="og:image" content="https://rpo.openproof.net/images/openproof-cover.png">
+  <meta property="og:image" content="https://rpo.openproof.net/images/gersende-de-parcey.png">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,10 +35,15 @@
     .founder-page h1,.founder-page h2,.founder-page h3,.founder-page .eyebrow,.founder-page .architecture-name{font-family:Orbitron,Montserrat,sans-serif}
     .founder-hero{min-height:calc(100vh - 70px);display:flex;align-items:center;padding:100px 0 86px;border-bottom:1px solid var(--line)}
     .founder-hero .wrap{position:relative;z-index:1}
-    .founder-role{color:var(--pale);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;margin:0 0 22px}
-    .founder-hero h1{max-width:980px;font-size:clamp(3.2rem,7vw,7rem);font-weight:600;line-height:.98;letter-spacing:-.035em;margin:0 0 30px}
-    .founder-hero h1 span{display:block;color:var(--gold);font-size:.42em;line-height:1.25;letter-spacing:.04em;margin-top:14px}
-    .founder-statement{max-width:900px;color:var(--soft);font-size:clamp(1.15rem,2vw,1.55rem);line-height:1.65;margin:0}
+    .founder-hero-grid{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(270px,.58fr);gap:64px;align-items:center}
+    .founder-signature{color:var(--pale);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 24px}
+    .founder-hero h1{max-width:940px;font-size:clamp(2.55rem,5.2vw,5.7rem);font-weight:600;line-height:1.06;letter-spacing:-.035em;margin:0 0 30px}
+    .founder-hero h1 span{color:var(--gold)}
+    .founder-statement{max-width:830px;color:var(--soft);font-size:clamp(1.05rem,1.65vw,1.32rem);line-height:1.7;margin:0}
+    .founder-portrait{position:relative;align-self:end;min-height:520px;display:flex;align-items:flex-end;justify-content:center}
+    .founder-portrait:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#04050a 0,transparent 25%),linear-gradient(0deg,#04050a 0,transparent 35%);pointer-events:none}
+    .founder-portrait img{display:block;width:100%;max-width:430px;height:auto;filter:saturate(.88) contrast(1.04)}
+    .founder-caption{position:absolute;z-index:2;right:0;bottom:24px;color:var(--pale);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;text-align:right}
     .founder-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
     .founder-section{padding:105px 0;border-bottom:1px solid var(--line)}
     .founder-grid{display:grid;grid-template-columns:minmax(230px,.38fr) minmax(0,.62fr);gap:80px;align-items:start}
@@ -63,6 +68,8 @@
     .founder-close h2{max-width:760px;font-size:clamp(2rem,4vw,4rem);font-weight:500;line-height:1.12;letter-spacing:-.025em;margin:16px 0 0}
     .founder-close .founder-actions{margin:0;justify-content:flex-end}
     @media(max-width:900px){
+      .founder-hero-grid{grid-template-columns:1fr;gap:38px}
+      .founder-portrait{min-height:0;max-width:440px}
       .founder-grid{grid-template-columns:1fr;gap:25px}
       .architecture-grid{grid-template-columns:1fr}
       .architecture-card{border-right:0;border-bottom:1px solid var(--line)}
@@ -72,7 +79,8 @@
     }
     @media(max-width:720px){
       .founder-hero{min-height:auto;padding:76px 0 68px}
-      .founder-hero h1{font-size:3rem}
+      .founder-hero h1{font-size:2.65rem}
+      .founder-portrait{max-width:330px}
       .founder-section,.architecture,.doctrine,.founder-close{padding:75px 0}
     }
   </style>
@@ -102,41 +110,49 @@
   <main id="main">
     <header class="founder-hero cosmos">
       <canvas class="stars" aria-hidden="true"></canvas>
-      <div class="wrap">
-        <p class="eyebrow">FOUNDER · OPENPROOF</p>
-        <h1>Gersende de Parcey
-          <span data-copy="fr">Fondatrice d’OpenProof · Créatrice de TruthX Engine</span>
-          <span data-copy="en" hidden>Founder of OpenProof · Creator of TruthX Engine</span>
-        </h1>
-        <p class="founder-statement" data-copy="fr">Rendre les décisions critiques reconstructibles, traçables et défendables.</p>
-        <p class="founder-statement" data-copy="en" hidden>Making critical decisions reconstructible, traceable and defensible.</p>
-        <div class="founder-actions">
-          <a class="btn primary" href="https://openproof.net" data-copy="fr">Découvrir OpenProof</a>
-          <a class="btn primary" href="https://openproof.net" data-copy="en" hidden>Discover OpenProof</a>
-          <a class="btn" href="/" data-copy="fr">Lire la spécification RPO</a>
-          <a class="btn" href="/" data-copy="en" hidden>Read the RPO specification</a>
+      <div class="wrap founder-hero-grid">
+        <div>
+          <p class="founder-signature">Gersende de Parcey · Founder of OpenProof</p>
+          <h1 data-copy="fr">La vérité ne suffit pas.<br><span>Elle doit pouvoir résister au pouvoir du récit.</span></h1>
+          <h1 data-copy="en" hidden>Truth is not enough.<br><span>It must withstand the power of narrative.</span></h1>
+          <p class="founder-statement" data-copy="fr">Quand les faits perdent leur structure, le pouvoir revient à celui qui impose le récit. OpenProof est né pour préserver les faits avant qu’ils ne deviennent un champ de bataille.</p>
+          <p class="founder-statement" data-copy="en" hidden>When facts lose their structure, power returns to whoever controls the narrative. OpenProof was born to preserve facts before they become a battlefield.</p>
+          <div class="founder-actions">
+            <a class="btn primary" href="https://openproof.net" data-copy="fr">Découvrir OpenProof</a>
+            <a class="btn primary" href="https://openproof.net" data-copy="en" hidden>Discover OpenProof</a>
+            <a class="btn" href="/" data-copy="fr">Lire la spécification RPO</a>
+            <a class="btn" href="/" data-copy="en" hidden>Read the RPO specification</a>
+          </div>
         </div>
+        <figure class="founder-portrait">
+          <img src="/images/gersende-de-parcey.png" alt="Portrait de Gersende de Parcey" width="790" height="790">
+          <figcaption class="founder-caption"><span data-copy="fr">Fondatrice d’OpenProof<br>Créatrice de TruthX Engine</span><span data-copy="en" hidden>Founder of OpenProof<br>Creator of TruthX Engine</span></figcaption>
+        </figure>
       </div>
     </header>
 
     <section class="founder-section">
       <div class="wrap founder-grid">
         <div>
-          <p class="section-index" data-copy="fr">LE PROBLÈME IDENTIFIÉ</p>
-          <p class="section-index" data-copy="en" hidden>THE PROBLEM IDENTIFIED</p>
-          <h2 data-copy="fr">Les documents existent. La structure manque.</h2>
-          <h2 data-copy="en" hidden>The documents exist. The structure is missing.</h2>
+          <p class="section-index" data-copy="fr">L’ORIGINE</p>
+          <p class="section-index" data-copy="en" hidden>THE ORIGIN</p>
+          <h2 data-copy="fr">Deux fractures.<br>Une même mécanique.</h2>
+          <h2 data-copy="en" hidden>Two ruptures.<br>The same mechanism.</h2>
         </div>
         <div class="founder-copy">
           <div data-copy="fr">
-            <p>Gersende de Parcey conçoit des systèmes de gouvernance de l’information pour les environnements dans lesquels les décisions peuvent être contestées, auditées ou jugées.</p>
-            <p>Après avoir travaillé au cœur de transformations, de crises organisationnelles et de conflits de gouvernance, elle a identifié une défaillance récurrente : <strong>les organisations disposent souvent de nombreux documents, mais rarement d’une structure capable d’en préserver l’origine, les relations, les contradictions et les limites.</strong></p>
-            <p>Elle a créé OpenProof pour répondre à cette défaillance.</p>
+            <p>OpenProof est né d’une expérience répétée : celle de voir des faits réels perdre leur force lorsqu’ils entrent dans des systèmes institutionnels, juridiques ou organisationnels capables de les fragmenter, de les isoler ou de les recouvrir par un récit mieux préparé.</p>
+            <p>Après le décès de son mari, officier, Gersende de Parcey découvre une forme de violence institutionnelle rarement racontée : celle de procédures conçues au nom de la protection, mais qui peuvent retirer à un adulte responsable sa capacité d’agir, de décider et de protéger lui-même ses enfants.</p>
+            <p>Des années plus tard, une crise mêlant gouvernance, responsabilités, accusations et récits contradictoires produit un second basculement. Les preuves existent et ont été conservées. Pourtant, les posséder ne suffit pas : il faut encore reconstruire leur chronologie, leurs relations, leur provenance et les mécanismes qu’elles révèlent.</p>
+            <p>De cette double fracture est née une conviction : <strong>une personne ou une organisation ne devrait jamais dépendre de sa seule capacité à raconter, dans l’urgence, ce qui lui est arrivé.</strong></p>
+            <p><strong>Il fallait construire une infrastructure capable de préserver les faits avant qu’ils ne deviennent un champ de bataille.</strong></p>
           </div>
           <div data-copy="en" hidden>
-            <p>Gersende de Parcey designs information-governance systems for environments in which decisions may be challenged, audited or judged.</p>
-            <p>Working at the centre of transformations, organisational crises and governance conflicts, she identified a recurring failure: <strong>organisations often hold many documents, but rarely possess a structure capable of preserving their origin, relationships, contradictions and limits.</strong></p>
-            <p>She created OpenProof to address that failure.</p>
+            <p>OpenProof grew from a repeated experience: seeing real facts lose their force when they enter institutional, legal or organisational systems capable of fragmenting, isolating or burying them beneath a better-prepared narrative.</p>
+            <p>After the death of her husband, an army officer, Gersende de Parcey encountered a rarely discussed form of institutional violence: procedures designed in the name of protection that can remove a responsible adult’s ability to act, decide and protect her own children.</p>
+            <p>Years later, a crisis involving governance, responsibility, accusations and competing narratives created a second turning point. The evidence existed and had been preserved. Yet possessing it was not enough: its chronology, relationships, provenance and underlying mechanisms still had to be reconstructed.</p>
+            <p>From these two ruptures came one conviction: <strong>no person or organisation should depend solely on their ability to explain, under pressure, what happened to them.</strong></p>
+            <p><strong>An infrastructure was needed to preserve facts before they become a battlefield.</strong></p>
           </div>
         </div>
       </div>
