@@ -35,21 +35,21 @@
     .founder-page h1,.founder-page h2,.founder-page h3,.founder-page .eyebrow,.founder-page .architecture-name{font-family:Orbitron,Montserrat,sans-serif}
     .founder-hero{min-height:calc(100vh - 70px);display:flex;align-items:center;padding:100px 0 86px;border-bottom:1px solid var(--line)}
     .founder-hero .wrap{position:relative;z-index:1}
-    .founder-hero-grid{display:grid;grid-template-columns:minmax(0,1.42fr) minmax(270px,.58fr);gap:64px;align-items:center}
+    .founder-hero-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(340px,.75fr);gap:56px;align-items:center}
     .founder-signature{color:var(--pale);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin:0 0 24px}
     .founder-hero h1{max-width:940px;font-size:clamp(2.55rem,5.2vw,5.7rem);font-weight:600;line-height:1.06;letter-spacing:-.035em;margin:0 0 30px}
     .founder-hero h1 span{color:var(--gold)}
     .founder-statement{max-width:830px;color:var(--soft);font-size:clamp(1.05rem,1.65vw,1.32rem);line-height:1.7;margin:0}
-    .founder-portrait{position:relative;align-self:end;min-height:520px;display:flex;align-items:flex-end;justify-content:center}
-    .founder-portrait:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#04050a 0,transparent 25%),linear-gradient(0deg,#04050a 0,transparent 35%);pointer-events:none}
-    .founder-portrait img{display:block;width:100%;max-width:430px;height:auto;filter:saturate(.88) contrast(1.04)}
+    .founder-portrait{position:relative;align-self:end;min-height:600px;margin:0;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;isolation:isolate}
+    .founder-portrait:after{content:"";position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,#04050a 0,transparent 18%,transparent 82%,#04050a 100%),linear-gradient(0deg,#04050a 0,transparent 22%,transparent 88%,rgba(4,5,10,.32) 100%);pointer-events:none}
+    .founder-portrait img{display:block;width:min(100%,500px);max-width:none;height:auto;object-fit:contain;object-position:center bottom;filter:saturate(.9) contrast(1.04)}
     .founder-caption{position:absolute;z-index:2;right:0;bottom:24px;color:var(--pale);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;text-align:right}
     .founder-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
     .founder-section{padding:105px 0;border-bottom:1px solid var(--line)}
     .founder-grid{display:grid;grid-template-columns:minmax(230px,.38fr) minmax(0,.62fr);gap:80px;align-items:start}
     .founder-section h2{font-size:clamp(2rem,4vw,4rem);font-weight:500;line-height:1.12;letter-spacing:-.025em;margin:16px 0}
     .founder-copy{max-width:780px;color:var(--soft);font-size:1.04rem;line-height:1.9}
-    .founder-copy p{margin:0 0 24px}
+    .founder-copy p{margin:0 0 24px;text-align:justify;text-justify:inter-word;hyphens:auto}
     .founder-copy strong{color:var(--pale);font-weight:600}
     .architecture{padding:105px 0;background:linear-gradient(180deg,rgba(212,175,55,.025),transparent);border-bottom:1px solid var(--line)}
     .architecture h2{max-width:850px;font-size:clamp(2rem,4vw,4rem);font-weight:500;line-height:1.12;letter-spacing:-.025em;margin:16px 0 52px}
@@ -69,7 +69,7 @@
     .founder-close .founder-actions{margin:0;justify-content:flex-end}
     @media(max-width:900px){
       .founder-hero-grid{grid-template-columns:1fr;gap:38px}
-      .founder-portrait{min-height:0;max-width:440px}
+      .founder-portrait{min-height:480px;max-width:440px;margin-inline:auto}
       .founder-grid{grid-template-columns:1fr;gap:25px}
       .architecture-grid{grid-template-columns:1fr}
       .architecture-card{border-right:0;border-bottom:1px solid var(--line)}
@@ -80,7 +80,7 @@
     @media(max-width:720px){
       .founder-hero{min-height:auto;padding:76px 0 68px}
       .founder-hero h1{font-size:2.65rem}
-      .founder-portrait{max-width:330px}
+      .founder-portrait{min-height:360px;max-width:330px}\n      .founder-copy p{text-align:left;hyphens:none}
       .founder-section,.architecture,.doctrine,.founder-close{padding:75px 0}
     }
   </style>
