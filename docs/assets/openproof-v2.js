@@ -3,6 +3,15 @@
   const links=document.querySelector('.links');
   const isRpoHome=document.body.classList.contains('rpo-home');
 
+  if(links&&!links.querySelector('a[href="/gersende-de-parcey.html"]')){
+    const founderLink=document.createElement('a');
+    founderLink.href='/gersende-de-parcey.html';
+    founderLink.textContent='Founder';
+    if(location.pathname.endsWith('/gersende-de-parcey.html')) founderLink.setAttribute('aria-current','page');
+    const external=links.querySelector('.external-link')||links.lastElementChild;
+    links.insertBefore(founderLink,external);
+  }
+
   if(links&&!isRpoHome){
     const path=location.pathname==='/'?'/':location.pathname;
     const nav=[
