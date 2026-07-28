@@ -7,7 +7,7 @@
     const path=location.pathname==='/'?'/':location.pathname;
     const nav=[
       ['/','Overview'],
-      ['/spec.html','Specification'],
+      ['/','Specification'],
       ['/examples.html','Example'],
       ['/tests.html','Verify']
     ];
