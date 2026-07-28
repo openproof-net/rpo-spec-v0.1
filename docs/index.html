@@ -1,143 +1,199 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="icon" href="/assets/openproof-icon.svg" type="image/svg+xml">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#050610">
-<title>OpenProof | Public Probative Infrastructure</title>
-<meta name="description" content="OpenProof makes reconstructed decision records readable, sealed and independently verifiable. Powered by the private TruthX Engine.">
-<meta name="google-site-verification" content="UsoVYSdermOBIPlpmt4XGcVMiq7h8trcY0EdTOPzAv4" />
-<link rel="canonical" href="https://rpo.openproof.net/">
-<link rel="stylesheet" href="/assets/openproof-v2.css">
-<style>.path{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:26px 0}.path .card{min-height:240px;display:flex;flex-direction:column}.path .btn{margin-top:auto;align-self:flex-start}.number{font-size:.78rem;color:var(--gold);letter-spacing:.1em}.band{padding:52px 0;border-block:1px solid var(--line);background:rgba(255,255,255,.015)}.triptych{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.triptych b{display:block;color:var(--pale);font-size:1.15rem}.section{padding:62px 0}.section h2{font-size:clamp(2rem,4vw,3.7rem);line-height:1.05;margin:0 0 12px}.audience{display:flex;gap:8px;flex-wrap:wrap}.audience span{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted)}@media(max-width:800px){.path,.triptych{grid-template-columns:1fr}}</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#04050a">
+  <title>RPO v0.1 — Public Technical Specification | OpenProof</title>
+  <meta name="description" content="La spécification technique publique du Registered Probative Object (RPO) produit par OpenProof et TruthX Engine.">
+  <link rel="canonical" href="https://rpo.openproof.net/">
+  <link rel="icon" href="/assets/openproof-icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/openproof-v2.css">
 </head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
-<nav class="nav">
-<div class="wrap navin">
-<a class="brand" aria-current="page" href="/">OPENPROOF</a>
-<button class="menu" aria-expanded="false">Menu</button>
-<div class="links">
-<a aria-current="page" href="/">Home</a>
-<a href="/simulator.html">Live Simulator</a>
-<a href="/simulator-signal.html">Signal Detection</a>
-<a href="/simulator-crisis.html">Crisis Reconstruction</a>
-<a href="/cockpit-technical.html">Technical Cockpit</a>
-<a href="/spec.html">RPO Spec</a>
-</div>
-</div>
-</nav>
-<main id="main">
-<header class="hero cosmos">
-<canvas class="stars" aria-hidden="true">
-</canvas>
-<div class="wrap heroGrid">
-<div>
-<span class="kicker">OpenProof · RPO v0.1</span>
-<h1>From fragmented reality<br>to a <span>verifiable record.</span>
-</h1>
-<p class="lead">OpenProof is the public probative infrastructure. It lets people inspect how a situation was reconstructed, what remains uncertain and whether the resulting RPO has been altered.</p>
-<div class="actions" style="justify-content:flex-start">
-<a class="btn primary" href="/simulator.html">Experience the live case</a>
-<a class="btn" href="/how-it-works.html">How it works</a>
-</div>
-</div>
-<aside class="orbitVisual" aria-label="Reality reconstruction system visual">
-<div class="orbitRing r1">
-</div>
-<div class="orbitRing r2">
-</div>
-<div class="orbitRing r3">
-</div>
-<div class="orbitSweep">
-</div>
-<div class="orbitCore">Reality<br>Reconstruction</div>
-<div class="orbitNode n1">
-<b>Evidence</b>Localized and traceable</div>
-<div class="orbitNode n2">
-<b>Narratives</b>Compared, never assumed</div>
-<div class="orbitNode n3">
-<b>Power</b>Formal and operational</div>
-<div class="orbitNode n4">
-<b>Decision</b>Human and accountable</div>
-</aside>
-</div>
-</header>
-<section class="section">
-<div class="wrap">
-<h2>Choose one clear path.</h2>
-<p class="lead">The technical depth remains underneath. The interface asks one question at a time.</p>
-<div class="path">
-<article class="card">
-<span class="number">01 · BEFORE</span>
-<h3>Signal Detection</h3>
-<p>See weak signals, ownership gaps and competing explanations while intervention remains reversible.</p>
-<a class="btn" href="/simulator-signal.html">Detect structural drift →</a>
-</article>
-<article class="card">
-<span class="number">02 · AFTER</span>
-<h3>Crisis Reconstruction</h3>
-<p>Separate facts, narratives, powers and causal hypotheses before responsibility is assigned.</p>
-<a class="btn" href="/simulator-crisis.html">Reconstruct the record →</a>
-</article>
-<article class="card">
-<span class="number">03 · EXAMPLE</span>
-<h3>AI Governance Demo</h3>
-<p>Follow a fictional AI programme from a misleading question to a robust, traceable decision frame.</p>
-<a class="btn primary" href="/demo-ai-governance.html">Explore the demonstration →</a>
-</article>
-<article class="card">
-<span class="number">04 · LIVE MVP</span>
-<h3>TRUTHX Live Case</h3>
-<p>Enter a fictional company, challenge its evidence, compare formal and effective power, and generate a verifiable decision record.</p>
-<a class="btn primary" href="/simulator.html">Experience the simulator →</a>
-</article>
-</div>
-</div>
-</section>
-<section class="band">
-<div class="wrap triptych">
-<div class="card">
-<b>TruthX Engine</b>
-<p>Private deterministic structuring engine. It reconstructs sources, facts, actors, flows, contradictions and hypotheses.</p>
-</div>
-<div class="card">
-<b>OpenProof</b>
-<p>Public probative infrastructure. It makes the structure inspectable and independently verifiable.</p>
-</div>
-<div class="card">
-<b>RPO</b>
-<p>Registered probative object. It preserves the sources, reservations, reconstruction and integrity hash.</p>
-</div>
-</div>
-</section>
-<section class="section">
-<div class="wrap">
-<h2>One method. Many exposed decisions.</h2>
-<p class="lead">Legal work is one application, not the perimeter of the product.</p>
-<div class="audience">
-<span>Executive committees</span>
-<span>Boards</span>
-<span>Investors</span>
-<span>M&amp;A</span>
-<span>Industrial transformation</span>
-<span>AI governance</span>
-<span>Internal investigations</span>
-<span>Audit &amp; compliance</span>
-<span>Legal teams</span>
-<span>Research</span>
-</div>
-</div>
-</section>
-</main>
-<footer class="footer">
-<div class="wrap">
-<b>OpenProof is the probative infrastructure.</b> TruthX Engine is the deterministic structuring engine powering it. RPO is the registered probative object it produces.<p class="disclaimer">OpenProof does not adjudicate truth and does not replace professional judgment.</p>
-</div>
-</footer>
-<script src="/assets/openproof-v2.js">
-</script>
+<body class="rpo-home">
+  <a class="skip" href="#main">Aller au contenu</a>
+
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="wrap navin">
+      <a class="brand brand-lockup" href="/" aria-current="page">
+        <img src="/assets/openproof-icon.svg" alt="" width="38" height="38">
+        <span><strong>OPENPROOF</strong><small>RPO PUBLIC SPECIFICATION</small></span>
+      </a>
+      <button class="menu" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+      <div class="links">
+        <a href="/spec.html">Specification</a>
+        <a href="/examples.html">Example</a>
+        <a href="/tests.html">Verify</a>
+        <a class="external-link" href="https://openproof.net">OpenProof ↗</a>
+      </div>
+      <div class="language" aria-label="Langue">
+        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="rpo-hero cosmos">
+      <canvas class="stars" aria-hidden="true"></canvas>
+      <div class="wrap rpo-hero-grid">
+        <div class="rpo-copy">
+          <p class="eyebrow">OPENPROOF · PUBLIC STANDARD · V0.1</p>
+          <h1>
+            <span data-copy="fr">Un objet probatoire.<br>Stable. Vérifiable. Défendable.</span>
+            <span data-copy="en" hidden>One probative object.<br>Stable. Verifiable. Defensible.</span>
+          </h1>
+          <p class="rpo-lead">
+            <span data-copy="fr">Le RPO est le format public produit par OpenProof pour préserver un dossier structuré, ses sources, ses réserves et son intégrité — sans confondre vérification et vérité.</span>
+            <span data-copy="en" hidden>The RPO is the public format produced by OpenProof to preserve a structured record, its sources, reservations and integrity — without confusing verification with truth.</span>
+          </p>
+          <div class="rpo-actions">
+            <a class="btn primary" href="/spec.html">
+              <span data-copy="fr">Lire la spécification</span>
+              <span data-copy="en" hidden>Read the specification</span>
+            </a>
+            <a class="btn" href="/examples.html">
+              <span data-copy="fr">Voir un RPO</span>
+              <span data-copy="en" hidden>View an RPO</span>
+            </a>
+          </div>
+          <p class="version-line">RPO v0.1 · JSON · SHA-256 · deterministic verification</p>
+        </div>
+
+        <div class="rpo-object" aria-label="Registered Probative Object">
+          <div class="rpo-orbit orbit-a"></div>
+          <div class="rpo-orbit orbit-b"></div>
+          <div class="rpo-orbit orbit-c"></div>
+          <div class="rpo-core">
+            <img src="/assets/openproof-icon.svg" alt="">
+            <strong>RPO</strong>
+            <span>REGISTERED<br>PROBATIVE OBJECT</span>
+          </div>
+          <div class="rpo-signal signal-source"><i></i><span>SOURCES</span></div>
+          <div class="rpo-signal signal-structure"><i></i><span>STRUCTURE</span></div>
+          <div class="rpo-signal signal-reserve"><i></i><span>RESERVATIONS</span></div>
+          <div class="rpo-signal signal-hash"><i></i><span>INTEGRITY HASH</span></div>
+        </div>
+      </div>
+    </header>
+
+    <section class="rpo-definition" aria-labelledby="definition-title">
+      <div class="wrap">
+        <p class="section-index">01 · DEFINITION</p>
+        <div class="definition-grid">
+          <h2 id="definition-title">
+            <span data-copy="fr">Ce que le RPO garantit.<br>Et ce qu’il ne prétend pas garantir.</span>
+            <span data-copy="en" hidden>What the RPO guarantees.<br>And what it does not claim to guarantee.</span>
+          </h2>
+          <div class="definition-copy">
+            <p data-copy="fr">Un RPO rend détectable toute modification du noyau scellé. Il conserve la provenance, les transformations et les réserves nécessaires à un examen indépendant.</p>
+            <p data-copy="en" hidden>An RPO makes any change to the sealed core detectable. It preserves the provenance, transformations and reservations required for independent review.</p>
+            <p class="boundary">
+              <span data-copy="fr"><strong>Limite essentielle :</strong> l’intégrité d’un objet ne prouve pas la vérité de son contenu. OpenProof structure et rend vérifiable ; il ne juge pas.</span>
+              <span data-copy="en" hidden><strong>Essential boundary:</strong> object integrity does not prove content truth. OpenProof structures and makes records verifiable; it does not adjudicate.</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="rpo-anatomy" aria-labelledby="anatomy-title">
+      <div class="wrap">
+        <p class="section-index">02 · ANATOMY</p>
+        <h2 id="anatomy-title">
+          <span data-copy="fr">Quatre éléments. Une trace reproductible.</span>
+          <span data-copy="en" hidden>Four elements. One reproducible trace.</span>
+        </h2>
+        <div class="anatomy-grid">
+          <article>
+            <span>01</span><h3>Sealed core</h3>
+            <p data-copy="fr">Le noyau JSON canonique du dossier.</p>
+            <p data-copy="en" hidden>The record’s canonical JSON core.</p>
+          </article>
+          <article>
+            <span>02</span><h3>Evidence manifest</h3>
+            <p data-copy="fr">Les sources, leurs identifiants et leur provenance.</p>
+            <p data-copy="en" hidden>Sources, identifiers and provenance.</p>
+          </article>
+          <article>
+            <span>03</span><h3>Reservations</h3>
+            <p data-copy="fr">Les lacunes, contradictions et limites explicites.</p>
+            <p data-copy="en" hidden>Explicit gaps, contradictions and limits.</p>
+          </article>
+          <article>
+            <span>04</span><h3>Public hash</h3>
+            <p data-copy="fr">L’empreinte SHA-256 permettant de détecter l’altération.</p>
+            <p data-copy="en" hidden>The SHA-256 fingerprint used to detect alteration.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rpo-paths" aria-labelledby="paths-title">
+      <div class="wrap">
+        <p class="section-index">03 · PUBLIC ACCESS</p>
+        <h2 id="paths-title">
+          <span data-copy="fr">Trois accès. Rien de plus.</span>
+          <span data-copy="en" hidden>Three entry points. Nothing more.</span>
+        </h2>
+        <div class="path-grid">
+          <a href="/spec.html">
+            <span>SPECIFICATION</span><strong>01</strong>
+            <h3 data-copy="fr">Comprendre le format</h3>
+            <h3 data-copy="en" hidden>Understand the format</h3>
+            <p data-copy="fr">Schéma, sérialisation canonique, empreinte et conformité.</p>
+            <p data-copy="en" hidden>Schema, canonical serialization, hashing and conformance.</p>
+            <i>Open specification →</i>
+          </a>
+          <a href="/examples.html">
+            <span>EXAMPLE</span><strong>02</strong>
+            <h3 data-copy="fr">Inspecter un objet</h3>
+            <h3 data-copy="en" hidden>Inspect an object</h3>
+            <p data-copy="fr">Un bundle d’exemple lisible par l’humain et la machine.</p>
+            <p data-copy="en" hidden>A sample bundle readable by humans and machines.</p>
+            <i>Open example →</i>
+          </a>
+          <a href="/tests.html">
+            <span>VERIFY</span><strong>03</strong>
+            <h3 data-copy="fr">Reproduire la vérification</h3>
+            <h3 data-copy="en" hidden>Reproduce verification</h3>
+            <p data-copy="fr">Vecteurs de test et résultat attendu, indépendamment d’OpenProof.</p>
+            <p data-copy="en" hidden>Test vectors and expected results, independently of OpenProof.</p>
+            <i>Open verification →</i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="architecture-line" aria-label="Architecture de marque">
+      <div class="wrap">
+        <div><span>OPENPROOF</span><strong>Probative infrastructure</strong></div>
+        <b aria-hidden="true">→</b>
+        <div><span>TRUTHX ENGINE</span><strong>Deterministic structuring engine</strong></div>
+        <b aria-hidden="true">→</b>
+        <div><span>RPO</span><strong>Registered probative object</strong></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer rpo-footer">
+    <div class="wrap">
+      <div>
+        <strong>RPO v0.1</strong>
+        <p>Public technical specification maintained by OpenProof.</p>
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a>
+        <a href="/spec.html">Specification</a>
+        <a href="https://openproof.net">OpenProof</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/openproof-v2.js"></script>
 </body>
 </html>
