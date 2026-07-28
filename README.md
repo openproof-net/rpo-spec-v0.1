@@ -1,5 +1,17 @@
 # 🔵 OpenProof — RPO Specification
 
+> **OpenProof is the probative infrastructure. TruthX Engine is the deterministic structuring engine powering it. RPO is the Registered Probative Object it produces.**
+
+OpenProof turns complex, fragmented evidence into structured, traceable and verifiable records for high-stakes decisions. This repository defines the public specification of the output: the **Registered Probative Object (RPO)**.
+
+| Layer | Role |
+|---|---|
+| **TruthX Engine** | Structures heterogeneous evidence through a controlled, deterministic pipeline. |
+| **OpenProof** | Provides the probative infrastructure and public verification layer. |
+| **RPO** | Preserves the structured record, its sources, transformations, reservations and integrity data. |
+
+**In one line:** complex evidence enters; a reviewable and independently verifiable decision record comes out.
+
 Integrity · Readability · Verifiability
 
 ![Version](https://img.shields.io/badge/RPO-v0.1-gold)
