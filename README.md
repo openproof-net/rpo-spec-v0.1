@@ -62,7 +62,7 @@ ___
 *A civil code for digital evidence in an age ruled by narratives.*
 
 OpenProof defines a public, deterministic and testable format for structuring digital evidence.
-Its core artifact, the RPO (Rapport Probatoire Ouvert), is a dual-format bundle allowing:
+Its core artifact, the RPO (Registered Probative Object), is a dual-format bundle allowing:
 
 - machines to verify integrity,
 - humans to read coherence,
@@ -80,7 +80,7 @@ ___
 
 Try it in 10 seconds
 ```bash
-git clone https://rpo.openproof.net/ 
+git clone https://github.com/openproof-net/rpo-spec-v0.1.git 
 cd rpo-spec-v0.1
 python tools/validate_rpo.py examples/rpo-example-001.json
 ```
