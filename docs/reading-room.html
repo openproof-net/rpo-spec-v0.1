@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#04050a">
+  <title>Reading Room — Annie Duke | OpenProof</title>
+  <meta name="description" content="Deux lectures fondatrices sur la décision sous incertitude et l'art de renoncer au bon moment : Thinking in Bets et Quit, d'Annie Duke.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://rpo.openproof.net/reading-room.html">
+  <link rel="icon" href="/assets/openproof-icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/openproof-v2.css">
+  <style>
+    .reading-page{font-family:Montserrat,Inter,ui-sans-serif,system-ui,sans-serif;background:#04050a}
+    .reading-page h1,.reading-page h2,.reading-page h3,.reading-page .eyebrow,.reading-page .section-index{font-family:Orbitron,Montserrat,sans-serif}
+    .reading-hero{padding:86px 0 56px;position:relative;overflow:hidden}
+    .reading-hero:after{content:"";position:absolute;width:620px;height:620px;right:-220px;top:-250px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.13),rgba(93,115,255,.06) 42%,transparent 70%);filter:blur(18px);pointer-events:none}
+    .reading-hero h1{font-size:clamp(2.8rem,7vw,6.2rem);line-height:.98;letter-spacing:-.055em;margin:18px 0;max-width:940px}
+    .reading-hero h1 span{color:var(--gold)}
+    .reading-intro{max-width:760px;color:var(--soft);font-size:1.1rem}
+    .reading-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;padding:18px 0 72px}
+    .book-card{position:relative;min-height:520px;padding:34px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(180deg,rgba(16,21,31,.98),rgba(5,8,14,.98));overflow:hidden}
+    .book-card:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(212,175,55,.08),transparent 40%);pointer-events:none}
+    .book-number{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase}
+    .book-status{display:inline-flex;border:1px solid rgba(242,199,104,.26);background:rgba(242,199,104,.08);color:var(--amber);padding:6px 10px;border-radius:999px}
+    .book-card h2{font-size:clamp(2rem,4vw,3.5rem);line-height:1;margin:72px 0 12px;color:var(--pale)}
+    .book-subtitle{color:var(--muted);max-width:460px;min-height:52px}
+    .book-question{margin:56px 0 0;padding-top:24px;border-top:1px solid var(--line);font-size:1.25rem;line-height:1.4;color:var(--ink)}
+    .book-use{margin-top:24px;color:var(--soft)}
+    .book-use strong{color:var(--pale)}
+    .book-link{display:inline-flex;margin-top:26px;text-decoration:none;color:var(--pale);border-bottom:1px solid var(--gold);padding-bottom:3px}
+    .method{padding:64px 0 82px;border-top:1px solid var(--line)}
+    .method-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px}
+    .method h2{font-size:clamp(2rem,4vw,3.8rem);line-height:1.05;margin:10px 0}
+    .method ol{margin:0;padding:0;list-style:none;counter-reset:steps}
+    .method li{counter-increment:steps;padding:18px 0 18px 54px;border-bottom:1px solid rgba(255,255,255,.07);position:relative;color:var(--soft)}
+    .method li:before{content:counter(steps,decimal-leading-zero);position:absolute;left:0;color:var(--gold);font-family:Orbitron,Montserrat,sans-serif;font-size:.78rem}
+    .boundary{margin-top:28px;padding:18px 20px;border-left:3px solid var(--gold);background:rgba(212,175,55,.07);color:var(--soft)}
+    @media(max-width:880px){.reading-grid,.method-grid{grid-template-columns:1fr}.book-card{min-height:auto}.book-card h2{margin-top:48px}.book-subtitle{min-height:0}}
+  </style>
+</head>
+<body class="reading-page">
+  <a class="skip" href="#main">Aller au contenu</a>
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="wrap navin">
+      <a class="brand brand-lockup" href="/">
+        <img src="/assets/openproof-icon.svg" alt="" width="38" height="38">
+        <span><strong>OPENPROOF</strong><small>RPO PUBLIC SPECIFICATION</small></span>
+      </a>
+      <button class="menu" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+      <div class="links">
+        <a href="/">Specification</a>
+        <a href="/examples.html">Example</a>
+        <a href="/tests.html">Verify</a>
+        <a href="/reading-room.html" aria-current="page">Reading Room</a>
+        <a class="external-link" href="https://openproof.net">OpenProof ↗</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="reading-hero">
+      <div class="wrap">
+        <p class="eyebrow">OPENPROOF · READING ROOM · 01</p>
+        <h1>Lire pour mieux <span>décider.</span></h1>
+        <p class="reading-intro">Cette page suit deux lectures fondatrices d’Annie Duke. Elle ne publie ni résumé automatique ni conclusion anticipée. Les notes seront ajoutées au fur et à mesure de la lecture, puis relues avant toute utilisation dans un Proof Brief.</p>
+      </div>
+    </header>
+
+    <section class="wrap reading-grid" aria-label="Livres suivis">
+      <article class="book-card">
+        <div class="book-number"><span>BOOK 01</span><span class="book-status">Lecture en cours</span></div>
+        <h2>Thinking in Bets</h2>
+        <p class="book-subtitle">Making Smarter Decisions When You Don’t Have All the Facts</p>
+        <p class="book-question">Comment évaluer une décision lorsque l’information est incomplète et que le résultat contient une part de hasard&nbsp;?</p>
+        <p class="book-use"><strong>Angle de lecture OpenProof :</strong> distinguer qualité de décision, résultat obtenu, incertitude et information disponible au moment du choix.</p>
+        <a class="book-link" href="https://www.annieduke.com/books/" rel="noopener">Source officielle →</a>
+      </article>
+
+      <article class="book-card">
+        <div class="book-number"><span>BOOK 02</span><span class="book-status">À lire ensuite</span></div>
+        <h2>Quit</h2>
+        <p class="book-subtitle">The Power of Knowing When to Walk Away</p>
+        <p class="book-question">À partir de quels signaux faut-il poursuivre, ralentir, suspendre ou abandonner une action&nbsp;?</p>
+        <p class="book-use"><strong>Angle de lecture OpenProof :</strong> documenter les critères d’arrêt avant que l’engagement, le temps investi ou l’identité ne rendent la sortie plus difficile.</p>
+        <a class="book-link" href="https://www.annieduke.com/books/" rel="noopener">Source officielle →</a>
+      </article>
+    </section>
+
+    <section class="method">
+      <div class="wrap method-grid">
+        <div>
+          <p class="section-index">02 · MÉTHODE</p>
+          <h2>Une lecture.<br>Une trace.</h2>
+        </div>
+        <div>
+          <ol>
+            <li>Noter l’idée exacte et la page, sans la reformuler trop vite.</li>
+            <li>Distinguer ce que l’autrice affirme, les exemples proposés et ce qui reste à vérifier.</li>
+            <li>Relier chaque idée à une décision ou à un projet réel seulement si le lien est explicite.</li>
+            <li>Conserver les objections, les limites et les désaccords.</li>
+            <li>N’intégrer une idée à un Proof Brief qu’après relecture et validation humaine.</li>
+          </ol>
+          <p class="boundary"><strong>Limite :</strong> cette page est un journal de lecture public. Elle ne constitue ni une validation scientifique des livres, ni une recommandation universelle, ni une décision produite par OpenProof.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer rpo-footer">
+    <div class="wrap">
+      <div><strong>OpenProof Reading Room</strong><p>Lectures, concepts et réserves avant publication.</p></div>
+      <div class="footer-links"><a href="/">Specification</a><a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a><a href="https://openproof.net">OpenProof</a></div>
+    </div>
+  </footer>
+  <script src="/assets/openproof-v2.js"></script>
+</body>
+</html>
