@@ -59,11 +59,31 @@
     .founder-copy{max-width:800px;color:var(--soft);font-size:1.04rem;line-height:1.9}
     .founder-copy p{margin:0 0 24px;text-align:justify;text-justify:inter-word;hyphens:auto}
     .founder-copy strong{color:var(--pale);font-weight:600}
-    .founder-copy ul{list-style:none;padding:0;margin:28px 0 30px;border-top:1px solid var(--line)}
-    .founder-copy li{padding:13px 0;border-bottom:1px solid var(--line);color:var(--pale)}
-    .founder-copy li::before{content:"—";color:var(--gold);margin-right:12px}
-    .founder-thesis{font:500 clamp(1.35rem,2.3vw,2.15rem)/1.45 Orbitron,sans-serif;color:var(--ink);letter-spacing:-.015em;margin:0 0 30px}
-    .founder-thesis span{color:var(--gold)}
+
+    .reality-section{padding:118px 0 126px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(212,175,55,.018),transparent 52%)}
+    .reality-header{display:grid;grid-template-columns:minmax(250px,.36fr) minmax(0,.64fr);gap:84px;align-items:start;margin-bottom:62px}
+    .reality-header h2{font-size:clamp(2rem,4vw,4rem);font-weight:500;line-height:1.12;letter-spacing:-.025em;margin:16px 0}
+    .reality-thesis{max-width:790px;font:500 clamp(1.5rem,2.55vw,2.55rem)/1.42 Orbitron,sans-serif;letter-spacing:-.018em;color:var(--ink);margin:0}
+    .reality-thesis span{color:var(--gold)}
+    .reality-pair{display:grid;grid-template-columns:repeat(2,1fr);border-block:1px solid var(--line);margin-bottom:58px}
+    .reality-card{min-height:270px;padding:34px 38px 40px;border-right:1px solid var(--line)}
+    .reality-card:last-child{border-right:0}
+    .reality-card-index{display:block;color:var(--gold);font:600 .62rem Orbitron,sans-serif;letter-spacing:.13em;margin-bottom:34px}
+    .reality-card h3{font-size:clamp(1.25rem,2vw,1.85rem);font-weight:500;line-height:1.25;margin:0 0 22px;color:var(--pale)}
+    .reality-card p{max-width:510px;color:var(--muted);font-size:.98rem;line-height:1.8;margin:0}
+    .reality-intro{max-width:900px;margin:0 auto 38px;color:var(--soft);font-size:1.03rem;line-height:1.85;text-align:center}
+    .question-grid{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);margin-top:34px}
+    .question-card{position:relative;min-height:140px;padding:28px 34px 30px 54px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;align-items:center;color:var(--pale);font-size:1rem;line-height:1.6}
+    .question-card:nth-child(2n){border-right:0}
+    .question-card::before{content:"";position:absolute;left:28px;top:50%;width:10px;height:1px;background:var(--gold)}
+    .question-card.wide{grid-column:1/-1;border-right:0;min-height:118px}
+    .reality-synthesis{display:grid;grid-template-columns:minmax(0,.58fr) minmax(260px,.42fr);gap:64px;align-items:end;margin-top:62px}
+    .reality-synthesis-copy{color:var(--soft);font-size:1.03rem;line-height:1.9}
+    .reality-synthesis-copy p{margin:0 0 22px}
+    .reality-synthesis-copy p:last-child{margin-bottom:0}
+    .reality-name{padding-left:26px;border-left:2px solid var(--gold);font:500 clamp(1.25rem,2vw,1.8rem)/1.5 Orbitron,sans-serif;color:var(--ink)}
+    .reality-name span{display:block;color:var(--gold);margin-top:10px}
+
     .architecture{padding:105px 0;background:linear-gradient(180deg,rgba(212,175,55,.025),transparent);border-bottom:1px solid var(--line)}
     .architecture h2{max-width:900px;font-size:clamp(2rem,4vw,4rem);font-weight:500;line-height:1.12;letter-spacing:-.025em;margin:16px 0 52px}
     .architecture-grid{display:grid;grid-template-columns:repeat(3,1fr);border-block:1px solid var(--line)}
@@ -83,12 +103,13 @@
     .founder-close h2{max-width:800px;font-size:clamp(2rem,4vw,4rem);font-weight:500;line-height:1.12;letter-spacing:-.025em;margin:16px 0 0}
     .founder-close .founder-actions{margin:0;justify-content:flex-end}
     @media(max-width:900px){
-      .founder-origin-grid{grid-template-columns:1fr;gap:42px}
+      .founder-origin-grid,.founder-grid,.reality-header,.reality-synthesis{grid-template-columns:1fr;gap:38px}
       .founder-portrait{max-width:460px;margin-inline:auto}
-      .founder-grid{grid-template-columns:1fr;gap:25px}
-      .architecture-grid{grid-template-columns:1fr}
-      .architecture-card{border-right:0;border-bottom:1px solid var(--line)}
-      .architecture-card:last-child{border-bottom:0}
+      .reality-pair,.question-grid,.architecture-grid{grid-template-columns:1fr}
+      .reality-card,.question-card,.architecture-card{border-right:0;border-bottom:1px solid var(--line)}
+      .reality-card:last-child,.architecture-card:last-child{border-bottom:0}
+      .question-card.wide{grid-column:auto}
+      .reality-intro{text-align:left;margin-inline:0}
       .founder-close .wrap{display:block}
       .founder-close .founder-actions{margin-top:34px;justify-content:flex-start}
     }
@@ -97,7 +118,10 @@
       .founder-hero h1{font-size:2.65rem}
       .founder-portrait{max-width:330px}
       .founder-copy p{text-align:left;hyphens:none}
-      .founder-section,.architecture,.doctrine,.founder-close{padding:75px 0}
+      .founder-section,.reality-section,.architecture,.doctrine,.founder-close{padding:75px 0}
+      .reality-card{min-height:auto;padding:30px 24px 34px}
+      .question-card{min-height:auto;padding:24px 24px 24px 48px}
+      .question-card::before{left:22px}
     }
   </style>
 </head>
@@ -174,43 +198,69 @@
       </div>
     </section>
 
-    <section class="founder-section">
-      <div class="wrap founder-grid">
-        <div>
-          <p class="section-index" data-copy="fr">VINGT ANS DE TERRAIN</p>
-          <p class="section-index" data-copy="en" hidden>TWENTY YEARS IN THE FIELD</p>
-          <h2 data-copy="fr">Reconstruire le système réel.</h2>
-          <h2 data-copy="en" hidden>Reconstruct the real system.</h2>
+    <section class="reality-section">
+      <div class="wrap">
+        <div class="reality-header">
+          <div>
+            <p class="section-index" data-copy="fr">VINGT ANS DE TERRAIN</p>
+            <p class="section-index" data-copy="en" hidden>TWENTY YEARS IN THE FIELD</p>
+            <h2 data-copy="fr">Reconstituer<br>le système réel.</h2>
+            <h2 data-copy="en" hidden>Reconstruct<br>the real system.</h2>
+          </div>
+          <p class="reality-thesis" data-copy="fr">Chaque organisation possède deux réalités. Celle qu’elle décrit. Et celle qui, <span>réellement,</span> détermine ses décisions, ses comportements et ses performances.</p>
+          <p class="reality-thesis" data-copy="en" hidden>Every organisation has two realities. The one it describes. And the one that <span>actually</span> drives its decisions, behaviour and performance.</p>
         </div>
-        <div class="founder-copy">
-          <div data-copy="fr">
-            <p class="founder-thesis">Chaque organisation possède deux réalités : celle qu’elle décrit, et celle qui <span>détermine réellement</span> les décisions, les comportements et la performance.</p>
-            <p>Pendant plus de vingt ans, Gersende de Parcey a accompagné des dirigeants confrontés à des organisations devenues difficiles à lire : informations fragmentées, responsabilités diffuses, décisions ralenties, silos, coûts cachés et jeux de pouvoir invisibles.</p>
-            <p>Son travail ne commence pas par une solution standard. Il commence par des questions simples, appliquées avec rigueur :</p>
-            <ul>
-              <li>Qui décide réellement ?</li>
-              <li>Qui produit réellement de la valeur ?</li>
-              <li>Où naît l’information, qui l’observe, qui la transforme et qui la transmet ?</li>
-              <li>À quel moment une hypothèse devient-elle une croyance, puis une décision ?</li>
-              <li>Quelles chaînes causales relient cette décision à ses conséquences ?</li>
-            </ul>
-            <p>Elle reconstruit les flux d’information, de décision, de responsabilité et d’exécution. Elle distingue les rôles formels des rôles réels, les symptômes des causes, les affirmations des sources et la visibilité apparente du fonctionnement effectif.</p>
-            <p>Cette pratique peut être décrite comme une forme d’<strong>Organizational Reality Engineering</strong> : rendre le fonctionnement réel d’une organisation suffisamment lisible pour qu’il puisse être compris, contesté et transformé.</p>
+
+        <div class="reality-pair">
+          <article class="reality-card">
+            <span class="reality-card-index" data-copy="fr">01 · RÉALITÉ DÉCRITE</span>
+            <span class="reality-card-index" data-copy="en" hidden>01 · DESCRIBED REALITY</span>
+            <h3 data-copy="fr">Ce que l’organisation montre.</h3>
+            <h3 data-copy="en" hidden>What the organisation shows.</h3>
+            <p data-copy="fr">Organigrammes, processus, tableaux de bord, procédures, responsabilités officielles et récits stabilisés.</p>
+            <p data-copy="en" hidden>Organisation charts, processes, dashboards, procedures, formal accountability and established narratives.</p>
+          </article>
+          <article class="reality-card">
+            <span class="reality-card-index" data-copy="fr">02 · RÉALITÉ OPÉRANTE</span>
+            <span class="reality-card-index" data-copy="en" hidden>02 · OPERATING REALITY</span>
+            <h3 data-copy="fr">Ce qui gouverne réellement le système.</h3>
+            <h3 data-copy="en" hidden>What actually governs the system.</h3>
+            <p data-copy="fr">Décisions effectives, flux réels, responsabilités assumées ou évitées, rapports de pouvoir, blocages et chaînes causales.</p>
+            <p data-copy="en" hidden>Actual decisions, real flows, assumed or avoided accountability, power dynamics, bottlenecks and causal chains.</p>
+          </article>
+        </div>
+
+        <p class="reality-intro" data-copy="fr">Depuis plus de vingt ans, le travail commence par des questions simples. Leur force ne vient pas de leur sophistication, mais de la rigueur avec laquelle leurs réponses sont reliées.</p>
+        <p class="reality-intro" data-copy="en" hidden>For more than twenty years, the work has begun with simple questions. Their power lies not in sophistication, but in the rigour with which their answers are connected.</p>
+
+        <div class="question-grid" data-copy="fr">
+          <div class="question-card">Qui prend réellement les décisions ?</div>
+          <div class="question-card">Qui crée réellement la valeur ?</div>
+          <div class="question-card">D’où vient l’information, qui l’observe, qui la transforme et qui la transmet ?</div>
+          <div class="question-card">À quel moment une supposition devient-elle une croyance, puis une décision ?</div>
+          <div class="question-card wide">Quelles chaînes causales relient cette décision à ses conséquences ?</div>
+        </div>
+        <div class="question-grid" data-copy="en" hidden>
+          <div class="question-card">Who actually makes the decisions?</div>
+          <div class="question-card">Who actually creates value?</div>
+          <div class="question-card">Where does information originate, who observes it, who transforms it and who transmits it?</div>
+          <div class="question-card">When does an assumption become a belief, then a decision?</div>
+          <div class="question-card wide">Which causal chains connect that decision to its consequences?</div>
+        </div>
+
+        <div class="reality-synthesis">
+          <div class="reality-synthesis-copy">
+            <div data-copy="fr">
+              <p>Gersende de Parcey reconstitue les flux d’information, de décision, de responsabilité et d’exécution. Elle distingue les rôles formels des rôles réels, les symptômes des causes, les affirmations des sources et la visibilité apparente du fonctionnement effectif.</p>
+              <p>Une fois cette cartographie reconstruite, l’organisation redevient lisible. Les blocages cessent d’être invisibles. Les responsabilités peuvent être examinées. Les décisions peuvent enfin être prises sur une représentation plus fidèle de la réalité.</p>
+            </div>
+            <div data-copy="en" hidden>
+              <p>Gersende de Parcey reconstructs information, decision, accountability and execution flows. She separates formal roles from real roles, symptoms from causes, claims from sources and apparent visibility from actual operation.</p>
+              <p>Once this map has been rebuilt, the organisation becomes readable again. Bottlenecks stop being invisible. Accountability can be examined. Decisions can finally be made from a more accurate representation of reality.</p>
+            </div>
           </div>
-          <div data-copy="en" hidden>
-            <p class="founder-thesis">Every organisation has two realities: the one it describes, and the one that <span>actually drives</span> decisions, behaviour and performance.</p>
-            <p>For more than twenty years, Gersende de Parcey has worked alongside leaders whose organisations had become difficult to read: fragmented information, blurred accountability, slowed decisions, silos, hidden costs and invisible power dynamics.</p>
-            <p>Her work does not begin with a standard solution. It begins with simple questions, applied rigorously:</p>
-            <ul>
-              <li>Who actually makes decisions?</li>
-              <li>Who actually creates value?</li>
-              <li>Where does information originate, who observes it, who transforms it and who transmits it?</li>
-              <li>When does an assumption become a belief, then a decision?</li>
-              <li>Which causal chains connect that decision to its consequences?</li>
-            </ul>
-            <p>She reconstructs information, decision, accountability and execution flows. She separates formal roles from real roles, symptoms from causes, claims from sources and apparent visibility from actual operation.</p>
-            <p>This practice can be described as a form of <strong>Organizational Reality Engineering</strong>: making the real operation of an organisation readable enough to be understood, challenged and transformed.</p>
-          </div>
+          <div class="reality-name" data-copy="fr">Cette pratique porte un nom.<span>Organizational Reality Engineering.</span></div>
+          <div class="reality-name" data-copy="en" hidden>This practice has a name.<span>Organizational Reality Engineering.</span></div>
         </div>
       </div>
     </section>
