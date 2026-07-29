@@ -37,7 +37,15 @@
     const setLanguage=(language)=>{
       const lang=language==='en'?'en':'fr';
       document.documentElement.lang=lang;
-      copyBlocks.forEach(block=>{block.hidden=block.dataset.copy!==lang;});
+      copyBlocks.forEach(block=>{
+        const shouldHide=block.dataset.copy!==lang;
+        block.hidden=shouldHide;
+        if(shouldHide){
+          block.style.setProperty('display','none','important');
+        }else{
+          block.style.removeProperty('display');
+        }
+      });
       languageButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));
       try{localStorage.setItem('openproof-language',lang);}catch(_){}
     };
