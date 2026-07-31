@@ -1,77 +1,89 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#04050a">
-  <title>Registered Probative Object (RPO) Specification | OpenProof</title>
-  <meta name="description" content="Spécification publique du Registered Probative Object (RPO) : sources, provenance, réserves, JSON canonique et empreinte SHA-256 vérifiable.">
+  <meta name="theme-color" content="#050809">
+  <title>Registered Probative Object (RPO) — Public Specification | OpenProof</title>
+  <meta name="description" content="Public specification of the Registered Probative Object (RPO): sealed core, evidence provenance, explicit reservations and independently verifiable SHA-256 integrity.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://rpo.openproof.net/">
-  <meta property="og:type" content="website">
+  <link rel="alternate" hreflang="en" href="https://rpo.openproof.net/">
+<link rel="alternate" hreflang="fr" href="https://rpo.openproof.net/fr/">
+<link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/">
+<meta property="og:type" content="website">
   <meta property="og:site_name" content="OpenProof">
-  <meta property="og:title" content="Registered Probative Object (RPO) Specification">
-  <meta property="og:description" content="The public specification for a stable, traceable and independently verifiable probative object.">
+  <meta property="og:title" content="Registered Probative Object (RPO) — Public Specification">
+  <meta property="og:description" content="Public specification of the Registered Probative Object (RPO): sealed core, evidence provenance, explicit reservations and independently verifiable SHA-256 integrity.">
   <meta property="og:url" content="https://rpo.openproof.net/">
   <meta property="og:image" content="https://rpo.openproof.net/images/openproof-cover.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Registered Probative Object (RPO) Specification">
-  <meta name="twitter:description" content="Sources, provenance, reservations, canonical JSON and independently verifiable SHA-256 integrity.">
+  <meta name="twitter:title" content="Registered Probative Object (RPO) — Public Specification">
+  <meta name="twitter:description" content="Public specification of the Registered Probative Object (RPO): sealed core, evidence provenance, explicit reservations and independently verifiable SHA-256 integrity.">
   <meta name="twitter:image" content="https://rpo.openproof.net/images/openproof-cover.png">
   <script type="application/ld+json">
   {
-    "@context":"https://schema.org",
-    "@graph":[
-      {
-        "@type":"WebSite",
-        "@id":"https://rpo.openproof.net/#website",
-        "url":"https://rpo.openproof.net/",
-        "name":"RPO Public Specification",
-        "publisher":{"@id":"https://openproof.net/#organization"},
-        "inLanguage":["fr","en"]
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://rpo.openproof.net/#website",
+      "url": "https://rpo.openproof.net/",
+      "name": "RPO Public Specification",
+      "publisher": {
+        "@id": "https://openproof.net/#organization"
       },
-      {
-        "@type":"TechArticle",
-        "@id":"https://rpo.openproof.net/#specification",
-        "headline":"Registered Probative Object (RPO) Public Specification v0.1",
-        "description":"Public specification for a stable, traceable and independently verifiable probative object.",
-        "url":"https://rpo.openproof.net/",
-        "author":{"@type":"Organization","name":"OpenProof","url":"https://openproof.net"},
-        "about":["Registered Probative Object","evidence provenance","canonical JSON","SHA-256 integrity","probative infrastructure"],
-        "version":"0.1",
-        "inLanguage":["fr","en"]
-      }
-    ]
-  }
+      "inLanguage": "en"
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://rpo.openproof.net/#specification",
+      "headline": "Registered Probative Object (RPO) Public Specification v0.1",
+      "description": "Public specification for a stable, traceable and independently verifiable probative object.",
+      "url": "https://rpo.openproof.net/",
+      "author": {
+        "@type": "Organization",
+        "name": "OpenProof",
+        "url": "https://openproof.net"
+      },
+      "about": [
+        "Registered Probative Object",
+        "evidence provenance",
+        "canonical JSON",
+        "SHA-256 integrity",
+        "probative infrastructure"
+      ],
+      "version": "0.1",
+      "inLanguage": "en"
+    }
+  ]
+}
   </script>
   <link rel="icon" href="/assets/openproof-icon.svg" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Orbitron:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/openproof-v2.css">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="fr_FR">
 </head>
 <body class="rpo-home">
-  <a class="skip" href="#main">Aller au contenu</a>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <nav class="nav" aria-label="Navigation principale">
+  <nav class="nav" aria-label="Primary navigation">
     <div class="wrap navin">
       <a class="brand brand-lockup" href="/" aria-current="page">
         <img src="/assets/openproof-icon.svg" alt="" width="38" height="38">
         <span><strong>OPENPROOF</strong><small>RPO PUBLIC SPECIFICATION</small></span>
       </a>
-      <button class="menu" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+      <button class="menu" aria-expanded="false" aria-label="Open menu">Menu</button>
       <div class="links">
-        <a href="/" aria-current="page">Specification</a>
-        <a href="/examples.html">Example</a>
-        <a href="/tests.html">Verify</a>
-        <a class="external-link" href="https://openproof.net">OpenProof ↗</a>
-      </div>
-      <div class="language" aria-label="Langue">
-        <button type="button" data-lang="fr" aria-pressed="true">FR</button>
-        <span aria-hidden="true">|</span>
-        <button type="button" data-lang="en" aria-pressed="false">EN</button>
-      </div>
+        <a href="/" aria-current="page">Specification</a><a href="/examples.html">Example</a><a href="/tests.html">Verify</a><a href="/gersende-de-parcey.html">Founder</a><a href="https://openproof.net" class="external-link">OpenProof ↗</a>
+</div>
+      <div class="language" aria-label="Language">
+<a href="/fr/" lang="fr" hreflang="fr">FR</a><span aria-hidden="true">|</span><a href="/" lang="en" hreflang="en" aria-current="page">EN</a>
+</div>
     </div>
   </nav>
 
@@ -82,21 +94,17 @@
         <div class="rpo-copy">
           <p class="eyebrow">OPENPROOF · PUBLIC STANDARD · V0.1</p>
           <h1>
-            <span data-copy="fr">Un objet probatoire.<br>Stable. Vérifiable. Défendable.</span>
-            <span data-copy="en" hidden>One probative object.<br>Stable. Verifiable. Defensible.</span>
+            <span>One probative object.<br>Stable. Verifiable. Defensible.</span>
           </h1>
           <p class="rpo-lead">
-            <span data-copy="fr">Le RPO est le format public produit par OpenProof pour préserver un dossier structuré, ses sources, ses réserves et son intégrité — sans confondre vérification et vérité.</span>
-            <span data-copy="en" hidden>The RPO is the public format produced by OpenProof to preserve a structured record, its sources, reservations and integrity — without confusing verification with truth.</span>
+            <span>The RPO is the public format produced by OpenProof to preserve a structured record, its sources, reservations and integrity — without confusing verification with truth.</span>
           </p>
           <div class="rpo-actions">
             <a class="btn primary" href="/">
-              <span data-copy="fr">Lire la spécification</span>
-              <span data-copy="en" hidden>Read the specification</span>
+              <span>Read the specification</span>
             </a>
             <a class="btn" href="/examples.html">
-              <span data-copy="fr">Voir un RPO</span>
-              <span data-copy="en" hidden>View an RPO</span>
+              <span>View an RPO</span>
             </a>
           </div>
           <p class="version-line">RPO v0.1 · JSON · SHA-256 · deterministic verification</p>
@@ -111,10 +119,18 @@
             <strong>RPO</strong>
             <span>REGISTERED<br>PROBATIVE OBJECT</span>
           </div>
-          <div class="rpo-signal signal-source"><i></i><span>SOURCES</span></div>
-          <div class="rpo-signal signal-structure"><i></i><span>STRUCTURE</span></div>
-          <div class="rpo-signal signal-reserve"><i></i><span>RESERVATIONS</span></div>
-          <div class="rpo-signal signal-hash"><i></i><span>INTEGRITY HASH</span></div>
+          <div class="rpo-signal signal-source">
+<i></i><span>SOURCES</span>
+</div>
+          <div class="rpo-signal signal-structure">
+<i></i><span>STRUCTURE</span>
+</div>
+          <div class="rpo-signal signal-reserve">
+<i></i><span>RESERVATIONS</span>
+</div>
+          <div class="rpo-signal signal-hash">
+<i></i><span>INTEGRITY HASH</span>
+</div>
         </div>
       </div>
     </header>
@@ -124,15 +140,12 @@
         <p class="section-index">01 · DEFINITION</p>
         <div class="definition-grid">
           <h2 id="definition-title">
-            <span data-copy="fr">Ce que le RPO garantit.<br>Et ce qu’il ne prétend pas garantir.</span>
-            <span data-copy="en" hidden>What the RPO guarantees.<br>And what it does not claim to guarantee.</span>
+            <span>What the RPO guarantees.<br>And what it does not claim to guarantee.</span>
           </h2>
           <div class="definition-copy">
-            <p data-copy="fr">Un RPO rend détectable toute modification du noyau scellé. Il conserve la provenance, les transformations et les réserves nécessaires à un examen indépendant.</p>
-            <p data-copy="en" hidden>An RPO makes any change to the sealed core detectable. It preserves the provenance, transformations and reservations required for independent review.</p>
+            <p>An RPO makes any change to the sealed core detectable. It preserves the provenance, transformations and reservations required for independent review.</p>
             <p class="boundary">
-              <span data-copy="fr"><strong>Limite essentielle :</strong> l’intégrité d’un objet ne prouve pas la vérité de son contenu. OpenProof structure et rend vérifiable ; il ne juge pas.</span>
-              <span data-copy="en" hidden><strong>Essential boundary:</strong> object integrity does not prove content truth. OpenProof structures and makes records verifiable; it does not adjudicate.</span>
+              <span><strong>Essential boundary:</strong> object integrity does not prove content truth. OpenProof structures and makes records verifiable; it does not adjudicate.</span>
             </p>
           </div>
         </div>
@@ -143,29 +156,24 @@
       <div class="wrap">
         <p class="section-index">02 · ANATOMY</p>
         <h2 id="anatomy-title">
-          <span data-copy="fr">Quatre éléments. Une trace reproductible.</span>
-          <span data-copy="en" hidden>Four elements. One reproducible trace.</span>
+          <span>Four elements. One reproducible trace.</span>
         </h2>
         <div class="anatomy-grid">
           <article>
             <span>01</span><h3>Sealed core</h3>
-            <p data-copy="fr">Le noyau JSON canonique du dossier.</p>
-            <p data-copy="en" hidden>The record’s canonical JSON core.</p>
+            <p>The record’s canonical JSON core.</p>
           </article>
           <article>
             <span>02</span><h3>Evidence manifest</h3>
-            <p data-copy="fr">Les sources, leurs identifiants et leur provenance.</p>
-            <p data-copy="en" hidden>Sources, identifiers and provenance.</p>
+            <p>Sources, identifiers and provenance.</p>
           </article>
           <article>
             <span>03</span><h3>Reservations</h3>
-            <p data-copy="fr">Les lacunes, contradictions et limites explicites.</p>
-            <p data-copy="en" hidden>Explicit gaps, contradictions and limits.</p>
+            <p>Explicit gaps, contradictions and limits.</p>
           </article>
           <article>
             <span>04</span><h3>Public hash</h3>
-            <p data-copy="fr">L’empreinte SHA-256 permettant de détecter l’altération.</p>
-            <p data-copy="en" hidden>The SHA-256 fingerprint used to detect alteration.</p>
+            <p>The SHA-256 fingerprint used to detect alteration.</p>
           </article>
         </div>
       </div>
@@ -175,32 +183,25 @@
       <div class="wrap">
         <p class="section-index">03 · PUBLIC ACCESS</p>
         <h2 id="paths-title">
-          <span data-copy="fr">Trois accès. Rien de plus.</span>
-          <span data-copy="en" hidden>Three entry points. Nothing more.</span>
+          <span>Three entry points. Nothing more.</span>
         </h2>
         <div class="path-grid">
           <a href="/">
             <span>SPECIFICATION</span><strong>01</strong>
-            <h3 data-copy="fr">Comprendre le format</h3>
-            <h3 data-copy="en" hidden>Understand the format</h3>
-            <p data-copy="fr">Schéma, sérialisation canonique, empreinte et conformité.</p>
-            <p data-copy="en" hidden>Schema, canonical serialization, hashing and conformance.</p>
+            <h3>Understand the format</h3>
+            <p>Schema, canonical serialization, hashing and conformance.</p>
             <i>Open specification →</i>
           </a>
           <a href="/examples.html">
             <span>EXAMPLE</span><strong>02</strong>
-            <h3 data-copy="fr">Inspecter un objet</h3>
-            <h3 data-copy="en" hidden>Inspect an object</h3>
-            <p data-copy="fr">Un bundle d’exemple lisible par l’humain et la machine.</p>
-            <p data-copy="en" hidden>A sample bundle readable by humans and machines.</p>
+            <h3>Inspect an object</h3>
+            <p>A sample bundle readable by humans and machines.</p>
             <i>Open example →</i>
           </a>
           <a href="/tests.html">
             <span>VERIFY</span><strong>03</strong>
-            <h3 data-copy="fr">Reproduire la vérification</h3>
-            <h3 data-copy="en" hidden>Reproduce verification</h3>
-            <p data-copy="fr">Vecteurs de test et résultat attendu, indépendamment d’OpenProof.</p>
-            <p data-copy="en" hidden>Test vectors and expected results, independently of OpenProof.</p>
+            <h3>Reproduce verification</h3>
+            <p>Test vectors and expected results, independently of OpenProof.</p>
             <i>Open verification →</i>
           </a>
         </div>
@@ -209,11 +210,17 @@
 
     <section class="architecture-line" aria-label="Architecture de marque">
       <div class="wrap">
-        <div><span>OPENPROOF</span><strong>Probative infrastructure</strong></div>
+        <div>
+<span>OPENPROOF</span><strong>Probative infrastructure</strong>
+</div>
         <b aria-hidden="true">→</b>
-        <div><span>TRUTHX ENGINE</span><strong>Deterministic structuring engine</strong></div>
+        <div>
+<span>TRUTHX ENGINE</span><strong>Deterministic structuring engine</strong>
+</div>
         <b aria-hidden="true">→</b>
-        <div><span>RPO</span><strong>Registered probative object</strong></div>
+        <div>
+<span>RPO</span><strong>Registered probative object</strong>
+</div>
       </div>
     </section>
   </main>

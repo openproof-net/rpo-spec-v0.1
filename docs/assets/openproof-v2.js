@@ -1,58 +1,12 @@
 (()=>{
   const menu=document.querySelector('.menu');
   const links=document.querySelector('.links');
-  const isRpoHome=document.body.classList.contains('rpo-home');
-
-  if(links&&!links.querySelector('a[href="/gersende-de-parcey.html"]')){
-    const founderLink=document.createElement('a');
-    founderLink.href='/gersende-de-parcey.html';
-    founderLink.textContent='Founder';
-    if(location.pathname.endsWith('/gersende-de-parcey.html')) founderLink.setAttribute('aria-current','page');
-    const external=links.querySelector('.external-link')||links.lastElementChild;
-    links.insertBefore(founderLink,external);
-  }
-
-  if(links&&!isRpoHome){
-    const path=location.pathname==='/'?'/':location.pathname;
-    const nav=[
-      ['/','Overview'],
-      ['/','Specification'],
-      ['/examples.html','Example'],
-      ['/tests.html','Verify']
-    ];
-    links.innerHTML=nav.map(([href,label])=>'<a '+(path===href?'aria-current="page" ':'')+'href="'+href+'">'+label+'</a>').join('')+
-      '<a href="https://openproof.net">OpenProof ↗</a>';
-  }
 
   if(menu&&links){
     menu.onclick=()=>{
       links.classList.toggle('open');
       menu.setAttribute('aria-expanded',links.classList.contains('open'));
     };
-  }
-
-  const languageButtons=[...document.querySelectorAll('[data-lang]')];
-  const copyBlocks=[...document.querySelectorAll('[data-copy]')];
-  if(languageButtons.length&&copyBlocks.length){
-    const setLanguage=(language)=>{
-      const lang=language==='en'?'en':'fr';
-      document.documentElement.lang=lang;
-      copyBlocks.forEach(block=>{
-        const shouldHide=block.dataset.copy!==lang;
-        block.hidden=shouldHide;
-        if(shouldHide){
-          block.style.setProperty('display','none','important');
-        }else{
-          block.style.removeProperty('display');
-        }
-      });
-      languageButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.lang===lang)));
-      try{localStorage.setItem('openproof-language',lang);}catch(_){}
-    };
-    languageButtons.forEach(button=>button.addEventListener('click',()=>setLanguage(button.dataset.lang)));
-    let stored='fr';
-    try{stored=localStorage.getItem('openproof-language')||'fr';}catch(_){}
-    setLanguage(stored);
   }
 
   const stages=[...document.querySelectorAll('.stage')];
@@ -66,7 +20,8 @@
     stages.forEach((stage,index)=>stage.classList.toggle('active',index===at));
     tabs.forEach((tab,index)=>tab.classList.toggle('active',index===at));
     prev.disabled=at===0;
-    next.textContent=at===stages.length-1?'Return to overview ↺':'Continue →';
+    const isFrench=document.documentElement.lang==='fr';
+    next.textContent=at===stages.length-1?(isFrench?'Retour à la vue d’ensemble ↺':'Return to overview ↺'):(isFrench?'Continuer →':'Continue →');
     if(innerWidth<880)document.querySelector('.mainGrid')?.scrollIntoView({behavior:'smooth'});
   };
   tabs.forEach((tab,index)=>tab.onclick=()=>opShow(index));
@@ -99,7 +54,7 @@
         if(!reduce){star.x+=star.vx;star.y+=star.vy;}
         if(star.x<0)star.x=w;if(star.x>w)star.x=0;
         if(star.y<0)star.y=h;if(star.y>h)star.y=0;
-        const color=star.t<.16?'212,175,55':star.t<.25?'56,224,162':star.t<.34?'93,115,255':'255,255,255';
+        const color=star.t<.22?'209,170,92':star.t<.38?'225,193,123':'238,233,220';
         ctx.beginPath();
         ctx.fillStyle='rgba('+color+','+star.a+')';
         ctx.arc(star.x,star.y,star.r,0,Math.PI*2);

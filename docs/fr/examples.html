@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050809">
+  <title>Exemple de RPO : manifeste de preuves et empreinte SHA-256 | OpenProof</title>
+  <meta name="description" content="Examinez un exemple public de RPO : noyau scellé, manifeste de preuves, provenance, réserves explicites et empreinte d’intégrité SHA-256.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://rpo.openproof.net/fr/examples.html">
+  <link rel="alternate" hreflang="en" href="https://rpo.openproof.net/examples.html">
+<link rel="alternate" hreflang="fr" href="https://rpo.openproof.net/fr/examples.html">
+<link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/examples.html">
+<meta property="og:type" content="article">
+  <meta property="og:site_name" content="OpenProof">
+  <meta property="og:title" content="Exemple de RPO : manifeste de preuves et empreinte SHA-256">
+  <meta property="og:description" content="Examinez un exemple public de RPO : noyau scellé, manifeste de preuves, provenance, réserves explicites et empreinte d’intégrité SHA-256.">
+  <meta property="og:url" content="https://rpo.openproof.net/fr/examples.html">
+  <meta property="og:image" content="https://rpo.openproof.net/images/openproof-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Exemple de RPO : manifeste de preuves et empreinte SHA-256">
+  <meta name="twitter:description" content="Examinez un exemple public de RPO : noyau scellé, manifeste de preuves, provenance, réserves explicites et empreinte d’intégrité SHA-256.">
+  <meta name="twitter:image" content="https://rpo.openproof.net/images/openproof-cover.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "Exemple public de Registered Probative Object (RPO)",
+  "description": "Exemple minimal de RPO contenant un noyau scellé, un manifeste de preuves, des réserves et une empreinte publique d’intégrité SHA-256.",
+  "url": "https://rpo.openproof.net/fr/examples.html",
+  "author": {
+    "@type": "Organization",
+    "name": "OpenProof",
+    "url": "https://openproof.net"
+  },
+  "isPartOf": {
+    "@id": "https://rpo.openproof.net/fr/#website"
+  },
+  "about": [
+    "Registered Probative Object",
+    "evidence manifest",
+    "evidence provenance",
+    "SHA-256"
+  ],
+  "inLanguage": "fr"
+}
+  </script>
+  <link rel="icon" href="/assets/openproof-icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/openproof-v2.css">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:locale:alternate" content="en_US">
+</head>
+<body class="rpo-home rpo-subpage">
+  <a class="skip" href="#main">Aller au contenu</a>
+  <nav class="nav" aria-label="Navigation principale">
+    <div class="wrap navin">
+      <a class="brand brand-lockup" href="/fr/">
+        <img src="/assets/openproof-icon.svg" alt="" width="38" height="38">
+        <span><strong>OPENPROOF</strong><small>SPÉCIFICATION PUBLIQUE RPO</small></span>
+      </a>
+      <button class="menu" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+      <div class="links">
+        <a href="/fr/">Spécification</a><a href="/fr/examples.html" aria-current="page">Exemple</a><a href="/fr/tests.html">Vérifier</a><a href="/fr/gersende-de-parcey.html">Fondatrice</a><a href="https://openproof.net" class="external-link">OpenProof ↗</a>
+</div>
+      <div class="language" aria-label="Langue">
+<a href="/fr/examples.html" lang="fr" hreflang="fr" aria-current="page">FR</a><span aria-hidden="true">|</span><a href="/examples.html" lang="en" hreflang="en">EN</a>
+</div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <header class="sub-hero cosmos">
+      <canvas class="stars" aria-hidden="true"></canvas>
+      <div class="wrap">
+        <p class="eyebrow">02 · EXEMPLE · RPO V0.1</p>
+        <h1>
+          <span>Un RPO, rendu lisible.</span>
+          </h1>
+        <p class="sub-lead">Un objet minimal permet d’inspecter la structure publique sans exposer de dossier réel. Le même fichier peut être lu par une personne, une machine et l’outil de vérification.</p>
+        <div class="sub-actions">
+          <a class="btn primary" href="/fr/tests.html">Vérifier cet objet</a>
+          <a class="btn" href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/examples/example-minimal/rpo.json">Raw JSON ↗</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="object-summary">
+      <div class="wrap">
+        <p class="section-index">JEU D’ESSAI PUBLIC · NON CONFIDENTIEL</p>
+        <div class="summary-grid">
+          <article><span>ID DU BUNDLE</span><strong>rpo-example-minimal-0001</strong></article>
+          <article><span>FORMAT</span><strong>RPO v0.1 · JSON</strong></article>
+          <article><span>STATUT</span><strong class="status-ok">STRUCTURE PRÉSENTE</strong></article>
+          <article><span>DONNÉES</span><strong>DONNÉES DE DÉMONSTRATION</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="object-inspection">
+      <div class="wrap inspection-grid">
+        <div>
+          <p class="section-index">ANATOMIE DE L’OBJET</p>
+          <h2>Ce que contient l’objet.</h2>
+          <div class="inspection-list">
+            <article><b>01</b><div>
+<h3>Identité</h3>
+<p>Version, identifiant stable et horodatage de création.</p>
+</div></article>
+            <article><b>02</b><div>
+<h3>Manifeste de preuves</h3>
+<p>Références aux pièces et empreintes déclarées.</p>
+</div></article>
+            <article><b>03</b><div>
+<h3>Récit</h3>
+<p>Résumé structuré relié aux éléments sources.</p>
+</div></article>
+            <article><b>04</b><div>
+<h3>Registre</h3>
+<p>Entrée publique et empreinte d’intégrité.</p>
+</div></article>
+          </div>
+        </div>
+        <div class="code-panel">
+          <div class="code-head">
+<span>rpo.json</span><button type="button" id="copyJson">COPIER LE JSON</button>
+</div>
+          <pre id="exampleJson" aria-live="polite">Chargement du jeu d’essai public…</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="essential-boundary">
+      <div class="wrap">
+        <p><strong>Limite essentielle.</strong> Cet exemple démontre une forme, une provenance déclarée et une intégrité vérifiable. Il ne démontre pas la vérité matérielle du contenu d’un dossier.</p>
+        </div>
+    </section>
+  </main>
+
+  <footer class="footer rpo-footer"><div class="wrap">
+<div>
+<strong>RPO v0.1</strong><p>Spécification technique publique maintenue par OpenProof.</p>
+</div>
+<div class="footer-links">
+<a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a><a href="/fr/">Spécification</a><a href="https://openproof.net">OpenProof</a>
+</div>
+</div></footer>
+  <script src="/assets/openproof-v2.js"></script>
+  <script>
+    (() => {
+      const output = document.querySelector('#exampleJson');
+      let raw = '';
+      fetch('https://raw.githubusercontent.com/openproof-net/rpo-spec-v0.1/main/examples/example-minimal/rpo.json')
+        .then(response => response.ok ? response.text() : Promise.reject())
+        .then(text => { raw = text; output.textContent = JSON.stringify(JSON.parse(text), null, 2); })
+        .catch(() => { output.textContent = 'Jeu d’essai indisponible. Ouvrez le JSON brut sur GitHub.'; });
+      document.querySelector('#copyJson').addEventListener('click', async event => {
+        if (!raw) return;
+        await navigator.clipboard.writeText(raw);
+        event.currentTarget.textContent = 'COPIÉ';
+        setTimeout(() => event.currentTarget.textContent = 'COPIER LE JSON', 1200);
+      });
+    })();
+  </script>
+</body>
+</html>
