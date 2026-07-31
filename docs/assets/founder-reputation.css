@@ -1225,3 +1225,19 @@
     transform: none !important;
   }
 }
+
+/* Editorial prose — justified where the measure is wide enough to stay elegant. */
+@media (min-width: 921px) {
+  .founder-page .founder-hero-lead,
+  .founder-page .founder-section-lead,
+  .founder-page .founder-origin-event p,
+  .founder-page .founder-method-copy p,
+  .founder-page .founder-shift-copy p,
+  .founder-page .founder-doctrine p,
+  .founder-page .founder-contact-aside p {
+    text-align: justify;
+    text-align-last: left;
+    text-justify: inter-word;
+    hyphens: auto;
+  }
+}
