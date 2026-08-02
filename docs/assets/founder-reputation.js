@@ -216,28 +216,43 @@
       try {
         if (!formId) throw new Error(contactForm.dataset.errorLabel);
 
-        const response = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`, {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({
-            submittedAt: String(Date.now()),
-            fields,
-            context,
-            legalConsentOptions: {
-              consent: {
-                consentToProcess: processingConsent,
-                text: copy.processing,
-                communications: marketingConsent ? [{
-                  value: true,
-                  subscriptionTypeId,
-                  text: copy.marketing
-                }] : []
+        const controller = new AbortController();
+        const timeoutId = window.setTimeout(() => controller.abort(), 15000);
+        let response;
+
+        try {
+          response = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`, {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            signal: controller.signal,
+            body: JSON.stringify({
+              submittedAt: String(Date.now()),
+              fields,
+              context,
+              legalConsentOptions: {
+                consent: {
+                  consentToProcess: processingConsent,
+                  text: copy.processing,
+                  communications: marketingConsent ? [{
+                    value: true,
+                    subscriptionTypeId,
+                    text: copy.marketing
+                  }] : []
+                }
               }
-            }
-          })
-        });
+            })
+          });
+        } finally {
+          window.clearTimeout(timeoutId);
+        }
 
         if (!response.ok) {
+          const details = await response.json().catch(() => ({}));
+          console.error('HubSpot form submission failed', {
+            status: response.status,
+            message: typeof details.message === 'string' ? details.message : '',
+            correlationId: typeof details.correlationId === 'string' ? details.correlationId : ''
+          });
           throw new Error(contactForm.dataset.errorLabel);
         }
 
