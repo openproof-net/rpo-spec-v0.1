@@ -146,4 +146,116 @@
   motionQuery.addEventListener?.('change', syncMotionPreference);
   finePointerQuery.addEventListener?.('change', syncMotionPreference);
   syncMotionPreference();
+
+  const contactForm = page.querySelector('[data-founder-contact-form]');
+  if (contactForm) {
+    const portalId = '49371550';
+    const subscriptionTypeId = 614615597;
+    const formId = contactForm.dataset.hubspotFormId;
+    const language = contactForm.dataset.language === 'en' ? 'en' : 'fr';
+    const field = name => contactForm.elements.namedItem(name);
+    const submitButton = contactForm.querySelector('.founder-form-submit');
+    const submitText = contactForm.querySelector('[data-submit-text]');
+    const errorMessage = contactForm.querySelector('.founder-form-error');
+    const successMessage = page.querySelector('[data-form-success]');
+    const firstField = field('firstname');
+
+    const copy = language === 'fr'
+      ? {
+          processing: 'J’accepte que TruthX et OpenProof stockent et traitent mes données afin de répondre à ma demande.',
+          marketing: 'Je souhaite recevoir les Proof Briefs et invitations correspondant à mon intérêt. Désinscription possible à tout moment.'
+        }
+      : {
+          processing: 'I agree that TruthX and OpenProof may store and process my data in order to respond to my request.',
+          marketing: 'I would like to receive Proof Briefs and invitations relevant to my interest. I can unsubscribe at any time.'
+        };
+
+    const readHubSpotCookie = () => {
+      const match = document.cookie.match(/(?:^|;\s*)hubspotutk=([^;]+)/);
+      return match ? decodeURIComponent(match[1]) : '';
+    };
+
+    page.querySelectorAll('[data-contact-focus]').forEach(link => {
+      link.addEventListener('click', () => {
+        window.setTimeout(() => firstField?.focus({ preventScroll: true }), motionQuery.matches ? 0 : 550);
+      });
+    });
+
+    contactForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      if (!contactForm.reportValidity()) return;
+
+      const formData = new FormData(contactForm);
+      const firstName = String(formData.get('firstname') || '').trim();
+      const lastName = String(formData.get('lastname') || '').trim();
+      const email = String(formData.get('email') || '').trim().toLowerCase();
+      const company = String(formData.get('company') || '').trim();
+      const contactMessage = String(formData.get('message') || '').trim();
+      const processingConsent = formData.get('processingConsent') === 'on';
+      const marketingConsent = formData.get('marketingConsent') === 'on';
+
+      const fields = [
+        { objectTypeId: '0-1', name: 'firstname', value: firstName },
+        { objectTypeId: '0-1', name: 'lastname', value: lastName },
+        { objectTypeId: '0-1', name: 'email', value: email },
+        { objectTypeId: '0-1', name: 'rpo__message_de_contact', value: contactMessage }
+      ];
+      if (company) fields.push({ objectTypeId: '0-1', name: 'company', value: company });
+
+      const context = {
+        pageUri: window.location.href,
+        pageName: contactForm.dataset.pageName || document.title
+      };
+      const hutk = readHubSpotCookie();
+      if (hutk) context.hutk = hutk;
+
+      submitButton.disabled = true;
+      submitText.textContent = contactForm.dataset.sendingLabel || submitText.textContent;
+      errorMessage.textContent = '';
+
+      try {
+        if (!formId) throw new Error(contactForm.dataset.errorLabel);
+
+        const response = await fetch(`https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({
+            submittedAt: String(Date.now()),
+            fields,
+            context,
+            legalConsentOptions: {
+              consent: {
+                consentToProcess: processingConsent,
+                text: copy.processing,
+                communications: [{
+                  value: marketingConsent,
+                  subscriptionTypeId,
+                  text: copy.marketing
+                }]
+              }
+            }
+          })
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          throw new Error(contactForm.dataset.errorLabel);
+        }
+
+        contactForm.hidden = true;
+        if (successMessage) {
+          successMessage.hidden = false;
+          successMessage.focus({ preventScroll: true });
+        }
+      } catch (error) {
+        errorMessage.textContent = error instanceof Error && error.message
+          ? error.message
+          : contactForm.dataset.errorLabel;
+      } finally {
+        submitButton.disabled = false;
+        submitText.textContent = contactForm.dataset.submitLabel || submitText.textContent;
+      }
+    });
+  }
+
 })();
