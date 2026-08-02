@@ -989,7 +989,7 @@
   display: grid;
   grid-template-columns: minmax(0, .64fr) minmax(310px, .36fr);
   gap: 80px;
-  align-items: end;
+  align-items: start;
 }
 
 .founder-page .founder-contact .founder-section-title {
@@ -1003,11 +1003,18 @@
   box-shadow: 0 30px 80px rgba(0, 0, 0, .32);
 }
 
-.founder-page .founder-contact-aside p {
+.founder-page .founder-contact-aside > .founder-contact-copy {
   margin: 0;
   color: var(--founder-soft);
   font-size: 14px;
   line-height: 1.78;
+}
+
+.founder-page .founder-hubspot-form {
+  width: 100%;
+  margin-top: 28px;
+  scroll-margin-top: 100px;
+  background: #fff;
 }
 
 .founder-page .founder-contact-email {
@@ -1234,7 +1241,7 @@
   .founder-page .founder-method-copy p,
   .founder-page .founder-shift-copy p,
   .founder-page .founder-doctrine p,
-  .founder-page .founder-contact-aside p {
+  .founder-page .founder-contact-aside > .founder-contact-copy {
     text-align: justify;
     text-align-last: left;
     text-justify: inter-word;
