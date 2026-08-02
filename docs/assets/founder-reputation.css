@@ -987,8 +987,8 @@
 
 .founder-page .founder-contact-grid {
   display: grid;
-  grid-template-columns: minmax(0, .64fr) minmax(310px, .36fr);
-  gap: 80px;
+  grid-template-columns: minmax(0, .46fr) minmax(520px, .54fr);
+  gap: clamp(48px, 6vw, 92px);
   align-items: start;
 }
 
@@ -997,36 +997,272 @@
 }
 
 .founder-page .founder-contact-aside {
-  padding: 29px;
+  position: relative;
+  overflow: hidden;
+  padding: clamp(29px, 3vw, 42px);
   border: 1px solid var(--founder-line);
-  background: rgba(8, 12, 16, .72);
-  box-shadow: 0 30px 80px rgba(0, 0, 0, .32);
+  background:
+    radial-gradient(520px 340px at 96% 0%, rgba(196, 154, 88, .10), transparent 65%),
+    rgba(8, 12, 16, .86);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 255, 255, .025);
+  backdrop-filter: blur(14px);
+}
+
+.founder-page .founder-contact-aside::before {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(225, 195, 138, .055);
+  content: "";
+  pointer-events: none;
 }
 
 .founder-page .founder-contact-aside > .founder-contact-copy {
+  position: relative;
+  z-index: 1;
   margin: 0;
   color: var(--founder-soft);
   font-size: 14px;
   line-height: 1.78;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
-.founder-page .founder-hubspot-form {
-  width: 100%;
-  margin-top: 28px;
-  scroll-margin-top: 100px;
-  background: #fff;
+.founder-page .founder-signal-head {
+  position: relative;
+  z-index: 1;
+  margin-top: 30px;
+  padding-top: 27px;
+  border-top: 1px solid rgba(225, 195, 138, .16);
+}
+
+.founder-page .founder-contact-aside .founder-form-kicker {
+  margin: 0 0 15px;
+  color: var(--founder-gold);
+  font: 600 8px/1.5 Orbitron, Montserrat, sans-serif;
+  letter-spacing: 1.7px;
+}
+
+.founder-page .founder-contact-aside h3 {
+  max-width: 540px;
+  margin: 0;
+  color: var(--founder-text);
+  font: 500 clamp(30px, 3vw, 44px)/1.12 Orbitron, Montserrat, sans-serif;
+  letter-spacing: -.025em;
+}
+
+.founder-page .founder-contact-aside .founder-contact-intro {
+  max-width: 540px;
+  margin: 14px 0 0;
+  color: var(--founder-soft);
+  font-size: 15px;
+  line-height: 1.65;
+  text-align: left;
 }
 
 .founder-page .founder-contact-email {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
-  min-height: 44px;
+  min-height: 38px;
   align-items: center;
-  margin-top: 24px;
-  padding-bottom: 7px;
+  margin-top: 20px;
+  padding-bottom: 6px;
   border-bottom: 1px solid rgba(225, 195, 138, .50);
   color: var(--founder-gold-light);
-  font-size: 12px;
+  font-size: 10px;
   text-decoration: none;
+}
+
+.founder-page .founder-contact-form {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+  scroll-margin-top: 100px;
+}
+
+.founder-page .founder-contact-form[hidden] {
+  display: none;
+}
+
+.founder-page .founder-contact-form label {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  gap: 8px;
+  color: #9fa4a3;
+  font: 600 10px/1.4 Orbitron, Montserrat, sans-serif;
+  letter-spacing: 1.05px;
+  text-transform: uppercase;
+}
+
+.founder-page .founder-contact-form input,
+.founder-page .founder-contact-form textarea {
+  width: 100%;
+  height: 54px;
+  padding: 0 14px;
+  border: 1px solid #29302f;
+  border-radius: 0;
+  outline: none;
+  background: #070a0b;
+  color: #e2ded5;
+  font: 500 13px/1 Montserrat, sans-serif;
+  text-align: left;
+  text-transform: none;
+  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.founder-page .founder-contact-form input:focus,
+.founder-page .founder-contact-form textarea:focus {
+  border-color: var(--founder-gold);
+  background: #090d0e;
+  box-shadow: 0 0 0 3px rgba(196, 154, 88, .08);
+}
+
+.founder-page .founder-contact-form .founder-form-wide,
+.founder-page .founder-contact-form .founder-form-consent,
+.founder-page .founder-contact-form .founder-form-error,
+.founder-page .founder-contact-form .founder-form-note {
+  grid-column: 1 / -1;
+}
+
+.founder-page .founder-contact-form textarea {
+  min-height: 104px;
+  padding: 12px;
+  line-height: 1.55;
+  resize: vertical;
+}
+
+.founder-page .founder-contact-form .founder-form-consent {
+  display: flex;
+  flex-direction: row;
+  gap: 11px;
+  align-items: flex-start;
+  color: #8f9798;
+  font-family: Montserrat, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.founder-page .founder-contact-form .founder-form-consent input {
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  padding: 0;
+  accent-color: var(--founder-gold);
+}
+
+.founder-page .founder-contact-form .founder-form-consent span {
+  display: grid;
+  gap: 4px;
+}
+
+.founder-page .founder-contact-form .founder-form-consent b {
+  color: #b4b8b6;
+  font: 600 10px/1.4 Orbitron, Montserrat, sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.founder-page .founder-contact-form .founder-form-consent small {
+  color: #747c7d;
+  font: 500 12px/1.55 Montserrat, sans-serif;
+  letter-spacing: 0;
+}
+
+.founder-page .founder-form-submit {
+  display: inline-flex;
+  width: 100%;
+  min-height: 56px;
+  justify-content: space-between;
+  gap: 22px;
+  align-items: center;
+  padding: 14px 17px;
+  border: 1px solid #d0b06b;
+  background: linear-gradient(110deg, #ad8747, #dfc17e);
+  color: #090b0d;
+  font: 700 10px/1.3 Montserrat, sans-serif;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 16px 42px rgba(173, 135, 71, .14);
+  transition: transform .2s ease, filter .2s ease, opacity .2s ease;
+}
+
+.founder-page .founder-form-submit:hover,
+.founder-page .founder-form-submit:focus-visible {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.founder-page .founder-form-submit:disabled {
+  opacity: .65;
+  cursor: wait;
+  transform: none;
+}
+
+.founder-page .founder-form-error,
+.founder-page .founder-form-note {
+  display: block;
+  text-align: left;
+  text-transform: none;
+}
+
+.founder-page .founder-form-error {
+  color: #e4a38e;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.founder-page .founder-form-error:empty {
+  display: none;
+}
+
+.founder-page .founder-form-note {
+  color: #626b6c;
+  font-size: 9px;
+  line-height: 1.55;
+}
+
+.founder-page .founder-form-success {
+  position: relative;
+  z-index: 1;
+  margin-top: 28px;
+  padding: 23px;
+  border-left: 2px solid var(--founder-gold);
+  background: rgba(196, 154, 88, .045);
+}
+
+.founder-page .founder-form-success[hidden] {
+  display: none;
+}
+
+.founder-page .founder-form-success strong {
+  color: var(--founder-gold-light);
+  font: 600 14px/1.4 Orbitron, Montserrat, sans-serif;
+  letter-spacing: 1px;
+}
+
+.founder-page .founder-form-success p {
+  margin-top: 11px;
+  color: var(--founder-soft);
+  font-size: 12px;
+  line-height: 1.65;
+  text-align: left;
+}
+
+.founder-page .founder-form-noscript {
+  position: relative;
+  z-index: 1;
+  margin-top: 22px !important;
+  text-align: left !important;
+}
+
+.founder-page .founder-form-noscript a {
+  color: var(--founder-gold-light);
 }
 
 /* Motion progressively enabled by founder-reputation.js */
@@ -1193,6 +1429,13 @@
   .founder-page .founder-doctrine blockquote { font-size: 40px; }
   .founder-page .founder-contact { padding: 92px 0 86px; }
   .founder-page .founder-contact-grid { gap: 48px; }
+  .founder-page .founder-contact-aside { padding: 25px 21px; }
+  .founder-page .founder-contact-form { grid-template-columns: 1fr; }
+  .founder-page .founder-contact-form .founder-form-wide,
+  .founder-page .founder-contact-form .founder-form-consent,
+  .founder-page .founder-contact-form .founder-form-error,
+  .founder-page .founder-contact-form .founder-form-note { grid-column: auto; }
+  .founder-page .founder-contact-email { font-size: 10px; }
 }
 
 @media (hover: none), (pointer: coarse) {

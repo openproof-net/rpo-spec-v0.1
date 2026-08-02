@@ -28,7 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/openproof-v2.css?v=20260731-3">
-  <link rel="stylesheet" href="/assets/founder-reputation.css?v=20260802-1">
+  <link rel="stylesheet" href="/assets/founder-reputation.css?v=20260802-3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -90,7 +90,7 @@
           <h1>Truth is not enough.<span>It must withstand the power of narrative.</span></h1>
           <p class="founder-hero-lead">When facts, accountability and decisions no longer align, Gersende de Parcey reconstructs the real mechanics of a situation — then makes that reconstruction legible, traceable and verifiable.</p>
           <div class="founder-actions">
-            <a class="btn primary" href="#rpo-contact-form-en">Discuss a mission or partnership</a>
+            <a class="btn primary" href="#rpo-contact-form-en" data-contact-focus>Discuss a mission or partnership</a>
             <a class="btn" href="https://openproof.net">Discover OpenProof</a>
             <a class="founder-text-link" href="mailto:openproof@truthx.co?subject=OpenProof%20pilot%20access%20request">Request pilot access ↗</a>
           </div>
@@ -287,15 +287,42 @@
           <p class="founder-kicker">Mission · Partnership</p>
           <h2 class="founder-section-title">A critical situation deserves more than another opinion.</h2>
           <div class="founder-actions">
-            <a class="btn primary" href="#rpo-contact-form-en">Contact me — mission or partnership</a>
+            <a class="btn primary" href="#rpo-contact-form-en" data-contact-focus>Contact me — mission or partnership</a>
             <a class="btn" href="https://openproof.net">Discover OpenProof</a>
             <a class="founder-text-link" href="mailto:openproof@truthx.co?subject=OpenProof%20pilot%20access%20request">Request pilot access ↗</a>
           </div>
         </div>
         <aside class="founder-contact-aside" data-reveal="right">
           <p class="founder-contact-copy">Gersende de Parcey works alongside leaders when facts must be reconstructed, accountability clarified and the basis for decision made more robust. She also engages with research, institutional and technology partners able to test, strengthen or deploy OpenProof.</p>
-          <div id="rpo-contact-form-en" class="founder-hubspot-form hs-form-frame" data-region="na1" data-form-id="87728bd0-81e1-4e96-855f-ff1e1a8c286e" data-portal-id="49371550"></div>
-          <a class="founder-contact-email" href="mailto:openproof@truthx.co">openproof@truthx.co</a>
+          <div class="founder-signal-head">
+            <p class="founder-form-kicker">TRUTHX SIGNAL</p>
+            <h3>STAY CONNECTED TO THE SYSTEM.</h3>
+            <p class="founder-contact-intro">Briefly describe your situation, mission or partnership proposal. Gersende de Parcey will reply directly.</p>
+          </div>
+          <form id="rpo-contact-form-en" class="founder-contact-form" data-founder-contact-form data-hs-do-not-collect="true" data-language="en" data-hubspot-form-id="87728bd0-81e1-4e96-855f-ff1e1a8c286e" data-page-name="Gersende de Parcey — Founder of OpenProof" data-submit-label="SUBMIT" data-sending-label="SUBMITTING…" data-error-label="Your message could not be sent. Try again or email openproof@truthx.co directly.">
+            <label>First name<input type="text" name="firstname" autocomplete="given-name" required></label>
+            <label>Last name<input type="text" name="lastname" autocomplete="family-name" required></label>
+            <label>Professional email<input type="email" name="email" autocomplete="email" required></label>
+            <label>Organisation (optional)<input type="text" name="company" autocomplete="organization"></label>
+            <label class="founder-form-wide">Message<textarea name="message" rows="4" required></textarea></label>
+            <label class="founder-form-consent">
+              <input type="checkbox" name="processingConsent" required>
+              <span><b>Request processing</b><small>I agree that TruthX and OpenProof may store and process my data in order to respond to my request.</small></span>
+            </label>
+            <label class="founder-form-consent">
+              <input type="checkbox" name="marketingConsent">
+              <span><b>TruthX publications</b><small>I would like to receive TruthX briefs and invitations. I can unsubscribe at any time.</small></span>
+            </label>
+            <button class="founder-form-submit" type="submit"><span data-submit-text>SUBMIT</span><span aria-hidden="true">→</span></button>
+            <small class="founder-form-error" role="alert" aria-live="polite"></small>
+            <small class="founder-form-note">Your data is used only to process your request and, with your consent, send TruthX publications.</small>
+          </form>
+          <a class="founder-contact-email" href="mailto:openproof@truthx.co">Email directly · openproof@truthx.co</a>
+          <div class="founder-form-success" data-form-success role="status" tabindex="-1" hidden>
+            <strong>REQUEST RECORDED.</strong>
+            <p>Your request has been submitted. You will be contacted directly.</p>
+          </div>
+          <noscript><p class="founder-form-noscript">To send your request, email <a href="mailto:openproof@truthx.co">openproof@truthx.co</a>.</p></noscript>
         </aside>
       </div>
     </section>
@@ -312,8 +339,7 @@
       </div>
     </div>
   </footer>
-  <script src="https://js.hsforms.net/forms/embed/49371550.js" defer></script>
   <script src="/assets/openproof-v2.js?v=20260731-1"></script>
-  <script src="/assets/founder-reputation.js?v=20260731-1"></script>
+  <script src="/assets/founder-reputation.js?v=20260802-2"></script>
 </body>
 </html>
