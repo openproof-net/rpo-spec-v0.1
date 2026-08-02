@@ -163,11 +163,11 @@
     const copy = language === 'fr'
       ? {
           processing: 'J’accepte que TruthX et OpenProof stockent et traitent mes données afin de répondre à ma demande.',
-          marketing: 'Je souhaite recevoir les Proof Briefs et invitations correspondant à mon intérêt. Désinscription possible à tout moment.'
+          marketing: 'Je souhaite recevoir les synthèses et invitations de TruthX. Je peux me désabonner à tout moment.'
         }
       : {
           processing: 'I agree that TruthX and OpenProof may store and process my data in order to respond to my request.',
-          marketing: 'I would like to receive Proof Briefs and invitations relevant to my interest. I can unsubscribe at any time.'
+          marketing: 'I would like to receive TruthX briefs and invitations. I can unsubscribe at any time.'
         };
 
     const readHubSpotCookie = () => {
@@ -227,17 +227,16 @@
               consent: {
                 consentToProcess: processingConsent,
                 text: copy.processing,
-                communications: [{
-                  value: marketingConsent,
+                communications: marketingConsent ? [{
+                  value: true,
                   subscriptionTypeId,
                   text: copy.marketing
-                }]
+                }] : []
               }
             }
           })
         });
 
-        const result = await response.json().catch(() => ({}));
         if (!response.ok) {
           throw new Error(contactForm.dataset.errorLabel);
         }
