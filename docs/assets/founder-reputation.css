@@ -90,7 +90,8 @@
 .founder-contact{background:#050709}
 
 /* Shared restrained panels. */
-.founder-signal-grid,.founder-integrity-grid,.founder-now-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--founder-line)}
+.founder-signal-grid,.founder-now-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--founder-line)}
+.founder-integrity-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-block:1px solid var(--founder-line)}
 .founder-signal-card,.founder-integrity-card,.founder-now-card{position:relative;min-height:290px;padding:31px 27px 29px;overflow:hidden;border-right:1px solid var(--founder-line);background:linear-gradient(180deg,rgba(13,19,25,.96),rgba(5,8,11,.96))}
 .founder-signal-card:last-child,.founder-integrity-card:last-child,.founder-now-card:last-child{border-right:0}
 .founder-signal-card::before,.founder-integrity-card::before,.founder-now-card::before,.founder-proof-card::before{position:absolute;inset:0;opacity:0;pointer-events:none;background:radial-gradient(330px circle at var(--pointer-x,50%) var(--pointer-y,50%),rgba(196,154,88,.11),transparent 62%);content:"";transition:opacity .25s ease}
@@ -199,10 +200,10 @@ html.motion-ready .founder-page [data-reveal].is-visible,html.motion-ready .foun
 /* Responsive */
 @media(max-width:1120px){
   .founder-hero-inner{grid-template-columns:1fr minmax(360px,.62fr)}
-  .founder-signal-grid,.founder-integrity-grid,.founder-now-grid,.founder-proof-grid{grid-template-columns:repeat(2,1fr)}
-  .founder-signal-card:nth-child(2),.founder-integrity-card:nth-child(2),.founder-now-card:nth-child(2),.founder-proof-card:nth-child(2){border-right:0}
-  .founder-signal-card,.founder-integrity-card,.founder-now-card,.founder-proof-card{border-bottom:1px solid var(--founder-line)}
-  .founder-signal-card:nth-last-child(-n+2),.founder-integrity-card:nth-last-child(-n+2),.founder-now-card:nth-last-child(-n+2),.founder-proof-card:nth-last-child(-n+2){border-bottom:0}
+  .founder-signal-grid,.founder-now-grid,.founder-proof-grid{grid-template-columns:repeat(2,1fr)}
+  .founder-signal-card:nth-child(2),.founder-now-card:nth-child(2),.founder-proof-card:nth-child(2){border-right:0}
+  .founder-signal-card,.founder-now-card,.founder-proof-card{border-bottom:1px solid var(--founder-line)}
+  .founder-signal-card:nth-last-child(-n+2),.founder-now-card:nth-last-child(-n+2),.founder-proof-card:nth-last-child(-n+2){border-bottom:0}
   .founder-chain{grid-template-columns:1fr 30px 1fr}
   .founder-chain article:nth-of-type(3){grid-column:1}
   .founder-chain article:nth-of-type(4){grid-column:3}
@@ -216,6 +217,9 @@ html.motion-ready .founder-page [data-reveal].is-visible,html.motion-ready .foun
   .founder-credibility span:nth-child(-n+2){border-bottom:1px solid var(--founder-line)}
   .founder-heading-grid,.founder-method-grid,.founder-origin-grid,.founder-contact-grid{grid-template-columns:1fr;gap:34px}
   .founder-heading-grid{margin-bottom:36px}
+  .founder-integrity-grid{grid-template-columns:1fr}
+  .founder-integrity-card{min-height:auto;border-right:0;border-bottom:1px solid var(--founder-line)}
+  .founder-integrity-card:last-child{border-bottom:0}
   .founder-modes-grid{grid-template-columns:1fr}
   .founder-mode-card{border-right:0;border-bottom:1px solid var(--founder-line)}
   .founder-mode-card:last-child{border-bottom:0}
