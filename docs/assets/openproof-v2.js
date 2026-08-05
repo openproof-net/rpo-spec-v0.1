@@ -162,3 +162,74 @@
     }
   });
 })();
+
+(() => {
+  const page = document.querySelector('.founder-page');
+  if (!page) return;
+
+  const root = document.documentElement;
+  const isFrench = root.lang.toLowerCase().startsWith('fr');
+
+  // The site already provides authoritative FR and EN pages. Prevent browser
+  // auto-translation from mixing the two versions after a manual language switch.
+  root.setAttribute('translate', 'no');
+  root.classList.add('notranslate');
+  document.body?.setAttribute('translate', 'no');
+  document.body?.classList.add('notranslate');
+  let noTranslateMeta = document.querySelector('meta[name="google"]');
+  if (!noTranslateMeta) {
+    noTranslateMeta = document.createElement('meta');
+    noTranslateMeta.name = 'google';
+    document.head.append(noTranslateMeta);
+  }
+  noTranslateMeta.content = 'notranslate';
+
+  // Keep the manual language routes explicit and the active state unambiguous.
+  const frLink = document.querySelector('.language a[lang="fr"]');
+  const enLink = document.querySelector('.language a[lang="en"]');
+  if (frLink) {
+    frLink.href = '/fr/gersende-de-parcey.html';
+    frLink.toggleAttribute('aria-current', isFrench);
+  }
+  if (enLink) {
+    enLink.href = '/gersende-de-parcey.html';
+    enLink.toggleAttribute('aria-current', !isFrench);
+  }
+
+  // Preserve the English discipline name; use a shorter, accurate French form.
+  const methodTitle = document.getElementById('method-title');
+  if (methodTitle) {
+    methodTitle.textContent = isFrench
+      ? 'INGÉNIERIE DU RÉEL ORGANISATIONNEL.'
+      : 'ORGANIZATIONAL REALITY ENGINEERING.';
+  }
+
+  if (!document.getElementById('founder-method-layout-fix')) {
+    const style = document.createElement('style');
+    style.id = 'founder-method-layout-fix';
+    style.textContent = `
+      .founder-page .founder-method-grid{
+        grid-template-columns:minmax(0,.9fr) minmax(560px,1.1fr);
+        gap:72px;
+      }
+      .founder-page .founder-method .founder-section-title{
+        max-width:540px;
+        font-size:clamp(2.05rem,2.45vw,3rem);
+        line-height:1.08;
+        letter-spacing:-.03em;
+      }
+      @media(max-width:1180px){
+        .founder-page .founder-method-grid{grid-template-columns:1fr;gap:42px}
+        .founder-page .founder-method .founder-section-title{
+          max-width:760px;
+          font-size:clamp(2.1rem,5vw,3.55rem);
+        }
+      }
+      @media(max-width:760px){
+        .founder-page .founder-method .founder-section-title{
+          font-size:clamp(2rem,10.5vw,3.2rem);
+        }
+      }`;
+    document.head.append(style);
+  }
+})();
