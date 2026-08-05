@@ -305,3 +305,68 @@
   .rpo-flow-card::after,.rpo-flow-card:nth-child(3)::before{display:none!important}
   .rpo-authority-panel{min-height:auto;padding:30px 26px}
 }
+
+/* Alignment refinement after visual review. */
+.rpo-flow-card{
+  display:flex;
+  flex-direction:column;
+  overflow:visible;
+}
+
+.rpo-flow-card:not(:last-child)::after,
+.rpo-flow-card:nth-child(3)::before{
+  display:none!important;
+  content:none!important;
+}
+
+.rpo-flow-card strong{
+  margin-top:auto;
+}
+
+.rpo-outcome-layout{
+  align-items:start;
+}
+
+.rpo-outcome-grid{
+  align-self:start;
+}
+
+.rpo-outcome-card{
+  display:flex;
+  min-height:520px;
+  flex-direction:column;
+}
+
+.rpo-outcome-card ul{
+  margin-top:auto;
+}
+
+.rpo-authority-panel{
+  min-height:auto;
+  justify-content:flex-start;
+  padding:32px 31px;
+}
+
+.rpo-authority-panel h3{
+  margin:16px 0 18px;
+  font-size:clamp(1.35rem,1.75vw,1.85rem);
+  line-height:1.18;
+}
+
+.rpo-authority-panel p{
+  line-height:1.78;
+}
+
+.rpo-authority-note{
+  margin-top:18px;
+  padding:16px 18px;
+}
+
+.rpo-authority-panel .rpo-actions{
+  margin-top:24px;
+}
+
+@media(max-width:1120px){
+  .rpo-outcome-card{min-height:auto}
+  .rpo-authority-panel{min-height:auto}
+}
