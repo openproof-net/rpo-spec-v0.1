@@ -9,9 +9,9 @@
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://rpo.openproof.net/fr/">
   <link rel="alternate" hreflang="en" href="https://rpo.openproof.net/">
-<link rel="alternate" hreflang="fr" href="https://rpo.openproof.net/fr/">
-<link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/">
-<meta property="og:type" content="website">
+  <link rel="alternate" hreflang="fr" href="https://rpo.openproof.net/fr/">
+  <link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/">
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="OpenProof">
   <meta property="og:title" content="Registered Probative Object (RPO) — Spécification publique">
   <meta property="og:description" content="Spécification publique du Registered Probative Object (RPO) : noyau scellé, provenance des preuves, réserves explicites et intégrité SHA-256 vérifiable indépendamment.">
@@ -23,41 +23,39 @@
   <meta name="twitter:image" content="https://rpo.openproof.net/images/openproof-cover.png">
   <script type="application/ld+json">
   {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://rpo.openproof.net/fr/#website",
-      "url": "https://rpo.openproof.net/fr/",
-      "name": "RPO — Spécification publique",
-      "publisher": {
-        "@id": "https://openproof.net/#organization"
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://rpo.openproof.net/fr/#website",
+        "url": "https://rpo.openproof.net/fr/",
+        "name": "RPO — Spécification publique",
+        "publisher": { "@id": "https://openproof.net/#organization" },
+        "inLanguage": "fr"
       },
-      "inLanguage": "fr"
-    },
-    {
-      "@type": "TechArticle",
-      "@id": "https://rpo.openproof.net/fr/#specification",
-      "headline": "Registered Probative Object (RPO) — Spécification publique v0.1",
-      "description": "Spécification publique d’un objet probatoire stable, traçable et vérifiable indépendamment.",
-      "url": "https://rpo.openproof.net/fr/",
-      "author": {
-        "@type": "Organization",
-        "name": "OpenProof",
-        "url": "https://openproof.net"
-      },
-      "about": [
-        "Registered Probative Object",
-        "evidence provenance",
-        "canonical JSON",
-        "SHA-256 integrity",
-        "probative infrastructure"
-      ],
-      "version": "0.1",
-      "inLanguage": "fr"
-    }
-  ]
-}
+      {
+        "@type": "TechArticle",
+        "@id": "https://rpo.openproof.net/fr/#specification",
+        "headline": "Registered Probative Object (RPO) — Spécification publique v0.1",
+        "description": "Spécification publique d’un objet probatoire stable, traçable et vérifiable indépendamment.",
+        "url": "https://rpo.openproof.net/fr/",
+        "author": {
+          "@type": "Organization",
+          "name": "OpenProof",
+          "url": "https://openproof.net"
+        },
+        "about": [
+          "Registered Probative Object",
+          "evidence provenance",
+          "canonical JSON",
+          "SHA-256 integrity",
+          "probative infrastructure"
+        ],
+        "version": "0.1",
+        "inLanguage": "fr"
+      }
+    ]
+  }
   </script>
   <link rel="icon" href="/assets/openproof-icon.svg?v=20260731-2" type="image/svg+xml">
   <link rel="manifest" href="/site.webmanifest">
@@ -65,8 +63,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/openproof-v2.css?v=20260731-3">
-<meta property="og:locale" content="fr_FR">
-<meta property="og:locale:alternate" content="en_US">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:locale:alternate" content="en_US">
 </head>
 <body class="rpo-home">
   <a class="skip" href="#main">Aller au contenu</a>
@@ -77,13 +75,19 @@
         <img src="/assets/openproof-icon.svg?v=20260731-2" alt="" width="38" height="38">
         <span><strong>OPENPROOF</strong><small>SPÉCIFICATION PUBLIQUE RPO</small></span>
       </a>
-      <button class="menu" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+      <button class="menu" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
       <div class="links">
-        <a href="/fr/" aria-current="page">Spécification</a><a href="/fr/examples.html">Exemple</a><a href="/fr/tests.html">Vérifier</a><a href="/fr/gersende-de-parcey.html">Fondatrice</a><a href="https://openproof.net" class="external-link">OpenProof ↗</a>
-</div>
+        <a href="/fr/" aria-current="page">Spécification</a>
+        <a href="/fr/examples.html">Voir un RPO</a>
+        <a href="/fr/tests.html">Vérifier un RPO</a>
+        <a href="/fr/gersende-de-parcey.html">Fondatrice</a>
+        <a href="https://openproof.net" class="external-link">OpenProof ↗</a>
+      </div>
       <div class="language" aria-label="Langue">
-<a href="/fr/" lang="fr" hreflang="fr" aria-current="page">FR</a><span aria-hidden="true">|</span><a href="/" lang="en" hreflang="en">EN</a>
-</div>
+        <a href="/fr/" lang="fr" hreflang="fr" aria-current="page">FR</a>
+        <span aria-hidden="true">|</span>
+        <a href="/" lang="en" hreflang="en">EN</a>
+      </div>
     </div>
   </nav>
 
@@ -93,21 +97,13 @@
       <div class="wrap rpo-hero-grid">
         <div class="rpo-copy">
           <p class="eyebrow">OPENPROOF · NORME PUBLIQUE · V0.1</p>
-          <h1>
-            <span>Un objet probatoire.<br>Stable. Vérifiable. Défendable.</span>
-            </h1>
-          <p class="rpo-lead">
-            <span>Le RPO est le format public produit par OpenProof pour préserver un dossier structuré, ses sources, ses réserves et son intégrité — sans confondre vérification et vérité.</span>
-            </p>
+          <h1><span>Un objet probatoire.<br>Stable. Vérifiable. Défendable.</span></h1>
+          <p class="rpo-lead"><span>Le RPO est le format public produit par OpenProof pour préserver un dossier structuré, ses sources, ses réserves et son intégrité — sans confondre vérification et vérité.</span></p>
           <div class="rpo-actions">
-            <a class="btn primary" href="/fr/">
-              <span>Lire la spécification</span>
-              </a>
-            <a class="btn" href="/fr/examples.html">
-              <span>Voir un RPO</span>
-              </a>
+            <a class="btn primary" href="#definition-title"><span>Comprendre le RPO</span></a>
+            <a class="btn" href="/fr/examples.html"><span>Voir un RPO</span></a>
           </div>
-          <p class="version-line">RPO v0.1 · JSON · SHA-256 · deterministic verification</p>
+          <p class="version-line">RPO v0.1 · JSON · SHA-256 · vérification déterministe</p>
         </div>
 
         <div class="rpo-object" aria-label="Registered Probative Object">
@@ -119,18 +115,10 @@
             <strong>RPO</strong>
             <span>REGISTERED<br>PROBATIVE OBJECT</span>
           </div>
-          <div class="rpo-signal signal-source">
-<i></i><span>SOURCES</span>
-</div>
-          <div class="rpo-signal signal-structure">
-<i></i><span>STRUCTURE</span>
-</div>
-          <div class="rpo-signal signal-reserve">
-<i></i><span>RESERVATIONS</span>
-</div>
-          <div class="rpo-signal signal-hash">
-<i></i><span>INTEGRITY HASH</span>
-</div>
+          <div class="rpo-signal signal-source"><i></i><span>SOURCES</span></div>
+          <div class="rpo-signal signal-structure"><i></i><span>STRUCTURE</span></div>
+          <div class="rpo-signal signal-reserve"><i></i><span>RÉSERVES</span></div>
+          <div class="rpo-signal signal-hash"><i></i><span>EMPREINTE</span></div>
         </div>
       </div>
     </header>
@@ -139,14 +127,10 @@
       <div class="wrap">
         <p class="section-index">01 · DÉFINITION</p>
         <div class="definition-grid">
-          <h2 id="definition-title">
-            <span>Ce que le RPO garantit.<br>Et ce qu’il ne prétend pas garantir.</span>
-            </h2>
+          <h2 id="definition-title"><span>Ce que le RPO garantit.<br>Et ce qu’il ne prétend pas garantir.</span></h2>
           <div class="definition-copy">
             <p>Un RPO rend détectable toute modification du noyau scellé. Il conserve la provenance, les transformations et les réserves nécessaires à un examen indépendant.</p>
-            <p class="boundary">
-              <span><strong>Limite essentielle :</strong> l’intégrité d’un objet ne prouve pas la vérité de son contenu. OpenProof structure et rend vérifiable ; il ne juge pas.</span>
-              </p>
+            <p class="boundary"><span><strong>Limite essentielle :</strong> l’intégrité d’un objet ne prouve pas la vérité de son contenu. OpenProof structure et rend vérifiable ; il ne juge pas.</span></p>
           </div>
         </div>
       </div>
@@ -155,26 +139,12 @@
     <section class="rpo-anatomy" aria-labelledby="anatomy-title">
       <div class="wrap">
         <p class="section-index">02 · ANATOMIE</p>
-        <h2 id="anatomy-title">
-          <span>Quatre éléments. Une trace reproductible.</span>
-          </h2>
+        <h2 id="anatomy-title"><span>Quatre éléments. Une trace reproductible.</span></h2>
         <div class="anatomy-grid">
-          <article>
-            <span>01</span><h3>Sealed core</h3>
-            <p>Le noyau JSON canonique du dossier.</p>
-            </article>
-          <article>
-            <span>02</span><h3>Manifeste de preuves</h3>
-            <p>Les sources, leurs identifiants et leur provenance.</p>
-            </article>
-          <article>
-            <span>03</span><h3>Reservations</h3>
-            <p>Les lacunes, contradictions et limites explicites.</p>
-            </article>
-          <article>
-            <span>04</span><h3>Public hash</h3>
-            <p>L’empreinte SHA-256 permettant de détecter l’altération.</p>
-            </article>
+          <article><span>01</span><h3>Noyau scellé</h3><p>Le noyau JSON canonique du dossier.</p></article>
+          <article><span>02</span><h3>Manifeste de preuves</h3><p>Les sources, leurs identifiants et leur provenance.</p></article>
+          <article><span>03</span><h3>Réserves</h3><p>Les lacunes, contradictions et limites explicites.</p></article>
+          <article><span>04</span><h3>Empreinte publique</h3><p>L’empreinte SHA-256 permettant de détecter l’altération.</p></article>
         </div>
       </div>
     </section>
@@ -182,27 +152,25 @@
     <section class="rpo-paths" aria-labelledby="paths-title">
       <div class="wrap">
         <p class="section-index">03 · ACCÈS PUBLIC</p>
-        <h2 id="paths-title">
-          <span>Trois accès. Rien de plus.</span>
-          </h2>
+        <h2 id="paths-title"><span>Comprendre. Voir. Vérifier.</span></h2>
         <div class="path-grid">
-          <a href="/fr/">
-            <span>SPÉCIFICATION</span><strong>01</strong>
-            <h3>Comprendre le format</h3>
-            <p>Schéma, sérialisation canonique, empreinte et conformité.</p>
-            <i>Ouvrir la spécification →</i>
+          <a href="#definition-title">
+            <span>COMPRENDRE</span><strong>01</strong>
+            <h3>Comprendre le RPO</h3>
+            <p>Ce que le format conserve, garantit et refuse volontairement de décider.</p>
+            <i>Lire la spécification publique →</i>
           </a>
           <a href="/fr/examples.html">
-            <span>EXEMPLE</span><strong>02</strong>
-            <h3>Inspectioner un objet</h3>
-            <p>Un bundle d’exemple lisible par l’humain et la machine.</p>
-            <i>Ouvrir l’exemple →</i>
+            <span>VOIR</span><strong>02</strong>
+            <h3>Suivre une situation fictive</h3>
+            <p>Comprendre l’écart en langage humain avant d’ouvrir le JSON technique.</p>
+            <i>Voir un RPO →</i>
           </a>
           <a href="/fr/tests.html">
             <span>VÉRIFIER</span><strong>03</strong>
-            <h3>Reproduire la vérification</h3>
-            <p>Vecteurs de test et résultat attendu, indépendamment d’OpenProof.</p>
-            <i>Ouvrir la vérification →</i>
+            <h3>Détecter une modification</h3>
+            <p>Changer un détail et voir immédiatement l’empreinte SHA-256 locale changer.</p>
+            <i>Vérifier un RPO →</i>
           </a>
         </div>
       </div>
@@ -210,35 +178,26 @@
 
     <section class="architecture-line" aria-label="Architecture de marque">
       <div class="wrap">
-        <div>
-<span>OPENPROOF</span><strong>Infrastructure probatoire</strong>
-</div>
+        <div><span>OPENPROOF</span><strong>Infrastructure probatoire</strong></div>
         <b aria-hidden="true">→</b>
-        <div>
-<span>TRUTHX ENGINE</span><strong>Moteur de structuration déterministe</strong>
-</div>
+        <div><span>TRUTHX ENGINE</span><strong>Moteur de structuration déterministe</strong></div>
         <b aria-hidden="true">→</b>
-        <div>
-<span>RPO</span><strong>Objet probatoire enregistré</strong>
-</div>
+        <div><span>RPO</span><strong>Objet probatoire enregistré</strong></div>
       </div>
     </section>
   </main>
 
   <footer class="footer rpo-footer">
     <div class="wrap">
-      <div>
-        <strong>RPO v0.1</strong>
-        <p>Spécification technique publique maintenue par OpenProof.</p>
-      </div>
+      <div><strong>RPO v0.1</strong><p>Spécification technique publique maintenue par OpenProof.</p></div>
       <div class="footer-links">
         <a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a>
         <a href="/fr/">Spécification</a>
         <a href="https://openproof.net">OpenProof</a>
-        <a class="linkedin-link" href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer" aria-label="Gersende Ryard de Parcey on LinkedIn"><span class="linkedin-glyph" aria-hidden="true">in</span><span>LinkedIn</span></a>
+        <a class="linkedin-link" href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer" aria-label="Gersende Ryard de Parcey sur LinkedIn"><span class="linkedin-glyph" aria-hidden="true">in</span><span>LinkedIn</span></a>
       </div>
     </div>
   </footer>
-  <script src="/assets/openproof-v2.js?v=20260731-1"></script>
+  <script src="/assets/openproof-v2.js?v=20260805-6"></script>
 </body>
 </html>
