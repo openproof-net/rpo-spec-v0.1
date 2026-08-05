@@ -1,1 +1,496 @@
-placeholder
+/*
+ * RPO homepage diagram layer
+ * Replaces two card-heavy sections with system maps inspired by TruthX Engine.
+ */
+
+.rpo-transform-map,
+.rpo-value-map{
+  display:grid;
+  grid-template-columns:minmax(220px,.78fr) 56px minmax(320px,.9fr) 56px minmax(220px,.78fr);
+  gap:18px;
+  align-items:center;
+  margin-top:48px;
+}
+
+.rpo-diagram-label{
+  margin:0 0 18px;
+  color:var(--gold);
+  font:600 .61rem/1.4 Orbitron,Montserrat,sans-serif;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.rpo-diagram-copy{
+  margin:21px 0 0;
+  color:var(--soft);
+  font-size:.86rem;
+  line-height:1.78;
+}
+
+.rpo-map-arrow{
+  position:relative;
+  width:100%;
+  height:1px;
+  background:linear-gradient(90deg,rgba(196,154,88,.12),rgba(196,154,88,.68));
+}
+
+.rpo-map-arrow::before{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#c7a65f;
+  box-shadow:0 0 12px rgba(213,175,96,.7);
+  transform:translateY(-50%);
+  content:"";
+}
+
+.rpo-map-arrow::after{
+  position:absolute;
+  top:50%;
+  right:0;
+  width:8px;
+  height:8px;
+  border-top:1px solid #d3b16b;
+  border-right:1px solid #d3b16b;
+  transform:translateY(-50%) rotate(45deg);
+  content:"";
+}
+
+/* 03 — fragmented reality to a verifiable record */
+.rpo-transform-sources,
+.rpo-transform-record{
+  position:relative;
+  z-index:2;
+}
+
+.rpo-source-stack,
+.rpo-record-signals{
+  display:grid;
+  gap:9px;
+}
+
+.rpo-source-stack span,
+.rpo-record-signals span{
+  padding:13px 15px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(13,19,25,.94),rgba(5,8,11,.96));
+  color:#9da6aa;
+  font-size:.76rem;
+  line-height:1.45;
+}
+
+.rpo-source-stack span:nth-child(2),
+.rpo-record-signals span:nth-child(2){
+  margin-inline:12px;
+  border-color:rgba(196,154,88,.28);
+}
+
+.rpo-transform-orbit,
+.rpo-value-engine{
+  position:relative;
+  display:grid;
+  place-items:center;
+  width:100%;
+  min-height:360px;
+}
+
+.rpo-transform-orbit::before,
+.rpo-value-engine::before{
+  position:absolute;
+  inset:13%;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(214,179,106,.09),rgba(100,117,128,.05) 30%,transparent 68%);
+  filter:blur(2px);
+  content:"";
+}
+
+.rpo-diagram-ring{
+  position:absolute;
+  top:50%;
+  left:50%;
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+}
+
+.rpo-diagram-ring--a{
+  width:74%;
+  height:74%;
+  border:1px solid rgba(172,154,112,.24);
+  animation:rpoDiagramSpin 34s linear infinite;
+}
+
+.rpo-diagram-ring--b{
+  width:96%;
+  height:96%;
+  border:1px solid rgba(133,150,156,.14);
+  animation:rpoDiagramSpinReverse 28s linear infinite;
+}
+
+.rpo-diagram-ring--a::before{
+  position:absolute;
+  inset:17%;
+  border:1px solid rgba(172,154,112,.13);
+  border-radius:50%;
+  content:"";
+}
+
+.rpo-process-core,
+.rpo-engine-core,
+.rpo-record-core{
+  position:relative;
+  z-index:3;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border:1px solid #d8bc7b;
+  border-radius:50%;
+  background:radial-gradient(circle at 48% 42%,#283038,#0a0e12 66%);
+  box-shadow:inset 0 0 45px rgba(210,174,96,.14),0 0 70px rgba(177,140,70,.11),0 0 0 12px rgba(185,155,92,.035);
+}
+
+.rpo-process-core{
+  width:164px;
+  height:164px;
+}
+
+.rpo-process-core strong,
+.rpo-engine-core strong,
+.rpo-record-core strong{
+  color:#e2c98e;
+  font:600 .76rem/1.35 Orbitron,Montserrat,sans-serif;
+  letter-spacing:.13em;
+}
+
+.rpo-process-core b{
+  margin:4px 0;
+  color:var(--gold);
+  font:500 1.7rem/1 Orbitron,Montserrat,sans-serif;
+}
+
+.rpo-process-core span,
+.rpo-engine-core span,
+.rpo-record-core span{
+  color:#70797d;
+  font:600 .54rem/1.45 Orbitron,Montserrat,sans-serif;
+  letter-spacing:.15em;
+}
+
+.rpo-orbit-node,
+.rpo-engine-node{
+  position:absolute;
+  z-index:4;
+  padding-left:12px;
+  color:#70797d;
+  font:600 7px/1.45 Orbitron,Montserrat,sans-serif;
+  letter-spacing:1.2px;
+  white-space:nowrap;
+  text-transform:uppercase;
+}
+
+.rpo-orbit-node::before,
+.rpo-engine-node::before{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#c7a65f;
+  box-shadow:0 0 10px #d5af60;
+  transform:translateY(-50%);
+  content:"";
+}
+
+.rpo-orbit-node--structured{top:14%;left:50%;transform:translateX(-50%)}
+.rpo-orbit-node--qualified{right:1%;bottom:21%}
+
+.rpo-transform-record{
+  display:grid;
+  justify-items:center;
+}
+
+.rpo-transform-record .rpo-diagram-label{
+  justify-self:start;
+}
+
+.rpo-record-core{
+  width:176px;
+  height:176px;
+  margin:2px 0 23px;
+}
+
+.rpo-record-core img{
+  width:38px;
+  height:38px;
+  margin-bottom:7px;
+}
+
+.rpo-record-signals{
+  width:100%;
+}
+
+.rpo-transform-rail{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  margin:58px 0 0;
+  padding:0;
+  border-top:1px solid var(--line);
+  list-style:none;
+}
+
+.rpo-transform-rail li{
+  position:relative;
+  display:grid;
+  grid-template-columns:34px 1fr;
+  gap:13px;
+  min-height:210px;
+  padding:29px 25px 0;
+  border-right:1px solid var(--line);
+}
+
+.rpo-transform-rail li:last-child{border-right:0}
+
+.rpo-transform-rail li::before{
+  position:absolute;
+  top:-4px;
+  left:25px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#c7a65f;
+  box-shadow:0 0 12px rgba(213,175,96,.7);
+  content:"";
+}
+
+.rpo-transform-rail>li>span{
+  color:var(--gold);
+  font:600 .66rem/1.5 Orbitron,Montserrat,sans-serif;
+}
+
+.rpo-transform-rail strong{
+  display:block;
+  color:var(--pale);
+  font:600 .9rem/1.45 Orbitron,Montserrat,sans-serif;
+}
+
+.rpo-transform-rail p{
+  margin:13px 0 0;
+  color:var(--soft);
+  font-size:.82rem;
+  line-height:1.72;
+}
+
+.rpo-transform-rail small{
+  display:block;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:#858f92;
+  font-size:.72rem;
+  line-height:1.65;
+}
+
+/* 04 — professional situations converging on one integrity engine */
+.rpo-value-map{
+  grid-template-columns:minmax(270px,.9fr) 56px minmax(330px,.9fr) 56px minmax(250px,.72fr);
+  align-items:center;
+}
+
+.rpo-value-inputs{
+  display:grid;
+  gap:13px;
+}
+
+.rpo-value-node{
+  position:relative;
+  padding:20px 22px 19px 24px;
+  border-left:1px solid rgba(196,154,88,.55);
+  background:linear-gradient(90deg,rgba(196,154,88,.06),rgba(8,11,15,.82) 54%,transparent);
+}
+
+.rpo-value-node::after{
+  position:absolute;
+  top:50%;
+  right:-24px;
+  width:24px;
+  height:1px;
+  background:linear-gradient(90deg,rgba(196,154,88,.5),transparent);
+  content:"";
+}
+
+.rpo-value-node>span{
+  color:var(--gold);
+  font:600 .59rem/1.4 Orbitron,Montserrat,sans-serif;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+}
+
+.rpo-value-node h3{
+  margin:11px 0 10px;
+  color:var(--pale);
+  font:600 .91rem/1.42 Orbitron,Montserrat,sans-serif;
+}
+
+.rpo-value-node p{
+  margin:0;
+  color:var(--soft);
+  font-size:.82rem;
+  line-height:1.72;
+}
+
+.rpo-value-node small{
+  display:block;
+  margin-top:13px;
+  padding-top:11px;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:#7f898d;
+  font-size:.68rem;
+  line-height:1.55;
+}
+
+.rpo-engine-core{
+  width:190px;
+  height:190px;
+}
+
+.rpo-engine-core img{
+  width:42px;
+  height:42px;
+  margin-bottom:10px;
+}
+
+.rpo-engine-node--sources{top:13%;left:50%;transform:translateX(-50%)}
+.rpo-engine-node--decisions{top:36%;right:-1%}
+.rpo-engine-node--gaps{bottom:17%;right:8%}
+.rpo-engine-node--outcomes{bottom:17%;left:8%}
+.rpo-engine-node--expectations{top:36%;left:-1%}
+
+.rpo-probative-chain{
+  display:grid;
+}
+
+.rpo-chain-step{
+  padding:20px 21px;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(13,19,25,.94),rgba(5,8,11,.96));
+}
+
+.rpo-chain-step span{
+  color:var(--gold);
+  font:600 .59rem/1.4 Orbitron,Montserrat,sans-serif;
+  letter-spacing:.13em;
+}
+
+.rpo-chain-step strong{
+  display:block;
+  margin-top:9px;
+  color:var(--pale);
+  font:600 1rem/1.4 Orbitron,Montserrat,sans-serif;
+}
+
+.rpo-chain-step p{
+  margin:10px 0 0;
+  color:var(--soft);
+  font-size:.79rem;
+  line-height:1.68;
+}
+
+.rpo-chain-arrow{
+  display:grid;
+  min-height:38px;
+  place-items:center;
+  color:var(--gold);
+  font:500 1.1rem Orbitron,Montserrat,sans-serif;
+}
+
+.rpo-probative-chain .rpo-authority-note{
+  margin-top:18px;
+}
+
+.rpo-probative-chain .rpo-actions{
+  display:grid;
+  gap:10px;
+  margin-top:18px;
+}
+
+.rpo-probative-chain .btn{
+  width:100%;
+  min-height:46px;
+  border-radius:0;
+}
+
+@media(min-width:821px){
+  .rpo-diagram-copy,
+  .rpo-transform-rail p,
+  .rpo-transform-rail small,
+  .rpo-value-node p,
+  .rpo-value-node small,
+  .rpo-chain-step p{
+    text-align:justify;
+    text-align-last:left;
+    text-justify:inter-word;
+    hyphens:auto;
+    -webkit-hyphens:auto;
+  }
+}
+
+@media(max-width:1120px){
+  .rpo-transform-map,
+  .rpo-value-map{
+    grid-template-columns:1fr;
+    gap:24px;
+  }
+  .rpo-map-arrow{
+    width:1px;
+    height:42px;
+    margin:auto;
+    background:linear-gradient(180deg,rgba(196,154,88,.12),rgba(196,154,88,.68));
+  }
+  .rpo-map-arrow::before{top:0;left:50%;transform:translateX(-50%)}
+  .rpo-map-arrow::after{top:auto;right:auto;bottom:0;left:50%;transform:translateX(-50%) rotate(135deg)}
+  .rpo-transform-sources,
+  .rpo-transform-record,
+  .rpo-value-inputs,
+  .rpo-probative-chain{width:min(620px,100%);margin:auto}
+  .rpo-transform-orbit,
+  .rpo-value-engine{width:min(430px,100%);margin:auto}
+  .rpo-transform-rail{grid-template-columns:repeat(2,1fr)}
+  .rpo-transform-rail li:nth-child(2){border-right:0}
+  .rpo-transform-rail li:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .rpo-value-node::after{display:none}
+}
+
+@media(max-width:720px){
+  .rpo-transform-rail{grid-template-columns:1fr}
+  .rpo-transform-rail li{
+    min-height:auto;
+    padding:27px 0 27px 22px;
+    border-right:0;
+    border-bottom:1px solid var(--line);
+  }
+  .rpo-transform-rail li:last-child{border-bottom:0}
+  .rpo-transform-rail li::before{left:0}
+  .rpo-transform-orbit,
+  .rpo-value-engine{min-height:330px}
+  .rpo-process-core{width:148px;height:148px}
+  .rpo-engine-core{width:170px;height:170px}
+  .rpo-record-core{width:158px;height:158px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .rpo-diagram-ring{animation:none!important}
+}
+
+@keyframes rpoDiagramSpin{
+  to{transform:translate(-50%,-50%) rotate(360deg)}
+}
+
+@keyframes rpoDiagramSpinReverse{
+  to{transform:translate(-50%,-50%) rotate(-360deg)}
+}

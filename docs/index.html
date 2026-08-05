@@ -95,7 +95,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/openproof-v2.css?v=20260731-3">
-  <link rel="stylesheet" href="/assets/rpo-home-authority.css?v=20260805-1">
+  <link rel="stylesheet" href="/assets/rpo-home-authority.css?v=20260805-2">
+  <link rel="stylesheet" href="/assets/rpo-home-diagrams.css?v=20260805-1">
 </head>
 <body class="rpo-home rpo-authority-home">
   <a class="skip" href="#main">Skip to content</a>
@@ -192,47 +193,133 @@
       </div>
     </section>
 
-    <section class="rpo-flow" aria-labelledby="flow-title">
+    <section class="rpo-flow rpo-flow-diagram" aria-labelledby="flow-title">
       <div class="wrap">
         <p class="section-index">03 · FROM FRAGMENTATION TO VERIFICATION</p>
         <div class="authority-heading">
           <h2 id="flow-title">FROM FRAGMENTED REALITY TO A VERIFIABLE RECORD.</h2>
           <p>The RPO creates continuity between information, decisions and review without forcing every professional to use the same operational tool.</p>
         </div>
-        <div class="rpo-flow-grid">
-          <article class="rpo-flow-card"><span>01 · FRAGMENTED</span><h3>Sources and decisions are dispersed</h3><p>Documents, emails, reports, declarations and project systems contain different parts of the situation.</p><strong>Risk: the record is reconstructed too late, from competing versions.</strong></article>
-          <article class="rpo-flow-card"><span>02 · STRUCTURED</span><h3>A common state is created</h3><p>Sources, actors, events, decisions and evidence references are represented in a stable, machine-readable structure.</p><strong>Result: decision traceability becomes inspectable rather than merely asserted.</strong></article>
-          <article class="rpo-flow-card"><span>03 · QUALIFIED</span><h3>Limits remain explicit</h3><p>Contradictions, missing material, reservations and unresolved points remain visible instead of being hidden by a confident narrative.</p><strong>Result: audit-ready does not mean uncertainty-free.</strong></article>
-          <article class="rpo-flow-card"><span>04 · VERIFIABLE</span><h3>Every copy becomes comparable</h3><p>A deterministic representation and SHA-256 fingerprint make silent alteration detectable and independent review reproducible.</p><strong>Result: digital evidence integrity can be checked without trusting OpenProof.</strong></article>
+
+        <div class="rpo-transform-map">
+          <div class="rpo-transform-sources">
+            <p class="rpo-diagram-label">01 · FRAGMENTED REALITY</p>
+            <div class="rpo-source-stack">
+              <span>Documents &amp; email</span>
+              <span>Reports &amp; declarations</span>
+              <span>Decisions &amp; project systems</span>
+            </div>
+            <p class="rpo-diagram-copy">Different tools and actors hold different parts of the same situation.</p>
+          </div>
+
+          <div class="rpo-map-arrow" aria-hidden="true"></div>
+
+          <div class="rpo-transform-orbit" aria-label="Structuring and qualification">
+            <div class="rpo-diagram-ring rpo-diagram-ring--a"></div>
+            <div class="rpo-diagram-ring rpo-diagram-ring--b"></div>
+            <div class="rpo-process-core">
+              <strong>STRUCTURE</strong>
+              <b>×</b>
+              <span>QUALIFY</span>
+            </div>
+            <div class="rpo-orbit-node rpo-orbit-node--structured">02 · COMMON STATE</div>
+            <div class="rpo-orbit-node rpo-orbit-node--qualified">03 · EXPLICIT LIMITS</div>
+          </div>
+
+          <div class="rpo-map-arrow" aria-hidden="true"></div>
+
+          <div class="rpo-transform-record">
+            <p class="rpo-diagram-label">04 · VERIFIABLE RECORD</p>
+            <div class="rpo-record-core">
+              <img src="/assets/openproof-icon.svg?v=20260731-2" alt="">
+              <strong>RPO</strong>
+              <span>REGISTERED PROBATIVE OBJECT</span>
+            </div>
+            <div class="rpo-record-signals">
+              <span>Comparable copies</span>
+              <span>SHA-256 fingerprint</span>
+              <span>Independent review</span>
+            </div>
+          </div>
         </div>
+
+        <ol class="rpo-transform-rail">
+          <li><span>01</span><div><strong>Fragmented</strong><p>Documents, emails, reports, declarations and project systems contain different parts of the situation.</p><small>Risk: the record is reconstructed too late, from competing versions.</small></div></li>
+          <li><span>02</span><div><strong>Structured</strong><p>Sources, actors, events, decisions and evidence references are represented in one stable state.</p><small>Result: decision traceability becomes inspectable rather than merely asserted.</small></div></li>
+          <li><span>03</span><div><strong>Qualified</strong><p>Contradictions, missing material, reservations and unresolved points remain visible.</p><small>Result: audit-ready does not mean uncertainty-free.</small></div></li>
+          <li><span>04</span><div><strong>Verifiable</strong><p>A deterministic representation makes every copy independently comparable.</p><small>Result: silent alteration becomes detectable without trusting OpenProof.</small></div></li>
+        </ol>
       </div>
     </section>
 
-    <section class="rpo-outcomes" aria-labelledby="outcomes-title">
+    <section class="rpo-outcomes rpo-value-diagram" aria-labelledby="outcomes-title">
       <div class="wrap">
         <p class="section-index">04 · PRACTICAL VALUE</p>
         <div class="authority-heading">
           <h2 id="outcomes-title">WHAT CHANGES WHEN A RECORD REMAINS DEMONSTRABLE?</h2>
           <p>The same RPO can support early correction, independent audit, mediation, insurance review or legal work without pretending that all those professions are the same.</p>
         </div>
-        <div class="rpo-outcome-layout">
-          <div class="rpo-outcome-grid">
-            <article class="rpo-outcome-card"><span>01 · CONTESTED DECISION</span><h3>Reconstruct what was known</h3><p>Recover the information, reservations and recorded state available when the decision was made.</p><ul><li>Decision reconstruction</li><li>Evidence provenance</li><li>Governance review</li></ul></article>
-            <article class="rpo-outcome-card"><span>02 · ACTIVE PROJECT</span><h3>Detect divergence earlier</h3><p>Compare what was expected, declared and evidenced while the gap can still be corrected.</p><ul><li>Project decision traceability</li><li>Delivery integrity</li><li>Defect and remediation records</li></ul></article>
-            <article class="rpo-outcome-card"><span>03 · REVIEW OR DISPUTE</span><h3>Share one reviewable state</h3><p>Give auditors, insurers, mediators or legal teams a stable record with explicit limits.</p><ul><li>Audit-ready record</li><li>Insurance evidence review</li><li>Legal evidence reconstruction</li></ul></article>
+
+        <div class="rpo-value-map">
+          <div class="rpo-value-inputs">
+            <article class="rpo-value-node">
+              <span>01 · CONTESTED DECISION</span>
+              <h3>Reconstruct what was known</h3>
+              <p>Recover the information, reservations and recorded state available when the decision was made.</p>
+              <small>Decision reconstruction · Evidence provenance · Governance review</small>
+            </article>
+            <article class="rpo-value-node">
+              <span>02 · ACTIVE PROJECT</span>
+              <h3>Detect divergence earlier</h3>
+              <p>Compare what was expected, declared and evidenced while the gap can still be corrected.</p>
+              <small>Project decision traceability · Delivery integrity · Defect and remediation records</small>
+            </article>
+            <article class="rpo-value-node">
+              <span>03 · REVIEW OR DISPUTE</span>
+              <h3>Share one reviewable state</h3>
+              <p>Give auditors, insurers, mediators or legal teams a stable record with explicit limits.</p>
+              <small>Audit-ready record · Insurance evidence review · Legal evidence reconstruction</small>
+            </article>
           </div>
-          <aside class="rpo-authority-panel">
-            <div>
-              <p class="section-index">THE ENGINE BEHIND THE OBJECT</p>
-              <h3>TruthX Engine structures. OpenProof preserves. The RPO records.</h3>
-              <p>TruthX Engine is the deterministic structuring engine that connects sources, expectations, decisions, contradictions and outcomes before OpenProof records the reviewed result as a verifiable RPO.</p>
-              <p class="rpo-authority-note">OpenProof is the probative infrastructure. TruthX Engine is the deterministic structuring engine powering it. RPO is the registered probative object it produces.</p>
+
+          <div class="rpo-map-arrow" aria-hidden="true"></div>
+
+          <div class="rpo-value-engine" aria-label="TruthX Engine integrity core">
+            <div class="rpo-diagram-ring rpo-diagram-ring--a"></div>
+            <div class="rpo-diagram-ring rpo-diagram-ring--b"></div>
+            <div class="rpo-engine-core">
+              <img src="/assets/openproof-icon.svg?v=20260731-2" alt="">
+              <strong>TRUTHX ENGINE</strong>
+              <span>STRUCTURES</span>
             </div>
+            <div class="rpo-engine-node rpo-engine-node--sources">SOURCES</div>
+            <div class="rpo-engine-node rpo-engine-node--decisions">DECISIONS</div>
+            <div class="rpo-engine-node rpo-engine-node--gaps">CONTRADICTIONS</div>
+            <div class="rpo-engine-node rpo-engine-node--outcomes">OUTCOMES</div>
+            <div class="rpo-engine-node rpo-engine-node--expectations">EXPECTATIONS</div>
+          </div>
+
+          <div class="rpo-map-arrow" aria-hidden="true"></div>
+
+          <div class="rpo-probative-chain">
+            <p class="rpo-diagram-label">THE PROBATIVE CHAIN</p>
+            <article class="rpo-chain-step">
+              <span>OPENPROOF</span>
+              <strong>PRESERVES</strong>
+              <p>Review boundaries, provenance and the public verification layer remain distinct from the engine.</p>
+            </article>
+            <div class="rpo-chain-arrow" aria-hidden="true">↓</div>
+            <article class="rpo-chain-step">
+              <span>RPO</span>
+              <strong>RECORDS</strong>
+              <p>The reviewed result becomes a versioned, sourced and independently comparable object.</p>
+            </article>
+            <p class="rpo-authority-note">OpenProof is the probative infrastructure. TruthX Engine is the deterministic structuring engine powering it. RPO is the registered probative object it produces.</p>
             <div class="rpo-actions">
               <a class="btn primary" href="/truthx-engine/">Discover TruthX Engine</a>
               <a class="btn" href="https://app.openproof.net/qualify?intent=case">Qualify a case</a>
             </div>
-          </aside>
+          </div>
         </div>
       </div>
     </section>

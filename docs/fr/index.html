@@ -95,7 +95,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/openproof-v2.css?v=20260731-3">
-  <link rel="stylesheet" href="/assets/rpo-home-authority.css?v=20260805-1">
+  <link rel="stylesheet" href="/assets/rpo-home-authority.css?v=20260805-2">
+  <link rel="stylesheet" href="/assets/rpo-home-diagrams.css?v=20260805-1">
 </head>
 <body class="rpo-home rpo-authority-home">
   <a class="skip" href="#main">Aller au contenu</a>
@@ -192,47 +193,133 @@
       </div>
     </section>
 
-    <section class="rpo-flow" aria-labelledby="flow-title">
+    <section class="rpo-flow rpo-flow-diagram" aria-labelledby="flow-title">
       <div class="wrap">
         <p class="section-index">03 · DE LA FRAGMENTATION À LA VÉRIFICATION</p>
         <div class="authority-heading">
           <h2 id="flow-title">DE LA RÉALITÉ FRAGMENTÉE À UN DOSSIER VÉRIFIABLE.</h2>
           <p>Le RPO maintient une continuité entre informations, décisions et examen sans obliger tous les professionnels à utiliser le même logiciel métier.</p>
         </div>
-        <div class="rpo-flow-grid">
-          <article class="rpo-flow-card"><span>01 · FRAGMENTÉ</span><h3>Les sources et décisions sont dispersées</h3><p>Documents, courriels, rapports, déclarations et logiciels de projet détiennent chacun une partie de la situation.</p><strong>Risque : le dossier est reconstitué trop tard, à partir de versions concurrentes.</strong></article>
-          <article class="rpo-flow-card"><span>02 · STRUCTURÉ</span><h3>Un état commun est constitué</h3><p>Sources, acteurs, événements, décisions et références probatoires sont représentés dans une structure stable et lisible par la machine.</p><strong>Résultat : la traçabilité décisionnelle devient inspectable au lieu d’être seulement affirmée.</strong></article>
-          <article class="rpo-flow-card"><span>03 · QUALIFIÉ</span><h3>Les limites restent explicites</h3><p>Contradictions, pièces manquantes, réserves et points non résolus demeurent visibles au lieu d’être masqués par un récit trop affirmatif.</p><strong>Résultat : un dossier prêt pour l’audit ne prétend pas être dépourvu d’incertitudes.</strong></article>
-          <article class="rpo-flow-card"><span>04 · VÉRIFIABLE</span><h3>Chaque copie devient comparable</h3><p>Une représentation déterministe et une empreinte SHA-256 rendent l’altération silencieuse détectable et l’examen indépendant reproductible.</p><strong>Résultat : l’intégrité des preuves numériques peut être contrôlée sans faire confiance à OpenProof.</strong></article>
+
+        <div class="rpo-transform-map">
+          <div class="rpo-transform-sources">
+            <p class="rpo-diagram-label">01 · RÉALITÉ FRAGMENTÉE</p>
+            <div class="rpo-source-stack">
+              <span>Documents &amp; courriels</span>
+              <span>Rapports &amp; déclarations</span>
+              <span>Décisions &amp; logiciels de projet</span>
+            </div>
+            <p class="rpo-diagram-copy">Des outils et des acteurs différents détiennent chacun une partie de la même situation.</p>
+          </div>
+
+          <div class="rpo-map-arrow" aria-hidden="true"></div>
+
+          <div class="rpo-transform-orbit" aria-label="Structuration et qualification">
+            <div class="rpo-diagram-ring rpo-diagram-ring--a"></div>
+            <div class="rpo-diagram-ring rpo-diagram-ring--b"></div>
+            <div class="rpo-process-core">
+              <strong>STRUCTURER</strong>
+              <b>×</b>
+              <span>QUALIFIER</span>
+            </div>
+            <div class="rpo-orbit-node rpo-orbit-node--structured">02 · ÉTAT COMMUN</div>
+            <div class="rpo-orbit-node rpo-orbit-node--qualified">03 · LIMITES EXPLICITES</div>
+          </div>
+
+          <div class="rpo-map-arrow" aria-hidden="true"></div>
+
+          <div class="rpo-transform-record">
+            <p class="rpo-diagram-label">04 · DOSSIER VÉRIFIABLE</p>
+            <div class="rpo-record-core">
+              <img src="/assets/openproof-icon.svg?v=20260731-2" alt="">
+              <strong>RPO</strong>
+              <span>OBJET PROBATOIRE ENREGISTRÉ</span>
+            </div>
+            <div class="rpo-record-signals">
+              <span>Copies comparables</span>
+              <span>Empreinte SHA-256</span>
+              <span>Examen indépendant</span>
+            </div>
+          </div>
         </div>
+
+        <ol class="rpo-transform-rail">
+          <li><span>01</span><div><strong>Fragmenté</strong><p>Documents, courriels, rapports, déclarations et logiciels de projet détiennent différentes parties de la situation.</p><small>Risque : le dossier est reconstitué trop tard, à partir de versions concurrentes.</small></div></li>
+          <li><span>02</span><div><strong>Structuré</strong><p>Sources, acteurs, événements, décisions et références probatoires sont réunis dans un état stable.</p><small>Résultat : la traçabilité décisionnelle devient inspectable au lieu d’être seulement affirmée.</small></div></li>
+          <li><span>03</span><div><strong>Qualifié</strong><p>Contradictions, pièces manquantes, réserves et points non résolus restent visibles.</p><small>Résultat : un dossier prêt pour l’audit ne prétend pas être dépourvu d’incertitudes.</small></div></li>
+          <li><span>04</span><div><strong>Vérifiable</strong><p>Une représentation déterministe rend chaque copie indépendamment comparable.</p><small>Résultat : l’altération silencieuse devient détectable sans faire confiance à OpenProof.</small></div></li>
+        </ol>
       </div>
     </section>
 
-    <section class="rpo-outcomes" aria-labelledby="outcomes-title">
+    <section class="rpo-outcomes rpo-value-diagram" aria-labelledby="outcomes-title">
       <div class="wrap">
         <p class="section-index">04 · VALEUR PRATIQUE</p>
         <div class="authority-heading">
           <h2 id="outcomes-title">QU’EST-CE QUI CHANGE LORSQU’UN DOSSIER RESTE DÉMONTRABLE ?</h2>
           <p>Le même RPO peut servir à corriger plus tôt, auditer, assurer, médier ou préparer un travail juridique sans prétendre que tous ces métiers se confondent.</p>
         </div>
-        <div class="rpo-outcome-layout">
-          <div class="rpo-outcome-grid">
-            <article class="rpo-outcome-card"><span>01 · DÉCISION CONTESTÉE</span><h3>Reconstituer ce qui était connu</h3><p>Retrouver les informations, réserves et états enregistrés disponibles au moment où la décision a été prise.</p><ul><li>Reconstruction de décision</li><li>Provenance des preuves</li><li>Revue de gouvernance</li></ul></article>
-            <article class="rpo-outcome-card"><span>02 · PROJET EN COURS</span><h3>Détecter l’écart plus tôt</h3><p>Comparer ce qui était attendu, déclaré et démontré pendant qu’une correction reste encore possible.</p><ul><li>Traçabilité des décisions de projet</li><li>Intégrité de livraison</li><li>Défauts et remédiation</li></ul></article>
-            <article class="rpo-outcome-card"><span>03 · EXAMEN OU CONFLIT</span><h3>Partager un état révisable</h3><p>Donner aux auditeurs, assureurs, médiateurs ou juristes un dossier stable dont les limites restent explicites.</p><ul><li>Dossier prêt pour l’audit</li><li>Revue probatoire d’assurance</li><li>Reconstruction de preuves juridiques</li></ul></article>
+
+        <div class="rpo-value-map">
+          <div class="rpo-value-inputs">
+            <article class="rpo-value-node">
+              <span>01 · DÉCISION CONTESTÉE</span>
+              <h3>Reconstituer ce qui était connu</h3>
+              <p>Retrouver les informations, réserves et états enregistrés disponibles au moment où la décision a été prise.</p>
+              <small>Reconstruction de décision · Provenance des preuves · Revue de gouvernance</small>
+            </article>
+            <article class="rpo-value-node">
+              <span>02 · PROJET EN COURS</span>
+              <h3>Détecter l’écart plus tôt</h3>
+              <p>Comparer ce qui était attendu, déclaré et démontré pendant qu’une correction reste encore possible.</p>
+              <small>Traçabilité des décisions de projet · Intégrité de livraison · Défauts et remédiation</small>
+            </article>
+            <article class="rpo-value-node">
+              <span>03 · EXAMEN OU CONFLIT</span>
+              <h3>Partager un état révisable</h3>
+              <p>Donner aux auditeurs, assureurs, médiateurs ou juristes un dossier stable dont les limites restent explicites.</p>
+              <small>Dossier prêt pour l’audit · Revue probatoire d’assurance · Reconstruction de preuves juridiques</small>
+            </article>
           </div>
-          <aside class="rpo-authority-panel">
-            <div>
-              <p class="section-index">LE MOTEUR DERRIÈRE L’OBJET</p>
-              <h3>TruthX Engine structure. OpenProof conserve. Le RPO enregistre.</h3>
-              <p>TruthX Engine est le moteur déterministe qui relie sources, attentes, décisions, contradictions et résultats avant qu’OpenProof n’enregistre le résultat revu sous la forme d’un RPO vérifiable.</p>
-              <p class="rpo-authority-note">OpenProof est l’infrastructure probatoire. TruthX Engine est le moteur de structuration déterministe qui l’alimente. Le RPO est l’objet probatoire enregistré qu’il produit.</p>
+
+          <div class="rpo-map-arrow" aria-hidden="true"></div>
+
+          <div class="rpo-value-engine" aria-label="Noyau d’intégrité TruthX Engine">
+            <div class="rpo-diagram-ring rpo-diagram-ring--a"></div>
+            <div class="rpo-diagram-ring rpo-diagram-ring--b"></div>
+            <div class="rpo-engine-core">
+              <img src="/assets/openproof-icon.svg?v=20260731-2" alt="">
+              <strong>TRUTHX ENGINE</strong>
+              <span>STRUCTURE</span>
             </div>
+            <div class="rpo-engine-node rpo-engine-node--sources">SOURCES</div>
+            <div class="rpo-engine-node rpo-engine-node--decisions">DÉCISIONS</div>
+            <div class="rpo-engine-node rpo-engine-node--gaps">CONTRADICTIONS</div>
+            <div class="rpo-engine-node rpo-engine-node--outcomes">RÉSULTATS</div>
+            <div class="rpo-engine-node rpo-engine-node--expectations">ATTENTES</div>
+          </div>
+
+          <div class="rpo-map-arrow" aria-hidden="true"></div>
+
+          <div class="rpo-probative-chain">
+            <p class="rpo-diagram-label">LA CHAÎNE PROBATOIRE</p>
+            <article class="rpo-chain-step">
+              <span>OPENPROOF</span>
+              <strong>CONSERVE</strong>
+              <p>La frontière de revue, la provenance et la couche publique de vérification restent distinctes du moteur.</p>
+            </article>
+            <div class="rpo-chain-arrow" aria-hidden="true">↓</div>
+            <article class="rpo-chain-step">
+              <span>RPO</span>
+              <strong>ENREGISTRE</strong>
+              <p>Le résultat revu devient un objet versionné, sourcé et comparable indépendamment.</p>
+            </article>
+            <p class="rpo-authority-note">OpenProof est l’infrastructure probatoire. TruthX Engine est le moteur de structuration déterministe qui l’alimente. Le RPO est l’objet probatoire enregistré qu’il produit.</p>
             <div class="rpo-actions">
               <a class="btn primary" href="/fr/truthx-engine/">Découvrir TruthX Engine</a>
               <a class="btn" href="https://app.openproof.net/qualify?intent=case">Qualifier un cas</a>
             </div>
-          </aside>
+          </div>
         </div>
       </div>
     </section>
