@@ -4,56 +4,51 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#050809">
-  <title>Exemple de RPO : manifeste de preuves et empreinte SHA-256 | OpenProof</title>
-  <meta name="description" content="Examinez un exemple public de RPO : noyau scellé, manifeste de preuves, provenance, réserves explicites et empreinte d’intégrité SHA-256.">
+  <title>Voir un RPO en langage humain | OpenProof</title>
+  <meta name="description" content="Comprenez concrètement ce qu’un Registered Probative Object conserve : situation, sources, contradiction, point non résolu et empreinte d’intégrité.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://rpo.openproof.net/fr/examples.html">
   <link rel="alternate" hreflang="en" href="https://rpo.openproof.net/examples.html">
-<link rel="alternate" hreflang="fr" href="https://rpo.openproof.net/fr/examples.html">
-<link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/examples.html">
-<meta property="og:type" content="article">
+  <link rel="alternate" hreflang="fr" href="https://rpo.openproof.net/fr/examples.html">
+  <link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/examples.html">
+  <meta property="og:type" content="article">
   <meta property="og:site_name" content="OpenProof">
-  <meta property="og:title" content="Exemple de RPO : manifeste de preuves et empreinte SHA-256">
-  <meta property="og:description" content="Examinez un exemple public de RPO : noyau scellé, manifeste de preuves, provenance, réserves explicites et empreinte d’intégrité SHA-256.">
+  <meta property="og:title" content="Un RPO expliqué en langage humain">
+  <meta property="og:description" content="Comprenez concrètement ce qu’un Registered Probative Object conserve : situation, sources, contradiction, point non résolu et empreinte d’intégrité.">
   <meta property="og:url" content="https://rpo.openproof.net/fr/examples.html">
   <meta property="og:image" content="https://rpo.openproof.net/images/openproof-cover.png">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:locale:alternate" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Exemple de RPO : manifeste de preuves et empreinte SHA-256">
-  <meta name="twitter:description" content="Examinez un exemple public de RPO : noyau scellé, manifeste de preuves, provenance, réserves explicites et empreinte d’intégrité SHA-256.">
+  <meta name="twitter:title" content="Un RPO expliqué en langage humain">
+  <meta name="twitter:description" content="Comprenez concrètement ce qu’un Registered Probative Object conserve : situation, sources, contradiction, point non résolu et empreinte d’intégrité.">
   <meta name="twitter:image" content="https://rpo.openproof.net/images/openproof-cover.png">
   <script type="application/ld+json">
   {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "Exemple public de Registered Probative Object (RPO)",
-  "description": "Exemple minimal de RPO contenant un noyau scellé, un manifeste de preuves, des réserves et une empreinte publique d’intégrité SHA-256.",
-  "url": "https://rpo.openproof.net/fr/examples.html",
-  "author": {
-    "@type": "Organization",
-    "name": "OpenProof",
-    "url": "https://openproof.net"
-  },
-  "isPartOf": {
-    "@id": "https://rpo.openproof.net/fr/#website"
-  },
-  "about": [
-    "Registered Probative Object",
-    "evidence manifest",
-    "evidence provenance",
-    "SHA-256"
-  ],
-  "inLanguage": "fr"
-}
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "name": "Démonstration publique d’un Registered Probative Object",
+    "headline": "Démonstration publique d’un Registered Probative Object",
+    "url": "https://rpo.openproof.net/fr/examples.html",
+    "description": "Comprenez concrètement ce qu’un Registered Probative Object conserve : situation, sources, contradiction, point non résolu et empreinte d’intégrité.",
+    "version": "0.1",
+    "isAccessibleForFree": true,
+    "publisher": {
+      "@type": "Organization",
+      "name": "OpenProof",
+      "url": "https://openproof.net"
+    },
+    "inLanguage": "fr"
+  }
   </script>
   <link rel="icon" href="/assets/openproof-icon.svg?v=20260731-2" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/openproof-v2.css?v=20260731-3">
-<meta property="og:locale" content="fr_FR">
-<meta property="og:locale:alternate" content="en_US">
+  <link rel="stylesheet" href="/assets/rpo-demonstration.css?v=20260805-1">
 </head>
-<body class="rpo-home rpo-subpage">
+<body class="rpo-home rpo-subpage rpo-demo-page" data-rpo-demo-page data-demo-src="/examples/public-demo/rpo-fr.json">
   <a class="skip" href="#main">Aller au contenu</a>
   <nav class="nav" aria-label="Navigation principale">
     <div class="wrap navin">
@@ -61,108 +56,142 @@
         <img src="/assets/openproof-icon.svg?v=20260731-2" alt="" width="38" height="38">
         <span><strong>OPENPROOF</strong><small>SPÉCIFICATION PUBLIQUE RPO</small></span>
       </a>
-      <button class="menu" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
+      <button class="menu" type="button" aria-expanded="false" aria-label="Ouvrir le menu">Menu</button>
       <div class="links">
-        <a href="/fr/">Spécification</a><a href="/fr/examples.html" aria-current="page">Exemple</a><a href="/fr/tests.html">Vérifier</a><a href="/fr/gersende-de-parcey.html">Fondatrice</a><a href="https://openproof.net" class="external-link">OpenProof ↗</a>
-</div>
+        <a href="/fr/">Spécification</a>
+        <a href="/fr/examples.html" aria-current="page">Voir un RPO</a>
+        <a href="/fr/tests.html">Vérifier un RPO</a>
+        <a href="/fr/gersende-de-parcey.html">Fondatrice</a>
+        <a href="https://openproof.net" class="external-link">OpenProof ↗</a>
+      </div>
       <div class="language" aria-label="Langue">
-<a href="/fr/examples.html" lang="fr" hreflang="fr" aria-current="page">FR</a><span aria-hidden="true">|</span><a href="/examples.html" lang="en" hreflang="en">EN</a>
-</div>
+        <a href="/fr/examples.html" lang="fr" hreflang="fr" aria-current="page">FR</a>
+        <span aria-hidden="true">|</span>
+        <a href="/examples.html" lang="en" hreflang="en">EN</a>
+      </div>
     </div>
   </nav>
 
   <main id="main">
-    <header class="sub-hero cosmos">
+    <header class="demo-hero cosmos">
       <canvas class="stars" aria-hidden="true"></canvas>
-      <div class="wrap">
-        <p class="eyebrow">02 · EXEMPLE · RPO V0.1</p>
-        <h1>
-          <span>Un RPO, rendu lisible.</span>
-          </h1>
-        <p class="sub-lead">Un objet minimal permet d’inspecter la structure publique sans exposer de dossier réel. Le même fichier peut être lu par une personne, une machine et l’outil de vérification.</p>
-        <div class="sub-actions">
-          <a class="btn primary" href="/fr/tests.html">Vérifier cet objet</a>
-          <a class="btn" href="https://github.com/openproof-net/rpo-spec-v0.1/blob/main/examples/example-minimal/rpo.json">Raw JSON ↗</a>
+      <div class="demo-wrap">
+        <div class="demo-hero-copy">
+          <p class="demo-kicker">02 · VOIR UN RPO · DONNÉES FICTIVES</p>
+          <h1>QUE MONTRE CONCRÈTEMENT UN RPO ?<span>COMMENÇONS PAR LA SITUATION, PAS PAR LE CODE.</span></h1>
+          <p class="demo-hero-lead">Un RPO n’est ni « la vérité », ni une conclusion juridique. C’est un dossier structuré qui conserve ce qui était attendu, ce qui a été déclaré, ce que les sources montrent et ce qui reste non résolu.</p>
+          <div class="demo-actions">
+            <a class="btn primary" href="#situation">Lire la situation</a>
+            <a class="btn" href="/fr/tests.html#laboratory">Vérifier cette copie</a>
+          </div>
+          <p class="demo-one-line">En une phrase : le RPO garde ensemble la situation, les sources, les limites et l’empreinte qui permet de détecter toute modification.</p>
+        </div>
+        <div class="demo-visual" aria-label="Démonstration RPO">
+          <div class="demo-visual-ring demo-visual-ring--outer"></div>
+          <div class="demo-visual-ring demo-visual-ring--inner"></div>
+          <div class="demo-visual-core"><div><strong>RPO</strong><span>ÉTAT VÉRIFIABLE</span></div></div>
+          <span class="demo-node demo-node--expected">ATTENDU</span>
+          <span class="demo-node demo-node--declared">DÉCLARÉ</span>
+          <span class="demo-node demo-node--evidence">SOURCE</span>
+          <span class="demo-node demo-node--unresolved">NON RÉSOLU</span>
         </div>
       </div>
     </header>
 
-    <section class="object-summary">
-      <div class="wrap">
-        <p class="section-index">JEU D’ESSAI PUBLIC · NON CONFIDENTIEL</p>
-        <div class="summary-grid">
-          <article><span>ID DU BUNDLE</span><strong>rpo-example-minimal-0001</strong></article>
-          <article><span>FORMAT</span><strong>RPO v0.1 · JSON</strong></article>
-          <article><span>STATUT</span><strong class="status-ok">STRUCTURE PRÉSENTE</strong></article>
-          <article><span>DONNÉES</span><strong>DONNÉES DE DÉMONSTRATION</strong></article>
+    <section class="demo-section" id="situation">
+      <div class="demo-wrap">
+        <p class="demo-index">01 · LA SITUATION</p>
+        <div class="demo-heading-grid">
+          <h2>QUATRE ÉLÉMENTS SUFFISENT POUR COMPRENDRE L’ÉCART.</h2>
+          <p>Cet exemple est entièrement fictif. Il montre la logique du RPO sans exposer de dossier réel.</p>
+        </div>
+        <div class="demo-story-grid">
+          <article class="demo-story-card"><span class="demo-label">01 · ATTENDU</span><h3>Avant la réception</h3><p>Le contrat exige que le test final de ventilation soit terminé avant la réception du bâtiment.</p></article>
+          <article class="demo-story-card"><span class="demo-label">02 · DÉCLARÉ</span><h3>Prêt à être réceptionné</h3><p>Le compte rendu du 15 juillet indique que le bâtiment est prêt à être réceptionné.</p></article>
+          <article class="demo-story-card"><span class="demo-label">03 · SOURCE</span><h3>Test encore manquant</h3><p>Le rapport d’inspection du 16 juillet précise que le test final de débit d’air reste à effectuer.</p></article>
+          <article class="demo-story-card demo-story-card--alert"><span class="demo-label">04 · NON RÉSOLU</span><h3>Un écart doit être traité</h3><p>Le RPO ne décide pas automatiquement qui est responsable. Il conserve l’écart, les sources et la question à résoudre.</p></article>
         </div>
       </div>
     </section>
 
-    <section class="object-inspection">
-      <div class="wrap inspection-grid">
-        <div>
-          <p class="section-index">ANATOMIE DE L’OBJET</p>
-          <h2>Ce que contient l’objet.</h2>
-          <div class="inspection-list">
-            <article><b>01</b><div>
-<h3>Identité</h3>
-<p>Version, identifiant stable et horodatage de création.</p>
-</div></article>
-            <article><b>02</b><div>
-<h3>Manifeste de preuves</h3>
-<p>Références aux pièces et empreintes déclarées.</p>
-</div></article>
-            <article><b>03</b><div>
-<h3>Récit</h3>
-<p>Résumé structuré relié aux éléments sources.</p>
-</div></article>
-            <article><b>04</b><div>
-<h3>Registre</h3>
-<p>Entrée publique et empreinte d’intégrité.</p>
-</div></article>
+    <section class="demo-section">
+      <div class="demo-wrap">
+        <p class="demo-index">02 · POURQUOI C’EST UTILE</p>
+        <h2>LE RPO NE REMPLACE PAS LE TRAVAIL. IL EMPÊCHE QUE LE TRAVAIL DEVIENNE INDÉMONTRABLE.</h2>
+        <div class="demo-value-grid" style="margin-top:42px">
+          <article class="demo-value-card"><span class="demo-label">01 · MÊME DOSSIER</span><h3>Une représentation commune</h3><p>Les personnes, l’auditeur, l’assureur ou l’avocat peuvent repartir du même état enregistré plutôt que de versions reconstruites plus tard.</p></article>
+          <article class="demo-value-card"><span class="demo-label">02 · PAS DE RÉÉCRITURE</span><h3>Toute modification devient visible</h3><p>Changer un mot, une date ou une pièce produit une empreinte différente. L’état antérieur ne disparaît pas silencieusement.</p></article>
+          <article class="demo-value-card"><span class="demo-label">03 · PLUS TÔT</span><h3>Corriger avant le conflit</h3><p>L’écart peut être discuté, vérifié et corrigé pendant qu’il est encore réparable — avant l’audit, la médiation ou le contentieux.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <div class="demo-wrap">
+        <p class="demo-index">03 · CE QUE L’OBJET CONSERVE</p>
+        <h2>UNE SITUATION LISIBLE PAR L’HUMAIN ET STRUCTURÉE POUR LA MACHINE.</h2>
+        <div class="demo-anatomy-grid" style="margin-top:42px">
+          <article class="demo-anatomy-card"><span class="demo-label">01 · CONTEXTE</span><h3>De quoi parle-t-on ?</h3><p>Version, identifiant, date, émetteur et objet concerné.</p></article>
+          <article class="demo-anatomy-card"><span class="demo-label">02 · SOURCES</span><h3>Sur quoi repose le dossier ?</h3><p>Références, descriptions, identifiants et empreintes déclarées des éléments utilisés.</p></article>
+          <article class="demo-anatomy-card"><span class="demo-label">03 · REPRÉSENTATION</span><h3>Que peut-on dire à ce stade ?</h3><p>Un résumé structuré qui conserve aussi le point non résolu et ne transforme pas une hypothèse en fait.</p></article>
+          <article class="demo-anatomy-card"><span class="demo-label">04 · INTÉGRITÉ</span><h3>Le fichier a-t-il changé ?</h3><p>Une empreinte numérique reproductible permet de comparer deux copies du même objet.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="demo-section">
+      <div class="demo-wrap">
+        <p class="demo-index">04 · DEUX LECTURES</p>
+        <div class="demo-heading-grid">
+          <h2>LA PERSONNE LIT LE SENS. LA MACHINE LIT LA STRUCTURE.</h2>
+          <p>Le même objet peut être présenté simplement sans perdre son format technique.</p>
+        </div>
+        <div class="demo-readable-grid">
+          <article class="demo-human-card">
+            <h3>Vue humaine</h3>
+            <div class="demo-human-copy">
+              <p><strong>Lecture humaine.</strong> Le bâtiment a été déclaré prêt alors que le test final de ventilation restait à réaliser.</p>
+              <p>Le dossier conserve l’exigence contractuelle, la déclaration d’avancement, le rapport d’inspection et la question encore ouverte.</p>
+              <p>Il n’affirme pas automatiquement qu’une personne a menti ni qu’une responsabilité juridique est établie.</p>
+            </div>
+          </article>
+          <div>
+            <p class="demo-index">Vue technique</p>
+            <div class="demo-tech-summary">
+              <div><span>Version</span><strong data-demo-field="version">—</strong></div>
+              <div><span>Identifiant</span><strong data-demo-field="bundle">—</strong></div>
+              <div><span>Objet</span><strong data-demo-field="subject">—</strong></div>
+              <div><span>Sources référencées</span><strong data-demo-field="evidence">—</strong></div>
+            </div>
+            <details class="demo-json-details">
+              <summary>Afficher le JSON technique</summary>
+              <div class="demo-code-head"><span>rpo.json</span><button type="button" id="copyDemoJson">COPIER LE JSON</button></div>
+              <pre class="demo-json" id="demoJson" aria-live="polite">Chargement…</pre>
+            </details>
           </div>
         </div>
-        <div class="code-panel">
-          <div class="code-head">
-<span>rpo.json</span><button type="button" id="copyJson">COPIER LE JSON</button>
-</div>
-          <pre id="exampleJson" aria-live="polite">Chargement du jeu d’essai public…</pre>
-        </div>
       </div>
     </section>
 
-    <section class="essential-boundary">
-      <div class="wrap">
-        <p><strong>Limite essentielle.</strong> Cet exemple démontre une forme, une provenance déclarée et une intégrité vérifiable. Il ne démontre pas la vérité matérielle du contenu d’un dossier.</p>
-        </div>
+    <section class="demo-boundary">
+      <div class="demo-wrap">
+        <p><strong>Limite essentielle.</strong> Cet exemple montre comment un état est structuré et comment une modification peut être détectée. Il ne prouve ni la vérité matérielle des déclarations, ni l’authenticité externe des pièces, ni une conclusion juridique.</p>
+        <a class="btn primary" href="/fr/tests.html#laboratory">Tester la modification vous-même</a>
+      </div>
     </section>
   </main>
-
-  <footer class="footer rpo-footer"><div class="wrap">
-<div>
-<strong>RPO v0.1</strong><p>Spécification technique publique maintenue par OpenProof.</p>
-</div>
-<div class="footer-links">
-<a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a><a href="/fr/">Spécification</a><a href="https://openproof.net">OpenProof</a>
-</div>
-</div></footer>
-  <script src="/assets/openproof-v2.js?v=20260731-1"></script>
-  <script>
-    (() => {
-      const output = document.querySelector('#exampleJson');
-      let raw = '';
-      fetch('https://raw.githubusercontent.com/openproof-net/rpo-spec-v0.1/main/examples/example-minimal/rpo.json')
-        .then(response => response.ok ? response.text() : Promise.reject())
-        .then(text => { raw = text; output.textContent = JSON.stringify(JSON.parse(text), null, 2); })
-        .catch(() => { output.textContent = 'Jeu d’essai indisponible. Ouvrez le JSON brut sur GitHub.'; });
-      document.querySelector('#copyJson').addEventListener('click', async event => {
-        if (!raw) return;
-        await navigator.clipboard.writeText(raw);
-        event.currentTarget.textContent = 'COPIÉ';
-        setTimeout(() => event.currentTarget.textContent = 'COPIER LE JSON', 1200);
-      });
-    })();
-  </script>
+  <footer class="footer rpo-footer">
+    <div class="wrap">
+      <div><strong>RPO v0.1</strong><p>Spécification publique maintenue par OpenProof.</p></div>
+      <div class="footer-links">
+        <a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a>
+        <a href="/fr/">Spécification</a>
+        <a href="/fr/truthx-engine/">TruthX Engine</a>
+        <a href="https://openproof.net">OpenProof</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/openproof-v2.js?v=20260805-5"></script>
+  <script src="/assets/rpo-demonstration.js?v=20260805-1"></script>
 </body>
 </html>
