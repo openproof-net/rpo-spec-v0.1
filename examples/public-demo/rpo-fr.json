@@ -1,0 +1,52 @@
+{
+  "rpo_version": "0.1",
+  "type": "evidence_bundle",
+  "bundle_id": "2d17e9b1-b615-4a47-a452-b2ec8ea11c63",
+  "created_at": "2026-08-05T12:00:00Z",
+  "jurisdiction": "Démonstration fictive — aucune juridiction applicable",
+  "language": "fr-FR",
+  "issuer": {
+    "name": "OpenProof — démonstration publique",
+    "id": "urn:openproof:demo:issuer",
+    "role": "demonstration_issuer"
+  },
+  "subject": {
+    "name": "Projet Atlas — réception d’un système de ventilation",
+    "id": "urn:openproof:demo:project-atlas",
+    "role": "project"
+  },
+  "evidence": [
+    {
+      "id": "ev-001",
+      "type": "contract_requirement",
+      "description": "Le contrat impose un test final de ventilation avant la réception.",
+      "hash": "sha256:5ed14741ae1fc28e3e297d57b2d037ed1da1d338c55061f6baa09fadbfd5730d",
+      "uri": "urn:openproof:demo:atlas:requirement"
+    },
+    {
+      "id": "ev-002",
+      "type": "progress_declaration",
+      "description": "Le compte rendu du 15 juillet déclare le bâtiment prêt à être réceptionné.",
+      "hash": "sha256:5983f3859b0234723a4661dfb350801ed52eacdbf116c2ad5235b79a9a3f48ea",
+      "uri": "urn:openproof:demo:atlas:minutes"
+    },
+    {
+      "id": "ev-003",
+      "type": "inspection_report",
+      "description": "Le rapport d’inspection du 16 juillet indique que le test final de débit d’air reste à réaliser.",
+      "hash": "sha256:66e7d65d48891a1ee5866c44d73d4bd3009bf5804d8efd0f25f4971803664d6c",
+      "uri": "urn:openproof:demo:atlas:inspection"
+    }
+  ],
+  "narrative": {
+    "summary": "Le bâtiment a été déclaré prêt à être réceptionné alors que le test final de ventilation restait à réaliser. Le RPO conserve l’exigence, la déclaration, le constat d’inspection et le point non résolu, sans décider automatiquement d’une responsabilité.",
+    "pdf_hash": "sha256:demo-public-no-pdf",
+    "timeline_ref": "ev-003"
+  },
+  "registry": {
+    "registry_id": "openproof-public-demo",
+    "entry_id": "demo-atlas-fr-0001",
+    "public_hash": "sha256:reference-computed-locally-by-the-demo"
+  },
+  "signatures": []
+}

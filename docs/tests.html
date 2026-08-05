@@ -4,50 +4,51 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#050809">
-  <title>Verify an RPO: Canonical JSON &amp; SHA-256 | OpenProof</title>
-  <meta name="description" content="Verify a Registered Probative Object locally: required structure, deterministic canonical JSON serialization and reproducible SHA-256 integrity fingerprint.">
+  <title>Verify an RPO Without Trusting OpenProof | OpenProof</title>
+  <meta name="description" content="Load a public copy, compute its fingerprint in your browser, change one detail and see the difference immediately.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://rpo.openproof.net/tests.html">
   <link rel="alternate" hreflang="en" href="https://rpo.openproof.net/tests.html">
-<link rel="alternate" hreflang="fr" href="https://rpo.openproof.net/fr/tests.html">
-<link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/tests.html">
-<meta property="og:type" content="website">
+  <link rel="alternate" hreflang="fr" href="https://rpo.openproof.net/fr/tests.html">
+  <link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/tests.html">
+  <meta property="og:type" content="website">
   <meta property="og:site_name" content="OpenProof">
-  <meta property="og:title" content="Verify an RPO: Canonical JSON &amp; SHA-256">
-  <meta property="og:description" content="Verify a Registered Probative Object locally: required structure, deterministic canonical JSON serialization and reproducible SHA-256 integrity fingerprint.">
+  <meta property="og:title" content="Detect whether an RPO has changed">
+  <meta property="og:description" content="Load a public copy, compute its fingerprint in your browser, change one detail and see the difference immediately.">
   <meta property="og:url" content="https://rpo.openproof.net/tests.html">
   <meta property="og:image" content="https://rpo.openproof.net/images/openproof-cover.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Verify an RPO: Canonical JSON &amp; SHA-256">
-  <meta name="twitter:description" content="Verify a Registered Probative Object locally: required structure, deterministic canonical JSON serialization and reproducible SHA-256 integrity fingerprint.">
+  <meta name="twitter:title" content="Detect whether an RPO has changed">
+  <meta name="twitter:description" content="Load a public copy, compute its fingerprint in your browser, change one detail and see the difference immediately.">
   <meta name="twitter:image" content="https://rpo.openproof.net/images/openproof-cover.png">
   <script type="application/ld+json">
   {
-  "@context": "https://schema.org",
-  "@type": "WebApplication",
-  "name": "RPO Verification Tool",
-  "applicationCategory": "DeveloperApplication",
-  "operatingSystem": "Any modern web browser",
-  "url": "https://rpo.openproof.net/tests.html",
-  "description": "Local verification of Registered Probative Object structure, canonical JSON serialization and SHA-256 integrity.",
-  "isAccessibleForFree": true,
-  "publisher": {
-    "@type": "Organization",
-    "name": "OpenProof",
-    "url": "https://openproof.net"
-  },
-  "inLanguage": "en"
-}
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Educational RPO verification tool",
+    "headline": "Educational RPO verification tool",
+    "url": "https://rpo.openproof.net/tests.html",
+    "description": "Load a public copy, compute its fingerprint in your browser, change one detail and see the difference immediately.",
+    "applicationCategory": "EducationalApplication",
+    "isAccessibleForFree": true,
+    "publisher": {
+      "@type": "Organization",
+      "name": "OpenProof",
+      "url": "https://openproof.net"
+    },
+    "inLanguage": "en"
+  }
   </script>
   <link rel="icon" href="/assets/openproof-icon.svg?v=20260731-2" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/openproof-v2.css?v=20260731-3">
-<meta property="og:locale" content="en_US">
-<meta property="og:locale:alternate" content="fr_FR">
+  <link rel="stylesheet" href="/assets/rpo-demonstration.css?v=20260805-1">
 </head>
-<body class="rpo-home rpo-subpage">
+<body class="rpo-home rpo-subpage rpo-verify-page" data-rpo-demo-page data-demo-src="/examples/public-demo/rpo-en.json">
   <a class="skip" href="#main">Skip to content</a>
   <nav class="nav" aria-label="Primary navigation">
     <div class="wrap navin">
@@ -55,143 +56,123 @@
         <img src="/assets/openproof-icon.svg?v=20260731-2" alt="" width="38" height="38">
         <span><strong>OPENPROOF</strong><small>RPO PUBLIC SPECIFICATION</small></span>
       </a>
-      <button class="menu" aria-expanded="false" aria-label="Open menu">Menu</button>
+      <button class="menu" type="button" aria-expanded="false" aria-label="Open menu">Menu</button>
       <div class="links">
-        <a href="/">Specification</a><a href="/examples.html">Example</a><a href="/tests.html" aria-current="page">Verify</a><a href="/gersende-de-parcey.html">Founder</a><a href="https://openproof.net" class="external-link">OpenProof ↗</a>
-</div>
+        <a href="/">Specification</a>
+        <a href="/examples.html">See an RPO</a>
+        <a href="/tests.html" aria-current="page">Verify an RPO</a>
+        <a href="/gersende-de-parcey.html">Founder</a>
+        <a href="https://openproof.net" class="external-link">OpenProof ↗</a>
+      </div>
       <div class="language" aria-label="Language">
-<a href="/fr/tests.html" lang="fr" hreflang="fr">FR</a><span aria-hidden="true">|</span><a href="/tests.html" lang="en" hreflang="en" aria-current="page">EN</a>
-</div>
+        <a href="/fr/tests.html" lang="fr" hreflang="fr">FR</a>
+        <span aria-hidden="true">|</span>
+        <a href="/tests.html" lang="en" hreflang="en" aria-current="page">EN</a>
+      </div>
     </div>
   </nav>
 
   <main id="main">
-    <header class="sub-hero cosmos">
+    <header class="demo-hero cosmos">
       <canvas class="stars" aria-hidden="true"></canvas>
-      <div class="wrap">
-        <p class="eyebrow">03 · VERIFY · LOCAL EXECUTION</p>
-        <h1>
-          <span>Verify, without trusting us.</span>
-        </h1>
-        <p class="sub-lead">The check runs in your browser. No object is sent to OpenProof: structure is inspected, JSON is serialized deterministically, then its SHA-256 fingerprint is computed locally.</p>
+      <div class="demo-wrap">
+        <div class="demo-hero-copy">
+          <p class="demo-kicker">03 · VERIFY AN RPO · LOCAL EXECUTION</p>
+          <h1>CAN WE DETECT WHETHER THIS RPO CHANGED?<span>YES. CHANGE ONE WORD AND THE FINGERPRINT CHANGES.</span></h1>
+          <p class="demo-hero-lead">This page loads the public demonstration copy, computes its fingerprint in your browser and compares it with the reference copy. No file is sent to OpenProof.</p>
+          <div class="demo-actions">
+            <a class="btn primary" href="#laboratory">Run the demonstration</a>
+            <a class="btn" href="/examples.html">Review the example</a>
+          </div>
+          <p class="demo-one-line">You do not need to understand JSON: click “Simulate a change”, then watch the verification state change.</p>
+        </div>
+        <div class="demo-visual" aria-label="RPO fingerprint comparison">
+          <div class="demo-visual-ring demo-visual-ring--outer"></div>
+          <div class="demo-visual-ring demo-visual-ring--inner"></div>
+          <div class="demo-visual-core"><div><strong>SHA-256</strong><span>LOCAL COMPARISON</span></div></div>
+          <span class="demo-node demo-node--expected">COPY A</span>
+          <span class="demo-node demo-node--declared">HASH A</span>
+          <span class="demo-node demo-node--evidence">COPY B</span>
+          <span class="demo-node demo-node--unresolved">IDENTICAL?</span>
+        </div>
       </div>
     </header>
 
-    <section class="verify-workspace">
-      <div class="wrap verify-grid">
-        <div class="verify-input">
-          <div class="workspace-head">
-<span>RPO INPUT · JSON</span><button type="button" id="loadExample">LOAD EXAMPLE</button>
-</div>
-          <textarea id="rpoInput" spellcheck="false" aria-label="RPO JSON input" placeholder="Paste an RPO JSON object here…"></textarea>
-          <div class="verify-actions">
-<button class="btn primary" type="button" id="verifyObject">RUN VERIFICATION</button><button class="btn" type="button" id="clearObject">CLEAR</button>
-</div>
-          <p class="local-note">LOCAL ONLY · NO UPLOAD · WEB CRYPTO SHA-256</p>
+    <section class="demo-section">
+      <div class="demo-wrap">
+        <p class="demo-index">01 · THREE STEPS</p>
+        <h2>VERIFICATION BECOMES CLEAR WHEN YOU CAN SEE WHAT CHANGES.</h2>
+        <div class="verify-steps" style="margin-top:42px">
+          <article class="verify-step"><b>01</b><h3>Load the reference copy</h3><p>The browser downloads the fictional RPO shown on the Example page.</p></article>
+          <article class="verify-step"><b>02</b><h3>Compute its fingerprint</h3><p>Keys are ordered consistently, then a SHA-256 fingerprint is calculated locally.</p></article>
+          <article class="verify-step"><b>03</b><h3>Compare after a change</h3><p>A single different character produces another fingerprint and shows that the two copies are no longer identical.</p></article>
         </div>
-        <div class="verify-output" aria-live="polite">
-          <p class="section-index">VERIFICATION REPORT</p>
-          <div class="verification-state" id="verificationState">
-<i></i><span>READY</span>
-</div>
-          <dl>
-            <div>
-<dt>JSON syntax</dt>
-<dd id="syntaxResult">—</dd>
-</div>
-            <div>
-<dt>Required structure</dt>
-<dd id="structureResult">—</dd>
-</div>
-            <div>
-<dt>Canonical bytes</dt>
-<dd id="bytesResult">—</dd>
-</div>
-            <div class="hash-row">
-<dt>SHA-256</dt>
-<dd id="hashResult">—</dd>
-</div>
-          </dl>
-          <div class="report-boundary">
-            <p><strong>This report establishes:</strong> JSON readability, presence of fundamental fields and the reproducible fingerprint of the supplied object.</p>
-            <p><strong>It does not establish:</strong> truth of statements, external authenticity of evidence or a legal conclusion.</p>
+      </div>
+    </section>
+
+    <section class="demo-section" id="laboratory">
+      <div class="demo-wrap">
+        <p class="demo-index">02 · TRY IT YOURSELF</p>
+        <h2>ONE CLICK TO SEE INTEGRITY. ANOTHER TO SEE A CHANGE.</h2>
+        <div class="verify-lab" style="margin-top:46px">
+          <aside class="verify-control">
+            <div class="verify-control-head"><p class="demo-index">GUIDED DEMONSTRATION</p><h3>What do you want to observe?</h3></div>
+            <div class="verify-control-copy"><p>Start with the original copy, then simulate a change. The content remains readable, but its fingerprint no longer matches the reference.</p></div>
+            <div class="verify-buttons">
+              <button class="btn primary" type="button" data-action="check-original">CHECK THE ORIGINAL COPY</button>
+              <button class="btn" type="button" data-action="mutate">SIMULATE A CHANGE</button>
+              <button class="btn" type="button" data-action="restore">RESTORE THE ORIGINAL</button>
+            </div>
+          </aside>
+          <div>
+            <div class="verify-report">
+              <div class="verify-state" id="verificationState"><i></i><span>READY</span></div>
+              <dl class="verify-result-grid">
+                <div class="verify-result"><dt>Readable JSON</dt><dd id="syntaxResult">—</dd></div>
+                <div class="verify-result"><dt>Basic RPO structure</dt><dd id="structureResult">—</dd></div>
+                <div class="verify-result"><dt>Reference comparison</dt><dd id="matchResult">—</dd></div>
+                <div class="verify-result"><dt>Bytes analysed</dt><dd id="bytesResult">—</dd></div>
+                <div class="verify-result verify-result--hash"><dt>Current SHA-256 fingerprint</dt><dd id="hashResult">—</dd></div>
+              </dl>
+            </div>
+            <div class="verify-reference"><strong>Reference-copy fingerprint:</strong><br><span id="referenceHash">—</span><p style="margin:12px 0 0">The comparison uses the public copy loaded when the page starts. It demonstrates change detection; it is not yet a substitute for anchoring in an external registry.</p><p id="simulationNote" style="margin:10px 0 0;color:var(--pale)"></p></div>
+            <details class="verify-advanced">
+              <summary>View or edit the technical JSON</summary>
+              <textarea class="verify-editor" id="rpoEditor" spellcheck="false" aria-label="View or edit the technical JSON"></textarea>
+              <div class="verify-editor-actions">
+                <button class="btn primary" type="button" id="runVerification">RUN VERIFICATION</button>
+                <button class="btn" type="button" data-action="restore">RELOAD ORIGINAL</button>
+              </div>
+            </details>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="verify-method">
-      <div class="wrap">
-        <p class="section-index">DETERMINISTIC METHOD</p>
-        <div class="method-grid">
-          <article><b>01</b><h3>Parse</h3>
-<p>Valid JSON syntax.</p></article>
-          <article><b>02</b><h3>Inspect</h3>
-<p>Required RPO fields.</p></article>
-          <article><b>03</b><h3>Canonicalize</h3>
-<p>Stable recursive key order.</p></article>
-          <article><b>04</b><h3>Hash</h3>
-<p>SHA-256 in the browser.</p></article>
+    <section class="demo-section">
+      <div class="demo-wrap">
+        <p class="demo-index">03 · WHAT THE CHECK ESTABLISHES</p>
+        <h2>INTEGRITY IS A DIFFERENT QUESTION FROM TRUTH.</h2>
+        <div class="verify-proof-grid" style="margin-top:42px">
+          <article class="verify-proof-card"><h3>This check can establish</h3><ul><li>that the text is readable JSON;</li><li>that the fundamental RPO sections are present;</li><li>the exact fingerprint of the supplied copy;</li><li>whether this copy is identical to the loaded reference.</li></ul></article>
+          <article class="verify-proof-card verify-proof-card--limit"><h3>This check cannot establish</h3><ul><li>that the statements inside are true;</li><li>that source evidence is authentic outside the RPO;</li><li>who is legally responsible;</li><li>that a human or legal conclusion is correct.</li></ul></article>
         </div>
+        <p class="verify-note">Full RPO verification may also include JSON Schema validation, signatures, evidence-file fingerprints and confirmation of a registry entry. This page deliberately shows the simplest mechanism: an identical copy produces the same fingerprint; a changed copy produces another.</p>
       </div>
     </section>
   </main>
-
-  <footer class="footer rpo-footer"><div class="wrap">
-<div>
-<strong>RPO v0.1</strong><p>Public technical specification maintained by OpenProof.</p>
-</div>
-<div class="footer-links">
-<a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a><a href="/">Specification</a><a href="https://openproof.net">OpenProof</a>
-</div>
-</div></footer>
-  <script src="/assets/openproof-v2.js?v=20260731-1"></script>
-  <script>
-    (() => {
-      const $ = selector => document.querySelector(selector);
-      const input = $('#rpoInput');
-      const required = ['rpo_version','type','bundle_id','created_at','issuer','subject','evidence','narrative','registry'];
-      const stable = value => {
-        if (Array.isArray(value)) return '[' + value.map(stable).join(',') + ']';
-        if (value && typeof value === 'object') return '{' + Object.keys(value).sort().map(key => JSON.stringify(key) + ':' + stable(value[key])).join(',') + '}';
-        return JSON.stringify(value);
-      };
-      const digest = async text => {
-        const bytes = new TextEncoder().encode(text);
-        const hash = await crypto.subtle.digest('SHA-256', bytes);
-        return { bytes: bytes.byteLength, hex: [...new Uint8Array(hash)].map(byte => byte.toString(16).padStart(2,'0')).join('') };
-      };
-      const setState = (kind, label) => {
-        const state = $('#verificationState');
-        state.className = 'verification-state ' + kind;
-        state.querySelector('span').textContent = label;
-      };
-      const reset = () => {
-        ['#syntaxResult','#structureResult','#bytesResult','#hashResult'].forEach(id => $(id).textContent = '—');
-        setState('', 'READY');
-      };
-      const load = () => fetch('https://raw.githubusercontent.com/openproof-net/rpo-spec-v0.1/main/examples/example-minimal/rpo.json')
-        .then(response => response.text()).then(text => { input.value = text; reset(); });
-      $('#loadExample').addEventListener('click', load);
-      $('#clearObject').addEventListener('click', () => { input.value = ''; reset(); });
-      $('#verifyObject').addEventListener('click', async () => {
-        reset();
-        try {
-          const object = JSON.parse(input.value);
-          $('#syntaxResult').textContent = 'PASS';
-          const missing = required.filter(field => !(field in object));
-          $('#structureResult').textContent = missing.length ? 'MISSING · ' + missing.join(', ') : 'PASS · RPO v' + object.rpo_version;
-          const result = await digest(stable(object));
-          $('#bytesResult').textContent = result.bytes.toLocaleString() + ' BYTES';
-          $('#hashResult').textContent = result.hex;
-          setState(missing.length ? 'warning' : 'success', missing.length ? 'STRUCTURE INCOMPLETE' : 'VERIFICATION COMPLETE');
-        } catch (error) {
-          $('#syntaxResult').textContent = 'FAIL · INVALID JSON';
-          setState('failure', 'VERIFICATION FAILED');
-        }
-      });
-      load();
-    })();
-  </script>
+  <footer class="footer rpo-footer">
+    <div class="wrap">
+      <div><strong>RPO v0.1</strong><p>Public specification maintained by OpenProof.</p></div>
+      <div class="footer-links">
+        <a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a>
+        <a href="/">Specification</a>
+        <a href="/truthx-engine/">TruthX Engine</a>
+        <a href="https://openproof.net">OpenProof</a>
+      </div>
+    </div>
+  </footer>
+  <script src="/assets/openproof-v2.js?v=20260805-5"></script>
+  <script src="/assets/rpo-demonstration.js?v=20260805-1"></script>
 </body>
 </html>

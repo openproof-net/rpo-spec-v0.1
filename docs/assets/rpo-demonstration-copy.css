@@ -1,0 +1,13 @@
+/* Editorial alignment requested for the public RPO demonstration pages. */
+@media(min-width:821px){
+  .rpo-demo-page main p:not(.demo-kicker):not(.demo-index),
+  .rpo-verify-page main p:not(.demo-kicker):not(.demo-index),
+  .rpo-demo-page main li,
+  .rpo-verify-page main li{
+    text-align:justify;
+    text-align-last:left;
+    text-justify:inter-word;
+    hyphens:auto;
+    -webkit-hyphens:auto;
+  }
+}
