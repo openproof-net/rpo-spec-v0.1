@@ -1,0 +1,52 @@
+{
+  "rpo_version": "0.1",
+  "type": "evidence_bundle",
+  "bundle_id": "9f9af5c8-d359-4da4-8a95-ef909b33747f",
+  "created_at": "2026-08-05T12:00:00Z",
+  "jurisdiction": "Fictional demonstration — no applicable jurisdiction",
+  "language": "en-GB",
+  "issuer": {
+    "name": "OpenProof — public demonstration",
+    "id": "urn:openproof:demo:issuer",
+    "role": "demonstration_issuer"
+  },
+  "subject": {
+    "name": "Project Atlas — ventilation system handover",
+    "id": "urn:openproof:demo:project-atlas",
+    "role": "project"
+  },
+  "evidence": [
+    {
+      "id": "ev-001",
+      "type": "contract_requirement",
+      "description": "The contract requires a final ventilation test before handover.",
+      "hash": "sha256:a16b27f6220a5d98a38dbf80027949509f7148507da8b77a62b36424d3324b02",
+      "uri": "urn:openproof:demo:atlas:requirement"
+    },
+    {
+      "id": "ev-002",
+      "type": "progress_declaration",
+      "description": "The 15 July meeting minutes declare the building ready for handover.",
+      "hash": "sha256:e4c971510492d2ded5ac50257db393880eb1f5f638cb2cad0a55a970566a0b5f",
+      "uri": "urn:openproof:demo:atlas:minutes"
+    },
+    {
+      "id": "ev-003",
+      "type": "inspection_report",
+      "description": "The 16 July inspection report states that the final airflow test is still outstanding.",
+      "hash": "sha256:4b0fa8b5488385adba81fcc9538d90e3af9e316b37dfe831d791f6a0b1cc56fe",
+      "uri": "urn:openproof:demo:atlas:inspection"
+    }
+  ],
+  "narrative": {
+    "summary": "The building was declared ready for handover while the final ventilation test was still outstanding. The RPO preserves the requirement, the declaration, the inspection finding and the unresolved point without automatically deciding liability.",
+    "pdf_hash": "sha256:demo-public-no-pdf",
+    "timeline_ref": "ev-003"
+  },
+  "registry": {
+    "registry_id": "openproof-public-demo",
+    "entry_id": "demo-atlas-en-0001",
+    "public_hash": "sha256:reference-computed-locally-by-the-demo"
+  },
+  "signatures": []
+}
