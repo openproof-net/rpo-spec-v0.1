@@ -2,6 +2,13 @@
   const page = document.querySelector('[data-rpo-demo-page]');
   if (!page) return;
 
+  if (!document.querySelector('link[href*="rpo-demonstration-copy.css"]')) {
+    const editorialStyles = document.createElement('link');
+    editorialStyles.rel = 'stylesheet';
+    editorialStyles.href = '/assets/rpo-demonstration-copy.css?v=20260805-1';
+    document.head.append(editorialStyles);
+  }
+
   const isFrench = document.documentElement.lang.toLowerCase().startsWith('fr');
   const source = page.dataset.demoSrc;
   const copy = isFrench
