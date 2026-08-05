@@ -72,6 +72,14 @@
   const links = document.querySelector('.links');
   if (!links) return;
 
+  const staticTruthX = links.querySelector('[data-truthx-static]');
+  if (staticTruthX) {
+    if (location.pathname.includes('/truthx-engine/')) {
+      staticTruthX.setAttribute('aria-current', 'page');
+    }
+    return;
+  }
+
   const isFrench = document.documentElement.lang === 'fr';
   const base = isFrench ? '/fr/truthx-engine/' : '/truthx-engine/';
   const items = isFrench

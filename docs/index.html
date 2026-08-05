@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#050809">
-  <title>Registered Probative Object (RPO) — Public Specification | OpenProof</title>
-  <meta name="description" content="Public specification of the Registered Probative Object (RPO): sealed core, evidence provenance, explicit reservations and independently verifiable SHA-256 integrity.">
+  <title>OpenProof RPO — Registered Probative Object &amp; Verifiable Evidence</title>
+  <meta name="description" content="OpenProof defines the RPO, a registered probative object linking sources, reservations and a SHA-256 fingerprint into a traceable, independently verifiable record.">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <link rel="canonical" href="https://rpo.openproof.net/">
   <link rel="alternate" hreflang="en" href="https://rpo.openproof.net/">
@@ -13,23 +13,50 @@
   <link rel="alternate" hreflang="x-default" href="https://rpo.openproof.net/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="OpenProof">
-  <meta property="og:title" content="Registered Probative Object (RPO) — Public Specification">
-  <meta property="og:description" content="Public specification of the Registered Probative Object (RPO): sealed core, evidence provenance, explicit reservations and independently verifiable SHA-256 integrity.">
+  <meta property="og:title" content="OpenProof RPO — Registered Probative Object &amp; Verifiable Evidence">
+  <meta property="og:description" content="A registered probative object linking sources, reservations and a SHA-256 fingerprint into a traceable, independently verifiable record.">
   <meta property="og:url" content="https://rpo.openproof.net/">
   <meta property="og:image" content="https://rpo.openproof.net/images/openproof-cover.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="fr_FR">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Registered Probative Object (RPO) — Public Specification">
-  <meta name="twitter:description" content="Public specification of the Registered Probative Object (RPO): sealed core, evidence provenance, explicit reservations and independently verifiable SHA-256 integrity.">
+  <meta name="twitter:title" content="OpenProof RPO — Registered Probative Object &amp; Verifiable Evidence">
+  <meta name="twitter:description" content="A registered probative object linking sources, reservations and a SHA-256 fingerprint into a traceable, independently verifiable record.">
   <meta name="twitter:image" content="https://rpo.openproof.net/images/openproof-cover.png">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "Organization",
+        "@id": "https://openproof.net/#organization",
+        "name": "OpenProof",
+        "url": "https://openproof.net",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://rpo.openproof.net/assets/openproof-icon.svg"
+        },
+        "description": "Probative infrastructure for traceable, reviewable and independently verifiable records.",
+        "founder": { "@id": "https://rpo.openproof.net/gersende-de-parcey.html#person" },
+        "sameAs": [
+          "https://github.com/openproof-net"
+        ]
+      },
+      {
+        "@type": "Person",
+        "@id": "https://rpo.openproof.net/gersende-de-parcey.html#person",
+        "name": "Gersende de Parcey",
+        "url": "https://rpo.openproof.net/gersende-de-parcey.html",
+        "jobTitle": "Founder of OpenProof and creator of TruthX Engine",
+        "sameAs": [
+          "https://www.linkedin.com/in/gryard/"
+        ]
+      },
+      {
         "@type": "WebSite",
         "@id": "https://rpo.openproof.net/#website",
         "url": "https://rpo.openproof.net/",
-        "name": "RPO Public Specification",
+        "name": "OpenProof RPO Public Specification",
         "publisher": { "@id": "https://openproof.net/#organization" },
         "inLanguage": "en"
       },
@@ -37,19 +64,24 @@
         "@type": "TechArticle",
         "@id": "https://rpo.openproof.net/#specification",
         "headline": "Registered Probative Object (RPO) Public Specification v0.1",
-        "description": "Public specification for a stable, traceable and independently verifiable probative object.",
+        "description": "Public specification for a registered probative object that preserves evidence provenance, explicit reservations and independently reproducible integrity.",
         "url": "https://rpo.openproof.net/",
-        "author": {
-          "@type": "Organization",
-          "name": "OpenProof",
-          "url": "https://openproof.net"
-        },
+        "mainEntityOfPage": { "@id": "https://rpo.openproof.net/" },
+        "image": "https://rpo.openproof.net/images/openproof-cover.png",
+        "datePublished": "2026-07-31",
+        "dateModified": "2026-08-05",
+        "author": { "@id": "https://rpo.openproof.net/gersende-de-parcey.html#person" },
+        "publisher": { "@id": "https://openproof.net/#organization" },
+        "isPartOf": { "@id": "https://rpo.openproof.net/#website" },
         "about": [
           "Registered Probative Object",
+          "probative infrastructure",
           "evidence provenance",
+          "decision traceability",
+          "digital evidence integrity",
+          "verifiable evidence record",
           "canonical JSON",
-          "SHA-256 integrity",
-          "probative infrastructure"
+          "SHA-256 integrity"
         ],
         "version": "0.1",
         "inLanguage": "en"
@@ -63,10 +95,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&amp;family=Orbitron:wght@500;600;700&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/openproof-v2.css?v=20260731-3">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:locale:alternate" content="fr_FR">
+  <link rel="stylesheet" href="/assets/rpo-home-authority.css?v=20260805-1">
 </head>
-<body class="rpo-home">
+<body class="rpo-home rpo-authority-home">
   <a class="skip" href="#main">Skip to content</a>
 
   <nav class="nav" aria-label="Primary navigation">
@@ -80,6 +111,17 @@
         <a href="/" aria-current="page">Specification</a>
         <a href="/examples.html">See an RPO</a>
         <a href="/tests.html">Verify an RPO</a>
+        <div class="truthx-nav" data-truthx-nav>
+          <a class="truthx-nav-main" href="/truthx-engine/">TruthX Engine</a>
+          <button class="truthx-nav-toggle" type="button" aria-expanded="false" aria-label="Open TruthX Engine sections">⌄</button>
+          <div class="truthx-nav-menu">
+            <a href="/truthx-engine/#overview">Overview</a>
+            <a href="/truthx-engine/#modes">Two operating modes</a>
+            <a href="/truthx-engine/#controls">Integrity controls</a>
+            <a href="/truthx-engine/#applications">Applications</a>
+            <a href="/truthx-engine/#landscape">Research landscape</a>
+          </div>
+        </div>
         <a href="/gersende-de-parcey.html">Founder</a>
         <a href="https://openproof.net" class="external-link">OpenProof ↗</a>
       </div>
@@ -96,12 +138,13 @@
       <canvas class="stars" aria-hidden="true"></canvas>
       <div class="wrap rpo-hero-grid">
         <div class="rpo-copy">
-          <p class="eyebrow">OPENPROOF · PUBLIC STANDARD · V0.1</p>
-          <h1><span>One probative object.<br>Stable. Verifiable. Defensible.</span></h1>
-          <p class="rpo-lead"><span>The RPO is the public format produced by OpenProof to preserve a structured record, its sources, reservations and integrity — without confusing verification with truth.</span></p>
+          <p class="eyebrow">OPENPROOF · PROBATIVE INFRASTRUCTURE · RPO V0.1</p>
+          <h1><span>RPO — A REGISTERED PROBATIVE OBJECT.<br>STABLE. VERIFIABLE. DEFENSIBLE.</span></h1>
+          <p class="rpo-lead"><span>The RPO is the public OpenProof format for preserving a traceable record, its sources, reservations and integrity — without confusing verification with truth.</span></p>
           <div class="rpo-actions">
             <a class="btn primary" href="#definition-title"><span>Understand the RPO</span></a>
             <a class="btn" href="/examples.html"><span>See an RPO</span></a>
+            <a class="rpo-text-link" href="/truthx-engine/">Discover TruthX Engine →</a>
           </div>
           <p class="version-line">RPO v0.1 · JSON · SHA-256 · deterministic verification</p>
         </div>
@@ -129,7 +172,7 @@
         <div class="definition-grid">
           <h2 id="definition-title"><span>What the RPO guarantees.<br>And what it does not claim to guarantee.</span></h2>
           <div class="definition-copy">
-            <p>An RPO makes any change to the sealed core detectable. It preserves the provenance, transformations and reservations required for independent review.</p>
+            <p>An RPO makes any change to the sealed core detectable. It preserves evidence provenance, transformations and explicit reservations required for independent review.</p>
             <p class="boundary"><span><strong>Essential boundary:</strong> object integrity does not prove content truth. OpenProof structures and makes records verifiable; it does not adjudicate.</span></p>
           </div>
         </div>
@@ -149,9 +192,54 @@
       </div>
     </section>
 
+    <section class="rpo-flow" aria-labelledby="flow-title">
+      <div class="wrap">
+        <p class="section-index">03 · FROM FRAGMENTATION TO VERIFICATION</p>
+        <div class="authority-heading">
+          <h2 id="flow-title">FROM FRAGMENTED REALITY TO A VERIFIABLE RECORD.</h2>
+          <p>The RPO creates continuity between information, decisions and review without forcing every professional to use the same operational tool.</p>
+        </div>
+        <div class="rpo-flow-grid">
+          <article class="rpo-flow-card"><span>01 · FRAGMENTED</span><h3>Sources and decisions are dispersed</h3><p>Documents, emails, reports, declarations and project systems contain different parts of the situation.</p><strong>Risk: the record is reconstructed too late, from competing versions.</strong></article>
+          <article class="rpo-flow-card"><span>02 · STRUCTURED</span><h3>A common state is created</h3><p>Sources, actors, events, decisions and evidence references are represented in a stable, machine-readable structure.</p><strong>Result: decision traceability becomes inspectable rather than merely asserted.</strong></article>
+          <article class="rpo-flow-card"><span>03 · QUALIFIED</span><h3>Limits remain explicit</h3><p>Contradictions, missing material, reservations and unresolved points remain visible instead of being hidden by a confident narrative.</p><strong>Result: audit-ready does not mean uncertainty-free.</strong></article>
+          <article class="rpo-flow-card"><span>04 · VERIFIABLE</span><h3>Every copy becomes comparable</h3><p>A deterministic representation and SHA-256 fingerprint make silent alteration detectable and independent review reproducible.</p><strong>Result: digital evidence integrity can be checked without trusting OpenProof.</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="rpo-outcomes" aria-labelledby="outcomes-title">
+      <div class="wrap">
+        <p class="section-index">04 · PRACTICAL VALUE</p>
+        <div class="authority-heading">
+          <h2 id="outcomes-title">WHAT CHANGES WHEN A RECORD REMAINS DEMONSTRABLE?</h2>
+          <p>The same RPO can support early correction, independent audit, mediation, insurance review or legal work without pretending that all those professions are the same.</p>
+        </div>
+        <div class="rpo-outcome-layout">
+          <div class="rpo-outcome-grid">
+            <article class="rpo-outcome-card"><span>01 · CONTESTED DECISION</span><h3>Reconstruct what was known</h3><p>Recover the information, reservations and recorded state available when the decision was made.</p><ul><li>Decision reconstruction</li><li>Evidence provenance</li><li>Governance review</li></ul></article>
+            <article class="rpo-outcome-card"><span>02 · ACTIVE PROJECT</span><h3>Detect divergence earlier</h3><p>Compare what was expected, declared and evidenced while the gap can still be corrected.</p><ul><li>Project decision traceability</li><li>Delivery integrity</li><li>Defect and remediation records</li></ul></article>
+            <article class="rpo-outcome-card"><span>03 · REVIEW OR DISPUTE</span><h3>Share one reviewable state</h3><p>Give auditors, insurers, mediators or legal teams a stable record with explicit limits.</p><ul><li>Audit-ready record</li><li>Insurance evidence review</li><li>Legal evidence reconstruction</li></ul></article>
+          </div>
+          <aside class="rpo-authority-panel">
+            <div>
+              <p class="section-index">THE ENGINE BEHIND THE OBJECT</p>
+              <h3>TruthX Engine structures. OpenProof preserves. The RPO records.</h3>
+              <p>TruthX Engine is the deterministic structuring engine that connects sources, expectations, decisions, contradictions and outcomes before OpenProof records the reviewed result as a verifiable RPO.</p>
+              <p class="rpo-authority-note">OpenProof is the probative infrastructure. TruthX Engine is the deterministic structuring engine powering it. RPO is the registered probative object it produces.</p>
+            </div>
+            <div class="rpo-actions">
+              <a class="btn primary" href="/truthx-engine/">Discover TruthX Engine</a>
+              <a class="btn" href="https://app.openproof.net/qualify?intent=case">Qualify a case</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <section class="rpo-paths" aria-labelledby="paths-title">
       <div class="wrap">
-        <p class="section-index">03 · PUBLIC ACCESS</p>
+        <p class="section-index">05 · PUBLIC ACCESS</p>
         <h2 id="paths-title"><span>Understand. See. Verify.</span></h2>
         <div class="path-grid">
           <a href="#definition-title">
@@ -193,11 +281,12 @@
       <div class="footer-links">
         <a href="https://github.com/openproof-net/rpo-spec-v0.1">GitHub</a>
         <a href="/">Specification</a>
+        <a href="/truthx-engine/">TruthX Engine</a>
         <a href="https://openproof.net">OpenProof</a>
-        <a class="linkedin-link" href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer" aria-label="Gersende Ryard de Parcey on LinkedIn"><span class="linkedin-glyph" aria-hidden="true">in</span><span>LinkedIn</span></a>
+        <a class="linkedin-link" href="https://www.linkedin.com/in/gryard/" target="_blank" rel="noopener noreferrer" aria-label="Gersende de Parcey on LinkedIn"><span class="linkedin-glyph" aria-hidden="true">in</span><span>LinkedIn</span></a>
       </div>
     </div>
   </footer>
-  <script src="/assets/openproof-v2.js?v=20260805-6"></script>
+  <script src="/assets/openproof-v2.js?v=20260805-7"></script>
 </body>
 </html>

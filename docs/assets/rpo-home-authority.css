@@ -1,0 +1,307 @@
+/*
+ * RPO homepage authority layer
+ * Adds semantic depth and two pedagogical sections while preserving the canonical OpenProof charter.
+ */
+
+.rpo-authority-home .rpo-text-link{
+  display:inline-flex;
+  align-items:center;
+  min-height:42px;
+  padding:9px 0 7px;
+  border-bottom:1px solid rgba(225,195,138,.48);
+  color:#d0d3d1;
+  font:700 8px/1.2 Montserrat,sans-serif;
+  letter-spacing:1.2px;
+  text-decoration:none;
+  text-transform:uppercase;
+}
+
+.rpo-authority-home .rpo-text-link:hover,
+.rpo-authority-home .rpo-text-link:focus-visible{
+  border-color:var(--pale);
+  color:var(--pale);
+}
+
+/* Static navigation is visible and stable before JavaScript enhances the dropdown. */
+.rpo-authority-home .truthx-nav{position:relative;display:flex;align-items:center;gap:3px}
+.rpo-authority-home .truthx-nav-main{white-space:nowrap}
+.rpo-authority-home .truthx-nav-toggle{border:0;background:transparent;color:var(--muted);padding:5px 3px;cursor:pointer;font:600 .74rem Montserrat,sans-serif}
+.rpo-authority-home .truthx-nav:hover .truthx-nav-toggle,
+.rpo-authority-home .truthx-nav:focus-within .truthx-nav-toggle,
+.rpo-authority-home .truthx-nav.is-open .truthx-nav-toggle{color:var(--pale)}
+.rpo-authority-home .truthx-nav-menu{position:absolute;left:-14px;top:calc(100% + 14px);z-index:30;display:none;min-width:238px;padding:10px;border:1px solid var(--line);border-radius:14px;background:rgba(5,8,14,.98);box-shadow:0 22px 60px rgba(0,0,0,.48);backdrop-filter:blur(18px)}
+.rpo-authority-home .truthx-nav-menu::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+.rpo-authority-home .truthx-nav-menu a{display:block;padding:9px 10px;border-radius:9px;white-space:nowrap;text-transform:none!important;letter-spacing:.02em!important;font-size:.76rem!important}
+.rpo-authority-home .truthx-nav-menu a:hover,
+.rpo-authority-home .truthx-nav-menu a:focus{background:rgba(212,175,55,.09);color:var(--pale)}
+.rpo-authority-home .truthx-nav.is-open .truthx-nav-menu{display:grid}
+
+.rpo-flow,
+.rpo-outcomes{
+  position:relative;
+  overflow:hidden;
+  padding:105px 0;
+  border-top:1px solid var(--line);
+}
+
+.rpo-flow{background:#080b0f}
+.rpo-outcomes{background:#0d1217}
+
+.rpo-authority-home .authority-heading{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(320px,.42fr);
+  gap:72px;
+  align-items:end;
+  margin-bottom:44px;
+}
+
+.rpo-authority-home .authority-heading h2{
+  max-width:930px;
+  margin:16px 0 0;
+  color:#ece8df;
+  font:500 clamp(2.15rem,3.45vw,3.75rem)/1.08 Orbitron,Montserrat,sans-serif;
+  letter-spacing:-.03em;
+  text-transform:uppercase;
+  text-wrap:balance;
+}
+
+.rpo-authority-home .authority-heading>p{
+  margin:0 0 8px;
+  color:#9da6aa;
+  font-size:.94rem;
+  line-height:1.9;
+}
+
+.rpo-flow-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  border-block:1px solid var(--line);
+}
+
+.rpo-flow-card{
+  position:relative;
+  min-height:292px;
+  padding:31px 28px 29px;
+  overflow:hidden;
+  border-right:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(13,19,25,.96),rgba(5,8,11,.96));
+}
+
+.rpo-flow-card:last-child{border-right:0}
+
+.rpo-flow-card:not(:last-child)::after{
+  position:absolute;
+  top:50%;
+  right:-13px;
+  z-index:3;
+  display:grid;
+  width:26px;
+  height:26px;
+  place-items:center;
+  border:1px solid rgba(196,154,88,.42);
+  background:#080b0f;
+  color:var(--gold);
+  font:500 .75rem Orbitron,Montserrat,sans-serif;
+  transform:translateY(-50%);
+  content:"→";
+}
+
+.rpo-flow-card span,
+.rpo-outcome-card span{
+  color:var(--gold);
+  font:600 .61rem/1.4 Orbitron,Montserrat,sans-serif;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.rpo-flow-card h3,
+.rpo-outcome-card h3{
+  margin:31px 0 17px;
+  color:var(--pale);
+  font:600 .98rem/1.45 Orbitron,Montserrat,sans-serif;
+  letter-spacing:.02em;
+}
+
+.rpo-flow-card p,
+.rpo-outcome-card p{
+  margin:0;
+  color:var(--soft);
+  font-size:.89rem;
+  line-height:1.82;
+}
+
+.rpo-flow-card strong{
+  display:block;
+  margin-top:24px;
+  padding-top:19px;
+  border-top:1px solid rgba(255,255,255,.07);
+  color:#c8ccc8;
+  font-size:.73rem;
+  font-weight:500;
+  line-height:1.65;
+}
+
+.rpo-outcome-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.28fr) minmax(330px,.72fr);
+  gap:74px;
+  align-items:stretch;
+}
+
+.rpo-outcome-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  border:1px solid var(--line);
+}
+
+.rpo-outcome-card{
+  min-height:330px;
+  padding:32px 29px 30px;
+  border-right:1px solid var(--line);
+  background:#080b0f;
+}
+
+.rpo-outcome-card:last-child{border-right:0}
+
+.rpo-outcome-card ul{
+  margin:24px 0 0;
+  padding:20px 0 0 18px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+
+.rpo-outcome-card li{
+  margin:0 0 9px;
+  padding-left:3px;
+  color:#858f92;
+  font-size:.8rem;
+  line-height:1.68;
+}
+
+.rpo-authority-panel{
+  display:flex;
+  min-height:100%;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:37px 35px;
+  border:1px solid rgba(196,154,88,.28);
+  background:
+    radial-gradient(540px 350px at 100% 0,rgba(196,154,88,.10),transparent 68%),
+    #05080b;
+}
+
+.rpo-authority-panel h3{
+  max-width:430px;
+  margin:18px 0 22px;
+  color:#ece8df;
+  font:500 clamp(1.55rem,2.3vw,2.35rem)/1.2 Orbitron,Montserrat,sans-serif;
+  letter-spacing:-.02em;
+  text-transform:uppercase;
+}
+
+.rpo-authority-panel p{
+  margin:0;
+  color:var(--soft);
+  font-size:.92rem;
+  line-height:1.86;
+}
+
+.rpo-authority-panel .rpo-actions{
+  margin-top:34px;
+  gap:14px;
+}
+
+.rpo-authority-panel .btn{
+  width:100%;
+  min-height:48px;
+  border-radius:0;
+}
+
+.rpo-authority-note{
+  margin:23px 0 0;
+  padding:18px 20px;
+  border-left:2px solid var(--gold);
+  background:rgba(196,154,88,.055);
+  color:#a7afaf;
+  font-size:.82rem;
+  line-height:1.75;
+}
+
+.rpo-authority-home .architecture-line{
+  border-top:1px solid var(--line);
+}
+
+@media(min-width:881px){
+  .rpo-authority-home .truthx-nav:hover .truthx-nav-menu,
+  .rpo-authority-home .truthx-nav:focus-within .truthx-nav-menu{display:grid}
+}
+
+@media(min-width:821px){
+  .rpo-authority-home .definition-copy>p,
+  .rpo-authority-home .anatomy-grid p,
+  .rpo-authority-home .path-grid p,
+  .rpo-authority-home .authority-heading>p,
+  .rpo-authority-home .rpo-flow-card p,
+  .rpo-authority-home .rpo-flow-card strong,
+  .rpo-authority-home .rpo-outcome-card p,
+  .rpo-authority-home .rpo-outcome-card li,
+  .rpo-authority-home .rpo-authority-panel p,
+  .rpo-authority-home .rpo-authority-note{
+    text-align:justify;
+    text-align-last:left;
+    text-justify:inter-word;
+    hyphens:auto;
+    -webkit-hyphens:auto;
+  }
+}
+
+@media(max-width:1120px){
+  .rpo-flow-grid{grid-template-columns:repeat(2,1fr)}
+  .rpo-flow-card:nth-child(2){border-right:0}
+  .rpo-flow-card{border-bottom:1px solid var(--line)}
+  .rpo-flow-card:nth-last-child(-n+2){border-bottom:0}
+  .rpo-flow-card:nth-child(2)::after{display:none}
+  .rpo-flow-card:nth-child(3)::before{
+    position:absolute;
+    top:-13px;
+    left:50%;
+    z-index:3;
+    display:grid;
+    width:26px;
+    height:26px;
+    place-items:center;
+    border:1px solid rgba(196,154,88,.42);
+    background:#080b0f;
+    color:var(--gold);
+    font:500 .75rem Orbitron,Montserrat,sans-serif;
+    transform:translateX(-50%) rotate(90deg);
+    content:"→";
+  }
+  .rpo-outcome-layout{grid-template-columns:1fr}
+  .rpo-authority-panel{min-height:430px}
+}
+
+@media(max-width:920px){
+  .rpo-authority-home .authority-heading{grid-template-columns:1fr;gap:30px}
+  .rpo-outcome-grid{grid-template-columns:1fr}
+  .rpo-outcome-card{min-height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .rpo-outcome-card:last-child{border-bottom:0}
+}
+
+@media(max-width:880px){
+  .rpo-authority-home .truthx-nav{width:100%;display:grid;grid-template-columns:1fr auto;gap:0}
+  .rpo-authority-home .truthx-nav-main{padding:6px 0}
+  .rpo-authority-home .truthx-nav-toggle{padding:7px 10px}
+  .rpo-authority-home .truthx-nav-menu{position:static;grid-column:1/-1;min-width:0;width:100%;margin-top:4px;padding:7px;box-shadow:none;background:rgba(255,255,255,.025)}
+  .rpo-authority-home .truthx-nav-menu::before{display:none}
+  .rpo-authority-home .truthx-nav-menu a{padding:8px 10px}
+}
+
+@media(max-width:720px){
+  .rpo-flow,.rpo-outcomes{padding:75px 0}
+  .rpo-authority-home .authority-heading h2{font-size:clamp(2rem,10vw,3.15rem)}
+  .rpo-flow-grid{grid-template-columns:1fr}
+  .rpo-flow-card{min-height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .rpo-flow-card:last-child{border-bottom:0}
+  .rpo-flow-card::after,.rpo-flow-card:nth-child(3)::before{display:none!important}
+  .rpo-authority-panel{min-height:auto;padding:30px 26px}
+}
