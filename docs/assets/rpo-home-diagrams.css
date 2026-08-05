@@ -494,3 +494,86 @@
 @keyframes rpoDiagramSpinReverse{
   to{transform:translate(-50%,-50%) rotate(-360deg)}
 }
+
+/* Final micro-polish: premium reading rhythm and explicit three-input convergence. */
+.rpo-transform-rail p{
+  font-size:.88rem;
+  line-height:1.75;
+}
+
+.rpo-transform-rail small{
+  font-size:.77rem;
+  line-height:1.66;
+}
+
+.rpo-value-inputs{
+  position:relative;
+}
+
+@media(min-width:1121px){
+  .rpo-value-inputs{
+    grid-template-rows:repeat(3,minmax(0,1fr));
+  }
+
+  .rpo-value-inputs::before{
+    position:absolute;
+    top:16.666%;
+    right:-18px;
+    bottom:16.666%;
+    width:1px;
+    background:linear-gradient(180deg,rgba(196,154,88,.18),rgba(196,154,88,.58) 50%,rgba(196,154,88,.18));
+    content:"";
+  }
+
+  .rpo-value-node::after{
+    right:-18px;
+    width:18px;
+    background:linear-gradient(90deg,rgba(196,154,88,.54),rgba(196,154,88,.34));
+  }
+
+  .rpo-value-node::before{
+    position:absolute;
+    top:50%;
+    right:-21px;
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#c7a65f;
+    box-shadow:0 0 11px rgba(213,175,96,.64);
+    transform:translateY(-50%);
+    content:"";
+  }
+
+  .rpo-value-node:nth-child(2)::before{
+    display:none;
+  }
+
+  .rpo-value-map>.rpo-map-arrow::before{
+    left:-3px;
+  }
+}
+
+@media(min-width:821px){
+  .rpo-authority-home .authority-heading>p,
+  .rpo-diagram-copy,
+  .rpo-transform-rail p,
+  .rpo-transform-rail small,
+  .rpo-value-node p,
+  .rpo-value-node small,
+  .rpo-chain-step p{
+    text-align:left;
+    text-align-last:auto;
+    text-justify:auto;
+    hyphens:none;
+    -webkit-hyphens:none;
+    word-break:normal;
+    overflow-wrap:normal;
+  }
+}
+
+@media(max-width:1120px){
+  .rpo-value-inputs::before,
+  .rpo-value-node::before{
+    display:none;
+  }
+}
