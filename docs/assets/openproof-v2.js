@@ -67,3 +67,98 @@
     draw();
   });
 })();
+
+(() => {
+  const links = document.querySelector('.links');
+  if (!links) return;
+
+  const isFrench = document.documentElement.lang === 'fr';
+  const base = isFrench ? '/fr/truthx-engine/' : '/truthx-engine/';
+  const items = isFrench
+    ? [
+        ['Vue d’ensemble', '#overview'],
+        ['Deux modes d’intervention', '#modes'],
+        ['Contrôles d’intégrité', '#controls'],
+        ['Applications', '#applications'],
+        ['Paysage de recherche', '#landscape']
+      ]
+    : [
+        ['Overview', '#overview'],
+        ['Two operating modes', '#modes'],
+        ['Integrity controls', '#controls'],
+        ['Applications', '#applications'],
+        ['Research landscape', '#landscape']
+      ];
+
+  let nav = links.querySelector('[data-truthx-nav]');
+  if (!nav) {
+    nav = document.createElement('div');
+    nav.className = 'truthx-nav';
+    nav.dataset.truthxNav = '';
+    nav.innerHTML = `
+      <a class="truthx-nav-main" href="${base}">TruthX Engine</a>
+      <button class="truthx-nav-toggle" type="button" aria-expanded="false" aria-label="${isFrench ? 'Ouvrir les sections TruthX Engine' : 'Open TruthX Engine sections'}">⌄</button>
+      <div class="truthx-nav-menu">
+        ${items.map(([label, hash]) => `<a href="${base}${hash}">${label}</a>`).join('')}
+      </div>`;
+    const founder = [...links.children].find(element =>
+      element.tagName === 'A' && element.getAttribute('href')?.includes('gersende-de-parcey')
+    );
+    links.insertBefore(nav, founder || links.lastElementChild);
+  }
+
+  if (location.pathname.includes('/truthx-engine/')) {
+    nav.querySelector('.truthx-nav-main')?.setAttribute('aria-current', 'page');
+  }
+
+  if (!document.getElementById('truthx-nav-styles')) {
+    const style = document.createElement('style');
+    style.id = 'truthx-nav-styles';
+    style.textContent = `
+      .truthx-nav{position:relative;display:flex;align-items:center;gap:3px}
+      .truthx-nav-main{white-space:nowrap}
+      .truthx-nav-toggle{border:0;background:transparent;color:var(--muted);padding:5px 3px;cursor:pointer;font:600 .74rem Montserrat,sans-serif}
+      .truthx-nav:hover .truthx-nav-toggle,.truthx-nav:focus-within .truthx-nav-toggle,.truthx-nav.is-open .truthx-nav-toggle{color:var(--pale)}
+      .truthx-nav-menu{position:absolute;left:-14px;top:calc(100% + 14px);z-index:30;display:none;min-width:238px;padding:10px;border:1px solid var(--line);border-radius:14px;background:rgba(5,8,14,.98);box-shadow:0 22px 60px rgba(0,0,0,.48);backdrop-filter:blur(18px)}
+      .truthx-nav-menu::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+      .truthx-nav-menu a{display:block;padding:9px 10px;border-radius:9px;white-space:nowrap;text-transform:none!important;letter-spacing:.02em!important;font-size:.76rem!important}
+      .truthx-nav-menu a:hover,.truthx-nav-menu a:focus{background:rgba(212,175,55,.09);color:var(--pale)}
+      .truthx-nav.is-open .truthx-nav-menu{display:grid}
+      @media(min-width:881px){.truthx-nav:hover .truthx-nav-menu,.truthx-nav:focus-within .truthx-nav-menu{display:grid}}
+      @media(max-width:880px){
+        .truthx-nav{width:100%;display:grid;grid-template-columns:1fr auto;gap:0}
+        .truthx-nav-main{padding:6px 0}
+        .truthx-nav-toggle{padding:7px 10px}
+        .truthx-nav-menu{position:static;grid-column:1/-1;min-width:0;width:100%;margin-top:4px;padding:7px;box-shadow:none;background:rgba(255,255,255,.025)}
+        .truthx-nav-menu::before{display:none}
+        .truthx-nav-menu a{padding:8px 10px}
+      }`;
+    document.head.append(style);
+  }
+
+  const toggle = nav.querySelector('.truthx-nav-toggle');
+  const setOpen = open => {
+    nav.classList.toggle('is-open', open);
+    toggle?.setAttribute('aria-expanded', open ? 'true' : 'false');
+  };
+
+  toggle?.addEventListener('click', event => {
+    event.stopPropagation();
+    setOpen(!nav.classList.contains('is-open'));
+  });
+
+  nav.querySelectorAll('.truthx-nav-menu a').forEach(link => {
+    link.addEventListener('click', () => setOpen(false));
+  });
+
+  document.addEventListener('click', event => {
+    if (!nav.contains(event.target)) setOpen(false);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      setOpen(false);
+      toggle?.focus();
+    }
+  });
+})();
