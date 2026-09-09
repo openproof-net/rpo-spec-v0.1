@@ -1,102 +1,28 @@
-# OpenProof Architecture
+# OpenProof: product architecture and public verification boundary
 
-OpenProof defines a probative infrastructure designed to preserve the reasoning behind high-stakes decisions.
+OpenProof is the application and review workflow. TruthX Engine structures information. The Registered Probative Object (RPO) describes a record and its references. The first product pilot is Legal; the broader direction is reconstruction and decision traceability in complex situations.
 
-The system is composed of three main elements:
+## Intended product workflow
 
-- a deterministic structuring engine
-- a registered evidential object
-- an open verification infrastructure
+Sources enter a bounded case. Proposed events, assertions and relationships remain distinct from their sources. A human reviews and may accept, correct, contest, reject or request additional material. A versioned output preserves the reviewed record and its reservations.
 
----
+This describes the product architecture, not a workflow that this public repository can execute end to end. The private application and engine are not included.
 
-## High-level architecture
-Evidence sources
-   ↓
-TruthX Engine
-   ↓
-RPO (Registered Probative Object)
-   ↓
-OpenProof infrastructure
-   ↓
-Verification / Audit / Governance
+## Available public verification
 
----
+The supported public entry point is the [Atlas example](../examples/public-demo/README.md). The local checker performs basic field inspection and compares a fingerprint with a separately supplied reference. It needs no private service.
 
-## Evidence sources
+| Check | What it establishes | What it does not establish |
+| --- | --- | --- |
+| Basic structure | Selected expected fields and types are present | Full schema conformance or completeness of a case |
+| Fingerprint comparison | The parsed object matches the retained reference under the documented serialisation | Authenticity if both the object and reference can be replaced |
+| Evidence references | The example declares sources | That the files exist or support the assertions |
+| Human-readable explanation | A person can inspect the example and its limits | That a professional has validated the case |
 
-Evidence can originate from multiple environments:
+No PDF, digital signature or external registry is verified by the public checker. Source fingerprints and the PDF field in the fixture are illustrative placeholders. The browser demonstration compares against the reference it loads from the website; the CLI accepts a retained digest file.
 
-- operational systems
-- incident reports
-- governance processes
-- regulatory compliance documentation
-- investigation records
+## Integrity and human judgement
 
-These inputs represent the raw material of decision reasoning.
+A hash is not a truth score. A citation is not proof that the cited source supports a statement. An intact object may contain errors. Verification therefore needs an explicit scope and, where authenticity matters, an independently trusted reference or signing mechanism.
 
----
-
-## TruthX Engine
-
-The TruthX Engine is the deterministic structuring engine.
-
-Its role is to:
-
-- structure evidence
-- preserve reasoning paths
-- produce deterministic artefacts
-
-Given the same inputs, the engine produces the same structured output.
-
----
-
-## Registered Probative Object (RPO)
-
-The RPO is the core artefact produced by the engine.
-
-Each RPO contains three layers:
-
-1. canonical JSON structure
-2. human-readable representation
-3. integrity hash
-
-This structure ensures the artefact can be:
-
-- audited
-- shared
-- independently verified
-
----
-
-## OpenProof Infrastructure
-
-OpenProof provides the infrastructure layer enabling:
-
-- storage of RPO artefacts
-- public integrity verification
-- long-term traceability
-
-It acts as the verification environment for decision artefacts.
-
----
-
-## Verification
-
-Third parties can verify:
-
-- the integrity of the artefact
-- the consistency of the reasoning structure
-- the authenticity of the evidential bundle
-
-This makes decisions defensible under scrutiny.
-
----
-
-## Summary
-
-OpenProof is the probative infrastructure.
-
-TruthX Engine is the deterministic structuring engine powering it.
-
-RPO is the registered probative object it produces.
+The public tests exercise the example and comparison logic. They do not attest the private runtime, deployment, security of a real case or legal admissibility.

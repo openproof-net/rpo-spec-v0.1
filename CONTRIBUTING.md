@@ -1,42 +1,25 @@
-# Contributing to OpenProof
+# Contributing to the public RPO example
 
-Thank you for your interest in contributing to OpenProof.
+Start with the [README](README.md) and the [fictional Atlas case](examples/public-demo/README.md).
 
-OpenProof defines the Registered Probative Object (RPO), a deterministic evidential bundle designed to make institutional decisions defensible under scrutiny.
+## Useful contributions
 
-## How to contribute
+- Reproducible bugs in the public verification path.
+- Clearer explanations of structure, integrity and their limits.
+- Fictional examples with explicit reservations.
+- Tests showing whether a proposed change preserves the documented behaviour.
 
-Contributions may include:
+## Before opening a pull request
 
-• improvements to the RPO specification  
-• additional example bundles  
-• validation tools  
-• implementation experiments  
-• feedback on institutional use cases
+1. Describe the problem in an issue, using synthetic data only.
+2. Keep the change scoped to the public specification or demonstration.
+3. Run `node --test tests/public-verification.test.cjs` with Node.js 22 or later.
+4. State what changed, what was verified and what remains unverified.
 
-## Process
+Do not silently regenerate reference hashes to make a failing comparison pass. An intentional fixture change requires an explanation and review of the corresponding reference change.
 
-1. Open an Issue describing the proposal.
-2. Discuss the proposal with maintainers.
-3. Submit a Pull Request if changes to the specification are required.
+Never submit personal dossiers, confidential source documents, tokens or credentials. The private TruthX engine and production deployment are outside this repository's public contribution scope.
 
-## Scope
+Licensing metadata is incomplete; see the README before proposing code for redistribution. No contributor rights assignment or new licensing terms are introduced here.
 
-OpenProof aims to remain:
-
-• deterministic  
-• auditable  
-• institutionally defensible  
-
-Proposals that introduce non-deterministic interpretation layers (e.g. AI inference) should be discussed carefully as they may affect the core guarantees of the specification.
-
-## Resources
-
-Specification  
-https://github.com/openproof-net/rpo-spec-v0.1
-
-Reference implementation  
-https://github.com/Gersenderdp/rpo-reference
-
-Examples  
-https://github.com/Gersenderdp/rpo-examples
+For a private use case, use [case qualification](https://openproof.net/qualify?intent=case) without uploading evidence. For other enquiries, contact [Gersende](https://www.linkedin.com/in/gryard/).
