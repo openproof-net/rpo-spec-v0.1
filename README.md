@@ -1,429 +1,79 @@
-# 🔵 OpenProof — RPO Specification
+# OpenProof — public RPO specification and verification example
 
-> **OpenProof is the probative infrastructure. TruthX Engine is the deterministic structuring engine powering it. RPO is the Registered Probative Object it produces.**
+**From fragmented sources to a verifiable record, under human review.**
 
-OpenProof turns complex, fragmented evidence into structured, traceable and verifiable records for high-stakes decisions. This repository defines the public specification of the output: the **Registered Probative Object (RPO)**.
+OpenProof is being developed to help people and organisations reconstruct complex situations from scattered documents. Its first product pilot is **OpenProof Legal**. The broader direction is reconstruction and decision traceability before, during and after a crisis.
 
-| Layer | Role |
-|---|---|
-| **TruthX Engine** | Structures heterogeneous evidence through a controlled, deterministic pipeline. |
-| **OpenProof** | Provides the probative infrastructure and public verification layer. |
-| **RPO** | Preserves the structured record, its sources, transformations, reservations and integrity data. |
+This repository is the public entry point for the **Registered Probative Object (RPO)**: its draft format, fictional examples and a local verification demonstration. It is not the complete OpenProof application or the private TruthX Engine.
 
-**In one line:** complex evidence enters; a reviewable and independently verifiable decision record comes out.
+[See an example](https://rpo.openproof.net/examples.html) · [Try browser verification](https://rpo.openproof.net/tests.html) · [Qualify a case](https://openproof.net/qualify?intent=case)
 
-Integrity · Readability · Verifiability
+## Start here
 
-![Version](https://img.shields.io/badge/RPO-v0.1-gold)
-![Status](https://img.shields.io/badge/specification-stable-blue)
+| Your question | Where to go |
+| --- | --- |
+| What does a record look like? | [Read the fictional Atlas case](examples/public-demo/README.md) |
+| Can I reproduce the integrity check? | Run the local example below |
+| What are the technical boundaries? | [Architecture and limitations](docs/architecture.md) |
+| What is the data format? | [Format guide](spec/rpo-format.md) and [JSON Schema](spec/rpo-schema.json) |
+| Who is building this? | [Gersende de Parcey](https://github.com/Gersenderdp) |
+| Can I propose a use case or a pilot? | [Describe the need](https://openproof.net/qualify?intent=case), without confidential documents |
 
-OpenProof introduces the **Registered Probative Object (RPO)**, a deterministic evidential bundle designed to make institutional decisions defensible under scrutiny.
-___
+## Verify the public example locally
 
-## Interactive demonstration
+Requires Node.js 22 or later and Git. No package installation, API key, account or engine access is needed.
 
-This repository also includes a deterministic simulator illustrating
-how a Registered Probative Object (RPO) structures institutional
-reaction bundles.
-
-It demonstrates:
-
-• sealed JSON core
-• human-readable preview
-• public integrity hash
-• institutional exposure & defensibility indicators
-
-The simulator does not implement a decision system.
-It illustrates the OpenProof specification in practice.
-
-👉 **Try the interactive simulator**
-
-https://rpo.openproof.net/simulator.html
-
-## Simulator preview
-
-![OpenProof Simulator](docs/simulator-preview.png)
-
-___
-
-## Documentation
-
-Why OpenProof exists  
-→ docs/why_openproof.md
-
-Architecture  
-→ docs/architecture.md
-
-Specification  
-→ spec/
-
-___
-
-*A civil code for digital evidence in an age ruled by narratives.*
-
-OpenProof defines a public, deterministic and testable format for structuring digital evidence.
-Its core artifact, the RPO (Registered Probative Object), is a dual-format bundle allowing:
-
-- machines to verify integrity,
-- humans to read coherence,
-- institutions to trust the structure of evidence.
-
-OpenProof does not adjudicate truth.
-It ensures that nothing can be altered without detection.
-
-```text
-Narrative → JSON → SHA-256 → Registry → Validation
-```
-___
-
-## ▶️ Quick start — validate your first RPO bundle (10 seconds) 
-
-Try it in 10 seconds
-```bash
-git clone https://github.com/openproof-net/rpo-spec-v0.1.git 
+```sh
+git clone https://github.com/openproof-net/rpo-spec-v0.1.git
 cd rpo-spec-v0.1
-python tools/validate_rpo.py examples/rpo-example-001.json
-```
-___
-
-## 👤 Who is this for?
-
-- Developers → see “Minimal JSON Structure” + “Hashing Algorithm”
-- Researchers → see “Scientific Pilot”
-- Legal teams → see “Validity & Immutability Guarantees”
-- Institutions → see “Verifiability & immutability guarantees”
-- Everyone → try the Sandbox in 10 seconds
-
-___
-
-## 💙 Why OpenProof Exists — The Crisis We Are Fixing
-
-Digital evidence is collapsing.
-
-Today, “evidence” often means:
-
-- screenshots no system can authenticate,
-- PDFs whose origin no one can verify,
-- AI-generated narratives with no traceability,
-- fragmented logs scattered across institutions,
-- internal formats that die with each organisation.
-- Everyone talks about truth. Very few artifacts are verifiable.
-
-OpenProof is born from this failure.
-It provides a minimal, deterministic and testable foundation that any machine, institution or jurisdiction can check — independently, predictably, transparently.
-
-If machines can verify integrity, and humans can read coherence, society can trust evidence again.
-
-___
-
-## 🧠 Why This Matters for Organizations (HR, Governance, CEOs)
-
-By 2027, organizations will not be challenged for making decisions —
-but for being unable to explain, reconstruct, and defend them over time.
-
-This applies directly to:
-- people decisions,
-- role assignments,
-- promotions,
-- exits,
-- restructurings,
-- compliance and risk arbitrations.
-
-The problem is not intent.
-The problem is traceability.
-
-Without a structured, auditable and integrity-safe data foundation,
-organizations are exposed — legally, socially, and reputationally.
-
-OpenProof does not replace HR systems.
-It provides a **proof layer** on top of them.
-
-___
-
-## Table of Contents
-
-1. [🏛 What OpenProof Is — A Minimal, Enforceable Standard](#1--what-openproof-is--a-minimal-enforceable-standard)
-2. [📦 Minimal RPO JSON Structure (v0.1)](#2--minimal-rpo-json-structure-v01)
-3. [🔐 Hashing Algorithm (public_hash)](#3--hashing-algorithm-public_hash)
-4. [✅ Validating an RPO Bundle](#4--validating-an-rpo-bundle)
-5. [🧩 Generating a New RPO Bundle](#5--generating-a-new-rpo-bundle)
-6. [🎯 Try the Engine — RPO Sandbox](#6--try-the-engine--rpo-sandbox)
-7. [🔬 Scientific Pilot](#7--scientific-pilot-cnrs--truthx)
-8. [🤝 Contributing](#8--contributing)
-9. [📫 Contact](#9--contact)
-10. [🛡 Maintainer](#10--maintainer)
-
-
-
-___
-
-## 1. 🏛 What OpenProof Is — A Minimal, Enforceable Standard
-
-The RPO guarantees three invariants:
-
-#### ✔ Integrity
-
-A signed JSON whose fields can be recomputed and validated.
-
-#### ✔ Readability
-
-A human-readable PDF mirroring the narrative.
-
-#### ✔ Verifiability
-
-A deterministic SHA-256 public hash anchoring immutability.
-
-OpenProof does not determine what is “true”.
-It ensures that any modification becomes detectable.
-
-In organizational contexts, the RPO acts as a decision trace:
-it captures **what data was available**, **what narrative was constructed**,
-and **what decision followed** — in a form that can be audited later.
-
-This is especially critical for HR, People Operations, and Governance teams,
-where decisions are sensitive, distributed, and often contested years later.
-
-___
-
-## 2. 📦 Minimal RPO JSON Structure (v0.1)
-
-This is the canonical baseline of a compliant RPO bundle:
-
-```json
-{
-  "rpo_version": "0.1",
-  "bundle_id": "string",
-  "created_at": "ISO-8601 timestamp",
-  "issuer": { "label": "string" },
-  "subject": { "label": "string" },
-  "narrative": {
-    "title": "string",
-    "text": "string",
-    "pdf_hash": "string"
-  },
-  "evidence": [],
-  "registry": {
-    "public_hash": "sha256 hex",
-    "registry_hint": "string"
-  },
-  "meta": {
-    "playground": false
-  }
-}
+node tools/verify-demo.cjs examples/public-demo/rpo-en.json examples/public-demo/rpo-en.sha256
+node --test tests/public-verification.test.cjs
 ```
 
-### 2.1 Optional — JSON Schema
+Expected result: `basic_structure_present: true`, `reference_matches: true`, exit code `0`.
 
-"schema": "https://json-schema.org/draft/2020-12/schema",
-"type": "object",
-"properties": { … }
+To observe a change being detected, copy `rpo-en.json`, edit `narrative.summary`, and run the same command against the edited file **while keeping the original `.sha256` reference**. The comparison returns `reference_matches: false` and exit code `1`.
 
-___
+The checker reads local files only. It inspects basic fields and hashes the entire parsed object, with recursively sorted object keys, preserved array order, compact JSON and UTF-8 encoding. The demonstration accepts safe integer numbers only. This is a documented demonstration serialisation, not a claim of RFC 8785 conformance.
 
-## 3. 🔐 Hashing Algorithm (public_hash)
+The retained digest represents the copy published in this repository. Preserve or authenticate that reference separately when using it as an integrity anchor: replacing both the object and its reference defeats a comparison. Recomputing an embedded hash alone cannot establish authenticity.
 
-RPO v0.1 uses SHA-256 over a deterministic concatenation of core fields.
+## What this demonstrates
 
-Concatenation model :
+- A readable fictional scenario with explicit evidence references and an unresolved point.
+- Reproducible fingerprints and detection of a change relative to a retained reference.
+- A distinction between document structure, integrity and the truth of the underlying statements.
+- Checks that can be reproduced without the private application.
 
-```
-rpo_version=<v>|
-bundle_id=<id>|
-created_at=<iso>|
-issuer=<label>|
-subject=<label>|
-title=<title>|
-narrative=<text>|
-```
+**It does not verify** the source files, a PDF, signatures, a registry entry, the merits of a case or a legal conclusion. Basic field inspection is not full JSON Schema validation. The example contains illustrative source hashes and a PDF placeholder; it is not a signed or registered production export.
 
+## Product and repository status
 
-Example (Python)
+| Area | Status |
+| --- | --- |
+| Public JSON examples and local comparison | Available in this repository |
+| Browser demonstration | Public educational example; separate from the Legal application |
+| RPO format | Version 0.1 draft; the schema and implementation limits are explicit |
+| OpenProof Legal | First product pilot; availability and scope are qualified individually |
+| Complete application and TruthX Engine | Private implementation; not distributed here |
+| Future professional applications | Direction of development, not released products |
 
+A passing public test does not certify production readiness, factual accuracy or legal admissibility.
 
-import hashlib
+## How the parts fit together
 
-```python
-import hashlib
+**OpenProof** provides the application and review workflow. **TruthX Engine** is the structuring engine. **RPO** describes the resulting record. People review proposals and retain responsibility for decisions. See the [architecture](docs/architecture.md).
 
-def compute_public_hash(bundle):
-    payload = (
-        f"rpo_version={bundle['rpo_version']}|"
-        f"bundle_id={bundle['bundle_id']}|"
-        f"created_at={bundle['created_at']}|"
-        f"issuer={bundle['issuer']['label']}|"
-        f"subject={bundle['subject']['label']}|"
-        f"title={bundle['narrative']['title']}|"
-        f"narrative={bundle['narrative']['text']}"
-    )
-    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
-```
+The `backend/`, `examples/cnrs-legal-mvp/`, `examples/example-minimal/`, `README-dev.md` and older documentation contain historical prototypes or design material. They are not the supported quick start or evidence of a live deployment. The current public walkthrough is `examples/public-demo/`.
 
+## Contribute or work with us
 
+Useful feedback includes a reproducible verification issue, a clearer explanation or a fictional use case. See [CONTRIBUTING.md](CONTRIBUTING.md). Never include personal case files, credentials or confidential documents in public issues or pull requests.
 
-This guarantees deterministic validation across implementations.
+For pilots, [qualify a case](https://openproof.net/qualify?intent=case). For transformation missions, research or integration, [contact Gersende](https://www.linkedin.com/in/gryard/) or explore [TruthX](https://truthx.co/).
 
-___
+## Attribution and licensing status
 
-## 4. ✅ Validating an RPO Bundle
+Maintained by **Gersende Ryard de Parcey**, founder of TruthX / OpenProof. Citation metadata is in [CITATION.cff](CITATION.cff).
 
-Minimal validation helper (Python)
-
-
-def validate_public_hash(bundle):
-    expected = compute_public_hash(bundle)
-    return expected == bundle["registry"]["public_hash"]
-
-Required validations
-
-Any implementation SHOULD verify:
-
-- presence of mandatory fields,
-- valid ISO-8601 created_at,
-- public_hash is a 64-character hex string,
-- narrative structure matches schema,
-- recompute hash and reject on mismatch.
-
-Optional (recommended)
-
-- validate pdf_hash,
-- ensure bundle_id uniqueness,
-- run full JSON Schema validation.
-
-___
-
-## 5. 🧩 Generating a New RPO Bundle
-
-Minimal example (Python):
-
-import uuid
-from datetime import datetime
-
-```python
-def validate_public_hash(bundle):
-    expected = compute_public_hash(bundle)
-    return expected == bundle["registry"]["public_hash"]
-```
-
-    
-```python
-import uuid
-from datetime import datetime
-
-def new_rpo(title, text, issuer, subject):
-    bundle = {
-        "rpo_version": "0.1",
-        "bundle_id": f"rpo-{uuid.uuid4()}",
-        "created_at": datetime.utcnow().isoformat() + "Z",
-        "issuer":  { "label": issuer },
-        "subject": { "label": subject },
-        "narrative": {
-            "title": title,
-            "text": text,
-            "pdf_hash": "placeholder"
-        },
-        "evidence": [],
-        "registry": {
-            "public_hash": "",
-            "registry_hint": "No registry anchor in v0.1"
-        },
-        "meta": {
-            "playground": False
-        }
-    }
-
-    bundle["registry"]["public_hash"] = compute_public_hash(bundle)
-    return bundle
-```
-
-___
-
-## 6. 🎯 Try the Engine — RPO Sandbox
-
-Open, deterministic, no AI, no registry.
-
-The Sandbox lets you transform any narrative into:
-
-- a minimal RPO JSON,
-- heuristic markers,
-- a deterministic SHA-256 hash.
-
-🔗 https://rpo.openproof.net/simulator.html
-
-___
-
-## 🔐 Data, Trust and Governance Boundaries
-
-OpenProof is designed with a strict separation of concerns.
-
-- It does not decide how data should be interpreted.
-- It does not expose confidential content.
-- It does not automate judgment.
-
-Its role is to ensure that:
-- data is collected intentionally,
-- transformations are traceable,
-- decisions can be explained without rewriting history.
-
-This is a prerequisite for trust —
-both from employees and from regulators.
-
-___
-
-## 7. 🔬 Scientific Pilot
-
-The open standard does not include interpretive or psycho-forensic analysis.
-
-These modules live in the scientific pilot:
-
-- narrative inversion,
-- coercive control signals,
-- interpretive coherence,
-- structure-level markers.
-
-🔗 https://www.truthx.co/truthx-pilote-form
-
-___
-
-## 8. 🤝 Contributing
-
-OpenProof welcomes contributions from:
-
-- engineers (validation, hashing, schema),
-- legal teams (probatory constraints),
-- researchers (structures, bias, narrative logic),
-- OSINT & forensic analysts (field use cases).
-
-Issues and pull requests are encouraged in this repository.
-
-___
-
-## 9. 📫 Contact
-
-Email: openproof@truthx.co
-
-LinkedIn: https://www.linkedin.com/in/gryard/
-
-___
-
-## 10. 🛡 Maintainer
-
-This specification is maintained by Gersende de Parcey.
-
-
-___
-
-## OpenProof Legal Evidence Lab — public MVP
-
-The repository now includes a browser-based public reference interface for a research-collaboration lineage:
-
-👉 **[Open the Legal Evidence Lab](docs/demo-cnrs-legal-mvp.html)**
-
-It lets visitors load synthetic or local text documents, inspect a visible evidence-processing trace, review signals and reservations, and export a schema-shaped RPO v0.1 JSON bundle with a SHA-256 integrity hash. The browser demo does not upload files, adjudicate truth, or provide legal advice. The full multi-agent runtime and real PDF ingestion remain deployment concerns outside this static public boundary.
-
-
-### OpenProof Legal Evidence Lab — stable public route
-
-The browser reference interface is also available through the stable route [docs/legal/](docs/legal/index.html), intended to sit behind the future hostname legal.openproof.net. The repository includes a 25-report synthetic calibration manifest ([scores.json](examples/cnrs-legal-mvp/benchmark/scores.json)); its final human scores are calibration references, not legal findings or ground truth. The raw report archive is not published by default.
-
-
-The deployable backend boundary is documented in [backend/](backend/) and remains disabled until hosted with TLS, authentication, isolated workers, retention controls and a private TruthX adapter.
+That metadata currently names MIT, but this repository has no accompanying LICENSE file. This update does not establish or change licensing terms. Clarify the applicable rights with the maintainer before redistribution or commercial integration; public access alone is not a complete open-source release.

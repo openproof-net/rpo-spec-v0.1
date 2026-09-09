@@ -1,3 +1,5 @@
+> **Historical design material.** This page is retained for context and may contain superseded claims or instructions. Use the [current public entry point](README.md) and its documented verification limits.
+
 # RPO v0.1 — Developer Guide  
 Minimal JSON profile · Hashing · Validation · Integration
 
