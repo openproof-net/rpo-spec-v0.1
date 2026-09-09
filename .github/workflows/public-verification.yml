@@ -13,5 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: node --test tests/public-verification.test.cjs
+      - run: node --test tests/public-verification.test.cjs tests/campaign-walkthrough.test.cjs
       - run: node tools/verify-demo.cjs examples/public-demo/rpo-en.json examples/public-demo/rpo-en.sha256
+      - run: node --check docs/assets/campaign-walkthrough.mjs
+      - run: node --check docs/assets/campaign-brief.js

@@ -6,7 +6,7 @@ OpenProof is being developed to help people and organisations reconstruct comple
 
 This repository is the public entry point for the **Registered Probative Object (RPO)**: its draft format, fictional examples and a local verification demonstration. It is not the complete OpenProof application or the private TruthX Engine.
 
-[See an example](https://rpo.openproof.net/examples.html) · [Try browser verification](https://rpo.openproof.net/tests.html) · [Qualify a case](https://openproof.net/qualify?intent=case)
+[Take the 90-second walkthrough](https://rpo.openproof.net/walkthrough.html) · [Read the case brief](https://rpo.openproof.net/case-brief.html) · [See an example](https://rpo.openproof.net/examples.html) · [Try browser verification](https://rpo.openproof.net/tests.html) · [Qualify a case](https://openproof.net/qualify?intent=case)
 
 ## Start here
 
