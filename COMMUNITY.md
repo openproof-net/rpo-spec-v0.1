@@ -6,7 +6,7 @@ A confident summary should not leave its next reader guessing where a claim came
 
 **Project lead: [Gersende Ryard de Parcey](https://github.com/Gersenderdp), founder of TruthX / OpenProof.** Gersende leads the project, sets priorities and coordinates acceptance and releases.
 
-**Research collaboration since 2024–2025:** Gersende works with **Professor [Gaël Dias](https://dias.users.greyc.fr/)** at **GREYC, Caen**, on the research behind TruthX / OpenProof.
+**Research collaboration initiated in 2024–2025 and continuing in 2026:** Gersende works with **Professor [Gaël Dias](https://dias.users.greyc.fr/)** at **GREYC, Université de Caen Normandie**, on the research behind TruthX / OpenProof. The 2026 collaboration includes a student project on report generation, with research and development work delivered in May.
 
 ## [Join the first contributor circle →](https://github.com/openproof-net/rpo-spec-v0.1/issues/43)
 
