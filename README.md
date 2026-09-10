@@ -7,7 +7,7 @@
 <td width="150" valign="top"><a href="https://github.com/Gersenderdp"><img src="docs/images/gersende-de-parcey.png" width="140" alt="Portrait of Gersende Ryard de Parcey, founder of TruthX and OpenProof"></a></td>
 <td valign="middle">
 <strong>Gersende Ryard de Parcey</strong><br>
-Founder of TruthX / OpenProof<br>
+Founder & project lead — TruthX / OpenProof<br>
 Transformation COO · Interim Executive
 <p>I design the product and review workflow: find the source, preserve uncertainty and keep responsibility for decisions visible.</p>
 <a href="https://github.com/Gersenderdp">Meet the founder</a> · <a href="https://www.linkedin.com/in/gryard/">Professional background</a>
@@ -19,11 +19,13 @@ Transformation COO · Interim Executive
 
 OpenProof Legal is being piloted for people who examine and hand over complex documentary cases. **Try today:** a fictional record and a local check that detects a change against a retained reference. Automated document analysis is not part of this public exercise.
 
-### [Try OpenProof in five minutes →](START_HERE.md)
+### [Build OpenProof with us →](COMMUNITY.md)
 
-Inspect the example. Change a copy. Report what you found. No paid AI service or account needed to try it; a GitHub account is needed to post feedback.
+**SOURCE TRACEABILITY · HUMAN REVIEW · OPEN COLLABORATION**
 
-[How to contribute](CONTRIBUTING.md) · [What is available](#what-is-available-today)
+Gersende leads the project and is forming its first circle of researchers, developers and documentary professionals. Start with [three fictional documents](examples/community-cedar/README.md), then help evaluate observations, improve report readability or specify citation checks. Each task has a clear deliverable; no coding is required for a first review.
+
+[Join the shared challenge](COMMUNITY.md) · [Try the five-minute integrity exercise](START_HERE.md) · [What is available](#what-is-available-today)
 
 ## The problem we want to solve
 
@@ -105,17 +107,11 @@ The `backend/`, `examples/cnrs-legal-mvp/`, `examples/example-minimal/`, `README
 
 ## Help shape the next useful step
 
-We are seeking first users and contributors. You can help without writing code:
+The [first collaborative challenge](COMMUNITY.md) is now open: a short report based on three invented source documents, with precise citations and visible unanswered questions. The [proposed review reference](examples/community-cedar/REVIEW_REFERENCE.md) is available for critique; it is not product-generated or externally validated.
 
-| Your perspective | A useful first contribution |
-| --- | --- |
-| Legal or other documentary work | Try the example and identify one question you still could not answer |
-| Development | Reproduce a checker issue with a minimal synthetic input and expected output |
-| Research or evaluation | Propose a fictional counterexample that separates integrity from factual accuracy |
+Researchers and practitioners can [challenge its observations](https://github.com/openproof-net/rpo-spec-v0.1/issues/44), readers can [improve the report layout](https://github.com/openproof-net/rpo-spec-v0.1/issues/45), and developers can [specify citation checks](https://github.com/openproof-net/rpo-spec-v0.1/issues/46). Gersende is responsible for priorities, coordination and acceptance; specialist reviewers are confirmed for defined tasks.
 
-Follow the [first-use guide](START_HERE.md), then the [contribution instructions](CONTRIBUTING.md). Reports, critique and proposals are welcome; licensing must be clarified before a reusable code release. No contributor count, institutional endorsement or external adoption is claimed.
-
-**Next capability to assess, not released:** a local dossier inventory that compares supplied files with an expected list and reports missing entries, duplicate contents and changes. It must reuse existing Legal work, have reproducible acceptance checks and have its publication rights resolved before release. Feedback should tell us whether this would solve a real handover problem.
+This public work informs the existing Legal product. It does not start a replacement engine. The community invitation is published, but external participation, a complete open-source release and improved product performance are not yet established. See [contribution scope and rights](CONTRIBUTING.md).
 
 ## Work with Gersende
 
