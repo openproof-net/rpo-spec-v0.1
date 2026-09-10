@@ -1,12 +1,34 @@
-# OpenProof — public RPO specification and verification example
+# OpenProof — which source supports this claim?
 
-**From fragmented sources to a verifiable record, under human review.**
+**A dossier contains a confident summary, conflicting documents and a decision someone must own. Can the next reviewer reconstruct what supports it?**
 
-OpenProof is being developed to help people and organisations reconstruct complex situations from scattered documents. Its first product pilot is **OpenProof Legal**. The broader direction is reconstruction and decision traceability before, during and after a crisis.
+OpenProof is being developed for people who need to examine and hand over complex documentary cases. The first product pilot is **OpenProof Legal**, focused on preparing records for human review. This repository offers a draft record format, the Registered Probative Object (RPO), and a small, reproducible integrity check.
 
-This repository is the public entry point for the **Registered Probative Object (RPO)**: its draft format, fictional examples and a local verification demonstration. It is not the complete OpenProof application or the private TruthX Engine.
+**[Start with the five-minute exercise: inspect, change a copy and report what you found](START_HERE.md).** No account or paid AI service is needed to try it. A GitHub account is needed to post feedback.
 
-[Take the 90-second walkthrough](https://rpo.openproof.net/walkthrough.html) · [Read the case brief](https://rpo.openproof.net/case-brief.html) · [See an example](https://rpo.openproof.net/examples.html) · [Try browser verification](https://rpo.openproof.net/tests.html) · [Qualify a case](https://openproof.net/qualify?intent=case)
+![Illustration of scattered documents connected to a shared record; not a product screenshot](docs/images/campaign-evidence.webp)
+
+## The problem we want to solve
+
+| In your work | Consequence to investigate | Control being designed |
+| --- | --- | --- |
+| A summary makes a claim, but its source is hard to find | A reviewer has to repeat the search | Explicit links between claims and sources |
+| Two documents disagree | An unresolved point can disappear in the handover | Preserve the discrepancy and the question for human review |
+| A record changes after review | People may be discussing different versions | Compare it with a separately retained reference |
+
+These are needs to test with users, not measured savings. **Only the record comparison is implemented in the supported public checker.** The fictional example illustrates the other controls; it does not discover contradictions automatically.
+
+## Built by Gersende
+
+**[Gersende Ryard de Parcey](https://github.com/Gersenderdp)** is the founder of TruthX / OpenProof and a transformation COO / interim executive. She brings experience in organisational transformation, executive operations and crisis work to the product's design.
+
+Her contribution is to define the problem, the review workflow and the rules that make responsibility visible: find the source, preserve uncertainty, examine competing interpretations and identify what a person must decide. Public code and reproducible checks make those choices open to examination; repository activity alone does not establish product performance.
+
+> Do not stop trusting. Stop trusting what cannot be reconstructed.
+
+## What is available today
+
+The fictional record and local JSON comparison below are available. The public checker does **not** ingest your PDFs, find missing pieces, reconstruct your dossier or detect its contradictions. The complete application and TruthX Engine remain private; Legal is being piloted.
 
 ## Start here
 
@@ -66,11 +88,25 @@ A passing public test does not certify production readiness, factual accuracy or
 
 The `backend/`, `examples/cnrs-legal-mvp/`, `examples/example-minimal/`, `README-dev.md` and older documentation contain historical prototypes or design material. They are not the supported quick start or evidence of a live deployment. The current public walkthrough is `examples/public-demo/`.
 
-## Contribute or work with us
+## Help shape the next useful step
 
-Useful feedback includes a reproducible verification issue, a clearer explanation or a fictional use case. See [CONTRIBUTING.md](CONTRIBUTING.md). Never include personal case files, credentials or confidential documents in public issues or pull requests.
+We are seeking first users and contributors. You can help without writing code:
 
-For pilots, [qualify a case](https://openproof.net/qualify?intent=case). For transformation missions, research or integration, [contact Gersende](https://www.linkedin.com/in/gryard/) or explore [TruthX](https://truthx.co/).
+| Your perspective | A useful first contribution |
+| --- | --- |
+| Legal or other documentary work | Try the example and identify one question you still could not answer |
+| Development | Reproduce a checker issue with a minimal synthetic input and expected output |
+| Research or evaluation | Propose a fictional counterexample that separates integrity from factual accuracy |
+
+Follow the [first-use guide](START_HERE.md), then the [contribution instructions](CONTRIBUTING.md). Reports, critique and proposals are welcome; licensing must be clarified before a reusable code release. No contributor count, institutional endorsement or external adoption is claimed.
+
+**Next capability to assess, not released:** a local dossier inventory that compares supplied files with an expected list and reports missing entries, duplicate contents and changes. It must reuse existing Legal work, have reproducible acceptance checks and have its publication rights resolved before release. Feedback should tell us whether this would solve a real handover problem.
+
+## Work with Gersende
+
+For a possible Legal pilot, [describe the need](https://openproof.net/qualify?intent=case) without confidential evidence. Scope, deliverable, prerequisites, timing, acceptance criteria and price must be agreed before an engagement; the public exercise is not delivery of that service.
+
+For transformation or interim executive assignments, [contact Gersende](https://www.linkedin.com/in/gryard/). [TruthX](https://truthx.co/) presents the broader method and architecture.
 
 ## Attribution and licensing status
 
