@@ -6,9 +6,11 @@ A confident summary should not leave its next reader guessing where a claim came
 
 **Project lead: [Gersende Ryard de Parcey](https://github.com/Gersenderdp), founder of TruthX / OpenProof.** Gersende leads the project, sets priorities and coordinates acceptance and releases.
 
+**Research collaboration since 2024–2025:** Gersende works with **Professor [Gaël Dias](https://dias.users.greyc.fr/)** at **GREYC, Caen**, on the research behind TruthX / OpenProof.
+
 ## [Join the first contributor circle →](https://github.com/openproof-net/rpo-spec-v0.1/issues/43)
 
-Tell us which task interests you, what you could contribute and the time you can realistically offer. French and English are welcome. This is an invitation to form the first circle; no participating team or institutional endorsement is claimed.
+Tell us which task interests you, what you could contribute and the time you can realistically offer. French and English are welcome. This invitation forms a new public contributor circle. Participation in its individual tasks is agreed separately from the existing research collaboration.
 
 ## One shared challenge
 **Can another person check every observation in a short documentary report and understand what remains unresolved?**
