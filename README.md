@@ -15,6 +15,8 @@ Transformation COO · Interim Executive
 </tr>
 </table>
 
+**Research collaboration since 2024–2025:** Gersende works with **Professor [Gaël Dias](https://dias.users.greyc.fr/)** at **GREYC, Caen**, on the research behind TruthX / OpenProof.
+
 **Find the source. Keep uncertainty visible. Retain human review.**
 
 OpenProof Legal is being piloted for people who examine and hand over complex documentary cases. **Try today:** a fictional record and a local check that detects a change against a retained reference. Automated document analysis is not part of this public exercise.
