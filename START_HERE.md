@@ -48,3 +48,7 @@ Expected: `basic_structure_present: true`, `reference_matches: false`, exit code
 A short report is useful even if you stopped before finishing. Posting requires a GitHub account. Use invented material only, never confidential evidence or identifiable case details.
 
 For a technical failure or proposed fictional example, see the [other contribution formats](CONTRIBUTING.md). Completing this exercise does not enrol you in a paid pilot.
+
+## Continue with the shared challenge
+
+Ready to help shape the documentary review workflow? [Read the Cedar source pack](examples/community-cedar/README.md), then [choose a research, reader-experience or technical task](COMMUNITY.md#first-tasks). Gersende leads the project and coordinates the first contributor circle. This second exercise is manual review and design; it does not imply that automated document analysis has been released.
