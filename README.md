@@ -125,9 +125,12 @@ This public work informs the existing Legal product. It does not start a replace
 
 ## Work with Gersende
 
+[OpenProof website](https://openproof.net/) · [Contact Gersende](https://openproof.net/#contact) · [Workspace sign-in](https://app.openproof.net/)
+
+
 For a possible Legal pilot, [describe the need](https://openproof.net/qualify?intent=case) without confidential evidence. Scope, deliverable, prerequisites, timing, acceptance criteria and price must be agreed before an engagement; the public exercise is not delivery of that service.
 
-For transformation or interim executive assignments, [contact Gersende](https://www.linkedin.com/in/gryard/). [TruthX](https://truthx.co/) presents the broader method and architecture.
+For transformation or interim executive assignments, [contact Gersende](https://www.linkedin.com/in/gryard/). [TruthX](https://openproof.net/technology) presents the broader method and architecture.
 
 ## Attribution and licensing status
 
