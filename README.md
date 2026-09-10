@@ -1,12 +1,29 @@
-# OpenProof — which source supports this claim?
+# OpenProof
 
-**A dossier contains a confident summary, conflicting documents and a decision someone must own. Can the next reviewer reconstruct what supports it?**
+**SCATTERED DOCUMENTS · CONFLICTING CLAIMS · A DECISION TO JUSTIFY**
 
-OpenProof is being developed for people who need to examine and hand over complex documentary cases. The first product pilot is **OpenProof Legal**, focused on preparing records for human review. This repository offers a draft record format, the Registered Probative Object (RPO), and a small, reproducible integrity check.
+<table>
+<tr>
+<td width="150" valign="top"><a href="https://github.com/Gersenderdp"><img src="docs/images/gersende-de-parcey.png" width="140" alt="Portrait of Gersende Ryard de Parcey, founder of TruthX and OpenProof"></a></td>
+<td valign="middle">
+<strong>Gersende Ryard de Parcey</strong><br>
+Founder of TruthX / OpenProof<br>
+Transformation COO · Interim Executive
+<p>I design the product and review workflow: find the source, preserve uncertainty and keep responsibility for decisions visible.</p>
+<a href="https://github.com/Gersenderdp">Meet the founder</a> · <a href="https://www.linkedin.com/in/gryard/">Professional background</a>
+</td>
+</tr>
+</table>
 
-**[Start with the five-minute exercise: inspect, change a copy and report what you found](START_HERE.md).** No account or paid AI service is needed to try it. A GitHub account is needed to post feedback.
+**Find the source. Keep uncertainty visible. Retain human review.**
 
-![Illustration of scattered documents connected to a shared record; not a product screenshot](docs/images/campaign-evidence.webp)
+OpenProof Legal is being piloted for people who examine and hand over complex documentary cases. **Try today:** a fictional record and a local check that detects a change against a retained reference. Automated document analysis is not part of this public exercise.
+
+### [Try OpenProof in five minutes →](START_HERE.md)
+
+Inspect the example. Change a copy. Report what you found. No paid AI service or account needed to try it; a GitHub account is needed to post feedback.
+
+[How to contribute](CONTRIBUTING.md) · [What is available](#what-is-available-today)
 
 ## The problem we want to solve
 
@@ -18,11 +35,9 @@ OpenProof is being developed for people who need to examine and hand over comple
 
 These are needs to test with users, not measured savings. **Only the record comparison is implemented in the supported public checker.** The fictional example illustrates the other controls; it does not discover contradictions automatically.
 
-## Built by Gersende
+## The design behind the product
 
-**[Gersende Ryard de Parcey](https://github.com/Gersenderdp)** is the founder of TruthX / OpenProof and a transformation COO / interim executive. She brings experience in organisational transformation, executive operations and crisis work to the product's design.
-
-Her contribution is to define the problem, the review workflow and the rules that make responsibility visible: find the source, preserve uncertainty, examine competing interpretations and identify what a person must decide. Public code and reproducible checks make those choices open to examination; repository activity alone does not establish product performance.
+Gersende brings experience in organisational transformation, executive operations and crisis work to the product's design. The review workflow connects sources, uncertainty, competing interpretations and human responsibility. The public code makes specific controls examinable; it does not establish product performance.
 
 > Do not stop trusting. Stop trusting what cannot be reconstructed.
 
