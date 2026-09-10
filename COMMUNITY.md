@@ -2,11 +2,17 @@
 
 **SOURCE TRACEABILITY · HUMAN REVIEW · OPEN COLLABORATION**
 
-A confident summary should not leave its next reader guessing where a claim came from. We are bringing together researchers, developers and people who review complex documents to make sources, disagreements and unanswered questions easier to examine.
+**Help people turn a confusing dossier into a report they can check.** We are bringing together researchers, developers and documentary professionals to make sources, disagreements and unanswered questions easier to examine. Join a project with an existing research collaboration, a delivered prototype and concrete first tasks.
 
 **Project lead: [Gersende Ryard de Parcey](https://github.com/Gersenderdp), founder of TruthX / OpenProof.** Gersende leads the project, sets priorities and coordinates acceptance and releases.
 
-**Research collaboration — GREYC, 2025–2026.** Since 2025, Gersende has worked with **Professor [Gaël Dias](https://dias.users.greyc.fr/)** and a student team at **Université de Caen Normandie**. In May 2026, **Lucy Martin and Clément Correia-Peltier** delivered a multi-agent research prototype, source code and a report, building on Gersende's thirteen-module design. **This research work is not yet integrated into the current engine.**
+**RESEARCH COLLABORATION SINCE 2025 · GREYC / UNIVERSITÉ DE CAEN NORMANDIE**
+
+**Conceived and led by Gersende Ryard de Parcey. Developed through research with Professor [Gaël Dias](https://dias.users.greyc.fr/), Lucy Martin and Clément Correia-Peltier.**
+
+Gersende designed the initial thirteen-module architecture. Under Gaël Dias's academic supervision, Lucy and Clément developed a multi-agent research prototype and delivered code, a report and a presentation in May 2026. Their work spans document extraction, consistency checks, structured analysis and report generation.
+
+**A research foundation already exists. Help turn it into a clearer, more useful document review experience.** The student prototype's integration into the current engine remains to be done.
 
 [Meet the research team and see what was delivered](RESEARCH_COLLABORATION.md).
 
