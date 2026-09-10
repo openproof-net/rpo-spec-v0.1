@@ -15,7 +15,9 @@ Transformation COO · Interim Executive
 </tr>
 </table>
 
-**Research collaboration initiated in 2024–2025 and continuing in 2026:** Gersende works with **Professor [Gaël Dias](https://dias.users.greyc.fr/)** at **GREYC, Université de Caen Normandie**, on the research behind TruthX / OpenProof. The 2026 collaboration includes a student project on report generation, with research and development work delivered in May.
+**Research collaboration — GREYC, 2025–2026.** Since 2025, Gersende has worked with **Professor [Gaël Dias](https://dias.users.greyc.fr/)** and a student team at **Université de Caen Normandie**. In May 2026, **Lucy Martin and Clément Correia-Peltier** delivered a multi-agent research prototype, source code and a report, building on Gersende's thirteen-module design. **This research work is not yet integrated into the current engine.**
+
+[Meet the research team and see what was delivered](RESEARCH_COLLABORATION.md).
 
 **Find the source. Keep uncertainty visible. Retain human review.**
 
