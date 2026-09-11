@@ -1,4 +1,8 @@
-# OpenProof
+# OpenProof RPO — Specification & Reference Examples
+
+This repository contains the **draft RPO specification, fictional reference examples and the supported local integrity checker**. It is not the hosted OpenProof Legal application or the private TruthX Engine. The public format remains **version 0.1**; the permanent repository name and the format version are separate concerns. No certification, recognised-standard status or external adoption is asserted.
+
+**Start with the [public integrity exercise](START_HERE.md)**, then examine the format or propose a bounded contribution. The Atlas and Cedar examples are fictional; their observations do not demonstrate automatic contradiction detection. A fingerprint checks a change against a retained reference, not the truth of a dossier.
 
 **SCATTERED DOCUMENTS · CONFLICTING CLAIMS · A DECISION TO JUSTIFY**
 
